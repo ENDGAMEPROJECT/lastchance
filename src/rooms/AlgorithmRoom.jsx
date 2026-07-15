@@ -21,41 +21,44 @@ import './AlgorithmRoom.css'
    Every row has three factor slots and a target ad. Exactly ONE slot per
    row is left blank (`blank: true`) and must be filled from the tray. The
    `tileId` on a blank slot is the id of the tile that correctly fills it. */
+/* Columns, in order: 0 = Demographic, 1 = Follows / likes, 2 = Insecurity.
+   Each row combines a person's demographic + what they follow + an
+   insecurity, which the algorithm turns into an insecurity-exploiting ad. */
 const ROWS = [
   {
     id: 'r1',
-    ad: { icon: '👙' }, // Swimsuits on sale
+    ad: { icon: '🧴' }, // Miracle skincare cream
     slots: [
       { col: 0, icon: '👧' }, // Girl, 13–17
-      { col: 1, icon: '💅' }, // Follows lifestyle influencers
-      { col: 2, blank: true, tileId: 't-beach' }, // Liked beach photos
+      { col: 1, icon: '💄' }, // Follows beauty influencers
+      { col: 2, blank: true, tileId: 't-skin' }, // Insecure about her skin
     ],
   },
   {
     id: 'r2',
-    ad: { icon: '🎮' }, // New online game
+    ad: { icon: '🥤' }, // Muscle-gain supplement
     slots: [
       { col: 0, blank: true, tileId: 't-boy' }, // Boy, 15–25
-      { col: 1, icon: '🕹️' }, // Follows gaming accounts
-      { col: 2, icon: '📺' }, // Watches videogame videos
+      { col: 1, icon: '🏋️' }, // Follows fitness influencers
+      { col: 2, icon: '🦴' }, // Insecure about being skinny
     ],
   },
   {
     id: 'r3',
-    ad: { icon: '💸' }, // Risky "get rich" investment
+    ad: { icon: '💊' }, // Baldness cream
     slots: [
-      { col: 0, icon: '📉' }, // Low income
-      { col: 1, icon: '👦' }, // Boy, 15–25
-      { col: 2, blank: true, tileId: 't-crypto' }, // Follows crypto influencers
+      { col: 0, icon: '🧑' }, // Man, 25–35
+      { col: 1, icon: '💻' }, // Follows tech channels
+      { col: 2, blank: true, tileId: 't-bald' }, // Worried about going bald
     ],
   },
   {
     id: 'r4',
-    ad: { icon: '💊' }, // Baldness cream
+    ad: { icon: '⚖️' }, // Weight-loss pills
     slots: [
-      { col: 0, icon: '🧑' }, // Man, 25–35
-      { col: 1, blank: true, tileId: 't-tech' }, // Technology enthusiast
-      { col: 2, icon: '📱' }, // Hours in front of screen
+      { col: 0, icon: '👩' }, // Woman, 30–45
+      { col: 1, blank: true, tileId: 't-diet' }, // Follows diet & lifestyle pages
+      { col: 2, icon: '😟' }, // Insecure about her weight
     ],
   },
 ]
@@ -65,13 +68,13 @@ const ROWS = [
    Labels live in i18n (rooms.algorithm.tiles.<id>); ids stay stable for
    correctness matching. */
 const TRAY = [
-  { id: 't-beach', icon: '🏖️' }, // Liked beach photos
-  { id: 't-boy', icon: '👦' }, // Boy, 15–25
-  { id: 't-crypto', icon: '💰' }, // Follows crypto influencers
-  { id: 't-tech', icon: '🧑‍💻' }, // Technology enthusiast
+  { id: 't-skin', icon: '🫣' }, // Insecure about her skin (demographic? no — insecurity)
+  { id: 't-boy', icon: '👦' }, // Boy, 15–25 (demographic)
+  { id: 't-bald', icon: '🧑‍🦲' }, // Worried about going bald (insecurity)
+  { id: 't-diet', icon: '🥗' }, // Follows diet & lifestyle pages (follows)
   // distractors — plausible data points that match no equation
   { id: 't-pets', icon: '🐶' }, // Follows pet accounts
-  { id: 't-retiree', icon: '👵' }, // Woman, 65+
+  { id: 't-retiree', icon: '🧓' }, // Retired, 65+
 ]
 
 /* Three factor columns; headings come from i18n (rooms.algorithm.cols). */

@@ -60,6 +60,7 @@
 
 /* ---------- The corridor wall ---------- */
 .ac-wall {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
@@ -79,17 +80,38 @@
     radial-gradient(120% 90% at 50% -10%, rgba(255, 185, 43, 0.12), transparent 60%),
     repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 60px),
     #04050d;
+  cursor: crosshair;
+}
+
+/* The flashlight beam: a dark overlay with a transparent hole that follows
+   the cursor (position set via --Xpos/--Ypos in JS). Sits above unrevealed
+   posters (z-index 1) but below revealed ones (z-index 3), so a poster the
+   beam has "lit" pops out of the darkness and stays visible. */
+.ac-flashlight {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: var(--radius);
+  --Xpos: 50%;
+  --Ypos: 50%;
+  background:
+    radial-gradient(circle 8em at var(--Xpos) var(--Ypos), rgba(255, 214, 150, 0.12), transparent 6em),
+    radial-gradient(circle 8em at var(--Xpos) var(--Ypos), rgba(4, 5, 13, 0) 0, rgba(4, 5, 13, 0.9) 100%);
 }
 
 /* ---------- Poster ---------- */
 .ac-poster {
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 6px;
   transition: transform 0.18s ease;
 }
 .ac-poster:hover { transform: translateY(-3px); }
+/* A revealed poster rises above the flashlight overlay so it stays lit. */
+.ac-poster.revealed { z-index: 3; }
 
 /* Glossy advertisement front */
 .ac-glossy {

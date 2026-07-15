@@ -74,38 +74,39 @@ export default {
     learnAfter: '.',
   },
 
-  /* Column headings (order matches COLS in the component). */
-  cols: ['Age / identity', 'Follows / likes', 'Other data'],
+  /* Column headings (order matches COLS in the component):
+     Demographic → Follows / likes → Insecurities. */
+  cols: ['Demographic', 'Follows / likes', 'Insecurities'],
 
   /* Per-row labels: keyed by row id, joined to ROWS in the component.
      `ad` is the targeted-ad label; `slots` holds the locked (non-blank)
      factor labels keyed by column index. */
   rows: {
     r1: {
-      ad: 'Swimsuits on sale',
-      slots: { 0: 'Girl, 13–17', 1: 'Follows lifestyle influencers' },
+      ad: 'Miracle skincare cream',
+      slots: { 0: 'Girl, 13–17', 1: 'Follows beauty influencers' },
     },
     r2: {
-      ad: 'New online game',
-      slots: { 1: 'Follows gaming accounts', 2: 'Watches videogame videos' },
+      ad: 'Muscle-gain supplement',
+      slots: { 1: 'Follows fitness influencers', 2: 'Insecure about being skinny' },
     },
     r3: {
-      ad: 'Risky "get rich" investment',
-      slots: { 0: 'Low income', 1: 'Boy, 15–25' },
+      ad: 'Baldness cream',
+      slots: { 0: 'Man, 25–35', 1: 'Follows tech channels' },
     },
     r4: {
-      ad: 'Baldness cream',
-      slots: { 0: 'Man, 25–35', 2: 'Hours in front of screen' },
+      ad: 'Weight-loss pills',
+      slots: { 0: 'Woman, 30–45', 2: 'Insecure about her weight' },
     },
   },
 
   /* Tray tile labels, keyed by tile id (joined to TRAY in the component). */
   tiles: {
-    't-beach': 'Liked beach photos',
+    't-skin': 'Insecure about her skin',
     't-boy': 'Boy, 15–25',
-    't-crypto': 'Follows crypto influencers',
-    't-tech': 'Technology enthusiast',
+    't-bald': 'Worried about going bald',
+    't-diet': 'Follows diet & lifestyle pages',
     't-pets': 'Follows pet accounts',
-    't-retiree': 'Woman, 65+',
+    't-retiree': 'Retired, 65+',
   },
 }

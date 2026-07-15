@@ -13,8 +13,8 @@ export default {
   torchOff: '🔦 Truth Flashlight',
   hintCharging:
     'The cheap torch flickers awake — bait ads love to waste a moment of your time…',
-  hintOn: 'Now shine it on each poster to burn away the gloss.',
-  hintOff: 'Switch it on, then reveal what the posters really say.',
+  hintOn: 'Sweep the beam across the dark wall — each poster lights up and reveals the truth.',
+  hintOff: 'Switch it on, then sweep the beam over the posters to reveal what they really say.',
 
   glossyCta: 'TAP TO CLAIM →',
   fineprint: '* terms & conditions apply',

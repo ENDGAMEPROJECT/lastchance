@@ -3,6 +3,7 @@ import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { ITEMS, CODES } from '../game/gameData.js'
 import RoomFrame from '../components/RoomFrame.jsx'
+import { useStage } from '../components/Stage.jsx'
 import './AdsCorridor.css'
 
 /* CORRIDOR (between Puzzle 3 and 4) — Ads Corridor.
@@ -26,11 +27,16 @@ const POSTERS = [
 export default function AdsCorridor({ node }) {
   const { completeRoom, addItem, addEvidence, hasItem } = useGame()
   const t = useT()
+  const { scale } = useStage()
 
   // Flashlight lifecycle: 'charging' → 'ready' (off) → toggle on/off.
   const [charging, setCharging] = useState(true)
   const [lightOn, setLightOn] = useState(false)
   const [pickedUp, setPickedUp] = useState(false)
+
+  // Refs for the cursor-tracked spotlight overlay.
+  const wallRef = useRef(null)
+  const flashRef = useRef(null)
 
   // Which posters have been illuminated at least once.
   const [revealed, setRevealed] = useState({}) // id -> true
@@ -67,6 +73,21 @@ export default function AdsCorridor({ node }) {
     setRevealed((r) => (r[id] ? r : { ...r, [id]: true }))
   }
 
+  // Move the spotlight to the cursor. We write the position straight to the
+  // overlay's CSS vars (no re-render). Coords are converted from screen space
+  // into the wall's own design-pixel space by dividing out the stage scale.
+  function moveBeam(clientX, clientY) {
+    const rect = wallRef.current?.getBoundingClientRect()
+    const el = flashRef.current
+    if (!rect || !el) return
+    el.style.setProperty('--Xpos', `${(clientX - rect.left) / scale}px`)
+    el.style.setProperty('--Ypos', `${(clientY - rect.top) / scale}px`)
+  }
+  const onMouseMove = (e) => { if (lightOn) moveBeam(e.clientX, e.clientY) }
+  const onTouchMove = (e) => {
+    if (lightOn && e.touches[0]) moveBeam(e.touches[0].clientX, e.touches[0].clientY)
+  }
+
   function submit(e) {
     e.preventDefault()
     if (solved) return
@@ -97,13 +118,28 @@ export default function AdsCorridor({ node }) {
     >
       <div className={`ac-wrap fade-in ${lightOn ? 'light-on' : ''}`}>
        <div className="ac-layout">
-        {/* Left: corridor wall with its two posters */}
-        <div className="ac-wall">
+        {/* Left: corridor wall with its posters + cursor-tracked flashlight */}
+        <div
+          className="ac-wall"
+          ref={wallRef}
+          onMouseMove={onMouseMove}
+          onTouchMove={onTouchMove}
+        >
           {POSTERS.map((p, i) => {
             const isRevealed = !!revealed[p.id]
             const poster = t('rooms.ads.posters')[i]
             return (
-              <div key={p.id} className={`ac-poster tint-${p.tint} ${isRevealed ? 'revealed' : ''}`}>
+              <div
+                key={p.id}
+                className={`ac-poster tint-${p.tint} ${isRevealed ? 'revealed' : ''}`}
+                role="button"
+                tabIndex={0}
+                aria-label={poster.glossyTitle}
+                // Sweeping the beam over a poster (or tapping it) reveals it.
+                onMouseMove={() => shine(p.id)}
+                onClick={() => shine(p.id)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); shine(p.id) } }}
+              >
                 {/* Glossy front — the advertisement's shiny promise */}
                 <div className="ac-glossy">
                   <div className="ac-badge">{poster.glossyBadge}</div>
@@ -113,7 +149,7 @@ export default function AdsCorridor({ node }) {
                   <div className="ac-fineprint">{t('rooms.ads.fineprint')}</div>
                 </div>
 
-                {/* Truth layer — only opaque once the light has hit it */}
+                {/* Truth layer — revealed once the beam has hit this poster */}
                 <div className="ac-truth" aria-hidden={!isRevealed}>
                   <div className="ac-truth-tag">{t('rooms.ads.truthTag')}</div>
                   <p className="ac-truth-text">{poster.truth}</p>
@@ -121,18 +157,13 @@ export default function AdsCorridor({ node }) {
                     {t('rooms.ads.codeFragment')}<b>{p.letters}</b>
                   </div>
                 </div>
-
-                {/* Shine control per poster (works only while the light is ON) */}
-                <button
-                  className={`btn btn-sm ac-shine ${lightOn ? 'btn-cyan' : ''}`}
-                  onClick={() => shine(p.id)}
-                  disabled={!lightOn || isRevealed}
-                >
-                  {isRevealed ? t('rooms.ads.shineRevealed') : lightOn ? t('rooms.ads.shineReady') : t('rooms.ads.shineOff')}
-                </button>
               </div>
             )
           })}
+
+          {/* The flashlight beam — a dark overlay with a transparent hole
+              that follows the cursor. Only present while the light is ON. */}
+          {lightOn && <div className="ac-flashlight" ref={flashRef} aria-hidden />}
         </div>
 
         {/* Right: flashlight controls, code assembly and exit entry */}
