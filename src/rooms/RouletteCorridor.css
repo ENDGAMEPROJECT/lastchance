@@ -1,0 +1,246 @@
+/* Roulette Corridor — gamified bait. Accent: MAGENTA.
+   Fits inside the fixed 1280x720 scene (no scroll): four wheels in one
+   row on a layered "arcade" stage with soft depth. */
+
+.rc-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Top bar: progress chips + global spin button */
+.rc-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+/* Layered arcade stage: a darker back panel + floor glow behind the cards. */
+.rc-stage {
+  position: relative;
+  border-radius: 14px;
+  padding: 14px 16px;
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(255, 43, 214, 0.10), transparent 60%),
+    linear-gradient(180deg, #120a20, #08060f);
+  border: 1px solid rgba(255, 43, 214, 0.18);
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+.rc-stage::after {
+  content: '';
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: 0;
+  height: 34%;
+  background: linear-gradient(180deg, transparent, rgba(255, 43, 214, 0.08));
+  pointer-events: none;
+}
+
+/* Wheel grid — four in one row. */
+.rc-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.rc-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: rgba(16, 12, 30, 0.72);
+  text-align: center;
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.18s ease;
+}
+.rc-card:hover { transform: translateY(-3px); border-color: rgba(255, 43, 214, 0.4); }
+.rc-card.rigged {
+  border-color: var(--magenta);
+  box-shadow: var(--glow-magenta), 0 14px 26px rgba(0, 0, 0, 0.5);
+}
+
+.rc-card-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+.rc-wheel-name {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  font-size: 0.82rem;
+  color: var(--magenta);
+  text-shadow: 0 0 10px rgba(255, 43, 214, 0.55);
+}
+
+/* ---------- The wheel itself ---------- */
+.rc-wheel-wrap {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  margin: 8px 0 4px;
+}
+
+/* Fixed pointer at 12 o'clock — the wheel always lands under it. */
+.rc-pointer {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  color: var(--amber);
+  font-size: 1.2rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px var(--amber));
+}
+
+.rc-wheel-face {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.rc-wheel {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 43, 214, 0.55);
+  box-shadow:
+    var(--glow-magenta),
+    inset 0 0 20px rgba(0, 0, 0, 0.55);
+  /* Idle: no transition. Spinning class adds the long, decelerating turn. */
+}
+.rc-wheel.spinning {
+  transition: transform 4.2s cubic-bezier(0.12, 0.66, 0.05, 1);
+}
+
+/* Slice labels — each rotated to sit along its slice, text pushed to the rim. */
+.rc-seg-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+.rc-seg-text {
+  margin-top: 8px;
+  max-width: 44px;
+  font-family: var(--font-mono);
+  font-size: 0.42rem;
+  line-height: 1.05;
+  font-weight: 700;
+  color: #0a0410;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.25);
+}
+.rc-seg-label.jackpot .rc-seg-text {
+  color: #2a1600;
+  font-size: 0.46rem;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+}
+
+/* Centre hub */
+.rc-hub {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, #16021a, #05060f);
+  border: 2px solid var(--magenta);
+  box-shadow: var(--glow-magenta);
+}
+
+/* Win flag that pops after a spin settles */
+.rc-win-flag {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  white-space: nowrap;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.66rem;
+  color: #2a1600;
+  background: var(--amber);
+  padding: 3px 10px;
+  border-radius: 999px;
+  box-shadow: 0 0 14px rgba(255, 185, 43, 0.7);
+}
+.rc-win-flag b { font-family: var(--font-display); }
+
+.rc-spin-btn { margin-top: 4px; }
+
+/* ---------- Rigged toggle ---------- */
+.rc-rig {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: rgba(4, 8, 20, 0.6);
+  cursor: pointer;
+  font-size: 0.72rem;
+  line-height: 1.15;
+  text-align: left;
+  transition: border-color 0.2s, background 0.2s;
+}
+.rc-rig:hover { border-color: var(--magenta); }
+.rc-rig.on { border-color: var(--magenta); background: rgba(255, 43, 214, 0.1); }
+.rc-rig b { color: var(--magenta); font-family: var(--font-display); }
+.rc-rig input { display: none; }
+.rc-rig-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  flex: none;
+  border: 1px solid var(--muted);
+  position: relative;
+}
+.rc-rig.on .rc-rig-box {
+  background: var(--magenta);
+  border-color: var(--magenta);
+  box-shadow: var(--glow-magenta);
+}
+.rc-rig.on .rc-rig-box::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2a0022;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.rc-hint { margin: 0; padding: 8px 14px; }
+.rc-learn { margin: 0; padding: 8px 14px; font-size: 0.82rem; }
+
+/* Respect the app's reduced-motion mode: no long spin transition. */
+.reduced-motion .rc-wheel.spinning { transition: none !important; }

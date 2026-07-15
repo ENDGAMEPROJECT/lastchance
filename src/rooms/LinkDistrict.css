@@ -1,0 +1,411 @@
+.ld-room { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+
+.ld-router-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 6px;
+}
+.ld-prompt { color: var(--text); font-size: 0.95rem; }
+
+/* Scene with layered depth: back wall + perspective floor + doors. */
+.ld-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 14px;
+}
+.ld-backwall {
+  position: absolute;
+  inset: 0 0 30% 0;
+  background:
+    radial-gradient(120% 120% at 50% 0%, rgba(22, 242, 255, 0.10), transparent 60%),
+    linear-gradient(180deg, #0a1024, #070b18);
+  border-bottom: 1px solid rgba(120, 160, 255, 0.18);
+}
+.ld-floor {
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  bottom: 0;
+  height: 34%;
+  background:
+    linear-gradient(180deg, #070b18, #04060f),
+    repeating-linear-gradient(90deg, transparent 0 78px, rgba(120,160,255,0.10) 78px 80px);
+  transform: rotateX(64deg);
+  transform-origin: top center;
+  box-shadow: inset 0 40px 60px rgba(0,0,0,0.6);
+}
+
+.ld-doors {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  padding-bottom: 6px;
+}
+
+/* ---------- A physical door ---------- */
+.ld-door { width: 208px; display: flex; flex-direction: column; gap: 10px; }
+
+.ld-door3d {
+  position: relative;
+  height: 292px;
+  perspective: 1000px;
+  cursor: pointer;
+  border-radius: 12px 12px 5px 5px;
+}
+.ld-door3d:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+/* jamb / frame behind everything */
+.ld-door3d::before {
+  content: '';
+  position: absolute;
+  inset: -6px -6px 0;
+  border-radius: 15px 15px 6px 6px;
+  background: linear-gradient(180deg, #0f1630, #0a1024);
+  border: 1px solid var(--line);
+  box-shadow: 0 22px 36px rgba(0, 0, 0, 0.55);
+}
+/* floor glow pad under the door */
+.ld-door3d::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -12px;
+  width: 82%;
+  height: 16px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(22,242,255,0.30), transparent 70%);
+  filter: blur(3px);
+  opacity: 0.5;
+  z-index: -1;
+}
+.ld-door.blocked .ld-door3d::after { background: radial-gradient(ellipse at center, rgba(43,255,136,0.4), transparent 70%); }
+.ld-door.blocked .ld-door3d::before { border-color: rgba(43,255,136,0.5); }
+
+/* interior (the website), revealed when the door opens */
+.ld-doorway {
+  position: absolute;
+  inset: 4px;
+  border-radius: 9px;
+  overflow: hidden;
+  background: #04060f;
+  box-shadow: inset 0 0 44px rgba(0, 0, 0, 0.85);
+  /* Contain the browser-bar z-index so it stays INSIDE the doorway,
+     behind the closed door slab (only visible once the door opens). */
+  isolation: isolate;
+}
+.ld-doorway .door-page { position: absolute; inset: 22px 0 0; }
+
+/* Browser chrome shown INSIDE the doorway — the security indicator only
+   appears once the door (site) is opened, like a real address bar. */
+.ld-browserbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 22px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 8px;
+  background: #0a0e1c;
+  border-bottom: 1px solid var(--line);
+}
+.ld-browserbar.insecure { background: #1a0f05; border-bottom-color: rgba(255, 185, 43, 0.4); }
+.ld-bar-flag {
+  font-size: 0.52rem;
+  font-weight: 700;
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  flex: none;
+}
+.ld-bar-flag.red { color: var(--red); }
+/* look-alike character, revealed inside the doorway (no underline) */
+.ld-homoglyph {
+  background: rgba(255, 59, 92, 0.28);
+  color: #ffb3c6;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+.ld-baraddr {
+  font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.58rem;
+  color: #9fb0e0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ld-browserbar.insecure .ld-baraddr { color: #ffcf8a; }
+.ld-doorway::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 90% at 50% 40%, rgba(22,242,255,0.14), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+.ld-door.open .ld-doorway::after { opacity: 1; }
+
+/* the swinging door slab */
+.ld-slab {
+  position: absolute;
+  inset: 4px;
+  border-radius: 9px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.05), transparent 26%),
+    linear-gradient(160deg, #16213f, #0d1428);
+  border: 1px solid var(--line);
+  transform-origin: left center;
+  transform: rotateY(0deg);
+  transition: transform 0.55s cubic-bezier(0.2, 0.75, 0.2, 1), box-shadow 0.3s;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+}
+/* lock-rail highlight across the middle of the slab */
+.ld-slab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 9px;
+  transform: translateY(-50%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(160, 190, 255, 0.05));
+  pointer-events: none;
+}
+/* Panelled door detailing — two recessed panels + a kick plate. */
+.ld-panel {
+  position: absolute;
+  left: 15px;
+  right: 15px;
+  border-radius: 5px;
+  background: linear-gradient(160deg, #141f3c, #0d1630);
+  box-shadow:
+    inset 2px 2px 6px rgba(0, 0, 0, 0.6),
+    inset -2px -2px 5px rgba(160, 190, 255, 0.05);
+  border: 1px solid rgba(120, 160, 255, 0.10);
+}
+.ld-panel.top { top: 15px; height: 41%; }
+.ld-panel.bottom { top: 54%; bottom: 48px; }
+.ld-kick {
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  bottom: 9px;
+  height: 22px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #1b2748, #10182f);
+  border: 1px solid rgba(120, 160, 255, 0.10);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+/* Door knob with escutcheon plate */
+.ld-knob {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #0c1426, #060a16);
+  border: 1px solid rgba(120, 160, 255, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.ld-knob i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #eafcff, var(--cyan) 45%, var(--cyan-dim));
+  box-shadow: var(--glow-cyan);
+}
+.ld-door.open .ld-slab { transform: rotateY(-82deg); box-shadow: -18px 12px 34px rgba(0, 0, 0, 0.6); }
+.ld-door.fake .ld-slab { border-color: rgba(255, 59, 92, 0.4); }
+.ld-door.safe .ld-slab { border-color: rgba(22, 242, 255, 0.5); }
+
+.ld-hinges {
+  position: absolute;
+  left: -1px;
+  top: 0;
+  bottom: 0;
+  width: 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 26px 0;
+}
+.ld-hinges span { height: 15px; border-radius: 3px; background: linear-gradient(#39456b, #232c4a); }
+
+/* URL sign mounted above the door (a lit transom / shop sign). */
+.ld-sign {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 14px;
+  min-height: 38px;
+  background: linear-gradient(180deg, #0b1226, #070b16);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(22, 242, 255, 0.16), inset 0 0 10px rgba(0, 0, 0, 0.55);
+}
+/* mounting screws */
+.ld-sign::before, .ld-sign::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(160, 190, 255, 0.4);
+}
+.ld-sign::before { left: 8px; }
+.ld-sign::after { right: 8px; }
+.ld-sign.insecure {
+  border-color: rgba(255, 185, 43, 0.5);
+  box-shadow: 0 0 12px rgba(255, 185, 43, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.55);
+}
+
+.ld-linkicon { font-size: 0.72rem; opacity: 0.7; flex: none; }
+.ld-lock { font-size: 0.8rem; flex: none; }
+.ld-lock.warn { color: var(--amber); }
+/* Proportional, browser-like font so look-alikes (rn≈m, Cyrillic
+   homoglyphs) are genuinely hard to spot — as in a real address bar. */
+.ld-url {
+  font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 0.72rem;
+  color: #e2eaff;
+  text-align: center;
+  word-break: break-all;
+  line-height: 1.2;
+}
+.ld-sign.insecure .ld-url { color: #ffcf8a; }
+
+.ld-peek {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 32px;
+  text-align: center;
+  margin: 0;
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+}
+.ld-door.open .ld-peek { color: var(--cyan); }
+
+/* Blocked: barricade tape + lock over the door */
+.ld-chains {
+  position: absolute;
+  inset: 4px;
+  z-index: 6;
+  border-radius: 9px;
+  background: rgba(4, 16, 10, 0.62);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--green);
+  overflow: hidden;
+}
+.ld-chains span { font-size: 2.1rem; filter: drop-shadow(0 0 8px var(--green)); z-index: 1; }
+.ld-chains b { font-family: var(--font-display); letter-spacing: 0.15em; font-size: 0.72rem; z-index: 1; }
+.ld-chains::before, .ld-chains::after {
+  content: '';
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  height: 13px;
+  background: repeating-linear-gradient(45deg, #0f2a1a 0 12px, #123520 12px 24px);
+  border-top: 1px solid rgba(43, 255, 136, 0.4);
+  border-bottom: 1px solid rgba(43, 255, 136, 0.4);
+}
+.ld-chains::before { top: 33%; transform: rotate(-8deg); }
+.ld-chains::after { top: 58%; transform: rotate(7deg); }
+
+.ld-door-foot { display: flex; flex-direction: column; align-items: center; gap: 5px; min-height: 50px; text-align: center; }
+.ld-note { line-height: 1.25; }
+
+/* ---------- Mini website pages (shown inside an opened doorway) ---------- */
+.door-page { position: absolute; inset: 0; display: flex; flex-direction: column; }
+.door-page.neutral { background: linear-gradient(160deg, #121a33, #0b1024); padding: 12px; gap: 10px; }
+.door-page.neutral .dp-hero { height: 44%; border-radius: 8px; background: linear-gradient(120deg, #1b2547, #223066); }
+.door-page.neutral .dp-lines { display: flex; flex-direction: column; gap: 6px; }
+.door-page.neutral .dp-lines span { height: 7px; border-radius: 4px; background: #223066; }
+.door-page.neutral .dp-lines span:nth-child(2) { width: 80%; }
+.door-page.neutral .dp-lines span:nth-child(3) { width: 55%; }
+.door-page.neutral .dp-tiles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: auto; }
+.door-page.neutral .dp-tiles span { height: 34px; border-radius: 6px; background: #1a2447; }
+
+.door-page.store { background: linear-gradient(160deg, #f4f6ff, #dfe6ff); color: #1a2340; padding: 10px; }
+.dp-bar { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; }
+.door-page.store .dp-tiles { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin: 8px 0; }
+.door-page.store .dp-tiles span { background: #b9c4ec; border-radius: 4px; }
+.dp-cap { font-size: 0.6rem; color: #46507a; }
+
+.door-page.sale { background: radial-gradient(circle at 50% 40%, #ff3b3b, #a50000); color: #fff; align-items: center; justify-content: center; text-align: center; padding: 8px; gap: 8px; }
+.dp-warn { position: absolute; top: 8px; left: 8px; right: 8px; font-size: 0.5rem; font-weight: 800; background: #111; color: #ffd400; padding: 3px; border-radius: 3px; }
+.dp-off { font-family: var(--font-display); font-weight: 900; font-size: 1.9rem; text-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+.dp-shop { background: #000; padding: 4px 12px; border-radius: 4px; font-size: 0.6rem; font-weight: 700; }
+
+.door-page.shop { background: #fff; color: #222; padding: 8px; align-items: center; }
+.dp-shopbar { align-self: stretch; font-size: 0.55rem; font-weight: 800; color: #7a2ce0; }
+.dp-prod { font-size: 2.4rem; margin: auto 0 0; }
+.dp-price { font-family: var(--font-display); font-weight: 900; color: #d10038; font-size: 1.3rem; }
+.dp-limited { font-size: 0.48rem; color: #d10038; font-weight: 800; }
+
+/* ---------- Actions ---------- */
+.ld-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.ld-banner { margin: 0; padding: 8px 14px; }
+
+/* ---------- Justify phase ---------- */
+.ld-justify { max-width: 860px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 12px; }
+.ld-justify .learn { font-size: 0.9rem; padding: 10px 14px; }
+.ld-flags { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+.ld-flag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--panel);
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: border-color 0.2s, background 0.2s;
+}
+.ld-flag:hover { border-color: var(--cyan); }
+.ld-flag.on { border-color: var(--cyan); background: rgba(22,242,255,0.08); }
+.ld-flag input { display: none; }
+.ld-check { width: 18px; height: 18px; border-radius: 5px; flex: none; border: 1px solid var(--muted); position: relative; }
+.ld-flag.on .ld-check { background: var(--cyan); border-color: var(--cyan); box-shadow: var(--glow-cyan); }
+.ld-flag.on .ld-check::after { content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #04202a; font-size: 0.72rem; font-weight: 900; }
+.ld-justify-foot { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }

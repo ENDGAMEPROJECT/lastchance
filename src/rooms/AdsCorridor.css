@@ -1,0 +1,248 @@
+/* Ads Corridor — AMBER accent.
+   A dark service tunnel with two glossy ad posters. The "Truth Flashlight"
+   burns away the gloss to expose the fine print (and the hidden code). */
+
+.ac-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Two columns: the poster wall on the left, controls on the right. */
+.ac-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.ac-side {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+}
+
+.ac-pickup {
+  border-color: rgba(255, 185, 43, 0.5);
+  color: var(--amber);
+  background: rgba(255, 185, 43, 0.08);
+  animation: pulse-glow 2.2s ease-in-out infinite;
+  padding: 8px 12px;
+  font-size: 0.82rem;
+}
+
+/* ---------- Flashlight toolbar ---------- */
+.ac-toolbar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.ac-torch {
+  border-color: var(--amber);
+  color: #ffe6b0;
+  box-shadow: 0 0 8px rgba(255, 185, 43, 0.5), 0 0 22px rgba(255, 185, 43, 0.3);
+}
+.ac-torch:hover:not(:disabled) { background: rgba(255, 185, 43, 0.14); }
+/* Charging state: a subtle flicker to sell the "cheap torch" beat */
+.ac-torch.charging {
+  color: var(--amber);
+  animation: ac-flicker 0.5s steps(2, end) infinite;
+}
+@keyframes ac-flicker {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+.ac-hint { font-size: 0.8rem; line-height: 1.35; }
+
+/* ---------- The corridor wall ---------- */
+.ac-wall {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(255, 185, 43, 0.06), transparent 60%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 60px),
+    #060814;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.7);
+}
+
+/* When the flashlight is ON, the wall dims so the beam pops */
+.ac-wrap.light-on .ac-wall {
+  background:
+    radial-gradient(120% 90% at 50% -10%, rgba(255, 185, 43, 0.12), transparent 60%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 60px),
+    #04050d;
+}
+
+/* ---------- Poster ---------- */
+.ac-poster {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform 0.18s ease;
+}
+.ac-poster:hover { transform: translateY(-3px); }
+
+/* Glossy advertisement front */
+.ac-glossy {
+  position: relative;
+  height: 148px;
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.55);
+  transition: filter 0.4s ease, opacity 0.4s ease;
+}
+/* Glossy sheen sweep */
+.ac-glossy::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.28) 48%, transparent 62%);
+  pointer-events: none;
+}
+.tint-blue .ac-glossy { background: linear-gradient(160deg, #2f7bff, #123a9e); }
+.tint-gold .ac-glossy { background: radial-gradient(circle at 50% 30%, #ffcf3a, #d98a00); color: #3a2400; }
+.tint-green .ac-glossy { background: linear-gradient(160deg, #16b866, #0a6b3a); }
+.tint-purple .ac-glossy { background: linear-gradient(160deg, #a24dff, #5a1e9e); }
+
+.ac-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 0.82rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.tint-gold .ac-badge { background: rgba(58, 36, 0, 0.35); color: #3a2400; border-color: rgba(58,36,0,0.4); }
+
+.ac-glossy-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 0.9rem;
+  line-height: 1.05;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+.ac-glossy-body { margin-top: 5px; font-weight: 600; font-size: 0.72rem; }
+.ac-glossy-cta {
+  margin-top: 7px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.28);
+}
+.tint-gold .ac-glossy-cta { background: rgba(58, 36, 0, 0.22); }
+.ac-fineprint {
+  position: absolute;
+  bottom: 5px;
+  left: 0;
+  right: 0;
+  font-size: 0.46rem;
+  opacity: 0.6;
+  letter-spacing: 0.02em;
+}
+
+/* Truth layer — sits over the glossy, hidden until illuminated */
+.ac-truth {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 9px 11px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  text-align: left;
+  background: rgba(6, 8, 20, 0.96);
+  border: 2px solid var(--amber);
+  box-shadow: inset 0 0 40px rgba(255, 185, 43, 0.12), 0 0 20px rgba(255, 185, 43, 0.25);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+.ac-poster.revealed .ac-truth { opacity: 1; }
+.ac-poster.revealed .ac-glossy { filter: grayscale(0.7) brightness(0.4); }
+
+.ac-truth-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.24em;
+  color: var(--amber);
+  text-transform: uppercase;
+}
+.ac-truth-text { margin: 0; color: var(--text); font-size: 0.7rem; line-height: 1.3; }
+.ac-code-frag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.62rem;
+  color: var(--muted);
+  padding-top: 5px;
+  border-top: 1px dashed rgba(255, 185, 43, 0.3);
+}
+.ac-code-frag b {
+  color: var(--amber);
+  font-size: 1.35rem;
+  text-shadow: 0 0 10px rgba(255, 185, 43, 0.6);
+}
+
+/* Per-poster shine button */
+.ac-shine { align-self: stretch; }
+
+/* ---------- Assembled code line ---------- */
+.ac-code-line {
+  text-align: center;
+  border-color: rgba(255, 185, 43, 0.5);
+  color: var(--amber);
+  background: rgba(255, 185, 43, 0.08);
+}
+.ac-code-letters {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  letter-spacing: 0.3em;
+  text-shadow: 0 0 12px rgba(255, 185, 43, 0.7);
+}
+
+/* ---------- Exit code entry ---------- */
+.ac-exit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.ac-exit-row { display: flex; gap: 12px; }
+.ac-field {
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  text-align: center;
+  color: var(--amber);
+}
+.ac-field:focus {
+  border-color: var(--amber);
+  box-shadow: 0 0 8px rgba(255, 185, 43, 0.6), 0 0 22px rgba(255, 185, 43, 0.35);
+}
+
+.ac-learn { margin: 0; font-size: 0.82rem; padding: 8px 12px; }

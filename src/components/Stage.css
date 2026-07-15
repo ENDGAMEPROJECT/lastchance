@@ -1,0 +1,26 @@
+.viewport {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(1400px 900px at 50% 50%, #0a0e1e, #02030a 70%);
+}
+
+/* The fixed 1280x720 design surface. transform-origin center keeps it
+   centered as it scales; the flex parent letterboxes the rest. */
+.stage16 {
+  transform-origin: center center;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(120, 160, 255, 0.16),
+    0 0 60px rgba(22, 242, 255, 0.10),
+    0 30px 80px rgba(0, 0, 0, 0.7);
+  isolation: isolate;
+}
+
+/* On very small windows the scale handles fit; nothing scrolls. */

@@ -1,0 +1,83 @@
+.welcome-scene { align-items: center; justify-content: center; }
+
+.welcome-card {
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  padding: 26px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  box-shadow: var(--glow-cyan), 0 24px 50px rgba(0, 0, 0, 0.55);
+}
+
+.welcome-glyph {
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--cyan);
+  text-shadow: var(--glow-cyan);
+  animation: pulse-glow 2.4s ease-in-out infinite;
+}
+.welcome-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+  margin: 2px 0;
+}
+.welcome-tag { color: var(--muted); letter-spacing: 0.08em; font-size: 0.78rem; margin: 0; }
+.welcome-sub { font-size: 0.86rem; margin: 4px 0 14px; }
+
+.welcome-fields { display: flex; gap: 14px; width: 100%; }
+.welcome-fields .welcome-field:first-child { flex: 1; }
+.welcome-fields .welcome-field.age { width: 110px; flex: none; }
+
+.welcome-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 14px;
+}
+.welcome-field > span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+
+/* Language picker */
+.lang-picker { display: flex; flex-wrap: wrap; gap: 8px; }
+.lang-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(10, 14, 30, 0.6);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.lang-chip em { font-style: normal; font-size: 0.66rem; color: var(--dim); text-transform: uppercase; }
+.lang-chip:hover { border-color: var(--cyan); }
+.lang-chip.on {
+  border-color: var(--cyan);
+  background: rgba(22, 242, 255, 0.12);
+  box-shadow: var(--glow-cyan);
+  color: #d7feff;
+}
+.lang-chip.on em { color: var(--cyan); }
+
+.welcome-start { margin-top: 6px; align-self: stretch; }
+
+/* Hide number input spinners for a cleaner look */
+.welcome-field input[type='number']::-webkit-inner-spin-button,
+.welcome-field input[type='number']::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.welcome-field input[type='number'] { -moz-appearance: textfield; appearance: textfield; }

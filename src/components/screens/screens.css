@@ -1,0 +1,101 @@
+/* Intro / Win / Lose screens are composed to fit the fixed 1280x720 stage
+   (usable ~1280x700 — no HUD) with no scrolling. All sizes are in fixed
+   px/rem so they scale cleanly inside the transform-scaled stage. */
+
+.intro {
+  max-width: 980px;
+  margin: auto;
+  text-align: center;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.intro-glyph {
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--cyan);
+  text-shadow: var(--glow-cyan);
+  animation: pulse-glow 2.4s ease-in-out infinite;
+}
+.win-glyph { color: var(--green); text-shadow: var(--glow-green); }
+.lose-glyph { color: var(--red); text-shadow: var(--glow-red); }
+
+.intro-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 2.1rem;
+  letter-spacing: 0.04em;
+  margin: 2px 0;
+}
+.grad {
+  background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--purple));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.grad-red {
+  background: linear-gradient(90deg, var(--red), var(--amber));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.intro-tag { color: var(--muted); letter-spacing: 0.1em; margin: 0 0 10px; font-size: 0.82rem; }
+
+/* Situation card + steps sit side by side to save vertical space. */
+.intro-body {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: 16px;
+  width: 100%;
+  align-items: stretch;
+  margin-bottom: 14px;
+}
+
+.intro-card {
+  text-align: left;
+  padding: 16px 20px;
+  width: 100%;
+  box-shadow: var(--glow-cyan), 0 18px 34px rgba(0, 0, 0, 0.45);
+}
+.intro-card h3 { margin-bottom: 8px; font-size: 1.05rem; }
+.intro-card p { color: var(--text); margin: 6px 0; font-size: 0.9rem; line-height: 1.35; }
+.intro-card p.muted { color: var(--muted); }
+.intro-mission {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.intro-mission p { margin: 8px 0 0; color: #eaf1ff; }
+
+.intro-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+.intro-step {
+  padding: 11px 14px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease, border-color 0.2s ease;
+}
+.intro-step:hover { transform: translateY(-2px); border-color: rgba(22, 242, 255, 0.4); }
+.intro-step b { font-family: var(--font-display); color: var(--cyan); font-size: 0.86rem; }
+.intro-step span { font-size: 0.8rem; color: var(--muted); line-height: 1.3; }
+
+.jack-in {
+  animation: pulse-glow 2.6s ease-in-out infinite;
+  box-shadow: var(--glow-cyan), 0 14px 28px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Win / Lose share the .intro layout but stack a single card --- */
+.intro.end { max-width: 720px; }
+.intro.end .intro-card { margin-bottom: 14px; box-shadow: var(--glow-cyan), 0 18px 34px rgba(0, 0, 0, 0.45); }
+.intro.end .intro-card p { font-size: 0.92rem; }
+.evidence-list { margin-top: 8px; }
+.intro.end .learn { font-size: 0.85rem; padding: 9px 12px; }
