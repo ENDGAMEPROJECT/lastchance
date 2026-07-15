@@ -183,6 +183,7 @@ export default function LinkDistrict({ node }) {
     >
       {phase === 'block' && (
         <div className="ld-room fade-in">
+          <div className="ld-crossroad" key={round}>
           <div className="ld-router-head">
             <span className="chip">{t('rooms.link.routerBadge', { current: round + 1, total: ROUNDS.length })}</span>
           </div>
@@ -267,6 +268,7 @@ export default function LinkDistrict({ node }) {
                 )
               })}
             </div>
+          </div>
           </div>
 
           <div className="ld-actions">

@@ -162,6 +162,8 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0
 .panel-glow-cyan { box-shadow: var(--glow-cyan); border-color: rgba(22,242,255,0.4); }
 .panel-glow-magenta { box-shadow: var(--glow-magenta); border-color: rgba(255,43,214,0.4); }
 .panel-glow-purple { box-shadow: var(--glow-purple); border-color: rgba(168,85,247,0.4); }
+.panel-glow-green { box-shadow: var(--glow-green); border-color: rgba(43,255,136,0.4); }
+.panel-glow-amber { box-shadow: 0 0 8px rgba(255,185,43,0.5), 0 0 22px rgba(255,185,43,0.3); border-color: rgba(255,185,43,0.4); }
 
 /* ---------- Buttons ---------- */
 .btn {
@@ -190,6 +192,8 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0
 .btn-purple:hover:not(:disabled) { background: rgba(168, 85, 247, 0.16); }
 .btn-green { border-color: var(--green); color: #d4ffe6; box-shadow: var(--glow-green); }
 .btn-green:hover:not(:disabled) { background: rgba(43, 255, 136, 0.14); }
+.btn-amber { border-color: var(--amber); color: #ffe6b0; box-shadow: 0 0 8px rgba(255,185,43,0.5), 0 0 22px rgba(255,185,43,0.3); }
+.btn-amber:hover:not(:disabled) { background: rgba(255, 185, 43, 0.14); }
 .btn-ghost { background: transparent; box-shadow: none; }
 .btn-lg { padding: 16px 34px; font-size: 1.05rem; }
 .btn-sm { padding: 7px 14px; font-size: 0.72rem; }
@@ -305,6 +309,36 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0
   filter: saturate(1.1);
   pointer-events: none;
   z-index: 0;
+}
+
+/* ---------- Scene transitions ----------
+   Each screen/room swap remounts under a new key, replaying a soft
+   enter animation + a vignette "veil" so navigation feels like stepping
+   through a doorway rather than a hard cut. */
+.stage-swap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  animation: scene-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes scene-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.988); }
+  to { opacity: 1; transform: none; }
+}
+.transition-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0; /* base = invisible, so reduced-motion (animation off) shows nothing */
+  background: radial-gradient(circle at 50% 45%, transparent 32%, rgba(2, 3, 10, 0.9) 82%);
+  animation: veil-clear 0.6s ease forwards;
+}
+@keyframes veil-clear {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 .reduced-motion, .reduced-motion * { animation: none !important; }

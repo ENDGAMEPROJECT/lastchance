@@ -6,6 +6,7 @@
   "description": "The Physical Internet — an educational cyberpunk escape room about ads, scams & fraudulent websites",
   "scripts": {
     "dev": "vite",
+    "dev:debug": "vite --mode debug",
     "build": "vite build",
     "preview": "vite preview",
     "check:i18n": "node scripts/i18n-check.mjs && node scripts/i18n-dynamic-check.mjs"

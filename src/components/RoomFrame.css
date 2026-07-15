@@ -1,5 +1,36 @@
 .room-scene { position: relative; }
 
+/* ---------- Briefing (shown on room entry) ---------- */
+.room-briefing {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.briefing-card {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  padding: 26px 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.briefing-icon {
+  font-size: 3rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 16px currentColor);
+  margin-bottom: 2px;
+}
+.briefing-title { font-family: var(--font-display); font-size: 1.85rem; margin: 2px 0; }
+.briefing-text { font-size: 1.02rem; line-height: 1.5; max-width: 500px; margin: 4px 0 0; }
+.briefing-begin { margin-top: 14px; animation: pulse-glow 2.6s ease-in-out infinite; }
+
+.swap-in { animation: scene-in 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+
 /* Body fills the remaining scene height; rooms compose to fit it. */
 .room-scene .room-body {
   flex: 1;

@@ -29,6 +29,15 @@
   transition: width 0.6s ease;
 }
 
+.map-debug {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 10px auto 0;
+}
+
 .map-route {
   max-width: 1180px;
   margin: 0 auto;

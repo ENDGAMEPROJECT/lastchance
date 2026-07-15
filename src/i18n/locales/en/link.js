@@ -5,7 +5,7 @@ export default {
   solvedText:
     'You blocked every fake and learned what makes a URL suspicious. The card unlocks the labels in Influencer Avenue.',
 
-  routerBadge: 'Router {current} / {total}',
+  routerBadge: 'Crossroads {current} / {total}',
   peek: '🔍 Open to peek inside',
   closeDoor: '✕ Close door',
   doorHelp: 'Open a door to peek at the site inside · read the address · use “Block” to shut the fraudulent ones',
@@ -22,8 +22,8 @@ export default {
   realStore: '↧ real store',
   blocked: 'BLOCKED',
   hint: 'Remember: block the fakes, keep the one real door open.',
-  nextRouter: 'Confirm & next router →',
-  finalRouter: 'Confirm final router →',
+  nextRouter: 'Advance to the next crossroads →',
+  finalRouter: 'Advance →',
 
   errStillOpen: 'At least one fraudulent link is still open. Block every fake before continuing.',
   errBlockedSafe: 'You blocked the real store! That is the one safe door — leave it open.',

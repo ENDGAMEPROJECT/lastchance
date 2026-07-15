@@ -9,6 +9,7 @@
 
 import { createContext, useContext, useReducer, useEffect, useCallback, useRef } from 'react'
 import { NODES, GAME_MINUTES, ITEMS } from './gameData.js'
+import { DEBUG, DEBUG_SCREEN } from './settings.js'
 
 const GameContext = createContext(null)
 
@@ -17,14 +18,17 @@ const START_SECONDS = GAME_MINUTES * 60
 function initialProgress() {
   const p = {}
   NODES.forEach((n, i) => {
-    p[n.id] = i === 0 ? 'available' : 'locked'
+    // Debug mode unlocks every district so any puzzle can be opened directly.
+    p[n.id] = DEBUG || i === 0 ? 'available' : 'locked'
   })
   return p
 }
 
 const initialState = {
-  screen: 'welcome', // 'welcome' | 'intro' | 'map' | 'room' | 'win' | 'lose'
+  // Debug: skip the welcome/pretest and land on the map (or a ?screen= jump).
+  screen: DEBUG ? DEBUG_SCREEN || 'map' : 'welcome', // 'welcome' | 'pretest' | 'map' | 'room' | 'posttest' | 'win' | 'lose'
   player: { alias: '', age: '' },
+  timedOut: false,
   activeNodeId: null,
   progress: initialProgress(),
   inventory: [], // Item[]
@@ -37,10 +41,14 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case 'SUBMIT_WELCOME':
-      return { ...state, player: action.player, screen: 'intro' }
+      return { ...state, player: action.player, screen: 'pretest' }
 
     case 'START_GAME':
       return { ...state, screen: 'map', running: true, timeLeft: START_SECONDS }
+
+    case 'FINISH':
+      // Final decision from the post-test resolves the game.
+      return { ...state, screen: action.outcome, running: false }
 
     case 'OPEN_NODE': {
       if (state.progress[action.id] === 'locked') return state
@@ -49,6 +57,9 @@ function reducer(state, action) {
 
     case 'GO_MAP':
       return { ...state, screen: 'map', activeNodeId: null }
+
+    case 'GOTO_SCREEN': // debug-only jump
+      return { ...state, screen: action.screen, activeNodeId: null }
 
     case 'COMPLETE_NODE': {
       const idx = NODES.findIndex((n) => n.id === action.id)
@@ -60,7 +71,8 @@ function reducer(state, action) {
       return {
         ...state,
         progress,
-        screen: allDone ? 'win' : 'map',
+        // Clearing the last district ends the puzzles → into the post-test.
+        screen: allDone ? 'posttest' : 'map',
         activeNodeId: null,
         running: allDone ? false : state.running,
       }
@@ -82,7 +94,8 @@ function reducer(state, action) {
     case 'TICK': {
       if (!state.running) return state
       const t = state.timeLeft - 1
-      if (t <= 0) return { ...state, timeLeft: 0, running: false, screen: 'lose' }
+      // Out of time → still face the friend in the post-test (last chance).
+      if (t <= 0) return { ...state, timeLeft: 0, running: false, timedOut: true, screen: 'posttest' }
       return { ...state, timeLeft: t }
     }
 
@@ -115,6 +128,8 @@ export function GameProvider({ children }) {
 
   const submitWelcome = useCallback((player) => dispatch({ type: 'SUBMIT_WELCOME', player }), [])
   const startGame = useCallback(() => dispatch({ type: 'START_GAME' }), [])
+  const finishGame = useCallback((outcome) => dispatch({ type: 'FINISH', outcome }), [])
+  const gotoScreen = useCallback((screen) => dispatch({ type: 'GOTO_SCREEN', screen }), [])
   const openNode = useCallback((id) => dispatch({ type: 'OPEN_NODE', id }), [])
   const goMap = useCallback(() => dispatch({ type: 'GO_MAP' }), [])
   const completeRoom = useCallback((id) => dispatch({ type: 'COMPLETE_NODE', id }), [])
@@ -136,6 +151,8 @@ export function GameProvider({ children }) {
     activeNode,
     submitWelcome,
     startGame,
+    finishGame,
+    gotoScreen,
     openNode,
     goMap,
     completeRoom,

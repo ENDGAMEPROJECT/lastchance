@@ -81,16 +81,8 @@ export const NODES = [
     component: 'PersuasionRoom',
     accent: 'magenta',
   },
-  {
-    id: 'final-decision',
-    index: 7,
-    kind: 'final',
-    title: 'Final Decision',
-    subtitle: 'Convince Max',
-    blurb: 'Present your evidence before the offer countdown runs out.',
-    component: 'FinalDecision',
-    accent: 'green',
-  },
+  // The finale is now the post-test conversation (see PosttestScreen),
+  // reached when the last district is cleared or the countdown ends.
 ]
 
 /* Reward / inventory items (added as puzzles are solved). */

@@ -45,6 +45,8 @@
 .hud-timer.critical .hud-timer-val { color: var(--red); }
 
 .hud-right { display: flex; gap: 10px; align-items: center; }
+.hud-debug { animation: pulse-glow 1.8s ease-in-out infinite; align-self: center; }
+
 .bag-count {
   display: inline-block;
   background: var(--purple);

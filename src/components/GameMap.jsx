@@ -1,6 +1,7 @@
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { NARRATIVE } from '../game/gameData.js'
+import { DEBUG } from '../game/settings.js'
 import './GameMap.css'
 
 const NODE_ICON = {
@@ -16,7 +17,7 @@ const NODE_ICON = {
 /* The city map / progress tracker. Nodes sit on a neon route; the
    player travels Start → … → Final. Locked nodes can't be entered. */
 export default function GameMap() {
-  const { NODES, progress, openNode } = useGame()
+  const { NODES, progress, openNode, gotoScreen } = useGame()
   const t = useT()
   const vars = { friend: NARRATIVE.friend }
 
@@ -35,11 +36,19 @@ export default function GameMap() {
           </div>
           <span className="mono t-sm">{doneCount}/{NODES.length} · {pct}%</span>
         </div>
+
+        {DEBUG && (
+          <div className="map-debug">
+            <span className="chip bad">🐞 DEBUG · jump to</span>
+            <button className="btn btn-sm btn-ghost" onClick={() => gotoScreen('pretest')}>Pre-test</button>
+            <button className="btn btn-sm btn-ghost" onClick={() => gotoScreen('posttest')}>Post-test</button>
+            <button className="btn btn-sm btn-ghost" onClick={() => gotoScreen('win')}>Win</button>
+            <button className="btn btn-sm btn-ghost" onClick={() => gotoScreen('lose')}>Lose</button>
+          </div>
+        )}
       </div>
 
       <div className="map-route">
-        <div className="route-start chip ok">{t('map.start', vars)}</div>
-
         <div className="route-nodes">
           {NODES.map((node, i) => {
             const status = progress[node.id]

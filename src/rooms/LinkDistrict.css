@@ -1,5 +1,19 @@
 .ld-room { flex: 1; display: flex; flex-direction: column; min-height: 0; }
 
+/* Each crossroad (round) slides in from ahead, so clearing one and moving
+   to the next feels like advancing through the neighbourhood. */
+.ld-crossroad {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  animation: ld-advance 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes ld-advance {
+  from { opacity: 0; transform: translateX(64px); }
+  to { opacity: 1; transform: none; }
+}
+
 .ld-router-head {
   display: flex;
   align-items: center;

@@ -1,0 +1,112 @@
+.cv-wrap {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Scrolling chat log */
+.cv-log {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 6px 6px 2px;
+}
+.cv-log::-webkit-scrollbar { width: 8px; }
+.cv-log::-webkit-scrollbar-thumb { background: rgba(120,160,255,0.25); border-radius: 8px; }
+
+.cv-msg { display: flex; align-items: flex-end; gap: 10px; max-width: 82%; }
+.cv-msg.friend { align-self: flex-start; }
+.cv-msg.you { align-self: flex-end; flex-direction: row-reverse; }
+
+.cv-avatar {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  background: rgba(168, 85, 247, 0.16);
+  border: 1px solid var(--purple);
+  box-shadow: var(--glow-purple);
+}
+
+.cv-bubble {
+  padding: 11px 15px;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  border: 1px solid var(--line);
+}
+.cv-msg.friend .cv-bubble {
+  background: rgba(20, 26, 54, 0.8);
+  color: #eaf1ff;
+  border-bottom-left-radius: 4px;
+}
+.cv-msg.you .cv-bubble {
+  background: rgba(22, 242, 255, 0.12);
+  border-color: rgba(22, 242, 255, 0.4);
+  color: #d7feff;
+  border-bottom-right-radius: 4px;
+}
+/* Mastery feedback tones (friend bubbles) */
+.cv-msg.friend.good .cv-bubble { border-color: var(--green); background: rgba(43,255,136,0.1); color: #d4ffe6; }
+.cv-msg.friend.bad .cv-bubble { border-color: var(--red); background: rgba(255,59,92,0.1); color: #ffd7de; }
+
+/* Answer options */
+.cv-tray { flex: none; }
+.cv-round-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-bottom: 8px;
+  text-align: center;
+}
+.cv-caret { display: inline-block; margin-left: 1px; color: var(--cyan); animation: cv-blink 0.9s steps(1) infinite; }
+@keyframes cv-blink { 50% { opacity: 0; } }
+.cv-option-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.cv-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: rgba(12, 16, 34, 0.8);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.12s, border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+.cv-option:hover { transform: translateY(-2px); border-color: var(--cyan); box-shadow: var(--glow-cyan); background: rgba(22,242,255,0.06); }
+.cv-option-key {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--cyan);
+  border: 1px solid rgba(22,242,255,0.4);
+  background: rgba(22,242,255,0.08);
+}
+
+.cv-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }

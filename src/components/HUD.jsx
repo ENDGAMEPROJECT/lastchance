@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useGame, formatTime } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { NARRATIVE } from '../game/gameData.js'
+import { DEBUG } from '../game/settings.js'
 import Modal from './Modal.jsx'
 import './HUD.css'
 
@@ -11,7 +12,7 @@ export default function HUD() {
   const t = useT()
   const [bagOpen, setBagOpen] = useState(false)
 
-  if (screen === 'welcome' || screen === 'intro' || screen === 'win' || screen === 'lose') return null
+  if (['welcome', 'pretest', 'posttest', 'win', 'lose'].includes(screen)) return null
 
   const low = timeLeft <= 300 // last 5 min
   const critical = timeLeft <= 60
@@ -30,6 +31,7 @@ export default function HUD() {
         </div>
 
         <div className="hud-right">
+          {DEBUG && <span className="chip bad hud-debug">🐞 DEBUG</span>}
           {screen !== 'map' && (
             <button className="btn btn-cyan btn-sm" onClick={goMap}>
               {t('hud.map')}

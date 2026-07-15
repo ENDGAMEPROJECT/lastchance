@@ -296,6 +296,64 @@
 /* compact learn callout so everything fits the fixed scene */
 .ar-eq .learn { padding: 6px 12px; font-size: 0.78rem; line-height: 1.3; }
 
+/* ---------- Control-room stations (RoomNav) ---------- */
+.ar-station {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.ar-mini-prompt { margin: 0; font-size: 0.86rem; text-align: center; }
+
+/* Station 2 — Data Wall */
+.ar-datawall { align-items: center; justify-content: center; gap: 12px; }
+.ar-dw-panel {
+  width: 100%;
+  max-width: 640px;
+  padding: 16px 20px;
+  background:
+    repeating-linear-gradient(180deg, rgba(22,242,255,0.03) 0 2px, transparent 2px 22px),
+    var(--panel);
+}
+.ar-dw-title {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.18em;
+  color: var(--cyan);
+  text-shadow: 0 0 10px rgba(22, 242, 255, 0.5);
+}
+.ar-dw-sub { margin: 4px 0 10px; }
+.ar-dw-feed { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.ar-dw-feed li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: #cfe0ff;
+  animation: ar-dw-in 0.4s ease both;
+}
+.ar-dw-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: var(--glow-cyan); flex: none; }
+@keyframes ar-dw-in { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: none; } }
+.ar-dw-learn { max-width: 640px; }
+
+/* Station 3 — Ad Terminal (note: distinct class from the unlock .ar-terminal) */
+.ar-adterminal { align-items: center; justify-content: center; }
+.ar-term-screen {
+  width: 100%;
+  max-width: 680px;
+  padding: 16px 20px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+.ar-term-idle { text-align: center; font-size: 0.95rem; margin: 0; }
+.ar-term-screen .ar-reveal { flex-direction: column; align-items: center; gap: 14px; }
+.ar-term-screen .ar-profile { max-width: none; padding: 0; }
+
 /* When the reveal is showing, the profile + learn callout would overflow;
    drop the learn callout to keep the whole phase on one screen. */
 .ar-eq:has(.ar-reveal) .learn { display: none; }

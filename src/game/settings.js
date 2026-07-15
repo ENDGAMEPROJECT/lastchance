@@ -4,6 +4,19 @@
    it can be edited without touching component code.
    ============================================================ */
 
+/* Debug mode: unlocks every district and drops you straight on the map,
+   so any puzzle can be opened without solving the earlier ones.
+   Enable with `npm run dev:debug`, or append ?debug to the URL
+   (e.g. http://localhost:5173/?debug). Off in normal builds.
+
+   ?screen=<name> jumps straight to a screen (and implies debug), e.g.
+   ?screen=posttest, ?screen=pretest, ?screen=win, ?screen=lose. */
+const _params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null
+export const DEBUG_SCREEN = (_params && _params.get('screen')) || null
+export const DEBUG =
+  (import.meta.env && import.meta.env.VITE_DEBUG === 'true') ||
+  (_params ? _params.has('debug') || !!DEBUG_SCREEN : false)
+
 export const settings = {
   /* The fixed design resolution. The whole game is composed at this
      size and scaled as one unit to fit the window (16:9, letterboxed).

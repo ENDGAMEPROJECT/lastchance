@@ -25,6 +25,7 @@ pnpm-debug.log*
 .env
 .env.*
 !.env.example
+!.env.debug
 *.local
 
 # Editor / IDE
