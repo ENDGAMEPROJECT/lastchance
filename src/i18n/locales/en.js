@@ -191,13 +191,13 @@ export default {
       debugTag: 'Pre-test',
       title: 'A message from {friend}',
       opening:
-        "Look at this! An influencer I follow just posted a flash sale — the $600 NovaPad X for only $49! There are just 28 minutes left on the countdown. I'm entering my card info right now.",
+        "Look at this! An influencer I follow just posted a flash sale — the $600 NovaPad X for only $49! There are just 30 minutes left on the countdown. I'm entering my card info right now.",
       responses: [
         "Whatever the reason for the setup, I don't want to miss out before the clock hits zero! Plus, she's a massive influencer — she wouldn't post something random. But the weird part is how this ad even knew I wanted a tablet. It popped up right at the top of my feed.",
         "Look, there are a million theories about how algorithms and accounts handle ads, but I'm looking at the actual store page right now. It has the official brand logo, great reviews, and a secure checkout.",
       ],
       endingFriend:
-        "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The timer's ticking and I've got less than 25 minutes. I'm giving you until it hits zero to prove this is a scam — or I'm hitting buy.",
+        "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running — you've got until it hits zero, thirty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
       endingYou: "Deal. Let's look behind the screen.",
       begin: '▶ Look behind the screen',
     },

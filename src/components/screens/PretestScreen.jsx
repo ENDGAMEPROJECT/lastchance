@@ -24,7 +24,7 @@ export default function PretestScreen() {
       </div>
 
       <div className="convo-layout">
-        <ProductPreview seconds={28 * 60} />
+        <ProductPreview seconds={30 * 60} />
         <Conversation
           opening={p.opening}
           rounds={t('story.rounds')}
