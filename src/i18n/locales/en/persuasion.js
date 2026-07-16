@@ -57,6 +57,7 @@ export default {
   },
   termBar: 'PERSUASION-LAB · EXIT TERMINAL',
   termPrompt: '> Enter the password formed by the revealed letters:',
+  termLocked: 'Frame all six posters to reveal the password letters.',
   termPlaceholder: 'type the password',
   termInputLabel: 'Exit password',
   unlock: 'Unlock →',

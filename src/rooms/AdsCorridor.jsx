@@ -32,7 +32,6 @@ export default function AdsCorridor({ node }) {
   // Flashlight lifecycle: 'charging' → 'ready' (off) → toggle on/off.
   const [charging, setCharging] = useState(true)
   const [lightOn, setLightOn] = useState(false)
-  const [pickedUp, setPickedUp] = useState(false)
 
   // Refs for the cursor-tracked spotlight overlay.
   const wallRef = useRef(null)
@@ -47,14 +46,12 @@ export default function AdsCorridor({ node }) {
   const inputRef = useRef(null)
 
   const ANSWER = CODES.adsCorridor // 'SAVE'
-  const allRevealed = POSTERS.every((p) => revealed[p.id])
 
   // On entry: grant the Truth Flashlight if the player doesn't have it,
   // then let it "charge" for a beat before it can be switched on.
   useEffect(() => {
     if (!hasItem('truthLight')) {
       addItem(ITEMS.truthLight)
-      setPickedUp(true)
     }
     const t = setTimeout(() => setCharging(false), 1000)
     return () => clearTimeout(t)
@@ -77,9 +74,11 @@ export default function AdsCorridor({ node }) {
   // overlay's CSS vars (no re-render). Coords are converted from screen space
   // into the wall's own design-pixel space by dividing out the stage scale.
   function moveBeam(clientX, clientY) {
-    const rect = wallRef.current?.getBoundingClientRect()
     const el = flashRef.current
-    if (!rect || !el) return
+    if (!el) return
+    // Measure against the beam element's OWN box (it extends past the wall),
+    // so the light hole tracks the cursor no matter how far it overflows.
+    const rect = el.getBoundingClientRect()
     el.style.setProperty('--Xpos', `${(clientX - rect.left) / scale}px`)
     el.style.setProperty('--Ypos', `${(clientY - rect.top) / scale}px`)
   }
@@ -110,6 +109,10 @@ export default function AdsCorridor({ node }) {
   return (
     <RoomFrame
       node={node}
+      bgImage="/bg/ads.png"
+      // Lights-out: darken the whole scene (incl. the background image) while
+      // the flashlight is on, so only the beam reveals the posters.
+      dimBackground={lightOn}
       intro={t('rooms.ads.intro')}
       solved={solved}
       solvedTitle={t('rooms.ads.solvedTitle')}
@@ -168,11 +171,6 @@ export default function AdsCorridor({ node }) {
 
         {/* Right: flashlight controls, code assembly and exit entry */}
         <div className="ac-side">
-          {/* Flashlight pickup note */}
-          {pickedUp && (
-            <div className="banner info ac-pickup">{t('rooms.ads.pickup')}</div>
-          )}
-
           {/* Flashlight control + status */}
           <div className="ac-toolbar">
             <button
@@ -190,13 +188,6 @@ export default function AdsCorridor({ node }) {
                   : t('rooms.ads.hintOff')}
             </span>
           </div>
-
-          {/* Assembled code hint, once all posters are lit */}
-          {allRevealed && (
-            <div className="banner correct ac-code-line fade-in">
-              {t('rooms.ads.codeAssembled')}<b className="ac-code-letters">{t('rooms.ads.codeLetters')}</b>
-            </div>
-          )}
 
           {/* Exit code entry */}
           <form className="ac-exit" onSubmit={submit}>

@@ -1,5 +1,18 @@
 .room-scene { position: relative; }
 
+/* Lights-out overlay over the background image (both live at z-index -1 inside
+   the scene's isolated stacking context; this is rendered after .bg-slot so it
+   paints on top of it, yet stays behind all interactive content). */
+.bg-blackout {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(2, 3, 10, 0.72);
+  animation: bg-blackout-in 0.35s ease both;
+}
+@keyframes bg-blackout-in { from { opacity: 0; } to { opacity: 1; } }
+
 /* ---------- Briefing (shown on room entry) ---------- */
 .room-briefing {
   flex: 1;
@@ -27,6 +40,10 @@
 }
 .briefing-title { font-family: var(--font-display); font-size: 1.85rem; margin: 2px 0; }
 .briefing-text { font-size: 1.02rem; line-height: 1.5; max-width: 500px; margin: 4px 0 0; }
+/* The room intro/description reads bright white (override the muted utility)
+   for legibility over the busy scene backgrounds. */
+.briefing-card .briefing-text,
+.room-header p { color: #fff; }
 .briefing-begin { margin-top: 14px; animation: pulse-glow 2.6s ease-in-out infinite; }
 
 .swap-in { animation: scene-in 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both; }

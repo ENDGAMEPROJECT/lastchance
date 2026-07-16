@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from 'react'
+import { useMemo, useState, useCallback, useRef, useEffect } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { ITEMS } from '../game/gameData.js'
@@ -57,6 +57,74 @@ function highlightAddr(url) {
   )
 }
 const hasLookalike = (url) => [...url].some((ch) => ch.charCodeAt(0) > 127)
+
+/* A single door. Rendered both for the interactive (incoming) crossroad and
+   for the static (outgoing) one shown during the advance transition. */
+function Door({ d, cfg, roundText, isBlocked, isOpen, interactive, onPeek, onBlock, t }) {
+  const note = roundText.notes[d.id]
+  const secure = d.url.startsWith('https://')
+  const lookalike = hasLookalike(d.url)
+  return (
+    <div className={`ld-door ${isBlocked ? 'blocked' : ''} ${isOpen ? 'open' : ''} ${cfg.ambiguous ? 'ambiguous' : d.safe ? 'safe' : 'fake'}`}>
+      <div className="ld-sign" title={t('rooms.link.linkTip')}>
+        <span className="ld-linkicon">🔗</span>
+        <span className="ld-url">{d.url}</span>
+      </div>
+
+      <div
+        className="ld-door3d"
+        role="button"
+        tabIndex={interactive ? 0 : -1}
+        aria-label={`${d.url} — ${t(isOpen ? 'rooms.link.closeDoor' : 'rooms.link.peek')}`}
+        onClick={() => interactive && !isBlocked && onPeek(d.url)}
+        onKeyDown={(e) => {
+          if (interactive && (e.key === 'Enter' || e.key === ' ') && !isBlocked) { e.preventDefault(); onPeek(d.url) }
+        }}
+      >
+        <div className="ld-doorway">
+          <div
+            className={`ld-browserbar ${secure ? '' : 'insecure'}`}
+            title={secure ? t('rooms.link.secureConn') : t('rooms.link.insecureConn')}
+          >
+            <span className={`ld-lock ${secure ? '' : 'warn'}`}>{secure ? '🔒' : '⚠'}</span>
+            {!secure && <span className="ld-bar-flag">{t('rooms.link.barNotSecure')}</span>}
+            {lookalike && <span className="ld-bar-flag red">{t('rooms.link.barLookalike')}</span>}
+            <span className="ld-baraddr">{highlightAddr(d.url)}</span>
+          </div>
+          <DoorPage type={d.preview} ambiguous={cfg.ambiguous} t={t} />
+        </div>
+
+        <div className="ld-slab">
+          <div className="ld-hinges"><span /><span /><span /></div>
+          <div className="ld-panel top" />
+          <div className="ld-panel bottom" />
+          <div className="ld-kick" />
+          <div className="ld-knob"><i /></div>
+          <div className="ld-peek">{t(isOpen ? 'rooms.link.closeDoor' : 'rooms.link.peek')}</div>
+        </div>
+
+        {isBlocked && (
+          <div className="ld-chains">
+            <span>🔒</span>
+            <b>{t('rooms.link.blocked')}</b>
+          </div>
+        )}
+      </div>
+
+      <div className="ld-door-foot">
+        <button
+          className={`btn btn-sm ${isBlocked ? 'btn-green' : 'btn-magenta'}`}
+          onClick={() => onBlock(d.url)}
+          disabled={!interactive}
+        >
+          {isBlocked ? t('rooms.link.unblock') : t('rooms.link.blockThis')}
+        </button>
+        {/* Always rendered so the layout never jumps; filled once blocked. */}
+        <div className="ld-note t-xs">{isBlocked && cfg.showNotesAfterBlock ? note : ''}</div>
+      </div>
+    </div>
+  )
+}
 
 function shuffle(arr) {
   const a = [...arr]
@@ -119,6 +187,26 @@ export default function LinkDistrict({ node }) {
   const [flags, setFlags] = useState({})
   const [justifyErr, setJustifyErr] = useState('')
 
+  // Background swaps to a transition clip for 5s when advancing crossroads,
+  // and the incoming doors glide in from the right over the same 5s.
+  const [bg, setBg] = useState('/bg/link.gif')
+  const [advancing, setAdvancing] = useState(false)
+  // A snapshot of the crossroad we're leaving, kept on-screen while the new
+  // one slides in over it during the transition.
+  const [outgoing, setOutgoing] = useState(null)
+  const bgTimer = useRef(null)
+  const playTransition = useCallback(() => {
+    clearTimeout(bgTimer.current)
+    setBg(`/bg/link_transition.gif?t=${Date.now()}`) // nonce forces the gif to replay
+    setAdvancing(true)
+    bgTimer.current = setTimeout(() => {
+      setBg('/bg/link.gif')
+      setAdvancing(false)
+      setOutgoing(null)
+    }, 1000)
+  }, [])
+  useEffect(() => () => clearTimeout(bgTimer.current), [])
+
   const data = ROUNDS[round]
   const roundText = t('rooms.link.rounds')[round]
 
@@ -146,8 +234,12 @@ export default function LinkDistrict({ node }) {
     if (!badOk) return setError(t('rooms.link.errStillOpen'))
     if (!safeOk) return setError(t('rooms.link.errBlockedSafe'))
     if (round < ROUNDS.length - 1) {
+      // Snapshot the doors we're leaving so they stay put during the slide.
+      setOutgoing({ doors: displayDoors, blocked: { ...blocked }, roundText })
       setRound((r) => r + 1)
       setBlocked({})
+      setOpened({})
+      playTransition()
     } else {
       setPhase('justify')
     }
@@ -175,6 +267,7 @@ export default function LinkDistrict({ node }) {
   return (
     <RoomFrame
       node={node}
+      bgImage={bg}
       intro={t('rooms.link.intro')}
       solved={phase === 'done'}
       solvedTitle={t('rooms.link.solvedTitle')}
@@ -183,99 +276,59 @@ export default function LinkDistrict({ node }) {
     >
       {phase === 'block' && (
         <div className="ld-room fade-in">
-          <div className="ld-crossroad" key={round}>
-          <div className="ld-router-head">
-            <span className="chip">{t('rooms.link.routerBadge', { current: round + 1, total: ROUNDS.length })}</span>
-          </div>
-
-          <div className="ld-stage">
-            <div className="ld-backwall" />
-            <div className="ld-floor" />
-            <div className="ld-doors">
-              {displayDoors.map((d) => {
-                const isBlocked = !!blocked[d.url]
-                const isOpen = !!opened[d.url] && !isBlocked
-                const note = roundText.notes[d.id]
-                const secure = d.url.startsWith('https://')
-                const lookalike = hasLookalike(d.url)
-                return (
-                  <div
-                    key={d.url}
-                    className={`ld-door ${isBlocked ? 'blocked' : ''} ${isOpen ? 'open' : ''} ${cfg.ambiguous ? 'ambiguous' : d.safe ? 'safe' : 'fake'}`}
-                  >
-                    {/* URL sign mounted above the door — the link as you'd
-                        see it before visiting: no security indicator yet. */}
-                    <div className="ld-sign" title={t('rooms.link.linkTip')}>
-                      <span className="ld-linkicon">🔗</span>
-                      <span className="ld-url">{d.url}</span>
-                    </div>
-
-                    <div
-                      className="ld-door3d"
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`${d.url} — ${t(isOpen ? 'rooms.link.closeDoor' : 'rooms.link.peek')}`}
-                      onClick={() => !isBlocked && togglePeek(d.url)}
-                      onKeyDown={(e) => {
-                        if ((e.key === 'Enter' || e.key === ' ') && !isBlocked) { e.preventDefault(); togglePeek(d.url) }
-                      }}
-                    >
-                      {/* the website, only visible once the door is opened.
-                          The browser's security indicator (padlock / not
-                          secure) only appears here — you can't tell a link's
-                          real certificate status until you actually visit. */}
-                      <div className="ld-doorway">
-                        <div
-                          className={`ld-browserbar ${secure ? '' : 'insecure'}`}
-                          title={secure ? t('rooms.link.secureConn') : t('rooms.link.insecureConn')}
-                        >
-                          <span className={`ld-lock ${secure ? '' : 'warn'}`}>{secure ? '🔒' : '⚠'}</span>
-                          {!secure && <span className="ld-bar-flag">{t('rooms.link.barNotSecure')}</span>}
-                          {lookalike && <span className="ld-bar-flag red">{t('rooms.link.barLookalike')}</span>}
-                          <span className="ld-baraddr">{highlightAddr(d.url)}</span>
-                        </div>
-                        <DoorPage type={d.preview} ambiguous={cfg.ambiguous} t={t} />
-                      </div>
-
-                      {/* the door slab, with panelled detailing */}
-                      <div className="ld-slab">
-                        <div className="ld-hinges"><span /><span /><span /></div>
-                        <div className="ld-panel top" />
-                        <div className="ld-panel bottom" />
-                        <div className="ld-kick" />
-                        <div className="ld-knob"><i /></div>
-                        <div className="ld-peek">{t(isOpen ? 'rooms.link.closeDoor' : 'rooms.link.peek')}</div>
-                      </div>
-
-                      {isBlocked && (
-                        <div className="ld-chains">
-                          <span>🔒</span>
-                          <b>{t('rooms.link.blocked')}</b>
-                        </div>
-                      )}
-                    </div>
-
-                    <div className="ld-door-foot">
-                      <button
-                        className={`btn btn-sm ${isBlocked ? 'btn-green' : 'btn-magenta'}`}
-                        onClick={() => toggleBlock(d.url)}
-                      >
-                        {isBlocked ? t('rooms.link.unblock') : t('rooms.link.blockThis')}
-                      </button>
-                      {isBlocked && cfg.showNotesAfterBlock && <div className="dim t-xs ld-note">{note}</div>}
-                    </div>
-                  </div>
-                )
-              })}
+          <div className="ld-crossroad">
+            <div className="ld-router-head">
+              <span className="chip">{t('rooms.link.routerBadge', { current: round + 1, total: ROUNDS.length })}</span>
             </div>
-          </div>
+
+            <div className="ld-stage">
+              {/* Outgoing crossroad — stays put while the new one slides over it. */}
+              {outgoing && (
+                <div className="ld-doors-slot ld-outgoing" aria-hidden>
+                  <div className="ld-doors">
+                    {outgoing.doors.map((d) => (
+                      <Door
+                        key={d.url}
+                        d={d}
+                        cfg={cfg}
+                        roundText={outgoing.roundText}
+                        isBlocked={!!outgoing.blocked[d.url]}
+                        isOpen={false}
+                        interactive={false}
+                        t={t}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Incoming crossroad — slides in from the right over the 5s. */}
+              <div className="ld-doors-slot">
+                <div className={`ld-doors ld-incoming ${advancing ? 'advancing' : ''}`} key={round}>
+                  {displayDoors.map((d) => (
+                    <Door
+                      key={d.url}
+                      d={d}
+                      cfg={cfg}
+                      roundText={roundText}
+                      isBlocked={!!blocked[d.url]}
+                      isOpen={!!opened[d.url] && !blocked[d.url]}
+                      interactive={!advancing}
+                      onPeek={togglePeek}
+                      onBlock={toggleBlock}
+                      t={t}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="ld-actions">
             {error
               ? <div className="banner wrong shake ld-banner">{error}</div>
               : <span className="dim t-sm">{t('rooms.link.doorHelp')}</span>}
-            <button className="btn btn-cyan" onClick={confirmRound} disabled={!touched}>
+            <button className="btn btn-cyan" onClick={confirmRound} disabled={advancing || !touched}>
               {round < ROUNDS.length - 1 ? t('rooms.link.nextRouter') : t('rooms.link.finalRouter')}
             </button>
           </div>

@@ -1,13 +1,49 @@
+/* The whole thing is a messaging-app window. */
 .cv-wrap {
   flex: 1;
   min-height: 0;
   width: 100%;
-  max-width: 860px;
+  max-width: 720px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(12, 16, 32, 0.9), rgba(8, 11, 24, 0.92));
+  box-shadow: 0 26px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(120, 160, 255, 0.06);
+  backdrop-filter: blur(6px);
 }
+
+/* App bar (contact header) */
+.cv-appbar {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 14px;
+  background: rgba(22, 28, 56, 0.8);
+  border-bottom: 1px solid var(--line);
+}
+.cv-appbar-avatar {
+  width: 40px;
+  height: 40px;
+  aspect-ratio: 1;
+  flex: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  line-height: 1; /* centre the emoji glyph vertically */
+  background: radial-gradient(circle at 40% 30%, #b06bff, #5a1e9e);
+  border: 1px solid var(--purple);
+  box-shadow: var(--glow-purple);
+}
+.cv-appbar-who { display: flex; flex-direction: column; line-height: 1.2; }
+.cv-appbar-name { font-family: var(--font-display); font-weight: 700; font-size: 0.98rem; color: var(--text); }
+.cv-appbar-status { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: var(--green); }
+.cv-online-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: var(--glow-green); flex: none; }
+.cv-appbar-actions { margin-left: auto; color: var(--muted); letter-spacing: 3px; font-size: 0.85rem; }
 
 /* Scrolling chat log */
 .cv-log {
@@ -18,7 +54,10 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 6px 6px 2px;
+  padding: 14px 14px 8px;
+  background:
+    radial-gradient(circle at 15% 8%, rgba(168, 85, 247, 0.06), transparent 42%),
+    radial-gradient(circle at 88% 92%, rgba(22, 242, 255, 0.05), transparent 42%);
 }
 .cv-log::-webkit-scrollbar { width: 8px; }
 .cv-log::-webkit-scrollbar-thumb { background: rgba(120,160,255,0.25); border-radius: 8px; }
@@ -30,12 +69,14 @@
 .cv-avatar {
   width: 34px;
   height: 34px;
+  aspect-ratio: 1;
   flex: none;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
+  line-height: 1; /* centre the emoji glyph vertically */
   background: rgba(168, 85, 247, 0.16);
   border: 1px solid var(--purple);
   box-shadow: var(--glow-purple);
@@ -63,8 +104,13 @@
 .cv-msg.friend.good .cv-bubble { border-color: var(--green); background: rgba(43,255,136,0.1); color: #d4ffe6; }
 .cv-msg.friend.bad .cv-bubble { border-color: var(--red); background: rgba(255,59,92,0.1); color: #ffd7de; }
 
-/* Answer options */
-.cv-tray { flex: none; }
+/* Answer options — the message composer at the bottom of the window */
+.cv-tray {
+  flex: none;
+  padding: 11px 14px 13px;
+  background: rgba(22, 28, 56, 0.6);
+  border-top: 1px solid var(--line);
+}
 .cv-round-label {
   font-family: var(--font-mono);
   font-size: 0.68rem;

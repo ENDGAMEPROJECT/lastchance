@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useGame } from './game/GameContext.jsx'
+import { preloadGameImages } from './game/preloadAssets.js'
 import Stage from './components/Stage.jsx'
 import { DndProvider } from './components/dnd/Dnd.jsx'
 import HUD from './components/HUD.jsx'
@@ -32,6 +33,12 @@ export default function App() {
   useEffect(() => {
     document.body.classList.toggle('reduced-motion', reducedMotion)
   }, [reducedMotion])
+
+  // Preload every room/corridor background once at startup so navigation
+  // never lags waiting on a big image to download.
+  useEffect(() => {
+    preloadGameImages()
+  }, [])
 
   let content
   if (screen === 'welcome') content = <WelcomeScreen />

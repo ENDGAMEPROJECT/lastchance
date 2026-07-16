@@ -30,6 +30,7 @@ export default function RoomFrame({
   node,
   intro,
   bgImage,
+  dimBackground = false,
   solved = false,
   solvedTitle,
   solvedText,
@@ -48,6 +49,9 @@ export default function RoomFrame({
   return (
     <div className="scene room-scene">
       {bgImage && <div className="bg-slot" style={{ backgroundImage: `url(${bgImage})` }} />}
+      {/* Optional lights-out layer: darkens the background image itself. Sits
+          just above .bg-slot but behind all interactive content. */}
+      {dimBackground && <div className="bg-blackout" aria-hidden />}
 
       {!started ? (
         <div className="room-briefing fade-in">

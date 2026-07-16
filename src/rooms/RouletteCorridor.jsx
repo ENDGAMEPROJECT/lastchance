@@ -172,6 +172,7 @@ export default function RouletteCorridor({ node }) {
   return (
     <RoomFrame
       node={node}
+      bgImage="/bg/roulette.png"
       intro={t('rooms.roulette.intro')}
       solved={solved}
       solvedTitle={t('rooms.roulette.solvedTitle')}

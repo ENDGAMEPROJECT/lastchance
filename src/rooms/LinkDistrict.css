@@ -1,17 +1,40 @@
 .ld-room { flex: 1; display: flex; flex-direction: column; min-height: 0; }
 
-/* Each crossroad (round) slides in from ahead, so clearing one and moving
-   to the next feels like advancing through the neighbourhood. */
 .ld-crossroad {
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  animation: ld-advance 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+/* Outgoing + incoming door sets overlap in the stage so the old doors stay
+   put while the new ones slide over them. */
+.ld-doors-slot {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ld-outgoing { pointer-events: none; }
+/* The outgoing doors slide off to the left over the same 5s, out of sight. */
+.ld-outgoing .ld-doors {
+  animation: ld-exit 1s linear both;
+}
+@keyframes ld-exit {
+  from { transform: translateX(0); }
+  to { transform: translateX(-1280px); }
+}
+
+/* On ADVANCE only: the incoming doors glide in from a full screen width to the
+   right across the full 5-second transition, synchronised with the background
+   clip. The first crossroad (room entry) has no `.advancing` class → instant. */
+.ld-doors.advancing {
+  animation: ld-advance 1s linear both;
 }
 @keyframes ld-advance {
-  from { opacity: 0; transform: translateX(64px); }
-  to { opacity: 1; transform: none; }
+  0% { opacity: 0; transform: translateX(1280px); }
+  10% { opacity: 1; }
+  100% { opacity: 1; transform: none; }
 }
 
 .ld-router-head {
@@ -234,8 +257,8 @@
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
+  width: 19px;
+  height: 19px;
   border-radius: 50%;
   background: radial-gradient(circle at 40% 35%, #0c1426, #060a16);
   border: 1px solid rgba(120, 160, 255, 0.22);
@@ -358,8 +381,10 @@
 .ld-chains::before { top: 33%; transform: rotate(-8deg); }
 .ld-chains::after { top: 58%; transform: rotate(7deg); }
 
-.ld-door-foot { display: flex; flex-direction: column; align-items: center; gap: 5px; min-height: 50px; text-align: center; }
-.ld-note { line-height: 1.25; }
+.ld-door-foot { display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; }
+/* Explanation note: always reserves space for three lines (so nothing jumps
+   and longer notes like the “subdomain glued on” one never clip) — reads white. */
+.ld-note { line-height: 1.3; min-height: 3.9em; color: #eef3ff; }
 
 /* ---------- Mini website pages (shown inside an opened doorway) ---------- */
 .door-page { position: absolute; inset: 0; display: flex; flex-direction: column; }

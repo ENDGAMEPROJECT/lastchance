@@ -309,3 +309,109 @@
 
 .pl-term-input { gap: 10px; }
 .pl-term-caret { color: var(--magenta); font-size: 1.1rem; }
+
+/* ============================================================
+   Reworked scene: poster wall (LEFT) · free-frame pile (CENTRE)
+   · computer/terminal (RIGHT). Frames drag freely (no gravity).
+   ============================================================ */
+.pl-scene2 {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px;
+  perspective: 500px;
+}
+
+/* LEFT — poster wall (2 columns × 3 rows), tilted into the wall's
+   perspective (opposite tilt to the centre frames). */
+.pl-posters {
+  flex: none;
+  width: 430px;
+  display: grid;
+  grid-template-columns: repeat(3, 134px);
+  grid-auto-rows: 150px;
+  gap: 10px;
+  align-content: center;
+  /* nudge the wall a little right and up */
+  align-self: flex-start;
+  margin: 6px 0 0 56px;
+  /* the whole wall tilts as one receding plane */
+  transform: rotateY(16deg);
+  transform-origin: left center;
+}
+.pl-posters .pl-poster { padding: 9px 9px 11px; box-shadow: 0 12px 22px rgba(0, 0, 0, 0.5); }
+.pl-posters .pl-poster-emoji { font-size: 1.6rem; }
+.pl-posters .pl-poster-head { font-size: 0.74rem; line-height: 1.1; }
+.pl-posters .pl-poster-sub { font-size: 0.62rem; }
+.pl-posters .pl-letter-tile { width: 28px; height: 28px; font-size: 1.05rem; bottom: 5px; right: 5px; }
+
+/* RIGHT — computer / exit terminal */
+.pl-computer {
+  flex: none;
+  width: 300px;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pl-terminal.locked { opacity: 0.9; border-color: var(--line); box-shadow: 0 14px 26px rgba(0, 0, 0, 0.5); }
+.pl-terminal.locked .pl-term-dot { background: var(--muted); box-shadow: none; }
+.pl-computer .pl-term-body { padding: 14px; gap: 10px; }
+.pl-computer .pl-term-letters { gap: 5px; }
+.pl-computer .pl-letter-tile.small { width: 27px; height: 33px; font-size: 1.05rem; }
+.pl-computer .pl-term-input { flex-wrap: wrap; }
+.pl-term-locked { color: var(--muted); font-size: 0.8rem; line-height: 1.35; text-align: center; margin: 0; }
+
+/* CENTRE — free-floating, overlapping technique frames, tilted into the
+   room's perspective and shaped like tall standing frames with a mark. */
+.pl-freeframe {
+  position: absolute;
+  /* Posters recede in the plane (further columns shrink), so a full-size
+     134px frame reads too big. Sized down to match the apparent size of the
+     mid-wall posters the frames actually hover over. */
+  width: 118px;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  filter: drop-shadow(3px 10px 16px rgba(0, 0, 0, 0.55));
+  /* Fixed tilt matching the left-column posters, so the floating frames read
+     as "in the room". This lives on .pl-freeframe (a DIRECT child of the
+     perspective element .pl-scene2) so the perspective actually applies —
+     on the inner .pl-frame it would just be a flat, near-invisible squish. */
+  transform: rotateY(16deg);
+  transform-origin: left center;
+}
+.pl-freeframe.dragging { cursor: grabbing; }
+.pl-freeframe .pl-frame {
+  cursor: inherit;
+  min-height: 132px; /* scaled down to match the receded posters */
+  padding: 10px 10px 12px;
+  gap: 7px;
+  align-items: center;
+  justify-content: flex-start;
+  background: rgba(255, 43, 214, 0.09);
+  transition: transform 0.15s ease, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+}
+.pl-freeframe .pl-frame-label { text-align: center; }
+/* the circular "mark" where the hidden letter is read once framed */
+.pl-frame-mark {
+  margin-top: auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 43, 214, 0.6);
+  box-shadow: inset 0 0 12px rgba(255, 43, 214, 0.22);
+}
+.pl-freeframe:hover .pl-frame {
+  border-color: var(--magenta);
+  background: rgba(255, 43, 214, 0.16);
+  box-shadow: var(--glow-magenta);
+}
+.pl-freeframe.dragging .pl-frame {
+  transform: scale(1.05);
+  box-shadow: var(--glow-magenta);
+}

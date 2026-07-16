@@ -164,6 +164,7 @@ export default function InfluencerAvenue({ node }) {
   return (
     <RoomFrame
       node={node}
+      bgImage="/bg/influencer.png"
       intro={t('rooms.influencer.intro')}
       solved={solved}
       solvedTitle={t('rooms.influencer.solvedTitle')}

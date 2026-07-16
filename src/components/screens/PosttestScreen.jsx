@@ -22,6 +22,7 @@ export default function PosttestScreen() {
 
   return (
     <div className="scene convo-scene">
+      <div className="bg-slot" style={{ backgroundImage: 'url(/bg/conversation.png)' }} />
       <div className="convo-head fade-in">
         <div className="eyebrow accent-magenta">{eyebrow}</div>
         <h2>{t('story.posttest.title', { friend })}</h2>
@@ -36,6 +37,7 @@ export default function PosttestScreen() {
             rounds={t('story.rounds')}
             responses={p.responses}
             mode="diagnostic"
+            friend={friend}
             replyLabel={reply}
             onRoundsDone={() => setPhase('mastery')}
           />
@@ -45,6 +47,7 @@ export default function PosttestScreen() {
             opening={t('story.mastery.banner')}
             rounds={t('story.rounds')}
             mode="mastery"
+            friend={friend}
             replyLabel={reply}
             ending={{
               friend: p.endingFriend,

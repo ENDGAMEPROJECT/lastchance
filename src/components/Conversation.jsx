@@ -37,6 +37,7 @@ export default function Conversation({
   responses = [],
   mode = 'diagnostic',
   replyLabel = 'Respond',
+  friend = 'Max',
   ending = null,
   onRoundsDone,
 }) {
@@ -131,6 +132,16 @@ export default function Conversation({
 
   return (
     <div className="cv-wrap">
+      {/* messaging-app header */}
+      <div className="cv-appbar">
+        <span className="cv-appbar-avatar" aria-hidden>🙂</span>
+        <div className="cv-appbar-who">
+          <span className="cv-appbar-name">{friend}</span>
+          <span className="cv-appbar-status"><i className="cv-online-dot" />{typing ? 'typing…' : 'online'}</span>
+        </div>
+        <span className="cv-appbar-actions" aria-hidden>📞 🎥 ⋯</span>
+      </div>
+
       <div className="cv-log" ref={logRef}>
         {entries.map((e, i) => (
           <div key={e.id} className={`cv-msg ${e.who} ${e.tone || ''} fade-in`}>

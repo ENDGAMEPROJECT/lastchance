@@ -25,6 +25,7 @@ export default function WelcomeScreen() {
 
   return (
     <div className="scene welcome-scene">
+      <div className="bg-slot" style={{ backgroundImage: 'url(/bg/welcome.gif)' }} />
       <form className="welcome-card panel clip panel-glow-cyan fade-in" onSubmit={onSubmit}>
         <div className="welcome-glyph">◉</div>
         <div className="eyebrow">{t('welcome.eyebrow')}</div>
@@ -32,7 +33,6 @@ export default function WelcomeScreen() {
           {t('welcome.titleLead')} <span className="grad">{t('welcome.titleAccent')}</span>
         </h1>
         <p className="welcome-tag mono">{t('welcome.tagline')}</p>
-        <p className="muted welcome-sub">{t('welcome.subtitle')}</p>
 
         <div className="welcome-fields">
           <label className="welcome-field">

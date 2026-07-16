@@ -170,6 +170,7 @@ export default function AlgorithmRoom({ node }) {
   return (
     <RoomFrame
       node={node}
+      bgImage="/bg/algorithm.png"
       intro={t('rooms.algorithm.intro')}
       solved={solved}
       solvedTitle={t('rooms.algorithm.solvedTitle')}

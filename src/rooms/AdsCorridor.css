@@ -10,20 +10,25 @@
   width: 100%;
 }
 
-/* Two columns: the poster wall on the left, controls on the right. */
+/* Stacked: a single row of four posters, with the controls/text below. */
 .ac-layout {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 18px;
-  align-items: stretch;
-}
-
-.ac-side {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  justify-content: center;
+  gap: 16px;
 }
+
+/* The text/controls sit under the posters as a compact centred bar. */
+.ac-side {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 22px;
+}
+/* Full-width notices break onto their own line within the bar. */
+.ac-side .ac-pickup,
+.ac-side .ac-code-line { flex-basis: 100%; }
 
 .ac-pickup {
   border-color: rgba(255, 185, 43, 0.5);
@@ -57,21 +62,24 @@
   50% { opacity: 1; }
 }
 .ac-hint { font-size: 0.8rem; line-height: 1.35; }
+/* Instruction lines read bright white (override the muted `dim` utility). */
+.ac-side .ac-hint,
+.ac-side .ac-exit-label { color: #fff; }
 
 /* ---------- The corridor wall ---------- */
 .ac-wall {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   padding: 12px;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  background:
+  /*background:
     radial-gradient(120% 90% at 50% -10%, rgba(255, 185, 43, 0.06), transparent 60%),
     repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 60px),
     #060814;
-  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.7);
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.7);*/
 }
 
 /* When the flashlight is ON, the wall dims so the beam pops */
@@ -89,10 +97,14 @@
    beam has "lit" pops out of the darkness and stays visible. */
 .ac-flashlight {
   position: absolute;
-  inset: 0;
+  /* Extends well past the poster wall so the beam can spill into the
+     surrounding darkness instead of being clipped at the poster edges. */
+  top: -170px;
+  left: -170px;
+  right: -170px;
+  bottom: -20px; /* small downward spill so the beam never darkens the controls */
   z-index: 2;
   pointer-events: none;
-  border-radius: var(--radius);
   --Xpos: 50%;
   --Ypos: 50%;
   background:
@@ -107,17 +119,15 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  transition: transform 0.18s ease;
 }
-.ac-poster:hover { transform: translateY(-3px); }
 /* A revealed poster rises above the flashlight overlay so it stays lit. */
 .ac-poster.revealed { z-index: 3; }
 
 /* Glossy advertisement front */
 .ac-glossy {
   position: relative;
-  height: 148px;
-  border-radius: 12px;
+  height: 320px;
+  /* border-radius: 12px;*/
   overflow: hidden;
   padding: 10px;
   display: flex;
@@ -253,7 +263,8 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 100%;
+  width: auto;
+  min-width: 240px;
 }
 .ac-exit-row { display: flex; gap: 12px; }
 .ac-field {
@@ -267,4 +278,4 @@
   box-shadow: 0 0 8px rgba(255, 185, 43, 0.6), 0 0 22px rgba(255, 185, 43, 0.35);
 }
 
-.ac-learn { margin: 0; font-size: 0.82rem; padding: 8px 12px; }
+.ac-learn { margin: 0; font-size: 0.82rem; padding: 8px 12px; flex: 1 1 260px; max-width: 360px; }

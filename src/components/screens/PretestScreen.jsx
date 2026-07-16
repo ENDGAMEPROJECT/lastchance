@@ -18,6 +18,7 @@ export default function PretestScreen() {
 
   return (
     <div className="scene convo-scene">
+      <div className="bg-slot" style={{ backgroundImage: 'url(/bg/conversation.png)' }} />
       <div className="convo-head fade-in">
         <div className="eyebrow accent-cyan">{eyebrow}</div>
         <h2>{t('story.pretest.title', { friend })}</h2>
@@ -30,6 +31,7 @@ export default function PretestScreen() {
           rounds={t('story.rounds')}
           responses={p.responses}
           mode="diagnostic"
+          friend={friend}
           replyLabel={t('story.respondPrompt', { friend })}
           ending={{
             friend: p.endingFriend,
