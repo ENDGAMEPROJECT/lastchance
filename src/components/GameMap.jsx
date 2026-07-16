@@ -2,6 +2,7 @@ import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { NARRATIVE } from '../game/gameData.js'
 import { DEBUG } from '../game/settings.js'
+import { bgUrl } from '../game/assets.js'
 import './GameMap.css'
 
 const NODE_ICON = {
@@ -72,7 +73,7 @@ export default function GameMap() {
 
   return (
     <div className="stage-scroll map-scroll">
-      <div className="bg-slot" style={{ backgroundImage: 'url(/bg/map.png)' }} />
+      <div className="bg-slot" style={{ backgroundImage: `url(${bgUrl('map.png')})` }} />
 
       <div className="map-head fade-in">
         <div className="eyebrow">{t('map.eyebrow')}</div>

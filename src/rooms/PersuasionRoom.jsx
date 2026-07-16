@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { CODES } from '../game/gameData.js'
+import { bgUrl } from '../game/assets.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { useStage } from '../components/Stage.jsx'
 import './PersuasionRoom.css'
@@ -155,7 +156,7 @@ export default function PersuasionRoom({ node }) {
   return (
     <RoomFrame
       node={node}
-      bgImage="/bg/persuasion.png"
+      bgImage={bgUrl('persuasion.png')}
       intro={t('rooms.persuasion.intro')}
       solved={solved}
       solvedTitle={t('rooms.persuasion.solvedTitle')}

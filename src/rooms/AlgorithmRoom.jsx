@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { CODES, NARRATIVE } from '../game/gameData.js'
+import { bgUrl } from '../game/assets.js'
 import { useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import RoomNav from '../components/RoomNav.jsx'
@@ -170,7 +171,7 @@ export default function AlgorithmRoom({ node }) {
   return (
     <RoomFrame
       node={node}
-      bgImage="/bg/algorithm.png"
+      bgImage={bgUrl('algorithm.png')}
       intro={t('rooms.algorithm.intro')}
       solved={solved}
       solvedTitle={t('rooms.algorithm.solvedTitle')}

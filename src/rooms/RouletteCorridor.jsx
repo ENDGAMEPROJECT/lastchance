@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
+import { bgUrl } from '../game/assets.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import './RouletteCorridor.css'
 
@@ -172,7 +173,7 @@ export default function RouletteCorridor({ node }) {
   return (
     <RoomFrame
       node={node}
-      bgImage="/bg/roulette.png"
+      bgImage={bgUrl('roulette.png')}
       intro={t('rooms.roulette.intro')}
       solved={solved}
       solvedTitle={t('rooms.roulette.solvedTitle')}

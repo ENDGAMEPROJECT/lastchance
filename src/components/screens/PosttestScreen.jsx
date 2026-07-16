@@ -3,6 +3,7 @@ import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { NARRATIVE } from '../../game/gameData.js'
 import { DEBUG } from '../../game/settings.js'
+import { bgUrl } from '../../game/assets.js'
 import Conversation from '../Conversation.jsx'
 import ProductPreview from '../ProductPreview.jsx'
 import './conversation-screen.css'
@@ -22,7 +23,7 @@ export default function PosttestScreen() {
 
   return (
     <div className="scene convo-scene">
-      <div className="bg-slot" style={{ backgroundImage: 'url(/bg/conversation.png)' }} />
+      <div className="bg-slot" style={{ backgroundImage: `url(${bgUrl('conversation.png')})` }} />
       <div className="convo-head fade-in">
         <div className="eyebrow accent-magenta">{eyebrow}</div>
         <h2>{t('story.posttest.title', { friend })}</h2>

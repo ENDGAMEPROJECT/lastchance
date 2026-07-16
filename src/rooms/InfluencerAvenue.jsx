@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { ITEMS, EMOJI_KEY, encodeWord } from '../game/gameData.js'
+import { bgUrl } from '../game/assets.js'
 import { useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import Modal from '../components/Modal.jsx'
@@ -164,7 +165,7 @@ export default function InfluencerAvenue({ node }) {
   return (
     <RoomFrame
       node={node}
-      bgImage="/bg/influencer.png"
+      bgImage={bgUrl('influencer.png')}
       intro={t('rooms.influencer.intro')}
       solved={solved}
       solvedTitle={t('rooms.influencer.solvedTitle')}

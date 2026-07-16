@@ -1,21 +1,23 @@
+import { bgUrl } from './assets.js'
+
 /* Warm every background image into the browser cache up front, so moving
    between the map, rooms and corridors never stalls to fetch a big PNG/GIF
-   mid-transition. Paths match exactly how the app requests them (bare
-   `/bg/...`, see RoomFrame / the screen components) so preloading hits the
-   same cache entries the app will later use. */
+   mid-transition. Paths are resolved through bgUrl() (which respects Vite's
+   base URL) so preloading hits the same cache entries the app later uses —
+   including in production under '/lastchance/'. */
 
 export const GAME_IMAGES = [
-  '/bg/welcome.gif',
-  '/bg/map.png',
-  '/bg/link.gif',
-  '/bg/link_transition.gif',
-  '/bg/roulette.png',
-  '/bg/influencer.png',
-  '/bg/algorithm.png',
-  '/bg/ads.png',
-  '/bg/persuasion.png',
-  '/bg/conversation.png',
-]
+  'welcome.gif',
+  'map.png',
+  'link.gif',
+  'link_transition.gif',
+  'roulette.png',
+  'influencer.png',
+  'algorithm.png',
+  'ads.png',
+  'persuasion.png',
+  'conversation.png',
+].map(bgUrl)
 
 let started = false
 

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useGame } from '../../game/GameContext.jsx'
 import { useI18n, useT, AVAILABLE_LOCALES, localeName } from '../../i18n/index.jsx'
+import { bgUrl } from '../../game/assets.js'
 import './welcome.css'
 
 /* First screen: collect the player's alias + age and let them pick a
@@ -25,7 +26,7 @@ export default function WelcomeScreen() {
 
   return (
     <div className="scene welcome-scene">
-      <div className="bg-slot" style={{ backgroundImage: 'url(/bg/welcome.gif)' }} />
+      <div className="bg-slot" style={{ backgroundImage: `url(${bgUrl('welcome.gif')})` }} />
       <form className="welcome-card panel clip panel-glow-cyan fade-in" onSubmit={onSubmit}>
         <div className="welcome-glyph">◉</div>
         <div className="eyebrow">{t('welcome.eyebrow')}</div>

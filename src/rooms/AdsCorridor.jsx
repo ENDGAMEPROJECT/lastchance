@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { ITEMS, CODES } from '../game/gameData.js'
+import { bgUrl } from '../game/assets.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { useStage } from '../components/Stage.jsx'
 import './AdsCorridor.css'
@@ -109,7 +110,7 @@ export default function AdsCorridor({ node }) {
   return (
     <RoomFrame
       node={node}
-      bgImage="/bg/ads.png"
+      bgImage={bgUrl('ads.png')}
       // Lights-out: darken the whole scene (incl. the background image) while
       // the flashlight is on, so only the beam reveals the posters.
       dimBackground={lightOn}

@@ -3,6 +3,7 @@ import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { ITEMS } from '../game/gameData.js'
 import { settings } from '../game/settings.js'
+import { bgUrl } from '../game/assets.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import './LinkDistrict.css'
 
@@ -189,7 +190,7 @@ export default function LinkDistrict({ node }) {
 
   // Background swaps to a transition clip for 5s when advancing crossroads,
   // and the incoming doors glide in from the right over the same 5s.
-  const [bg, setBg] = useState('/bg/link.gif')
+  const [bg, setBg] = useState(bgUrl('link.gif'))
   const [advancing, setAdvancing] = useState(false)
   // A snapshot of the crossroad we're leaving, kept on-screen while the new
   // one slides in over it during the transition.
@@ -197,10 +198,10 @@ export default function LinkDistrict({ node }) {
   const bgTimer = useRef(null)
   const playTransition = useCallback(() => {
     clearTimeout(bgTimer.current)
-    setBg(`/bg/link_transition.gif?t=${Date.now()}`) // nonce forces the gif to replay
+    setBg(`${bgUrl('link_transition.gif')}?t=${Date.now()}`) // nonce forces the gif to replay
     setAdvancing(true)
     bgTimer.current = setTimeout(() => {
-      setBg('/bg/link.gif')
+      setBg(bgUrl('link.gif'))
       setAdvancing(false)
       setOutgoing(null)
     }, 1000)
