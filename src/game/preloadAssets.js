@@ -16,6 +16,9 @@ export const GAME_IMAGES = [
   'algorithm.png',
   'ads.png',
   'persuasion.png',
+  'persuasion_animation.gif',
+  'persuasion_end.png',
+  'computer.png',
   'conversation.png',
 ].map(bgUrl)
 

@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
-import { CODES, NARRATIVE } from '../game/gameData.js'
+import { CODES, ITEMS, NARRATIVE } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
+import { playSound } from '../game/sound.js'
 import { useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import RoomNav from '../components/RoomNav.jsx'
@@ -83,7 +84,7 @@ const TRAY = [
 const COL_COUNT = 3
 
 export default function AlgorithmRoom({ node }) {
-  const { completeRoom, addEvidence } = useGame()
+  const { completeRoom, addEvidence, addItem } = useGame()
   const t = useT()
   const [phase, setPhase] = useState('unlock') // 'unlock' | 'choice' | 'equations'
   const [solved, setSolved] = useState(false)
@@ -111,6 +112,7 @@ export default function AlgorithmRoom({ node }) {
       setCodeErr(false)
       setPhase('choice')
     } else {
+      playSound('wrong.mp3')
       setCodeErr(true)
     }
   }
@@ -157,6 +159,7 @@ export default function AlgorithmRoom({ node }) {
     if (!allFilled) return
     setChecked(true)
     if (ROWS.every(rowSolved)) setView(2)
+    else playSound('wrong.mp3') // some equations are mis-matched
   }
 
   // Fires exactly once, when the player logs the evidence after a clean run.
@@ -165,6 +168,8 @@ export default function AlgorithmRoom({ node }) {
       id: 'ev-algo',
       label: t('rooms.algorithm.evidence', { friend: NARRATIVE.friend }),
     })
+    // Reward: the Truth Flashlight the player will need in the Ads Corridor.
+    addItem(ITEMS.truthLight)
     setSolved(true)
   }
 
@@ -176,6 +181,7 @@ export default function AlgorithmRoom({ node }) {
       solved={solved}
       solvedTitle={t('rooms.algorithm.solvedTitle')}
       solvedText={t('rooms.algorithm.solvedText', { friend: NARRATIVE.friend })}
+      reward={ITEMS.truthLight}
       onContinue={() => completeRoom(node.id)}
     >
       {/* ================= PHASE: UNLOCK ================= */}

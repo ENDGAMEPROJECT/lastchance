@@ -94,6 +94,7 @@ export default {
   roomframe: {
     clearedDefaultTitle: 'District cleared',
     clearedDefaultText: 'Nice work. The next node is unlocked on the map.',
+    rewardLabel: 'Added to your Bag — you’ll need it next',
   },
 
   end: {
@@ -279,7 +280,7 @@ export default {
     },
     truthLight: {
       name: 'Truth Flashlight',
-      desc: 'Reveals the fine print hidden behind glossy ad posters.',
+      desc: 'Reveals the fine print hidden behind the glossy posters in the Ads Corridor.',
     },
   },
 

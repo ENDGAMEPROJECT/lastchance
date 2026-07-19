@@ -382,9 +382,18 @@
 .ld-chains::after { top: 58%; transform: rotate(7deg); }
 
 .ld-door-foot { display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; }
-/* Explanation note: always reserves space for three lines (so nothing jumps
-   and longer notes like the “subdomain glued on” one never clip) — reads white. */
-.ld-note { line-height: 1.3; min-height: 3.9em; color: #eef3ff; }
+/* Explanation note: every door reserves a fixed THREE lines of space, whether
+   its explanation is long, short, or not shown yet — so all doors stay the same
+   height and nothing jumps. `flex: none` stops the flex column from collapsing
+   the reserve; `height` (not just min-height) keeps short notes from shrinking. */
+.ld-note {
+  flex: none;
+  line-height: 1.3;
+  height: 3.9em;
+  min-height: 3.9em;
+  color: #eef3ff;
+  overflow: hidden;
+}
 
 /* ---------- Mini website pages (shown inside an opened doorway) ---------- */
 .door-page { position: absolute; inset: 0; display: flex; flex-direction: column; }

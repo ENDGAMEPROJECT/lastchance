@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { ITEMS, EMOJI_KEY, encodeWord } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
+import { playSound } from '../game/sound.js'
 import { useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import Modal from '../components/Modal.jsx'
@@ -115,6 +116,9 @@ export default function InfluencerAvenue({ node }) {
   /* Assign (or replace) the label stamped onto a post. Chips are reusable,
      so this never consumes them. Advance once all three are correct. */
   function assign(postId, label) {
+    // Wrong label dropped on a post → error chime.
+    const post = POSTS.find((p) => p.id === postId)
+    if (post && label !== post.correctLabel) playSound('wrong.mp3')
     setPlaced((prev) => {
       const next = { ...prev, [postId]: label }
       if (POSTS.every((p) => next[p.id] === p.correctLabel)) {
@@ -150,6 +154,7 @@ export default function InfluencerAvenue({ node }) {
     }
     const allCorrect = PRODUCTS.every((p) => picks[p.id] === p.verdict)
     if (!allCorrect) {
+      playSound('wrong.mp3')
       setVerifyErr(t('rooms.influencer.stage2.errWrong'))
       return
     }
@@ -170,6 +175,7 @@ export default function InfluencerAvenue({ node }) {
       solved={solved}
       solvedTitle={t('rooms.influencer.solvedTitle')}
       solvedText={t('rooms.influencer.solvedText')}
+      reward={ITEMS.dataReport}
       onContinue={() => completeRoom(node.id)}
     >
       {/* ============================ STAGE 1 ============================ */}

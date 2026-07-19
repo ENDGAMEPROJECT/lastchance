@@ -1,7 +1,8 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
+import { playSound, stopSound, preloadSound } from '../game/sound.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import './RouletteCorridor.css'
 
@@ -106,6 +107,12 @@ export default function RouletteCorridor({ node }) {
   // Guard against overlapping timers per wheel.
   const timers = useRef({})
 
+  // Warm the spin/win sounds so the first spin has no load delay.
+  useEffect(() => {
+    preloadSound('roulette_spin.mp3')
+    preloadSound('roulette_win.mp3')
+  }, [])
+
   const spunCount = useMemo(() => Object.values(won).filter(Boolean).length, [won])
   const riggedCount = useMemo(() => Object.values(rigged).filter(Boolean).length, [rigged])
 
@@ -118,6 +125,7 @@ export default function RouletteCorridor({ node }) {
     if (spinning[w.id]) return
     setHint('')
     setSpinning((s) => ({ ...s, [w.id]: true }))
+    playSound('roulette_spin.mp3') // whir while the wheel turns
 
     const current = angles[w.id]
     const jackpotCentre = w.jackpot * SLICE + SLICE / 2
@@ -136,6 +144,8 @@ export default function RouletteCorridor({ node }) {
     timers.current[w.id] = setTimeout(() => {
       setSpinning((s) => ({ ...s, [w.id]: false }))
       setWon((wn) => ({ ...wn, [w.id]: true }))
+      stopSound('roulette_spin.mp3') // whir ends…
+      playSound('roulette_win.mp3') // …and the "you won!" jingle plays
     }, 4200)
   }
 

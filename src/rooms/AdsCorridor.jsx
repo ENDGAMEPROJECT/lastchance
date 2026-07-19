@@ -3,6 +3,7 @@ import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { ITEMS, CODES } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
+import { playSound } from '../game/sound.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { useStage } from '../components/Stage.jsx'
 import './AdsCorridor.css'
@@ -99,6 +100,7 @@ export default function AdsCorridor({ node }) {
       setSolved(true)
       setError('')
     } else {
+      playSound('wrong.mp3')
       setError(t('rooms.ads.errCode'))
       inputRef.current?.classList.remove('shake')
       // force reflow so the shake animation can retrigger
@@ -139,6 +141,10 @@ export default function AdsCorridor({ node }) {
                 role="button"
                 tabIndex={0}
                 aria-label={poster.glossyTitle}
+                // Don't take focus on click: focusing a child inside the scaled,
+                // overflow:hidden stage makes the browser scroll it "into view",
+                // jumping the whole screen up. Keyboard (Tab+Enter) still works.
+                onMouseDown={(e) => e.preventDefault()}
                 // Sweeping the beam over a poster (or tapping it) reveals it.
                 onMouseMove={() => shine(p.id)}
                 onClick={() => shine(p.id)}

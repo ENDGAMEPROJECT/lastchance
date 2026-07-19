@@ -34,6 +34,7 @@ export default function RoomFrame({
   solved = false,
   solvedTitle,
   solvedText,
+  reward = null,
   onContinue,
   children,
 }) {
@@ -85,6 +86,18 @@ export default function RoomFrame({
                     <div className="cleared-text muted t-sm">{solvedText || t('roomframe.clearedDefaultText')}</div>
                   </div>
                 </div>
+
+                {reward && (
+                  <div className="cleared-reward">
+                    <span className="reward-icon" aria-hidden>{reward.icon}</span>
+                    <div className="reward-info">
+                      <div className="reward-eyebrow">{t('roomframe.rewardLabel')}</div>
+                      <div className="reward-name">{t(`items.${reward.id}.name`, vars)}</div>
+                      <div className="reward-desc t-xs">{t(`items.${reward.id}.desc`, vars)}</div>
+                    </div>
+                  </div>
+                )}
+
                 <button className="btn btn-green" onClick={onContinue}>{t('common.continue')}</button>
               </div>
             </div>

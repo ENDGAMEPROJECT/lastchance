@@ -4,6 +4,7 @@ import { useT } from '../i18n/index.jsx'
 import { ITEMS } from '../game/gameData.js'
 import { settings } from '../game/settings.js'
 import { bgUrl } from '../game/assets.js'
+import { playSound, preloadSound } from '../game/sound.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import './LinkDistrict.css'
 
@@ -65,6 +66,17 @@ function Door({ d, cfg, roundText, isBlocked, isOpen, interactive, onPeek, onBlo
   const note = roundText.notes[d.id]
   const secure = d.url.startsWith('https://')
   const lookalike = hasLookalike(d.url)
+  // Peek toggles the door; play the matching open/close sound as it swings.
+  const peek = () => {
+    if (!interactive || isBlocked) return
+    playSound(isOpen ? 'close_door.mp3' : 'open_door.mp3')
+    onPeek(d.url)
+  }
+  // Blocking / unblocking a link — the chain/lock sound (skip its 200ms lead-in).
+  const block = () => {
+    playSound('blocked_door.mp3', 1, 0.2)
+    onBlock(d.url)
+  }
   return (
     <div className={`ld-door ${isBlocked ? 'blocked' : ''} ${isOpen ? 'open' : ''} ${cfg.ambiguous ? 'ambiguous' : d.safe ? 'safe' : 'fake'}`}>
       <div className="ld-sign" title={t('rooms.link.linkTip')}>
@@ -77,9 +89,9 @@ function Door({ d, cfg, roundText, isBlocked, isOpen, interactive, onPeek, onBlo
         role="button"
         tabIndex={interactive ? 0 : -1}
         aria-label={`${d.url} — ${t(isOpen ? 'rooms.link.closeDoor' : 'rooms.link.peek')}`}
-        onClick={() => interactive && !isBlocked && onPeek(d.url)}
+        onClick={peek}
         onKeyDown={(e) => {
-          if (interactive && (e.key === 'Enter' || e.key === ' ') && !isBlocked) { e.preventDefault(); onPeek(d.url) }
+          if ((e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); peek() }
         }}
       >
         <div className="ld-doorway">
@@ -115,7 +127,7 @@ function Door({ d, cfg, roundText, isBlocked, isOpen, interactive, onPeek, onBlo
       <div className="ld-door-foot">
         <button
           className={`btn btn-sm ${isBlocked ? 'btn-green' : 'btn-magenta'}`}
-          onClick={() => onBlock(d.url)}
+          onClick={block}
           disabled={!interactive}
         >
           {isBlocked ? t('rooms.link.unblock') : t('rooms.link.blockThis')}
@@ -198,6 +210,7 @@ export default function LinkDistrict({ node }) {
   const bgTimer = useRef(null)
   const playTransition = useCallback(() => {
     clearTimeout(bgTimer.current)
+    playSound('door_rotate.mp3') // whoosh as the doors rotate to the next task
     setBg(`${bgUrl('link_transition.gif')}?t=${Date.now()}`) // nonce forces the gif to replay
     setAdvancing(true)
     bgTimer.current = setTimeout(() => {
@@ -207,6 +220,13 @@ export default function LinkDistrict({ node }) {
     }, 1000)
   }, [])
   useEffect(() => () => clearTimeout(bgTimer.current), [])
+  // Warm the door sounds so the first open/close has no load delay.
+  useEffect(() => {
+    preloadSound('open_door.mp3')
+    preloadSound('close_door.mp3')
+    preloadSound('blocked_door.mp3')
+    preloadSound('door_rotate.mp3')
+  }, [])
 
   const data = ROUNDS[round]
   const roundText = t('rooms.link.rounds')[round]
@@ -232,8 +252,8 @@ export default function LinkDistrict({ node }) {
   function confirmRound() {
     const badOk = fakes.every((d) => blocked[d.url])
     const safeOk = data.doors.filter((d) => d.safe).every((d) => !blocked[d.url])
-    if (!badOk) return setError(t('rooms.link.errStillOpen'))
-    if (!safeOk) return setError(t('rooms.link.errBlockedSafe'))
+    if (!badOk) { playSound('wrong.mp3'); return setError(t('rooms.link.errStillOpen')) }
+    if (!safeOk) { playSound('wrong.mp3'); return setError(t('rooms.link.errBlockedSafe')) }
     if (round < ROUNDS.length - 1) {
       // Snapshot the doors we're leaving so they stay put during the slide.
       setOutgoing({ doors: displayDoors, blocked: { ...blocked }, roundText })
@@ -256,6 +276,7 @@ export default function LinkDistrict({ node }) {
     const missing = CORRECT_FLAGS.filter((id) => !chosen.includes(id))
     const wrong = chosen.filter((id) => !CORRECT_FLAGS.includes(id))
     if (missing.length || wrong.length) {
+      playSound('wrong.mp3')
       return setJustifyErr(wrong.length ? t('rooms.link.justifyErrWrong') : t('rooms.link.justifyErrMissing'))
     }
     addItem(ITEMS.emojiCard)
@@ -273,6 +294,7 @@ export default function LinkDistrict({ node }) {
       solved={phase === 'done'}
       solvedTitle={t('rooms.link.solvedTitle')}
       solvedText={t('rooms.link.solvedText')}
+      reward={ITEMS.emojiCard}
       onContinue={() => completeRoom(node.id)}
     >
       {phase === 'block' && (

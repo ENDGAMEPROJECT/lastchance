@@ -21,7 +21,7 @@ export default {
 
   hints: {
     start: 'Drag a technique frame onto the poster it fits — or tap the frame, then tap the poster.',
-    allDone: 'All six framed — the letters spell a password. Head to the terminal.',
+    allDone: 'All six framed — the letters spell a password. Click the computer to type it in.',
     correct: 'Correct — a letter surfaced. Keep framing the rest.',
     wrong: 'That technique does not match this ad. Frame returned — try another.',
   },
@@ -55,6 +55,8 @@ export default {
     body:
       'Six posters, six tricks. The letters they hid, read left to right, are the exit password — proof you saw through every one.',
   },
+  openComputer: 'Use the computer →',
+  closeComputer: 'Close the screen',
   termBar: 'PERSUASION-LAB · EXIT TERMINAL',
   termPrompt: '> Enter the password formed by the revealed letters:',
   termLocked: 'Frame all six posters to reveal the password letters.',

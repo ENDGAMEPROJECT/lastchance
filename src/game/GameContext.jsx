@@ -10,6 +10,7 @@
 import { createContext, useContext, useReducer, useEffect, useCallback, useRef } from 'react'
 import { NODES, GAME_MINUTES, ITEMS } from './gameData.js'
 import { DEBUG, DEBUG_SCREEN } from './settings.js'
+import { playSound, preloadSound } from './sound.js'
 
 const GameContext = createContext(null)
 
@@ -124,6 +125,18 @@ export function GameProvider({ children }) {
       if (runningRef.current) dispatch({ type: 'TICK' })
     }, 1000)
     return () => clearInterval(id)
+  }, [])
+
+  // Chime whenever a NEW object lands in the inventory (reducer dedupes, so
+  // this only fires on genuine growth — one place covers every reward grant).
+  const prevInvLen = useRef(state.inventory.length)
+  useEffect(() => {
+    if (state.inventory.length > prevInvLen.current) playSound('inventory.mp3')
+    prevInvLen.current = state.inventory.length
+  }, [state.inventory.length])
+  useEffect(() => {
+    preloadSound('inventory.mp3')
+    preloadSound('wrong.mp3') // used by every puzzle's incorrect-answer feedback
   }, [])
 
   const submitWelcome = useCallback((player) => dispatch({ type: 'SUBMIT_WELCOME', player }), [])

@@ -128,12 +128,19 @@
 
 .pl-count { text-align: center; }
 .pl-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 6px;
+  z-index: 7;
   text-align: center;
-  color: var(--muted);
+  color: #fff;
   font-size: 0.78rem;
   line-height: 1.3;
-  min-height: 2.2em;
+  min-height: 1.3em;
   margin: 0;
+  pointer-events: none;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
 }
 
 /* ---------- Poster wall: compact 3 × 2 grid of drop zones ---------- */
@@ -348,21 +355,89 @@
 .pl-posters .pl-poster-sub { font-size: 0.62rem; }
 .pl-posters .pl-letter-tile { width: 28px; height: 28px; font-size: 1.05rem; bottom: 5px; right: 5px; }
 
-/* RIGHT — computer / exit terminal */
-.pl-computer {
-  flex: none;
+/* RIGHT — the computer lives inside the persuasion.png scene. An invisible
+   hotspot sits over it; clicking opens the computer screen (below). Position
+   is tuned to the computer in the background art — nudge right/top to fit. */
+.pl-computer-hotspot {
+  position: absolute;
+  right: 168px; /* shifted left by ~50% of its width to sit over the computer */
+  top: 84px;
   width: 300px;
-  margin-left: auto;
+  height: 340px;
+  z-index: 6;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: flex-start; /* tag rides the top of the area */
+  justify-content: center;
+  padding-top: 10px;
 }
-.pl-terminal.locked { opacity: 0.9; border-color: var(--line); box-shadow: 0 14px 26px rgba(0, 0, 0, 0.5); }
+/* The clickable computer area is left completely unframed — no border, no
+   background, no glow. Only the tag hints that it's interactive. */
+.pl-hotspot-tag {
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(8, 12, 26, 0.86);
+  border: 1px solid var(--magenta);
+  color: #fff;
+  box-shadow: var(--glow-magenta);
+  opacity: 0.9;
+}
+
+/* The computer SCREEN overlay (computer.png), opened by clicking the computer. */
+.pl-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: pl-screen-in 0.22s ease both;
+}
+@keyframes pl-screen-in {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
+}
+.pl-screen-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--magenta);
+  background: rgba(8, 12, 26, 0.86);
+  color: #fff;
+  font-size: 1.05rem;
+  cursor: pointer;
+  box-shadow: var(--glow-magenta);
+}
+.pl-screen-close:hover { background: rgba(255, 43, 214, 0.16); }
+/* Nudge onto the monitor with top/left (NOT transform) so the wrong-password
+   `shake` animation — which drives transform — doesn't override it and jump. */
+.pl-screen .pl-terminal { position: relative; top: -80px; left: 35px; width: 100%; max-width: 460px; }
+/* The "access denied" banner floats below the terminal so it never grows the
+   box (which would push the whole screen down when a wrong password is tried). */
+.pl-screen .pl-term-body .banner.wrong {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  margin: 0;
+}
+.pl-screen .pl-term-body { padding: 16px; gap: 12px; }
+.pl-screen .pl-term-letters { gap: 6px; }
+.pl-screen .pl-letter-tile.small { width: 30px; height: 36px; font-size: 1.1rem; }
+
+.pl-terminal.locked { opacity: 0.95; border-color: var(--line); box-shadow: 0 14px 26px rgba(0, 0, 0, 0.5); }
 .pl-terminal.locked .pl-term-dot { background: var(--muted); box-shadow: none; }
-.pl-computer .pl-term-body { padding: 14px; gap: 10px; }
-.pl-computer .pl-term-letters { gap: 5px; }
-.pl-computer .pl-letter-tile.small { width: 27px; height: 33px; font-size: 1.05rem; }
-.pl-computer .pl-term-input { flex-wrap: wrap; }
 .pl-term-locked { color: var(--muted); font-size: 0.8rem; line-height: 1.35; text-align: center; margin: 0; }
 
 /* CENTRE — free-floating, overlapping technique frames, tilted into the

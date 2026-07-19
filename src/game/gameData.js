@@ -103,7 +103,7 @@ export const ITEMS = {
     id: 'truthLight',
     name: 'Truth Flashlight',
     icon: '🔦',
-    desc: 'Reveals the fine print hidden behind glossy ad posters.',
+    desc: 'Reveals the fine print hidden behind the glossy posters in the Ads Corridor.',
   },
 }
 
