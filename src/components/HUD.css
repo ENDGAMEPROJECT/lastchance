@@ -46,6 +46,8 @@
 
 .hud-right { display: flex; gap: 10px; align-items: center; }
 .hud-debug { animation: pulse-glow 1.8s ease-in-out infinite; align-self: center; }
+/* Compact square icon button for the sound toggle. */
+.hud-mute { padding-left: 9px; padding-right: 9px; font-size: 1rem; line-height: 1; }
 
 .bag-count {
   display: inline-block;

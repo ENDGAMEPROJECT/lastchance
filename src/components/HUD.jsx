@@ -3,6 +3,7 @@ import { useGame, formatTime } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { NARRATIVE } from '../game/gameData.js'
 import { DEBUG } from '../game/settings.js'
+import { isMuted, setMuted } from '../game/sound.js'
 import Modal from './Modal.jsx'
 import './HUD.css'
 
@@ -11,6 +12,8 @@ export default function HUD() {
   const { screen, timeLeft, inventory, evidence, goMap } = useGame()
   const t = useT()
   const [bagOpen, setBagOpen] = useState(false)
+  const [muted, setMutedState] = useState(isMuted())
+  const toggleMute = () => setMutedState(setMuted(!muted))
 
   if (['welcome', 'pretest', 'posttest', 'win', 'lose'].includes(screen)) return null
 
@@ -32,6 +35,14 @@ export default function HUD() {
 
         <div className="hud-right">
           {DEBUG && <span className="chip bad hud-debug">🐞 DEBUG</span>}
+          <button
+            className="btn btn-ghost btn-sm hud-mute"
+            onClick={toggleMute}
+            aria-label={muted ? t('hud.unmuteSound') : t('hud.muteSound')}
+            title={muted ? t('hud.unmuteSound') : t('hud.muteSound')}
+          >
+            {muted ? '🔇' : '🔊'}
+          </button>
           {screen !== 'map' && (
             <button className="btn btn-cyan btn-sm" onClick={goMap}>
               {t('hud.map')}

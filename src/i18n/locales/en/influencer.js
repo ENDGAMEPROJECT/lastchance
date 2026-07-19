@@ -80,6 +80,8 @@ export default {
     prompt:
       'These sellers all claim their products are “real”. Run a reverse image search on each photo, then classify what it actually is.',
     runSearch: '🔍 Run reverse image search',
+    searching: 'Searching the web',
+    matchesTitle: 'Web matches found',
     resultTitle: 'Search result',
     errRunAll: 'Run the reverse image search on every product before classifying it.',
     errClassifyAll: 'Classify all three products first.',
@@ -94,24 +96,39 @@ export default {
   products: [
     {
       name: '“Handmade ceramic mug”',
+      matches: [
+        { site: 'aliluxe-deals.shop', title: 'Ceramic Coffee Mug — bulk 500 pcs' },
+        { site: 'dropmart.store', title: '“Handmade” Mug · wholesale lot' },
+        { site: 'quickship-goods.net', title: 'Artisan-style mug (factory direct)' },
+        { site: 'mega-bazaar.shop', title: 'Same photo — €1.90 / unit' },
+      ],
       result: '1,240+ identical listings on 12 dropshipping sites.',
       hint: 'The exact same photo appears on dozens of cheap stores.',
     },
     {
       name: '“NovaPad X” promo shot',
-      result: '0 results found anywhere.',
-      hint: 'A real product photo shows up somewhere. Zero matches is a red flag.',
+      matches: [
+        { site: 'thisdevicedoesnotexist.ai', title: 'Generated device render · SDXL' },
+        { site: 'promptgallery.art', title: 'Sci-fi tablet — AI artwork' },
+      ],
+      result: '0 retail listings — image traced to AI generators.',
+      hint: 'Only AI-art sites match. This photo was never a real product.',
     },
     {
       name: 'Local bakery cupcakes',
+      matches: [
+        { site: 'cornerst-bakery.com', title: 'Fresh cupcakes — Corner St. Bakery' },
+        { site: 'localeats.review', title: 'Review: Corner St. Bakery ★★★★☆' },
+        { site: 'instagram.com/cornerst', title: '@cornerst · local bakery' },
+      ],
       result: '3 consistent results, all the same small business.',
       hint: 'Matches trace back to one genuine local bakery.',
     },
   ],
 
   classify: {
-    mass: 'Mass-produced (fake “handmade”)',
-    ai: 'AI-generated / fake',
+    mass: 'Mass-produced',
+    ai: 'AI-generated',
     legit: 'Legit',
   },
 

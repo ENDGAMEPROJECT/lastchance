@@ -50,6 +50,8 @@ export default {
     tminus: 'T-MINUS',
     map: '🗺 Map',
     bag: '🎒 Bag',
+    muteSound: 'Mute sound',
+    unmuteSound: 'Unmute sound',
     inventoryTitle: 'Inventory & Evidence',
     tools: 'Tools & Rewards',
     noTools: 'Nothing collected yet. Solve puzzles to earn tools.',

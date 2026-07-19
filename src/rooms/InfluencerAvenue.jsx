@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { ITEMS, EMOJI_KEY, encodeWord } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
@@ -130,12 +130,22 @@ export default function InfluencerAvenue({ node }) {
   }
 
   /* ---- Stage 2 state ---- */
-  const [searched, setSearched] = useState({}) // productId -> true once searched
+  const [searching, setSearching] = useState({}) // productId -> true while "searching the web"
+  const [searched, setSearched] = useState({}) // productId -> true once results are in
   const [picks, setPicks] = useState({}) // productId -> chosen verdict value
   const [verifyErr, setVerifyErr] = useState('')
+  const searchTimers = useRef({})
+  useEffect(() => () => Object.values(searchTimers.current).forEach(clearTimeout), [])
 
+  /* Simulate a reverse image search: show a "searching the web" animation for
+     a beat, then reveal the web-match results. */
   function runSearch(id) {
-    setSearched((s) => ({ ...s, [id]: true }))
+    setSearching((s) => ({ ...s, [id]: true }))
+    clearTimeout(searchTimers.current[id])
+    searchTimers.current[id] = window.setTimeout(() => {
+      setSearching((s) => ({ ...s, [id]: false }))
+      setSearched((s) => ({ ...s, [id]: true }))
+    }, 1900)
   }
 
   function pick(id, value) {
@@ -290,25 +300,57 @@ export default function InfluencerAvenue({ node }) {
 
           <div className="ia-products">
             {PRODUCTS.map((p, idx) => {
+              const isSearching = !!searching[p.id]
               const done = !!searched[p.id]
               const copy = productCopy[idx]
               return (
-                <div key={p.id} className={`ia-product ${done ? 'searched' : ''}`}>
+                <div key={p.id} className={`ia-product ${done ? 'searched' : ''} ${isSearching ? 'is-searching' : ''}`}>
                   <div className="ia-prod-photo" style={{ background: p.hue }}>
                     <span className="ia-prod-emoji">{p.emoji}</span>
                     <span className="ia-prod-seller mono t-xs">{p.seller}</span>
+                    {isSearching && <span className="ia-scan" aria-hidden />}
                   </div>
                   <div className="ia-prod-name t-sm">{copy.name}</div>
 
-                  {!done ? (
+                  {!done && !isSearching && (
                     <button className="btn btn-purple btn-sm" onClick={() => runSearch(p.id)}>
                       {t('rooms.influencer.stage2.runSearch')}
                     </button>
-                  ) : (
+                  )}
+
+                  {/* "Searching the web" animation */}
+                  {isSearching && (
+                    <div className="ia-searching">
+                      <div className="ia-searching-head t-xs">
+                        <span className="ia-globe" aria-hidden>🌐</span>
+                        {t('rooms.influencer.stage2.searching')}
+                        <span className="ia-dots" aria-hidden><i /><i /><i /></span>
+                      </div>
+                      <div className="ia-skels" aria-hidden>
+                        <span className="ia-skel" />
+                        <span className="ia-skel" />
+                        <span className="ia-skel" />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Actual results */}
+                  {done && (
                     <>
                       <div className="ia-prod-result">
-                        <div className="t-xs upper dim">{t('rooms.influencer.stage2.resultTitle')}</div>
-                        <div className="t-xs">{copy.result}</div>
+                        <div className="t-xs upper dim">{t('rooms.influencer.stage2.matchesTitle')}</div>
+                        <ul className="ia-matches">
+                          {copy.matches.slice(0, 3).map((m, i) => (
+                            <li key={i} className="ia-match" style={{ animationDelay: `${i * 90}ms` }}>
+                              <span className="ia-match-fav" style={{ background: p.hue }} aria-hidden />
+                              <span className="ia-match-txt">
+                                <span className="ia-match-site mono">{m.site}</span>
+                                <span className="ia-match-title">{m.title}</span>
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="ia-result-sum t-xs">{copy.result}</div>
                         <div className="t-xs dim ia-prod-hint">{copy.hint}</div>
                       </div>
 
@@ -335,7 +377,7 @@ export default function InfluencerAvenue({ node }) {
             {verifyErr
               ? <div className="banner wrong shake ia-banner">{verifyErr}</div>
               : <span className="dim t-sm">{t('rooms.influencer.stage2.hint')}</span>}
-            <button className="btn btn-purple" onClick={submitVerify}>
+            <button className="btn btn-purple btn-lg ia-confirm" onClick={submitVerify}>
               {t('rooms.influencer.stage2.confirm')}
             </button>
           </div>
