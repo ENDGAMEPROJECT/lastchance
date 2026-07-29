@@ -46,6 +46,8 @@ after touching any `t('...')` key or locale file.
 - `game/gameData.js` is the **structure** (6 nodes, items, codes, emoji key, narrative). Display
   text is NOT here — it's in i18n.
 - `game/settings.js` = tunables + `DEBUG`/`DEBUG_SCREEN`.
+- `game/assets.js` = `bgUrl()`; `game/preloadAssets.js` warms bg images at startup;
+  `game/sound.js` = `playSound`/`preloadSound`/`stopSound` + global mute (localStorage).
 - `rooms/*` = one component (+ co-located CSS) per district/corridor.
 - `components/` = shared UI: `RoomFrame` (room chrome), `HUD`, `GameMap` (oval progress map),
   `Conversation` (chat), `ProductPreview` (phone post), `RoomNav`, `Modal`, `dnd/Dnd`.
@@ -69,6 +71,18 @@ after touching any `t('...')` key or locale file.
 - **CSS perspective.** `rotateY`/perspective only apply through direct children of the element
   holding `perspective`. If a tilt looks flat, the transform is probably on too deep a descendant
   (this bit the Persuasion Lab frames — fixed by moving the transform up to the direct child).
+- **Sounds mirror the image rule.** Play via `game/sound.js` (`playSound`), which resolves
+  `public/sounds/*` through `soundUrl()`/`BASE_URL` — never hardcode `/sounds/...`. The global
+  mute is applied automatically inside `playSound`. The inventory chime is fired **centrally** in
+  `GameContext` when the inventory grows — don't add per-room "got item" sounds.
+- **Focus-scroll jump.** Clicking a focusable element (`role="button"`, inputs) inside the scaled,
+  `overflow:hidden` stage makes the browser scroll it "into view" and shoves the whole scene. If a
+  click "jumps the screen", add `onMouseDown={(e) => e.preventDefault()}` so it doesn't take focus
+  (keyboard Tab+Enter still works). See the `AdsCorridor` posters.
+- **Transform vs. animations.** The global `.shake` (and similar) animate `transform`, which
+  overrides any static `transform` on the same element. Offset an element's position with
+  `top/left` (or a wrapper), not `transform`, if it can also shake/animate. (Bit the Persuasion
+  computer terminal — a wrong password made it jump.)
 - **GIF frame delays.** Browsers clamp very short delays; to "play a whole gif in ~1s" re-encode
   to many frames × ~20ms (e.g. 50×20ms), not one frame with delay=1.
 - **Non-breaking spaces.** Copy pasted into `en.js` has occasionally introduced U+00A0, which
@@ -90,10 +104,20 @@ images are missing, suspect a bare `/bg/...` path that skipped `bgUrl()`.
 
 - Six map nodes wired and playable; pre-test and post-test conversations in place (post-test is
   the finale — there is no separate "Final Decision" node/screen).
-- Backgrounds are user-supplied PNG/GIF in `public/bg/`; all references go through `bgUrl()`.
-- Recent polish work: Ads Corridor (4-poster row, taller posters, lights-out blackout + spilling
-  flashlight beam), Persuasion Lab (tilted poster wall + matching frames), map status badges,
-  Max chat avatars, Link District note spacing, Roulette wheel placement, image preloading.
+- Backgrounds & sounds are owner-supplied in `public/bg/` and `public/sounds/`; every path goes
+  through `bgUrl()` / `soundUrl()`.
+- Feature set added this cycle (all live): **sound system** (`game/sound.js`) wired across rooms
+  with a **HUD mute toggle**; **reward reveal** on the cleared bar with a tool chain
+  (Link → Emoji Card → Influencer → Data Report → Algorithm → Truth Flashlight → Ads); the
+  **Persuasion Lab** click-to-open computer screen (`computer.png`) for the password + a background
+  end animation (`persuasion_animation.gif` → `persuasion_end.png`); and the **Influencer Avenue**
+  reverse-image-search revamp (animated "searching the web" → web-match result rows, side-by-side
+  classify buttons).
+- **REVERTED — do not reintroduce without asking:** a "physical space" interactivity pass (cursor
+  **parallax**, an **ambient** dust/glow/vignette layer, a **held-tool** badge, a step-in **bloom**,
+  and drag-weight) was prototyped and then rolled back by the owner — they specifically disliked the
+  background shifting with the cursor and the puzzle-entry sound. The `useParallax` hook and
+  `Ambient` component were deleted. The "look-around viewpoints" (`RoomNav` panning) idea was
+  discussed but never built.
 - Open cosmetic threads the owner iterates on live: exact perspective match of Persuasion frames
-  to posters, and background-image sizing/blur (assets are owner-provided). Confirm before large
-  refactors of these.
+  to posters, and owner-provided background-image sizing/blur. Confirm before large refactors.

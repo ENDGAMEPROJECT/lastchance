@@ -42,11 +42,16 @@ Flow of screens (see the `screen` state in `GameContext`, routed in `App.jsx`):
 | 1 | **Link District** | Puzzle | Spot & block fraudulent look-alike URLs (typosquatting, homoglyphs, http vs https, odd TLDs). Doors open to reveal the site; order is shuffled. Reward: *Emoji Decoding Card*. |
 | 2 | **Roulette Corridor** | Corridor | Gamified "prize wheels" are rigged bait — the guaranteed win is worthless. |
 | 3 | **Influencer Avenue** | Puzzle | Decode sponsorship labels (PAID/COLLAB/GIFTED) + simulated reverse-image-search to spot fake/AI products. Reward: *Data Report*. |
-| 4 | **Algorithm Control Room** | Puzzle | How personalization equations target ads using your demographics, follows & insecurities. |
-| 5 | **Ads Corridor** | Corridor | A cursor-tracked "Truth Flashlight" burns away the gloss to reveal the fine print (and a hidden exit code). |
-| 6 | **Persuasion Lab** | Puzzle | Name the persuasion technique on each poster (FOMO, social proof, urgency…) by dragging frames onto them → spells the exit password. |
+| 4 | **Algorithm Control Room** | Puzzle | How personalization equations target ads using your demographics, follows & insecurities. Reward: *Truth Flashlight*. |
+| 5 | **Ads Corridor** | Corridor | A cursor-tracked "Truth Flashlight" (carried in from the Algorithm Room) burns away the gloss to reveal the fine print + a hidden exit code. |
+| 6 | **Persuasion Lab** | Puzzle | Name the persuasion technique on each poster (FOMO, social proof, urgency…) by dragging frames onto them; then click the computer to type the revealed password. |
 
 The finale is the **Post-test** conversation (there is no separate "Final Decision" node).
+
+**Reward chain.** Solving a puzzle grants the tool the next one needs, revealed on the "cleared"
+bar (`RoomFrame`'s `reward` prop): Link District → 🔑 *Emoji Card* (Influencer Avenue) →
+📄 *Data Report* (opens the Algorithm Room) → 🔦 *Truth Flashlight* (Ads Corridor). Items live in
+`ITEMS` (`gameData.js`); their names/descriptions are i18n'd under `items.*`.
 
 ## Debug mode
 
@@ -69,6 +74,7 @@ src/
     settings.js            Tunables + DEBUG / DEBUG_SCREEN flags
     assets.js              bgUrl() — resolves public asset paths against the base URL
     preloadAssets.js       Warms every background image into cache at startup
+    sound.js               playSound()/preloadSound()/stopSound() + global mute (persisted); base-URL aware
   i18n/
     index.jsx              useT()/useI18n() hooks, provider, {var} interpolation, locale registry
     locales/
@@ -76,9 +82,9 @@ src/
       en/*.js              Per-room string fragments (link, roulette, ads, persuasion, …)
   components/
     Stage.jsx              Fixed 1280×720 stage, scaled to fit (exposes useStage().scale)
-    HUD.jsx                Top bar: countdown, Bag, Map
+    HUD.jsx                Top bar: countdown, Bag, Map, sound on/off toggle
     GameMap.jsx            Oval "racetrack" district map / progress tracker
-    RoomFrame.jsx          Shared room chrome (briefing gate, bg slot, dim overlay, "cleared" bar)
+    RoomFrame.jsx          Shared room chrome (briefing gate, bg slot, dim overlay, reward reveal, "cleared" bar)
     RoomNav.jsx            In-room viewpoint navigator (◀ ▶ stations, e.g. Algorithm Room)
     Conversation.jsx       Messaging-app chat UI (typewriter, online/typing status) for the tests
     ProductPreview.jsx     Phone flash-sale post: spoofed non-clickable URL + live countdown
@@ -110,6 +116,23 @@ which prefixes Vite's `import.meta.env.BASE_URL` (i.e. `/` in dev, `/lastchance/
 Notes: PNGs render best around **1376×768**; animated **GIFs** are supported (browsers clamp
 very short frame delays, so encode e.g. 50 frames × 20 ms to play a 1 s loop). Prompt files
 for generating these backgrounds live in `junk/bg_prompts/` (gitignored).
+
+## Sound
+
+Sound effects live in `public/sounds/` and play through `src/game/sound.js`:
+
+- `playSound(name, volume?, startAt?)` — best-effort play (autoplay/missing-file errors are
+  swallowed); `preloadSound(name)` warms a clip on room entry; `stopSound(name)` halts a long
+  clip (e.g. the roulette spin whir). Paths resolve via `soundUrl()` against `BASE_URL`, so
+  they work under `/lastchance/` in production — the same base-path rule as images.
+- **Global mute** — `isMuted()/setMuted()` back the 🔊/🔇 toggle in the HUD; the choice is
+  persisted to `localStorage` and `playSound` short-circuits when muted.
+- Wired in for tactile feedback: door open/close/blocked/rotate (Link District), roulette
+  spin + win, a "correct" twinkle and a shared `wrong.mp3` on any incorrect answer, and an
+  inventory chime fired centrally from `GameContext` whenever a new item is earned.
+
+To add a sound: drop the file in `public/sounds/`, then `playSound('file.mp3')` (and optionally
+`preloadSound('file.mp3')` on mount).
 
 ## Editing text / adding a language
 

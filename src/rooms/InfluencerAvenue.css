@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  overflow-y: auto; /* safety: never let a tall stage push the confirm button off */
 }
 
 /* ---------- Stage header ---------- */
@@ -344,6 +345,159 @@
 .ia-match-site { font-size: 0.6rem; color: var(--cyan); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ia-match-title { font-size: 0.66rem; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ia-result-sum { color: var(--text); font-weight: 600; padding-top: 5px; margin-top: 1px; border-top: 1px dashed rgba(168, 85, 247, 0.3); }
+
+/* Two-column verify layout: image tray on the left, engine (with more vertical
+   room for its scrolling results) on the right. */
+.ia-verify {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 16px;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ---------- The reverse-search "engine" (drag a product image onto it) ---------- */
+.ia-engine {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-radius: var(--radius);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  background: rgba(12, 10, 26, 0.72);
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+.ia-engine-bar, .ia-engine-drop { flex: none; }
+.ia-engine-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  font-size: 0.78rem;
+  color: var(--cyan);
+  background: rgba(4, 8, 20, 0.7);
+  border-bottom: 1px solid var(--line);
+}
+.ia-engine-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); flex: none; }
+.ia-engine-drop {
+  min-height: 84px;
+  margin: 11px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 2px dashed rgba(168, 85, 247, 0.5);
+  border-radius: var(--radius-sm);
+  background: rgba(168, 85, 247, 0.05);
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.ia-engine-drop.is-over {
+  border-color: var(--purple);
+  background: rgba(168, 85, 247, 0.14);
+  box-shadow: inset 0 0 30px rgba(168, 85, 247, 0.18);
+}
+.ia-engine-ph { display: flex; align-items: center; gap: 11px; color: var(--muted); font-size: 0.92rem; }
+.ia-engine-icon { font-size: 1.6rem; color: var(--purple); animation: ia-bob 1.8s ease-in-out infinite; }
+@keyframes ia-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+.ia-engine-busy { display: flex; align-items: center; gap: 16px; width: 100%; }
+.ia-engine-thumb {
+  position: relative;
+  overflow: hidden;
+  flex: none;
+  width: 88px;
+  height: 62px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.35);
+}
+.ia-engine-thumb .ia-prod-emoji { font-size: 1.9rem; }
+.ia-engine-busy .ia-searching { flex: 1; border: none; background: none; padding: 0; }
+
+/* Draggable product image ("download" it and drop on the engine to "upload"). */
+.ia-prod-photo-drag { display: block; cursor: grab; }
+.ia-prod-photo-drag.dnd-dragging { cursor: grabbing; }
+.ia-prod-photo-drag.dnd-disabled { cursor: default; opacity: 0.85; }
+.ia-prod-photo-drag .ia-prod-photo { transition: transform 0.15s ease, box-shadow 0.2s; }
+.ia-prod-photo-drag:not(.dnd-disabled):hover .ia-prod-photo { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); }
+.ia-prod-grab {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 0.85rem;
+  color: #fff;
+  background: rgba(4, 8, 20, 0.6);
+  border-radius: 6px;
+  padding: 0 5px;
+  animation: ia-bob 1.8s ease-in-out infinite;
+}
+.ia-drag-hint { line-height: 1.3; min-height: 2.3em; }
+.ia-product.is-searching { opacity: 0.7; }
+.reduced-motion .ia-engine-icon, .reduced-motion .ia-prod-grab { animation: none; }
+
+/* ---------- "Downloaded images" tray — a left-hand column of draggable tiles ---------- */
+.ia-imgtray { display: flex; flex-direction: column; gap: 8px; min-height: 0; }
+.ia-imgtray-label { text-align: left; line-height: 1.3; }
+.ia-imgtray-items { display: flex; flex-direction: column; gap: 10px; min-height: 0; overflow-y: auto; }
+.ia-imgtile-drag { cursor: grab; }
+.ia-imgtile-drag.dnd-dragging { cursor: grabbing; }
+.ia-imgtile-drag.dnd-disabled { cursor: default; opacity: 0.6; }
+.ia-imgtile {
+  position: relative;
+  width: 100%;
+  height: 78px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 2px solid transparent;
+  box-shadow: inset 0 0 22px rgba(0, 0, 0, 0.35), 0 8px 18px rgba(0, 0, 0, 0.45);
+  transition: transform 0.15s ease, border-color 0.2s, box-shadow 0.2s;
+}
+.ia-imgtile-drag:not(.dnd-disabled):hover .ia-imgtile { transform: translateY(-3px); }
+.ia-imgtile-drag.shown .ia-imgtile { border-color: var(--purple); box-shadow: var(--glow-purple), inset 0 0 22px rgba(0, 0, 0, 0.35); }
+.ia-imgtile-emoji { font-size: 1.7rem; filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45)); }
+.ia-imgtile-name { color: #fff; text-align: center; padding: 0 8px; line-height: 1.1; }
+.ia-imgtile-badge {
+  position: absolute;
+  top: 5px;
+  right: 6px;
+  font-size: 0.8rem;
+  color: #fff;
+  background: rgba(4, 8, 20, 0.6);
+  border-radius: 6px;
+  padding: 0 5px;
+}
+.ia-imgtile-badge.grab { animation: ia-bob 1.8s ease-in-out infinite; }
+.ia-imgtile-badge.done { color: var(--green); background: rgba(4, 16, 10, 0.7); }
+.ia-imgtile-verdict {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(168, 85, 247, 0.9);
+  color: #fff;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+/* ---------- Results panel under the engine (search + verdict happen here) ---------- */
+.ia-engine-panel { margin: 0 11px 12px; padding: 12px 12px 4px; border-top: 1px solid var(--line); flex: 1; min-height: 0; overflow-y: auto; }
+.ia-engine-result-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.ia-engine-result-meta { display: flex; flex-direction: column; gap: 2px; }
+.ia-engine-result-meta .t-sm { font-family: var(--font-display); font-weight: 700; color: var(--text); }
+.ia-engine-cols { display: grid; grid-template-columns: 1fr 230px; gap: 16px; align-items: start; }
+.ia-engine-classify { display: flex; flex-direction: column; gap: 7px; }
+.ia-engine-classify .ia-segments { grid-template-columns: 1fr; }
 
 /* Segmented classification control — three options side by side. */
 .ia-segments { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: auto; }

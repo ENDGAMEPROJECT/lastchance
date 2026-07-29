@@ -62,8 +62,7 @@ const hasLookalike = (url) => [...url].some((ch) => ch.charCodeAt(0) > 127)
 
 /* A single door. Rendered both for the interactive (incoming) crossroad and
    for the static (outgoing) one shown during the advance transition. */
-function Door({ d, cfg, roundText, isBlocked, isOpen, interactive, onPeek, onBlock, t }) {
-  const note = roundText.notes[d.id]
+function Door({ d, cfg, isBlocked, isOpen, interactive, onPeek, onBlock, t }) {
   const secure = d.url.startsWith('https://')
   const lookalike = hasLookalike(d.url)
   // Peek toggles the door; play the matching open/close sound as it swings.
@@ -132,8 +131,6 @@ function Door({ d, cfg, roundText, isBlocked, isOpen, interactive, onPeek, onBlo
         >
           {isBlocked ? t('rooms.link.unblock') : t('rooms.link.blockThis')}
         </button>
-        {/* Always rendered so the layout never jumps; filled once blocked. */}
-        <div className="ld-note t-xs">{isBlocked && cfg.showNotesAfterBlock ? note : ''}</div>
       </div>
     </div>
   )
@@ -197,6 +194,7 @@ export default function LinkDistrict({ node }) {
   const [opened, setOpened] = useState({}) // which doors are peeked open
   const [error, setError] = useState('')
   const [phase, setPhase] = useState('block') // 'block' | 'justify' | 'done'
+  const [reviewing, setReviewing] = useState(false) // showing the round's explanations
   const [flags, setFlags] = useState({})
   const [justifyErr, setJustifyErr] = useState('')
 
@@ -254,6 +252,14 @@ export default function LinkDistrict({ node }) {
     const safeOk = data.doors.filter((d) => d.safe).every((d) => !blocked[d.url])
     if (!badOk) { playSound('wrong.mp3'); return setError(t('rooms.link.errStillOpen')) }
     if (!safeOk) { playSound('wrong.mp3'); return setError(t('rooms.link.errBlockedSafe')) }
+    // Round passed — explain all three doors together before moving on.
+    setReviewing(true)
+  }
+
+  // Leave the round review and advance to the next crossroads (or the justify
+  // phase after the last one).
+  function proceedAfterReview() {
+    setReviewing(false)
     if (round < ROUNDS.length - 1) {
       // Snapshot the doors we're leaving so they stay put during the slide.
       setOutgoing({ doors: displayDoors, blocked: { ...blocked }, roundText })
@@ -355,6 +361,32 @@ export default function LinkDistrict({ node }) {
               {round < ROUNDS.length - 1 ? t('rooms.link.nextRouter') : t('rooms.link.finalRouter')}
             </button>
           </div>
+
+          {/* Round review — explain all three doors together once the round is passed. */}
+          {reviewing && (
+            <div className="ld-review-overlay fade-in">
+              <div className="ld-review panel clip panel-glow-magenta">
+                <div className="ld-review-head">
+                  <span className="ld-review-title">{t('rooms.link.reviewTitle')}</span>
+                  <span className="chip">{t('rooms.link.routerBadge', { current: round + 1, total: ROUNDS.length })}</span>
+                </div>
+                <ul className="ld-review-list">
+                  {displayDoors.map((d) => (
+                    <li key={d.url} className={`ld-review-item ${d.safe ? 'safe' : 'fake'}`}>
+                      <span className="ld-review-verdict">{d.safe ? '✓' : '⛔'}</span>
+                      <div className="ld-review-text">
+                        <span className="ld-review-url mono">{highlightAddr(d.url)}</span>
+                        <span className="ld-review-note">{roundText.notes[d.id]}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <button className="btn btn-cyan" onClick={proceedAfterReview}>
+                  {round < ROUNDS.length - 1 ? t('rooms.link.nextRouter') : t('rooms.link.finalRouter')}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

@@ -26,8 +26,8 @@
   letter-spacing: 0.04em;
   margin: 2px 0;
 }
-.welcome-tag { color: var(--muted); letter-spacing: 0.08em; font-size: 0.78rem; margin: 0; }
-.welcome-sub { font-size: 0.86rem; margin: 4px 0 14px; }
+.welcome-tag { color: var(--muted); letter-spacing: 0.08em; font-size: 0.92rem; margin: 0; }
+.welcome-sub { font-size: 1rem; line-height: 1.45; margin: 4px 0 14px; }
 
 .welcome-fields { display: flex; gap: 14px; width: 100%; }
 .welcome-fields .welcome-field:first-child { flex: 1; }
@@ -43,11 +43,12 @@
 }
 .welcome-field > span {
   font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   color: var(--muted);
 }
+.welcome-card .field { font-size: 1.02rem; }
 
 /* Language picker */
 .lang-picker { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -61,11 +62,11 @@
   background: rgba(10, 14, 30, 0.6);
   color: var(--text);
   font-family: var(--font-ui);
-  font-size: 0.9rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
-.lang-chip em { font-style: normal; font-size: 0.66rem; color: var(--dim); text-transform: uppercase; }
+.lang-chip em { font-style: normal; font-size: 0.74rem; color: var(--dim); text-transform: uppercase; }
 .lang-chip:hover { border-color: var(--cyan); }
 .lang-chip.on {
   border-color: var(--cyan);

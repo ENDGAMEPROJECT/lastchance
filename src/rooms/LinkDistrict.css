@@ -125,8 +125,8 @@
   opacity: 0.5;
   z-index: -1;
 }
-.ld-door.blocked .ld-door3d::after { background: radial-gradient(ellipse at center, rgba(43,255,136,0.4), transparent 70%); }
-.ld-door.blocked .ld-door3d::before { border-color: rgba(43,255,136,0.5); }
+.ld-door.blocked .ld-door3d::after { background: radial-gradient(ellipse at center, rgba(255,43,214,0.4), transparent 70%); }
+.ld-door.blocked .ld-door3d::before { border-color: rgba(255,43,214,0.5); }
 
 /* interior (the website), revealed when the door opens */
 .ld-doorway {
@@ -357,16 +357,16 @@
   inset: 4px;
   z-index: 6;
   border-radius: 9px;
-  background: rgba(4, 16, 10, 0.62);
+  background: rgba(16, 4, 14, 0.62);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  color: var(--green);
+  color: var(--magenta);
   overflow: hidden;
 }
-.ld-chains span { font-size: 2.1rem; filter: drop-shadow(0 0 8px var(--green)); z-index: 1; }
+.ld-chains span { font-size: 2.1rem; filter: drop-shadow(0 0 8px var(--magenta)); z-index: 1; }
 .ld-chains b { font-family: var(--font-display); letter-spacing: 0.15em; font-size: 0.72rem; z-index: 1; }
 .ld-chains::before, .ld-chains::after {
   content: '';
@@ -374,26 +374,55 @@
   left: -8%;
   right: -8%;
   height: 13px;
-  background: repeating-linear-gradient(45deg, #0f2a1a 0 12px, #123520 12px 24px);
-  border-top: 1px solid rgba(43, 255, 136, 0.4);
-  border-bottom: 1px solid rgba(43, 255, 136, 0.4);
+  background: repeating-linear-gradient(45deg, #2a0f22 0 12px, #35122c 12px 24px);
+  border-top: 1px solid rgba(255, 43, 214, 0.4);
+  border-bottom: 1px solid rgba(255, 43, 214, 0.4);
 }
 .ld-chains::before { top: 33%; transform: rotate(-8deg); }
 .ld-chains::after { top: 58%; transform: rotate(7deg); }
 
 .ld-door-foot { display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; }
-/* Explanation note: every door reserves a fixed THREE lines of space, whether
-   its explanation is long, short, or not shown yet — so all doors stay the same
-   height and nothing jumps. `flex: none` stops the flex column from collapsing
-   the reserve; `height` (not just min-height) keeps short notes from shrinking. */
-.ld-note {
-  flex: none;
-  line-height: 1.3;
-  height: 3.9em;
-  min-height: 3.9em;
-  color: #eef3ff;
-  overflow: hidden;
+
+/* ---------- Round review: all three explanations together, after passing ---------- */
+.ld-review-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(2, 3, 10, 0.6);
 }
+.ld-review {
+  width: 100%;
+  max-width: 560px;
+  padding: 20px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.ld-review-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.ld-review-title { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; color: var(--magenta); }
+.ld-review-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.ld-review-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: rgba(10, 14, 30, 0.6);
+}
+.ld-review-item.safe { border-color: rgba(22, 242, 255, 0.5); }
+.ld-review-item.fake { border-color: rgba(255, 59, 92, 0.45); }
+.ld-review-verdict { font-size: 1.1rem; line-height: 1.3; flex: none; }
+.ld-review-item.safe .ld-review-verdict { color: var(--cyan); }
+.ld-review-item.fake .ld-review-verdict { color: var(--red); }
+.ld-review-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.ld-review-url { font-size: 0.82rem; word-break: break-all; }
+.ld-review-note { font-size: 0.82rem; line-height: 1.35; color: #eef3ff; }
+.ld-review .btn { align-self: flex-end; }
 
 /* ---------- Mini website pages (shown inside an opened doorway) ---------- */
 .door-page { position: absolute; inset: 0; display: flex; flex-direction: column; }

@@ -24,6 +24,7 @@ export default {
   hint: 'Remember: block the fakes, keep the one real door open.',
   nextRouter: 'Advance to the next crossroads →',
   finalRouter: 'Advance →',
+  reviewTitle: 'Why those doors?',
 
   errStillOpen: 'At least one fraudulent link is still open. Block every fake before continuing.',
   errBlockedSafe: 'You blocked the real store! That is the one safe door — leave it open.',
