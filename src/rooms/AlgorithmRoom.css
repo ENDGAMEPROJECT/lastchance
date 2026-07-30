@@ -110,9 +110,11 @@
   max-width: 1160px;
   width: 100%;
   margin: 0 auto;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 10px;
 }
 .ar-eq-head { text-align: center; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .ar-eq .ar-prompt { margin: 0; font-size: 0.92rem; }
@@ -305,6 +307,83 @@
   gap: 7px;
 }
 .ar-mini-prompt { margin: 0; font-size: 0.86rem; text-align: center; }
+
+/* ---------- One-equation-at-a-time stepper ---------- */
+.ar-step-badge { color: var(--cyan); letter-spacing: 0.08em; }
+.ar-step { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: center; justify-content: space-evenly; gap: 18px; }
+
+.ar-equation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  width: 100%;
+  max-width: 900px;
+  padding: 28px 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: rgba(8, 12, 26, 0.55);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.ar-equation.solved { border-color: var(--green); box-shadow: var(--glow-green); }
+.ar-equation.wrong { border-color: var(--red); box-shadow: var(--glow-red); animation: shake 0.4s ease; }
+.ar-equation .ar-slot-wrap { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.ar-col-tag { text-transform: uppercase; letter-spacing: 0.08em; }
+.ar-equation > .ar-op { align-self: center; margin-top: 14px; }
+
+/* Bigger, auto-width, stacked tiles for the single focused equation. */
+.ar-equation .ar-tile,
+.ar-opts-tiles .ar-tile.tray {
+  width: auto;
+  min-width: 140px;
+  max-width: 168px;
+  min-height: 96px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+}
+.ar-equation .ar-tile-icon,
+.ar-opts-tiles .ar-tile-icon { font-size: 2rem; }
+.ar-equation .ar-tile-label,
+.ar-opts-tiles .ar-tile-label { font-size: 0.84rem; }
+.ar-equation .ar-tile.slot .ar-tile-inner {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+}
+.ar-equation .ar-ad { min-width: 128px; }
+.ar-equation.solved .ar-tile.slot.filled { border-color: var(--green); background: rgba(43, 255, 136, 0.08); }
+
+/* Tile options to choose from */
+.ar-opts { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+.ar-opts-hint { text-align: center; font-size: 0.9rem; }
+.ar-opts-tiles { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+.ar-wrong { margin: 0; }
+
+/* Reflection after each equation */
+.ar-reflection {
+  width: 100%;
+  max-width: 740px;
+  padding: 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ar-reflect-title { font-family: var(--font-display); font-weight: 800; color: var(--cyan); font-size: 1.1rem; }
+.ar-reflect-text { margin: 0; line-height: 1.55; color: var(--text); font-size: 1rem; }
+.ar-reflection .btn { align-self: flex-end; }
+
+/* Final reconstructed-profile screen */
+.ar-final { flex: 1; min-height: 0; display: flex; justify-content: center; }
+.ar-final .ar-term-screen { max-width: 700px; }
 
 /* Station 2 — Data Wall */
 .ar-datawall { align-items: center; justify-content: center; gap: 12px; }

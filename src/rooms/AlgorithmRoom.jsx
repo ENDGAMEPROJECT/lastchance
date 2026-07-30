@@ -1,11 +1,10 @@
-import { useMemo, useRef, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { CODES, ITEMS, NARRATIVE } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 import { playSound } from '../game/sound.js'
 import { useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
-import RoomNav from '../components/RoomNav.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
 import './AlgorithmRoom.css'
 
@@ -66,22 +65,37 @@ const ROWS = [
   },
 ]
 
-/* The tray: the four tiles that complete the rows above, plus a couple of
-   distractors that fit nowhere (so it isn't just process-of-elimination).
-   Labels live in i18n (rooms.algorithm.tiles.<id>); ids stay stable for
-   correctness matching. */
+/* The tile pool. Each tile has a `kind` matching one of the three factor
+   columns (demographic / follows / insecurity). Per equation, the options are
+   drawn from the SAME kind as the blank, so the player must pick the RIGHT
+   insecurity/demographic/follow for this exact person — not just the right
+   type. Labels live in i18n (rooms.algorithm.tiles.<id>); ids stay stable for
+   correctness matching. The four "correct" tiles complete the rows above. */
 const TRAY = [
-  { id: 't-skin', icon: '🫣' }, // Insecure about her skin (demographic? no — insecurity)
-  { id: 't-boy', icon: '👦' }, // Boy, 15–25 (demographic)
-  { id: 't-bald', icon: '🧑‍🦲' }, // Worried about going bald (insecurity)
-  { id: 't-diet', icon: '🥗' }, // Follows diet & lifestyle pages (follows)
-  // distractors — plausible data points that match no equation
-  { id: 't-pets', icon: '🐶' }, // Follows pet accounts
-  { id: 't-retiree', icon: '🧓' }, // Retired, 65+
+  // ---- correct tiles (one completes each row's blank) ----
+  { id: 't-skin', icon: '🫣', kind: 'insecurity' },
+  { id: 't-boy', icon: '👦', kind: 'demographic' },
+  { id: 't-bald', icon: '🧑‍🦲', kind: 'insecurity' },
+  { id: 't-diet', icon: '🥗', kind: 'follows' },
+  // ---- demographic distractors ----
+  { id: 't-retiree', icon: '🧓', kind: 'demographic' },
+  { id: 't-tween', icon: '🧒', kind: 'demographic' },
+  { id: 't-gran', icon: '👵', kind: 'demographic' },
+  { id: 't-dad', icon: '🧔', kind: 'demographic' },
+  // ---- follows distractors ----
+  { id: 't-pets', icon: '🐶', kind: 'follows' },
+  { id: 't-gamer', icon: '🎮', kind: 'follows' },
+  { id: 't-cook', icon: '🍳', kind: 'follows' },
+  { id: 't-travel', icon: '✈️', kind: 'follows' },
+  // ---- insecurity distractors ----
+  { id: 't-money', icon: '💸', kind: 'insecurity' },
+  { id: 't-lonely', icon: '😔', kind: 'insecurity' },
+  { id: 't-height', icon: '📏', kind: 'insecurity' },
+  { id: 't-teeth', icon: '😬', kind: 'insecurity' },
 ]
 
-/* Three factor columns; headings come from i18n (rooms.algorithm.cols). */
-const COL_COUNT = 3
+/* Column index → tile kind (matches the `cols` i18n order). */
+const COL_KIND = ['demographic', 'follows', 'insecurity']
 
 export default function AlgorithmRoom({ node }) {
   const { completeRoom, addEvidence, addItem } = useGame()
@@ -96,15 +110,35 @@ export default function AlgorithmRoom({ node }) {
   /* ----- phase 'choice' state ----- */
   const [choice, setChoice] = useState(null) // 'A' | 'B' | null
 
-  /* ----- phase 'equations' state ----- */
-  // placements: rowId -> tileId dropped into that row's blank slot.
-  const [placements, setPlacements] = useState({})
-  // Feedback is withheld until the player runs the whole algorithm.
-  const [checked, setChecked] = useState(false)
-  // Which control-room station is in view (0 mainframe, 1 data wall, 2 terminal).
-  const [view, setView] = useState(0)
+  /* ----- phase 'equations' state (one equation at a time) ----- */
+  const [step, setStep] = useState(0) // current equation index; ROWS.length = the profile
+  const [placements, setPlacements] = useState({}) // rowId -> tileId placed in its blank slot
+  const [wrongFlash, setWrongFlash] = useState(false) // transient wrong-tile feedback
 
   const tileById = useMemo(() => Object.fromEntries(TRAY.map((tile) => [tile.id, tile])), [])
+  const blankSlot = (row) => row.slots.find((s) => s.blank)
+
+  /* Per-equation options: the correct tile + up to four SAME-CATEGORY
+     distractors, arranged deterministically so the answer isn't always in the
+     same spot and it isn't pure process-of-elimination. */
+  const OPTIONS_BY_ROW = useMemo(() => {
+    const OPTION_TOTAL = 5
+    const map = {}
+    ROWS.forEach((row, i) => {
+      const blank = row.slots.find((s) => s.blank)
+      const kind = COL_KIND[blank.col]
+      const correct = blank.tileId
+      const pool = TRAY.filter((tl) => tl.kind === kind && tl.id !== correct).map((tl) => tl.id)
+      const k = i % pool.length
+      const rotated = pool.slice(k).concat(pool.slice(0, k))
+      const opts = [correct, ...rotated.slice(0, OPTION_TOTAL - 1)]
+      // vary where the correct answer sits
+      if (i % 2 === 0) opts.reverse()
+      else { const c = opts.shift(); opts.splice(Math.min(2, opts.length), 0, c) }
+      map[row.id] = opts
+    })
+    return map
+  }, [])
 
   /* ---- unlock handlers ---- */
   function submitCode() {
@@ -118,48 +152,21 @@ export default function AlgorithmRoom({ node }) {
   }
 
   /* ---- equations helpers ---- */
-  const blankSlot = (row) => row.slots.find((s) => s.blank)
-  const rowSolved = (row) => placements[row.id] === blankSlot(row).tileId
-
-  // A tile is "used" once placed in any slot, so it leaves the tray.
-  const usedTileIds = useMemo(
-    () => new Set(Object.values(placements)),
-    [placements]
-  )
-  const allFilled = ROWS.every((row) => placements[row.id]) // every blank slot filled
-  const allRowsSolved = ROWS.every(rowSolved)
-
-  // A tile dropped into a row's blank slot. No correctness feedback here —
-  // any tile can be placed; the player fills every slot, then runs the
-  // algorithm to see which rows are right. If the tile was already in
-  // another slot, it moves. Placing/removing clears prior feedback.
-  function placeTile(row, tileId) {
-    setChecked(false)
-    setPlacements((p) => {
-      const next = {}
-      for (const [rid, tid] of Object.entries(p)) if (tid !== tileId) next[rid] = tid
-      next[row.id] = tileId
-      return next
-    })
+  // Drop a tile into the current equation's blank: correct → it locks in and the
+  // reflection unlocks; wrong → a red flash + a nudge (tile stays in the tray).
+  function handleDrop(row, tileId) {
+    if (tileId === blankSlot(row).tileId) {
+      setWrongFlash(false)
+      setPlacements((p) => ({ ...p, [row.id]: tileId }))
+    } else {
+      playSound('wrong.mp3')
+      setWrongFlash(true)
+      window.setTimeout(() => setWrongFlash(false), 1200)
+    }
   }
-
-  // Return a placed tile back to the tray (drag it out or click the slot).
-  function clearSlot(rowId) {
-    setChecked(false)
-    setPlacements((p) => {
-      const next = { ...p }
-      delete next[rowId]
-      return next
-    })
-  }
-
-  // Run the algorithm: reveal feedback only now, once every slot is filled.
-  // A clean run auto-pans to the Ad Terminal to show the profile it fires.
-  function runCheck() {
-    if (!allFilled) return
-    setChecked(true)
-    if (ROWS.every(rowSolved)) setView(2)
-    else playSound('wrong.mp3') // some equations are mis-matched
+  function nextEquation() {
+    setWrongFlash(false)
+    setStep((s) => s + 1)
   }
 
   // Fires exactly once, when the player logs the evidence after a clean run.
@@ -306,194 +313,133 @@ export default function AlgorithmRoom({ node }) {
         </div>
       )}
 
-      {/* ================= PHASE: EQUATIONS (control room) ================= */}
+      {/* ================= PHASE: EQUATIONS (one at a time) ================= */}
       {phase === 'equations' && (
         <div className="ar-eq fade-in">
           <div className="ar-eq-head">
             <span className="chip">{t('rooms.algorithm.equations.badge')}</span>
-            <span className="dim t-xs">{t('rooms.algorithm.equations.navHint')}</span>
+            <span className="ar-step-badge mono">
+              {step < ROWS.length
+                ? t('rooms.algorithm.equations.stepBadge', { n: step + 1, total: ROWS.length })
+                : t('rooms.algorithm.equations.profileBadge')}
+            </span>
           </div>
 
-          <RoomNav
-            accent="cyan"
-            index={view}
-            onChange={setView}
-            views={[
-              /* ---------- Station 1 · Mainframe (the puzzle) ---------- */
-              {
-                id: 'mainframe',
-                icon: '🖥️',
-                label: t('rooms.algorithm.equations.navMainframe'),
-                content: (
-                  <div className="ar-station ar-mainframe scene-scroll">
-                    <p className="ar-prompt ar-mini-prompt">{t('rooms.algorithm.equations.prompt')}</p>
+          {step < ROWS.length ? (() => {
+            const row = ROWS[step]
+            const placedId = placements[row.id]
+            const placed = placedId ? tileById[placedId] : null
+            const stepSolved = placedId === blankSlot(row).tileId
+            return (
+              <div className="ar-step scene-scroll">
+                <p className="ar-prompt ar-mini-prompt">{t('rooms.algorithm.equations.prompt')}</p>
 
-                    <div className="ar-eq-cols">
-                      {Array.from({ length: COL_COUNT }).map((_, i) => (
-                        <span key={i} className="ar-col-head">{t('rooms.algorithm.cols')[i]}</span>
-                      ))}
-                      <span className="ar-col-head result">{t('rooms.algorithm.equations.resultCol')}</span>
-                    </div>
-
-                    <div className="ar-eq-rows">
-                      {ROWS.map((row) => {
-                        const placedId = placements[row.id]
-                        const placed = placedId ? tileById[placedId] : null
-                        const done = checked && rowSolved(row)
-                        const wrong = checked && placedId && !rowSolved(row)
-                        return (
-                          <div key={row.id} className={`ar-row ${done ? 'done' : ''} ${wrong ? 'wrong' : ''}`}>
-                            {row.slots.map((slot, i) => (
-                              <div key={slot.col} className="ar-slot-wrap">
-                                {slot.blank ? (
-                                  <DropZone
-                                    id={`slot-${row.id}`}
-                                    accept={['tile']}
-                                    className={`ar-tile slot ${placed ? 'filled' : 'empty'}`}
-                                    overClassName="is-over"
-                                    onDrop={(data) => placeTile(row, data.tileId)}
-                                  >
-                                    {placed ? (
-                                      <Draggable
-                                        id={`placed-${row.id}`}
-                                        kind="tile"
-                                        data={{ tileId: placed.id }}
-                                        className="ar-tile-inner"
-                                        onClick={() => clearSlot(row.id)}
-                                      >
-                                        <span className="ar-tile-icon">{placed.icon}</span>
-                                        <span className="ar-tile-label">{t(`rooms.algorithm.tiles.${placed.id}`)}</span>
-                                      </Draggable>
-                                    ) : (
-                                      <span className="ar-slot-ph">{t('rooms.algorithm.equations.slotPlaceholder')}</span>
-                                    )}
-                                  </DropZone>
-                                ) : (
-                                  <div className="ar-tile locked">
-                                    <span className="ar-tile-icon">{slot.icon}</span>
-                                    <span className="ar-tile-label">{t(`rooms.algorithm.rows.${row.id}.slots.${slot.col}`)}</span>
-                                  </div>
-                                )}
-                                {i < row.slots.length - 1 && <span className="ar-op">+</span>}
-                              </div>
-                            ))}
-
-                            <span className="ar-op eq">=</span>
-
-                            <div className={`ar-ad ${done ? 'active' : ''}`}>
-                              <span className="ar-ad-icon">{row.ad.icon}</span>
-                              <span className="ar-ad-label">{t(`rooms.algorithm.rows.${row.id}.ad`)}</span>
-                              {done && <span className="ar-ad-flag">{t('rooms.algorithm.equations.adFlag')}</span>}
-                            </div>
+                {/* The single equation */}
+                <div className={`ar-equation ${stepSolved ? 'solved' : ''} ${wrongFlash ? 'wrong' : ''}`}>
+                  {row.slots.map((slot, i) => (
+                    <Fragment key={slot.col}>
+                      <div className="ar-slot-wrap">
+                        <span className="ar-col-tag t-xs dim">{t('rooms.algorithm.cols')[slot.col]}</span>
+                        {slot.blank ? (
+                          <DropZone
+                            id={`slot-${row.id}`}
+                            accept={['tile']}
+                            className={`ar-tile slot ${placed ? 'filled' : 'empty'}`}
+                            overClassName="is-over"
+                            onDrop={(data) => handleDrop(row, data.tileId)}
+                          >
+                            {placed ? (
+                              <span className="ar-tile-inner">
+                                <span className="ar-tile-icon">{placed.icon}</span>
+                                <span className="ar-tile-label">{t(`rooms.algorithm.tiles.${placed.id}`)}</span>
+                              </span>
+                            ) : (
+                              <span className="ar-slot-ph">{t('rooms.algorithm.equations.slotPlaceholder')}</span>
+                            )}
+                          </DropZone>
+                        ) : (
+                          <div className="ar-tile locked">
+                            <span className="ar-tile-icon">{slot.icon}</span>
+                            <span className="ar-tile-label">{t(`rooms.algorithm.rows.${row.id}.slots.${slot.col}`)}</span>
                           </div>
-                        )
-                      })}
-                    </div>
-
-                    <div className="ar-tray">
-                      <div className="ar-tray-label mono t-xs dim">{t('rooms.algorithm.equations.trayLabel')}</div>
-                      <div className="ar-tray-tiles">
-                        {TRAY.map((tile) => {
-                          if (usedTileIds.has(tile.id)) return null
-                          return (
-                            <Draggable
-                              key={tile.id}
-                              id={`tile-${tile.id}`}
-                              kind="tile"
-                              data={{ tileId: tile.id }}
-                              className="ar-tile tray"
-                            >
-                              <span className="ar-tile-icon">{tile.icon}</span>
-                              <span className="ar-tile-label">{t(`rooms.algorithm.tiles.${tile.id}`)}</span>
-                            </Draggable>
-                          )
-                        })}
-                      </div>
-                    </div>
-
-                    {!(checked && allRowsSolved) && (
-                      <div className="ar-run">
-                        {checked && !allRowsSolved && (
-                          <div className="banner wrong ar-run-banner">{t('rooms.algorithm.equations.wrongBanner')}</div>
                         )}
-                        <button className="btn btn-cyan btn-lg" onClick={runCheck} disabled={!allFilled}>
-                          {t('rooms.algorithm.equations.runBtn')}
-                        </button>
-                        {!allFilled && <span className="dim t-xs">{t('rooms.algorithm.equations.fillHint')}</span>}
                       </div>
-                    )}
-                  </div>
-                ),
-              },
+                      {i < row.slots.length - 1 && <span className="ar-op">+</span>}
+                    </Fragment>
+                  ))}
 
-              /* ---------- Station 2 · Data Wall (atmosphere + lesson) ---------- */
-              {
-                id: 'datawall',
-                icon: '📡',
-                label: t('rooms.algorithm.equations.navDataWall'),
-                content: (
-                  <div className="ar-station ar-datawall scene-scroll">
-                    <div className="ar-dw-panel panel clip panel-glow-cyan">
-                      <div className="ar-dw-title">{t('rooms.algorithm.equations.dataWallTitle')}</div>
-                      <div className="ar-dw-sub muted t-sm">
-                        {t('rooms.algorithm.equations.dataWallSub', { friend: NARRATIVE.friend })}
-                      </div>
-                      <ul className="ar-dw-feed">
-                        {t('rooms.algorithm.equations.dataWallFeed').map((line, i) => (
-                          <li key={i} style={{ animationDelay: `${i * 0.12}s` }}>
-                            <span className="ar-dw-dot" />{line}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="learn ar-dw-learn">
-                      <b>{t('rooms.algorithm.equations.learnTitle')}</b>
-                      {t('rooms.algorithm.equations.learnBefore')}
-                      <i>{t('rooms.algorithm.equations.learnItalic')}</i>
-                      {t('rooms.algorithm.equations.learnAfter')}
-                    </div>
-                  </div>
-                ),
-              },
+                  <span className="ar-op eq">=</span>
 
-              /* ---------- Station 3 · Ad Terminal (output) ---------- */
-              {
-                id: 'terminal',
-                icon: '📺',
-                label: t('rooms.algorithm.equations.navTerminal'),
-                content: (
-                  <div className="ar-station ar-adterminal scene-scroll">
-                    <div className="ar-term-screen panel clip panel-glow-cyan">
-                      <div className="ar-dw-title">{t('rooms.algorithm.equations.terminalTitle')}</div>
-                      {checked && allRowsSolved ? (
-                        <div className="ar-reveal fade-in">
-                          <div className="ar-profile">
-                            <div className="ar-profile-title">{t('rooms.algorithm.equations.profileTitle')}</div>
-                            <p>
-                              {t('rooms.algorithm.equations.profileP1')}
-                              <b>{t('rooms.algorithm.equations.profileB1', { friend: NARRATIVE.friend })}</b>
-                              {t('rooms.algorithm.equations.profileP2')}
-                              <b>{t('rooms.algorithm.equations.profileB2')}</b>
-                              {t('rooms.algorithm.equations.profileP3')}
-                              <b>{t('rooms.algorithm.equations.profileB3')}</b>
-                              {t('rooms.algorithm.equations.profileP4', { friend: NARRATIVE.friend })}
-                            </p>
-                          </div>
-                          {!solved && (
-                            <button className="btn btn-green btn-lg" onClick={finish}>
-                              {t('rooms.algorithm.equations.logEvidence')}
-                            </button>
-                          )}
-                        </div>
-                      ) : (
-                        <p className="ar-term-idle muted">{t('rooms.algorithm.equations.terminalIdle')}</p>
-                      )}
-                    </div>
+                  <div className={`ar-ad ${stepSolved ? 'active' : ''}`}>
+                    <span className="ar-ad-icon">{row.ad.icon}</span>
+                    <span className="ar-ad-label">{t(`rooms.algorithm.rows.${row.id}.ad`)}</span>
+                    {stepSolved && <span className="ar-ad-flag">{t('rooms.algorithm.equations.adFlag')}</span>}
                   </div>
-                ),
-              },
-            ]}
-          />
+                </div>
+
+                {!stepSolved ? (
+                  <div className="ar-opts">
+                    <div className="ar-opts-hint dim t-sm">{t('rooms.algorithm.equations.dragHint')}</div>
+                    <div className="ar-opts-tiles">
+                      {OPTIONS_BY_ROW[row.id].map((id) => (
+                        <Draggable
+                          key={id}
+                          id={`opt-${id}`}
+                          kind="tile"
+                          data={{ tileId: id }}
+                          className="ar-tile tray"
+                        >
+                          <span className="ar-tile-icon">{tileById[id].icon}</span>
+                          <span className="ar-tile-label">{t(`rooms.algorithm.tiles.${id}`)}</span>
+                        </Draggable>
+                      ))}
+                    </div>
+                    {wrongFlash && <div className="banner wrong shake ar-wrong">{t('rooms.algorithm.equations.wrongHint')}</div>}
+                  </div>
+                ) : (
+                  <div className="ar-reflection panel clip panel-glow-cyan fade-in">
+                    <div className="ar-reflect-title">{t('rooms.algorithm.equations.reflectTitle')}</div>
+                    <p className="ar-reflect-text">{t(`rooms.algorithm.rows.${row.id}.explain`, { friend: NARRATIVE.friend })}</p>
+                    <button className="btn btn-cyan" onClick={nextEquation}>
+                      {step < ROWS.length - 1
+                        ? t('rooms.algorithm.equations.nextBtn')
+                        : t('rooms.algorithm.equations.lastBtn', { friend: NARRATIVE.friend })}
+                    </button>
+                  </div>
+                )}
+              </div>
+            )
+          })() : (
+            /* ---------- Final: the reconstructed profile + the lesson ---------- */
+            <div className="ar-final scene-scroll fade-in">
+              <div className="ar-term-screen panel clip panel-glow-cyan">
+                <div className="ar-dw-title">{t('rooms.algorithm.equations.terminalTitle')}</div>
+                <div className="ar-profile">
+                  <div className="ar-profile-title">{t('rooms.algorithm.equations.profileTitle')}</div>
+                  <p>
+                    {t('rooms.algorithm.equations.profileP1')}
+                    <b>{t('rooms.algorithm.equations.profileB1', { friend: NARRATIVE.friend })}</b>
+                    {t('rooms.algorithm.equations.profileP2')}
+                    <b>{t('rooms.algorithm.equations.profileB2')}</b>
+                    {t('rooms.algorithm.equations.profileP3')}
+                    <b>{t('rooms.algorithm.equations.profileB3')}</b>
+                    {t('rooms.algorithm.equations.profileP4', { friend: NARRATIVE.friend })}
+                  </p>
+                </div>
+                <div className="learn ar-dw-learn">
+                  <b>{t('rooms.algorithm.equations.learnTitle')}</b>
+                  {t('rooms.algorithm.equations.learnBefore')}
+                  <i>{t('rooms.algorithm.equations.learnItalic')}</i>
+                  {t('rooms.algorithm.equations.learnAfter')}
+                </div>
+                {!solved && (
+                  <button className="btn btn-green btn-lg" onClick={finish}>
+                    {t('rooms.algorithm.equations.logEvidence')}
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </RoomFrame>

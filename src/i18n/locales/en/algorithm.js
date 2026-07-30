@@ -53,6 +53,15 @@ export default {
     resultCol: '→ Targeted ad',
     adFlag: 'AD ACTIVATED',
     slotPlaceholder: '＋ drop tile',
+
+    /* One-equation-at-a-time flow */
+    stepBadge: 'Equation {n} / {total}',
+    profileBadge: 'Profile complete',
+    dragHint: 'Drag the missing factor into the equation — the one that fits this exact person.',
+    wrongHint: 'That factor doesn’t fit this person. Look at what the ad is really selling.',
+    reflectTitle: 'What just happened',
+    nextBtn: 'Next equation →',
+    lastBtn: 'See {friend}’s profile →',
     trayLabel: 'DATA TILES — drag one into each empty slot (or tap a tile, then tap a slot)',
     runBtn: '⚡ Run the algorithm',
     fillHint: 'Fill every slot, then run the algorithm.',
@@ -104,18 +113,26 @@ export default {
     r1: {
       ad: 'Miracle skincare cream',
       slots: { 0: 'Girl, 13–17', 1: 'Follows beauty influencers' },
+      explain:
+        'A 13-year-old who follows beauty accounts and worries about her skin is served a “miracle” cream. The algorithm didn’t guess — it matched her age and her follows to an insecurity, then sold straight to it.',
     },
     r2: {
       ad: 'Muscle-gain supplement',
       slots: { 1: 'Follows fitness influencers', 2: 'Insecure about being skinny' },
+      explain:
+        'A teen boy who follows fitness pages and feels too skinny is handed a muscle-gain supplement. His insecurity is the exact reason the ad reached him.',
     },
     r3: {
       ad: 'Baldness cream',
       slots: { 0: 'Man, 25–35', 1: 'Follows tech channels' },
+      explain:
+        'A man who fears going bald — flagged by his age and browsing — is shown a baldness “cure”. Same recipe: a private worry turned into a target.',
     },
     r4: {
       ad: 'Weight-loss pills',
       slots: { 0: 'Woman, 30–45', 2: 'Insecure about her weight' },
+      explain:
+        'A woman who follows diet pages and feels bad about her weight is aimed at with weight-loss pills. The feed she scrolls quietly feeds the very fear it then sells to.',
     },
   },
 
@@ -125,7 +142,20 @@ export default {
     't-boy': 'Boy, 15–25',
     't-bald': 'Worried about going bald',
     't-diet': 'Follows diet & lifestyle pages',
-    't-pets': 'Follows pet accounts',
+    // demographic distractors
     't-retiree': 'Retired, 65+',
+    't-tween': 'Kid, 8–12',
+    't-gran': 'Woman, 60+',
+    't-dad': 'Dad, in his 40s',
+    // follows distractors
+    't-pets': 'Follows pet accounts',
+    't-gamer': 'Follows gaming channels',
+    't-cook': 'Follows cooking pages',
+    't-travel': 'Follows travel bloggers',
+    // insecurity distractors
+    't-money': 'Anxious about money',
+    't-lonely': 'Afraid of being left out',
+    't-height': 'Self-conscious about height',
+    't-teeth': 'Worried about their teeth',
   },
 }
