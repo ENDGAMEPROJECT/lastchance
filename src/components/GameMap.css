@@ -1,6 +1,14 @@
 /* City map / progress tracker — a serpentine neon path of floating 3D
    podiums (rendered art from public/bg/map) over the map background. */
 
+/* The global .bg-slot (styles/global.css) fades every backdrop to opacity 0.42.
+   The map keeps that treatment, just a little clearer — the saturation bump and
+   everything else are inherited. Delete this block to fall back to the global
+   value. */
+.map-scroll .bg-slot {
+  opacity: 0.6;
+}
+
 .map-head { max-width: 900px; margin: 0 auto 4px; text-align: center; }
 .map-head h2 { font-size: 1.7rem; margin-bottom: 2px; }
 .map-head .eyebrow { font-size: 0.66rem; }
@@ -29,6 +37,23 @@
 /* Holds the stations so they can be nudged as one block (see useCentred). */
 .map-nodes { position: absolute; inset: 0; }
 
+/* ---------- The road ---------- */
+/* Drawn behind the stations, so each podium sits on it rather than beside it. */
+.mroad { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
+/* dark tarmac, faintly lit from the neon either side */
+.mroad-surface {
+  fill: rgba(10, 5, 24, 0.82);
+  stroke: rgba(168, 85, 247, 0.25);
+  stroke-width: 1;
+}
+/* the lit kerbs down each side — this is what makes it read as a road */
+.mroad-kerb {
+  fill: none;
+  stroke: var(--magenta);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 5px var(--magenta)) drop-shadow(0 0 12px rgba(255, 43, 214, 0.5));
+}
 /* ---------- A station ---------- */
 /* The button is sized to the art and centred on its trail coordinate; the
    label, index and status badges hang off it absolutely so the art itself
@@ -59,11 +84,11 @@
   bottom: 100%;
   transform: translateX(-50%);
   font-family: var(--font-display);
-  font-size: 0.74rem;
+  font-size: 0.62rem;
   font-weight: 700;
   color: var(--text);
-  padding: 5px 13px;
-  border-radius: 11px;
+  padding: 4px 11px;
+  border-radius: 9px;
   border: 1px solid currentColor;
   background: rgba(8, 12, 26, 0.86);
   box-shadow: 0 0 12px -2px currentColor;
@@ -73,11 +98,17 @@
 
 /* the rendered podium */
 .mnode-art { position: absolute; inset: 0; }
-.mnode-art img { width: 100%; height: 100%; object-fit: contain; display: block; }
-/* Per-file scale/offset (set inline from ART_FIT) that evens out the art's
-   inconsistent framing. The origin is the bottom of the box, so scaling pivots
-   on the podium's base rather than the middle of the image. */
-.mnode-img { transform-origin: 50% 100%; }
+/* A single baked render: fills the box, then the per-file scale/offset (set
+   inline from ART_FIT) evens out the art's inconsistent framing. The origin is
+   the bottom of the box, so scaling pivots on the podium's base rather than the
+   middle of the image. */
+.mnode-img { width: 100%; height: 100%; object-fit: contain; display: block; transform-origin: 50% 100%; }
+/* A composite station: the shared stand, with its prop seated on top. Position
+   and size come inline from composite(). */
+.mnode-stand, .mnode-prop { position: absolute; height: auto; display: block; }
+/* No gray artwork for these, so the locked state is made here. */
+.mnode.locked .mnode-stand,
+.mnode.locked .mnode-prop { filter: grayscale(1) brightness(0.55) contrast(1.05); }
 
 /* padlock over a locked station */
 .mnode-art img.mnode-lock {

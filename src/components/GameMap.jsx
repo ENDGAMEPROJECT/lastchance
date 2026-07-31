@@ -40,13 +40,69 @@ const ART_FIT = {
   final: { s: 0.949, dy: -3.5, top: 0.041 },
 }
 
+/* ---- Composite stations: one shared stand, with a prop standing on it ----
+   Instead of a single baked render, these draw `stand.png` and seat a prop
+   image on its upper surface. Every number below is a fraction of that image's
+   own canvas, measured from its alpha, so the values survive the PNGs being
+   resized. Listing a station in PROPS is all it takes to switch it over. */
+const STAND = {
+  aspect: 1024 / 682, // canvas proportions
+  cx: 0.498, // centre of the podium across the canvas
+  bottom: 0.807, // its lowest opaque row
+  surface: 0.639, // the upper face, where a prop's feet land
+  width: 0.455, // share of the canvas width the podium spans
+}
+
+/* cx/top/bottom/height are fractions of the prop's own canvas, from its alpha.
+   `scale` is an optional per-prop tweak against PROP_HEIGHT, for art whose
+   subject reads bigger or smaller than the rest at the same measured height. */
+const PROPS = {
+  start: { aspect: 1, cx: 0.493, top: 0.09, bottom: 0.887, height: 0.799 },
+  link: { aspect: 1, cx: 0.5, top: 0.145, bottom: 0.852, height: 0.709 },
+  roulette: { aspect: 1, cx: 0.495, top: 0.057, bottom: 0.953, height: 0.898 },
+  influencer: { aspect: 1, cx: 0.51, top: 0.076, bottom: 0.926, height: 0.852 },
+  algorithm: { aspect: 1, cx: 0.492, top: 0.072, bottom: 0.895, height: 0.824 },
+  ads: { aspect: 1, cx: 0.498, top: 0.037, bottom: 0.947, height: 0.912 },
+  persuasion: { aspect: 1, cx: 0.498, top: 0.066, bottom: 0.949, height: 0.885 },
+  final: { aspect: 1, cx: 0.503, top: 0.037, bottom: 0.893, height: 0.857 },
+}
+
+/* How the pair is laid out, in fractions of the (square) art box. */
+const STAND_WIDTH = 0.91 // podium width against the box
+const STAND_FOOT = 0.96 // where the podium's lowest pixel sits
+const PROP_HEIGHT = 0.63 // prop height against the box
+
+function composite(name) {
+  const p = PROPS[name]
+  const sw = STAND_WIDTH / STAND.width
+  const sh = sw / STAND.aspect
+  const stand = { w: sw, left: 0.5 - STAND.cx * sw, top: STAND_FOOT - STAND.bottom * sh }
+  const surface = stand.top + STAND.surface * sh
+  const ph = (PROP_HEIGHT * (p.scale ?? 1)) / p.height
+  const pw = ph * p.aspect
+  const prop = { w: pw, left: 0.5 - p.cx * pw, top: surface - p.bottom * ph }
+  return { stand, prop, artTop: prop.top + p.top * ph }
+}
+
+/* A composite layer's placement, as inline style. (Not named `pct` — GameMap
+   already has a local of that name for the progress percentage.) */
+const layer = ({ w, left, top }) => ({
+  width: `${(w * 100).toFixed(2)}%`,
+  left: `${(left * 100).toFixed(2)}%`,
+  top: `${(top * 100).toFixed(2)}%`,
+})
+
 const LABEL_GAP = 12 // px of clear air between a label pill and the art below it
 
 /* Where the label's lower edge sits, measured up from the bottom of the art
-   box: the artwork's own top, after the fit transform, less the gap. */
+   box: the artwork's own top, less the gap. */
 function labelBottom(art) {
-  const { s, dy, top } = ART_FIT[art]
-  const artTop = 1 - s * (1 - top) + dy / 100
+  let artTop
+  if (PROPS[art]) artTop = composite(art).artTop
+  else {
+    const { s, dy, top } = ART_FIT[art]
+    artTop = 1 - s * (1 - top) + dy / 100
+  }
   return `calc(${((1 - artTop) * 100).toFixed(1)}% + ${LABEL_GAP}px)`
 }
 
@@ -80,6 +136,78 @@ const STATIONS = PLACES.map(([nx, ny]) => ({
   x: FIELD.x + nx * FIELD.w,
   y: FIELD.y + ny * FIELD.h,
 }))
+
+/* ---- The road ------------------------------------------------------------
+   A neon road running Start → Link → Roulette → Influencer → Algorithm → Ads →
+   Persuasion → Final, closing the ring the stations sit on. It is a filled
+   ribbon rather than a stroked line so each side can carry its own lit kerb.
+   The width is the same all the way round: a true ground plane would compress
+   the width of a road running away from the viewer, but that makes the side
+   legs read as fatter than the top and bottom ones, which is not how the
+   reference ribbon behaves. It sits at ground level, behind the podiums. */
+const ROAD_DY = 50 // node centre → the ground the podium stands on
+const ROAD_W = 24 // width of the road, uniform along its length
+
+/* Extra curve per leg: the midpoint of leg i (station i → i+1) is pushed this
+   many px away from the middle of the board before the spline is fitted, which
+   bows that stretch outward. The long leg down the right-hand side needs it —
+   its two stations sit at the same x, so it would otherwise run dead straight. */
+const ROAD_BOW = [0, 0, 0, 60, 0, 0, 0]
+
+const ROAD = (() => {
+  const mid = { x: BOARD.w / 2, y: BOARD.h / 2 + ROAD_DY }
+  const pts = []
+  STATIONS.forEach((s, i) => {
+    pts.push({ x: s.x, y: s.y + ROAD_DY })
+    const bow = ROAD_BOW[i]
+    const next = STATIONS[i + 1]
+    if (!bow || !next) return
+    const mx = (s.x + next.x) / 2
+    const my = (s.y + next.y) / 2 + ROAD_DY
+    const len = Math.hypot(mx - mid.x, my - mid.y) || 1
+    pts.push({ x: mx + ((mx - mid.x) / len) * bow, y: my + ((my - mid.y) / len) * bow })
+  })
+
+  // Catmull-Rom through the stations, sampled into a dense polyline
+  const line = []
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[i - 1] || pts[i]
+    const p1 = pts[i]
+    const p2 = pts[i + 1]
+    const p3 = pts[i + 2] || p2
+    const c1 = { x: p1.x + (p2.x - p0.x) / 6, y: p1.y + (p2.y - p0.y) / 6 }
+    const c2 = { x: p2.x - (p3.x - p1.x) / 6, y: p2.y - (p3.y - p1.y) / 6 }
+    for (let k = i === 0 ? 0 : 1; k <= 40; k++) {
+      const t = k / 40
+      const u = 1 - t
+      const w = [u * u * u, 3 * u * u * t, 3 * u * t * t, t * t * t]
+      line.push({
+        x: w[0] * p1.x + w[1] * c1.x + w[2] * c2.x + w[3] * p2.x,
+        y: w[0] * p1.y + w[1] * c1.y + w[2] * c2.y + w[3] * p2.y,
+      })
+    }
+  }
+
+  // kerbs: the centre line offset to either side along its normal
+  const left = []
+  const right = []
+  for (let i = 0; i < line.length; i++) {
+    const a = line[Math.max(0, i - 1)]
+    const b = line[Math.min(line.length - 1, i + 1)]
+    const len = Math.hypot(b.x - a.x, b.y - a.y) || 1
+    const nx = (-(b.y - a.y) / len) * (ROAD_W / 2)
+    const ny = ((b.x - a.x) / len) * (ROAD_W / 2)
+    left.push({ x: line[i].x + nx, y: line[i].y + ny })
+    right.push({ x: line[i].x - nx, y: line[i].y - ny })
+  }
+
+  const d = (ps) => ps.map((p, i) => `${i ? 'L' : 'M'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ')
+  return {
+    surface: `${d(left)} ${d([...right].reverse()).replace('M', 'L')} Z`,
+    left: d(left),
+    right: d(right),
+  }
+})()
 
 /* Centre the stations horizontally by what is actually on screen, not by their
    coordinates. The art is symmetric about the board's middle, but the label
@@ -180,10 +308,17 @@ export default function GameMap() {
 
       <div className="map-board" ref={boardRef} style={{ width: BOARD.w, height: BOARD.h }}>
         <div className="map-nodes" style={{ transform: `translateX(${shift.toFixed(1)}px)` }}>
+        {/* road surface with a lit kerb down each side */}
+        <svg className="mroad" viewBox={`0 0 ${BOARD.w} ${BOARD.h}`} aria-hidden>
+          <path className="mroad-surface" d={ROAD.surface} />
+          <path className="mroad-kerb" d={ROAD.left} />
+          <path className="mroad-kerb" d={ROAD.right} />
+        </svg>
         {stations.map((s, i) => {
           const locked = s.status === 'locked'
           const { x, y } = STATIONS[i]
           const title = t(`nodes.${s.id}.title`, vars)
+          const view = PROPS[s.art] ? composite(s.art) : null
           return (
             <button
               key={s.id}
@@ -199,13 +334,20 @@ export default function GameMap() {
               <span className="mnode-label" style={{ bottom: labelBottom(s.art) }}>{title}</span>
               <span className="mnode-glow" />
               <span className="mnode-art">
-                <img
-                  className="mnode-img"
-                  style={{ transform: `translateY(${ART_FIT[s.art].dy}%) scale(${ART_FIT[s.art].s})` }}
-                  src={artUrl(s.art, locked)}
-                  alt=""
-                  draggable={false}
-                />
+                {view ? (
+                  <>
+                    <img className="mnode-stand" style={layer(view.stand)} src={bgUrl('map/stand.png')} alt="" draggable={false} />
+                    <img className="mnode-prop" style={layer(view.prop)} src={bgUrl(`map/${s.art}.png`)} alt="" draggable={false} />
+                  </>
+                ) : (
+                  <img
+                    className="mnode-img"
+                    style={{ transform: `translateY(${ART_FIT[s.art].dy}%) scale(${ART_FIT[s.art].s})` }}
+                    src={artUrl(s.art, locked)}
+                    alt=""
+                    draggable={false}
+                  />
+                )}
                 {locked && <img className="mnode-lock" src={bgUrl('map/lock-closed.png')} alt="" draggable={false} />}
               </span>
             </button>
