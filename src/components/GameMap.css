@@ -1,5 +1,5 @@
-/* City map / progress tracker — a serpentine neon path of glowing
-   pedestals with floating icons, over the map background. */
+/* City map / progress tracker — a serpentine neon path of floating 3D
+   podiums (rendered art from public/bg/map) over the map background. */
 
 .map-head { max-width: 900px; margin: 0 auto 4px; text-align: center; }
 .map-head h2 { font-size: 1.7rem; margin-bottom: 2px; }
@@ -23,50 +23,22 @@
 .map-debug { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 8px auto 0; }
 
 /* ---------- The board ---------- */
-.map-board { position: relative; margin: 6px auto 0; overflow: visible; }
+/* `margin: auto` centres the board in whatever space the header leaves, both
+   across and down. */
+.map-board { position: relative; margin: auto; overflow: visible; }
+/* Holds the stations so they can be nudged as one block (see useCentred). */
+.map-nodes { position: absolute; inset: 0; }
 
-.map-trail { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 0; pointer-events: none; }
-.mt-base {
-  fill: none;
-  stroke: url(#trailgrad);
-  stroke-width: 6;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  opacity: 0.5;
-  filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.7));
-}
-.mt-flow {
-  fill: none;
-  stroke: #eafcff;
-  stroke-width: 5;
-  stroke-linecap: round;
-  stroke-dasharray: 2 26;
-  opacity: 0.9;
-  filter: drop-shadow(0 0 5px rgba(22, 242, 255, 0.9));
-  animation: mt-flow 3.2s linear infinite;
-}
-@keyframes mt-flow { to { stroke-dashoffset: -280; } }
-
-/* Directional chevrons flowing along the trail (like the reference arrows) */
-.mt-arrows {
-  fill: #bfefff;
-  font-size: 17px;
-  font-weight: 700;
-  letter-spacing: 30px;
-  filter: drop-shadow(0 0 4px rgba(22, 242, 255, 0.85));
-  opacity: 0.92;
-}
-
-/* ---------- A pedestal node ---------- */
+/* ---------- A station ---------- */
+/* The button is sized to the art and centred on its trail coordinate; the
+   label, index and status badges hang off it absolutely so the art itself
+   stays the anchor. */
 .mnode {
   position: absolute;
   transform: translate(-50%, -50%);
   z-index: 1;
-  width: 176px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
+  width: 152px;
+  height: 152px;
   padding: 0;
   border: none;
   background: transparent;
@@ -79,8 +51,13 @@
 .mnode.accent-amber { color: var(--amber); }
 .mnode.accent-green { color: var(--green); }
 
-/* label pill */
+/* Label pill, floating just above the art. `bottom` is set inline per station
+   (see labelBottom) so the gap follows the artwork, not the empty frame. */
 .mnode-label {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
   font-family: var(--font-display);
   font-size: 0.74rem;
   font-weight: 700;
@@ -91,105 +68,66 @@
   background: rgba(8, 12, 26, 0.86);
   box-shadow: 0 0 12px -2px currentColor;
   white-space: nowrap;
+  z-index: 2;
 }
 
-/* floating glowing icon */
-.mnode-orb {
-  width: 66px;
-  height: 66px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle at 50% 42%, color-mix(in srgb, currentColor 26%, transparent), transparent 70%);
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-.mnode-icon { font-size: 2.5rem; line-height: 1; filter: drop-shadow(0 0 12px currentColor); }
+/* the rendered podium */
+.mnode-art { position: absolute; inset: 0; }
+.mnode-art img { width: 100%; height: 100%; object-fit: contain; display: block; }
+/* Per-file scale/offset (set inline from ART_FIT) that evens out the art's
+   inconsistent framing. The origin is the bottom of the box, so scaling pivots
+   on the podium's base rather than the middle of the image. */
+.mnode-img { transform-origin: 50% 100%; }
 
-/* the glowing disc it stands on */
-.mnode-pedestal {
-  margin-top: -8px;
-  width: 124px;
-  height: 30px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at 50% 32%, color-mix(in srgb, currentColor 55%, transparent), color-mix(in srgb, currentColor 8%, transparent) 62%, transparent 72%);
-  border: 1px solid currentColor;
-  box-shadow: 0 0 26px -4px currentColor, inset 0 0 14px rgba(0, 0, 0, 0.55);
-  position: relative;
-}
-.mnode-pedestal::before {
-  content: '';
+/* padlock over a locked station */
+.mnode-art img.mnode-lock {
   position: absolute;
-  left: 18%;
-  right: 18%;
-  top: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: color-mix(in srgb, currentColor 70%, white 20%);
-  opacity: 0.7;
-  filter: blur(1px);
+  left: 50%;
+  top: 44%;
+  transform: translate(-50%, -50%);
+  width: 58%;
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.75));
 }
 
-.mnode-index { position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); font-size: 0.58rem; color: rgba(255,255,255,0.55); z-index: 2; }
-.mnode-status { position: absolute; top: 22px; right: 30px; }
-/* Single-glyph status badges (✓ / ▶): force a real circle. The global .chip is
-   a wide pill and its letter-spacing pushes a lone glyph off-centre, so we zero
-   both out and give it equal width/height with flex centring. */
-.mnode-status .chip {
-  width: 22px;
-  height: 22px;
-  padding: 0;
-  gap: 0;
-  letter-spacing: 0;
+/* ground glow under the podium (does not float — it is the light on the floor) */
+.mnode-glow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 2%;
+  height: 26%;
   border-radius: 50%;
-  justify-content: center;
-  font-size: 0.72rem;
-  line-height: 1;
+  background: radial-gradient(ellipse at 50% 50%, color-mix(in srgb, currentColor 45%, transparent), transparent 70%);
+  opacity: 0.55;
+  pointer-events: none;
 }
-/* The ▶ glyph is optically left-heavy — nudge it a hair right to sit centred. */
-.mnode-status .chip.warn { text-indent: 2px; }
+
+/* Station number, mirroring the status chip on the other shoulder. It sits on
+   the art rather than under it — the trail passes just below the podium. */
+/* State is carried entirely by the art (gray + padlock vs. lit) and the label
+   glow — no numbers or status badges over the render. */
 
 /* states */
-.mnode:hover:not(:disabled) .mnode-orb { transform: translateY(-5px) scale(1.06); filter: drop-shadow(0 0 10px currentColor); }
-.mnode:hover:not(:disabled) .mnode-pedestal { box-shadow: 0 0 34px -2px currentColor, inset 0 0 14px rgba(0,0,0,0.55); }
+.mnode:hover:not(:disabled) .mnode-art img { filter: drop-shadow(0 0 16px currentColor); }
+.mnode:hover:not(:disabled) .mnode-glow { opacity: 0.85; }
 
-.mnode.available .mnode-pedestal { animation: mnode-pulse 1.9s ease-in-out infinite; }
+.mnode.available .mnode-glow { animation: mnode-pulse 1.9s ease-in-out infinite; }
 .mnode.available .mnode-label { box-shadow: 0 0 16px -1px currentColor; }
 @keyframes mnode-pulse {
-  0%, 100% { box-shadow: 0 0 22px -6px currentColor, inset 0 0 14px rgba(0,0,0,0.55); }
-  50% { box-shadow: 0 0 40px 0 currentColor, inset 0 0 14px rgba(0,0,0,0.55); }
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
 .mnode.done { color: var(--green); }
 .mnode.done .mnode-label { color: #d4ffe6; }
 
-.mnode.locked {
-  color: var(--dim);
-  cursor: not-allowed;
-  filter: grayscale(0.5);
-  opacity: 0.6;
-}
+/* The gray art already reads as powered-down, so no extra grayscale filter
+   here — stacking one on top would only muddy the padlock. */
+.mnode.locked { color: var(--dim); cursor: not-allowed; }
 .mnode.locked .mnode-label { color: var(--muted); box-shadow: none; }
-.mnode.locked .mnode-icon { filter: none; opacity: 0.8; }
+.mnode.locked .mnode-glow { opacity: 0.18; }
 
-/* Corridors are small "waypoint" badges — no big pedestal — so they read as
-   minor stops between the bigger puzzle pedestals. */
-.mnode.corridor { width: 122px; gap: 4px; }
-.mnode.corridor .mnode-pedestal { display: none; }
-.mnode.corridor .mnode-orb {
-  width: 48px;
-  height: 48px;
-  border: 1px dashed currentColor;
-  background:
-    radial-gradient(circle at 50% 40%, color-mix(in srgb, currentColor 22%, transparent), transparent 72%),
-    rgba(8, 12, 26, 0.72);
-  box-shadow: 0 0 16px -5px currentColor;
-}
-.mnode.corridor .mnode-icon { font-size: 1.4rem; }
-.mnode.corridor .mnode-label {
-  font-size: 0.6rem;
-  padding: 3px 9px;
-  border-style: dashed;
-  opacity: 0.92;
-}
-.mnode.corridor .mnode-status { top: 4px; right: 30px; }
+/* Start / Final Decision are story signposts, not puzzles. */
+.mnode.gate:disabled:not(.locked) { cursor: default; }

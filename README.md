@@ -83,7 +83,7 @@ src/
   components/
     Stage.jsx              Fixed 1280×720 stage, scaled to fit (exposes useStage().scale)
     HUD.jsx                Top bar: countdown, Bag, Map, sound on/off toggle
-    GameMap.jsx            Oval "racetrack" district map / progress tracker
+    GameMap.jsx            Serpentine district map / progress tracker (3D station art)
     RoomFrame.jsx          Shared room chrome (briefing gate, bg slot, dim overlay, reward reveal, "cleared" bar)
     RoomNav.jsx            In-room viewpoint navigator (◀ ▶ stations, e.g. Algorithm Room)
     Conversation.jsx       Messaging-app chat UI (typewriter, online/typing status) for the tests
@@ -112,6 +112,13 @@ which prefixes Vite's `import.meta.env.BASE_URL` (i.e. `/` in dev, `/lastchance/
 4. Add the file name to `GAME_IMAGES` in `src/game/preloadAssets.js` so it's cached up front
    and transitions never stall.
 5. Tune opacity/blend in `.bg-slot` (global.css) if the image competes with the UI.
+
+**Map station art** lives in `public/bg/map/` — `map-bg.png` (the city backdrop, no path baked in;
+the neon trail is SVG drawn in `GameMap.jsx`), plus a `node-<key>-color.png` / `node-<key>-gray.png`
+pair per station (`start, link, roulette, influencer, algorithm, ads, persuasion, final`) and
+`lock-closed.png`. The node art is transparent 512×512 PNGs of an icon on a podium; the color and
+gray renders must stay pixel-aligned, since the map swaps one file name for the other. Reference
+them as `bgUrl('map/node-link-color.png')` — the folder is part of the name.
 
 Notes: PNGs render best around **1376×768**; animated **GIFs** are supported (browsers clamp
 very short frame delays, so encode e.g. 50 frames × 20 ms to play a 1 s loop). Prompt files

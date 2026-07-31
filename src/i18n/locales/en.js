@@ -226,6 +226,12 @@ export default {
 
   /* Node display text (map cards + room headers pull from here). */
   nodes: {
+    start: {
+      title: 'Start',
+      subtitle: 'Pre-test · The message from {friend}',
+      blurb: 'Where it began — {friend} sent you the deal and asked what you think.',
+      kind: 'gate',
+    },
     'link-district': {
       title: 'Link District',
       subtitle: 'Puzzle 1 · Fraudulent Links',

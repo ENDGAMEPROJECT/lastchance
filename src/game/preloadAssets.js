@@ -6,9 +6,14 @@ import { bgUrl } from './assets.js'
    base URL) so preloading hits the same cache entries the app later uses —
    including in production under '/lastchance/'. */
 
+const MAP_ART = ['start', 'link', 'roulette', 'influencer', 'algorithm', 'ads', 'persuasion', 'final']
+  .flatMap((k) => [`map/node-${k}-color.png`, `map/node-${k}-gray.png`])
+
 export const GAME_IMAGES = [
   'welcome.gif',
-  'map.png',
+  'map/map-bg.png',
+  'map/lock-closed.png',
+  ...MAP_ART,
   'link.gif',
   'link_transition.gif',
   'roulette.png',

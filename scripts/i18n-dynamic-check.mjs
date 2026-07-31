@@ -9,10 +9,12 @@ const ok = (cond, msg) => { if (!cond) problems.push(msg) }
 const has = (obj, k) => obj != null && Object.prototype.hasOwnProperty.call(obj, k)
 
 // --- Shell: nodes.<id>.{title,subtitle,blurb,kind} (GameMap + RoomFrame) ---
-for (const n of NODES) {
-  const node = en.nodes[n.id]
-  ok(node, `nodes.${n.id} missing`)
-  for (const f of ['title', 'subtitle', 'blurb', 'kind']) ok(node && has(node, f), `nodes.${n.id}.${f} missing`)
+// 'start' and 'final-decision' are map-only stations (no NODES entry), but the
+// map labels them through the same nodes.<id>.title lookup.
+for (const id of ['start', ...NODES.map((n) => n.id), 'final-decision']) {
+  const node = en.nodes[id]
+  ok(node, `nodes.${id} missing`)
+  for (const f of ['title', 'subtitle', 'blurb', 'kind']) ok(node && has(node, f), `nodes.${id}.${f} missing`)
 }
 
 // --- Shell: items.<id>.{name,desc} (HUD bag) ---
