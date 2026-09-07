@@ -50,6 +50,7 @@ export default {
     tminus: 'T-MINUS',
     map: '🗺 Map',
     bag: '🎒 Bag',
+    hints: '💡 Hints',
     muteSound: 'Mute sound',
     unmuteSound: 'Unmute sound',
     inventoryTitle: 'Inventory & Evidence',
@@ -57,6 +58,46 @@ export default {
     noTools: 'Nothing collected yet. Solve puzzles to earn tools.',
     evidenceHeading: 'Evidence on the deal',
     noEvidence: 'Collect proof in each district to convince {friend} at the end.',
+  },
+
+  hints: {
+    title: 'Mission hints',
+    pretest: {
+      context: 'Start by noticing what makes the offer feel urgent and trustworthy.',
+      items: [
+        'Look at the countdown: what is it trying to make you do before you think?',
+        'Ask how the offer reached your feed and what the platform may already know about you.',
+        'Read the store address character by character before entering any details.',
+      ],
+    },
+    map: {
+      context: 'Choose an unlocked district and follow the evidence trail.',
+      items: [
+        'A bright station is ready to explore; a dim station is still locked.',
+        'The districts are designed as a chain, so finishing one unlocks the next.',
+        'Check your Bag after each solved district: new tools help with later puzzles.',
+      ],
+    },
+    posttest: {
+      context: 'Use what you discovered to help your friend make the final call.',
+      items: [
+        'Separate manufactured urgency from a genuinely good offer.',
+        'Remember that a familiar creator or a polished page is not proof of safety.',
+        'Use the evidence in your Bag to explain the risk before choosing.',
+      ],
+    },
+    room: {
+      link: { context: 'Inspect every URL. Small spelling changes can hide a fake destination.', items: ['Compare the domains letter by letter.', 'Watch for look-alike characters and unusual endings.', 'The safest link is the one that matches the real store exactly.'] },
+      roulette: { context: 'Treat the prize wheel as a lesson in gamified bait.', items: ['Observe whether every outcome is conveniently a win.', 'A reward can distract you from the conditions attached to it.', 'Ask what the game wants you to do next, not only what it promises.'] },
+      influencer: { context: 'Separate genuine recommendations from paid or fabricated signals.', items: ['Look for a clear sponsorship disclosure.', 'Compare the post with the creator and product details.', 'Popularity and polished content do not replace verification.'] },
+      algorithm: { context: 'Follow the data trail behind the personalized feed.', items: ['Start with the actions and searches the profile already contains.', 'Connect those signals to the ad categories being served.', 'The algorithm is predicting interest, not reading thoughts.'] },
+      ads: { context: 'Slow down the visual pressure and inspect what the ad is doing.', items: ['Find the words that create scarcity or a deadline.', 'Notice which design elements pull your eyes toward Buy Now.', 'Ask what information is missing from the most exciting claim.'] },
+      persuasion: { context: 'Use the terminal to expose the final persuasion techniques.', items: ['Look for the password clue in the evidence you collected.', 'Try the relevant code rather than guessing random words.', 'Once inside, connect urgency, targeting, and trust into one explanation.'] },
+    },
+    end: {
+      win: { context: 'You made it. Review the evidence that changed the decision.', items: ['Name the red flags that mattered most.', 'Keep checking URLs, disclosures, targeting, and urgency in real life.', 'A pause before buying is a powerful safety tool.'] },
+      lose: { context: 'The timer ran out, but the lesson is still available.', items: ['Urgency is designed to interrupt careful thinking.', 'A countdown ending does not make an offer more trustworthy.', 'When pressure rises, pause and verify through an independent source.'] },
+    },
   },
 
   intro: {

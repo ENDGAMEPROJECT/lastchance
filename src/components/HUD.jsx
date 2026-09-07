@@ -4,18 +4,20 @@ import { useT } from '../i18n/index.jsx'
 import { NARRATIVE } from '../game/gameData.js'
 import { DEBUG } from '../game/settings.js'
 import { isMuted, setMuted } from '../game/sound.js'
+import { getHintContext } from '../game/hints.js'
 import Modal from './Modal.jsx'
 import './HUD.css'
 
 /* Persistent top bar: countdown, mission recap, inventory & map access. */
 export default function HUD() {
-  const { screen, timeLeft, inventory, evidence, goMap } = useGame()
+  const { screen, activeNodeId, timeLeft, inventory, evidence, goMap } = useGame()
   const t = useT()
   const [bagOpen, setBagOpen] = useState(false)
+  const [hintsOpen, setHintsOpen] = useState(false)
   const [muted, setMutedState] = useState(isMuted())
   const toggleMute = () => setMutedState(setMuted(!muted))
-
-  if (['welcome', 'pretest', 'posttest', 'win', 'lose'].includes(screen)) return null
+  const hintContext = getHintContext(screen, activeNodeId)
+  const hints = t(`hints.${hintContext}.items`)
 
   const low = timeLeft <= 300 // last 5 min
   const critical = timeLeft <= 60
@@ -36,6 +38,14 @@ export default function HUD() {
         <div className="hud-right">
           {DEBUG && <span className="chip bad hud-debug">🐞 DEBUG</span>}
           <button
+            className="btn btn-amber btn-sm hud-hints"
+            onClick={() => setHintsOpen(true)}
+            aria-label={t('hud.hints')}
+            title={t('hud.hints')}
+          >
+            {t('hud.hints')}
+          </button>
+          <button
             className="btn btn-ghost btn-sm hud-mute"
             onClick={toggleMute}
             aria-label={muted ? t('hud.unmuteSound') : t('hud.muteSound')}
@@ -53,6 +63,18 @@ export default function HUD() {
           </button>
         </div>
       </header>
+
+      <Modal open={hintsOpen} onClose={() => setHintsOpen(false)} title={t('hints.title')} accent="amber" width={620}>
+        <p className="muted t-sm hints-context">{t(`hints.${hintContext}.context`)}</p>
+        <ol className="hints-list">
+          {hints.map((hint, index) => (
+            <li key={index}>
+              <span className="hint-number">{index + 1}</span>
+              <span>{hint}</span>
+            </li>
+          ))}
+        </ol>
+      </Modal>
 
       <Modal open={bagOpen} onClose={() => setBagOpen(false)} title={t('hud.inventoryTitle')} accent="purple" width={620}>
         <div className="bag-section">

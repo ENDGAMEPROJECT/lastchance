@@ -48,6 +48,32 @@
 .hud-debug { animation: pulse-glow 1.8s ease-in-out infinite; align-self: center; }
 /* Compact square icon button for the sound toggle. */
 .hud-mute { padding-left: 9px; padding-right: 9px; font-size: 1rem; line-height: 1; }
+.hud-hints { white-space: nowrap; }
+
+.hints-context { margin: 0 0 16px; }
+.hints-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.hints-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid rgba(255, 185, 43, 0.25);
+  background: rgba(255, 185, 43, 0.05);
+  color: var(--text);
+  line-height: 1.4;
+}
+.hint-number {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  border: 1px solid var(--amber);
+  border-radius: 50%;
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
 
 .bag-count {
   display: inline-block;
