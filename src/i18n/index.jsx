@@ -13,8 +13,11 @@
 
 import { createContext, useContext, useMemo, useState, useCallback } from 'react'
 import en from './locales/en.js'
+import es from './locales/es.js'
+import fi from './locales/fi.js'
+import sr from './locales/sr.js'
 
-const LOCALES = { en }
+const LOCALES = { en, es, fi, sr }
 export const AVAILABLE_LOCALES = Object.keys(LOCALES)
 const DEFAULT_LOCALE = 'en'
 
@@ -22,8 +25,9 @@ const DEFAULT_LOCALE = 'en'
    you register a new locale above. */
 export const LOCALE_NAMES = {
   en: 'English',
-  // es: 'Español',
-  // fr: 'Français',
+  es: 'Español',
+  fi: 'Suomi',
+  sr: 'Српски',
 }
 export const localeName = (code) => LOCALE_NAMES[code] || code.toUpperCase()
 
