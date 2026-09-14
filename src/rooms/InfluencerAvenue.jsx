@@ -139,6 +139,14 @@ export default function InfluencerAvenue({ node }) {
   const searchTimer = useRef(null)
   useEffect(() => () => clearTimeout(searchTimer.current), [])
 
+  useEffect(() => {
+    const onUseItem = (event) => {
+      if (event.detail?.id === 'emojiCard') setDecoderOpen(true)
+    }
+    window.addEventListener('lastchance:use-item', onUseItem)
+    return () => window.removeEventListener('lastchance:use-item', onUseItem)
+  }, [])
+
   /* Drop a product image on the reverse-search engine: it "uploads" and searches
      the web for a beat, then its web-match results open under the engine.
      Dropping an already-searched image just re-opens its results. */
@@ -208,9 +216,6 @@ export default function InfluencerAvenue({ node }) {
                 gifted: t('rooms.influencer.labels.gifted'),
               })}
             </p>
-            <button className="btn btn-purple btn-sm" onClick={() => setDecoderOpen(true)}>
-              {t('rooms.influencer.stage1.openDecoder')}
-            </button>
           </div>
 
           <div className="ia-posts">

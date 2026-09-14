@@ -96,8 +96,10 @@
   color: inherit;
   text-align: left;
 }
-.bag-item-report { cursor: pointer; border: 1px solid rgba(168, 85, 247, 0.35); transition: border-color 0.2s, box-shadow 0.2s; }
+.bag-item-report, .bag-item { cursor: pointer; border: 1px solid rgba(168, 85, 247, 0.35); transition: border-color 0.2s, box-shadow 0.2s, color 0.2s; }
 .bag-item-report:hover { border-color: var(--purple); box-shadow: var(--glow-purple); }
+.bag-item-denied { border-color: var(--red) !important; color: var(--red); animation: bag-denied 0.7s ease; box-shadow: var(--glow-red); }
+@keyframes bag-denied { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
 .bag-icon { font-size: 1.8rem; filter: drop-shadow(0 0 6px rgba(168,85,247,0.6)); }
 .bag-name { font-family: var(--font-display); font-size: 0.92rem; color: var(--text); }
 .bag-desc { margin-top: 2px; line-height: 1.35; }

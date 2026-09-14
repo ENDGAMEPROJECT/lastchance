@@ -15,6 +15,7 @@ export default function HUD() {
   const t = useT()
   const [bagOpen, setBagOpen] = useState(false)
   const [reportOpen, setReportOpen] = useState(false)
+  const [deniedItem, setDeniedItem] = useState(null)
   const [hintsOpen, setHintsOpen] = useState(false)
   const [muted, setMutedState] = useState(isMuted())
   const toggleMute = () => setMutedState(setMuted(!muted))
@@ -44,6 +45,18 @@ export default function HUD() {
     setRevealedHints((current) => current.includes(index)
       ? current.filter((item) => item !== index)
       : [...current, index])
+  }
+
+  const itemRoom = { emojiCard: 'influencer-avenue', dataReport: 'algorithm-room', truthLight: 'ads-corridor' }
+  const useItem = (item) => {
+    if (itemRoom[item.id] !== activeNodeId) {
+      setDeniedItem(item.id)
+      window.setTimeout(() => setDeniedItem(null), 700)
+      return
+    }
+    setBagOpen(false)
+    if (item.id === 'dataReport') setReportOpen(true)
+    else window.dispatchEvent(new CustomEvent('lastchance:use-item', { detail: { id: item.id } }))
   }
 
   const low = timeLeft <= 300
@@ -150,8 +163,8 @@ export default function HUD() {
                 <button
                   key={it.id}
                   type="button"
-                  className={`bag-item panel ${it.id === 'dataReport' ? 'bag-item-report' : ''}`}
-                  onClick={it.id === 'dataReport' ? () => { setBagOpen(false); setReportOpen(true) } : undefined}
+                  className={`bag-item panel ${it.id === 'dataReport' ? 'bag-item-report' : ''} ${deniedItem === it.id ? 'bag-item-denied' : ''}`}
+                  onClick={() => useItem(it)}
                 >
                   <div className="bag-icon">{it.icon}</div>
                   <div>
