@@ -31,6 +31,7 @@ const initialState = {
   player: { alias: '', age: '' },
   timedOut: false,
   activeNodeId: null,
+  reviewNodeId: null,
   roomStarted: false,
   linkRound: null,
   progress: initialProgress(),
@@ -54,9 +55,21 @@ function reducer(state, action) {
       return { ...state, screen: action.outcome, running: false }
 
     case 'OPEN_NODE': {
-      if (state.progress[action.id] === 'locked') return state
-      return { ...state, screen: 'room', activeNodeId: action.id, roomStarted: false, linkRound: null }
+      if (state.progress[action.id] !== 'available') return state
+      const returningToRoom = state.activeNodeId === action.id
+      return {
+        ...state,
+        screen: 'room',
+        activeNodeId: action.id,
+        reviewNodeId: null,
+        roomStarted: returningToRoom ? state.roomStarted : false,
+        linkRound: returningToRoom ? state.linkRound : null,
+      }
     }
+
+    case 'REVIEW_NODE':
+      if (state.progress[action.id] !== 'done') return state
+      return { ...state, screen: 'review', reviewNodeId: action.id }
 
     case 'START_ROOM':
       return { ...state, roomStarted: true }
@@ -65,10 +78,10 @@ function reducer(state, action) {
       return { ...state, linkRound: action.round }
 
     case 'GO_MAP':
-      return { ...state, screen: 'map', activeNodeId: null, roomStarted: false, linkRound: null }
+      return { ...state, screen: 'map', reviewNodeId: null }
 
     case 'GOTO_SCREEN': // debug-only jump
-      return { ...state, screen: action.screen, activeNodeId: null }
+      return { ...state, screen: action.screen, activeNodeId: null, reviewNodeId: null }
 
     case 'COMPLETE_NODE': {
       const idx = NODES.findIndex((n) => n.id === action.id)
@@ -83,6 +96,7 @@ function reducer(state, action) {
         // Clearing the last district ends the puzzles → into the post-test.
         screen: allDone ? 'posttest' : 'map',
         activeNodeId: null,
+        reviewNodeId: null,
         roomStarted: false,
         linkRound: null,
         running: allDone ? false : state.running,
@@ -154,6 +168,7 @@ export function GameProvider({ children }) {
   const finishGame = useCallback((outcome) => dispatch({ type: 'FINISH', outcome }), [])
   const gotoScreen = useCallback((screen) => dispatch({ type: 'GOTO_SCREEN', screen }), [])
   const openNode = useCallback((id) => dispatch({ type: 'OPEN_NODE', id }), [])
+  const reviewNode = useCallback((id) => dispatch({ type: 'REVIEW_NODE', id }), [])
   const startRoom = useCallback(() => dispatch({ type: 'START_ROOM' }), [])
   const setLinkRound = useCallback((round) => dispatch({ type: 'SET_LINK_ROUND', round }), [])
   const goMap = useCallback(() => dispatch({ type: 'GO_MAP' }), [])
@@ -168,17 +183,20 @@ export function GameProvider({ children }) {
   const hasItem = useCallback((id) => state.inventory.some((i) => i.id === id), [state.inventory])
 
   const activeNode = NODES.find((n) => n.id === state.activeNodeId) || null
+  const reviewNodeData = NODES.find((n) => n.id === state.reviewNodeId) || null
 
   const value = {
     ...state,
     NODES,
     ITEMS,
     activeNode,
+    reviewNodeData,
     submitWelcome,
     startGame,
     finishGame,
     gotoScreen,
     openNode,
+    reviewNode,
     startRoom,
     setLinkRound,
     goMap,
