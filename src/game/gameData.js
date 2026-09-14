@@ -124,7 +124,7 @@ export function encodeWord(word) {
 }
 
 export const CODES = {
-  algorithmRoom: '748392', // shown on the Data Report, entered in Puzzle 3
+  algorithmRoom: '274181', // shown on the Data Report, entered in Puzzle 3
   adsCorridor: 'SAVE', // revealed under the ad poster
   persuasion: 'FOOLED', // formed from revealed letters in Puzzle 4
   final: '072025',

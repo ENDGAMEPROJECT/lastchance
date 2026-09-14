@@ -37,6 +37,7 @@
 }
 .modal-x:hover { color: var(--text); border-color: var(--cyan); }
 .modal-body { padding: 20px; overflow-y: auto; }
+.report-modal .modal-body { padding: 10px; overflow: hidden; }
 
 .accent-cyan { color: var(--cyan); }
 .accent-magenta { color: var(--magenta); }

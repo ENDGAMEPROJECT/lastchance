@@ -44,16 +44,55 @@ export default {
   },
   hints: {
     title: 'Mission hints',
+    defaultPrompt: 'I do not know how to use this clue yet.',
+    briefLabel: 'Mission status',
+    progressLabel: 'Mission progress',
+    brief: {
+      welcome: 'Prepare your run',
+      pretest: 'Read the deal before you enter the network',
+      map: 'Choose the next district in the evidence trail',
+      room: 'Solve the district and log what you discover',
+      posttest: 'Use your evidence to protect Max',
+      win: 'Run complete: review what protected you',
+      lose: 'Time expired: review the warning signs',
+    },
+    stats: { time: 'Time left', districts: 'Districts', tools: 'Tools', evidence: 'Evidence' },
+    targetLabel: 'Current objective',
+    noTarget: 'Return to the map to choose an available district.',
+    mapObjective: {
+      title: 'Open {district}',
+      text: 'This is the next available room in the investigation. Enter it from the map when you are ready to begin the challenge.',
+    },
+    objectives: {
+      pretest: {
+        title: 'Complete the pre-test conversation',
+        text: 'Read Max’s message, choose the response that best explains your first impression, and use the final button to enter the Physical Internet.',
+      },
+      posttest: {
+        title: 'Make the final call',
+        text: 'Use the evidence you collected to explain the warning signs and decide whether Max should close the tab.',
+      },
+    },
     pretest: {
-      context: 'Start by noticing what makes the offer feel urgent and trustworthy.',
+      context: 'Build your first impression before the investigation begins.',
+      prompts: [
+        'I do not know how to recognise pressure in this offer.',
+        'I do not know what makes the influencer or page trustworthy.',
+        'I do not know which doubts I should carry into the investigation.',
+      ],
       items: [
-        'Look at the countdown: what is it trying to make you do before you think?',
-        'Ask how the offer reached your feed and what the platform may already know about you.',
-        'Read the store address character by character before entering any details.',
+        'Notice the countdown, the huge discount, and the promise of a limited-time deal.',
+        'Ask yourself whether the influencer, comments, and polished page are enough to prove the offer is safe.',
+        'Keep your first concerns in mind. The districts ahead will give you evidence to test them.',
       ],
     },
     map: {
       context: 'Choose an unlocked district and follow the evidence trail.',
+      prompts: [
+        'I do not know which station I can enter next.',
+        'I do not know how the district chain works.',
+        'I do not know when my tools will become useful.',
+      ],
       items: [
         'A bright station is ready to explore; a dim station is still locked.',
         'The districts are designed as a chain, so finishing one unlocks the next.',
@@ -62,6 +101,11 @@ export default {
     },
     posttest: {
       context: 'Use what you discovered to help your friend make the final call.',
+      prompts: [
+        'I do not know how to separate real evidence from persuasive decoration.',
+        'I do not know which warning signs matter most.',
+        'I do not know how to explain the risk before choosing.',
+      ],
       items: [
         'Separate manufactured urgency from a genuinely good offer.',
         'Remember that a familiar creator or a polished page is not proof of safety.',
@@ -69,12 +113,45 @@ export default {
       ],
     },
     room: {
-      link: { context: 'Inspect every URL. Small spelling changes can hide a fake destination.', items: ['Compare the domains letter by letter.', 'Watch for look-alike characters and unusual endings.', 'The safest link is the one that matches the real store exactly.'] },
-      roulette: { context: 'Treat the prize wheel as a lesson in gamified bait.', items: ['Observe whether every outcome is conveniently a win.', 'A reward can distract you from the conditions attached to it.', 'Ask what the game wants you to do next, not only what it promises.'] },
-      influencer: { context: 'Separate genuine recommendations from paid or fabricated signals.', items: ['Look for a clear sponsorship disclosure.', 'Compare the post with the creator and product details.', 'Popularity and polished content do not replace verification.'] },
-      algorithm: { context: 'Follow the data trail behind the personalized feed.', items: ['Start with the actions and searches the profile already contains.', 'Connect those signals to the ad categories being served.', 'The algorithm is predicting interest, not reading thoughts.'] },
-      ads: { context: 'Slow down the visual pressure and inspect what the ad is doing.', items: ['Find the words that create scarcity or a deadline.', 'Notice which design elements pull your eyes toward Buy Now.', 'Ask what information is missing from the most exciting claim.'] },
-      persuasion: { context: 'Use the terminal to expose the final persuasion techniques.', items: ['Look for the password clue in the evidence you collected.', 'Try the relevant code rather than guessing random words.', 'Once inside, connect urgency, targeting, and trust into one explanation.'] },
+      link: {
+        context: 'Inspect every URL. Small spelling changes can hide a fake destination.',
+        items: ['Compare the domains letter by letter.', 'Watch for look-alike characters and unusual endings.', 'The safest link is the one that matches the real store exactly.'],
+        prompts: [
+          'I do not know how to spot the extra words in these domains.',
+          'I do not know how to check whether the connection and domain ending are suspicious.',
+          'I do not know how to identify disguised or look-alike characters.',
+        ],
+        rounds: [
+          'Common suffixes: keep the genuine domain open and block the two addresses that add words after the real name, such as “-official.shop” or “-dealz”.',
+          'HTTP vs HTTPS: keep the genuine store open and block both doors using http://. An unusual ending like .free is another warning sign.',
+          'Phishing attempts: read every character. Block the doors using a disguised “rn” or a foreign look-alike character, and keep magnumshop.com open.',
+        ],
+      },
+      roulette: {
+        context: 'Treat the prize wheel as a lesson in gamified bait.',
+        prompts: ['I do not know what to compare after spinning the wheels.', 'I do not know why a guaranteed prize could be suspicious.', 'I do not know how to finish the corridor.'],
+        items: ['Spin at least two different wheels and watch the pointer settle. Every wheel is rigged to land on the same tiny 30¢ OFF reward.', 'A guaranteed win is not generosity when the prize is worthless: it is bait to make you keep playing, sharing, or spending.', 'Spin each wheel at least once, then mark all four as Rigged. A wheel must be observed before the game lets you classify it.'],
+      },
+      influencer: {
+        context: 'Separate genuine recommendations from paid or fabricated signals.',
+        prompts: ['I do not know how to decode the disclosure on each post.', 'I do not know what to do after I label the posts.', 'I do not know how to classify the three product images.'],
+        items: ['Use the Emoji Decoding Card: LUNA20 and an affiliate link indicate PAID; #ad and a creative partnership indicate COLLAB; a free product with no payment indicates GIFTED.', 'Run the reverse image search on all three products before choosing a verdict. Identical listings suggest mass production; only AI-art matches suggest an AI-generated image.', 'The mug appears across dropshipping sites, the NovaPad image traces to AI generators, and the cupcakes match one real local bakery.'],
+      },
+      algorithm: {
+        context: 'Follow the data trail behind the personalized feed.',
+        prompts: ['I do not know which code opens the targeting engine.', 'I do not know how to choose the missing factor in an equation.', 'I do not know how the completed profile explains the NovaPad ad.'],
+        items: ['Use the six highlighted digits on the Data Report: 274181.', 'Read the row as a profile: match the missing demographic, follow, or insecurity to the person and the ad, not just to the same category.', 'The engine combines age, interests, searches, and insecurities. The NovaPad offer reached Max because those signals made him a precise target.'],
+      },
+      ads: {
+        context: 'Slow down the visual pressure and inspect what the ad is doing.',
+        prompts: ['I do not know how to make the Truth Flashlight work.', 'I do not know what to look for under each poster.', 'I do not know how to assemble the exit code.'],
+        items: ['Wait for the flashlight to charge, switch it on, and move the beam across the wall. A poster only reveals its truth inside the light.', 'Read the fine print, not the large promise: the trial renews at €59/month, the prize harvests data, the investment is fake, and the antivirus warning is malware bait.', 'Reveal all four hidden letters in poster order. They spell SAVE, which is the code for the exit.'],
+      },
+      persuasion: {
+        context: 'Use the terminal to expose the final persuasion techniques.',
+        prompts: ['I do not know how to match a technique to a poster.', 'I do not know what the glowing letters are for.', 'I do not know what password to enter in the computer.'],
+        items: ['Match the technique to the tactic: “ONLY 3 LEFT” is FOMO; “2 MILLION people” is Social Proof; the miracle result is Exaggeration; the celebrity post is Influencer Endorsement; family guilt is Emotional Appeal; the countdown is Urgency.', 'Each correct frame reveals one letter. Read the six letters from left to right across the poster wall.', 'After all six matches, open the computer and enter FOOLED.'],
+      },
     },
     end: {
       win: { context: 'You made it. Review the evidence that changed the decision.', items: ['Name the red flags that mattered most.', 'Keep checking URLs, disclosures, targeting, and urgency in real life.', 'A pause before buying is a powerful safety tool.'] },
@@ -153,6 +230,8 @@ export default {
       "wasPrice": "$600",
       "nowPrice": "$49",
       "endsIn": "Ends in",
+      "offerLabel": "30-minute deal",
+      "offerUrgency": "Hurry before it's gone!",
       "buy": "BUY NOW",
       "caption": "OMG they dropped the NovaPad X to $49?! 😱🔥 Grab it before it’s gone! #deal #ad",
       "likes": "12.4k likes"
@@ -498,7 +577,7 @@ export default {
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
       "solvedTitle": "Influencer Avenue cleared — Data Report obtained 📄",
-      "solvedText": "You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 748392 — open the Algorithm Control Room next.",
+      "solvedText": "You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 274181 — open the Algorithm Control Room next.",
       "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
       "stage1": {
         "badge": "Stage 1 / 2",
@@ -647,13 +726,35 @@ export default {
       "solvedTitle": "Algorithm Control Room cracked · Evidence logged 🧠",
       "solvedText": "You watched the machine turn {friend}'s age, interests and insecurities into a single ad. That is not luck — it is a profile.",
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
+      "report": {
+        "modalTitle": "Data Report · Max's profile",
+        "kicker": "ALGORITHM CONTROL ROOM",
+        "title": "Targeted Ad Profile Log: MAX",
+        "subject": "Subject: MAX's Online Activities",
+        "instruction": "Review the activity below to determine how the algorithm learned.",
+        "columns": {
+          "time": "TIME",
+          "activity": "USER ACTIVITY",
+          "interpretation": "ALGORITHM INTERPRETATION"
+        },
+        "entries": [
+          { "time": "10:02", "text": "User clicked on the ad.", "result": "INTERESTED", "tone": "green" },
+          { "time": "10:03", "text": "Stayed on the project page for 2 minutes.", "result": "INTERESTED", "tone": "green" },
+          { "time": "10:04", "text": "Saw 7 new reviews.", "result": "INTERESTED", "tone": "green" },
+          { "time": "10:05", "text": "User closed the window.", "result": "LOST INTEREST", "tone": "red" },
+          { "time": "10:06", "text": "User clicked on a different ad from the same brand.", "result": "BACKTRACK", "tone": "orange" },
+          { "time": "10:07", "text": "User scrolls for 4 minutes.", "result": "LOOKING FOR MORE", "tone": "green" },
+          { "time": "10:11", "text": "Added 1 item to cart.", "result": "INTEREST SIGNAL", "tone": "green" },
+          { "time": "10:12", "text": "Spent 8 minutes on the same page.", "result": "HESITATION", "tone": "orange" },
+          { "time": "10:20", "text": "Triggered special offer / countdown intervention.", "result": "CONVERSION", "tone": "green" },
+          { "time": "10:25", "text": "Bought 1 item.", "result": "PURCHASE", "tone": "green" }
+        ]
+      },
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",
         "prompt": "Enter the 6-digit access code to boot the targeting engine.",
         "error": "Access denied — that code is wrong.",
         "submit": "Unlock →",
-        "skip": "skip — I don’t have the report",
-        "hint": "Hint: the highlighted digits on your Data Report."
       },
       "choice": {
         "badge": "System question · privacy trade-off",
@@ -683,6 +784,8 @@ export default {
         "profileBadge": "Profile complete",
         "dragHint": "Drag the missing factor into the equation — the one that fits this exact person.",
         "wrongHint": "That factor doesn’t fit this person. Look at what the ad is really selling.",
+        "finalLessonTitle": "What you learned",
+        "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you.",
         "reflectTitle": "What just happened",
         "nextBtn": "Next equation →",
         "lastBtn": "See {friend}’s profile →",
@@ -843,10 +946,19 @@ export default {
       },
       "trayLabel": "TECHNIQUE FRAMES",
       "hints": {
-        "start": "Drag a technique frame onto the poster it fits — or tap the frame, then tap the poster.",
+        "start": "Read the promise, the pressure, and who the ad wants you to trust. Match each poster to the technique doing the persuading.",
         "allDone": "All six framed — the letters spell a password. Click the computer to type it in.",
         "correct": "Correct — a letter surfaced. Keep framing the rest.",
-        "wrong": "That technique does not match this ad. Frame returned — try another."
+        "wrong": "That technique does not match this ad. Frame returned — try another.",
+        "wrongSpecific": "Not quite. Look again: {clue} Frame returned — try another technique.",
+      },
+      "posterHints": {
+        "fomo": "the ad says only a few are left and makes you fear missing out",
+        "social": "the ad uses a huge number of buyers to make popularity feel like proof",
+        "exagg": "the promise is an extreme result in an unrealistically short time",
+        "influencer": "a famous creator is used as borrowed authority, with an #ad disclosure",
+        "emotional": "the message targets your guilt and fear of letting your family down",
+        "urgency": "a ticking countdown tells you to buy immediately before the offer disappears",
       },
       "dragHint": "Drag onto its poster",
       "count": "Framed {matched} / {total}",

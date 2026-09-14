@@ -38,7 +38,7 @@ const LOCALES_DIR = resolve(ROOT, 'src/i18n/locales')
 /* Google Sheet source. Tabs are listed in escape-room order; each is
    fetched as CSV. Override the id with I18N_SHEET_ID if the sheet moves. */
 const SHEET_ID = process.env.I18N_SHEET_ID || '1cbn45Bo4OFBMLHEism-0dzoeiWMugNsqrM5BanbAYh8'
-const TABS = ['Interface', 'Links', 'Roulette', 'Influencer', 'Algorithm', 'Ads', 'Persuasion', 'Final']
+const TABS = ['Interface', 'Hints', 'Links', 'Roulette', 'Influencer', 'Algorithm', 'Ads', 'Persuasion', 'Final']
 // headers=1 pins the header to a single row; without it gviz merges the
 // all-text header rows of a fully-untranslated tab into one giant field.
 const tabCsvUrl = (tab) =>

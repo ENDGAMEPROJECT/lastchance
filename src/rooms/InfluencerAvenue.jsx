@@ -135,6 +135,7 @@ export default function InfluencerAvenue({ node }) {
   const [searched, setSearched] = useState({}) // productId -> true once results are in
   const [picks, setPicks] = useState({}) // productId -> chosen verdict value
   const [verifyErr, setVerifyErr] = useState('')
+
   const searchTimer = useRef(null)
   useEffect(() => () => clearTimeout(searchTimer.current), [])
 

@@ -9,7 +9,7 @@ export default {
     'A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.',
   solvedTitle: 'Influencer Avenue cleared — Data Report obtained 📄',
   solvedText:
-    'You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 748392 — open the Algorithm Control Room next.',
+    'You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 274181 — open the Algorithm Control Room next.',
 
   evidenceLabel:
     'The posts hid paid promotions, and the product photo was AI-generated with zero real results.',

@@ -50,18 +50,15 @@
 .hud-mute { padding-left: 9px; padding-right: 9px; font-size: 1rem; line-height: 1; }
 .hud-hints { white-space: nowrap; }
 
+.hint-target { margin-bottom: 16px; padding: 13px; border-color: rgba(22, 242, 255, 0.25); background: rgba(22, 242, 255, 0.04); }
+.hint-target h4 { margin: 4px 0 3px; color: var(--cyan); font-family: var(--font-display); }
+.hint-target p { margin: 0; color: var(--muted); line-height: 1.4; }
 .hints-context { margin: 0 0 16px; }
-.hints-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-.hints-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px;
-  border: 1px solid rgba(255, 185, 43, 0.25);
-  background: rgba(255, 185, 43, 0.05);
-  color: var(--text);
-  line-height: 1.4;
-}
+.hints-list { display: grid; gap: 10px; }
+.hint-disclosure { border: 1px solid rgba(255, 185, 43, 0.25); background: rgba(255, 185, 43, 0.05); }
+.hint-disclosure.is-open { border-color: rgba(255, 185, 43, 0.55); background: rgba(255, 185, 43, 0.09); }
+.hint-trigger { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px; border: 0; background: transparent; color: var(--text); text-align: left; font: inherit; line-height: 1.4; cursor: pointer; }
+.hint-trigger:hover { background: rgba(255, 185, 43, 0.08); }
 .hint-number {
   display: grid;
   place-items: center;
@@ -74,7 +71,8 @@
   font-family: var(--font-mono);
   font-size: 0.78rem;
 }
-
+.hint-chevron { margin-left: auto; color: var(--amber); font-family: var(--font-mono); font-size: 1.15rem; }
+.hint-answer { padding: 0 42px 14px 48px; color: var(--muted); line-height: 1.45; }
 .bag-count {
   display: inline-block;
   background: var(--purple);
@@ -94,7 +92,12 @@
   gap: 12px;
   padding: 12px;
   align-items: center;
+  width: 100%;
+  color: inherit;
+  text-align: left;
 }
+.bag-item-report { cursor: pointer; border: 1px solid rgba(168, 85, 247, 0.35); transition: border-color 0.2s, box-shadow 0.2s; }
+.bag-item-report:hover { border-color: var(--purple); box-shadow: var(--glow-purple); }
 .bag-icon { font-size: 1.8rem; filter: drop-shadow(0 0 6px rgba(168,85,247,0.6)); }
 .bag-name { font-family: var(--font-display); font-size: 0.92rem; color: var(--text); }
 .bag-desc { margin-top: 2px; line-height: 1.35; }
@@ -102,3 +105,7 @@
 .evidence-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
 .evidence-list li { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #d4ffe6; }
 .ev-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: var(--glow-green); flex: none; }
+
+@media (max-width: 560px) {
+  .hint-answer { padding-left: 48px; }
+}

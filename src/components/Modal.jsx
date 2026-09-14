@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import './Modal.css'
 
 /* Reusable neon modal. Pass accent: 'cyan' | 'magenta' | 'purple' | 'green'. */
-export default function Modal({ open, onClose, title, accent = 'cyan', children, width = 560 }) {
+export default function Modal({ open, onClose, title, accent = 'cyan', children, width = 560, className = '' }) {
   useEffect(() => {
     if (!open) return
     const onKey = (e) => e.key === 'Escape' && onClose?.()
@@ -15,7 +15,7 @@ export default function Modal({ open, onClose, title, accent = 'cyan', children,
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div
-        className={`modal panel clip panel-glow-${accent} fade-in`}
+        className={`modal panel clip panel-glow-${accent} fade-in ${className}`}
         style={{ maxWidth: width }}
         onClick={(e) => e.stopPropagation()}
         role="dialog"

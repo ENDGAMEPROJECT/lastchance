@@ -31,6 +31,8 @@ const initialState = {
   player: { alias: '', age: '' },
   timedOut: false,
   activeNodeId: null,
+  roomStarted: false,
+  linkRound: null,
   progress: initialProgress(),
   inventory: [], // Item[]
   evidence: [], // { id, label } collected clues to use on Max
@@ -45,7 +47,7 @@ function reducer(state, action) {
       return { ...state, player: action.player, screen: 'pretest' }
 
     case 'START_GAME':
-      return { ...state, screen: 'map', running: true, timeLeft: START_SECONDS }
+      return { ...state, screen: 'map', running: true, timeLeft: START_SECONDS, linkRound: null }
 
     case 'FINISH':
       // Final decision from the post-test resolves the game.
@@ -53,11 +55,17 @@ function reducer(state, action) {
 
     case 'OPEN_NODE': {
       if (state.progress[action.id] === 'locked') return state
-      return { ...state, screen: 'room', activeNodeId: action.id }
+      return { ...state, screen: 'room', activeNodeId: action.id, roomStarted: false, linkRound: null }
     }
 
+    case 'START_ROOM':
+      return { ...state, roomStarted: true }
+
+    case 'SET_LINK_ROUND':
+      return { ...state, linkRound: action.round }
+
     case 'GO_MAP':
-      return { ...state, screen: 'map', activeNodeId: null }
+      return { ...state, screen: 'map', activeNodeId: null, roomStarted: false, linkRound: null }
 
     case 'GOTO_SCREEN': // debug-only jump
       return { ...state, screen: action.screen, activeNodeId: null }
@@ -75,6 +83,8 @@ function reducer(state, action) {
         // Clearing the last district ends the puzzles → into the post-test.
         screen: allDone ? 'posttest' : 'map',
         activeNodeId: null,
+        roomStarted: false,
+        linkRound: null,
         running: allDone ? false : state.running,
       }
     }
@@ -144,6 +154,8 @@ export function GameProvider({ children }) {
   const finishGame = useCallback((outcome) => dispatch({ type: 'FINISH', outcome }), [])
   const gotoScreen = useCallback((screen) => dispatch({ type: 'GOTO_SCREEN', screen }), [])
   const openNode = useCallback((id) => dispatch({ type: 'OPEN_NODE', id }), [])
+  const startRoom = useCallback(() => dispatch({ type: 'START_ROOM' }), [])
+  const setLinkRound = useCallback((round) => dispatch({ type: 'SET_LINK_ROUND', round }), [])
   const goMap = useCallback(() => dispatch({ type: 'GO_MAP' }), [])
   const completeRoom = useCallback((id) => dispatch({ type: 'COMPLETE_NODE', id }), [])
   const addItem = useCallback((item) => dispatch({ type: 'ADD_ITEM', item }), [])
@@ -167,6 +179,8 @@ export function GameProvider({ children }) {
     finishGame,
     gotoScreen,
     openNode,
+    startRoom,
+    setLinkRound,
     goMap,
     completeRoom,
     addItem,

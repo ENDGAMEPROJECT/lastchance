@@ -47,6 +47,7 @@ export default function AdsCorridor({ node }) {
   const [solved, setSolved] = useState(false)
   const inputRef = useRef(null)
 
+
   const ANSWER = CODES.adsCorridor // 'SAVE'
 
   // On entry: grant the Truth Flashlight if the player doesn't have it,

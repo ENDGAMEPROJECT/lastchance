@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { NARRATIVE } from '../game/gameData.js'
 import './RoomFrame.css'
@@ -39,6 +40,7 @@ export default function RoomFrame({
   children,
 }) {
   const t = useT()
+  const { startRoom } = useGame()
   const accent = node?.accent || 'cyan'
   const vars = { friend: NARRATIVE.friend }
   const [started, setStarted] = useState(false)
@@ -61,7 +63,13 @@ export default function RoomFrame({
             <div className={`eyebrow accent-${accent}`}>{subtitle}</div>
             <h2 className="briefing-title">{title}</h2>
             <p className="briefing-text muted">{brief}</p>
-            <button className={`btn btn-${accent} btn-lg briefing-begin`} onClick={() => setStarted(true)}>
+            <button
+              className={`btn btn-${accent} btn-lg briefing-begin`}
+              onClick={() => {
+                setStarted(true)
+                startRoom()
+              }}
+            >
               {t('common.begin')}
             </button>
           </div>
