@@ -3,5 +3,6 @@
    '/lastchance/'. import.meta.env.BASE_URL always ends with a slash. */
 const BASE = import.meta.env.BASE_URL
 
-/* URL for a background image in public/bg (pass just the file name). */
-export const bgUrl = (name) => `${BASE}bg/${name}`
+/* URL for an image in public/bg, or a public subfolder such as challenge-1. */
+export const bgUrl = (name) =>
+   name.startsWith('challenge-1/') ? `${BASE}${name}` : `${BASE}bg/${name}`

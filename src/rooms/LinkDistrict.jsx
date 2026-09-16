@@ -23,25 +23,25 @@ const ROUNDS = [
   {
     // Common suffixes — the real domain is hidden after a familiar name.
     doors: [
-      { id: 'a', url: 'https://www.lunawear.com', safe: true, preview: 'store' },
-      { id: 'b', url: 'https://www.lunawear.com-official.shop/', safe: false, preview: 'shop' },
-      { id: 'c', url: 'https://www.lunawear-dealz.com', safe: false, preview: 'sale' },
+      { id: 'a', url: 'https://www.lunawear.com', safe: true, preview: 'luna-2' },
+      { id: 'b', url: 'https://www.lunawear.com-official.shop/', safe: false, preview: 'luna-3' },
+      { id: 'c', url: 'https://www.lunawear-dealz.com', safe: false, preview: 'luna-1' },
     ],
   },
   {
     // HTTP vs HTTPS — the insecure ones use http:// (and an odd TLD).
     doors: [
-      { id: 'a', url: 'https://theshoefactory.com', safe: true, preview: 'store' },
-      { id: 'b', url: 'http://shoefactory.com', safe: false, preview: 'store' },
-      { id: 'c', url: 'http://shoefactory.free', safe: false, preview: 'shop' },
+      { id: 'a', url: 'https://theshoefactory.com', safe: true, preview: 'shoes-2' },
+      { id: 'b', url: 'http://shoefactory.com', safe: false, preview: 'shoes-1' },
+      { id: 'c', url: 'http://shoefactory.free', safe: false, preview: 'shoes-3' },
     ],
   },
   {
     // Phishing — look-alike characters (rn→m, and a Cyrillic и).
     doors: [
-      { id: 'a', url: 'https://magnumshop.com', safe: true, preview: 'store' },
-      { id: 'b', url: 'https://rnagnumshop.com', safe: false, preview: 'store' },
-      { id: 'c', url: 'https://magиumshop.com', safe: false, preview: 'store' },
+      { id: 'a', url: 'https://magnumshop.com', safe: true, preview: 'lights-1' },
+      { id: 'b', url: 'https://rnagnumshop.com', safe: false, preview: 'lights-2' },
+      { id: 'c', url: 'https://magиumshop.com', safe: false, preview: 'lights-3' },
     ],
   },
 ]
@@ -140,7 +140,7 @@ function shuffle(arr) {
   const a = [...arr]
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-    ;[a[i], a[j]] = [a[j], a[i]]
+      ;[a[i], a[j]] = [a[j], a[i]]
   }
   return a
 }
@@ -148,6 +148,201 @@ function shuffle(arr) {
 /* The mini website shown "through" each door. In ambiguous mode all
    doors render the same neutral page so only the address bar differs. */
 function DoorPage({ type, ambiguous, t }) {
+  if (type === 'luna-1') {
+    return (
+      <div
+        className="door-page luna-ad"
+        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-luna-1.png')}")` }}
+      >
+        <div className="luna-ad-copy">
+          <div className="luna-ad-1-headline">{t('rooms.link.lunaAd1.headline')}</div>
+          <div className="luna-ad-1-second-headline">{t('rooms.link.lunaAd1.headlineSecond')}</div>
+          <div className="luna-ad-footer">
+            <p className="luna-ad-1-text">
+            {t('rooms.link.lunaAd1.text')}
+          </p>
+            <div className="luna-ad-1-brand">{t('rooms.link.lunaAd1.brand')}</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  if (type === 'luna-2') {
+    return (
+      <div
+        className="door-page luna-ad"
+        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-luna-2.png')}")` }}
+      >
+        <div className="luna-ad-copy">
+          <div className="luna-ad-2-brand">{t('rooms.link.lunaAd2.brand')}</div>
+          <div className="luna-ad-2-headline">{t('rooms.link.lunaAd2.headline')}</div>
+           <p className="luna-ad-2-text">
+            {t('rooms.link.lunaAd2.text')}
+          </p>
+          <div className="luna-ad-footer">
+           
+            <button
+              className="luna-ad-2-cta"
+              type="button"
+              tabIndex={-1}
+              onClick={(event) => event.stopPropagation()}
+            >
+              {t('rooms.link.lunaAd2.cta')} <b aria-hidden="true">  <span style={{ marginLeft: '0.5rem' }}>→</span></b>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    )
+  }
+  if (type === 'luna-3') {
+    return (
+      <div
+        className="door-page luna-ad"
+        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-luna-3.png')}")` }}
+      >
+        <div className="luna-ad-copy">
+          <div className="luna-ad-3-headline">{t('rooms.link.lunaAd3.headline')}</div>
+          <div className="luna-ad-3-prices">
+            <span className="luna-ad-3-discount">{t('rooms.link.lunaAd3.discount')}</span>
+            <span className="luna-ad-3-oldprice">{t('rooms.link.lunaAd3.oldPrice')}</span>
+          </div>
+         <div style={{ transform: "rotate(-5deg)" }}>
+          <div className="luna-ad-3-second-headline">{t('rooms.link.lunaAd3.headlineSecond')}</div>
+          </div>
+          <p className="luna-ad-3-text">
+            {t('rooms.link.lunaAd3.text')} 😱😱😱
+          </p>
+          <div className="luna-ad-footer">
+            <div className="luna-ad-3-brand">{t('rooms.link.lunaAd3.brand')}</div>
+          </div>
+        </div>
+
+      </div>
+    )
+  }
+  if (type === 'shoes-1') {
+    return (
+      <div
+        className="door-page shoes-ad"
+        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-shoes-1.png')}")` }}
+      >
+        <div className="shoes-ad-copy">
+          <div className="shoes-ad-1-headline">{t('rooms.link.shoesAd1.headline')}</div>
+          <button
+            className="shoes-ad-1-cta"
+            type="button"
+            tabIndex={-1}
+            onClick={(event) => event.stopPropagation()}
+          >
+            {t('rooms.link.shoesAd1.cta')} <b aria-hidden="true">→</b>
+          </button>
+          <div className="shoes-ad-footer">
+            <div className="shoes-ad-1-brand">{t('rooms.link.shoesAd1.brand')}</div>
+            <div className="shoes-ad-1-second-headline">{t('rooms.link.shoesAd1.headlineSecond')}</div>
+          </div>
+        </div>
+
+      </div>
+    )
+  }
+  if (type === 'shoes-2') {
+    return (
+      <div
+        className="door-page shoes-ad"
+        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-shoes-2.jpeg')}")` }}
+      >
+        <div className="shoes-ad-copy">
+          <div className="shoes-ad-2-headline">{t('rooms.link.shoesAd2.headline')}</div>
+          <div className="shoes-ad-2-second-headline">{t('rooms.link.shoesAd2.headlineSecond')}</div>
+          <div className="shoes-ad-footer">
+            <span className="shoes-ad-2-cta"> {t('rooms.link.shoesAd2.cta')} </span>
+            <div className="shoes-ad-2-brand">{t('rooms.link.shoesAd2.brand')}</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  if (type === 'shoes-3') {
+    return (
+      <div
+        className="door-page shoes-ad"
+        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-shoes-3.png')}")` }}
+      >
+        <div className="shoes-ad-copy">
+          <div className="shoes-ad-3-headline">{t('rooms.link.shoesAd3.headline')}</div>
+
+          <div className="shoes-ad-footer">
+            <div className="shoes-ad-3-second-headline">{t('rooms.link.shoesAd3.headlineSecond')}</div>
+            <div className="shoes-ad-3-brand">{t('rooms.link.shoesAd3.brand')}</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  if (type === 'lights-1') {
+    return (
+      <div
+        className="door-page lights-ad"
+        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-lights-1.png')}")` }}
+      >
+        <div className="lights-ad-copy">
+          <div className="lights-ad-1-headline">{t('rooms.link.lightsAd1.headline')}</div>
+          <div className="lights-ad-1-discounts">
+            <span className="lights-discount" id="lights-discount-1">{t('rooms.link.lightsAd1.discount1')}</span>
+            <span className="lights-discount" id="lights-discount-2">{t('rooms.link.lightsAd1.discount2')}</span>
+            <span className="lights-discount" id="lights-discount-3">{t('rooms.link.lightsAd1.discount3')}</span>
+          </div>
+          <div className="lights-ad-footer">
+            <div className="lights-ad-1-second-headline">{t('rooms.link.lightsAd1.headlineSecond')}</div>
+            <div className="lights-ad-1-brand">{t('rooms.link.lightsAd1.brand')}</div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  if (type === 'lights-2') {
+    return (
+      <div
+        className="door-page lights-ad"
+        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-lights-2.png')}")` }}
+      >
+        <div className="lights-ad-copy">
+          <div className="lights-ad-2-brand">{t('rooms.link.lightsAd2.brand')}</div>
+          <div className="lights-ad-2-headline-container">
+            <div className="lights-ad-2-headline">{t('rooms.link.lightsAd2.headline')}</div>
+            <div className="lights-ad-2-second-headline">{t('rooms.link.lightsAd2.headlineSecond')}</div>
+          </div>
+          <div className="lights-ad-footer">
+
+
+          </div>
+        </div>
+      </div>
+    )
+  }
+  if (type === 'lights-3') {
+    return (
+      <div
+        className="door-page lights-ad"
+        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-lights-3.png')}")` }}
+      >
+        <div className="lights-ad-copy">
+          <div className="lights-ad-3-brand">{t('rooms.link.lightsAd3.brand')}</div>
+          <div className="lights-ad-footer">
+            <div className="lights-ad-3-headline">{t('rooms.link.lightsAd3.headline')}</div>
+            <button className="lights-ad-3-cta">{t('rooms.link.lightsAd3.cta')}</button>
+            <div
+              className="lights-ad-3-text"
+              type="button">
+              {t('rooms.link.lightsAd3.text')}
+            </div>
+
+          </div>
+        </div>
+      </div>
+    )
+  }
   if (ambiguous) {
     return (
       <div className="door-page neutral">
@@ -157,24 +352,7 @@ function DoorPage({ type, ambiguous, t }) {
       </div>
     )
   }
-  if (type === 'store') {
-    return (
-      <div className="door-page store">
-        <div className="dp-bar">{t('rooms.link.preview.newArrivals')}</div>
-        <div className="dp-tiles"><span /><span /><span /></div>
-        <div className="dp-cap">{t('rooms.link.preview.storeCaption')}</div>
-      </div>
-    )
-  }
-  if (type === 'sale') {
-    return (
-      <div className="door-page sale">
-        <div className="dp-warn">{t('rooms.link.preview.megaSale')}</div>
-        <div className="dp-off">90% OFF</div>
-        <div className="dp-shop">{t('rooms.link.preview.shopNow')}</div>
-      </div>
-    )
-  }
+
   return (
     <div className="door-page shop">
       <div className="dp-shopbar">{t('rooms.link.preview.shopBar')}</div>
@@ -354,9 +532,6 @@ export default function LinkDistrict({ node }) {
           </div>
 
           <div className="ld-actions">
-            {error
-              ? <div className="banner wrong shake ld-banner">{error}</div>
-              : <span className="dim t-sm">{t('rooms.link.doorHelp')}</span>}
             <button className="btn btn-cyan" onClick={confirmRound} disabled={advancing || !touched}>
               {round < ROUNDS.length - 1 ? t('rooms.link.nextRouter') : t('rooms.link.finalRouter')}
             </button>
