@@ -35,7 +35,7 @@ export const GAME_IMAGES = [
   'persuasion_end.png',
   'computer.png',
   'conversation.png',
-  'challenge-1/poster-shoe-1.png',
+  'link-district/ad-shoe-1.png',
 ].map(bgUrl)
 
 let started = false

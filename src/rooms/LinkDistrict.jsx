@@ -152,7 +152,7 @@ function DoorPage({ type, ambiguous, t }) {
     return (
       <div
         className="door-page luna-ad"
-        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-luna-1.png')}")` }}
+        style={{ backgroundImage: `url("${bgUrl('link-district/ad-luna-1.png')}")` }}
       >
         <div className="luna-ad-copy">
           <div className="luna-ad-1-headline">{t('rooms.link.lunaAd1.headline')}</div>
@@ -171,7 +171,7 @@ function DoorPage({ type, ambiguous, t }) {
     return (
       <div
         className="door-page luna-ad"
-        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-luna-2.png')}")` }}
+        style={{ backgroundImage: `url("${bgUrl('link-district/ad-luna-2.png')}")` }}
       >
         <div className="luna-ad-copy">
           <div className="luna-ad-2-brand">{t('rooms.link.lunaAd2.brand')}</div>
@@ -199,7 +199,7 @@ function DoorPage({ type, ambiguous, t }) {
     return (
       <div
         className="door-page luna-ad"
-        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-luna-3.png')}")` }}
+        style={{ backgroundImage: `url("${bgUrl('link-district/ad-luna-3.png')}")` }}
       >
         <div className="luna-ad-copy">
           <div className="luna-ad-3-headline">{t('rooms.link.lunaAd3.headline')}</div>
@@ -225,7 +225,7 @@ function DoorPage({ type, ambiguous, t }) {
     return (
       <div
         className="door-page shoes-ad"
-        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-shoes-1.png')}")` }}
+        style={{ backgroundImage: `url("${bgUrl('link-district/ad-shoes-1.png')}")` }}
       >
         <div className="shoes-ad-copy">
           <div className="shoes-ad-1-headline">{t('rooms.link.shoesAd1.headline')}</div>
@@ -250,7 +250,7 @@ function DoorPage({ type, ambiguous, t }) {
     return (
       <div
         className="door-page shoes-ad"
-        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-shoes-2.jpeg')}")` }}
+        style={{ backgroundImage: `url("${bgUrl('link-district/ad-shoes-2.jpeg')}")` }}
       >
         <div className="shoes-ad-copy">
           <div className="shoes-ad-2-headline">{t('rooms.link.shoesAd2.headline')}</div>
@@ -267,7 +267,7 @@ function DoorPage({ type, ambiguous, t }) {
     return (
       <div
         className="door-page shoes-ad"
-        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-shoes-3.png')}")` }}
+        style={{ backgroundImage: `url("${bgUrl('link-district/ad-shoes-3.png')}")` }}
       >
         <div className="shoes-ad-copy">
           <div className="shoes-ad-3-headline">{t('rooms.link.shoesAd3.headline')}</div>
@@ -284,7 +284,7 @@ function DoorPage({ type, ambiguous, t }) {
     return (
       <div
         className="door-page lights-ad"
-        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-lights-1.png')}")` }}
+        style={{ backgroundImage: `url("${bgUrl('link-district/ad-lights-1.png')}")` }}
       >
         <div className="lights-ad-copy">
           <div className="lights-ad-1-headline">{t('rooms.link.lightsAd1.headline')}</div>
@@ -305,7 +305,7 @@ function DoorPage({ type, ambiguous, t }) {
     return (
       <div
         className="door-page lights-ad"
-        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-lights-2.png')}")` }}
+        style={{ backgroundImage: `url("${bgUrl('link-district/ad-lights-2.png')}")` }}
       >
         <div className="lights-ad-copy">
           <div className="lights-ad-2-brand">{t('rooms.link.lightsAd2.brand')}</div>
@@ -325,7 +325,7 @@ function DoorPage({ type, ambiguous, t }) {
     return (
       <div
         className="door-page lights-ad"
-        style={{ backgroundImage: `url("${bgUrl('challenge-1/ad-lights-3.png')}")` }}
+        style={{ backgroundImage: `url("${bgUrl('link-district/ad-lights-3.png')}")` }}
       >
         <div className="lights-ad-copy">
           <div className="lights-ad-3-brand">{t('rooms.link.lightsAd3.brand')}</div>

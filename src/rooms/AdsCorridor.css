@@ -171,7 +171,7 @@
 .ac-glossy-title {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   line-height: 1.05;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
@@ -196,6 +196,53 @@
   opacity: 0.6;
   letter-spacing: 0.02em;
 }
+/* Ads different styles */
+/* Ad price */
+.ac-prize {
+  .ac-glossy-title {
+  font-family: var(--font-narrow);
+  font-weight: 900;
+  font-size: 1.5rem;
+  line-height: 1.05;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+}
+/* Ad rich */
+.ac-rich {
+  .ac-glossy-title, .ac-truth-title {
+    font-family: var(--font-neogrotesk);
+    font-weight: 900;
+    margin-top: -6rem;
+    font-size: 2rem;
+    color: rgb(181, 255, 181);
+    text-align: right;
+    width: 50%;
+    align-self: flex-end;
+    line-height: 1.05;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  }
+  .ac-glossy-body { 
+  margin-top: 1rem; 
+  font-weight: 500; 
+  font-size: 0.8rem; 
+  text-align: right;
+  align-self: flex-end;
+  width:60%;
+  }
+
+}
+/* Ad virus */
+.ac-virus {
+  .ac-glossy-title, .ac-truth-title {
+    font-family: var(--font-mono);
+    font-weight: 900;
+    margin-top: 8rem;
+    font-size: 2rem;
+    line-height: 1.05;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  };
+}
+
 
 /* Truth layer — sits over the glossy, hidden until illuminated */
 .ac-truth {
@@ -207,8 +254,7 @@
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  text-align: left;
-  background: rgba(6, 8, 20, 0.96);
+  background: linear-gradient(180deg, rgba(6, 8, 20, 0.15), rgba(6, 8, 20, 0.2));
   border: 2px solid var(--amber);
   box-shadow: inset 0 0 40px rgba(255, 185, 43, 0.12), 0 0 20px rgba(255, 185, 43, 0.25);
   opacity: 0;
@@ -216,7 +262,9 @@
   transition: opacity 0.45s ease;
 }
 .ac-poster.revealed .ac-truth { opacity: 1; }
-.ac-poster.revealed .ac-glossy { filter: grayscale(0.7) brightness(0.4); }
+.ac-poster.revealed .ac-glossy {
+  filter: saturate(1.1) contrast(1.15) brightness(0.72);
+}
 
 .ac-truth-tag {
   font-family: var(--font-mono);
