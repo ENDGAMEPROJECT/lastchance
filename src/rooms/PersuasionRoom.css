@@ -444,10 +444,8 @@
    room's perspective and shaped like tall standing frames with a mark. */
 .pl-freeframe {
   position: absolute;
-  /* Posters recede in the plane (further columns shrink), so a full-size
-     134px frame reads too big. Sized down to match the apparent size of the
-     mid-wall posters the frames actually hover over. */
-  width: 118px;
+  width: 134px;
+  height: 150px;
   cursor: grab;
   touch-action: none;
   user-select: none;
@@ -463,15 +461,55 @@
 .pl-freeframe.dragging { cursor: grabbing; }
 .pl-freeframe .pl-frame {
   cursor: inherit;
-  min-height: 132px; /* scaled down to match the receded posters */
-  padding: 10px 10px 12px;
-  gap: 7px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 9px 9px 11px;
+  gap: 5px;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  border-width: 2px;
   background: rgba(255, 43, 214, 0.09);
   transition: transform 0.15s ease, box-shadow 0.2s, border-color 0.2s, background 0.2s;
 }
-.pl-freeframe .pl-frame-label { text-align: center; }
+.pl-freeframe .pl-poster-emoji {
+  font-size: 1.6rem;
+  opacity: 0.1;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
+.pl-freeframe .pl-poster-head {
+  color: rgba(255, 255, 255, 0.1);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.74rem;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+.pl-freeframe .pl-poster-sub {
+  color: rgba(255, 255, 255, 0.1);
+  font-size: 0.62rem;
+  line-height: normal;
+}
+.pl-freeframe-technique {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #d4ffe6;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.pl-letter-highlight {
+  background:
+    linear-gradient(104deg, rgba(130, 255, 173, 0) 0.9%, rgba(130, 255, 173, 1) 2.4%, rgba(130, 255, 173, 0.5) 5.8%, rgba(130, 255, 173, 0.1) 93%, rgba(130, 255, 173, 0.7) 96%, rgba(130, 255, 173, 0) 98%),
+    linear-gradient(183deg, rgba(130, 255, 173, 0) 0%, rgba(130, 255, 173, 0.3) 7.9%, rgba(130, 255, 173, 0) 15%);
+  color: rgba(255, 255, 255, 0.95);
+  opacity: 1;
+}
 /* the circular "mark" where the hidden letter is read once framed */
 .pl-frame-mark {
   margin-top: auto;

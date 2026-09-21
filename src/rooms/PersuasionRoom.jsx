@@ -28,6 +28,35 @@ const POSTERS = [
 
 const FRAME_ORDER = ['emotional', 'fomo', 'urgency', 'social', 'influencer', 'exagg']
 
+function findLetter(text, letter) {
+  const wanted = letter.toUpperCase()
+  return [...text].map((character, index) => ({
+    character,
+    index,
+    matches: character.toUpperCase() === wanted,
+  }))
+}
+
+function PosterContent({ poster, copy, highlightLetter = false }) {
+  const headline = highlightLetter
+    ? findLetter(copy.headline, poster.letter)
+    : [{ character: copy.headline, index: 0, matches: false }]
+
+  return (
+    <>
+      <span className="pl-poster-emoji">{poster.emoji}</span>
+      <span className="pl-poster-head" aria-label={copy.headline}>
+        {headline.map(({ character, index, matches }) => (
+          <span key={index} className={matches ? 'pl-letter-highlight' : undefined}>
+            {character}
+          </span>
+        ))}
+      </span>
+      <span className="pl-poster-sub">{copy.sub}</span>
+    </>
+  )
+}
+
 /* Initial overlapping positions for the centre pile (scene-local px). */
 const CENTER = { x: 470, y: 110 }
 function initPositions() {
@@ -202,9 +231,7 @@ export default function PersuasionRoom({ node }) {
                 ref={(el) => (posterRefs.current[p.id] = el)}
                 className={`pl-poster tint-${p.tint} ${done ? 'framed' : ''} ${wrong ? 'wrong' : ''} ${over ? 'is-over' : ''}`}
               >
-                <div className="pl-poster-emoji">{p.emoji}</div>
-                <div className="pl-poster-head">{copy.headline}</div>
-                <div className="pl-poster-sub">{copy.sub}</div>
+                <PosterContent poster={p} copy={copy} />
 
                 {done && (
                   <div className="pl-frame-overlay">
@@ -237,7 +264,7 @@ export default function PersuasionRoom({ node }) {
 
         {/* floating status hint */}
         <p className="pl-hint mono">{hint}</p>
-
+          
         {/* ---- CENTRE: free-floating overlapping frame pile ---- */}
         {frames.map((f) => {
           if (placed[f.id]) return null
@@ -253,8 +280,13 @@ export default function PersuasionRoom({ node }) {
                 <span className="pl-frame-corner tr" />
                 <span className="pl-frame-corner bl" />
                 <span className="pl-frame-corner br" />
-                <span className="pl-frame-label">{f.technique}</span>
-                <span className="pl-frame-mark" aria-hidden />
+                <PosterContent
+                  poster={POSTERS[posterIndex[f.id]]}
+                  copy={posterText[posterIndex[f.id]]}
+                  highlightLetter
+                />
+                <span className="pl-freeframe-technique">{f.technique}</span>
+           
               </span>
             </div>
           )
