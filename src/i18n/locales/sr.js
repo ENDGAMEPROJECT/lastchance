@@ -467,19 +467,19 @@ export default {
       "stage1": {
         "badge": "Stage 1 / 2",
         "tag": "Content labelling",
-        "prompt": "Decode each emoji sticky-note, then drag the matching label onto its post: {paid}, {collab} or {gifted}.",
+        "prompt": "Decode the hidden sponsorship on each post with your Emoji Decoding Card.",
+        "selectPost": "Select {name}",
+        "answerProgress": "{count} / {total}",
         "openDecoder": "🔑 Open Decoder Card",
         "verified": "Verified",
         "followersSuffix": "followers",
         "cluesTitle": "Disclosure clues",
         "decodeMe": "decode me →",
-        "trayTitle": "Drag a label onto each post",
-        "dropPlaceholder": "drop label",
         "correct": "✓ {label}",
         "wrong": "✗ wrong label",
         "learnLabel": "Why it matters:",
         "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
-        "hint": "Tap or drag a label chip, then drop it on the matching post."
+        "hint": "Open the Emoji Decoding Card from your bag, select a post and enter its hidden word one letter at a time."
       },
       "labels": {
         "paid": "PAID",
@@ -602,7 +602,8 @@ export default {
       },
       "decoder": {
         "title": "🔑 Emoji Decoding Card",
-        "noCard": "You would normally have earned this card back in Link District — here it is anyway.",
+        "noSelection": "No post selected",
+        "erase": "Delete last letter",
         "help": "Match each emoji on a sticky-note to its letter to read the hidden label."
       }
     },

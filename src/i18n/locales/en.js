@@ -135,7 +135,7 @@ export default {
       influencer: {
         context: 'Separate genuine recommendations from paid or fabricated signals.',
         prompts: ['I do not know how to decode the disclosure on each post.', 'I do not know what to do after I label the posts.', 'I do not know how to classify the three product images.'],
-        items: ['Use the Emoji Decoding Card: LUNA20 and an affiliate link indicate PAID; #ad and a creative partnership indicate COLLAB; a free product with no payment indicates GIFTED.', 'Run the reverse image search on all three products before choosing a verdict. Identical listings suggest mass production; only AI-art matches suggest an AI-generated image.', 'The mug appears across dropshipping sites, the NovaPad image traces to AI generators, and the cupcakes match one real local bakery.'],
+        items: ['Open the Emoji Decoding Card from your bag, select a post and click the matching letters. LUNA20 and an affiliate link indicate PAID; #ad and a creative partnership indicate COLLAB; a free product with no payment indicates GIFTED.', 'Run the reverse image search on all three products before choosing a verdict. Identical listings suggest mass production; only AI-art matches suggest an AI-generated image.', 'The mug appears across dropshipping sites, the NovaPad image traces to AI generators, and the cupcakes match one real local bakery.'],
       },
       algorithm: {
         context: 'Follow the data trail behind the personalized feed.',
@@ -582,19 +582,19 @@ export default {
       "stage1": {
         "badge": "Stage 1 / 2",
         "tag": "Content labelling",
-        "prompt": "Decode each emoji sticky-note, then drag the matching label onto its post: {paid}, {collab} or {gifted}.",
+        "prompt": "Decode the hidden sponsorship on each post with your Emoji Decoding Card.",
+        "selectPost": "Select {name}",
+        "answerProgress": "{count} / {total}",
         "openDecoder": "🔑 Open Decoder Card",
         "verified": "Verified",
         "followersSuffix": "followers",
         "cluesTitle": "Disclosure clues",
         "decodeMe": "decode me →",
-        "trayTitle": "Drag a label onto each post",
-        "dropPlaceholder": "drop label",
         "correct": "✓ {label}",
         "wrong": "✗ wrong label",
         "learnLabel": "Why it matters:",
         "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
-        "hint": "Tap or drag a label chip, then drop it on the matching post."
+        "hint": "Open the Emoji Decoding Card from your bag, select a post and enter its hidden word one letter at a time."
       },
       "labels": {
         "paid": "PAID",
@@ -717,7 +717,8 @@ export default {
       },
       "decoder": {
         "title": "🔑 Emoji Decoding Card",
-        "noCard": "You would normally have earned this card back in Link District — here it is anyway.",
+        "noSelection": "No post selected",
+        "erase": "Delete last letter",
         "help": "Match each emoji on a sticky-note to its letter to read the hidden label."
       }
     },

@@ -12,6 +12,7 @@
 /* The fixed 1280x720 design surface. transform-origin center keeps it
    centered as it scales; the flex parent letterboxes the rest. */
 .stage16 {
+  flex-shrink: 0;
   transform-origin: center center;
   position: relative;
   border-radius: 16px;
