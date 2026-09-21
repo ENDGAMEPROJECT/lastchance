@@ -143,6 +143,7 @@
   letter-spacing: 0.06em;
 }
 .pp-timer b { font-size: 0.95rem; color: var(--cyan); }
+.pp-timer.static b { color: #ffcf3a; }
 .pp-timer.low b { color: var(--red); animation: pulse-glow 1s ease-in-out infinite; }
 
 .pp-buy {

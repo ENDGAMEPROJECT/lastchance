@@ -9,7 +9,8 @@
     "dev:debug": "vite --mode debug",
     "build": "vite build",
     "preview": "vite preview",
-    "check:i18n": "node scripts/i18n-check.mjs && node scripts/i18n-dynamic-check.mjs"
+    "check:i18n": "node scripts/i18n-check.mjs && node scripts/i18n-dynamic-check.mjs",
+    "i18n:import": "node scripts/i18n-import.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

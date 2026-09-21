@@ -108,6 +108,7 @@ export default function PersuasionRoom({ node }) {
   const matchedCount = Object.keys(placed).length
   const allMatched = matchedCount === POSTERS.length
 
+
   // Convert a screen point into scene-local design pixels (undo stage scale).
   const toLocal = (cx, cy) => {
     const r = sceneRef.current.getBoundingClientRect()
@@ -178,7 +179,9 @@ export default function PersuasionRoom({ node }) {
       // Wrong — flash the poster; the frame stays where it was dropped.
       playSound('wrong.mp3')
       setWrongPoster(posterId)
-      setHint(t('rooms.persuasion.hints.wrong'))
+      setHint(t('rooms.persuasion.hints.wrongSpecific', {
+        clue: t(`rooms.persuasion.posterHints.${posterId}`),
+      }))
       window.setTimeout(() => setWrongPoster((cur) => (cur === posterId ? null : cur)), 600)
     }
   }

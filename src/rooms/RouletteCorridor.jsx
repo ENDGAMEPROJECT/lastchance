@@ -116,6 +116,7 @@ export default function RouletteCorridor({ node }) {
   const spunCount = useMemo(() => Object.values(won).filter(Boolean).length, [won])
   const riggedCount = useMemo(() => Object.values(rigged).filter(Boolean).length, [rigged])
 
+
   /* RIGGED SPIN — always lands on the jackpot.
      We compute the extra rotation needed so the jackpot slice ends up
      centred under the fixed top pointer, then add several full turns for

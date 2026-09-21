@@ -364,7 +364,7 @@ function DoorPage({ type, ambiguous, t }) {
 }
 
 export default function LinkDistrict({ node }) {
-  const { completeRoom, addItem, addEvidence } = useGame()
+  const { completeRoom, addItem, addEvidence, setLinkRound } = useGame()
   const t = useT()
   const cfg = settings.linkDistrict
   const [round, setRound] = useState(0)
@@ -372,6 +372,11 @@ export default function LinkDistrict({ node }) {
   const [opened, setOpened] = useState({}) // which doors are peeked open
   const [error, setError] = useState('')
   const [phase, setPhase] = useState('block') // 'block' | 'justify' | 'done'
+
+  useEffect(() => {
+    setLinkRound(round)
+  }, [round, setLinkRound])
+
   const [reviewing, setReviewing] = useState(false) // showing the round's explanations
   const [flags, setFlags] = useState({})
   const [justifyErr, setJustifyErr] = useState('')
