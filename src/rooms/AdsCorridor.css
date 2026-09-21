@@ -291,6 +291,7 @@
     line-height: 1.05;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
     color: rgb(178, 178, 253);
+    text-align: center;
   }
   .ac-truth-text {
     text-align: center;
@@ -336,7 +337,7 @@
     margin-top: 8rem;
     font-size: 2rem;
     line-height: 1.05;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.836);
   }
   .ac-truth-title {
     font-family: var(--font-mono);
