@@ -27,7 +27,7 @@ const POSTERS = [
 ]
 
 export default function AdsCorridor({ node }) {
-  const { completeRoom, addItem, addEvidence, hasItem } = useGame()
+  const { completeRoom, addEvidence } = useGame()
   const t = useT()
   const { scale } = useStage()
 
@@ -47,23 +47,24 @@ export default function AdsCorridor({ node }) {
   const [solved, setSolved] = useState(false)
   const inputRef = useRef(null)
 
+
   const ANSWER = CODES.adsCorridor // 'SAVE'
 
   // On entry: grant the Truth Flashlight if the player doesn't have it,
   // then let it "charge" for a beat before it can be switched on.
   useEffect(() => {
-    if (!hasItem('truthLight')) {
-      addItem(ITEMS.truthLight)
-    }
     const t = setTimeout(() => setCharging(false), 1000)
     return () => clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  function toggleLight() {
-    if (charging) return
-    setLightOn((on) => !on)
-  }
+  useEffect(() => {
+    const onUseItem = (event) => {
+      if (event.detail?.id === 'truthLight' && !charging) setLightOn(true)
+    }
+    window.addEventListener('lastchance:use-item', onUseItem)
+    return () => window.removeEventListener('lastchance:use-item', onUseItem)
+  }, [charging])
 
   // Shining the light on a poster (only works while it is ON) reveals
   // that poster's hidden fine print and remembers it for the code hint.

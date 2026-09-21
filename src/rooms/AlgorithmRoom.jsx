@@ -115,6 +115,7 @@ export default function AlgorithmRoom({ node }) {
   const [placements, setPlacements] = useState({}) // rowId -> tileId placed in its blank slot
   const [wrongFlash, setWrongFlash] = useState(false) // transient wrong-tile feedback
 
+
   const tileById = useMemo(() => Object.fromEntries(TRAY.map((tile) => [tile.id, tile])), [])
   const blankSlot = (row) => row.slots.find((s) => s.blank)
 
@@ -155,20 +156,19 @@ export default function AlgorithmRoom({ node }) {
   // Drop a tile into the current equation's blank: correct → it locks in and the
   // reflection unlocks; wrong → a red flash + a nudge (tile stays in the tray).
   function handleDrop(row, tileId) {
+    if (placements[row.id]) return
     if (tileId === blankSlot(row).tileId) {
       setWrongFlash(false)
       setPlacements((p) => ({ ...p, [row.id]: tileId }))
+      if (step < ROWS.length - 1) {
+        window.setTimeout(() => setStep((current) => current + 1), 850)
+      }
     } else {
       playSound('wrong.mp3')
       setWrongFlash(true)
       window.setTimeout(() => setWrongFlash(false), 1200)
     }
   }
-  function nextEquation() {
-    setWrongFlash(false)
-    setStep((s) => s + 1)
-  }
-
   // Fires exactly once, when the player logs the evidence after a clean run.
   function finish() {
     addEvidence({
@@ -237,15 +237,8 @@ export default function AlgorithmRoom({ node }) {
               <button className="btn btn-cyan" onClick={submitCode} disabled={code.length !== 6}>
                 {t('rooms.algorithm.unlock.submit')}
               </button>
-              <button
-                className="btn btn-ghost btn-sm"
-                onClick={() => setPhase('choice')}
-              >
-                {t('rooms.algorithm.unlock.skip')}
-              </button>
             </div>
 
-            <p className="ar-hint t-xs dim">{t('rooms.algorithm.unlock.hint')}</p>
           </div>
         </div>
       )}
@@ -396,17 +389,15 @@ export default function AlgorithmRoom({ node }) {
                     </div>
                     {wrongFlash && <div className="banner wrong shake ar-wrong">{t('rooms.algorithm.equations.wrongHint')}</div>}
                   </div>
-                ) : (
-                  <div className="ar-reflection panel clip panel-glow-cyan fade-in">
-                    <div className="ar-reflect-title">{t('rooms.algorithm.equations.reflectTitle')}</div>
-                    <p className="ar-reflect-text">{t(`rooms.algorithm.rows.${row.id}.explain`, { friend: NARRATIVE.friend })}</p>
-                    <button className="btn btn-cyan" onClick={nextEquation}>
-                      {step < ROWS.length - 1
-                        ? t('rooms.algorithm.equations.nextBtn')
-                        : t('rooms.algorithm.equations.lastBtn', { friend: NARRATIVE.friend })}
+                ) : step === ROWS.length - 1 ? (
+                  <div className="ar-reflection ar-final-reflection fade-in">
+                    <div className="ar-reflect-title">{t('rooms.algorithm.equations.finalLessonTitle')}</div>
+                    <p className="ar-reflect-text">{t('rooms.algorithm.equations.finalLesson')}</p>
+                    <button className="btn btn-cyan" onClick={() => setStep((current) => current + 1)}>
+                      {t('rooms.algorithm.equations.terminalTitle')} →
                     </button>
                   </div>
-                )}
+                ) : null}
               </div>
             )
           })() : (
@@ -425,12 +416,6 @@ export default function AlgorithmRoom({ node }) {
                     <b>{t('rooms.algorithm.equations.profileB3')}</b>
                     {t('rooms.algorithm.equations.profileP4', { friend: NARRATIVE.friend })}
                   </p>
-                </div>
-                <div className="learn ar-dw-learn">
-                  <b>{t('rooms.algorithm.equations.learnTitle')}</b>
-                  {t('rooms.algorithm.equations.learnBefore')}
-                  <i>{t('rooms.algorithm.equations.learnItalic')}</i>
-                  {t('rooms.algorithm.equations.learnAfter')}
                 </div>
                 {!solved && (
                   <button className="btn btn-green btn-lg" onClick={finish}>

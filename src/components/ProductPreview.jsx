@@ -7,7 +7,7 @@ const fmt = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 
 /* The scam "deal" the friend is looking at: an influencer flash-sale post
    in a phone frame, with a live-ticking countdown. Pure CSS/SVG. Shown
    beside the pre/post-test conversation for context. */
-export default function ProductPreview({ seconds = 1680, urgent = false }) {
+export default function ProductPreview({ seconds = 1680, urgent = false, staticOffer = false }) {
   const t = useT()
   const p = t('story.product')
   const [left, setLeft] = useState(seconds)
@@ -51,9 +51,9 @@ export default function ProductPreview({ seconds = 1680, urgent = false }) {
             <span className="pp-was">{p.wasPrice}</span>
             <span className="pp-now">{p.nowPrice}</span>
           </div>
-          <div className={`pp-timer ${low ? 'low' : ''}`}>
-            <span>{p.endsIn}</span>
-            <b className="mono">{fmt(left)}</b>
+          <div className={`pp-timer ${staticOffer ? 'static' : (low ? 'low' : '')}`}>
+            <span>{staticOffer ? p.offerLabel : p.endsIn}</span>
+            {staticOffer ? <b>{p.offerUrgency}</b> : <b className="mono">{fmt(left)}</b>}
           </div>
         </div>
 
