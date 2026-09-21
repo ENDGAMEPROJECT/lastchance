@@ -30,6 +30,10 @@
   line-height: 1.35;
 }
 
+.ia-label-stage { overflow: visible; }
+.ia-label-stage .ia-head { flex: none; flex-wrap: nowrap; }
+.ia-label-stage .ia-prompt { flex: 1; font-size: 0.8rem; margin: 0; }
+
 /* ---------- Stage 1: posts row ---------- */
 .ia-posts {
   flex: 1;
@@ -43,17 +47,21 @@
 }
 
 .ia-post {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
   padding: 12px;
-  border-radius: var(--radius);
+  border-radius: 8px;
   border: 1px solid var(--line);
   background: var(--panel);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
-  transition: transform 0.2s, border-color 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+  transition: border-color 0.25s, box-shadow 0.25s;
 }
-.ia-post:hover { transform: translateY(-2px); box-shadow: 0 16px 30px rgba(0, 0, 0, 0.5); }
+.ia-post:hover { border-color: var(--cyan); }
+.ia-post.selected { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan); }
+.ia-post > * { flex-shrink: 0; }
 .ia-post.solved {
   border-color: var(--green);
   box-shadow: 0 0 20px rgba(43, 255, 136, 0.28), 0 10px 24px rgba(0, 0, 0, 0.45);
@@ -137,92 +145,120 @@
 }
 .ia-note-cap { margin-top: 5px; color: #7a6410; font-style: italic; }
 
-/* Drop target */
-.ia-drop {
+/* The selected post receives letters from the decoder keyboard. */
+.ia-answer {
   margin-top: auto;
-  min-height: 42px;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: var(--radius-sm);
-  border: 2px dashed var(--line);
-  background: rgba(168, 85, 247, 0.06);
-  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-  text-align: center;
-}
-.ia-drop.dnd-over, .ia-drop.is-over {
-  border-color: var(--purple);
-  background: rgba(168, 85, 247, 0.16);
-  box-shadow: var(--glow-purple);
-}
-.ia-drop.dnd-can-drop { border-color: rgba(168, 85, 247, 0.55); }
-.ia-drop.ok {
-  border-style: solid;
-  border-color: var(--green);
-  background: rgba(43, 255, 136, 0.12);
-}
-.ia-drop.bad {
-  border-style: solid;
-  border-color: var(--red);
-  background: rgba(255, 59, 92, 0.12);
-}
-.ia-drop-ph { color: var(--dim); }
-.ia-drop-label {
-  font-family: var(--font-display);
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  font-size: 0.9rem;
-  color: var(--text);
-}
-.ia-drop.ok .ia-drop-label { color: var(--green); }
-.ia-drop.bad .ia-drop-label { color: var(--red); }
-
-/* Reusable label chips tray */
-.ia-tray {
+  height: 66px;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px 16px;
-  padding: 10px 14px;
-  border-radius: var(--radius);
+  gap: 4px;
+  padding: 5px;
   border: 1px solid var(--line);
-  background: rgba(168, 85, 247, 0.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  border-radius: 6px;
+  background: rgba(4, 8, 20, 0.65);
+  color: var(--text);
+  text-align: center;
+  cursor: pointer;
 }
-.ia-tray-title { flex-basis: 100%; text-align: center; }
-.ia-chips { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-.ia-chip {
-  display: inline-flex;
-  align-items: center;
+.ia-answer[aria-pressed="true"] { border-color: var(--cyan); }
+.ia-answer.ok { border-color: var(--green); color: var(--green); }
+.ia-answer.bad { border-color: var(--red); color: var(--red); }
+.ia-answer-letters { display: flex; gap: 6px; }
+.ia-answer-letter {
+  width: 28px;
+  height: 29px;
+  border-bottom: 2px solid var(--muted);
   font-family: var(--font-display);
+  font-size: 1rem;
   font-weight: 800;
-  letter-spacing: 0.06em;
-  font-size: 0.9rem;
-  color: #eeddff;
-  padding: 9px 18px;
-  border-radius: 999px;
-  border: 1px solid var(--purple);
-  background: rgba(168, 85, 247, 0.16);
-  box-shadow: var(--glow-purple), 0 6px 14px rgba(0, 0, 0, 0.4);
-  transition: transform 0.15s, box-shadow 0.2s;
+  letter-spacing: 0;
 }
-.ia-chip:hover { transform: translateY(-2px); box-shadow: var(--glow-purple), 0 10px 20px rgba(0, 0, 0, 0.5); }
-.ia-tray-hint { flex-basis: 100%; text-align: center; }
+.ia-answer-letter.current { border-color: var(--cyan); background: rgba(22, 242, 255, 0.1); }
+.ia-answer-status { line-height: 1.1; }
 
-/* ---------- Emoji Decoding Card modal grid ---------- */
+/* Reserve the keyboard's space so opening the bag cannot shift the posts. */
+.ia-decoder-slot {
+  flex: none;
+  height: 148px;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.ia-decoder {
+  height: 100%;
+  padding: 6px 0 0;
+  border-top: 1px solid rgba(168, 85, 247, 0.6);
+  background: rgba(11, 8, 24, 0.92);
+}
+.ia-decoder-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 30px;
+  margin-bottom: 6px;
+  color: #eeddff;
+  user-select: none;
+}
+.ia-decoder-head strong {
+  min-width: 0;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  line-height: 1.1;
+}
+.ia-decoder-target { margin-left: auto; color: var(--cyan); font-size: 0.75rem; }
+.ia-decoder-erase, .ia-decoder-close {
+  width: 42px;
+  height: 30px;
+  flex: none;
+  border: 1px solid rgba(238, 221, 255, 0.4);
+  border-radius: var(--radius-sm);
+  background: rgba(4, 8, 20, 0.55);
+  color: #fff;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.ia-decoder-close { width: 30px; margin-left: 4px; }
+.ia-decoder-erase {
+  grid-column: 14;
+  grid-row: 1 / span 2;
+  width: auto;
+  height: auto;
+  border-radius: 6px;
+  background: rgba(168, 85, 247, 0.12);
+}
+.ia-decoder-erase:not(:disabled):hover, .ia-decoder-close:hover {
+  border-color: var(--purple);
+  box-shadow: var(--glow-purple);
+}
 .ia-key-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(14, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 46px);
+  gap: 6px;
 }
 .ia-key-cell {
-  display: flex; flex-direction: column; align-items: center; gap: 2px;
-  padding: 8px 4px;
-  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  min-width: 0;
+  padding: 4px;
+  border-radius: 6px;
   border: 1px solid var(--line);
-  background: rgba(168, 85, 247, 0.06);
+  background: rgba(168, 85, 247, 0.12);
+  cursor: pointer;
 }
-.ia-key-emoji { font-size: 1.4rem; line-height: 1; }
-.ia-key-letter { color: var(--purple); font-size: 0.9rem; font-weight: 700; }
+.ia-key-cell:not(:disabled):hover { border-color: var(--cyan); background: rgba(22, 242, 255, 0.14); }
+.ia-key-cell:not(:disabled):active { background: rgba(22, 242, 255, 0.3); }
+.ia-key-cell:disabled, .ia-decoder-erase:disabled { opacity: 0.6; cursor: default; }
+.ia-key-cell:focus-visible, .ia-decoder-erase:focus-visible, .ia-decoder-close:focus-visible, .ia-answer:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+.ia-key-emoji { font-size: 1.25rem; line-height: 1; }
+.ia-key-letter { color: #eeddff; font-size: 0.9rem; font-weight: 700; }
 
 /* ---------- Stage 2: products ---------- */
 .ia-products {

@@ -50,6 +50,7 @@
 
 /* Body fills the remaining scene height; rooms compose to fit it. */
 .room-scene .room-body {
+  position: relative;
   flex: 1;
   min-height: 0;
   width: 100%;

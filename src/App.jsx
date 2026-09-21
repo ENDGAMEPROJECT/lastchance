@@ -5,6 +5,7 @@ import Stage from './components/Stage.jsx'
 import { DndProvider } from './components/dnd/Dnd.jsx'
 import HUD from './components/HUD.jsx'
 import GameMap from './components/GameMap.jsx'
+import RoomReview from './components/RoomReview.jsx'
 import WelcomeScreen from './components/screens/WelcomeScreen.jsx'
 import PretestScreen from './components/screens/PretestScreen.jsx'
 import PosttestScreen from './components/screens/PosttestScreen.jsx'
@@ -40,20 +41,26 @@ export default function App() {
     preloadGameImages()
   }, [])
 
+  const roomContent = activeNode
+    ? (() => {
+      const RoomComp = ROOMS[activeNode.component]
+      return RoomComp ? <RoomComp node={activeNode} /> : null
+    })()
+    : null
+
   let content
   if (screen === 'welcome') content = <WelcomeScreen />
   else if (screen === 'pretest') content = <PretestScreen />
   else if (screen === 'posttest') content = <PosttestScreen />
   else if (screen === 'win') content = <WinScreen />
   else if (screen === 'lose') content = <LoseScreen />
-  else if (screen === 'room' && activeNode) {
-    const RoomComp = ROOMS[activeNode.component]
-    content = RoomComp ? <RoomComp node={activeNode} /> : <GameMap />
-  } else content = <GameMap />
+  else if (screen === 'review') content = <RoomReview />
+  else if (screen === 'map') content = <GameMap />
+  else content = roomContent ? null : <GameMap />
 
   // A key that changes on every navigation, so the swap remounts and its
   // enter animation + veil replay (map ↔ room feels like a doorway).
-  const transitionKey = screen === 'room' && activeNode ? `room:${activeNode.id}` : screen
+  const transitionKey = activeNode ? `node:${activeNode.id}` : screen
 
   return (
     <Stage>
@@ -61,6 +68,14 @@ export default function App() {
         <div className="stage">
           <HUD />
           <div className="stage-swap" key={transitionKey}>
+            {activeNode && (
+              <div
+                className={`room-preserved ${screen === 'room' ? 'is-active' : ''}`}
+                aria-hidden={screen === 'room' ? undefined : 'true'}
+              >
+                {roomContent}
+              </div>
+            )}
             {content}
             <div className="transition-veil" aria-hidden />
           </div>

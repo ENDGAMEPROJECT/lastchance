@@ -153,6 +153,25 @@
 
 .mnode.done { color: var(--green); }
 .mnode.done .mnode-label { color: #d4ffe6; }
+.mnode-check {
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(43, 255, 136, 0.85);
+  border-radius: 50%;
+  background: rgba(4, 20, 13, 0.92);
+  color: var(--green);
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 800;
+  box-shadow: var(--glow-green);
+  z-index: 3;
+}
 
 /* The gray art already reads as powered-down, so no extra grayscale filter
    here — stacking one on top would only muddy the padlock. */

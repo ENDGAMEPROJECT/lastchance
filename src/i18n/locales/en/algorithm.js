@@ -19,8 +19,6 @@ export default {
     prompt: 'Enter the 6-digit access code to boot the targeting engine.',
     error: 'Access denied — that code is wrong.',
     submit: 'Unlock →',
-    skip: 'skip — I don’t have the report',
-    hint: 'Hint: the highlighted digits on your Data Report.',
   },
 
   /* ---- PHASE: choice ---- */
@@ -59,7 +57,8 @@ export default {
     profileBadge: 'Profile complete',
     dragHint: 'Drag the missing factor into the equation — the one that fits this exact person.',
     wrongHint: 'That factor doesn’t fit this person. Look at what the ad is really selling.',
-    reflectTitle: 'What just happened',
+    finalLessonTitle: 'What you learned',
+    finalLesson: 'Personalised ads combine your activity, interests, and insecurities to target you.',
     nextBtn: 'Next equation →',
     lastBtn: 'See {friend}’s profile →',
     trayLabel: 'DATA TILES — drag one into each empty slot (or tap a tile, then tap a slot)',

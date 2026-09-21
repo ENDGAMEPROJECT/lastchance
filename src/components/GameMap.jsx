@@ -250,7 +250,7 @@ function useCentred(ref, deps) {
 }
 
 export default function GameMap() {
-  const { NODES, progress, openNode, gotoScreen } = useGame()
+  const { NODES, progress, openNode, reviewNode, gotoScreen } = useGame()
   const t = useT()
   const vars = { friend: NARRATIVE.friend }
   const boardRef = useRef(null)
@@ -272,7 +272,7 @@ export default function GameMap() {
       kind: n.kind,
       accent: n.accent,
       status: progress[n.id],
-      onOpen: () => openNode(n.id),
+      onOpen: () => (progress[n.id] === 'done' ? reviewNode(n.id) : openNode(n.id)),
     })),
     {
       id: 'final-decision',
@@ -350,6 +350,7 @@ export default function GameMap() {
                 )}
                 {locked && <img className="mnode-lock" src={bgUrl('map/lock-closed.png')} alt="" draggable={false} />}
               </span>
+              {s.status === 'done' && <span className="mnode-check" aria-label={t('common.cleared')}>✓</span>}
             </button>
           )
         })}

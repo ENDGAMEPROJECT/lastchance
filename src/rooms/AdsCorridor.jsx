@@ -27,7 +27,7 @@ const POSTERS = [
 ]
 
 export default function AdsCorridor({ node }) {
-  const { completeRoom, addItem, addEvidence, hasItem } = useGame()
+  const { completeRoom, addEvidence } = useGame()
   const t = useT()
   const { scale } = useStage()
 
@@ -47,23 +47,24 @@ export default function AdsCorridor({ node }) {
   const [solved, setSolved] = useState(false)
   const inputRef = useRef(null)
 
+
   const ANSWER = CODES.adsCorridor // 'SAVE'
 
   // On entry: grant the Truth Flashlight if the player doesn't have it,
   // then let it "charge" for a beat before it can be switched on.
   useEffect(() => {
-    if (!hasItem('truthLight')) {
-      addItem(ITEMS.truthLight)
-    }
     const t = setTimeout(() => setCharging(false), 1000)
     return () => clearTimeout(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  function toggleLight() {
-    if (charging) return
-    setLightOn((on) => !on)
-  }
+  useEffect(() => {
+    const onUseItem = (event) => {
+      if (event.detail?.id === 'truthLight' && !charging) setLightOn(true)
+    }
+    window.addEventListener('lastchance:use-item', onUseItem)
+    return () => window.removeEventListener('lastchance:use-item', onUseItem)
+  }, [charging])
 
   // Shining the light on a poster (only works while it is ON) reveals
   // that poster's hidden fine print and remembers it for the code hint.
@@ -176,26 +177,8 @@ export default function AdsCorridor({ node }) {
           {lightOn && <div className="ac-flashlight" ref={flashRef} aria-hidden />}
         </div>
 
-        {/* Right: flashlight controls, code assembly and exit entry */}
+        {/* Right: code assembly and exit entry */}
         <div className="ac-side">
-          {/* Flashlight control + status */}
-          <div className="ac-toolbar">
-            <button
-              className={`btn ${lightOn ? 'btn-cyan' : 'btn-ghost'} ac-torch ${charging ? 'charging' : ''}`}
-              onClick={toggleLight}
-              disabled={charging}
-            >
-              {charging ? t('rooms.ads.torchCharging') : lightOn ? t('rooms.ads.torchOn') : t('rooms.ads.torchOff')}
-            </button>
-            <span className="ac-hint dim t-sm">
-              {charging
-                ? t('rooms.ads.hintCharging')
-                : lightOn
-                  ? t('rooms.ads.hintOn')
-                  : t('rooms.ads.hintOff')}
-            </span>
-          </div>
-
           {/* Exit code entry */}
           <form className="ac-exit" onSubmit={submit}>
             <label className="ac-exit-label upper t-sm dim" htmlFor="ac-code">

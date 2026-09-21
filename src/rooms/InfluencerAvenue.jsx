@@ -5,14 +5,13 @@ import { bgUrl } from '../game/assets.js'
 import { playSound } from '../game/sound.js'
 import { useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
-import Modal from '../components/Modal.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
 import './InfluencerAvenue.css'
 
 /* PUZZLE 2 — Influencer Avenue.
    Two stages shown in sequence:
-     'label'  → decode the emoji sticky-notes, then DRAG the correct label
-                (PAID / COLLAB / GIFTED) onto each sponsored post using the
+     'label'  → decode the emoji sticky-notes, then type each label
+                (PAID / COLLAB / GIFTED) into the selected post using the
                 Emoji Decoding Card earned in Link District.
      'verify' → run a SIMULATED reverse image search on three products,
                 then classify each (mass-produced fake / AI-generated / legit).
@@ -59,11 +58,6 @@ const POSTS = [
   },
 ]
 
-/* The three draggable label "stamps". Values are the answer keys; the
-   display copy comes from i18n (rooms.influencer.labels.*). */
-const LABELS = ['PAID', 'COLLAB', 'GIFTED']
-const LABEL_KEY = { PAID: 'paid', COLLAB: 'collab', GIFTED: 'gifted' }
-
 /* ---- Stage 2 content: the three products for reverse image search ---- */
 const PRODUCTS = [
   {
@@ -104,8 +98,12 @@ export default function InfluencerAvenue({ node }) {
   const productCopy = t('rooms.influencer.products')
 
   /* ---- Stage 1 state ---- */
-  const [placed, setPlaced] = useState({}) // postId -> placed label value
+  const [answers, setAnswers] = useState({}) // postId -> decoded letters
+  const [selectedPostId, setSelectedPostId] = useState(null)
   const [decoderOpen, setDecoderOpen] = useState(false)
+  const selectedPost = POSTS.find((post) => post.id === selectedPostId)
+  const selectedAnswer = answers[selectedPostId] || ''
+  const canEdit = decoderOpen && selectedPost && selectedAnswer !== selectedPost.correctLabel
 
   /* Emoji sticky-notes: generated from the correct label via encodeWord. */
   const notes = useMemo(
@@ -113,21 +111,29 @@ export default function InfluencerAvenue({ node }) {
     []
   )
 
-  /* Assign (or replace) the label stamped onto a post. Chips are reusable,
-     so this never consumes them. Advance once all three are correct. */
-  function assign(postId, label) {
-    // Wrong label dropped on a post → error chime.
-    const post = POSTS.find((p) => p.id === postId)
-    if (post && label !== post.correctLabel) playSound('wrong.mp3')
-    setPlaced((prev) => {
-      const next = { ...prev, [postId]: label }
-      if (POSTS.every((p) => next[p.id] === p.correctLabel)) {
-        // small beat so the green feedback registers before advancing
-        setTimeout(() => setStage('verify'), 650)
-      }
-      return next
-    })
+  function enterLetter(letter) {
+    if (!canEdit || selectedAnswer.length >= selectedPost.correctLabel.length) return
+    const next = selectedAnswer + letter
+    if (next.length === selectedPost.correctLabel.length) {
+      playSound(next === selectedPost.correctLabel ? 'twinkle.mp3' : 'wrong.mp3')
+    }
+    setAnswers((prev) => ({ ...prev, [selectedPostId]: next }))
   }
+
+  function eraseLetter() {
+    if (!canEdit) return
+    setAnswers((prev) => ({ ...prev, [selectedPostId]: selectedAnswer.slice(0, -1) }))
+  }
+
+  useEffect(() => {
+    if (stage !== 'label' || !POSTS.every((post) => answers[post.id] === post.correctLabel)) return
+    // Keep all three completed words visible briefly before the next challenge.
+    const timer = window.setTimeout(() => {
+      setDecoderOpen(false)
+      setStage('verify')
+    }, 900)
+    return () => window.clearTimeout(timer)
+  }, [answers, stage])
 
   /* ---- Stage 2 state ---- */
   const [activeId, setActiveId] = useState(null) // product image being uploaded/searched in the engine
@@ -135,8 +141,17 @@ export default function InfluencerAvenue({ node }) {
   const [searched, setSearched] = useState({}) // productId -> true once results are in
   const [picks, setPicks] = useState({}) // productId -> chosen verdict value
   const [verifyErr, setVerifyErr] = useState('')
+
   const searchTimer = useRef(null)
   useEffect(() => () => clearTimeout(searchTimer.current), [])
+
+  useEffect(() => {
+    const onUseItem = (event) => {
+      if (event.detail?.id === 'emojiCard' && hasItem('emojiCard') && stage === 'label') setDecoderOpen(true)
+    }
+    window.addEventListener('lastchance:use-item', onUseItem)
+    return () => window.removeEventListener('lastchance:use-item', onUseItem)
+  }, [hasItem, stage])
 
   /* Drop a product image on the reverse-search engine: it "uploads" and searches
      the web for a beat, then its web-match results open under the engine.
@@ -196,31 +211,29 @@ export default function InfluencerAvenue({ node }) {
     >
       {/* ============================ STAGE 1 ============================ */}
       {stage === 'label' && (
-        <div className="ia-stage fade-in">
+        <div className="ia-stage ia-label-stage fade-in">
           <div className="ia-head">
             <span className="chip">{t('rooms.influencer.stage1.badge')}</span>
             <span className="chip warn">{t('rooms.influencer.stage1.tag')}</span>
             <p className="ia-prompt">
-              {t('rooms.influencer.stage1.prompt', {
-                paid: t('rooms.influencer.labels.paid'),
-                collab: t('rooms.influencer.labels.collab'),
-                gifted: t('rooms.influencer.labels.gifted'),
-              })}
+              {t('rooms.influencer.stage1.prompt')}
             </p>
-            <button className="btn btn-purple btn-sm" onClick={() => setDecoderOpen(true)}>
-              {t('rooms.influencer.stage1.openDecoder')}
-            </button>
           </div>
 
           <div className="ia-posts">
             {POSTS.map((p, idx) => {
               const note = notes.find((n) => n.id === p.id)
               const copy = postCopy[idx]
-              const label = placed[p.id]
+              const label = answers[p.id] || ''
               const correct = label === p.correctLabel
-              const state = !label ? '' : correct ? 'ok' : 'bad'
+              const state = correct ? 'ok' : label.length === p.correctLabel.length ? 'bad' : ''
+              const selected = selectedPostId === p.id
               return (
-                <div key={p.id} className={`ia-post ${state === 'ok' ? 'solved' : ''}`}>
+                <article
+                  key={p.id}
+                  className={`ia-post ${correct ? 'solved' : ''} ${selected ? 'selected' : ''}`}
+                  onClick={() => setSelectedPostId(p.id)}
+                >
                   {/* Social card header */}
                   <div className="ia-card-top">
                     <div className="ia-avatar" style={{ background: p.hue }}>
@@ -257,39 +270,80 @@ export default function InfluencerAvenue({ node }) {
                     <div className="ia-note-cap t-xs">{t('rooms.influencer.stage1.decodeMe')}</div>
                   </div>
 
-                  {/* Drop target for the decoded label */}
-                  <DropZone
-                    id={`post-${p.id}`}
-                    accept={['label']}
-                    overClassName="is-over"
-                    className={`ia-drop ${state}`}
-                    onDrop={(data) => assign(p.id, data.label)}
+                  <button
+                    type="button"
+                    className={`ia-answer ${state}`}
+                    aria-pressed={selected}
+                    aria-label={t('rooms.influencer.stage1.selectPost', { name: p.name })}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => setSelectedPostId(p.id)}
                   >
-                    {label ? (
-                      <span className="ia-drop-label">
-                        {state === 'ok' ? '✓ ' : '✗ '}
-                        {t(`rooms.influencer.labels.${LABEL_KEY[label]}`)}
-                      </span>
-                    ) : (
-                      <span className="ia-drop-ph t-sm">{t('rooms.influencer.stage1.dropPlaceholder')}</span>
-                    )}
-                  </DropZone>
-                </div>
+                    <span className="ia-answer-letters" aria-hidden="true">
+                      {Array.from({ length: p.correctLabel.length }, (_, index) => (
+                        <span key={index} className={`ia-answer-letter ${selected && !correct && index === label.length ? 'current' : ''}`}>
+                          {label[index] || '\u00a0'}
+                        </span>
+                      ))}
+                    </span>
+                    <span className="ia-answer-status t-xs" aria-live="polite">
+                      {correct ? t('rooms.influencer.stage1.correct', { label }) : state === 'bad'
+                        ? t('rooms.influencer.stage1.wrong')
+                        : t('rooms.influencer.stage1.answerProgress', { count: label.length, total: p.correctLabel.length })}
+                    </span>
+                  </button>
+                </article>
               )
             })}
           </div>
 
-          {/* Reusable label chips tray */}
-          <div className="ia-tray">
-            <span className="ia-tray-title t-xs upper dim">{t('rooms.influencer.stage1.trayTitle')}</span>
-            <div className="ia-chips">
-              {LABELS.map((w) => (
-                <Draggable key={w} id={`label-${w}`} kind="label" data={{ label: w }}>
-                  <span className="ia-chip">{t(`rooms.influencer.labels.${LABEL_KEY[w]}`)}</span>
-                </Draggable>
-              ))}
-            </div>
-            <span className="dim t-xs ia-tray-hint">{t('rooms.influencer.stage1.hint')}</span>
+          <div className="ia-decoder-slot">
+            {decoderOpen && (
+              <section className="ia-decoder" aria-label={t('rooms.influencer.decoder.title')}>
+                <div className="ia-decoder-head">
+                  <strong>{t('rooms.influencer.decoder.title')}</strong>
+                  <span className="ia-decoder-target mono" aria-live="polite">
+                    {selectedPost?.name || t('rooms.influencer.decoder.noSelection')}
+                  </span>
+                  <button
+                    type="button"
+                    className="ia-decoder-close"
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => setDecoderOpen(false)}
+                    aria-label={t('common.close')}
+                    title={t('common.close')}
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div className="ia-key-grid">
+                  {Object.entries(EMOJI_KEY).map(([emoji, letter]) => (
+                    <button
+                      key={letter}
+                      type="button"
+                      className="ia-key-cell"
+                      disabled={!canEdit || selectedAnswer.length >= selectedPost.correctLabel.length}
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => enterLetter(letter)}
+                      aria-label={`${letter} ${emoji}`}
+                    >
+                      <span className="ia-key-emoji" aria-hidden="true">{emoji}</span>
+                      <span className="ia-key-letter mono" aria-hidden="true">{letter}</span>
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    className="ia-decoder-erase"
+                    disabled={!canEdit || !selectedAnswer}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={eraseLetter}
+                    aria-label={t('rooms.influencer.decoder.erase')}
+                    title={t('rooms.influencer.decoder.erase')}
+                  >
+                    <span aria-hidden="true">←</span>
+                  </button>
+                </div>
+              </section>
+            )}
           </div>
         </div>
       )}
@@ -443,31 +497,6 @@ export default function InfluencerAvenue({ node }) {
         </div>
       )}
 
-      {/* -------- Emoji Decoding Card (reusable Modal) -------- */}
-      <Modal
-        open={decoderOpen}
-        onClose={() => setDecoderOpen(false)}
-        title={t('rooms.influencer.decoder.title')}
-        accent="purple"
-        width={520}
-      >
-        {!hasItem('emojiCard') && (
-          <div className="banner info t-sm" style={{ marginBottom: 14 }}>
-            {t('rooms.influencer.decoder.noCard')}
-          </div>
-        )}
-        <p className="t-sm dim" style={{ marginTop: 0 }}>
-          {t('rooms.influencer.decoder.help')}
-        </p>
-        <div className="ia-key-grid">
-          {Object.entries(EMOJI_KEY).map(([emoji, letter]) => (
-            <div key={letter} className="ia-key-cell">
-              <span className="ia-key-emoji">{emoji}</span>
-              <span className="ia-key-letter mono">{letter}</span>
-            </div>
-          ))}
-        </div>
-      </Modal>
     </RoomFrame>
   )
 }

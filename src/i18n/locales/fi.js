@@ -115,6 +115,8 @@ export default {
       "wasPrice": "$600",
       "nowPrice": "$49",
       "endsIn": "Ends in",
+      "offerLabel": "30-minute deal",
+      "offerUrgency": "Hurry before it's gone!",
       "buy": "BUY NOW",
       "caption": "OMG they dropped the NovaPad X to $49?! 😱🔥 Grab it before it’s gone! #deal #ad",
       "likes": "12.4k likes"
@@ -460,24 +462,24 @@ export default {
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
       "solvedTitle": "Influencer Avenue cleared — Data Report obtained 📄",
-      "solvedText": "You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 748392 — open the Algorithm Control Room next.",
+      "solvedText": "You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 274181 — open the Algorithm Control Room next.",
       "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
       "stage1": {
         "badge": "Stage 1 / 2",
         "tag": "Content labelling",
-        "prompt": "Decode each emoji sticky-note, then drag the matching label onto its post: {paid}, {collab} or {gifted}.",
+        "prompt": "Decode the hidden sponsorship on each post with your Emoji Decoding Card.",
+        "selectPost": "Select {name}",
+        "answerProgress": "{count} / {total}",
         "openDecoder": "🔑 Open Decoder Card",
         "verified": "Verified",
         "followersSuffix": "followers",
         "cluesTitle": "Disclosure clues",
         "decodeMe": "decode me →",
-        "trayTitle": "Drag a label onto each post",
-        "dropPlaceholder": "drop label",
         "correct": "✓ {label}",
         "wrong": "✗ wrong label",
         "learnLabel": "Why it matters:",
         "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
-        "hint": "Tap or drag a label chip, then drop it on the matching post."
+        "hint": "Open the Emoji Decoding Card from your bag, select a post and enter its hidden word one letter at a time."
       },
       "labels": {
         "paid": "PAID",
@@ -600,7 +602,8 @@ export default {
       },
       "decoder": {
         "title": "🔑 Emoji Decoding Card",
-        "noCard": "You would normally have earned this card back in Link District — here it is anyway.",
+        "noSelection": "No post selected",
+        "erase": "Delete last letter",
         "help": "Match each emoji on a sticky-note to its letter to read the hidden label."
       }
     },
@@ -614,8 +617,6 @@ export default {
         "prompt": "Enter the 6-digit access code to boot the targeting engine.",
         "error": "Access denied — that code is wrong.",
         "submit": "Unlock →",
-        "skip": "skip — I don’t have the report",
-        "hint": "Hint: the highlighted digits on your Data Report."
       },
       "choice": {
         "badge": "System question · privacy trade-off",
@@ -645,6 +646,8 @@ export default {
         "profileBadge": "Profile complete",
         "dragHint": "Drag the missing factor into the equation — the one that fits this exact person.",
         "wrongHint": "That factor doesn’t fit this person. Look at what the ad is really selling.",
+        "finalLessonTitle": "What you learned",
+        "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you.",
         "reflectTitle": "What just happened",
         "nextBtn": "Next equation →",
         "lastBtn": "See {friend}’s profile →",

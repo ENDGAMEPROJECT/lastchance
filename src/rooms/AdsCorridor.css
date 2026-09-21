@@ -39,31 +39,7 @@
   font-size: 0.82rem;
 }
 
-/* ---------- Flashlight toolbar ---------- */
-.ac-toolbar {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-.ac-torch {
-  border-color: var(--amber);
-  color: #ffe6b0;
-  box-shadow: 0 0 8px rgba(255, 185, 43, 0.5), 0 0 22px rgba(255, 185, 43, 0.3);
-}
-.ac-torch:hover:not(:disabled) { background: rgba(255, 185, 43, 0.14); }
-/* Charging state: a subtle flicker to sell the "cheap torch" beat */
-.ac-torch.charging {
-  color: var(--amber);
-  animation: ac-flicker 0.5s steps(2, end) infinite;
-}
-@keyframes ac-flicker {
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 1; }
-}
-.ac-hint { font-size: 0.8rem; line-height: 1.35; }
-/* Instruction lines read bright white (override the muted `dim` utility). */
-.ac-side .ac-hint,
+/* Instruction labels read bright white over the corridor background. */
 .ac-side .ac-exit-label { color: #fff; }
 
 /* ---------- The corridor wall ---------- */
@@ -176,28 +152,6 @@
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 .ac-glossy-body { margin-top: 5px; font-weight: 600; font-size: 0.72rem; }
-.ac-glossy-cta {
-  margin-top: 7px;
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 0.64rem;
-  letter-spacing: 0.06em;
-  padding: 4px 10px;
-  border-radius: 6px;
-  background: rgba(0, 0, 0, 0.28);
-}
-.tint-gold .ac-glossy-cta { background: rgba(58, 36, 0, 0.22); }
-.ac-fineprint {
-  position: absolute;
-  bottom: 5px;
-  left: 0;
-  right: 0;
-  font-size: 0.46rem;
-  opacity: 0.6;
-  letter-spacing: 0.02em;
-}
-
-/* Truth layer — sits over the glossy, hidden until illuminated */
 .ac-truth {
   position: absolute;
   inset: 0;
