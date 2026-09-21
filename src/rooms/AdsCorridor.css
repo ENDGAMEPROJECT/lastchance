@@ -28,7 +28,9 @@
 }
 /* Full-width notices break onto their own line within the bar. */
 .ac-side .ac-pickup,
-.ac-side .ac-code-line { flex-basis: 100%; }
+.ac-side .ac-code-line {
+  flex-basis: 100%;
+}
 
 .ac-pickup {
   border-color: rgba(255, 185, 43, 0.5);
@@ -49,22 +51,36 @@
 .ac-torch {
   border-color: var(--amber);
   color: #ffe6b0;
-  box-shadow: 0 0 8px rgba(255, 185, 43, 0.5), 0 0 22px rgba(255, 185, 43, 0.3);
+  box-shadow:
+    0 0 8px rgba(255, 185, 43, 0.5),
+    0 0 22px rgba(255, 185, 43, 0.3);
 }
-.ac-torch:hover:not(:disabled) { background: rgba(255, 185, 43, 0.14); }
+.ac-torch:hover:not(:disabled) {
+  background: rgba(255, 185, 43, 0.14);
+}
 /* Charging state: a subtle flicker to sell the "cheap torch" beat */
 .ac-torch.charging {
   color: var(--amber);
   animation: ac-flicker 0.5s steps(2, end) infinite;
 }
 @keyframes ac-flicker {
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
 }
-.ac-hint { font-size: 0.8rem; line-height: 1.35; }
+.ac-hint {
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
 /* Instruction lines read bright white (override the muted `dim` utility). */
 .ac-side .ac-hint,
-.ac-side .ac-exit-label { color: #fff; }
+.ac-side .ac-exit-label {
+  color: #fff;
+}
 
 /* ---------- The corridor wall ---------- */
 .ac-wall {
@@ -85,8 +101,16 @@
 /* When the flashlight is ON, the wall dims so the beam pops */
 .ac-wrap.light-on .ac-wall {
   background:
-    radial-gradient(120% 90% at 50% -10%, rgba(255, 185, 43, 0.12), transparent 60%),
-    repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 2px, transparent 2px 60px),
+    radial-gradient(
+      120% 90% at 50% -10%,
+      rgba(255, 185, 43, 0.12),
+      transparent 60%
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.02) 0 2px,
+      transparent 2px 60px
+    ),
     #04050d;
   cursor: crosshair;
 }
@@ -108,8 +132,16 @@
   --Xpos: 50%;
   --Ypos: 50%;
   background:
-    radial-gradient(circle 8em at var(--Xpos) var(--Ypos), rgba(255, 214, 150, 0.12), transparent 6em),
-    radial-gradient(circle 8em at var(--Xpos) var(--Ypos), rgba(4, 5, 13, 0) 0, rgba(4, 5, 13, 0.9) 100%);
+    radial-gradient(
+      circle 8em at var(--Xpos) var(--Ypos),
+      rgba(255, 214, 150, 0.12),
+      transparent 6em
+    ),
+    radial-gradient(
+      circle 8em at var(--Xpos) var(--Ypos),
+      rgba(4, 5, 13, 0) 0,
+      rgba(4, 5, 13, 0.9) 100%
+    );
 }
 
 /* ---------- Poster ---------- */
@@ -121,7 +153,9 @@
   gap: 6px;
 }
 /* A revealed poster rises above the flashlight overlay so it stays lit. */
-.ac-poster.revealed { z-index: 3; }
+.ac-poster.revealed {
+  z-index: 3;
+}
 
 /* Glossy advertisement front */
 .ac-glossy {
@@ -138,20 +172,36 @@
   color: #fff;
   border: 2px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.55);
-  transition: filter 0.4s ease, opacity 0.4s ease;
+  transition:
+    filter 0.4s ease,
+    opacity 0.4s ease;
 }
 /* Glossy sheen sweep */
 .ac-glossy::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.28) 48%, transparent 62%);
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 48%,
+    transparent 62%
+  );
   pointer-events: none;
 }
-.tint-blue .ac-glossy { background: linear-gradient(160deg, #2f7bff, #123a9e); }
-.tint-gold .ac-glossy { background: radial-gradient(circle at 50% 30%, #ffcf3a, #d98a00); color: #3a2400; }
-.tint-green .ac-glossy { background: linear-gradient(160deg, #16b866, #0a6b3a); }
-.tint-purple .ac-glossy { background: linear-gradient(160deg, #a24dff, #5a1e9e); }
+.tint-blue .ac-glossy {
+  background: linear-gradient(160deg, #2f7bff, #123a9e);
+}
+.tint-gold .ac-glossy {
+  background: radial-gradient(circle at 50% 30%, #ffcf3a, #d98a00);
+  color: #3a2400;
+}
+.tint-green .ac-glossy {
+  background: linear-gradient(160deg, #16b866, #0a6b3a);
+}
+.tint-purple .ac-glossy {
+  background: linear-gradient(160deg, #a24dff, #5a1e9e);
+}
 
 .ac-badge {
   position: absolute;
@@ -166,7 +216,11 @@
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
-.tint-gold .ac-badge { background: rgba(58, 36, 0, 0.35); color: #3a2400; border-color: rgba(58,36,0,0.4); }
+.tint-gold .ac-badge {
+  background: rgba(58, 36, 0, 0.35);
+  color: #3a2400;
+  border-color: rgba(58, 36, 0, 0.4);
+}
 
 .ac-glossy-title {
   font-family: var(--font-display);
@@ -175,7 +229,11 @@
   line-height: 1.05;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
-.ac-glossy-body { margin-top: 5px; font-weight: 600; font-size: 0.72rem; }
+.ac-glossy-body {
+  margin-top: 5px;
+  font-weight: 600;
+  font-size: 0.72rem;
+}
 .ac-glossy-cta {
   margin-top: 7px;
   font-family: var(--font-display);
@@ -186,7 +244,9 @@
   border-radius: 6px;
   background: rgba(0, 0, 0, 0.28);
 }
-.tint-gold .ac-glossy-cta { background: rgba(58, 36, 0, 0.22); }
+.tint-gold .ac-glossy-cta {
+  background: rgba(58, 36, 0, 0.22);
+}
 .ac-fineprint {
   position: absolute;
   bottom: 5px;
@@ -197,22 +257,54 @@
   letter-spacing: 0.02em;
 }
 /* Ads different styles */
+/* Ad trial */
+.ac-trial {
+  .ac-truth-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.05;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    color: yellow;
+  }
+  .ac-truth-text {
+    text-align: center;
+    color: rgba(255, 255, 0, 0.719);
+  }
+}
+
 /* Ad price */
 .ac-prize {
-  .ac-glossy-title {
-  font-family: var(--font-narrow);
-  font-weight: 900;
-  font-size: 1.5rem;
-  line-height: 1.05;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-}
+  .ac-glossy-title{
+    font-family: var(--font-narrow);
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 1.05;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  }
+  .ac-truth-title  {
+    font-family: var(--font-narrow);
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 1.05;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    color: rgb(178, 178, 253);
+  }
+  .ac-truth-text {
+    text-align: center;
+    width: 90%;
+    color: rgb(202, 202, 230);
+  }
 }
 /* Ad rich */
 .ac-rich {
-  .ac-glossy-title, .ac-truth-title {
+  .ac-glossy-title,
+  .ac-truth-title {
     font-family: var(--font-neogrotesk);
     font-weight: 900;
-    margin-top: -6rem;
+    margin-top: -2rem;
     font-size: 2rem;
     color: rgb(181, 255, 181);
     text-align: right;
@@ -220,29 +312,42 @@
     align-self: flex-end;
     line-height: 1.05;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    text-transform: uppercase
   }
-  .ac-glossy-body { 
-  margin-top: 1rem; 
-  font-weight: 500; 
-  font-size: 0.8rem; 
-  text-align: right;
-  align-self: flex-end;
-  width:60%;
+  .ac-glossy-body {
+    margin-top: 1rem;
+    font-weight: 500;
+    font-size: 0.8rem;
+    text-align: right;
+    align-self: flex-end;
+    width: 60%;
   }
-
+  .ac-truth-text {
+    text-align: right;
+    width: 60%;
+    align-self: flex-end;
+  }
 }
 /* Ad virus */
 .ac-virus {
-  .ac-glossy-title, .ac-truth-title {
+  .ac-glossy-title {
     font-family: var(--font-mono);
     font-weight: 900;
     margin-top: 8rem;
     font-size: 2rem;
     line-height: 1.05;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-  };
+  }
+  .ac-truth-title {
+    font-family: var(--font-mono);
+    font-weight: 900;
+    margin-top: 12rem;
+    font-size: 1.2rem;
+    line-height: 0.9;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.678);
+    
+  }
 }
-
 
 /* Truth layer — sits over the glossy, hidden until illuminated */
 .ac-truth {
@@ -254,14 +359,22 @@
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  background: linear-gradient(180deg, rgba(6, 8, 20, 0.15), rgba(6, 8, 20, 0.2));
+  background: linear-gradient(
+    180deg,
+    rgba(6, 8, 20, 0.15),
+    rgba(6, 8, 20, 0.2)
+  );
   border: 2px solid var(--amber);
-  box-shadow: inset 0 0 40px rgba(255, 185, 43, 0.12), 0 0 20px rgba(255, 185, 43, 0.25);
+  box-shadow:
+    inset 0 0 40px rgba(255, 185, 43, 0.12),
+    0 0 20px rgba(255, 185, 43, 0.25);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.45s ease;
 }
-.ac-poster.revealed .ac-truth { opacity: 1; }
+.ac-poster.revealed .ac-truth {
+  opacity: 1;
+}
 .ac-poster.revealed .ac-glossy {
   filter: saturate(1.1) contrast(1.15) brightness(0.72);
 }
@@ -273,7 +386,12 @@
   color: var(--amber);
   text-transform: uppercase;
 }
-.ac-truth-text { margin: 0; color: var(--text); font-size: 0.7rem; line-height: 1.3; }
+.ac-truth-text {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.7rem;
+  line-height: 1.3;
+}
 .ac-code-frag {
   display: flex;
   align-items: center;
@@ -290,7 +408,9 @@
 }
 
 /* Per-poster shine button */
-.ac-shine { align-self: stretch; }
+.ac-shine {
+  align-self: stretch;
+}
 
 /* ---------- Assembled code line ---------- */
 .ac-code-line {
@@ -314,7 +434,10 @@
   width: auto;
   min-width: 240px;
 }
-.ac-exit-row { display: flex; gap: 12px; }
+.ac-exit-row {
+  display: flex;
+  gap: 12px;
+}
 .ac-field {
   text-transform: uppercase;
   letter-spacing: 0.35em;
@@ -323,7 +446,15 @@
 }
 .ac-field:focus {
   border-color: var(--amber);
-  box-shadow: 0 0 8px rgba(255, 185, 43, 0.6), 0 0 22px rgba(255, 185, 43, 0.35);
+  box-shadow:
+    0 0 8px rgba(255, 185, 43, 0.6),
+    0 0 22px rgba(255, 185, 43, 0.35);
 }
 
-.ac-learn { margin: 0; font-size: 0.82rem; padding: 8px 12px; flex: 1 1 260px; max-width: 360px; }
+.ac-learn {
+  margin: 0;
+  font-size: 0.82rem;
+  padding: 8px 12px;
+  flex: 1 1 260px;
+  max-width: 360px;
+}
