@@ -1,0 +1,162 @@
+.pretest-scene { padding: 0; background: #090b10; font-family: Arial, sans-serif; }
+.pretest-content { position: absolute; inset: 0; }
+
+/* Image and hit target share the same coordinates at every stage scale. */
+.pretest-art {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 1728 / 998;
+  transform: translateY(-50%);
+}
+.pretest-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+}
+.pretest-backdrop.is-visible { opacity: 1; }
+.pretest-phone {
+  position: absolute;
+  left: 37.615741%;
+  top: 49.098196%;
+  width: 6.365741%;
+  height: 9.018036%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+.pretest-phone-light { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.pretest-phone-light path {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+.pretest-phone.is-unseen path {
+  stroke: #dbffff;
+  animation: pretest-phone-glow 1.8s ease-in-out infinite;
+}
+.pretest-phone:hover path, .pretest-phone:focus-visible path {
+  stroke: #fff;
+  fill: rgba(190, 255, 255, 0.24);
+  filter: drop-shadow(0 0 4px #a3fcff);
+}
+@keyframes pretest-phone-glow {
+  0%, 100% { fill: rgba(190, 255, 255, 0.06); filter: drop-shadow(0 0 2px #a3fcff); }
+  50% { fill: rgba(220, 255, 255, 0.45); filter: drop-shadow(0 0 6px #a3fcff); }
+}
+
+.pretest-speech {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  width: 650px;
+  max-width: calc(100% - 48px);
+  padding: 16px 22px;
+  background: rgba(195, 234, 233, 0.95);
+  color: #081616;
+}
+.pretest-speech.is-long { width: 900px; }
+.pretest-speech.is-player { left: auto; right: 24px; background: rgba(229, 218, 242, 0.95); }
+.pretest-line { margin: 0; font-size: 20px; line-height: 1.3; letter-spacing: 0; }
+.pretest-line-pending { visibility: hidden; }
+.pretest-reading-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: #387b7a;
+  pointer-events: none;
+}
+.pretest-dialogue {
+  position: absolute;
+  bottom: 18px;
+  left: 24px;
+  right: 24px;
+  color: #fff;
+}
+.pretest-speaker {
+  display: table;
+  padding: 12px 20px;
+  margin-bottom: 6px;
+  background: rgba(0, 0, 0, 0.88);
+  font-size: 19px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+.pretest-line-row { display: flex; justify-content: flex-end; }
+.pretest-phone-close {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 0;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.88);
+  font-size: 30px;
+  cursor: pointer;
+}
+.pretest-phone-close:hover { background: #264342; }
+.pretest-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(78px, auto));
+  grid-auto-flow: column;
+  gap: 8px;
+}
+.pretest-option {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 12px 20px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: left;
+  font-family: inherit;
+  font-size: 20px;
+  line-height: 1.25;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.pretest-option:hover { border-color: #c3eae9; background: rgba(19, 48, 47, 0.95); }
+.pretest-option:focus-visible, .pretest-phone-close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+.pretest-line-row .btn {
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.88);
+  color: #fff;
+  font-family: inherit;
+  letter-spacing: 0;
+  box-shadow: none;
+}
+.pretest-phone-view {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background: #090b10;
+}
+.pretest-phone-view img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.pretest-phone-close { position: absolute; top: 16px; right: 20px; }
+.reduced-motion .pretest-phone.is-unseen path {
+  animation: none;
+  fill: rgba(190, 255, 255, 0.2);
+  filter: drop-shadow(0 0 4px #a3fcff);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pretest-phone.is-unseen path { animation: none; fill: rgba(190, 255, 255, 0.2); filter: drop-shadow(0 0 4px #a3fcff); }
+}

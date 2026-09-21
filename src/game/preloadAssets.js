@@ -35,6 +35,9 @@ export const GAME_IMAGES = [
   'persuasion_end.png',
   'computer.png',
   'conversation.png',
+  'max-talking.png',
+  'player-talking.png',
+  'phone-with-ad.png',
 ].map(bgUrl)
 
 let started = false
