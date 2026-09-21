@@ -3,6 +3,8 @@
    Shared tokens + utilities used by every room/screen.
    ============================================================ */
 
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Orbitron:wght@400;500;600;700;800;900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Roboto+Condensed:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Share+Tech+Mono&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700;1,900&display=swap');
+
 :root {
   /* Core palette */
   --bg: #05060f;
@@ -36,8 +38,17 @@
   --glow-green: 0 0 8px rgba(43, 255, 136, 0.6), 0 0 22px rgba(43, 255, 136, 0.35);
   --glow-red: 0 0 8px rgba(255, 59, 92, 0.6), 0 0 22px rgba(255, 59, 92, 0.35);
 
-  --font-display: 'Orbitron', 'Segoe UI', system-ui, sans-serif;
-  --font-ui: 'Rajdhani', 'Segoe UI', system-ui, sans-serif;
+  /* Local design roles: each family is loaded above from Google Fonts. */
+  --font-serif: 'Source Serif 4', Georgia, serif;
+  --font-script: 'Lobster Two', cursive;
+  --font-retro: 'Chakra Petch', 'Segoe UI', sans-serif;
+  --font-neogrotesk: 'Roboto', 'Segoe UI', sans-serif;
+  --font-futuristic: 'Orbitron', 'Segoe UI', sans-serif;
+  --font-narrow: 'Roboto Condensed', 'Arial Narrow', sans-serif;
+
+  /* Existing component roles, preserved for compatibility. */
+  --font-display: var(--font-futuristic);
+  --font-ui: var(--font-neogrotesk);
   --font-mono: 'Share Tech Mono', 'SFMono-Regular', ui-monospace, monospace;
 }
 
@@ -310,7 +321,7 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0
   opacity: 0.42;
   filter: saturate(1.05);
   pointer-events: none;
-  z-index: -1; /* sits behind the scene's interactive content */
+  z-index: 0; /* stays inside the scene while remaining visible */
 }
 
 /* ---------- Scene transitions ----------

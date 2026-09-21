@@ -1,4 +1,9 @@
-.ld-room { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.ld-room {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
 
 .ld-crossroad {
   flex: 1;
@@ -15,14 +20,20 @@
   align-items: center;
   justify-content: center;
 }
-.ld-outgoing { pointer-events: none; }
+.ld-outgoing {
+  pointer-events: none;
+}
 /* The outgoing doors slide off to the left over the same 5s, out of sight. */
 .ld-outgoing .ld-doors {
   animation: ld-exit 1s linear both;
 }
 @keyframes ld-exit {
-  from { transform: translateX(0); }
-  to { transform: translateX(-1280px); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-1280px);
+  }
 }
 
 /* On ADVANCE only: the incoming doors glide in from a full screen width to the
@@ -32,9 +43,17 @@
   animation: ld-advance 1s linear both;
 }
 @keyframes ld-advance {
-  0% { opacity: 0; transform: translateX(1280px); }
-  10% { opacity: 1; }
-  100% { opacity: 1; transform: none; }
+  0% {
+    opacity: 0;
+    transform: translateX(1280px);
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .ld-router-head {
@@ -45,7 +64,10 @@
   flex-wrap: wrap;
   margin-bottom: 6px;
 }
-.ld-prompt { color: var(--text); font-size: 0.95rem; }
+.ld-prompt {
+  color: var(--text);
+  font-size: 0.95rem;
+}
 
 /* Scene with layered depth: back wall + perspective floor + doors. */
 .ld-stage {
@@ -62,7 +84,11 @@
   position: absolute;
   inset: 0 0 30% 0;
   background:
-    radial-gradient(120% 120% at 50% 0%, rgba(22, 242, 255, 0.10), transparent 60%),
+    radial-gradient(
+      120% 120% at 50% 0%,
+      rgba(22, 242, 255, 0.1),
+      transparent 60%
+    ),
     linear-gradient(180deg, #0a1024, #070b18);
   border-bottom: 1px solid rgba(120, 160, 255, 0.18);
 }
@@ -74,10 +100,14 @@
   height: 34%;
   background:
     linear-gradient(180deg, #070b18, #04060f),
-    repeating-linear-gradient(90deg, transparent 0 78px, rgba(120,160,255,0.10) 78px 80px);
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 78px,
+      rgba(120, 160, 255, 0.1) 78px 80px
+    );
   transform: rotateX(64deg);
   transform-origin: top center;
-  box-shadow: inset 0 40px 60px rgba(0,0,0,0.6);
+  box-shadow: inset 0 40px 60px rgba(0, 0, 0, 0.6);
 }
 
 .ld-doors {
@@ -90,19 +120,27 @@
 }
 
 /* ---------- A physical door ---------- */
-.ld-door { width: 208px; display: flex; flex-direction: column; gap: 10px; }
+.ld-door {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 .ld-door3d {
   position: relative;
-  height: 292px;
+  height: 350px;
   perspective: 1000px;
   cursor: pointer;
   border-radius: 12px 12px 5px 5px;
 }
-.ld-door3d:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+.ld-door3d:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+}
 /* jamb / frame behind everything */
 .ld-door3d::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -6px -6px 0;
   border-radius: 15px 15px 6px 6px;
@@ -112,7 +150,7 @@
 }
 /* floor glow pad under the door */
 .ld-door3d::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 50%;
   bottom: -12px;
@@ -120,13 +158,25 @@
   height: 16px;
   transform: translateX(-50%);
   border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(22,242,255,0.30), transparent 70%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(22, 242, 255, 0.3),
+    transparent 70%
+  );
   filter: blur(3px);
   opacity: 0.5;
   z-index: -1;
 }
-.ld-door.blocked .ld-door3d::after { background: radial-gradient(ellipse at center, rgba(255,43,214,0.4), transparent 70%); }
-.ld-door.blocked .ld-door3d::before { border-color: rgba(255,43,214,0.5); }
+.ld-door.blocked .ld-door3d::after {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 43, 214, 0.4),
+    transparent 70%
+  );
+}
+.ld-door.blocked .ld-door3d::before {
+  border-color: rgba(255, 43, 214, 0.5);
+}
 
 /* interior (the website), revealed when the door opens */
 .ld-doorway {
@@ -140,7 +190,10 @@
      behind the closed door slab (only visible once the door opens). */
   isolation: isolate;
 }
-.ld-doorway .door-page { position: absolute; inset: 22px 0 0; }
+.ld-doorway .door-page {
+  position: absolute;
+  inset: 22px 0 0;
+}
 
 /* Browser chrome shown INSIDE the doorway — the security indicator only
    appears once the door (site) is opened, like a real address bar. */
@@ -158,7 +211,10 @@
   background: #0a0e1c;
   border-bottom: 1px solid var(--line);
 }
-.ld-browserbar.insecure { background: #1a0f05; border-bottom-color: rgba(255, 185, 43, 0.4); }
+.ld-browserbar.insecure {
+  background: #1a0f05;
+  border-bottom-color: rgba(255, 185, 43, 0.4);
+}
 .ld-bar-flag {
   font-size: 0.52rem;
   font-weight: 700;
@@ -168,7 +224,9 @@
   white-space: nowrap;
   flex: none;
 }
-.ld-bar-flag.red { color: var(--red); }
+.ld-bar-flag.red {
+  color: var(--red);
+}
 /* look-alike character, revealed inside the doorway (no underline) */
 .ld-homoglyph {
   background: rgba(255, 59, 92, 0.28);
@@ -177,24 +235,32 @@
   padding: 0 1px;
 }
 .ld-baraddr {
-  font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 0.58rem;
   color: #9fb0e0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.ld-browserbar.insecure .ld-baraddr { color: #ffcf8a; }
+.ld-browserbar.insecure .ld-baraddr {
+  color: #ffcf8a;
+}
 .ld-doorway::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(120% 90% at 50% 40%, rgba(22,242,255,0.14), transparent 70%);
+  background: radial-gradient(
+    120% 90% at 50% 40%,
+    rgba(22, 242, 255, 0.14),
+    transparent 70%
+  );
   opacity: 0;
   transition: opacity 0.45s ease;
   pointer-events: none;
 }
-.ld-door.open .ld-doorway::after { opacity: 1; }
+.ld-door.open .ld-doorway::after {
+  opacity: 1;
+}
 
 /* the swinging door slab */
 .ld-slab {
@@ -202,12 +268,14 @@
   inset: 4px;
   border-radius: 9px;
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.05), transparent 26%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 26%),
     linear-gradient(160deg, #16213f, #0d1428);
   border: 1px solid var(--line);
   transform-origin: left center;
   transform: rotateY(0deg);
-  transition: transform 0.55s cubic-bezier(0.2, 0.75, 0.2, 1), box-shadow 0.3s;
+  transition:
+    transform 0.55s cubic-bezier(0.2, 0.75, 0.2, 1),
+    box-shadow 0.3s;
   backface-visibility: hidden;
   display: flex;
   flex-direction: column;
@@ -216,14 +284,18 @@
 }
 /* lock-rail highlight across the middle of the slab */
 .ld-slab::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
   top: 50%;
   height: 9px;
   transform: translateY(-50%);
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(160, 190, 255, 0.05));
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.4),
+    rgba(160, 190, 255, 0.05)
+  );
   pointer-events: none;
 }
 /* Panelled door detailing — two recessed panels + a kick plate. */
@@ -236,10 +308,16 @@
   box-shadow:
     inset 2px 2px 6px rgba(0, 0, 0, 0.6),
     inset -2px -2px 5px rgba(160, 190, 255, 0.05);
-  border: 1px solid rgba(120, 160, 255, 0.10);
+  border: 1px solid rgba(120, 160, 255, 0.1);
 }
-.ld-panel.top { top: 15px; height: 41%; }
-.ld-panel.bottom { top: 54%; bottom: 48px; }
+.ld-panel.top {
+  top: 15px;
+  height: 41%;
+}
+.ld-panel.bottom {
+  top: 54%;
+  bottom: 48px;
+}
 .ld-kick {
   position: absolute;
   left: 9px;
@@ -248,7 +326,7 @@
   height: 22px;
   border-radius: 3px;
   background: linear-gradient(180deg, #1b2748, #10182f);
-  border: 1px solid rgba(120, 160, 255, 0.10);
+  border: 1px solid rgba(120, 160, 255, 0.1);
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 /* Door knob with escutcheon plate */
@@ -271,12 +349,24 @@
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #eafcff, var(--cyan) 45%, var(--cyan-dim));
+  background: radial-gradient(
+    circle at 35% 30%,
+    #eafcff,
+    var(--cyan) 45%,
+    var(--cyan-dim)
+  );
   box-shadow: var(--glow-cyan);
 }
-.ld-door.open .ld-slab { transform: rotateY(-82deg); box-shadow: -18px 12px 34px rgba(0, 0, 0, 0.6); }
-.ld-door.fake .ld-slab { border-color: rgba(255, 59, 92, 0.4); }
-.ld-door.safe .ld-slab { border-color: rgba(22, 242, 255, 0.5); }
+.ld-door.open .ld-slab {
+  transform: rotateY(-82deg);
+  box-shadow: -18px 12px 34px rgba(0, 0, 0, 0.6);
+}
+.ld-door.fake .ld-slab {
+  border-color: rgba(255, 59, 92, 0.4);
+}
+.ld-door.safe .ld-slab {
+  border-color: rgba(22, 242, 255, 0.5);
+}
 
 .ld-hinges {
   position: absolute;
@@ -289,7 +379,11 @@
   justify-content: space-around;
   padding: 26px 0;
 }
-.ld-hinges span { height: 15px; border-radius: 3px; background: linear-gradient(#39456b, #232c4a); }
+.ld-hinges span {
+  height: 15px;
+  border-radius: 3px;
+  background: linear-gradient(#39456b, #232c4a);
+}
 
 /* URL sign mounted above the door (a lit transom / shop sign). */
 .ld-sign {
@@ -303,11 +397,14 @@
   background: linear-gradient(180deg, #0b1226, #070b16);
   border: 1px solid var(--line);
   border-radius: 8px;
-  box-shadow: 0 0 12px rgba(22, 242, 255, 0.16), inset 0 0 10px rgba(0, 0, 0, 0.55);
+  box-shadow:
+    0 0 12px rgba(22, 242, 255, 0.16),
+    inset 0 0 10px rgba(0, 0, 0, 0.55);
 }
 /* mounting screws */
-.ld-sign::before, .ld-sign::after {
-  content: '';
+.ld-sign::before,
+.ld-sign::after {
+  content: "";
   position: absolute;
   top: 6px;
   width: 4px;
@@ -315,27 +412,44 @@
   border-radius: 50%;
   background: rgba(160, 190, 255, 0.4);
 }
-.ld-sign::before { left: 8px; }
-.ld-sign::after { right: 8px; }
+.ld-sign::before {
+  left: 8px;
+}
+.ld-sign::after {
+  right: 8px;
+}
 .ld-sign.insecure {
   border-color: rgba(255, 185, 43, 0.5);
-  box-shadow: 0 0 12px rgba(255, 185, 43, 0.2), inset 0 0 10px rgba(0, 0, 0, 0.55);
+  box-shadow:
+    0 0 12px rgba(255, 185, 43, 0.2),
+    inset 0 0 10px rgba(0, 0, 0, 0.55);
 }
 
-.ld-linkicon { font-size: 0.72rem; opacity: 0.7; flex: none; }
-.ld-lock { font-size: 0.8rem; flex: none; }
-.ld-lock.warn { color: var(--amber); }
+.ld-linkicon {
+  font-size: 0.72rem;
+  opacity: 0.7;
+  flex: none;
+}
+.ld-lock {
+  font-size: 0.8rem;
+  flex: none;
+}
+.ld-lock.warn {
+  color: var(--amber);
+}
 /* Proportional, browser-like font so look-alikes (rn≈m, Cyrillic
    homoglyphs) are genuinely hard to spot — as in a real address bar. */
 .ld-url {
-  font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 0.72rem;
   color: #e2eaff;
   text-align: center;
   word-break: break-all;
   line-height: 1.2;
 }
-.ld-sign.insecure .ld-url { color: #ffcf8a; }
+.ld-sign.insecure .ld-url {
+  color: #ffcf8a;
+}
 
 .ld-peek {
   position: absolute;
@@ -349,7 +463,9 @@
   letter-spacing: 0.14em;
   color: var(--muted);
 }
-.ld-door.open .ld-peek { color: var(--cyan); }
+.ld-door.open .ld-peek {
+  color: var(--cyan);
+}
 
 /* Blocked: barricade tape + lock over the door */
 .ld-chains {
@@ -366,22 +482,48 @@
   color: var(--magenta);
   overflow: hidden;
 }
-.ld-chains span { font-size: 2.1rem; filter: drop-shadow(0 0 8px var(--magenta)); z-index: 1; }
-.ld-chains b { font-family: var(--font-display); letter-spacing: 0.15em; font-size: 0.72rem; z-index: 1; }
-.ld-chains::before, .ld-chains::after {
-  content: '';
+.ld-chains span {
+  font-size: 2.1rem;
+  filter: drop-shadow(0 0 8px var(--magenta));
+  z-index: 1;
+}
+.ld-chains b {
+  font-family: var(--font-display);
+  letter-spacing: 0.15em;
+  font-size: 0.72rem;
+  z-index: 1;
+}
+.ld-chains::before,
+.ld-chains::after {
+  content: "";
   position: absolute;
   left: -8%;
   right: -8%;
   height: 13px;
-  background: repeating-linear-gradient(45deg, #2a0f22 0 12px, #35122c 12px 24px);
+  background: repeating-linear-gradient(
+    45deg,
+    #2a0f22 0 12px,
+    #35122c 12px 24px
+  );
   border-top: 1px solid rgba(255, 43, 214, 0.4);
   border-bottom: 1px solid rgba(255, 43, 214, 0.4);
 }
-.ld-chains::before { top: 33%; transform: rotate(-8deg); }
-.ld-chains::after { top: 58%; transform: rotate(7deg); }
+.ld-chains::before {
+  top: 33%;
+  transform: rotate(-8deg);
+}
+.ld-chains::after {
+  top: 58%;
+  transform: rotate(7deg);
+}
 
-.ld-door-foot { display: flex; flex-direction: column; align-items: center; gap: 5px; text-align: center; }
+.ld-door-foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+}
 
 /* ---------- Round review: all three explanations together, after passing ---------- */
 .ld-review-overlay {
@@ -402,9 +544,26 @@
   flex-direction: column;
   gap: 14px;
 }
-.ld-review-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.ld-review-title { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; color: var(--magenta); }
-.ld-review-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.ld-review-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.ld-review-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--magenta);
+}
+.ld-review-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .ld-review-item {
   display: flex;
   align-items: flex-start;
@@ -414,59 +573,658 @@
   border: 1px solid var(--line);
   background: rgba(10, 14, 30, 0.6);
 }
-.ld-review-item.safe { border-color: rgba(22, 242, 255, 0.5); }
-.ld-review-item.fake { border-color: rgba(255, 59, 92, 0.45); }
-.ld-review-verdict { font-size: 1.1rem; line-height: 1.3; flex: none; }
-.ld-review-item.safe .ld-review-verdict { color: var(--cyan); }
-.ld-review-item.fake .ld-review-verdict { color: var(--red); }
-.ld-review-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.ld-review-url { font-size: 0.82rem; word-break: break-all; }
-.ld-review-note { font-size: 0.82rem; line-height: 1.35; color: #eef3ff; }
-.ld-review .btn { align-self: flex-end; }
+.ld-review-item.safe {
+  border-color: rgba(22, 242, 255, 0.5);
+}
+.ld-review-item.fake {
+  border-color: rgba(255, 59, 92, 0.45);
+}
+.ld-review-verdict {
+  font-size: 1.1rem;
+  line-height: 1.3;
+  flex: none;
+}
+.ld-review-item.safe .ld-review-verdict {
+  color: var(--cyan);
+}
+.ld-review-item.fake .ld-review-verdict {
+  color: var(--red);
+}
+.ld-review-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.ld-review-url {
+  font-size: 0.82rem;
+  word-break: break-all;
+}
+.ld-review-note {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: #eef3ff;
+}
+.ld-review .btn {
+  align-self: flex-end;
+}
 
 /* ---------- Mini website pages (shown inside an opened doorway) ---------- */
-.door-page { position: absolute; inset: 0; display: flex; flex-direction: column; }
-.door-page.neutral { background: linear-gradient(160deg, #121a33, #0b1024); padding: 12px; gap: 10px; }
-.door-page.neutral .dp-hero { height: 44%; border-radius: 8px; background: linear-gradient(120deg, #1b2547, #223066); }
-.door-page.neutral .dp-lines { display: flex; flex-direction: column; gap: 6px; }
-.door-page.neutral .dp-lines span { height: 7px; border-radius: 4px; background: #223066; }
-.door-page.neutral .dp-lines span:nth-child(2) { width: 80%; }
-.door-page.neutral .dp-lines span:nth-child(3) { width: 55%; }
-.door-page.neutral .dp-tiles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-top: auto; }
-.door-page.neutral .dp-tiles span { height: 34px; border-radius: 6px; background: #1a2447; }
+.door-page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+.door-page.neutral {
+  background: linear-gradient(160deg, #121a33, #0b1024);
+  padding: 12px;
+  gap: 10px;
+}
+.door-page.neutral .dp-hero {
+  height: 44%;
+  border-radius: 8px;
+  background: linear-gradient(120deg, #1b2547, #223066);
+}
+.door-page.neutral .dp-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.door-page.neutral .dp-lines span {
+  height: 7px;
+  border-radius: 4px;
+  background: #223066;
+}
+.door-page.neutral .dp-lines span:nth-child(2) {
+  width: 80%;
+}
+.door-page.neutral .dp-lines span:nth-child(3) {
+  width: 55%;
+}
+.door-page.neutral .dp-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  margin-top: auto;
+}
+.door-page.neutral .dp-tiles span {
+  height: 34px;
+  border-radius: 6px;
+  background: #1a2447;
+}
 
-.door-page.store { background: linear-gradient(160deg, #f4f6ff, #dfe6ff); color: #1a2340; padding: 10px; }
-.dp-bar { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.08em; }
-.door-page.store .dp-tiles { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin: 8px 0; }
-.door-page.store .dp-tiles span { background: #b9c4ec; border-radius: 4px; }
-.dp-cap { font-size: 0.6rem; color: #46507a; }
+.door-page.store {
+  background: linear-gradient(160deg, #f4f6ff, #dfe6ff);
+  color: #1a2340;
+  padding: 10px;
+}
+.dp-bar {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.door-page.store .dp-tiles {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+  margin: 8px 0;
+}
+.door-page.store .dp-tiles span {
+  background: #b9c4ec;
+  border-radius: 4px;
+}
+.dp-cap {
+  font-size: 0.6rem;
+  color: #46507a;
+}
 
-.door-page.sale { background: radial-gradient(circle at 50% 40%, #ff3b3b, #a50000); color: #fff; align-items: center; justify-content: center; text-align: center; padding: 8px; gap: 8px; }
-.dp-warn { position: absolute; top: 8px; left: 8px; right: 8px; font-size: 0.5rem; font-weight: 800; background: #111; color: #ffd400; padding: 3px; border-radius: 3px; }
-.dp-off { font-family: var(--font-display); font-weight: 900; font-size: 1.9rem; text-shadow: 0 2px 6px rgba(0,0,0,0.4); }
-.dp-shop { background: #000; padding: 4px 12px; border-radius: 4px; font-size: 0.6rem; font-weight: 700; }
+.door-page.shoes-ad,
+.door-page.luna-ad,
+.door-page.lights-ad {
+  overflow: hidden;
+  background-color: #1976d2;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+/* SHOES*/
+.shoes-ad-copy {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  padding: 0.6em;
+  pointer-events: none;
+}
+.shoes-ad-footer {
+  position: absolute;
+  bottom: 0.6em;
+  width: 96%;
+}
+/*first ad shoes*/
+.shoes-ad-1-headline {
+  max-width: 100%;
+  color: #fff8a2;
+  font-family: Impact, var(--font-display), sans-serif;
+  font-size: 2rem;
+  line-height: 0.9;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+.shoes-ad-1-second-headline {
+  max-width: 100%;
+  color: #fff8a2;
+  font-family: Impact, var(--font-display), sans-serif;
+  font-size: 2rem;
+  line-height: 0.9;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+.shoes-ad-1-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 7px;
+  padding: 2px 5px;
+  overflow: hidden;
+  border: 2px solid #fff;
+  background: rgba(25, 118, 210, 0.18);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 0.66rem;
+  line-height: 1.1;
+  white-space: nowrap;
+  pointer-events: auto;
+}
+.shoes-ad-1-cta b {
+  flex: none;
+  margin-left: 4px;
+  font-size: 0.85rem;
+}
+.shoes-ad-1-brand {
+  margin-bottom: 0.3rem;
+  color: #fff;
+  font-weight: bold;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  width: 32%;
+}
+/*second ad shoes*/
+.shoes-ad-2-headline {
+  max-width: 100%;
+  color: #fca2ff;
+  font-family: var(--font-display), sans-serif;
+  font-size: 2rem;
+  line-height: 0.9;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+.shoes-ad-2-second-headline {
+  max-width: 100%;
+  color: #fca2ff;
+  font-family: var(--font-display), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 0.9;
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+.shoes-ad-2-brand {
+  margin-bottom: 0.3rem;
+  color: #fff;
+  font-weight: bold;
+  font-family: var(--font-ui);
+  font-size: 1.5rem;
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  justify-self: center;
+}
+.shoes-ad-2-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 7px 0;
+  padding: 6px 5px;
+  overflow: hidden;
+  font-weight: 800;
+  text-align: center;
+  color: rgb(142, 255, 131);
+  background: rgb(247, 0, 255);
+  font-family: var(--font-ui);
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  line-height: 0.9;
+  pointer-events: auto;
+}
+/*third ad shoes*/
+.shoes-ad-3-headline {
+  max-width: 100%;
+  color: #000000;
+  font-family: Roboto, var(--font-display), sans-serif;
+  font-size: 0.9rem;
+  line-height: 1;
+  background-color: rgba(255, 198, 206, 0.801);
+  overflow-wrap: anywhere;
+  border-radius: 4px;
+  padding: 0.3rem;
+}
+.shoes-ad-3-second-headline {
+  max-width: 100%;
+  color: #ffffff;
+  font-family: Roboto, var(--font-display), sans-serif;
+  font-size: 1.4rem;
+  line-height: 1;
+  background-color: #00000063;
+  overflow-wrap: anywhere;
+  border-radius: 4px;
+  padding: 0.3rem;
+  margin: 0 0.4rem 0.4rem 0;
+}
+.shoes-ad-3-brand {
+  margin-bottom: 0.3rem;
+  color: #000000;
+  font-weight: bold;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  justify-self: center;
+}
 
-.door-page.shop { background: #fff; color: #222; padding: 8px; align-items: center; }
-.dp-shopbar { align-self: stretch; font-size: 0.55rem; font-weight: 800; color: #7a2ce0; }
-.dp-prod { font-size: 2.4rem; margin: auto 0 0; }
-.dp-price { font-family: var(--font-display); font-weight: 900; color: #d10038; font-size: 1.3rem; }
-.dp-limited { font-size: 0.48rem; color: #d10038; font-weight: 800; }
+/*LUNA*/
+.luna-ad-copy {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  padding: 0.6em;
+  pointer-events: none;
+}
+.luna-ad-footer {
+  position: absolute;
+  bottom: 0.6em;
+  width: 96%;
+  display: flex;
+  flex-direction: column;
+}
+/*first ad luna*/
+.luna-ad-1-headline {
+  max-width: 100%;
+  color: #ffffff;
+  font-size: 1.6rem;
+  line-height: 1;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+  font-style: italic;
+    font-family: var(--font-script), sans-serif;
+}
+.luna-ad-1-second-headline {
+  font-size: 4.4rem;
+  width: 15%;
+  margin-top: 1.8rem;
+  font-weight: 900;
+  line-height: 0.9;
+   color: pink
+}
+.luna-ad-1-text {
+  font-family: var(--font-script), sans-serif;
+  font-size: 2.5rem;
+  font-style: italic;
+  line-height: 1;
+  text-align: center;
+  margin: 0.3rem;
+  font-weight: bold;
+  color: #ffffff
+}
+.luna-ad-1-brand {
+  font-size: 1.15rem;
+  font-weight: normal;
+  text-align: center;
+  align-self: center;
+  margin-top: 0.4rem;
+  letter-spacing: 0.33rem;
+}
+/*second ad luna*/
+.luna-ad-2-brand {
+  font-size: 1.55rem;
+  font-weight: normal;
+  text-align: center;
+  align-self: center;
+  margin-top: -0.4rem;
+  letter-spacing: 0.33rem;
+}
+.luna-ad-2-headline {
+  max-width: 100%;
+  color: #000000;
+  font-family: var(--font-serif);
+  background: #ff9100;
+  font-size: 2rem;
+  line-height: 0.9;
+  font-weight: 600;
+  padding: 0.2rem 0.7rem 0.4rem 0.7rem;
+  overflow-wrap: anywhere;
+}
+.luna-ad-2-text {
+  font-size: 0.8rem;
+  text-align: center;
+  margin-top: 0.3rem;
+}
+.luna-ad-2-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 7px auto;
+  padding: 8px 15px;
+  overflow: hidden;
+  align-self: center;
+  border: 1px solid #ffffff;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.452);
+  color: #000000;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  line-height: 1.1;
+  white-space: nowrap;
+  pointer-events: auto;
+}
+/*third ad luna */
+.luna-ad-3-headline {
+  max-width: 100%;
+  color: #ffffff;
+  font-family: Roboto, var(--font-display), sans-serif;
+  font-weight: 800;
+  font-size: 2.4rem;
+  line-height: 1;
+  margin-top: -0.5rem;
+  overflow-wrap: anywhere;
+  border-radius: 4px;
+  padding: 0 0.3rem;
+}
+.luna-ad-3-prices {
+  display: flex;
+  flex-direction: column;
+}
+.luna-ad-3-discount {
+  color: rgb(200, 255, 0);
+  font-family: var(--font-retro);
+  font-size: 4rem;
+  font-weight: 700;
+  margin-top: -1rem;
+  text-shadow: 5px 5px 0px rgb(26, 224, 75);
+  max-height: 5rem;
+}
+.luna-ad-3-oldprice {
+  text-decoration: line-through red 2px;
+  color: #dbdbdb;
+}
+.luna-ad-3-second-headline {
+  background: yellow;
+  border-radius: 3px;
+  font-weight: bold;
+  color: black;
+  display: inline;
+  font-size: 1.2rem;
+  padding: 0 0.4rem;
+}
+.luna-ad-3-text {
+  font-size: 1rem;
+  color: #fff;
+  width: 50%;
+  line-height: 1.1;
+}
+.luna-ad-3-brand {
+  margin-bottom: 0.3rem;
+  color: #ffffff;
+  font-weight: bold;
+  font-family: var(--font-ui);
+  font-size: 1.8rem;
+  font-weight: 900;
+  line-height: 0.9;
+  max-width: 80%;
+  text-transform: uppercase;
+  justify-self: start;
+  text-shadow: 1px 1px 2px black;
+}
+/*LIGHTS AD*/
+.lights-ad-copy {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  padding: 0.6em;
+  pointer-events: none;
+}
+.lights-ad-footer {
+  position: absolute;
+  bottom: 0.6em;
+  width: 96%;
+}
+.lights-discount {
+  background-color: #ff0000;
+  color: #fff;
+  font-weight: bold;
+  font-size: 2rem;
+  padding: 0rem 0.2rem;
+}
+/*first ad lights*/
+.lights-ad-1-discounts {
+  display: flex;
+  height: 50%;
+  width: 100%;
+  justify-content: space-between;
+}
+#lights-discount-1 {
+  justify-self: flex-start;
+  align-self: flex-start;
+}
+#lights-discount-2 {
+  justify-self: center;
+  align-self: center;
+}
+#lights-discount-3 {
+  justify-self: flex-end;
+  align-self: flex-end;
+}
+.lights-ad-1-headline {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.2rem;
+}
+.lights-ad-1-second-headline {
+  transform: rotate(-5deg);
+  background-color: #ffffff;
+  color: #ff0000;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.lights-ad-1-brand {
+  color: #e5ff00;
+  font-weight: bold;
+  font-size: 1.3rem;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+/*second ad lights*/
+
+.lights-ad-2-headline-container {
+  position: absolute;
+  top: 40%;
+  margin: 0 1rem;
+  font-family: var(--font-retro);
+  font-size: 1.8rem;
+  line-height: 1;
+  font-weight: 900;
+  color: yellow;
+  text-shadow: 2px 2px 0px rgb(255, 98, 0);
+  text-align: center;
+}
+.lights-ad-2-brand {
+  color: #9d99ff;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-align: center;
+  margin-top: -0.5rem;
+  letter-spacing: 0.2em;
+}
+.lights-ad-2-second-headline {
+  margin: 0.7rem auto 0.8rem auto;
+  font-family: var(--font-retro);
+  font-size: 1.3rem;
+  line-height: 1;
+  font-weight: 400;
+  color: yellow;
+  text-shadow: 2px 2px 10px rgb(15, 11, 9);
+  text-align: center;
+}
+
+/*third ad lights*/
+.lights-ad-3-brand {
+  font-size: 1.7rem;
+  text-align: center;
+  margin-top: -0.7rem;
+  color: rgb(217, 141, 255);
+}
+.lights-ad-3-headline {
+  font-size: 2.4rem;
+  text-align: center;
+  color: rgb(217, 141, 255);
+  font-weight: 800;
+  line-height: 0.9;
+  margin-bottom: 0.8rem;
+  text-shadow: 2px 2px 5px rgb(136, 146, 255);
+}
+.lights-ad-3-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  justify-self: center;
+  margin-top: 7px;
+  margin-bottom: 1.2rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #ffffff48;
+  background: rgb(178, 0, 166);
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 1.2rem;
+  line-height: 1.1;
+  white-space: nowrap;
+  pointer-events: auto;
+}
+.lights-ad-3-text {
+  font-size: 0.7rem;
+  text-align: center;
+  color: #fff;
+  letter-spacing: 0.1em;
+}
+
+.door-page.sale {
+  background: radial-gradient(circle at 50% 40%, #ff3b3b, #a50000);
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  gap: 8px;
+}
+.dp-warn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  font-size: 0.5rem;
+  font-weight: 800;
+  background: #111;
+  color: #ffd400;
+  padding: 3px;
+  border-radius: 3px;
+}
+.dp-off {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.9rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.dp-shop {
+  background: #000;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+
+.door-page.shop {
+  background: #fff;
+  color: #222;
+  padding: 8px;
+  align-items: center;
+}
+.dp-shopbar {
+  align-self: stretch;
+  font-size: 0.55rem;
+  font-weight: 800;
+  color: #7a2ce0;
+}
+.dp-prod {
+  font-size: 2.4rem;
+  margin: auto 0 0;
+}
+.dp-price {
+  font-family: var(--font-display);
+  font-weight: 900;
+  color: #d10038;
+  font-size: 1.3rem;
+}
+.dp-limited {
+  font-size: 0.48rem;
+  color: #d10038;
+  font-weight: 800;
+}
 
 /* ---------- Actions ---------- */
 .ld-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 14px;
   margin-top: 10px;
   flex-wrap: wrap;
+  justify-content: end;
 }
-.ld-banner { margin: 0; padding: 8px 14px; }
+.ld-banner {
+  margin: 0;
+  padding: 8px 14px;
+}
 
 /* ---------- Justify phase ---------- */
-.ld-justify { max-width: 860px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; gap: 12px; }
-.ld-justify .learn { font-size: 0.9rem; padding: 10px 14px; }
-.ld-flags { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; }
+.ld-justify {
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ld-justify .learn {
+  font-size: 0.9rem;
+  padding: 10px 14px;
+}
+.ld-flags {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+}
 .ld-flag {
   display: flex;
   align-items: center;
@@ -477,12 +1235,48 @@
   background: var(--panel);
   cursor: pointer;
   font-size: 0.88rem;
-  transition: border-color 0.2s, background 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
 }
-.ld-flag:hover { border-color: var(--cyan); }
-.ld-flag.on { border-color: var(--cyan); background: rgba(22,242,255,0.08); }
-.ld-flag input { display: none; }
-.ld-check { width: 18px; height: 18px; border-radius: 5px; flex: none; border: 1px solid var(--muted); position: relative; }
-.ld-flag.on .ld-check { background: var(--cyan); border-color: var(--cyan); box-shadow: var(--glow-cyan); }
-.ld-flag.on .ld-check::after { content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #04202a; font-size: 0.72rem; font-weight: 900; }
-.ld-justify-foot { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.ld-flag:hover {
+  border-color: var(--cyan);
+}
+.ld-flag.on {
+  border-color: var(--cyan);
+  background: rgba(22, 242, 255, 0.08);
+}
+.ld-flag input {
+  display: none;
+}
+.ld-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  flex: none;
+  border: 1px solid var(--muted);
+  position: relative;
+}
+.ld-flag.on .ld-check {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow: var(--glow-cyan);
+}
+.ld-flag.on .ld-check::after {
+  content: "✓";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #04202a;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+.ld-justify-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
