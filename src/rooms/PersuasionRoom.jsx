@@ -30,11 +30,20 @@ const FRAME_ORDER = ['emotional', 'fomo', 'urgency', 'social', 'influencer', 'ex
 
 function findLetter(text, letter) {
   const wanted = letter.toUpperCase()
-  return [...text].map((character, index) => ({
-    character,
-    index,
-    matches: character.toUpperCase() === wanted,
-  }))
+  let foundFirst = false
+
+  return [...text].map((character, index) => {
+    const isMatch = character.toUpperCase() === wanted
+    const matches = isMatch && !foundFirst
+
+    if (isMatch && !foundFirst) foundFirst = true
+
+    return {
+      character,
+      index,
+      matches,
+    }
+  })
 }
 
 function PosterContent({ poster, copy, highlightLetter = false }) {
@@ -65,6 +74,14 @@ function initPositions() {
     o[id] = { x: CENTER.x + i * 30, y: CENTER.y + i * 24 } // diagonal overlapping pile
   })
   return o
+}
+
+function getFrameScale(x) {
+  const minX = 0
+  const maxX = 760
+  const safeX = Math.min(Math.max(x, minX), maxX)
+  const t = (safeX - minX) / (maxX - minX)
+  return 1 - (t * 0.3)
 }
 
 export default function PersuasionRoom({ node }) {
@@ -271,11 +288,20 @@ export default function PersuasionRoom({ node }) {
         {/* ---- CENTRE: free-floating overlapping frame pile ---- */}
         {frames.map((f) => {
           if (placed[f.id]) return null
+          const scale = getFrameScale(pos[f.id].x)
           return (
             <div
               key={f.id}
               className={`pl-freeframe ${dragId === f.id ? 'dragging' : ''}`}
-              style={{ left: pos[f.id].x, top: pos[f.id].y, zIndex: dragId === f.id ? 999 : 20 + zorder.indexOf(f.id) }}
+              style={{
+                left: pos[f.id].x,
+                top: pos[f.id].y,
+                width: '134px',
+                height: '150px',
+                transform: `rotateY(16deg) scale(${scale})`,
+                transformOrigin: 'left center',
+                zIndex: dragId === f.id ? 999 : 20 + zorder.indexOf(f.id),
+              }}
               onPointerDown={(e) => onFrameDown(e, f.id)}
             >
               <span className="pl-frame">

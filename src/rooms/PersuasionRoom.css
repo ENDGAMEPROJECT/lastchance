@@ -504,10 +504,12 @@
   white-space: nowrap;
 }
 .pl-letter-highlight {
-  background:
-    linear-gradient(104deg, rgba(130, 255, 173, 0) 0.9%, rgba(130, 255, 173, 1) 2.4%, rgba(130, 255, 173, 0.5) 5.8%, rgba(130, 255, 173, 0.1) 93%, rgba(130, 255, 173, 0.7) 96%, rgba(130, 255, 173, 0) 98%),
-    linear-gradient(183deg, rgba(130, 255, 173, 0) 0%, rgba(130, 255, 173, 0.3) 7.9%, rgba(130, 255, 173, 0) 15%);
-  color: rgba(255, 255, 255, 0.95);
+  /* background:
+    yellow;
+    mix-blend-mode: difference; */
+  border: yellow 1px solid;
+  border-radius: 4px;
+
   opacity: 1;
 }
 /* the circular "mark" where the hidden letter is read once framed */
