@@ -91,7 +91,7 @@
   text-transform: uppercase;
   letter-spacing: 0;
 }
-.pretest-line-row { display: flex; justify-content: flex-end; }
+.pretest-line-row { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 12px; }
 .pretest-phone-close {
   flex: none;
   display: grid;
