@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
-import { ITEMS, CODES } from '../game/gameData.js'
+import { CODES } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 import { playSound } from '../game/sound.js'
 import RoomFrame from '../components/RoomFrame.jsx'
@@ -10,8 +10,8 @@ import './AdsCorridor.css'
 
 /* CORRIDOR (between Puzzle 3 and 4) — Ads Corridor.
    Per the brief: glossy ads hide the truth in the fine print. The player
-   picks up a "Truth Flashlight" on entry, charges it (a deliberate beat —
-   a nod to how bait ads waste your time), toggles it ON, and shines it on
+   equips the "Truth Flashlight" earned in Algorithm Room from the bag,
+   then shines it on
    four posters to reveal the hidden truth. Each revealed truth hides one
    letter; in order they spell the exit code (CODES.adsCorridor === 'SAVE').
    Type the code to open the exit. Reward: an evidence clue for Max.
@@ -27,12 +27,11 @@ const POSTERS = [
 ]
 
 export default function AdsCorridor({ node }) {
-  const { completeRoom, addEvidence } = useGame()
+  const { completeRoom, addEvidence, hasItem } = useGame()
   const t = useT()
   const { scale } = useStage()
 
-  // Flashlight lifecycle: 'charging' → 'ready' (off) → toggle on/off.
-  const [charging, setCharging] = useState(true)
+  // The flashlight stays off until the player equips it from the bag.
   const [lightOn, setLightOn] = useState(false)
 
   // Refs for the cursor-tracked spotlight overlay.
@@ -50,21 +49,13 @@ export default function AdsCorridor({ node }) {
 
   const ANSWER = CODES.adsCorridor // 'SAVE'
 
-  // On entry: grant the Truth Flashlight if the player doesn't have it,
-  // then let it "charge" for a beat before it can be switched on.
-  useEffect(() => {
-    const t = setTimeout(() => setCharging(false), 1000)
-    return () => clearTimeout(t)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   useEffect(() => {
     const onUseItem = (event) => {
-      if (event.detail?.id === 'truthLight' && !charging) setLightOn(true)
+      if (event.detail?.id === 'truthLight' && hasItem('truthLight')) setLightOn(true)
     }
     window.addEventListener('lastchance:use-item', onUseItem)
     return () => window.removeEventListener('lastchance:use-item', onUseItem)
-  }, [charging])
+  }, [hasItem])
 
   // Shining the light on a poster (only works while it is ON) reveals
   // that poster's hidden fine print and remembers it for the code hint.
@@ -190,26 +181,8 @@ export default function AdsCorridor({ node }) {
             {lightOn && <div className="ac-flashlight" ref={flashRef} aria-hidden />}
           </div>
 
-          {/* Right: flashlight controls, code assembly and exit entry */}
+          {/* Exit entry and learning objective */}
           <div className="ac-side">
-            {/* Flashlight control + status */}
-            <div className="ac-toolbar">
-              <button
-                className={`btn ${lightOn ? 'btn-cyan' : 'btn-ghost'} ac-torch ${charging ? 'charging' : ''}`}
-                onClick={toggleLight}
-                disabled={charging}
-              >
-                {charging ? t('rooms.ads.torchCharging') : lightOn ? t('rooms.ads.torchOn') : t('rooms.ads.torchOff')}
-              </button>
-              <span className="ac-hint dim t-sm">
-                {charging
-                  ? t('rooms.ads.hintCharging')
-                  : lightOn
-                    ? t('rooms.ads.hintOn')
-                    : t('rooms.ads.hintOff')}
-              </span>
-            </div>
-
             {/* Exit code entry */}
             <form className="ac-exit" onSubmit={submit}>
               <label className="ac-exit-label upper t-sm dim" htmlFor="ac-code">
