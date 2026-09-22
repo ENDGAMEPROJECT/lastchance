@@ -669,8 +669,6 @@ export default {
       "wonSuffix": "!",
       "hintSpinFirst": "Spin a couple of wheels first — watch where they land before you decide.",
       "hintSpinThis": "Spin THIS wheel at least once before marking it. See what it does.",
-      "learnLead": "A guaranteed “win”?",
-      "learnBody": "Spin wheels, daily login bonuses and loot boxes are engagement and advertising tricks, not generosity. They are rigged so you almost always “win” something — usually a tiny discount like 30¢ off — because feeling lucky makes you keep playing, share the app, and spend more. A prize you always get, worth almost nothing, isn't a gift. It's bait.",
       "evidenceLabel": "The prize wheels were rigged to always land on a worthless 30¢ coupon — bait to make you spend.",
       "wheels": {
         "w1": {
@@ -739,7 +737,7 @@ export default {
       "stage1": {
         "badge": "Stage 1 / 2",
         "tag": "Content labelling",
-        "prompt": "Drag the right label onto each post: {paid}, {collab} or {gifted}.",
+        "prompt": "Choose the right label for each post",
         "openDecoder": "🔑 Open Decoder Card",
         "verified": "Verified",
         "followersSuffix": "followers",
@@ -887,11 +885,6 @@ export default {
       "solvedTitle": "Algorithm Control Room cracked · Evidence logged 🧠",
       "solvedText": "You watched the machine turn {friend}'s age, interests and insecurities into a single ad. That is not luck — it is a profile.",
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
-      "door": {
-        "badge": "Control Room · Sealed",
-        "prompt": "The Algorithm Control Room is locked. A keypad is mounted on the door — step up to it and enter the 6-digit code from your Data Report.",
-        "action": "Use the keypad →"
-      },
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",
         "prompt": "Enter the 6-digit code.",
@@ -1045,12 +1038,17 @@ export default {
             "result": "PURCHASE"
           }
         ]
+      },
+      "door": {
+        "badge": "Control Room · Sealed",
+        "prompt": "The Algorithm Control Room is locked. A keypad is mounted on the door — step up to it and enter the 6-digit code from your Data Report.",
+        "action": "Use the keypad →"
       }
     },
     "ads": {
       "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
       "solvedTitle": "Corridor cleared — you read the fine print",
-      "solvedText": "The exit hisses open — you logged the hidden €59/month auto-renewal as evidence. Ads shouting “free”, “you won” or “$0 today” usually bury the real cost in tiny print, so always read what you're agreeing to before you tap.",
+      "solvedText": "The exit hisses open — you logged the hidden €59/month auto-renewal as evidence. Ads shouting “free”, “you won” or “$0 today” usually bury the real cost in tiny print, so always read  what you're agreeing to before you tap.",
       "pickup": "You pick up the Truth Flashlight 🔦",
       "torchCharging": "🔦 Charging…",
       "torchOn": "🔦 Flashlight ON",

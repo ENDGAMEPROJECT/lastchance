@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
-import { ITEMS } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 import { playSound } from '../game/sound.js'
 import RoomFrame from '../components/RoomFrame.jsx'
@@ -10,9 +9,9 @@ import './AdsCorridor.css'
 
 /* CORRIDOR (between Puzzle 3 and 4) — Ads Corridor.
    Per the brief: glossy ads hide the truth in the fine print. The player
-   picks up a "Truth Flashlight" on entry, charges it (a deliberate beat —
-   a nod to how bait ads waste your time), toggles it ON, and shines it on
-   four posters to reveal the hidden truth. Each truth highlights one code
+   equips the "Truth Flashlight" (earned in the Algorithm Room) from the Bag,
+   then sweeps its beam across the posters to reveal the hidden truth — a poster
+   shows its truth ONLY while the beam is on it. Each truth highlights one code
    letter (set per language in i18n); read left-to-right across the posters in
    display order they spell the exit code. Type it to open the exit. Reward: an
    evidence clue for Max.
@@ -46,56 +45,38 @@ function highlightLetter(text, letter) {
 }
 
 export default function AdsCorridor({ node }) {
-  const { completeRoom, addEvidence } = useGame()
+  const { completeRoom, addEvidence, hasItem } = useGame()
   const t = useT()
   const { scale } = useStage()
 
-  // Flashlight lifecycle: 'charging' → 'ready' (off) → toggle on/off.
-  const [charging, setCharging] = useState(true)
+  // The flashlight stays off until the player equips it from the Bag.
   const [lightOn, setLightOn] = useState(false)
 
   // Refs for the cursor-tracked spotlight overlay.
   const wallRef = useRef(null)
   const flashRef = useRef(null)
 
-  // Which posters have been illuminated at least once.
-  const [activePoster, setActivePoster] = useState(null) // poster under the beam right now (transient)
+  // Which poster is under the beam right now (transient — reveals hide again).
+  const [activePoster, setActivePoster] = useState(null)
 
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
   const [solved, setSolved] = useState(false)
   const inputRef = useRef(null)
 
-
   // The exit code is the highlighted letters read across the posters in display
   // order — derived from i18n, so it follows whatever letters each language sets.
   const posterTexts = t('rooms.ads.posters')
   const ANSWER = POSTERS.map((p) => posterTexts[p.textIndex]?.letter || '').join('')
 
-  // On entry: grant the Truth Flashlight if the player doesn't have it,
-  // then let it "charge" for a beat before it can be switched on.
-  useEffect(() => {
-    const t = setTimeout(() => setCharging(false), 1000)
-    return () => clearTimeout(t)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
+  // Equipping the Truth Flashlight from the Bag switches the beam on.
   useEffect(() => {
     const onUseItem = (event) => {
-      if (event.detail?.id === 'truthLight' && !charging) setLightOn(true)
+      if (event.detail?.id === 'truthLight' && hasItem('truthLight')) setLightOn(true)
     }
     window.addEventListener('lastchance:use-item', onUseItem)
     return () => window.removeEventListener('lastchance:use-item', onUseItem)
-  }, [charging])
-
-  // The torch button switches the flashlight on/off (disabled until it has
-  // finished charging).
-  function toggleLight() {
-    if (charging) return
-    const next = !lightOn
-    setLightOn(next)
-    if (!next) setActivePoster(null) // switching off hides any revealed truth
-  }
+  }, [hasItem])
 
   // Point the flashlight at a poster to reveal its truth — but ONLY while the
   // beam is on it. Moving the beam away reverts it to the glossy ad, so the
@@ -166,7 +147,7 @@ export default function AdsCorridor({ node }) {
             onMouseMove={onMouseMove}
             onTouchMove={onTouchMove}
           >
-            {POSTERS.map((p, i) => {
+            {POSTERS.map((p) => {
               const isRevealed = lightOn && activePoster === p.id
               const poster = posterTexts[p.textIndex]
               // Prefer highlighting the code letter in the big title; only fall
@@ -233,27 +214,8 @@ export default function AdsCorridor({ node }) {
             {lightOn && <div className="ac-flashlight" ref={flashRef} aria-hidden />}
           </div>
 
-          {/* Right: flashlight controls, code assembly and exit entry */}
+          {/* Right: exit code entry */}
           <div className="ac-side">
-            {/* Flashlight control + status */}
-            <div className="ac-toolbar">
-              <button
-                className={`btn ${lightOn ? 'btn-cyan' : 'btn-ghost'} ac-torch ${charging ? 'charging' : ''}`}
-                onClick={toggleLight}
-                disabled={charging}
-              >
-                {charging ? t('rooms.ads.torchCharging') : lightOn ? t('rooms.ads.torchOn') : t('rooms.ads.torchOff')}
-              </button>
-              <span className="ac-hint dim t-sm">
-                {charging
-                  ? t('rooms.ads.hintCharging')
-                  : lightOn
-                    ? t('rooms.ads.hintOn')
-                    : t('rooms.ads.hintOff')}
-              </span>
-            </div>
-
-            {/* Exit code entry */}
             <form className="ac-exit" onSubmit={submit}>
               <label className="ac-exit-label upper t-sm dim" htmlFor="ac-code">
                 {t('rooms.ads.exitLabel')}

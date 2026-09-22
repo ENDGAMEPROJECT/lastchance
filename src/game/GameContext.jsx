@@ -37,7 +37,7 @@ const initialState = {
   roomStarted: false,
   linkRound: null,
   progress: initialProgress(),
-  inventory: [], // Item[]
+  inventory: DEBUG ? Object.values(ITEMS) : [], // Item[]; debug starts with every tool.
   evidence: [], // { id, label } collected clues to use on Max
   timeLeft: START_SECONDS,
   running: false,

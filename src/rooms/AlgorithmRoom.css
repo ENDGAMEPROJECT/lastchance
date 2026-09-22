@@ -478,7 +478,6 @@
 }
 .ar-reflect-title { font-family: var(--font-display); font-weight: 800; color: var(--cyan); font-size: 1.2rem; }
 .ar-reflect-text { margin: 0; line-height: 1.45; color: var(--text); font-size: 1rem; text-align: left; }
-.ar-final-reflection { flex-direction: column; align-items: stretch; justify-content: center; gap: 12px; border: 1px solid var(--cyan); box-shadow: var(--glow-cyan), 0 14px 30px rgba(0, 0, 0, 0.4); animation: ar-lesson-pop 0.5s cubic-bezier(0.2, 1.2, 0.4, 1) both; }
 .ar-reflection .btn { align-self: flex-end; }
 
 /* Final reconstructed-profile screen */

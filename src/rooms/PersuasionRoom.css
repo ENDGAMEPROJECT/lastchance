@@ -242,13 +242,22 @@
    the cloned text is fully transparent. */
 .pl-frame-ghost {
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 50%;
+  /* Match the REAL poster's box (134x150 with its padding) so the text wraps
+     line-for-line exactly like the poster, then scale down to the frame's
+     footprint. This keeps the ring on the same line as on the poster even for
+     long, multi-line headlines. */
+  width: 134px;
+  height: 150px;
+  padding: 9px 9px 11px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  padding: 9px 9px 11px;
+  transform: translate(-50%, -50%) scale(0.86);
+  transform-origin: center;
   pointer-events: none;
 }
 .pl-frame-ghost .pl-poster-emoji { font-size: 1.6rem; visibility: hidden; }

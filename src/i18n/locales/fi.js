@@ -669,8 +669,6 @@ export default {
       "wonSuffix": "!",
       "hintSpinFirst": "Spin a couple of wheels first — watch where they land before you decide.",
       "hintSpinThis": "Spin THIS wheel at least once before marking it. See what it does.",
-      "learnLead": "A guaranteed “win”?",
-      "learnBody": "Spin wheels, daily login bonuses and loot boxes are engagement and advertising tricks, not generosity. They are rigged so you almost always “win” something — usually a tiny discount like 30¢ off — because feeling lucky makes you keep playing, share the app, and spend more. A prize you always get, worth almost nothing, isn't a gift. It's bait.",
       "evidenceLabel": "The prize wheels were rigged to always land on a worthless 30¢ coupon — bait to make you spend.",
       "wheels": {
         "w1": {
@@ -739,7 +737,7 @@ export default {
       "stage1": {
         "badge": "Stage 1 / 2",
         "tag": "Content labelling",
-        "prompt": "Decode each emoji sticky-note, then drag the matching label onto its post: {paid}, {collab} or {gifted}.",
+        "prompt": "Choose the right label for each post",
         "openDecoder": "🔑 Open Decoder Card",
         "verified": "Verified",
         "followersSuffix": "followers",
@@ -752,7 +750,8 @@ export default {
         "learnLabel": "Why it matters:",
         "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
         "hint": "Tap or drag a label chip, then drop it on the matching post.",
-        "selectPost": "Select Post"
+        "selectPost": "Select Post",
+        "answerProgress": "{count} / {total}"
       },
       "labels": {
         "paid": "PAID",
@@ -792,7 +791,7 @@ export default {
         "stage1Cleared": "Stage 1 cleared ✓",
         "badge": "Stage 2 / 2",
         "tag": "Product legitimacy",
-        "prompt": "These sellers all claim their products are “real”. Run a reverse image search on each photo, then classify what it actually is.",
+        "prompt": "Reverse-image-search each photo, then classify what it really is.",
         "runSearch": "🔍 Run reverse image search",
         "engineBar": "reverse-image-search.io",
         "engineDrop": "Drag a product image here to reverse-search it",
@@ -888,13 +887,13 @@ export default {
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",
-        "prompt": "Enter the 6-digit access code to boot the targeting engine.",
+        "prompt": "Enter the 6-digit code.",
         "error": "Access denied — that code is wrong.",
         "submit": "Unlock →"
       },
       "choice": {
         "badge": "System question · privacy trade-off",
-        "prompt": "The mainframe offers you a deal. Which future do you want?",
+        "prompt": "Which future do you want?",
         "optionATag": "Option A",
         "optionABefore": "See",
         "optionABold": "fewer, personalised",
@@ -912,7 +911,7 @@ export default {
       },
       "equations": {
         "badge": "Targeting engine · solve every equation",
-        "prompt": "Each row is a person. Fill the empty slot so the machine can output the ad it would show them.",
+        "prompt": "Fill the missing slot to complete each person's ad.",
         "adFlag": "AD ACTIVATED",
         "slotPlaceholder": "＋ drop tile",
         "stepBadge": "Equation {n} / {total}",
@@ -929,7 +928,9 @@ export default {
         "profileP3": " (gaming, new tech, the NovaPad X he keeps searching) and ",
         "profileB3": "his insecurities",
         "profileP4": " (fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
-        "logEvidence": "Log this evidence ✓"
+        "logEvidence": "Log this evidence ✓",
+        "finalLessonTitle": "What you learned",
+        "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you."
       },
       "cols": [
         "Demographic",
@@ -1037,12 +1038,17 @@ export default {
             "result": "OSTOS"
           }
         ]
+      },
+      "door": {
+        "badge": "Control Room · Sealed",
+        "prompt": "The Algorithm Control Room is locked. A keypad is mounted on the door — step up to it and enter the 6-digit code from your Data Report.",
+        "action": "Use the keypad →"
       }
     },
     "ads": {
       "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
       "solvedTitle": "Corridor cleared — you read the fine print",
-      "solvedText": "The exit hisses open. You logged the hidden €59/month auto-renewal as evidence against the deal.",
+      "solvedText": "The exit hisses open — you logged the hidden €59/month auto-renewal as evidence. Ads shouting “free”, “you won” or “$0 today” usually bury the real cost in tiny print, so always read  what you're agreeing to before you tap.",
       "pickup": "You pick up the Truth Flashlight 🔦",
       "torchCharging": "🔦 Charging…",
       "torchOn": "🔦 Flashlight ON",
@@ -1072,28 +1078,32 @@ export default {
           "glossyBody": "Try NovaCloud Premium — $0 today!",
           "glossyBadge": "$0",
           "truth": "After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.",
-          "truthTitle": "Automatic renovation"
+          "truthTitle": "Automatic renovation",
+          "letter": "A"
         },
         {
           "glossyTitle": "🎉 CONGRATULATIONS!",
           "glossyBody": "You've WON a €1,000 gift card! Tap to claim.",
           "glossyBadge": "€1,000",
           "truth": "This 'prize' harvests your personal data and card details.",
-          "truthTitle": "👎🏼 You did NOT win anything"
+          "truthTitle": "👎🏼 You did NOT win anything",
+          "letter": "S"
         },
         {
           "glossyTitle": "📈 GET RICH QUICK!",
           "glossyBody": "Turn €100 into €10,000 in one week — guaranteed!",
           "glossyBadge": "×100",
           "truth": "Every euro you “invest” is gone, and the sky-high “returns” on screen are fake.",
-          "truthTitle": "A pure scam"
+          "truthTitle": "A pure scam",
+          "letter": "E"
         },
         {
           "glossyTitle": "🛡️ VIRUS DETECTED!",
           "glossyBody": "Your device may be at risk — download SecureNow FREE!",
           "glossyBadge": "FREE",
           "truth": "The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad.",
-          "truthTitle": "You didn´t have a virus... but now you do"
+          "truthTitle": "You didn´t have a virus... but now you do",
+          "letter": "V"
         }
       ]
     },
@@ -1118,27 +1128,33 @@ export default {
       "posters": [
         {
           "headline": "ONLY 3 LEFT IN STOCK!",
-          "sub": "Don't miss out!"
+          "sub": "Don't miss out!",
+          "letter": "F"
         },
         {
           "headline": "Over 2 MILLION people already bought this!",
-          "sub": "Join the crowd."
+          "sub": "Join the crowd.",
+          "letter": "O"
         },
         {
           "headline": "Lose 10kg in just 3 DAYS — guaranteed miracle!",
-          "sub": "Results not typical."
+          "sub": "Results not typical.",
+          "letter": "O"
         },
         {
           "headline": "As seen on @StarCeleb's page — she LOVES it!",
-          "sub": "#ad"
+          "sub": "#ad",
+          "letter": "L"
         },
         {
           "headline": "Don't let your family down.",
-          "sub": "They deserve better."
+          "sub": "They deserve better.",
+          "letter": "E"
         },
         {
           "headline": "OFFER ENDS IN 04:59 — buy NOW before it's gone!",
-          "sub": "Tick, tock…"
+          "sub": "Tick, tock…",
+          "letter": "D"
         }
       ],
       "techniques": {
