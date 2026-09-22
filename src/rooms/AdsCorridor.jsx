@@ -20,10 +20,10 @@ import './AdsCorridor.css'
    text comes from i18n (rooms.ads.*). Poster text is keyed by array index
    into rooms.ads.posters — order matters (letters spell the code). */
 const POSTERS = [
-  { id: 'trial', tint: 'blue', letters: 'S' },
-  { id: 'prize', tint: 'gold', letters: 'A' },
-  { id: 'rich', tint: 'green', letters: 'V' },
-  { id: 'virus', tint: 'purple', letters: 'E' },
+  { id: 'trial', tint: 'blue', letters: 'S', image: '1-get-offer.png' },
+  { id: 'prize', tint: 'gold', letters: 'A', image: '2-get-gift.png' },
+  { id: 'rich', tint: 'green', letters: 'V', image: '3-get-rich.png' },
+  { id: 'virus', tint: 'purple', letters: 'E', image: '4-get-protection.png' },
 ]
 
 export default function AdsCorridor({ node }) {
@@ -124,91 +124,122 @@ export default function AdsCorridor({ node }) {
       onContinue={() => completeRoom(node.id)}
     >
       <div className={`ac-wrap fade-in ${lightOn ? 'light-on' : ''}`}>
-       <div className="ac-layout">
-        {/* Left: corridor wall with its posters + cursor-tracked flashlight */}
-        <div
-          className="ac-wall"
-          ref={wallRef}
-          onMouseMove={onMouseMove}
-          onTouchMove={onTouchMove}
-        >
-          {POSTERS.map((p, i) => {
-            const isRevealed = !!revealed[p.id]
-            const poster = t('rooms.ads.posters')[i]
-            return (
-              <div
-                key={p.id}
-                className={`ac-poster tint-${p.tint} ${isRevealed ? 'revealed' : ''}`}
-                role="button"
-                tabIndex={0}
-                aria-label={poster.glossyTitle}
-                // Don't take focus on click: focusing a child inside the scaled,
-                // overflow:hidden stage makes the browser scroll it "into view",
-                // jumping the whole screen up. Keyboard (Tab+Enter) still works.
-                onMouseDown={(e) => e.preventDefault()}
-                // Sweeping the beam over a poster (or tapping it) reveals it.
-                onMouseMove={() => shine(p.id)}
-                onClick={() => shine(p.id)}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); shine(p.id) } }}
-              >
-                {/* Glossy front — the advertisement's shiny promise */}
-                <div className="ac-glossy">
-                  <div className="ac-badge">{poster.glossyBadge}</div>
-                  <div className="ac-glossy-title">{poster.glossyTitle}</div>
-                  <div className="ac-glossy-body">{poster.glossyBody}</div>
-                  <div className="ac-glossy-cta">{t('rooms.ads.glossyCta')}</div>
-                  <div className="ac-fineprint">{t('rooms.ads.fineprint')}</div>
-                </div>
-
-                {/* Truth layer — revealed once the beam has hit this poster */}
-                <div className="ac-truth" aria-hidden={!isRevealed}>
-                  <div className="ac-truth-tag">{t('rooms.ads.truthTag')}</div>
-                  <p className="ac-truth-text">{poster.truth}</p>
-                  <div className="ac-code-frag mono">
-                    {t('rooms.ads.codeFragment')}<b>{p.letters}</b>
+        <div className="ac-layout">
+          {/* Left: corridor wall with its posters + cursor-tracked flashlight */}
+          <div
+            className="ac-wall"
+            ref={wallRef}
+            onMouseMove={onMouseMove}
+            onTouchMove={onTouchMove}
+          >
+            {POSTERS.map((p, i) => {
+              const isRevealed = !!revealed[p.id]
+              const poster = t('rooms.ads.posters')[i]
+              const adImage = isRevealed ? p.image.replace(/\.png$/, '-truth.png') : p.image
+              const adBackground = `linear-gradient(160deg, rgba(9, 12, 25, 0.16), rgba(9, 12, 25, 0.18)), url(${import.meta.env.BASE_URL}ads-corridor/${adImage})`
+              return (
+                <div
+                  key={p.id}
+                  className={`ac-poster tint-${p.tint} ${isRevealed ? 'revealed' : ''}`}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={poster.glossyTitle}
+                  // Don't take focus on click: focusing a child inside the scaled,
+                  // overflow:hidden stage makes the browser scroll it "into view",
+                  // jumping the whole screen up. Keyboard (Tab+Enter) still works.
+                  onMouseDown={(e) => e.preventDefault()}
+                  // Sweeping the beam over a poster (or tapping it) reveals it.
+                  onMouseMove={() => shine(p.id)}
+                  onClick={() => shine(p.id)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); shine(p.id) } }}
+                >
+                  {/* Glossy front — the advertisement's shiny promise */}
+                  <div className={`ac-glossy ac-${p.id}`}
+                    style={{
+                      backgroundImage: adBackground,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      backgroundRepeat: 'no-repeat',
+                    }}
+                  >
+                    {!isRevealed ?
+                      <>
+                        <div className="ac-badge">{poster.glossyBadge}</div>
+                        <div className="ac-glossy-title">{poster.glossyTitle}</div>
+                        <div className="ac-glossy-body">{poster.glossyBody}</div>
+                        <div className="ac-glossy-cta">{t('rooms.ads.glossyCta')}</div>
+                        <div className="ac-fineprint">{t('rooms.ads.fineprint')}</div>
+                      </> : <></>
+                    }
                   </div>
+                  <div className={`ac-truth ac-${p.id}`}  aria-hidden={!isRevealed}>
+                    <div className={`ac-truth-title`}>{poster.truthTitle}</div>
+                    <p className="ac-truth-text">{poster.truth}</p>
+                    <div className="ac-code-frag mono">
+                      {t('rooms.ads.codeFragment')}<b>{p.letters}</b>
+                    </div>
+                  </div>
+
+
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
 
-          {/* The flashlight beam — a dark overlay with a transparent hole
+            {/* The flashlight beam — a dark overlay with a transparent hole
               that follows the cursor. Only present while the light is ON. */}
-          {lightOn && <div className="ac-flashlight" ref={flashRef} aria-hidden />}
-        </div>
+            {lightOn && <div className="ac-flashlight" ref={flashRef} aria-hidden />}
+          </div>
 
-        {/* Right: code assembly and exit entry */}
-        <div className="ac-side">
-          {/* Exit code entry */}
-          <form className="ac-exit" onSubmit={submit}>
-            <label className="ac-exit-label upper t-sm dim" htmlFor="ac-code">
-              {t('rooms.ads.exitLabel')}
-            </label>
-            <div className="ac-exit-row">
-              <input
-                id="ac-code"
-                ref={inputRef}
-                className="field ac-field"
-                value={code}
-                maxLength={8}
-                placeholder={t('rooms.ads.exitPlaceholder')}
-                autoComplete="off"
-                onChange={(e) => {
-                  setError('')
-                  setCode(e.target.value)
-                }}
-              />
-              <button type="submit" className="btn btn-cyan">{t('rooms.ads.exitButton')}</button>
+          {/* Right: flashlight controls, code assembly and exit entry */}
+          <div className="ac-side">
+            {/* Flashlight control + status */}
+            <div className="ac-toolbar">
+              <button
+                className={`btn ${lightOn ? 'btn-cyan' : 'btn-ghost'} ac-torch ${charging ? 'charging' : ''}`}
+                onClick={toggleLight}
+                disabled={charging}
+              >
+                {charging ? t('rooms.ads.torchCharging') : lightOn ? t('rooms.ads.torchOn') : t('rooms.ads.torchOff')}
+              </button>
+              <span className="ac-hint dim t-sm">
+                {charging
+                  ? t('rooms.ads.hintCharging')
+                  : lightOn
+                    ? t('rooms.ads.hintOn')
+                    : t('rooms.ads.hintOff')}
+              </span>
             </div>
-            {error && <div className="banner wrong">{error}</div>}
-          </form>
 
-          {/* Learning objective */}
-          <div className="learn ac-learn">
-            <b>{t('rooms.ads.learnLabel')}</b> {t('rooms.ads.learn')}
+            {/* Exit code entry */}
+            <form className="ac-exit" onSubmit={submit}>
+              <label className="ac-exit-label upper t-sm dim" htmlFor="ac-code">
+                {t('rooms.ads.exitLabel')}
+              </label>
+              <div className="ac-exit-row">
+                <input
+                  id="ac-code"
+                  ref={inputRef}
+                  className="field ac-field"
+                  value={code}
+                  maxLength={8}
+                  placeholder={t('rooms.ads.exitPlaceholder')}
+                  autoComplete="off"
+                  onChange={(e) => {
+                    setError('')
+                    setCode(e.target.value)
+                  }}
+                />
+                <button type="submit" className="btn btn-cyan">{t('rooms.ads.exitButton')}</button>
+              </div>
+              {error && <div className="banner wrong">{error}</div>}
+            </form>
+
+            {/* Learning objective */}
+            <div className="learn ac-learn">
+              <b>{t('rooms.ads.learnLabel')}</b> {t('rooms.ads.learn')}
+            </div>
           </div>
         </div>
-       </div>
       </div>
     </RoomFrame>
   )

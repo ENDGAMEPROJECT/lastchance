@@ -38,6 +38,7 @@ export const GAME_IMAGES = [
   'max-talking.png',
   'player-talking.png',
   'phone-with-ad.png',
+  'link-district.ad-shoe.png',
 ].map(bgUrl)
 
 let started = false

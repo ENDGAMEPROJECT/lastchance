@@ -288,7 +288,7 @@ export default function InfluencerAvenue({ node }) {
                     <span className="ia-answer-status t-xs" aria-live="polite">
                       {correct ? t('rooms.influencer.stage1.correct', { label }) : state === 'bad'
                         ? t('rooms.influencer.stage1.wrong')
-                        : t('rooms.influencer.stage1.answerProgress', { count: label.length, total: p.correctLabel.length })}
+                        : null}
                     </span>
                   </button>
                 </article>

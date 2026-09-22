@@ -46,27 +46,31 @@ export default {
       glossyTitle: 'FREE 30-DAY TRIAL!',
       glossyBody: 'Try NovaCloud Premium — $0 today!',
       glossyBadge: '$0',
+      truthTitle: 'Automatic renovation',
       truth:
-        '…then auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.',
+        'After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.',
     },
     {
       glossyTitle: '🎉 CONGRATULATIONS!',
       glossyBody: "You've WON a €1,000 gift card! Tap to claim.",
       glossyBadge: '€1000',
+      truthTitle: '👎🏼 You did NOT win anything',
       truth:
-        "You did NOT win anything. This 'prize' harvests your personal data and card details.",
+        "This 'prize' harvests your personal data and card details.",
     },
     {
       glossyTitle: '📈 GET RICH QUICK!',
       glossyBody: 'Turn €100 into €10,000 in one week — guaranteed!',
       glossyBadge: '×100',
+      truthTitle: '📉 A pure scam',
       truth:
-        'A pure scam. Every euro you “invest” is gone, and the sky-high “returns” on screen are fake.',
+        'Every euro you “invest” is gone, and the sky-high “returns” on screen are fake.',
     },
     {
       glossyTitle: '🛡️ VIRUS DETECTED!',
       glossyBody: 'Your device may be at risk — download SecureNow FREE!',
       glossyBadge: 'FREE',
+      truthTitle: '🚨 You didn´t have a virus... but now you do',
       truth:
         'The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad.',
     },

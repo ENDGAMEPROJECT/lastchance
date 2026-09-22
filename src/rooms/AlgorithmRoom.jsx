@@ -160,9 +160,7 @@ export default function AlgorithmRoom({ node }) {
     if (tileId === blankSlot(row).tileId) {
       setWrongFlash(false)
       setPlacements((p) => ({ ...p, [row.id]: tileId }))
-      if (step < ROWS.length - 1) {
-        window.setTimeout(() => setStep((current) => current + 1), 850)
-      }
+      window.setTimeout(() => setStep((current) => current + 1), 850)
     } else {
       playSound('wrong.mp3')
       setWrongFlash(true)
@@ -388,14 +386,6 @@ export default function AlgorithmRoom({ node }) {
                       ))}
                     </div>
                     {wrongFlash && <div className="banner wrong shake ar-wrong">{t('rooms.algorithm.equations.wrongHint')}</div>}
-                  </div>
-                ) : step === ROWS.length - 1 ? (
-                  <div className="ar-reflection ar-final-reflection fade-in">
-                    <div className="ar-reflect-title">{t('rooms.algorithm.equations.finalLessonTitle')}</div>
-                    <p className="ar-reflect-text">{t('rooms.algorithm.equations.finalLesson')}</p>
-                    <button className="btn btn-cyan" onClick={() => setStep((current) => current + 1)}>
-                      {t('rooms.algorithm.equations.terminalTitle')} →
-                    </button>
                   </div>
                 ) : null}
               </div>

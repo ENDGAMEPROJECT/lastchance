@@ -1,12 +1,16 @@
 .room-scene { position: relative; }
 
-/* Lights-out overlay over the background image (both live at z-index -1 inside
-   the scene's isolated stacking context; this is rendered after .bg-slot so it
-   paints on top of it, yet stays behind all interactive content). */
+.room-scene > :not(.bg-slot):not(.bg-blackout) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Lights-out overlay over the background image; it sits above .bg-slot while
+  remaining below the room content. */
 .bg-blackout {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
   background: rgba(2, 3, 10, 0.72);
   animation: bg-blackout-in 0.35s ease both;
