@@ -103,7 +103,25 @@ export default {
       "body": "Before you could finish gathering proof, the fake \"today only\" countdown did its job and {friend} bought {product}. That urgency was the whole trick.",
       "lessonLabel": "Lesson:",
       "lesson": "artificial urgency (\"only 3 left!\", \"offer ends in 5:00\") is designed to stop you from thinking. Slow down — a real deal will still be there tomorrow.",
-      "again": "↻ Try again"
+      "again": "↻ Try again",
+      "reasons": {
+        "timeUp": {
+          "heading": "The offer got them first",
+          "body": "Before you could finish convincing {friend}, the fake \"today only\" countdown hit zero — and {friend} bought {product}. That urgency was the whole trick."
+        },
+        "choseBuy": {
+          "heading": "Out of arguments",
+          "body": "You ran out of ways to convince {friend}. Still unconvinced, {friend} decided to go for it and bought {product}."
+        },
+        "notEnoughEvidenceConvincing": {
+          "heading": "Convincing — but not enough proof",
+          "body": "{friend}: \"It sounds convincing… but I didn't get to see enough evidence in the Physical Internet. I'm buying it.\" — {friend} bought {product}."
+        },
+        "notEnoughEvidenceUnconvincing": {
+          "heading": "Not convinced",
+          "body": "{friend}: \"You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it.\" — {friend} bought {product}."
+        }
+      }
     }
   },
   "story": {
@@ -233,7 +251,10 @@ export default {
       ],
       "endingFriend": "Ugh, you've given me a lot to process, but I need to choose right now — the timer's about to hit zero. Based on everything we looked at, give it to me straight: do I close this tab and protect my data, or take the risk and buy it?",
       "choiceClose": "Close the tab. It’s a scam.",
-      "choiceBuy": "Hit buy. Let’s risk it."
+      "choiceBuy": "Hit buy. Let’s risk it.",
+      "retryFriend": "You still haven't convinced me… but the countdown's not at zero yet. Do you want to try again, or should I just buy it?",
+      "retryAgain": "Try again to convince {friend}",
+      "retryGiveUp": "Let {friend} buy the tablet"
     },
     "mastery": {
       "banner": "One more time — I am still not convinced. Give me the strongest reason for each."
@@ -1036,7 +1057,8 @@ export default {
           "glossyTitle": "FREE 30-DAY TRIAL!",
           "glossyBody": "Try NovaCloud Premium — $0 today!",
           "glossyBadge": "$0",
-          "truth": "Automatic renovation"
+          "truth": "After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.",
+          "truthTitle": "Automatic renovation"
         },
         {
           "glossyTitle": "🎉 CONGRATULATIONS!",
