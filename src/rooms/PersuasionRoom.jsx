@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
-import { CODES } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 import { playSound, preloadSound } from '../game/sound.js'
 import RoomFrame from '../components/RoomFrame.jsx'
@@ -13,18 +12,34 @@ import './PersuasionRoom.css'
    labelled technique "frames" piled in the CENTRE — freely draggable
    with no gravity (they stay wherever you drop them, overlapping). Drag
    a frame onto the poster it matches: correct → the frame locks on and a
-   hidden LETTER appears; wrong → the poster flashes red and the frame
-   stays put. The letters (poster order) spell CODES.persuasion = FOOLED,
-   typed into the terminal to unlock the exit. */
+   circle is drawn around the poster's code letter (the first occurrence of
+   the per-language letter set in i18n); wrong → the poster flashes red and the
+   frame stays put. The circled letters, read left-to-right across the wall,
+   spell the terminal password. */
 
 const POSTERS = [
-  { id: 'fomo', letter: 'F', emoji: '⚡', tint: 'red' },
-  { id: 'social', letter: 'O', emoji: '🌟', tint: 'cyan' },
-  { id: 'exagg', letter: 'O', emoji: '🔥', tint: 'amber' },
-  { id: 'influencer', letter: 'L', emoji: '💄', tint: 'purple' },
-  { id: 'emotional', letter: 'E', emoji: '😢', tint: 'magenta' },
-  { id: 'urgency', letter: 'D', emoji: '⏰', tint: 'green' },
+  { id: 'fomo', emoji: '⚡', tint: 'red' },
+  { id: 'social', emoji: '🌟', tint: 'cyan' },
+  { id: 'exagg', emoji: '🔥', tint: 'amber' },
+  { id: 'influencer', emoji: '💄', tint: 'purple' },
+  { id: 'emotional', emoji: '😢', tint: 'magenta' },
+  { id: 'urgency', emoji: '⏰', tint: 'green' },
 ]
+
+/* Wrap the first occurrence (case-insensitive) of `letter` in `text` with a
+   circled-letter span. Used to ring the code letter inside a poster's copy. */
+function circleLetter(text, letter) {
+  if (!text || !letter) return text
+  const idx = text.toLowerCase().indexOf(letter.toLowerCase())
+  if (idx === -1) return text
+  return (
+    <>
+      {text.slice(0, idx)}
+      <span className="pl-circled">{text[idx]}</span>
+      {text.slice(idx + 1)}
+    </>
+  )
+}
 
 const FRAME_ORDER = ['emotional', 'fomo', 'urgency', 'social', 'influencer', 'exagg']
 
@@ -45,6 +60,9 @@ export default function PersuasionRoom({ node }) {
 
   const posterText = t('rooms.persuasion.posters')
   const posterIndex = POSTERS.reduce((m, p, i) => ((m[p.id] = i), m), {})
+  // The terminal password is the circled letters read across the wall in poster
+  // order — derived from i18n, so it follows whatever letters each language sets.
+  const password = POSTERS.map((p) => posterText[posterIndex[p.id]]?.letter || '').join('')
   const techniqueLabel = (id) => t(`rooms.persuasion.techniques.${id}`)
   const frames = FRAME_ORDER.map((id) => ({ id, technique: techniqueLabel(id) }))
 
@@ -159,7 +177,7 @@ export default function PersuasionRoom({ node }) {
 
   function submitPassword(e) {
     e.preventDefault()
-    if (entry.trim().toUpperCase() === CODES.persuasion.toUpperCase()) {
+    if (entry.trim().toUpperCase() === password.toUpperCase()) {
       addEvidence({ id: 'ev-persuasion', label: t('rooms.persuasion.evidence') })
       // Close the computer close-up, play the ending animation over the whole
       // scene for 5.1s, then settle on the end frame and reveal the cleared bar.
@@ -199,6 +217,11 @@ export default function PersuasionRoom({ node }) {
             const wrong = wrongPoster === p.id
             const over = overPoster === p.id
             const copy = posterText[posterIndex[p.id]]
+            const letter = copy.letter
+            // Once matched, the real poster keeps the ring on its code letter
+            // (the frame carried the ring here before it was placed).
+            const inHead = done && !!letter && copy.headline?.toLowerCase().includes(letter.toLowerCase())
+            const inSub = done && !!letter && !inHead && copy.sub?.toLowerCase().includes(letter.toLowerCase())
             return (
               <div
                 key={p.id}
@@ -206,8 +229,8 @@ export default function PersuasionRoom({ node }) {
                 className={`pl-poster tint-${p.tint} ${done ? 'framed' : ''} ${wrong ? 'wrong' : ''} ${over ? 'is-over' : ''}`}
               >
                 <div className="pl-poster-emoji">{p.emoji}</div>
-                <div className="pl-poster-head">{copy.headline}</div>
-                <div className="pl-poster-sub">{copy.sub}</div>
+                <div className="pl-poster-head">{inHead ? circleLetter(copy.headline, letter) : copy.headline}</div>
+                <div className="pl-poster-sub">{inSub ? circleLetter(copy.sub, letter) : copy.sub}</div>
 
                 {done && (
                   <div className="pl-frame-overlay">
@@ -216,11 +239,6 @@ export default function PersuasionRoom({ node }) {
                     <span className="pl-frame-corner bl" />
                     <span className="pl-frame-corner br" />
                     <span className="pl-poster-tag mono">{techniqueLabel(p.id)}</span>
-                  </div>
-                )}
-                {done && (
-                  <div className="pl-letter-tile" aria-label={t('rooms.persuasion.hiddenLetter', { letter: p.letter })}>
-                    {p.letter}
                   </div>
                 )}
               </div>
@@ -244,6 +262,14 @@ export default function PersuasionRoom({ node }) {
         {/* ---- CENTRE: free-floating overlapping frame pile ---- */}
         {frames.map((f) => {
           if (placed[f.id]) return null
+          // The frame carries an invisible clone of its poster's copy, so the
+          // circle lands where the code letter sits on the real poster — the
+          // player lines the ring up over the letter to place the frame.
+          const fc = posterText[posterIndex[f.id]]
+          const fl = fc.letter
+          const fHead = !!fl && fc.headline?.toLowerCase().includes(fl.toLowerCase())
+          const fSub = !!fl && !fHead && fc.sub?.toLowerCase().includes(fl.toLowerCase())
+          const fEmoji = POSTERS[posterIndex[f.id]].emoji
           return (
             <div
               key={f.id}
@@ -257,7 +283,12 @@ export default function PersuasionRoom({ node }) {
                 <span className="pl-frame-corner bl" />
                 <span className="pl-frame-corner br" />
                 <span className="pl-frame-label">{f.technique}</span>
-                <span className="pl-frame-mark" aria-hidden />
+                {/* invisible poster clone — only the circle shows through */}
+                <span className="pl-frame-ghost" aria-hidden>
+                  <span className="pl-poster-emoji">{fEmoji}</span>
+                  <span className="pl-poster-head">{fHead ? circleLetter(fc.headline, fl) : fc.headline}</span>
+                  <span className="pl-poster-sub">{fSub ? circleLetter(fc.sub, fl) : fc.sub}</span>
+                </span>
               </span>
             </div>
           )

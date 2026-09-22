@@ -217,6 +217,52 @@
 }
 .pl-poster-sub { font-size: 0.74rem; color: var(--muted); font-style: italic; }
 
+/* A marker ring drawn over the first occurrence of the code letter. The letter
+   itself keeps its normal colour — only the circle is added. */
+.pl-circled {
+  position: relative;
+  display: inline-block;
+}
+.pl-circled::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1.25em;
+  height: 1.25em;
+  transform: translate(-50%, -50%) rotate(-7deg);
+  border: 2px solid #ffcf3a;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 207, 58, 0.75);
+  pointer-events: none;
+}
+
+/* An invisible clone of the poster laid out inside a frame, so the ring lands
+   exactly where the letter sits on the poster. Only the circle shows through —
+   the cloned text is fully transparent. */
+.pl-frame-ghost {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 9px 9px 11px;
+  pointer-events: none;
+}
+.pl-frame-ghost .pl-poster-emoji { font-size: 1.6rem; visibility: hidden; }
+.pl-frame-ghost .pl-poster-head {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.74rem;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: transparent;
+}
+.pl-frame-ghost .pl-poster-sub { font-size: 0.62rem; font-style: italic; color: transparent; }
+
 /* The translucent labelled frame sitting on top of a matched poster. */
 .pl-frame-overlay {
   position: absolute;
@@ -344,9 +390,10 @@
   align-content: center;
   /* nudge the wall a little right and up */
   align-self: flex-start;
-  margin: 6px 0 0 56px;
+  /* nudge the wall right, and down a little from the top */
+  margin: 46px 0 0 56px;
   /* the whole wall tilts as one receding plane */
-  transform: rotateY(16deg);
+  transform: rotateY(10deg);
   transform-origin: left center;
 }
 .pl-posters .pl-poster { padding: 9px 9px 11px; box-shadow: 0 12px 22px rgba(0, 0, 0, 0.5); }
@@ -457,7 +504,7 @@
      as "in the room". This lives on .pl-freeframe (a DIRECT child of the
      perspective element .pl-scene2) so the perspective actually applies —
      on the inner .pl-frame it would just be a flat, near-invisible squish. */
-  transform: rotateY(16deg);
+  transform: rotateY(10deg);
   transform-origin: left center;
 }
 .pl-freeframe.dragging { cursor: grabbing; }

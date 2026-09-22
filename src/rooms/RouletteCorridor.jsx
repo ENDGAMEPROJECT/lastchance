@@ -114,7 +114,6 @@ export default function RouletteCorridor({ node }) {
   }, [])
 
   const spunCount = useMemo(() => Object.values(won).filter(Boolean).length, [won])
-  const riggedCount = useMemo(() => Object.values(rigged).filter(Boolean).length, [rigged])
 
 
   /* RIGGED SPIN — always lands on the jackpot.
@@ -193,10 +192,6 @@ export default function RouletteCorridor({ node }) {
     >
       <div className="rc-wrap fade-in">
         <div className="rc-topbar">
-          <span className="chip warn">{t('rooms.roulette.spunBadge', { spun: spunCount, total: WHEELS.length })}</span>
-          <span className={`chip ${riggedCount === WHEELS.length ? 'ok' : ''}`}>
-            {t('rooms.roulette.riggedBadge', { rigged: riggedCount, total: WHEELS.length })}
-          </span>
           <button className="btn btn-magenta btn-sm" onClick={spinAll}>{t('rooms.roulette.spinAll')}</button>
         </div>
 
@@ -209,7 +204,6 @@ export default function RouletteCorridor({ node }) {
               <div key={w.id} className={`rc-card${isRigged ? ' rigged' : ''}`}>
                 <div className="rc-card-head">
                   <span className="rc-wheel-name">{t(`rooms.roulette.wheels.${w.id}.name`)}</span>
-                  <span className="chip">{t(`rooms.roulette.wheels.${w.id}.tag`)}</span>
                 </div>
 
                 <PrizeWheel
@@ -246,10 +240,6 @@ export default function RouletteCorridor({ node }) {
         </div>
 
         {hint && <div className="banner info rc-hint">{hint}</div>}
-
-        <div className="learn rc-learn">
-          <b>{t('rooms.roulette.learnLead')}</b> {t('rooms.roulette.learnBody')}
-        </div>
       </div>
     </RoomFrame>
   )

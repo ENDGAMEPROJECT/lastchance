@@ -11,7 +11,7 @@ import './conversation-screen.css'
    the scam "deal" shown on a phone beside the chat. Any answer advances;
    it ends on the ultimatum and a button that starts the game clock. */
 export default function PretestScreen() {
-  const { startGame } = useGame()
+  const { enterInternet } = useGame()
   const t = useT()
   const friend = NARRATIVE.friend
   const p = t('story.pretest')
@@ -37,7 +37,7 @@ export default function PretestScreen() {
           ending={{
             friend: p.endingFriend,
             you: p.endingYou,
-            actions: [{ label: p.begin, tone: 'cyan', onClick: startGame }],
+            actions: [{ label: p.begin, tone: 'cyan', onClick: enterInternet }],
           }}
         />
       </div>

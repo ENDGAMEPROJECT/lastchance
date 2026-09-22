@@ -9,7 +9,8 @@ import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
 import './AlgorithmRoom.css'
 
 /* PUZZLE 3 — Personalization / the targeting algorithm.
-   Three phases, driven by `phase` state:
+   Phases, driven by `phase` state:
+     'door'      → the sealed control-room door; step up to reach the keypad.
      'unlock'    → type the 6-digit code off the Data Report.
      'choice'    → the privacy trade-off (personalised ads vs. your data).
      'equations' → the core puzzle: a giant computer solving "targeting
@@ -100,12 +101,12 @@ const COL_KIND = ['demographic', 'follows', 'insecurity']
 export default function AlgorithmRoom({ node }) {
   const { completeRoom, addEvidence, addItem } = useGame()
   const t = useT()
-  const [phase, setPhase] = useState('unlock') // 'unlock' | 'choice' | 'equations'
+  const [phase, setPhase] = useState('door') // 'door' | 'unlock' | 'choice' | 'equations'
   const [solved, setSolved] = useState(false)
 
   /* ----- phase 'unlock' state ----- */
   const [code, setCode] = useState('')
-  const [codeErr, setCodeErr] = useState(false)
+  const [status, setStatus] = useState('idle') // 'idle' | 'wrong' | 'ok' — the access light
 
   /* ----- phase 'choice' state ----- */
   const [choice, setChoice] = useState(null) // 'A' | 'B' | null
@@ -142,13 +143,15 @@ export default function AlgorithmRoom({ node }) {
   }, [])
 
   /* ---- unlock handlers ---- */
+  // Feedback is a light + a sound, not words: green chime → unlock; red buzz → deny.
   function submitCode() {
     if (code === CODES.algorithmRoom) {
-      setCodeErr(false)
-      setPhase('choice')
+      setStatus('ok')
+      playSound('twinkle.mp3')
+      window.setTimeout(() => setPhase('choice'), 850)
     } else {
       playSound('wrong.mp3')
-      setCodeErr(true)
+      setStatus('wrong')
     }
   }
 
@@ -183,7 +186,13 @@ export default function AlgorithmRoom({ node }) {
   return (
     <RoomFrame
       node={node}
-      bgImage={bgUrl('algorithm.png')}
+      bgImage={
+        phase === 'door'
+          ? bgUrl('algorithm-door.jpg')
+          : phase === 'unlock'
+            ? bgUrl('algorithm-keypad.jpg')
+            : bgUrl('algorithm.png')
+      }
       intro={t('rooms.algorithm.intro')}
       solved={solved}
       solvedTitle={t('rooms.algorithm.solvedTitle')}
@@ -191,13 +200,32 @@ export default function AlgorithmRoom({ node }) {
       reward={ITEMS.truthLight}
       onContinue={() => completeRoom(node.id)}
     >
+      {/* ================= PHASE: DOOR ================= */}
+      {/* The sealed door (with its mounted keypad) is the background image; the
+          whole scene is a button that steps up to the keypad terminal. */}
+      {phase === 'door' && (
+        <button
+          type="button"
+          className="ar-door-scene fade-in"
+          onClick={() => { playSound('open_door.mp3'); setPhase('unlock') }}
+          aria-label={t('rooms.algorithm.door.action')}
+        >
+          <span className="ar-door-head">
+            <span className="ar-prompt">{t('rooms.algorithm.door.prompt')}</span>
+          </span>
+          <span className="ar-door-cta">{t('rooms.algorithm.door.action')}</span>
+        </button>
+      )}
+
       {/* ================= PHASE: UNLOCK ================= */}
       {phase === 'unlock' && (
         <div className="ar-unlock fade-in">
           <div className="ar-terminal panel clip panel-glow-cyan">
             <div className="ar-term-head">
-              <span className="chip">{t('rooms.algorithm.unlock.badge')}</span>
-              <span className="ar-dots"><i /><i /><i /></span>
+              {/* Access light: red on a wrong code, green when it unlocks. */}
+              <span className={`ar-access ${status}`} role="status" aria-label={t('rooms.algorithm.unlock.badge')}>
+                <span className="ar-access-led" aria-hidden />
+              </span>
             </div>
 
             <p className="ar-term-prompt">
@@ -205,7 +233,7 @@ export default function AlgorithmRoom({ node }) {
             </p>
 
             {/* six-cell display of the code so far */}
-            <div className={`ar-code-display ${codeErr ? 'shake' : ''}`}>
+            <div className={`ar-code-display ${status === 'wrong' ? 'shake err' : ''} ${status === 'ok' ? 'ok' : ''}`}>
               {Array.from({ length: 6 }).map((_, i) => (
                 <span key={i} className={`ar-cell ${code[i] ? 'filled' : ''}`}>
                   {code[i] || ''}
@@ -219,8 +247,10 @@ export default function AlgorithmRoom({ node }) {
                 <button
                   key={k}
                   className={`ar-key ${k === 'C' || k === '⌫' ? 'alt' : ''}`}
+                  disabled={status === 'ok'}
                   onClick={() => {
-                    setCodeErr(false)
+                    if (status === 'ok') return
+                    setStatus('idle') // clear the red light on the next keypress
                     if (k === 'C') setCode('')
                     else if (k === '⌫') setCode((c) => c.slice(0, -1))
                     else if (code.length < 6) setCode((c) => c + k)
@@ -231,10 +261,8 @@ export default function AlgorithmRoom({ node }) {
               ))}
             </div>
 
-            {codeErr && <div className="banner wrong shake">{t('rooms.algorithm.unlock.error')}</div>}
-
             <div className="ar-unlock-actions">
-              <button className="btn btn-cyan" onClick={submitCode} disabled={code.length !== 6}>
+              <button className="btn btn-cyan" onClick={submitCode} disabled={code.length !== 6 || status === 'ok'}>
                 {t('rooms.algorithm.unlock.submit')}
               </button>
             </div>
@@ -247,7 +275,6 @@ export default function AlgorithmRoom({ node }) {
       {phase === 'choice' && (
         <div className="ar-choice fade-in">
           <div className="ar-choice-head">
-            <span className="chip warn">{t('rooms.algorithm.choice.badge')}</span>
             <p className="ar-prompt">
               {t('rooms.algorithm.choice.prompt')}
             </p>
@@ -309,14 +336,6 @@ export default function AlgorithmRoom({ node }) {
       {/* ================= PHASE: EQUATIONS (one at a time) ================= */}
       {phase === 'equations' && (
         <div className="ar-eq fade-in">
-          <div className="ar-eq-head">
-            <span className="chip">{t('rooms.algorithm.equations.badge')}</span>
-            <span className="ar-step-badge mono">
-              {step < ROWS.length
-                ? t('rooms.algorithm.equations.stepBadge', { n: step + 1, total: ROWS.length })
-                : t('rooms.algorithm.equations.profileBadge')}
-            </span>
-          </div>
 
           {step < ROWS.length ? (() => {
             const row = ROWS[step]

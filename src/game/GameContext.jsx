@@ -27,9 +27,11 @@ function initialProgress() {
 
 const initialState = {
   // Debug: skip the welcome/pretest and land on the map (or a ?screen= jump).
-  screen: DEBUG ? DEBUG_SCREEN || 'map' : 'welcome', // 'welcome' | 'pretest' | 'map' | 'room' | 'posttest' | 'win' | 'lose'
+  screen: DEBUG ? DEBUG_SCREEN || 'map' : 'welcome', // 'welcome' | 'pretest' | 'enter' | 'map' | 'room' | 'posttest' | 'win' | 'lose'
   player: { alias: '', age: '' },
-  timedOut: false,
+  timedOut: false, // ran out of time BEFORE finishing the puzzles
+  loseReason: null, // why the friend bought — picks the lose-screen copy
+  postDecision: false, // post-test reached the final call → clock runs & shows
   activeNodeId: null,
   reviewNodeId: null,
   roomStarted: false,
@@ -47,12 +49,23 @@ function reducer(state, action) {
     case 'SUBMIT_WELCOME':
       return { ...state, player: action.player, screen: 'pretest' }
 
+    case 'ENTER_INTERNET':
+      // Pre-test → the "jack in" transition (explains Map/Bag). Clock is not
+      // running yet; START_GAME starts it when the player commits.
+      return { ...state, screen: 'enter' }
+
     case 'START_GAME':
       return { ...state, screen: 'map', running: true, timeLeft: START_SECONDS, linkRound: null }
 
     case 'FINISH':
       // Final decision from the post-test resolves the game.
-      return { ...state, screen: action.outcome, running: false }
+      return { ...state, screen: action.outcome, running: false, loseReason: action.reason ?? state.loseReason }
+
+    case 'START_POSTTEST_DECISION':
+      // The friend asks for the final call: reveal the clock, and — unless the
+      // player already ran out of time before the puzzles — resume the
+      // countdown so the retry loop races a real deadline.
+      return { ...state, postDecision: true, running: !state.timedOut && state.timeLeft > 0 }
 
     case 'OPEN_NODE': {
       if (state.progress[action.id] !== 'available') return state
@@ -99,6 +112,9 @@ function reducer(state, action) {
         reviewNodeId: null,
         roomStarted: false,
         linkRound: null,
+        // Finished in time: freeze the clock on entering the post-test. It
+        // stays hidden through the diagnostic/mastery Q&A and only resumes
+        // when the final decision begins (START_POSTTEST_DECISION).
         running: allDone ? false : state.running,
       }
     }
@@ -119,8 +135,16 @@ function reducer(state, action) {
     case 'TICK': {
       if (!state.running) return state
       const t = state.timeLeft - 1
-      // Out of time → still face the friend in the post-test (last chance).
-      if (t <= 0) return { ...state, timeLeft: 0, running: false, timedOut: true, screen: 'posttest' }
+      if (t <= 0) {
+        // Already in the post-test → puzzles were finished in time and the
+        // retry clock just ran out. The friend stops waiting and buys.
+        if (state.screen === 'posttest') {
+          return { ...state, timeLeft: 0, running: false, screen: 'lose', loseReason: 'timeUp' }
+        }
+        // Out of time before finishing the puzzles → still face the friend in
+        // the post-test (last chance), but flagged as timed out.
+        return { ...state, timeLeft: 0, running: false, timedOut: true, screen: 'posttest' }
+      }
       return { ...state, timeLeft: t }
     }
 
@@ -164,8 +188,10 @@ export function GameProvider({ children }) {
   }, [])
 
   const submitWelcome = useCallback((player) => dispatch({ type: 'SUBMIT_WELCOME', player }), [])
+  const enterInternet = useCallback(() => dispatch({ type: 'ENTER_INTERNET' }), [])
   const startGame = useCallback(() => dispatch({ type: 'START_GAME' }), [])
-  const finishGame = useCallback((outcome) => dispatch({ type: 'FINISH', outcome }), [])
+  const finishGame = useCallback((outcome, reason) => dispatch({ type: 'FINISH', outcome, reason }), [])
+  const startPosttestDecision = useCallback(() => dispatch({ type: 'START_POSTTEST_DECISION' }), [])
   const gotoScreen = useCallback((screen) => dispatch({ type: 'GOTO_SCREEN', screen }), [])
   const openNode = useCallback((id) => dispatch({ type: 'OPEN_NODE', id }), [])
   const reviewNode = useCallback((id) => dispatch({ type: 'REVIEW_NODE', id }), [])
@@ -192,8 +218,10 @@ export function GameProvider({ children }) {
     activeNode,
     reviewNodeData,
     submitWelcome,
+    enterInternet,
     startGame,
     finishGame,
+    startPosttestDecision,
     gotoScreen,
     openNode,
     reviewNode,

@@ -37,9 +37,18 @@ export function WinScreen() {
 }
 
 export function LoseScreen() {
-  const { reset } = useGame()
+  const { reset, loseReason } = useGame()
   const t = useT()
   const vars = { friend: NARRATIVE.friend, product: NARRATIVE.product }
+
+  // Per-outcome heading/body, falling back to the generic time-up copy. The
+  // reducer sets loseReason: 'timeUp' | 'choseBuy' |
+  // 'notEnoughEvidenceConvincing' | 'notEnoughEvidenceUnconvincing'.
+  const reasonKey = `end.lose.reasons.${loseReason}`
+  const reasonHeading = t(`${reasonKey}.heading`)
+  const heading = reasonHeading === `${reasonKey}.heading` ? t('end.lose.heading') : reasonHeading
+  const reasonBody = t(`${reasonKey}.body`, vars)
+  const body = reasonBody === `${reasonKey}.body` ? t('end.lose.body', vars) : reasonBody
 
   return (
     <div className="stage-scroll">
@@ -50,8 +59,8 @@ export function LoseScreen() {
         <p className="intro-tag mono">{t('end.lose.tag')}</p>
 
         <div className="intro-card panel clip" style={{ borderColor: 'rgba(255,59,92,0.4)', boxShadow: 'var(--glow-red)' }}>
-          <h3 style={{ color: 'var(--red)' }}>{t('end.lose.heading')}</h3>
-          <p>{t('end.lose.body', vars)}</p>
+          <h3 style={{ color: 'var(--red)' }}>{heading}</h3>
+          <p>{body}</p>
           <div className="learn" style={{ marginTop: 14, borderColor: 'var(--red)', background: 'rgba(255,59,92,0.08)' }}>
             <b style={{ color: 'var(--red)' }}>{t('end.lose.lessonLabel')}</b> {t('end.lose.lesson')}
           </div>

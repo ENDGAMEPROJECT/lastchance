@@ -45,8 +45,8 @@ export default function RoomFrame({
   const vars = { friend: NARRATIVE.friend }
   const [started, setStarted] = useState(false)
 
-  const title = node ? t(`nodes.${node.id}.title`, vars) : ''
-  const subtitle = node ? t(`nodes.${node.id}.subtitle`, vars) : ''
+  // Titles and "Puzzle N ·" subtitles are metadata clutter inside a room — the
+  // map already names each district. Rooms show only their task brief + icon.
   const brief = intro || (node ? t(`nodes.${node.id}.blurb`, vars) : '')
 
   return (
@@ -60,8 +60,6 @@ export default function RoomFrame({
         <div className="room-briefing fade-in">
           <div className={`briefing-card panel clip panel-glow-${accent}`}>
             <div className={`briefing-icon accent-${accent}`}>{node ? NODE_ICON[node.id] : '▶'}</div>
-            <div className={`eyebrow accent-${accent}`}>{subtitle}</div>
-            <h2 className="briefing-title">{title}</h2>
             <p className="briefing-text muted">{brief}</p>
             <button
               className={`btn btn-${accent} btn-lg briefing-begin`}
@@ -76,12 +74,8 @@ export default function RoomFrame({
         </div>
       ) : (
         <>
-          <div className="room-header fade-in">
-            <div className={`eyebrow accent-${accent}`}>{subtitle}</div>
-            <h2>{title}</h2>
-            <p className="muted">{brief}</p>
-          </div>
-
+          {/* The task brief is shown once on the entry briefing card; during
+              play the puzzle speaks for itself, so no persistent header. */}
           <div className="room-body swap-in">{children}</div>
 
           {solved && (

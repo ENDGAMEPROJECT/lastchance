@@ -12,3 +12,17 @@
   justify-content: center;
 }
 .convo-layout .cv-wrap { margin: 0; }
+
+/* Path-A retry offer: shown when the player finished the puzzles in time but
+   failed to convince the friend, while the clock is still running. */
+.pt-retry {
+  align-self: center;
+  max-width: 460px;
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.pt-retry-line { font-size: 1.1rem; line-height: 1.5; margin: 0; }
+.pt-retry-actions { display: flex; flex-direction: column; gap: 12px; }
+

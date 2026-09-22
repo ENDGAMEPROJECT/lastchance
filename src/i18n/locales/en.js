@@ -1,186 +1,72 @@
 /* AUTO-GENERATED from the translation Google Sheet by `npm run i18n:import`. Do not edit by hand. */
 export default {
-  common: {
-    continue: 'Continue →',
-    begin: '▶ Step inside',
-    submit: 'Submit',
-    enter: 'Enter',
-    next: 'Next',
-    locked: 'Locked',
-    cleared: '✓ Cleared',
-    enterNode: '▶ Enter',
-    back: 'Back',
-    close: 'Close',
+  "common": {
+    "continue": "Continue →",
+    "begin": "▶ Step inside",
+    "submit": "Submit",
+    "enter": "Enter",
+    "next": "Next",
+    "locked": "Locked",
+    "cleared": "✓ Cleared",
+    "enterNode": "▶ Enter",
+    "back": "Back",
+    "close": "Close"
   },
-  welcome: {
-    eyebrow: 'Player Setup',
-    titleLead: 'LAST CHANCE',
-    titleAccent: 'TO ESCAPE',
-    tagline: '// an escape room about ads, scams & fraudulent websites',
-    subtitle: 'Set up your player, then jack into the Physical Internet.',
-    aliasLabel: 'Choose an alias',
-    aliasPlaceholder: 'e.g. Ne0nRunner',
-    ageLabel: 'Your age',
-    agePlaceholder: 'e.g. 14',
-    languageLabel: 'Language',
-    start: '⏻ Enter',
-    aliasError: 'Enter an alias to continue.',
-    ageError: 'Enter a valid age (1–120).',
+  "welcome": {
+    "eyebrow": "Player Setup",
+    "titleLead": "LAST CHANCE",
+    "titleAccent": "TO ESCAPE",
+    "tagline": "// an escape room about ads, scams & fraudulent websites",
+    "subtitle": "Set up your player, then step inside the Physical Internet.",
+    "aliasLabel": "Choose an alias",
+    "aliasPlaceholder": "e.g. Ne0nRunner",
+    "ageLabel": "Your age",
+    "agePlaceholder": "e.g. 14",
+    "languageLabel": "Language",
+    "start": "⏻ Enter",
+    "aliasError": "Enter an alias to continue.",
+    "ageError": "Enter a valid age (1–120)."
   },
-  hud: {
-    logo: 'LAST CHANCE TO ESCAPE',
-    expires: 'offer expires in',
-    tminus: 'T-MINUS',
-    map: '🗺 Map',
-    bag: '🎒 Bag',
-    hints: '💡 Hints',
-    muteSound: 'Mute sound',
-    unmuteSound: 'Unmute sound',
-    inventoryTitle: 'Inventory & Evidence',
-    tools: 'Tools & Rewards',
-    noTools: 'Nothing collected yet. Solve puzzles to earn tools.',
-    evidenceHeading: 'Evidence on the deal',
-    noEvidence: 'Collect proof in each district to convince {friend} at the end.',
+  "hud": {
+    "logo": "LAST CHANCE TO ESCAPE",
+    "expires": "offer expires in",
+    "tminus": "T-MINUS",
+    "map": "🗺 Map",
+    "bag": "🎒 Bag",
+    "muteSound": "Mute sound",
+    "unmuteSound": "Unmute sound",
+    "inventoryTitle": "Inventory & Evidence",
+    "tools": "Tools & Rewards",
+    "noTools": "Nothing collected yet. Solve puzzles to earn tools.",
+    "evidenceHeading": "Evidence on the deal",
+    "noEvidence": "Collect proof in each district to convince {friend} at the end.",
+    "hints": "💡 Hints"
   },
-  hints: {
-    title: 'Mission hints',
-    defaultPrompt: 'I do not know how to use this clue yet.',
-    briefLabel: 'Mission status',
-    progressLabel: 'Mission progress',
-    brief: {
-      welcome: 'Prepare your run',
-      pretest: 'Read the deal before you enter the network',
-      map: 'Choose the next district in the evidence trail',
-      room: 'Solve the district and log what you discover',
-      posttest: 'Use your evidence to protect Max',
-      win: 'Run complete: review what protected you',
-      lose: 'Time expired: review the warning signs',
-    },
-    stats: { time: 'Time left', districts: 'Districts', tools: 'Tools', evidence: 'Evidence' },
-    targetLabel: 'Current objective',
-    noTarget: 'Return to the map to choose an available district.',
-    mapObjective: {
-      title: 'Open {district}',
-      text: 'This is the next available room in the investigation. Enter it from the map when you are ready to begin the challenge.',
-    },
-    objectives: {
-      pretest: {
-        title: 'Complete the pre-test conversation',
-        text: 'Read Max’s message, choose the response that best explains your first impression, and use the final button to enter the Physical Internet.',
+  "intro": {
+    "eyebrow": "Educational Escape Room",
+    "titleLead": "THE",
+    "titleAccent": "PHYSICAL INTERNET",
+    "tagline": "// ads · scams · fraudulent websites — decoded",
+    "situationTitle": "The situation",
+    "hook": "Your friend {friend} just found a viral deal on {product} — 90% off, \"today only\". It looks incredible… which is exactly why you think it is a scam.",
+    "context": "To show {friend} how scams and advertising really work, you both step inside a physical version of the Internet — a neon city where shops, social platforms and ads become districts you can walk through.",
+    "clock": "⏱ {minutes}:00 on the clock",
+    "mission": "You have {minutes} minutes — the time before the offer expires — to travel through the Physical Internet, gather evidence about how ads and scams work, and convince {friend} not to buy. If the timer hits zero, {friend} buys it.",
+    "steps": [
+      {
+        "title": "1 · Explore",
+        "text": "Four districts, two corridors. Each teaches one trick advertisers use."
       },
-      posttest: {
-        title: 'Make the final call',
-        text: 'Use the evidence you collected to explain the warning signs and decide whether Max should close the tab.',
+      {
+        "title": "2 · Gather",
+        "text": "Earn tools and evidence. Track them in your Bag and on the Map."
       },
-    },
-    pretest: {
-      context: 'Build your first impression before the investigation begins.',
-      prompts: [
-        'I do not know how to recognise pressure in this offer.',
-        'I do not know what makes the influencer or page trustworthy.',
-        'I do not know which doubts I should carry into the investigation.',
-      ],
-      items: [
-        'Notice the countdown, the huge discount, and the promise of a limited-time deal.',
-        'Ask yourself whether the influencer, comments, and polished page are enough to prove the offer is safe.',
-        'Keep your first concerns in mind. The districts ahead will give you evidence to test them.',
-      ],
-    },
-    map: {
-      context: 'Choose an unlocked district and follow the evidence trail.',
-      prompts: [
-        'I do not know which station I can enter next.',
-        'I do not know how the district chain works.',
-        'I do not know when my tools will become useful.',
-      ],
-      items: [
-        'A bright station is ready to explore; a dim station is still locked.',
-        'The districts are designed as a chain, so finishing one unlocks the next.',
-        'Check your Bag after each solved district: new tools help with later puzzles.',
-      ],
-    },
-    posttest: {
-      context: 'Use what you discovered to help your friend make the final call.',
-      prompts: [
-        'I do not know how to separate real evidence from persuasive decoration.',
-        'I do not know which warning signs matter most.',
-        'I do not know how to explain the risk before choosing.',
-      ],
-      items: [
-        'Separate manufactured urgency from a genuinely good offer.',
-        'Remember that a familiar creator or a polished page is not proof of safety.',
-        'Use the evidence in your Bag to explain the risk before choosing.',
-      ],
-    },
-    room: {
-      link: {
-        context: 'Inspect every URL. Small spelling changes can hide a fake destination.',
-        items: ['Compare the domains letter by letter.', 'Watch for look-alike characters and unusual endings.', 'The safest link is the one that matches the real store exactly.'],
-        prompts: [
-          'I do not know how to spot the extra words in these domains.',
-          'I do not know how to check whether the connection and domain ending are suspicious.',
-          'I do not know how to identify disguised or look-alike characters.',
-        ],
-        rounds: [
-          'Common suffixes: keep the genuine domain open and block the two addresses that add words after the real name, such as “-official.shop” or “-dealz”.',
-          'HTTP vs HTTPS: keep the genuine store open and block both doors using http://. An unusual ending like .free is another warning sign.',
-          'Phishing attempts: read every character. Block the doors using a disguised “rn” or a foreign look-alike character, and keep magnumshop.com open.',
-        ],
-      },
-      roulette: {
-        context: 'Treat the prize wheel as a lesson in gamified bait.',
-        prompts: ['I do not know what to compare after spinning the wheels.', 'I do not know why a guaranteed prize could be suspicious.', 'I do not know how to finish the corridor.'],
-        items: ['Spin at least two different wheels and watch the pointer settle. Every wheel is rigged to land on the same tiny 30¢ OFF reward.', 'A guaranteed win is not generosity when the prize is worthless: it is bait to make you keep playing, sharing, or spending.', 'Spin each wheel at least once, then mark all four as Rigged. A wheel must be observed before the game lets you classify it.'],
-      },
-      influencer: {
-        context: 'Separate genuine recommendations from paid or fabricated signals.',
-        prompts: ['I do not know how to decode the disclosure on each post.', 'I do not know what to do after I label the posts.', 'I do not know how to classify the three product images.'],
-        items: ['Open the Emoji Decoding Card from your bag, select a post and click the matching letters. LUNA20 and an affiliate link indicate PAID; #ad and a creative partnership indicate COLLAB; a free product with no payment indicates GIFTED.', 'Run the reverse image search on all three products before choosing a verdict. Identical listings suggest mass production; only AI-art matches suggest an AI-generated image.', 'The mug appears across dropshipping sites, the NovaPad image traces to AI generators, and the cupcakes match one real local bakery.'],
-      },
-      algorithm: {
-        context: 'Follow the data trail behind the personalized feed.',
-        prompts: ['I do not know which code opens the targeting engine.', 'I do not know how to choose the missing factor in an equation.', 'I do not know how the completed profile explains the NovaPad ad.'],
-        items: ['Use the six highlighted digits on the Data Report: 274181.', 'Read the row as a profile: match the missing demographic, follow, or insecurity to the person and the ad, not just to the same category.', 'The engine combines age, interests, searches, and insecurities. The NovaPad offer reached Max because those signals made him a precise target.'],
-      },
-      ads: {
-        context: 'Slow down the visual pressure and inspect what the ad is doing.',
-        prompts: ['I do not know how to make the Truth Flashlight work.', 'I do not know what to look for under each poster.', 'I do not know how to assemble the exit code.'],
-        items: ['Wait for the flashlight to charge, switch it on, and move the beam across the wall. A poster only reveals its truth inside the light.', 'Read the fine print, not the large promise: the trial renews at €59/month, the prize harvests data, the investment is fake, and the antivirus warning is malware bait.', 'Reveal all four hidden letters in poster order. They spell SAVE, which is the code for the exit.'],
-      },
-      persuasion: {
-        context: 'Use the terminal to expose the final persuasion techniques.',
-        prompts: ['I do not know how to match a technique to a poster.', 'I do not know what the glowing letters are for.', 'I do not know what password to enter in the computer.'],
-        items: ['Match the technique to the tactic: “ONLY 3 LEFT” is FOMO; “2 MILLION people” is Social Proof; the miracle result is Exaggeration; the celebrity post is Influencer Endorsement; family guilt is Emotional Appeal; the countdown is Urgency.', 'Each correct frame reveals one letter. Read the six letters from left to right across the poster wall.', 'After all six matches, open the computer and enter FOOLED.'],
-      },
-    },
-    end: {
-      win: { context: 'You made it. Review the evidence that changed the decision.', items: ['Name the red flags that mattered most.', 'Keep checking URLs, disclosures, targeting, and urgency in real life.', 'A pause before buying is a powerful safety tool.'] },
-      lose: { context: 'The timer ran out, but the lesson is still available.', items: ['Urgency is designed to interrupt careful thinking.', 'A countdown ending does not make an offer more trustworthy.', 'When pressure rises, pause and verify through an independent source.'] },
-    },
-  },
-
-  intro: {
-    eyebrow: 'Educational Escape Room',
-    titleLead: 'THE',
-    titleAccent: 'PHYSICAL INTERNET',
-    tagline: '// ads · scams · fraudulent websites — decoded',
-    situationTitle: 'The situation',
-    hook:
-      'Your friend {friend} just found a viral deal on {product} — 90% off, "today only". ' +
-      'It looks incredible… which is exactly why you think it is a scam.',
-    context:
-      'To show {friend} how scams and advertising really work, you both jack into a physical version of ' +
-      'the Internet — a neon city where shops, social platforms and ads become districts you can walk through.',
-    clock: '⏱ {minutes}:00 on the clock',
-    mission:
-      'You have {minutes} minutes — the time before the offer expires — to travel through the Physical Internet, ' +
-      'gather evidence about how ads and scams work, and convince {friend} not to buy. If the timer hits zero, {friend} buys it.',
-    steps: [
-      { title: '1 · Explore', text: 'Four districts, two corridors. Each teaches one trick advertisers use.' },
-      { title: '2 · Gather', text: 'Earn tools and evidence. Track them in your Bag and on the Map.' },
-      { title: '3 · Convince', text: 'Reach the Final Decision and use your evidence before time runs out.' },
+      {
+        "title": "3 · Convince",
+        "text": "Reach the Final Decision and use your evidence before time runs out."
+      }
     ],
-    "start": "⏻ Jack in — start the clock",
+    "start": "▶ Step inside — start the clock",
     "pretest": "Pre-test: first, tell {friend} what you already think about this deal. Then enter the Internet."
   },
   "map": {
@@ -217,7 +103,25 @@ export default {
       "body": "Before you could finish gathering proof, the fake \"today only\" countdown did its job and {friend} bought {product}. That urgency was the whole trick.",
       "lessonLabel": "Lesson:",
       "lesson": "artificial urgency (\"only 3 left!\", \"offer ends in 5:00\") is designed to stop you from thinking. Slow down — a real deal will still be there tomorrow.",
-      "again": "↻ Try again"
+      "again": "↻ Try again",
+      "reasons": {
+        "timeUp": {
+          "heading": "The offer got them first",
+          "body": "Before you could finish convincing {friend}, the fake \"today only\" countdown hit zero — and {friend} bought {product}. That urgency was the whole trick."
+        },
+        "choseBuy": {
+          "heading": "Out of arguments",
+          "body": "You ran out of ways to convince {friend}. Still unconvinced, {friend} decided to go for it and bought {product}."
+        },
+        "notEnoughEvidenceConvincing": {
+          "heading": "Convincing — but not enough proof",
+          "body": "{friend}: \"It sounds convincing… but I didn't get to see enough evidence in the Physical Internet. I'm buying it.\" — {friend} bought {product}."
+        },
+        "notEnoughEvidenceUnconvincing": {
+          "heading": "Not convinced",
+          "body": "{friend}: \"You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it.\" — {friend} bought {product}."
+        }
+      }
     }
   },
   "story": {
@@ -229,8 +133,8 @@ export default {
       "saleBadge": "⚡ FLASH SALE",
       "wasPrice": "$600",
       "nowPrice": "$49",
-      "endsIn": "Ends in",
       "offerLabel": "30-minute deal",
+      "endsIn": "Ends in\n",
       "offerUrgency": "Hurry before it's gone!",
       "buy": "BUY NOW",
       "caption": "OMG they dropped the NovaPad X to $49?! 😱🔥 Grab it before it’s gone! #deal #ad",
@@ -347,7 +251,10 @@ export default {
       ],
       "endingFriend": "Ugh, you've given me a lot to process, but I need to choose right now — the timer's about to hit zero. Based on everything we looked at, give it to me straight: do I close this tab and protect my data, or take the risk and buy it?",
       "choiceClose": "Close the tab. It’s a scam.",
-      "choiceBuy": "Hit buy. Let’s risk it."
+      "choiceBuy": "Hit buy. Let’s risk it.",
+      "retryFriend": "You still haven't convinced me… but the countdown's not at zero yet. Do you want to try again, or should I just buy it?",
+      "retryAgain": "Try again to convince {friend}",
+      "retryGiveUp": "Let {friend} buy the tablet"
     },
     "mastery": {
       "banner": "One more time — I am still not convinced. Give me the strongest reason for each."
@@ -415,6 +322,199 @@ export default {
     "truthLight": {
       "name": "Truth Flashlight",
       "desc": "Reveals the fine print hidden behind the glossy posters in the Ads Corridor."
+    }
+  },
+  "enter": {
+    "eyebrow": "Stepping In",
+    "titleLead": "Enter the",
+    "titleAccent": "PHYSICAL INTERNET",
+    "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
+    "playerLine": "Then come with me. We're going on a journey through the Physical Internet — I'll show you exactly how this deal was built to fool you.",
+    "toolsTitle": "Before we go — your gear",
+    "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
+    "clock": "⏱ {minutes}:00 starts the moment you step inside",
+    "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
+    "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
+    "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
+    "start": "▶ Step inside — countdown begins"
+  },
+  "hints": {
+    "title": "Mission hints",
+    "defaultPrompt": "I do not know how to use this clue yet.",
+    "briefLabel": "Mission status",
+    "progressLabel": "Mission progress",
+    "brief": {
+      "welcome": "Prepare your run",
+      "pretest": "Read the deal before you enter the network",
+      "map": "Choose the next district in the evidence trail",
+      "room": "Solve the district and log what you discover",
+      "posttest": "Use your evidence to protect Max",
+      "win": "Run complete: review what protected you",
+      "lose": "Time expired: review the warning signs"
+    },
+    "stats": {
+      "time": "Time left",
+      "districts": "Districts",
+      "tools": "Tools",
+      "evidence": "Evidence"
+    },
+    "targetLabel": "Current objective",
+    "noTarget": "Return to the map to choose an available district.",
+    "mapObjective": {
+      "title": "Open {district}",
+      "text": "This is the next available room in the investigation. Enter it from the map when you are ready to begin the challenge."
+    },
+    "objectives": {
+      "pretest": {
+        "title": "Complete the pre-test conversation",
+        "text": "Read Max’s message, choose the response that best explains your first impression, and use the final button to enter the Physical Internet."
+      },
+      "posttest": {
+        "title": "Make the final call",
+        "text": "Use the evidence you collected to explain the warning signs and decide whether Max should close the tab."
+      }
+    },
+    "pretest": {
+      "context": "Build your first impression before the investigation begins.",
+      "prompts": [
+        "I do not know how to recognise pressure in this offer.",
+        "I do not know what makes the influencer or page trustworthy.",
+        "I do not know which doubts I should carry into the investigation."
+      ],
+      "items": [
+        "Notice the countdown, the huge discount, and the promise of a limited-time deal. ",
+        "Ask yourself whether the influencer, comments, and polished page are enough to prove the offer is safe.",
+        "Keep your first concerns in mind. The districts ahead will give you evidence to test them."
+      ]
+    },
+    "map": {
+      "context": "Choose an unlocked district and follow the evidence trail.",
+      "prompts": [
+        "I do not know which station I can enter next. ",
+        "I do not know how the district chain works. ",
+        "I do not know when my tools will become useful."
+      ],
+      "items": [
+        "A bright station is ready to explore; a dim station is still locked. ",
+        "The districts are designed as a chain, so finishing one unlocks the next. ",
+        "Check your Bag after each solved district: new tools help with later puzzles."
+      ]
+    },
+    "posttest": {
+      "context        ": "Use what you discovered to help your friend make the final call.",
+      "prompts": [
+        "I do not know how to separate real evidence from persuasive decoration. ",
+        "I do not know which warning signs matter most. ",
+        "I do not know how to explain the risk before choosing."
+      ],
+      "items": [
+        "Separate manufactured urgency from a genuinely good offer.",
+        "Remember that a familiar creator or a polished page is not proof of safety. ",
+        "Use the evidence in your Bag to explain the risk before choosing."
+      ]
+    },
+    "room": {
+      "link": {
+        "context": "Inspect every URL. Small spelling changes can hide a fake destination.",
+        "prompts": [
+          "I do not know how to spot the extra words in these domains. ",
+          "I do not know how to check whether the connection and domain ending are suspicious.",
+          "I do not know how to identify disguised or look-alike characters."
+        ],
+        "items": [
+          "Compare the domains letter by letter.",
+          "Watch for look-alike characters and unusual endings. ",
+          "The safest link is the one that matches the real store exactly."
+        ],
+        "rounds": [
+          "Common suffixes: keep the genuine domain open and block the two addresses that add words after the real name. ",
+          "HTTP vs HTTPS: keep the genuine store open and block both doors using http://. ",
+          "Phishing attempts: read every character and block disguised look-alike addresses."
+        ]
+      },
+      "roulette": {
+        "context\t": "Treat the prize wheel as a lesson in gamified bait.",
+        "prompts": [
+          "I do not know what to compare after spinning the wheels. ",
+          "I do not know why a guaranteed prize could be suspicious. ",
+          "I do not know how to finish the corridor."
+        ],
+        "items": [
+          "Spin at least two different wheels and watch the pointer settle. ",
+          "A guaranteed win is bait when the prize is worthless.",
+          "Spin each wheel once, then mark all four as Rigged."
+        ]
+      },
+      "influencer": {
+        "context": "Separate genuine recommendations from paid or fabricated signals.",
+        "prompts": [
+          "I do not know how to decode the disclosure on each post. ",
+          "I do not know what to do after I label the posts.",
+          "I do not know how to classify the three product images."
+        ],
+        "items": [
+          "Use the Emoji Decoding Card to identify",
+          "Run the reverse image search on all three products.",
+          "The mug is mass-produced, the NovaPad image is AI-generated, and the cupcakes are genuine."
+        ]
+      },
+      "algorithm": {
+        "context": "Follow the data trail behind the personalized feed.",
+        "prompts": [
+          "I do not know which code opens the targeting engine.",
+          "I do not know how to choose the missing factor in an equation.",
+          "I do not know how the completed profile explains the NovaPad ad."
+        ],
+        "items": [
+          "Use the six highlighted digits on the report. Search on the bag. ",
+          "Match the missing factor to the person and the ad.",
+          "The engine combines age, interests, searches and insecurities."
+        ]
+      },
+      "ads": {
+        "context": "Slow down the visual pressure and inspect what the ad is doing.",
+        "prompts": [
+          "I do not know how to make the Truth Flashlight work.",
+          "I do not know what to look for under each poster. ",
+          "I do not know how to assemble the exit code."
+        ],
+        "items": [
+          "Charge and sweep the flashlight across the wall. ",
+          "Read the fine print, not the large promise. ",
+          "Reveal all four hidden letters in poster order. They spell SAVE, which is the code for the exit."
+        ]
+      },
+      "persuasion": {
+        "context": "Use the terminal to expose the final persuasion techniques.",
+        "prompts": [
+          "I do not know how to match a technique to a poster.",
+          "I do not know what the glowing letters are for.",
+          "I do not know what password to enter in the computer."
+        ],
+        "items": [
+          "Drag and drop each poster to its persuasion technique.",
+          "Each correct frame reveals one letter. ",
+          "After all six matches, open the computer and enter FOOLED."
+        ]
+      }
+    },
+    "end": {
+      "win": {
+        "context": "You made it. Review the evidence that changed the decision.",
+        "items": [
+          "Name the red flags that mattered most.",
+          "Keep checking URLs, disclosures, targeting and urgency",
+          "A pause before buying is a powerful safety tool."
+        ]
+      },
+      "lose": {
+        "context": "The timer ran out, but the lesson is still available.",
+        "items": [
+          "Urgency interrupts careful thinking.",
+          "A countdown does not make an offer trustworthy. ",
+          "Pause and verify through an independent source."
+        ]
+      }
     }
   },
   "rooms": {
@@ -495,6 +595,63 @@ export default {
         "httpsGood": "It starts with https:// — so it must be trustworthy",
         "lock": "The browser shows a little padlock icon",
         "looksReal": "The name looks right at a first glance"
+      },
+      "lunaAd1": {
+        "headline": "Get Luna’s dress and purse",
+        "headlineSecond": "70% OFF",
+        "text": "Steal her style",
+        "brand": "LUNA WEARS"
+      },
+      "lunaAd2": {
+        "headline": "New autumn collection",
+        "cta": "Explore new collection",
+        "text": "From 10th december until 31st march",
+        "brand": "LUNA WEARS"
+      },
+      "lunaAd3": {
+        "headline": "Tablet Nova",
+        "headlineSecond": "Flash Sale!!",
+        "oldPrice": "600$",
+        "discount": "49$",
+        "text": "Hurry up! Offer ends in limited time.",
+        "brand": "luna wears"
+      },
+      "shoesAd1": {
+        "headline": "BRAND NEW SNEAKERS",
+        "headlineSecond": "SPECIAL PRICES",
+        "cta": "Shop now!",
+        "brand": "THE SHOE FACTORY"
+      },
+      "shoesAd2": {
+        "headline": "Break the rules.",
+        "headlineSecond": "Be yourself.",
+        "text": "Special prices 1st week",
+        "cta": "Don't miss out, get yours now",
+        "brand": "THE SHOE FACTORY"
+      },
+      "shoesAd3": {
+        "headline": "Here comes the fall collection... To fall in love with",
+        "headlineSecond": "NEW MEMBERS GET 20% DISCOUNT.",
+        "brand": "THE SHOE FACTORY"
+      },
+      "lightsAd1": {
+        "headline": "Discounts from:",
+        "discount1": "40%",
+        "discount2": "60%",
+        "discount3": "80%",
+        "headlineSecond": "Total Settlement",
+        "brand": "magnumshop.com"
+      },
+      "lightsAd2": {
+        "headline": "New astronomical lightning collection",
+        "headlineSecond": "Build your own universe",
+        "brand": "magnumshop.com"
+      },
+      "lightsAd3": {
+        "headline": "NEON LIGHTS FOR 0.99c!!!",
+        "cta": "Get them now",
+        "brand": "Magnum Shop",
+        "text": "Offer valid from 19 to 29 september"
       }
     },
     "roulette": {
@@ -577,24 +734,26 @@ export default {
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
       "solvedTitle": "Influencer Avenue cleared — Data Report obtained 📄",
-      "solvedText": "You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 274181 — open the Algorithm Control Room next.",
+      "solvedText": "You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 748392 — open the Algorithm Control Room next.",
       "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
       "stage1": {
         "badge": "Stage 1 / 2",
         "tag": "Content labelling",
-        "prompt": "Decode the hidden sponsorship on each post with your Emoji Decoding Card.",
-        "selectPost": "Select {name}",
-        "answerProgress": "{count} / {total}",
+        "prompt": "Drag the right label onto each post: {paid}, {collab} or {gifted}.",
         "openDecoder": "🔑 Open Decoder Card",
         "verified": "Verified",
         "followersSuffix": "followers",
         "cluesTitle": "Disclosure clues",
         "decodeMe": "decode me →",
+        "trayTitle": "Drag a label onto each post",
+        "dropPlaceholder": "drop label",
         "correct": "✓ {label}",
         "wrong": "✗ wrong label",
         "learnLabel": "Why it matters:",
         "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
-        "hint": "Open the Emoji Decoding Card from your bag, select a post and enter its hidden word one letter at a time."
+        "hint": "Tap or drag a label chip, then drop it on the matching post.",
+        "selectPost": "Select Post",
+        "answerProgress": "{count} / {total}"
       },
       "labels": {
         "paid": "PAID",
@@ -634,7 +793,7 @@ export default {
         "stage1Cleared": "Stage 1 cleared ✓",
         "badge": "Stage 2 / 2",
         "tag": "Product legitimacy",
-        "prompt": "These sellers all claim their products are “real”. Run a reverse image search on each photo, then classify what it actually is.",
+        "prompt": "Reverse-image-search each photo, then classify what it really is.",
         "runSearch": "🔍 Run reverse image search",
         "engineBar": "reverse-image-search.io",
         "engineDrop": "Drag a product image here to reverse-search it",
@@ -717,9 +876,10 @@ export default {
       },
       "decoder": {
         "title": "🔑 Emoji Decoding Card",
+        "noCard": "You would normally have earned this card back in Link District — here it is anyway.",
+        "help": "Match each emoji on a sticky-note to its letter to read the hidden label.",
         "noSelection": "No post selected",
-        "erase": "Delete last letter",
-        "help": "Match each emoji on a sticky-note to its letter to read the hidden label."
+        "erase": "Delete last letter"
       }
     },
     "algorithm": {
@@ -727,39 +887,20 @@ export default {
       "solvedTitle": "Algorithm Control Room cracked · Evidence logged 🧠",
       "solvedText": "You watched the machine turn {friend}'s age, interests and insecurities into a single ad. That is not luck — it is a profile.",
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
-      "report": {
-        "modalTitle": "Data Report · Max's profile",
-        "kicker": "ALGORITHM CONTROL ROOM",
-        "title": "Targeted Ad Profile Log: MAX",
-        "subject": "Subject: MAX's Online Activities",
-        "instruction": "Review the activity below to determine how the algorithm learned.",
-        "columns": {
-          "time": "TIME",
-          "activity": "USER ACTIVITY",
-          "interpretation": "ALGORITHM INTERPRETATION"
-        },
-        "entries": [
-          { "time": "10:02", "text": "User clicked on the ad.", "result": "INTERESTED", "tone": "green" },
-          { "time": "10:03", "text": "Stayed on the project page for 2 minutes.", "result": "INTERESTED", "tone": "green" },
-          { "time": "10:04", "text": "Saw 7 new reviews.", "result": "INTERESTED", "tone": "green" },
-          { "time": "10:05", "text": "User closed the window.", "result": "LOST INTEREST", "tone": "red" },
-          { "time": "10:06", "text": "User clicked on a different ad from the same brand.", "result": "BACKTRACK", "tone": "orange" },
-          { "time": "10:07", "text": "User scrolls for 4 minutes.", "result": "LOOKING FOR MORE", "tone": "green" },
-          { "time": "10:11", "text": "Added 1 item to cart.", "result": "INTEREST SIGNAL", "tone": "green" },
-          { "time": "10:12", "text": "Spent 8 minutes on the same page.", "result": "HESITATION", "tone": "orange" },
-          { "time": "10:20", "text": "Triggered special offer / countdown intervention.", "result": "CONVERSION", "tone": "green" },
-          { "time": "10:25", "text": "Bought 1 item.", "result": "PURCHASE", "tone": "green" }
-        ]
+      "door": {
+        "badge": "Control Room · Sealed",
+        "prompt": "The Algorithm Control Room is locked. A keypad is mounted on the door — step up to it and enter the 6-digit code from your Data Report.",
+        "action": "Use the keypad →"
       },
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",
-        "prompt": "Enter the 6-digit access code to boot the targeting engine.",
+        "prompt": "Enter the 6-digit code.",
         "error": "Access denied — that code is wrong.",
-        "submit": "Unlock →",
+        "submit": "Unlock →"
       },
       "choice": {
         "badge": "System question · privacy trade-off",
-        "prompt": "The mainframe offers you a deal. Which future do you want?",
+        "prompt": "Which future do you want?",
         "optionATag": "Option A",
         "optionABefore": "See",
         "optionABold": "fewer, personalised",
@@ -777,40 +918,15 @@ export default {
       },
       "equations": {
         "badge": "Targeting engine · solve every equation",
-        "prompt": "Each row is a person. Fill the empty slot so the machine can output the ad it would show them.",
-        "resultCol": "→ Targeted ad",
+        "prompt": "Fill the missing slot to complete each person's ad.",
         "adFlag": "AD ACTIVATED",
         "slotPlaceholder": "＋ drop tile",
         "stepBadge": "Equation {n} / {total}",
         "profileBadge": "Profile complete",
         "dragHint": "Drag the missing factor into the equation — the one that fits this exact person.",
         "wrongHint": "That factor doesn’t fit this person. Look at what the ad is really selling.",
-        "finalLessonTitle": "What you learned",
-        "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you.",
-        "reflectTitle": "What just happened",
-        "nextBtn": "Next equation →",
-        "lastBtn": "See {friend}’s profile →",
-        "trayLabel": "DATA TILES — drag one into each empty slot (or tap a tile, then tap a slot)",
-        "runBtn": "⚡ Run the algorithm",
-        "fillHint": "Fill every slot, then run the algorithm.",
-        "wrongBanner": "The algorithm rejected some inputs. Fix the rows marked in red and run it again.",
-        "navHint": "Use ◀ ▶ or the arrow keys to move around the control room.",
-        "navMainframe": "Mainframe",
-        "navDataWall": "Data Wall",
         "navTerminal": "Ad Terminal",
-        "dataWallTitle": "DATA-BROKER · LIVE FEED",
-        "dataWallSub": "Everything the machine already bought about {friend}:",
-        "dataWallFeed": [
-          "AGE — 15",
-          "FOLLOWS — gaming · new tech · fitness",
-          "SEARCHED — “NovaPad X cheapest”",
-          "LOCATION — home + school, daily",
-          "SCREEN TIME — 6.2 h / day",
-          "INSECURITY FLAGS — fitting in · FOMO",
-          "PAYMENT — card on file ✓"
-        ],
         "terminalTitle": "AD-OUTPUT TERMINAL",
-        "terminalIdle": "Awaiting profile… assemble the equations at the Mainframe, then run the algorithm.",
         "profileTitle": "▚ PROFILE RECONSTRUCTED ▚",
         "profileP1": "The engine cross-referenced",
         "profileB1": "{friend}’s age",
@@ -820,10 +936,8 @@ export default {
         "profileB3": "his insecurities",
         "profileP4": " (fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
         "logEvidence": "Log this evidence ✓",
-        "learnTitle": "How personalised ads work:",
-        "learnBefore": " the algorithm combines many data points — your age, what you follow, how you behave and even your insecurities — to guess what you’ll click. And beware the trade: “fewer ads” almost always means ",
-        "learnItalic": "more of your data collected",
-        "learnAfter": "."
+        "finalLessonTitle": "What you learned",
+        "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you."
       },
       "cols": [
         "Demographic",
@@ -836,32 +950,28 @@ export default {
           "slots": {
             "0": "Girl, 13–17",
             "1": "Follows beauty influencers"
-          },
-          "explain": "A 13-year-old who follows beauty accounts and worries about her skin is served a “miracle” cream. The algorithm didn’t guess — it matched her age and her follows to an insecurity, then sold straight to it."
+          }
         },
         "r2": {
           "ad": "Muscle-gain supplement",
           "slots": {
             "1": "Follows fitness influencers",
             "2": "Insecure about being skinny"
-          },
-          "explain": "A teen boy who follows fitness pages and feels too skinny is handed a muscle-gain supplement. His insecurity is the exact reason the ad reached him."
+          }
         },
         "r3": {
           "ad": "Baldness cream",
           "slots": {
             "0": "Man, 25–35",
             "1": "Follows tech channels"
-          },
-          "explain": "A man who fears going bald — flagged by his age and browsing — is shown a baldness “cure”. Same recipe: a private worry turned into a target."
+          }
         },
         "r4": {
           "ad": "Weight-loss pills",
           "slots": {
             "0": "Woman, 30–45",
             "2": "Insecure about her weight"
-          },
-          "explain": "A woman who follows diet pages and feels bad about her weight is aimed at with weight-loss pills. The feed she scrolls quietly feeds the very fear it then sells to."
+          }
         }
       },
       "tiles": {
@@ -881,12 +991,66 @@ export default {
         "t-lonely": "Afraid of being left out",
         "t-height": "Self-conscious about height",
         "t-teeth": "Worried about their teeth"
+      },
+      "report": {
+        "modalTitle": "Data Report · Max's profile",
+        "kicker": "ALGORITHM CONTROL ROOM",
+        "title": "Targeted Ad Profile Log: MAX",
+        "subject": "Subject: MAX's Online Activities",
+        "instruction": "Review the activity below to determine how the algorithm learned.",
+        "columns": {
+          "time": "TIME",
+          "activity": "USER ACTIVITY",
+          "interpretation": "ALGORITHM INTERPRETATION"
+        },
+        "entries": [
+          {
+            "text": "User clicked on the ad.",
+            "result": "INTERESTED"
+          },
+          {
+            "text": "Stayed on the project page for 2 minutes.",
+            "result": "INTERESTED"
+          },
+          {
+            "text": "Saw 7 new reviews.",
+            "result": "INTERESTED"
+          },
+          {
+            "text": "User closed the window.",
+            "result": "LOST INTEREST"
+          },
+          {
+            "text": "User clicked on a different ad from the same brand.",
+            "result": "BACKTRACK"
+          },
+          {
+            "text": "User scrolls for 4 minutes.",
+            "result": "LOOKING FOR MORE"
+          },
+          {
+            "text": "Added 1 item to cart.",
+            "result": "INTEREST SIGNAL"
+          },
+          {
+            "text": "Spent 8 minutes on the same page.",
+            "result": "HESITATION"
+          },
+          {
+            "text": "Triggered special offer / countdown intervention.",
+            "result": "CONVERSION"
+          },
+          {
+            "text": "Bought 1 item.",
+            "result": "PURCHASE"
+          }
+        ]
       }
     },
     "ads": {
       "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
       "solvedTitle": "Corridor cleared — you read the fine print",
-      "solvedText": "The exit hisses open. You logged the hidden €59/month auto-renewal as evidence against the deal.",
+      "solvedText": "The exit hisses open — you logged the hidden €59/month auto-renewal as evidence. Ads shouting “free”, “you won” or “$0 today” usually bury the real cost in tiny print, so always read what you're agreeing to before you tap.",
       "pickup": "You pick up the Truth Flashlight 🔦",
       "torchCharging": "🔦 Charging…",
       "torchOn": "🔦 Flashlight ON",
@@ -915,25 +1079,33 @@ export default {
           "glossyTitle": "FREE 30-DAY TRIAL!",
           "glossyBody": "Try NovaCloud Premium — $0 today!",
           "glossyBadge": "$0",
-          "truth": "…then auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week."
+          "truth": "After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.",
+          "truthTitle": "Automatic renovation",
+          "letter": "A"
         },
         {
           "glossyTitle": "🎉 CONGRATULATIONS!",
           "glossyBody": "You've WON a €1,000 gift card! Tap to claim.",
           "glossyBadge": "€1,000",
-          "truth": "You did NOT win anything. This 'prize' harvests your personal data and card details."
+          "truth": "This 'prize' harvests your personal data and card details.",
+          "truthTitle": "👎🏼 You did NOT win anything",
+          "letter": "S"
         },
         {
           "glossyTitle": "📈 GET RICH QUICK!",
           "glossyBody": "Turn €100 into €10,000 in one week — guaranteed!",
           "glossyBadge": "×100",
-          "truth": "A pure scam. Every euro you “invest” is gone, and the sky-high “returns” on screen are fake."
+          "truth": "Every euro you “invest” is gone, and the sky-high “returns” on screen are fake.",
+          "truthTitle": "📉 A pure scam",
+          "letter": "E"
         },
         {
           "glossyTitle": "🛡️ VIRUS DETECTED!",
           "glossyBody": "Your device may be at risk — download SecureNow FREE!",
           "glossyBadge": "FREE",
-          "truth": "The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad."
+          "truth": "The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad.",
+          "truthTitle": "🚨 You didn´t have a virus... but now you do",
+          "letter": "V"
         }
       ]
     },
@@ -947,46 +1119,44 @@ export default {
       },
       "trayLabel": "TECHNIQUE FRAMES",
       "hints": {
-        "start": "Read the promise, the pressure, and who the ad wants you to trust. Match each poster to the technique doing the persuading.",
+        "start": "Drag a technique frame onto the poster it fits — or tap the frame, then tap the poster.",
         "allDone": "All six framed — the letters spell a password. Click the computer to type it in.",
         "correct": "Correct — a letter surfaced. Keep framing the rest.",
         "wrong": "That technique does not match this ad. Frame returned — try another.",
-        "wrongSpecific": "Not quite. Look again: {clue} Frame returned — try another technique.",
-      },
-      "posterHints": {
-        "fomo": "the ad says only a few are left and makes you fear missing out",
-        "social": "the ad uses a huge number of buyers to make popularity feel like proof",
-        "exagg": "the promise is an extreme result in an unrealistically short time",
-        "influencer": "a famous creator is used as borrowed authority, with an #ad disclosure",
-        "emotional": "the message targets your guilt and fear of letting your family down",
-        "urgency": "a ticking countdown tells you to buy immediately before the offer disappears",
+        "wrongSpecific": "Not quite. Look again: {clue}"
       },
       "dragHint": "Drag onto its poster",
       "count": "Framed {matched} / {total}",
       "posters": [
         {
           "headline": "ONLY 3 LEFT IN STOCK!",
-          "sub": "Don't miss out!"
+          "sub": "Don't miss out!",
+          "letter": "F"
         },
         {
           "headline": "Over 2 MILLION people already bought this!",
-          "sub": "Join the crowd."
+          "sub": "Join the crowd.",
+          "letter": "O"
         },
         {
           "headline": "Lose 10kg in just 3 DAYS — guaranteed miracle!",
-          "sub": "Results not typical."
+          "sub": "Results not typical.",
+          "letter": "O"
         },
         {
           "headline": "As seen on @StarCeleb's page — she LOVES it!",
-          "sub": "#ad"
+          "sub": "#ad",
+          "letter": "L"
         },
         {
           "headline": "Don't let your family down.",
-          "sub": "They deserve better."
+          "sub": "They deserve better.",
+          "letter": "E"
         },
         {
           "headline": "OFFER ENDS IN 04:59 — buy NOW before it's gone!",
-          "sub": "Tick, tock…"
+          "sub": "Tick, tock…",
+          "letter": "D"
         }
       ],
       "techniques": {

@@ -227,7 +227,6 @@
 }
 
 .rc-hint { margin: 0; padding: 8px 14px; }
-.rc-learn { margin: 0; padding: 8px 14px; font-size: 0.82rem; }
 
 /* Respect the app's reduced-motion mode: no long spin transition. */
 .reduced-motion .rc-wheel.spinning { transition: none !important; }

@@ -11,7 +11,7 @@ import './HUD.css'
 
 /* Persistent top bar: countdown, mission recap, inventory & map access. */
 export default function HUD() {
-  const { screen, activeNodeId, roomStarted, linkRound, timeLeft, inventory, evidence, progress, goMap } = useGame()
+  const { screen, activeNodeId, roomStarted, linkRound, timeLeft, inventory, evidence, progress, goMap, postDecision } = useGame()
   const t = useT()
   const [bagOpen, setBagOpen] = useState(false)
   const [reportOpen, setReportOpen] = useState(false)
@@ -62,29 +62,47 @@ export default function HUD() {
   const low = timeLeft <= 300
   const critical = timeLeft <= 60
 
+  // The welcome/setup, pre-test and "step inside" transition all happen before
+  // the clock starts, so there's no countdown to show. In the post-test the
+  // clock stays hidden through the Q&A and only appears once the final decision
+  // begins (postDecision). None of these screens are navigable, so hide the
+  // Map/Bag shortcuts there too. (In debug the run starts straight on the map,
+  // where both correctly appear.)
+  const preGame = screen === 'welcome' || screen === 'pretest' || screen === 'enter'
+  const showTimer = !preGame && (screen !== 'posttest' || postDecision)
+  const showNav = !preGame && screen !== 'posttest'
+  // Hints only help where there's a live objective — a puzzle room, or the map
+  // pointing at the next district. Elsewhere (setup, conversations, endings)
+  // there's nothing to hint, so don't offer the button.
+  const showHints = screen === 'room' || screen === 'map'
+
   return (
     <>
       <header className="hud">
         <div className="hud-left">
           <span className="hud-logo" aria-label={t('hud.logo')}>◉</span>
-          <span className="hud-sub mono">{t('hud.expires')}</span>
+          {showTimer && <span className="hud-sub mono">{t('hud.expires')}</span>}
         </div>
 
-        <div className={`hud-timer ${low ? 'low' : ''} ${critical ? 'critical pulse' : ''}`}>
-          <span className="hud-timer-label mono">{t('hud.tminus')}</span>
-          <span className="hud-timer-val mono">{formatTime(timeLeft)}</span>
-        </div>
+        {showTimer && (
+          <div className={`hud-timer ${low ? 'low' : ''} ${critical ? 'critical pulse' : ''}`}>
+            <span className="hud-timer-label mono">{t('hud.tminus')}</span>
+            <span className="hud-timer-val mono">{formatTime(timeLeft)}</span>
+          </div>
+        )}
 
         <div className="hud-right">
           {DEBUG && <span className="chip bad hud-debug">🐞 DEBUG</span>}
-          <button
-            className="btn btn-amber btn-sm hud-hints"
-            onClick={() => setHintsOpen(true)}
-            aria-label={t('hud.hints')}
-            title={t('hud.hints')}
-          >
-            {t('hud.hints')}
-          </button>
+          {showHints && (
+            <button
+              className="btn btn-amber btn-sm hud-hints"
+              onClick={() => setHintsOpen(true)}
+              aria-label={t('hud.hints')}
+              title={t('hud.hints')}
+            >
+              {t('hud.hints')}
+            </button>
+          )}
           <button
             className="btn btn-ghost btn-sm hud-mute"
             onClick={toggleMute}
@@ -93,14 +111,16 @@ export default function HUD() {
           >
             {muted ? '🔇' : '🔊'}
           </button>
-          {screen !== 'map' && (
+          {showNav && screen !== 'map' && (
             <button className="btn btn-cyan btn-sm" onClick={goMap}>
               {t('hud.map')}
             </button>
           )}
-          <button className="btn btn-purple btn-sm" onClick={() => setBagOpen(true)}>
-            {t('hud.bag')} {inventory.length > 0 && <b className="bag-count">{inventory.length}</b>}
-          </button>
+          {showNav && (
+            <button className="btn btn-purple btn-sm" onClick={() => setBagOpen(true)}>
+              {t('hud.bag')} {inventory.length > 0 && <b className="bag-count">{inventory.length}</b>}
+            </button>
+          )}
         </div>
       </header>
 

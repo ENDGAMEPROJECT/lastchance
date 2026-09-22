@@ -213,8 +213,6 @@ export default function InfluencerAvenue({ node }) {
       {stage === 'label' && (
         <div className="ia-stage ia-label-stage fade-in">
           <div className="ia-head">
-            <span className="chip">{t('rooms.influencer.stage1.badge')}</span>
-            <span className="chip warn">{t('rooms.influencer.stage1.tag')}</span>
             <p className="ia-prompt">
               {t('rooms.influencer.stage1.prompt')}
             </p>
@@ -352,9 +350,6 @@ export default function InfluencerAvenue({ node }) {
       {stage === 'verify' && (
         <div className="ia-stage fade-in">
           <div className="ia-head">
-            <span className="chip ok">{t('rooms.influencer.stage2.stage1Cleared')}</span>
-            <span className="chip">{t('rooms.influencer.stage2.badge')}</span>
-            <span className="chip warn">{t('rooms.influencer.stage2.tag')}</span>
             <p className="ia-prompt">{t('rooms.influencer.stage2.prompt')}</p>
           </div>
 
