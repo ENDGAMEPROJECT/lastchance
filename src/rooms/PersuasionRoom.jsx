@@ -18,12 +18,15 @@ import './PersuasionRoom.css'
    typed into the terminal to unlock the exit. */
 
 const POSTERS = [
-  { id: 'fomo', letter: 'F', emoji: '⚡', tint: 'red' },
-  { id: 'social', letter: 'O', emoji: '🌟', tint: 'cyan' },
-  { id: 'exagg', letter: 'O', emoji: '🔥', tint: 'amber' },
-  { id: 'influencer', letter: 'L', emoji: '💄', tint: 'purple' },
-  { id: 'emotional', letter: 'E', emoji: '😢', tint: 'magenta' },
-  { id: 'urgency', letter: 'D', emoji: '⏰', tint: 'green' },
+  { id: 'fomo', 
+    letter: 'F', 
+    // emoji: '⚡', 
+   },
+  { id: 'social', letter: 'O', emoji: '🌟' },
+  { id: 'exagg', letter: 'O', emoji: '🔥' },
+  { id: 'influencer', letter: 'L', emoji: '💄' },
+  { id: 'emotional', letter: 'E', emoji: '😢' },
+  { id: 'urgency', letter: 'D', emoji: '⏰' },
 ]
 
 const FRAME_ORDER = ['emotional', 'fomo', 'urgency', 'social', 'influencer', 'exagg']
@@ -71,7 +74,7 @@ const CENTER = { x: 470, y: 110 }
 function initPositions() {
   const o = {}
   FRAME_ORDER.forEach((id, i) => {
-    o[id] = { x: CENTER.x + i * 30, y: CENTER.y + i * 24 } // diagonal overlapping pile
+    o[id] = { x: CENTER.x + i * 10 + 100, y: CENTER.y - 70 + i * 34 } // stacked ascending pile, same x-position
   })
   return o
 }
@@ -159,7 +162,7 @@ export default function PersuasionRoom({ node }) {
       if (!d) return
       const p = toLocal(e.clientX, e.clientY)
       setPos((cur) => ({ ...cur, [d.id]: { x: p.x - d.offX, y: p.y - d.offY } }))
-      setOverPoster(posterUnder(e.clientX, e.clientY))
+      setOverPoster(null)
     }
     const up = (e) => {
       const d = dragRef.current
@@ -186,20 +189,16 @@ export default function PersuasionRoom({ node }) {
       const next = { ...placed, [posterId]: true }
       setPlaced(next)
       setWrongPoster(null)
-      playSound('twinkle.mp3') // chime on a correct frame landing
       setHint(
         Object.keys(next).length === POSTERS.length
           ? t('rooms.persuasion.hints.allDone')
           : t('rooms.persuasion.hints.correct'),
       )
     } else {
-      // Wrong — flash the poster; the frame stays where it was dropped.
-      playSound('wrong.mp3')
-      setWrongPoster(posterId)
+      setWrongPoster(null)
       setHint(t('rooms.persuasion.hints.wrongSpecific', {
         clue: t(`rooms.persuasion.posterHints.${posterId}`),
       }))
-      window.setTimeout(() => setWrongPoster((cur) => (cur === posterId ? null : cur)), 600)
     }
   }
 
@@ -243,30 +242,14 @@ export default function PersuasionRoom({ node }) {
           {POSTERS.map((p) => {
             const done = !!placed[p.id]
             const wrong = wrongPoster === p.id
-            const over = overPoster === p.id
             const copy = posterText[posterIndex[p.id]]
             return (
               <div
                 key={p.id}
                 ref={(el) => (posterRefs.current[p.id] = el)}
-                className={`pl-poster tint-${p.tint} ${done ? 'framed' : ''} ${wrong ? 'wrong' : ''} ${over ? 'is-over' : ''}`}
+                className={`pl-poster pl-${p.id} ${done ? 'framed' : ''} ${wrong ? 'wrong' : ''}`}
               >
                 <PosterContent poster={p} copy={copy} />
-
-                {done && (
-                  <div className="pl-frame-overlay">
-                    <span className="pl-frame-corner tl" />
-                    <span className="pl-frame-corner tr" />
-                    <span className="pl-frame-corner bl" />
-                    <span className="pl-frame-corner br" />
-                    <span className="pl-poster-tag mono">{techniqueLabel(p.id)}</span>
-                  </div>
-                )}
-                {done && (
-                  <div className="pl-letter-tile" aria-label={t('rooms.persuasion.hiddenLetter', { letter: p.letter })}>
-                    {p.letter}
-                  </div>
-                )}
               </div>
             )
           })}
@@ -275,7 +258,7 @@ export default function PersuasionRoom({ node }) {
         {/* ---- RIGHT: the computer in the scene — click it to open its screen ---- */}
         <button
           type="button"
-          className={`pl-computer-hotspot ${allMatched ? 'ready' : ''}`}
+          className="pl-computer-hotspot"
           onClick={() => setComputerOpen(true)}
           aria-label={t('rooms.persuasion.openComputer')}
         >
@@ -287,24 +270,25 @@ export default function PersuasionRoom({ node }) {
           
         {/* ---- CENTRE: free-floating overlapping frame pile ---- */}
         {frames.map((f) => {
-          if (placed[f.id]) return null
+          const placedFrame = !!placed[f.id]
           const scale = getFrameScale(pos[f.id].x)
           return (
             <div
               key={f.id}
-              className={`pl-freeframe ${dragId === f.id ? 'dragging' : ''}`}
+              className={`pl-freeframe ${dragId === f.id ? 'dragging' : ''} ${placedFrame ? 'locked' : ''}`}
               style={{
                 left: pos[f.id].x,
                 top: pos[f.id].y,
-                width: '134px',
-                height: '150px',
+                width: '164px',
+                height: '190px',
                 transform: `rotateY(16deg) scale(${scale})`,
                 transformOrigin: 'left center',
-                zIndex: dragId === f.id ? 999 : 20 + zorder.indexOf(f.id),
+                zIndex: placedFrame ? 40 : dragId === f.id ? 999 : 20 + zorder.indexOf(f.id),
+                pointerEvents: 'auto',
               }}
               onPointerDown={(e) => onFrameDown(e, f.id)}
             >
-              <span className="pl-frame">
+              <span className={`pl-frame pl-${f.id}`}>
                 <span className="pl-frame-corner tl" />
                 <span className="pl-frame-corner tr" />
                 <span className="pl-frame-corner bl" />
@@ -333,7 +317,7 @@ export default function PersuasionRoom({ node }) {
               ✕
             </button>
             <form
-              className={`pl-terminal ${allMatched ? 'on' : 'locked'} ${pwError ? 'shake' : ''}`}
+              className={`pl-terminal on ${pwError ? 'shake' : ''}`}
               onSubmit={submitPassword}
             >
               <div className="pl-term-bar mono">
@@ -341,34 +325,19 @@ export default function PersuasionRoom({ node }) {
                 {t('rooms.persuasion.termBar')}
               </div>
               <div className="pl-term-body">
-                {/*<div className="pl-term-letters">
-                  {POSTERS.map((p) => (
-                    <span key={p.id} className={`pl-letter-tile small ${placed[p.id] ? 'lit' : ''}`}>
-                      {placed[p.id] ? p.letter : '_'}
-                    </span>
-                  ))}
-                </div>*/}
-
-                {allMatched ? (
-                  <>
-                   {/*<p className="pl-term-prompt mono">{t('rooms.persuasion.termPrompt')}</p>*/}
-                    <div className="pl-term-input row">
-                      <span className="pl-term-caret mono">&gt;</span>
-                      <input
-                        className="field"
-                        value={entry}
-                        onChange={(e) => setEntry(e.target.value)}
-                        placeholder={t('rooms.persuasion.termPlaceholder')}
-                        maxLength={12}
-                        autoFocus
-                        aria-label={t('rooms.persuasion.termInputLabel')}
-                      />
-                      <button className="btn btn-magenta" type="submit">{t('rooms.persuasion.unlock')}</button>
-                    </div>
-                  </>
-                ) : (
-                  <p className="pl-term-locked mono">🔒 {t('rooms.persuasion.termLocked')}</p>
-                )}
+                <div className="pl-term-input row">
+                  <span className="pl-term-caret mono">&gt;</span>
+                  <input
+                    className="field"
+                    value={entry}
+                    onChange={(e) => setEntry(e.target.value)}
+                    placeholder={t('rooms.persuasion.termPlaceholder')}
+                    maxLength={12}
+                    autoFocus
+                    aria-label={t('rooms.persuasion.termInputLabel')}
+                  />
+                  <button className="btn btn-magenta" type="submit">{t('rooms.persuasion.unlock')}</button>
+                </div>
 
                 {pwError && <div className="banner wrong">{t('rooms.persuasion.pwError')}</div>}
               </div>

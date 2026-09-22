@@ -162,7 +162,7 @@
   gap: 5px;
   text-align: center;
   min-height: 0;
-  padding: 14px 14px 16px;
+  padding: 9px 9px 11px;
   border-radius: var(--radius);
   border: 2px solid var(--line);
   background:
@@ -176,35 +176,114 @@
 }
 
 /* Per-poster neon tint on the border so each ad reads distinct. */
-.pl-poster.tint-red { border-color: rgba(255, 59, 92, 0.4); }
+/* fomo */
+.pl-fomo { 
+  border-color: rgba(16, 12, 13, 0.4); 
+  background-image:  url('/persuasion-lab/fomo.png');
+  background-size: cover;
+  text-align:center;
+  .pl-poster-head {
+    font-family: var(--neogroteske);
+    font-size: 1.2rem;
+    letter-spacing: 1;
+    background: black;
+    color: yellow;
+    padding: 0.5rem 0.5rem
+  }
+  .pl-poster-sub {
+    font-family: var(--font-neogrotesk);
+
+    font-size: 0.8rem;
+    color: white;
+    padding-top: 0.4rem
+  }
+}
+.pl-social {
+   border-color: rgba(255, 59, 92, 0.4); 
+  background-image: url("/persuasion-lab/social.png");
+    background-size: cover;
+  text-align:center;
+   .pl-poster-head {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    letter-spacing: 1;
+    /* text-shadow: 3px 3px 6px black; */
+    background: transparent;
+    color: rgb(255, 166, 166);
+    padding: 0.5rem 0.5rem
+  }
+  .pl-poster-sub {
+    font-family: var(--font-serif);
+    letter-spacing: 1;
+    font-size: 0.8rem;
+    color: white;
+    padding-top: 0.1rem
+  }
+}
+
+.pl-exagg {
+ border-color: rgba(95, 59, 255, 0.4); 
+  background-image: url("/persuasion-lab/exagg.png");
+    background-size: cover;
+  text-align:center;
+   .pl-poster-head {
+    font-family: var(--font-neogrotesk);
+    font-size: 1rem;
+    letter-spacing: 1;
+    /* text-shadow: 3px 3px 6px black; */
+    background: transparent;
+    color: rgb(208, 213, 238);
+    padding: 0.5rem 0.5rem
+  }
+  .pl-poster-sub {
+    font-family: var(--font-neogrotesk);
+    letter-spacing: 1;
+    font-size: 0.8rem;
+    color: white;
+    padding-top: 0.1rem
+  }
+}
+.pl-influencer {
+
+}
+.pl-emotional {
+
+}
+.pl-urgency {
+  
+}
+.pl-frame {
+  .pl-poster-head {
+    color: rgba(255,255,255,0);
+    background-color: rgba(255,255,255,0);
+  }
+  .pl-poster-sub {
+    color: rgba(255,255,255,0);
+    background-color: rgba(255,255,255,0);
+  }
+  .pl-poster-emoji {
+      color: rgba(255,255,255,0);
+    background-color: rgba(255,255,255,0);
+  }
+}
+
 .pl-poster.tint-cyan { border-color: rgba(22, 242, 255, 0.4); }
 .pl-poster.tint-amber { border-color: rgba(255, 185, 43, 0.4); }
 .pl-poster.tint-purple { border-color: rgba(168, 85, 247, 0.4); }
 .pl-poster.tint-magenta { border-color: rgba(255, 43, 214, 0.4); }
 .pl-poster.tint-green { border-color: rgba(43, 255, 136, 0.4); }
 
-/* A frame is hovering over this drop zone — invite the drop. */
-.pl-poster.is-over {
-  border-color: var(--magenta);
-  box-shadow: var(--glow-magenta);
-  transform: translateY(-3px) scale(1.02);
-}
-
 /* Correct placement — locked, letter revealed. */
 .pl-poster.framed {
-  border-color: var(--green);
-  box-shadow: var(--glow-green);
+  border-color: var(--line);
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.5);
 }
 
-/* Wrong placement — red flash. */
+/* Wrong placement remains silent and static; no flash or reaction while overlaid. */
 .pl-poster.wrong {
-  border-color: var(--red) !important;
-  box-shadow: var(--glow-red);
-  animation: pl-flash 0.6s ease;
-}
-@keyframes pl-flash {
-  0%, 100% { background-color: transparent; }
-  30% { background-color: rgba(255, 59, 92, 0.28); }
+  border-color: var(--line);
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.5);
+  animation: none;
 }
 
 .pl-poster-emoji { font-size: 1.9rem; filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5)); }
@@ -336,10 +415,10 @@
    perspective (opposite tilt to the centre frames). */
 .pl-posters {
   flex: none;
-  width: 430px;
+  width: 730px;
   display: grid;
-  grid-template-columns: repeat(3, 134px);
-  grid-auto-rows: 150px;
+  grid-template-columns: repeat(3, 164px);
+  grid-auto-rows: 190px;
   gap: 10px;
   align-content: center;
   /* nudge the wall a little right and up */
@@ -349,11 +428,11 @@
   transform: rotateY(16deg);
   transform-origin: left center;
 }
-.pl-posters .pl-poster { padding: 9px 9px 11px; box-shadow: 0 12px 22px rgba(0, 0, 0, 0.5); }
+/* .pl-posters .pl-poster { padding: 9px 9px 11px; box-shadow: 0 12px 22px rgba(0, 0, 0, 0.5); }
 .pl-posters .pl-poster-emoji { font-size: 1.6rem; }
 .pl-posters .pl-poster-head { font-size: 0.74rem; line-height: 1.1; }
-.pl-posters .pl-poster-sub { font-size: 0.62rem; }
-.pl-posters .pl-letter-tile { width: 28px; height: 28px; font-size: 1.05rem; bottom: 5px; right: 5px; }
+.pl-posters .pl-poster-sub { font-size: 0.62rem; } 
+.pl-posters .pl-letter-tile { width: 28px; height: 28px; font-size: 1.05rem; bottom: 5px; right: 5px; } */ */
 
 /* RIGHT — the computer lives inside the persuasion.png scene. An invisible
    hotspot sits over it; clicking opens the computer screen (below). Position
@@ -444,8 +523,8 @@
    room's perspective and shaped like tall standing frames with a mark. */
 .pl-freeframe {
   position: absolute;
-  width: 134px;
-  height: 150px;
+  width: 164px;
+  height: 190px;
   cursor: grab;
   touch-action: none;
   user-select: none;
@@ -471,8 +550,9 @@
   border-width: 2px;
   background: rgba(255, 43, 214, 0.09);
   transition: transform 0.15s ease, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+text-align: center;
 }
-.pl-freeframe .pl-poster-emoji {
+/* .pl-freeframe .pl-poster-emoji {
   font-size: 1.6rem;
   opacity: 0;
   filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
@@ -490,18 +570,23 @@
   color: rgba(255, 255, 255, 0.1);
   font-size: 0.62rem;
   line-height: normal;
-}
+} */
 .pl-freeframe-technique {
   position: absolute;
   top: 7px;
   left: 50%;
   transform: translateX(-50%);
   color: #d4ffe6;
+  background: var(--magenta-dim);
+  padding: 0.1rem  0.4rem 0.2rem  0.4rem; 
+  border-radius: 4px;
   font-family: var(--font-display);
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+  line-height: 1;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  white-space: nowrap;
+  text-align: center
 }
 .pl-letter-highlight {
   /* background:
@@ -522,11 +607,21 @@
   box-shadow: inset 0 0 12px rgba(255, 43, 214, 0.22);
 }
 .pl-freeframe:hover .pl-frame {
-  border-color: var(--magenta);
-  background: rgba(255, 43, 214, 0.16);
-  box-shadow: var(--glow-magenta);
+  border-color: rgba(255, 43, 214, 0.55);
+  background: rgba(255, 43, 214, 0.09);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 .pl-freeframe.dragging .pl-frame {
-  transform: scale(1.05);
-  box-shadow: var(--glow-magenta);
+  transform: none;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+.pl-freeframe.locked {
+  opacity: 1;
+  filter: drop-shadow(3px 10px 16px rgba(0, 0, 0, 0.55));
+}
+.pl-freeframe.locked .pl-frame {
+  border-color: rgba(255, 43, 214, 0.55);
+  background: rgba(255, 43, 214, 0.09);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  transform: none;
 }
