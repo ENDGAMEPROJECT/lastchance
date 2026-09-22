@@ -39,7 +39,8 @@ export default {
     "tools": "Tools & Rewards",
     "noTools": "Nothing collected yet. Solve puzzles to earn tools.",
     "evidenceHeading": "Evidence on the deal",
-    "noEvidence": "Collect proof in each district to convince {friend} at the end."
+    "noEvidence": "Collect proof in each district to convince {friend} at the end.",
+    "hints": "💡 Pistas"
   },
   "intro": {
     "eyebrow": "Educational Escape Room",
@@ -114,9 +115,9 @@ export default {
       "saleBadge": "⚡ FLASH SALE",
       "wasPrice": "$600",
       "nowPrice": "$49",
-      "endsIn": "Ends in",
-      "offerLabel": "30-minute deal",
-      "offerUrgency": "Hurry before it's gone!",
+      "offerLabel": "Oferta de 30 minutos",
+      "endsIn": "Ends in\n",
+      "offerUrgency": "¡Date prisa antes de que se acabe!",
       "buy": "BUY NOW",
       "caption": "OMG they dropped the NovaPad X to $49?! 😱🔥 Grab it before it’s gone! #deal #ad",
       "likes": "12.4k likes"
@@ -302,6 +303,185 @@ export default {
       "desc": "Reveals the fine print hidden behind the glossy posters in the Ads Corridor."
     }
   },
+  "hints": {
+    "title": "Mission hints",
+    "defaultPrompt": "I do not know how to use this clue yet.",
+    "briefLabel": "Mission status",
+    "progressLabel": "Mission progress",
+    "brief": {
+      "welcome": "Prepare your run",
+      "pretest": "Read the deal before you enter the network",
+      "map": "Choose the next district in the evidence trail",
+      "room": "Solve the district and log what you discover",
+      "posttest": "Use your evidence to protect Max",
+      "win": "Run complete: review what protected you",
+      "lose": "Time expired: review the warning signs"
+    },
+    "stats": {
+      "time": "Time left",
+      "districts": "Districts",
+      "tools": "Tools",
+      "evidence": "Evidence"
+    },
+    "targetLabel": "Current objective",
+    "noTarget": "Return to the map to choose an available district.",
+    "mapObjective": {
+      "title": "Open {district}",
+      "text": "This is the next available room in the investigation. Enter it from the map when you are ready to begin the challenge."
+    },
+    "objectives": {
+      "pretest": {
+        "title": "Complete the pre-test conversation",
+        "text": "Read Max’s message, choose the response that best explains your first impression, and use the final button to enter the Physical Internet."
+      },
+      "posttest": {
+        "title": "Make the final call",
+        "text": "Use the evidence you collected to explain the warning signs and decide whether Max should close the tab."
+      }
+    },
+    "pretest": {
+      "context": "Build your first impression before the investigation begins.",
+      "prompts": [
+        "I do not know how to recognise pressure in this offer.",
+        "I do not know what makes the influencer or page trustworthy.",
+        "I do not know which doubts I should carry into the investigation."
+      ],
+      "items": [
+        "Notice the countdown, the huge discount, and the promise of a limited-time deal. ",
+        "Ask yourself whether the influencer, comments, and polished page are enough to prove the offer is safe.",
+        "Keep your first concerns in mind. The districts ahead will give you evidence to test them."
+      ]
+    },
+    "map": {
+      "context": "Choose an unlocked district and follow the evidence trail.",
+      "prompts": [
+        "I do not know which station I can enter next. ",
+        "I do not know how the district chain works. ",
+        "I do not know when my tools will become useful."
+      ],
+      "items": [
+        "A bright station is ready to explore; a dim station is still locked. ",
+        "The districts are designed as a chain, so finishing one unlocks the next. ",
+        "Check your Bag after each solved district: new tools help with later puzzles."
+      ]
+    },
+    "posttest": {
+      "context        ": "Use what you discovered to help your friend make the final call.",
+      "prompts": [
+        "I do not know how to separate real evidence from persuasive decoration. ",
+        "I do not know which warning signs matter most. ",
+        "I do not know how to explain the risk before choosing."
+      ],
+      "items": [
+        "Separate manufactured urgency from a genuinely good offer.",
+        "Remember that a familiar creator or a polished page is not proof of safety. ",
+        "Use the evidence in your Bag to explain the risk before choosing."
+      ]
+    },
+    "room": {
+      "link": {
+        "context": "Inspect every URL. Small spelling changes can hide a fake destination.",
+        "prompts": [
+          "I do not know how to spot the extra words in these domains. ",
+          "I do not know how to check whether the connection and domain ending are suspicious.",
+          "I do not know how to identify disguised or look-alike characters."
+        ],
+        "items": [
+          "Compare the domains letter by letter.",
+          "Watch for look-alike characters and unusual endings. ",
+          "The safest link is the one that matches the real store exactly."
+        ],
+        "rounds": [
+          "Common suffixes: keep the genuine domain open and block the two addresses that add words after the real name. ",
+          "HTTP vs HTTPS: keep the genuine store open and block both doors using http://. ",
+          "Phishing attempts: read every character and block disguised look-alike addresses."
+        ]
+      },
+      "roulette": {
+        "context\t": "Treat the prize wheel as a lesson in gamified bait.",
+        "prompts": [
+          "I do not know what to compare after spinning the wheels. ",
+          "I do not know why a guaranteed prize could be suspicious. ",
+          "I do not know how to finish the corridor."
+        ],
+        "items": [
+          "Spin at least two different wheels and watch the pointer settle. ",
+          "A guaranteed win is bait when the prize is worthless.",
+          "Spin each wheel once, then mark all four as Rigged."
+        ]
+      },
+      "influencer": {
+        "context": "Separate genuine recommendations from paid or fabricated signals.",
+        "prompts": [
+          "I do not know how to decode the disclosure on each post. ",
+          "I do not know what to do after I label the posts.",
+          "I do not know how to classify the three product images."
+        ],
+        "items": [
+          "Use the Emoji Decoding Card to identify",
+          "Run the reverse image search on all three products.",
+          "The mug is mass-produced, the NovaPad image is AI-generated, and the cupcakes are genuine."
+        ]
+      },
+      "algorithm": {
+        "context": "Follow the data trail behind the personalized feed.",
+        "prompts": [
+          "I do not know which code opens the targeting engine.",
+          "I do not know how to choose the missing factor in an equation.",
+          "I do not know how the completed profile explains the NovaPad ad."
+        ],
+        "items": [
+          "Use the six highlighted digits on the report. Search on the bag. ",
+          "Match the missing factor to the person and the ad.",
+          "The engine combines age, interests, searches and insecurities."
+        ]
+      },
+      "ads": {
+        "context": "Slow down the visual pressure and inspect what the ad is doing.",
+        "prompts": [
+          "I do not know how to make the Truth Flashlight work.",
+          "I do not know what to look for under each poster. ",
+          "I do not know how to assemble the exit code."
+        ],
+        "items": [
+          "Charge and sweep the flashlight across the wall. ",
+          "Read the fine print, not the large promise. ",
+          "Reveal all four hidden letters in poster order. They spell SAVE, which is the code for the exit."
+        ]
+      },
+      "persuasion": {
+        "context": "Use the terminal to expose the final persuasion techniques.",
+        "prompts": [
+          "I do not know how to match a technique to a poster.",
+          "I do not know what the glowing letters are for.",
+          "I do not know what password to enter in the computer."
+        ],
+        "items": [
+          "Drag and drop each poster to its persuasion technique.",
+          "Each correct frame reveals one letter. ",
+          "After all six matches, open the computer and enter FOOLED."
+        ]
+      }
+    },
+    "end": {
+      "win": {
+        "context": "You made it. Review the evidence that changed the decision.",
+        "items": [
+          "Name the red flags that mattered most.",
+          "Keep checking URLs, disclosures, targeting and urgency",
+          "A pause before buying is a powerful safety tool."
+        ]
+      },
+      "lose": {
+        "context": "The timer ran out, but the lesson is still available.",
+        "items": [
+          "Urgency interrupts careful thinking.",
+          "A countdown does not make an offer trustworthy. ",
+          "Pause and verify through an independent source."
+        ]
+      }
+    }
+  },
   "rooms": {
     "link": {
       "intro": "A router with three doors. Each is a link claiming to be a store. Shut the fraudulent ones.",
@@ -380,6 +560,63 @@ export default {
         "httpsGood": "It starts with https:// — so it must be trustworthy",
         "lock": "The browser shows a little padlock icon",
         "looksReal": "The name looks right at a first glance"
+      },
+      "lunaAd1": {
+        "headline": "Get Luna’s dress and purse",
+        "headlineSecond": "70% OFF",
+        "text": "Steal her style",
+        "brand": "LUNA WEARS"
+      },
+      "lunaAd2": {
+        "headline": "New autumn collection",
+        "cta": "Explore new collection",
+        "text": "From 10th december until 31st march",
+        "brand": "LUNA WEARS"
+      },
+      "lunaAd3": {
+        "headline": "Tablet Nova",
+        "headlineSecond": "Flash Sale!!",
+        "oldPrice": "600$",
+        "discount": "49$",
+        "text": "Hurry up! Offer ends in limited time.",
+        "brand": "luna wears"
+      },
+      "shoesAd1": {
+        "headline": "BRAND NEW SNEAKERS",
+        "headlineSecond": "SPECIAL PRICES",
+        "cta": "Shop now!",
+        "brand": "THE SHOE FACTORY"
+      },
+      "shoesAd2": {
+        "headline": "Break the rules.",
+        "headlineSecond": "Be yourself.",
+        "text": "Special prices 1st week",
+        "cta": "Don't miss out, get yours now",
+        "brand": "THE SHOE FACTORY"
+      },
+      "shoesAd3": {
+        "headline": "Here comes the fall collection... To fall in love with",
+        "headlineSecond": "NEW MEMBERS GET 20% DISCOUNT.",
+        "brand": "THE SHOE FACTORY"
+      },
+      "lightsAd1": {
+        "headline": "Discounts from:",
+        "discount1": "40%",
+        "discount2": "60%",
+        "discount3": "80%",
+        "headlineSecond": "Total Settlement",
+        "brand": "magnumshop.com"
+      },
+      "lightsAd2": {
+        "headline": "New astronomical lightning collection",
+        "headlineSecond": "Build your own universe",
+        "brand": "magnumshop.com"
+      },
+      "lightsAd3": {
+        "headline": "NEON LIGHTS FOR 0.99c!!!",
+        "cta": "Get them now",
+        "brand": "Magnum Shop",
+        "text": "Offer valid from 19 to 29 september"
       }
     },
     "roulette": {
@@ -462,24 +699,25 @@ export default {
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
       "solvedTitle": "Influencer Avenue cleared — Data Report obtained 📄",
-      "solvedText": "You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 274181 — open the Algorithm Control Room next.",
+      "solvedText": "You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 748392 — open the Algorithm Control Room next.",
       "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
       "stage1": {
         "badge": "Stage 1 / 2",
         "tag": "Content labelling",
-        "prompt": "Decode the hidden sponsorship on each post with your Emoji Decoding Card.",
-        "selectPost": "Select {name}",
-        "answerProgress": "{count} / {total}",
+        "prompt": "Decode each emoji sticky-note, then drag the matching label onto its post: {paid}, {collab} or {gifted}.",
         "openDecoder": "🔑 Open Decoder Card",
         "verified": "Verified",
         "followersSuffix": "followers",
         "cluesTitle": "Disclosure clues",
         "decodeMe": "decode me →",
+        "trayTitle": "Drag a label onto each post",
+        "dropPlaceholder": "drop label",
         "correct": "✓ {label}",
         "wrong": "✗ wrong label",
         "learnLabel": "Why it matters:",
         "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
-        "hint": "Open the Emoji Decoding Card from your bag, select a post and enter its hidden word one letter at a time."
+        "hint": "Tap or drag a label chip, then drop it on the matching post.",
+        "selectPost": "Select Post"
       },
       "labels": {
         "paid": "PAID",
@@ -602,9 +840,10 @@ export default {
       },
       "decoder": {
         "title": "🔑 Emoji Decoding Card",
+        "noCard": "You would normally have earned this card back in Link District — here it is anyway.",
+        "help": "Match each emoji on a sticky-note to its letter to read the hidden label.",
         "noSelection": "No post selected",
-        "erase": "Delete last letter",
-        "help": "Match each emoji on a sticky-note to its letter to read the hidden label."
+        "erase": "Delete last letter"
       }
     },
     "algorithm": {
@@ -616,7 +855,7 @@ export default {
         "badge": "ACCESS · Algorithm Control Room",
         "prompt": "Enter the 6-digit access code to boot the targeting engine.",
         "error": "Access denied — that code is wrong.",
-        "submit": "Unlock →",
+        "submit": "Unlock →"
       },
       "choice": {
         "badge": "System question · privacy trade-off",
@@ -639,39 +878,14 @@ export default {
       "equations": {
         "badge": "Targeting engine · solve every equation",
         "prompt": "Each row is a person. Fill the empty slot so the machine can output the ad it would show them.",
-        "resultCol": "→ Targeted ad",
         "adFlag": "AD ACTIVATED",
         "slotPlaceholder": "＋ drop tile",
         "stepBadge": "Equation {n} / {total}",
         "profileBadge": "Profile complete",
         "dragHint": "Drag the missing factor into the equation — the one that fits this exact person.",
         "wrongHint": "That factor doesn’t fit this person. Look at what the ad is really selling.",
-        "finalLessonTitle": "What you learned",
-        "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you.",
-        "reflectTitle": "What just happened",
-        "nextBtn": "Next equation →",
-        "lastBtn": "See {friend}’s profile →",
-        "trayLabel": "DATA TILES — drag one into each empty slot (or tap a tile, then tap a slot)",
-        "runBtn": "⚡ Run the algorithm",
-        "fillHint": "Fill every slot, then run the algorithm.",
-        "wrongBanner": "The algorithm rejected some inputs. Fix the rows marked in red and run it again.",
-        "navHint": "Use ◀ ▶ or the arrow keys to move around the control room.",
-        "navMainframe": "Mainframe",
-        "navDataWall": "Data Wall",
         "navTerminal": "Ad Terminal",
-        "dataWallTitle": "DATA-BROKER · LIVE FEED",
-        "dataWallSub": "Everything the machine already bought about {friend}:",
-        "dataWallFeed": [
-          "AGE — 15",
-          "FOLLOWS — gaming · new tech · fitness",
-          "SEARCHED — “NovaPad X cheapest”",
-          "LOCATION — home + school, daily",
-          "SCREEN TIME — 6.2 h / day",
-          "INSECURITY FLAGS — fitting in · FOMO",
-          "PAYMENT — card on file ✓"
-        ],
         "terminalTitle": "AD-OUTPUT TERMINAL",
-        "terminalIdle": "Awaiting profile… assemble the equations at the Mainframe, then run the algorithm.",
         "profileTitle": "▚ PROFILE RECONSTRUCTED ▚",
         "profileP1": "The engine cross-referenced",
         "profileB1": "{friend}’s age",
@@ -680,11 +894,7 @@ export default {
         "profileP3": " (gaming, new tech, the NovaPad X he keeps searching) and ",
         "profileB3": "his insecurities",
         "profileP4": " (fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
-        "logEvidence": "Log this evidence ✓",
-        "learnTitle": "How personalised ads work:",
-        "learnBefore": " the algorithm combines many data points — your age, what you follow, how you behave and even your insecurities — to guess what you’ll click. And beware the trade: “fewer ads” almost always means ",
-        "learnItalic": "more of your data collected",
-        "learnAfter": "."
+        "logEvidence": "Log this evidence ✓"
       },
       "cols": [
         "Demographic",
@@ -697,32 +907,28 @@ export default {
           "slots": {
             "0": "Girl, 13–17",
             "1": "Follows beauty influencers"
-          },
-          "explain": "A 13-year-old who follows beauty accounts and worries about her skin is served a “miracle” cream. The algorithm didn’t guess — it matched her age and her follows to an insecurity, then sold straight to it."
+          }
         },
         "r2": {
           "ad": "Muscle-gain supplement",
           "slots": {
             "1": "Follows fitness influencers",
             "2": "Insecure about being skinny"
-          },
-          "explain": "A teen boy who follows fitness pages and feels too skinny is handed a muscle-gain supplement. His insecurity is the exact reason the ad reached him."
+          }
         },
         "r3": {
           "ad": "Baldness cream",
           "slots": {
             "0": "Man, 25–35",
             "1": "Follows tech channels"
-          },
-          "explain": "A man who fears going bald — flagged by his age and browsing — is shown a baldness “cure”. Same recipe: a private worry turned into a target."
+          }
         },
         "r4": {
           "ad": "Weight-loss pills",
           "slots": {
             "0": "Woman, 30–45",
             "2": "Insecure about her weight"
-          },
-          "explain": "A woman who follows diet pages and feels bad about her weight is aimed at with weight-loss pills. The feed she scrolls quietly feeds the very fear it then sells to."
+          }
         }
       },
       "tiles": {
@@ -742,6 +948,60 @@ export default {
         "t-lonely": "Afraid of being left out",
         "t-height": "Self-conscious about height",
         "t-teeth": "Worried about their teeth"
+      },
+      "report": {
+        "modalTitle": "Informe de datos · Perfil de Max",
+        "kicker": "SALA DE CONTROL DEL ALGORITMO",
+        "title": "Registro de anuncios dirigidos: MAX",
+        "subject": "Sujeto: Actividad online de MAX",
+        "instruction": "Revisa la actividad para descubrir cómo aprendió el algoritmo.",
+        "columns": {
+          "time": "HORA",
+          "activity": "ACTIVIDAD DEL USUARIO",
+          "interpretation": "INTERPRETACIÓN DEL ALGORITMO"
+        },
+        "entries": [
+          {
+            "text": "El usuario hizo clic en el anuncio.",
+            "result": "INTERESADO"
+          },
+          {
+            "text": "Permaneció 2 minutos en la página del producto.",
+            "result": "INTERESADO"
+          },
+          {
+            "text": "Vio 7 reseñas nuevas.",
+            "result": "INTERESADO"
+          },
+          {
+            "text": "El usuario cerró la ventana.",
+            "result": "PERDIÓ EL INTERÉS"
+          },
+          {
+            "text": "El usuario hizo clic en otro anuncio de la misma marca.",
+            "result": "RETROCESO"
+          },
+          {
+            "text": "El usuario navega durante 4 minutos.",
+            "result": "BUSCA MÁS"
+          },
+          {
+            "text": "Añadió 1 artículo al carrito.",
+            "result": "SEÑAL DE INTERÉS"
+          },
+          {
+            "text": "Pasó 8 minutos en la misma página.",
+            "result": "DUDA"
+          },
+          {
+            "text": "Activó una oferta especial / intervención de cuenta atrás.",
+            "result": "CONVERSIÓN"
+          },
+          {
+            "text": "Compró 1 artículo.",
+            "result": "COMPRA"
+          }
+        ]
       }
     },
     "ads": {
@@ -776,25 +1036,28 @@ export default {
           "glossyTitle": "FREE 30-DAY TRIAL!",
           "glossyBody": "Try NovaCloud Premium — $0 today!",
           "glossyBadge": "$0",
-          "truth": "…then auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week."
+          "truth": "Automatic renovation"
         },
         {
           "glossyTitle": "🎉 CONGRATULATIONS!",
           "glossyBody": "You've WON a €1,000 gift card! Tap to claim.",
           "glossyBadge": "€1,000",
-          "truth": "You did NOT win anything. This 'prize' harvests your personal data and card details."
+          "truth": "This 'prize' harvests your personal data and card details.",
+          "truthTitle": "👎🏼 You did NOT win anything"
         },
         {
           "glossyTitle": "📈 GET RICH QUICK!",
           "glossyBody": "Turn €100 into €10,000 in one week — guaranteed!",
           "glossyBadge": "×100",
-          "truth": "A pure scam. Every euro you “invest” is gone, and the sky-high “returns” on screen are fake."
+          "truth": "Every euro you “invest” is gone, and the sky-high “returns” on screen are fake.",
+          "truthTitle": "A pure scam"
         },
         {
           "glossyTitle": "🛡️ VIRUS DETECTED!",
           "glossyBody": "Your device may be at risk — download SecureNow FREE!",
           "glossyBadge": "FREE",
-          "truth": "The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad."
+          "truth": "The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad.",
+          "truthTitle": "You didn´t have a virus... but now you do"
         }
       ]
     },
@@ -811,7 +1074,8 @@ export default {
         "start": "Drag a technique frame onto the poster it fits — or tap the frame, then tap the poster.",
         "allDone": "All six framed — the letters spell a password. Click the computer to type it in.",
         "correct": "Correct — a letter surfaced. Keep framing the rest.",
-        "wrong": "That technique does not match this ad. Frame returned — try another."
+        "wrong": "That technique does not match this ad. Frame returned — try another.",
+        "wrongSpecific": "Not quite. Look again: {clue}"
       },
       "dragHint": "Drag onto its poster",
       "count": "Framed {matched} / {total}",

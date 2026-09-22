@@ -21,7 +21,6 @@ export default {
     prompt:
       'Decode the hidden sponsorship on each post with your Emoji Decoding Card.',
     selectPost: 'Select {name}',
-    answerProgress: '{count} / {total}',
     openDecoder: '🔑 Open Decoder Card',
     verified: 'Verified',
     followersSuffix: 'followers',
