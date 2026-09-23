@@ -66,7 +66,7 @@ export default {
         "text": "Reach the Final Decision and use your evidence before time runs out."
       }
     ],
-    "start": "⏻ Jack in — start the clock",
+    "start": "▶ Step inside — start the clock",
     "pretest": "Pre-test: first, tell {friend} what you already think about this deal. Then enter the Internet."
   },
   "map": {
@@ -103,7 +103,25 @@ export default {
       "body": "Before you could finish gathering proof, the fake \"today only\" countdown did its job and {friend} bought {product}. That urgency was the whole trick.",
       "lessonLabel": "Lesson:",
       "lesson": "artificial urgency (\"only 3 left!\", \"offer ends in 5:00\") is designed to stop you from thinking. Slow down — a real deal will still be there tomorrow.",
-      "again": "↻ Try again"
+      "again": "↻ Try again",
+      "reasons": {
+        "timeUp": {
+          "heading": "The offer got them first",
+          "body": "Before you could finish convincing {friend}, the fake \"today only\" countdown hit zero — and {friend} bought {product}. That urgency was the whole trick."
+        },
+        "choseBuy": {
+          "heading": "Out of arguments",
+          "body": "You ran out of ways to convince {friend}. Still unconvinced, {friend} decided to go for it and bought {product}."
+        },
+        "notEnoughEvidenceConvincing": {
+          "heading": "Convincing — but not enough proof",
+          "body": "{friend}: \"It sounds convincing… but I didn't get to see enough evidence in the Physical Internet. I'm buying it.\" — {friend} bought {product}."
+        },
+        "notEnoughEvidenceUnconvincing": {
+          "heading": "Not convinced",
+          "body": "{friend}: \"You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it.\" — {friend} bought {product}."
+        }
+      }
     }
   },
   "story": {
@@ -233,7 +251,10 @@ export default {
       ],
       "endingFriend": "Ugh, you've given me a lot to process, but I need to choose right now — the timer's about to hit zero. Based on everything we looked at, give it to me straight: do I close this tab and protect my data, or take the risk and buy it?",
       "choiceClose": "Close the tab. It’s a scam.",
-      "choiceBuy": "Hit buy. Let’s risk it."
+      "choiceBuy": "Hit buy. Let’s risk it.",
+      "retryFriend": "You still haven't convinced me… but the countdown's not at zero yet. Do you want to try again, or should I just buy it?",
+      "retryAgain": "Try again to convince {friend}",
+      "retryGiveUp": "Let {friend} buy the tablet"
     },
     "mastery": {
       "banner": "One more time — I am still not convinced. Give me the strongest reason for each."
@@ -302,6 +323,20 @@ export default {
       "name": "Truth Flashlight",
       "desc": "Reveals the fine print hidden behind the glossy posters in the Ads Corridor."
     }
+  },
+  "enter": {
+    "eyebrow": "Stepping In",
+    "titleLead": "Enter the",
+    "titleAccent": "PHYSICAL INTERNET",
+    "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
+    "playerLine": "Then come with me. We're going on a journey through the Physical Internet — I'll show you exactly how this deal was built to fool you.",
+    "toolsTitle": "Before we go — your gear",
+    "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
+    "clock": "⏱ {minutes}:00 starts the moment you step inside",
+    "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
+    "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
+    "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
+    "start": "▶ Step inside — countdown begins"
   },
   "hints": {
     "title": "Mission hints",
@@ -634,8 +669,6 @@ export default {
       "wonSuffix": "!",
       "hintSpinFirst": "Spin a couple of wheels first — watch where they land before you decide.",
       "hintSpinThis": "Spin THIS wheel at least once before marking it. See what it does.",
-      "learnLead": "A guaranteed “win”?",
-      "learnBody": "Spin wheels, daily login bonuses and loot boxes are engagement and advertising tricks, not generosity. They are rigged so you almost always “win” something — usually a tiny discount like 30¢ off — because feeling lucky makes you keep playing, share the app, and spend more. A prize you always get, worth almost nothing, isn't a gift. It's bait.",
       "evidenceLabel": "The prize wheels were rigged to always land on a worthless 30¢ coupon — bait to make you spend.",
       "wheels": {
         "w1": {
@@ -694,7 +727,9 @@ export default {
             "2% off"
           ]
         }
-      }
+      },
+      "learnLead": "A guaranteed “win”?",
+      "learnBody": "Spin wheels, daily login bonuses and loot boxes are engagement and advertising tricks, not generosity. They are rigged so you almost always “win” something — usually a tiny discount like 30¢ off — because feeling lucky makes you keep playing, share the app, and spend more. A prize you always get, worth almost nothing, isn't a gift. It's bait."
     },
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
@@ -704,7 +739,7 @@ export default {
       "stage1": {
         "badge": "Stage 1 / 2",
         "tag": "Content labelling",
-        "prompt": "Decode each emoji sticky-note, then drag the matching label onto its post: {paid}, {collab} or {gifted}.",
+        "prompt": "Choose the right label for each post",
         "openDecoder": "🔑 Open Decoder Card",
         "verified": "Verified",
         "followersSuffix": "followers",
@@ -717,7 +752,8 @@ export default {
         "learnLabel": "Why it matters:",
         "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
         "hint": "Tap or drag a label chip, then drop it on the matching post.",
-        "selectPost": "Select Post"
+        "selectPost": "Select Post",
+        "answerProgress": "{count} / {total}"
       },
       "labels": {
         "paid": "PAID",
@@ -757,7 +793,7 @@ export default {
         "stage1Cleared": "Stage 1 cleared ✓",
         "badge": "Stage 2 / 2",
         "tag": "Product legitimacy",
-        "prompt": "These sellers all claim their products are “real”. Run a reverse image search on each photo, then classify what it actually is.",
+        "prompt": "Reverse-image-search each photo, then classify what it really is.",
         "runSearch": "🔍 Run reverse image search",
         "engineBar": "reverse-image-search.io",
         "engineDrop": "Drag a product image here to reverse-search it",
@@ -772,7 +808,8 @@ export default {
         "learnLabel": "Real tool, real habit:",
         "learn": "a reverse image search checks whether a “handmade”, “unique” or “real” product photo is actually stolen, mass-produced across dozens of dropshipping stores, or AI-generated. No results at all can mean the image is fake.",
         "hint": "Search first, then classify all three.",
-        "confirm": "Confirm classifications →"
+        "confirm": "Confirm classifications →",
+        "stampHere": "Stamp here"
       },
       "products": [
         {
@@ -844,6 +881,31 @@ export default {
         "help": "Match each emoji on a sticky-note to its letter to read the hidden label.",
         "noSelection": "No post selected",
         "erase": "Delete last letter"
+      },
+      "explain": {
+        "title": "Besides the ad — what about the product?",
+        "body": "You've spotted how these posts are packaged. But is the product itself what they claim? A reverse image search helps you check: instead of typing words, you search with a photo, and it finds everywhere that exact picture appears online.",
+        "useShop": "Love a piece of clothing you saw in a post? Reverse-search the photo to find where you can actually buy it.",
+        "useVerify": "Not sure an influencer's product is genuine? Reverse-search it to see if it's really unique — or the same mass-produced item everyone's selling.",
+        "searchLabel": "reverse image search",
+        "searching": "Searching the web…",
+        "dragHint": "↓ Drag the seller's photo into a reverse image search",
+        "queryCaption": "Seller says: “one-of-a-kind handmade jacket” · $180",
+        "resultsLabel": "Same photo found on:",
+        "takeawayLabel": "The catch:",
+        "takeaway": "That “unique handmade” jacket is the same mass-produced item selling for $9–14 on dozens of dropshipping shops. The photo gave it away.",
+        "continue": "Now try it yourself →"
+      },
+      "labelFeedback": {
+        "title": "Sponsored posts must be labeled",
+        "intro": "When a creator is paid, partnered with, or gifted a product, they have to disclose it — clearly and up front. A hidden ad dressed up as a genuine recommendation is exactly what you just labeled. Here's how to tell them apart:",
+        "paidDesc": "The creator is paid by the brand to post about it.",
+        "paidExample": "Tell-tale signs: an affiliate link, or a personal discount code like “LUNA20”.",
+        "collabDesc": "A creative partnership, made together with the brand.",
+        "collabExample": "Tell-tale signs: a “paid partnership” tag, or #ad on a co-created post.",
+        "giftedDesc": "The creator was sent the product for free.",
+        "giftedExample": "Tell-tale signs: “gifted”, or “thanks @brand for sending this” — a free item, no payment.",
+        "continue": "Got it →"
       }
     },
     "algorithm": {
@@ -853,13 +915,13 @@ export default {
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",
-        "prompt": "Enter the 6-digit access code to boot the targeting engine.",
+        "prompt": "Enter the 6-digit code.",
         "error": "Access denied — that code is wrong.",
         "submit": "Unlock →"
       },
       "choice": {
         "badge": "System question · privacy trade-off",
-        "prompt": "The mainframe offers you a deal. Which future do you want?",
+        "prompt": "Which future do you want?",
         "optionATag": "Option A",
         "optionABefore": "See",
         "optionABold": "fewer, personalised",
@@ -876,8 +938,9 @@ export default {
         "continue": "Enter the targeting engine →"
       },
       "equations": {
+        "feedbackTitle": "Equation solved: why this ad?",
         "badge": "Targeting engine · solve every equation",
-        "prompt": "Each row is a person. Fill the empty slot so the machine can output the ad it would show them.",
+        "prompt": "Fill the missing slot to complete each person's ad.",
         "adFlag": "AD ACTIVATED",
         "slotPlaceholder": "＋ drop tile",
         "stepBadge": "Equation {n} / {total}",
@@ -894,7 +957,11 @@ export default {
         "profileP3": " (gaming, new tech, the NovaPad X he keeps searching) and ",
         "profileB3": "his insecurities",
         "profileP4": " (fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
-        "logEvidence": "Log this evidence ✓"
+        "logEvidence": "Log this evidence ✓",
+        "finalLessonTitle": "What you learned",
+        "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you.",
+        "nextBtn": "Next equation →",
+        "lastBtn": "See {friend}’s profile →"
       },
       "cols": [
         "Demographic",
@@ -907,28 +974,32 @@ export default {
           "slots": {
             "0": "Girl, 13–17",
             "1": "Follows beauty influencers"
-          }
+          },
+          "feedbackLesson": "How does the algorithm build this profile? It can combine age entered at sign-up with followed accounts, likes and time spent on skincare videos. It uses that activity to infer an interest in skin products and select an ad designed to turn that interest into a purchase."
         },
         "r2": {
           "ad": "Muscle-gain supplement",
           "slots": {
             "1": "Follows fitness influencers",
             "2": "Insecure about being skinny"
-          }
+          },
+          "feedbackLesson": "The algorithm can use account details, followed fitness pages and interactions with workout content to build an advertising profile. In this equation, the supplement is matched to that profile because its promise of more muscle appeals to his concern about being skinny."
         },
         "r3": {
           "ad": "Baldness cream",
           "slots": {
             "0": "Man, 25–35",
             "1": "Follows tech channels"
-          }
+          },
+          "feedbackLesson": "For example, clicks on hair-loss products or repeated views of related content can suggest that concern. An algorithm can use these recorded actions to put someone in an audience for hair-loss ads. The advertiser then offers a supposed solution to the worry."
         },
         "r4": {
           "ad": "Weight-loss pills",
           "slots": {
             "0": "Woman, 30–45",
             "2": "Insecure about her weight"
-          }
+          },
+          "feedbackLesson": "Following diet pages, liking weight-loss posts and watching related videos can feed an advertising profile. The algorithm uses those traces to select a matching ad. That is the mechanism behind personalised advertising: your activity helps decide which sales pitch you see."
         }
       },
       "tiles": {
@@ -1002,12 +1073,17 @@ export default {
             "result": "OSTOS"
           }
         ]
+      },
+      "door": {
+        "badge": "Control Room · Sealed",
+        "prompt": "The Algorithm Control Room is locked. A keypad is mounted on the door — step up to it and enter the 6-digit code from your Data Report.",
+        "action": "Use the keypad →"
       }
     },
     "ads": {
       "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
       "solvedTitle": "Corridor cleared — you read the fine print",
-      "solvedText": "The exit hisses open. You logged the hidden €59/month auto-renewal as evidence against the deal.",
+      "solvedText": "The exit hisses open — you logged the hidden €59/month auto-renewal as evidence. Ads shouting “free”, “you won” or “$0 today” usually bury the real cost in tiny print, so always read  what you're agreeing to before you tap.",
       "pickup": "You pick up the Truth Flashlight 🔦",
       "torchCharging": "🔦 Charging…",
       "torchOn": "🔦 Flashlight ON",
@@ -1036,28 +1112,33 @@ export default {
           "glossyTitle": "FREE 30-DAY TRIAL!",
           "glossyBody": "Try NovaCloud Premium — $0 today!",
           "glossyBadge": "$0",
-          "truth": "Automatic renovation"
+          "truth": "After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.",
+          "truthTitle": "Automatic renovation",
+          "letter": "A"
         },
         {
           "glossyTitle": "🎉 CONGRATULATIONS!",
           "glossyBody": "You've WON a €1,000 gift card! Tap to claim.",
           "glossyBadge": "€1,000",
           "truth": "This 'prize' harvests your personal data and card details.",
-          "truthTitle": "👎🏼 You did NOT win anything"
+          "truthTitle": "👎🏼 You did NOT win anything",
+          "letter": "S"
         },
         {
           "glossyTitle": "📈 GET RICH QUICK!",
           "glossyBody": "Turn €100 into €10,000 in one week — guaranteed!",
           "glossyBadge": "×100",
           "truth": "Every euro you “invest” is gone, and the sky-high “returns” on screen are fake.",
-          "truthTitle": "A pure scam"
+          "truthTitle": "A pure scam",
+          "letter": "E"
         },
         {
           "glossyTitle": "🛡️ VIRUS DETECTED!",
           "glossyBody": "Your device may be at risk — download SecureNow FREE!",
           "glossyBadge": "FREE",
           "truth": "The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad.",
-          "truthTitle": "You didn´t have a virus... but now you do"
+          "truthTitle": "You didn´t have a virus... but now you do",
+          "letter": "V"
         }
       ]
     },
@@ -1082,27 +1163,33 @@ export default {
       "posters": [
         {
           "headline": "ONLY 3 LEFT IN STOCK!",
-          "sub": "Don't miss out!"
+          "sub": "Don't miss out!",
+          "letter": "F"
         },
         {
           "headline": "Over 2 MILLION people already bought this!",
-          "sub": "Join the crowd."
+          "sub": "Join the crowd.",
+          "letter": "O"
         },
         {
           "headline": "Lose 10kg in just 3 DAYS — guaranteed miracle!",
-          "sub": "Results not typical."
+          "sub": "Results not typical.",
+          "letter": "O"
         },
         {
           "headline": "As seen on @StarCeleb's page — she LOVES it!",
-          "sub": "#ad"
+          "sub": "#ad",
+          "letter": "L"
         },
         {
           "headline": "Don't let your family down.",
-          "sub": "They deserve better."
+          "sub": "They deserve better.",
+          "letter": "E"
         },
         {
           "headline": "OFFER ENDS IN 04:59 — buy NOW before it's gone!",
-          "sub": "Tick, tock…"
+          "sub": "Tick, tock…",
+          "letter": "D"
         }
       ],
       "techniques": {

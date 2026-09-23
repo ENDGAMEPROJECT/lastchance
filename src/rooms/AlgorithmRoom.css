@@ -461,3 +461,16 @@
 /* When the reveal is showing, the profile + learn callout would overflow;
    drop the learn callout to keep the whole phase on one screen. */
 .ar-eq:has(.ar-reveal) .learn { display: none; }
+
+.ar-feedback {
+  width: 100%;
+  max-width: 900px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px 20px;
+  padding: 16px 20px;
+}
+.ar-feedback h3 { grid-column: 1 / -1; color: var(--cyan); margin: 0; font-size: 1rem; }
+.ar-feedback p { line-height: 1.45; margin: 0; font-size: 0.88rem; }
+.ar-feedback-lesson { border-left: 3px solid var(--cyan); padding-left: 16px; }
+.ar-feedback .btn { grid-column: 1 / -1; justify-self: end; }

@@ -160,7 +160,6 @@ export default function AlgorithmRoom({ node }) {
     if (tileId === blankSlot(row).tileId) {
       setWrongFlash(false)
       setPlacements((p) => ({ ...p, [row.id]: tileId }))
-      window.setTimeout(() => setStep((current) => current + 1), 850)
     } else {
       playSound('wrong.mp3')
       setWrongFlash(true)
@@ -387,7 +386,25 @@ export default function AlgorithmRoom({ node }) {
                     </div>
                     {wrongFlash && <div className="banner wrong shake ar-wrong">{t('rooms.algorithm.equations.wrongHint')}</div>}
                   </div>
-                ) : null}
+                ) : (
+                    <section
+                      className="ar-feedback panel panel-glow-cyan fade-in"
+                      aria-labelledby="ar-feedback-title"
+                      aria-live="polite"
+                    >
+                      <h3 id="ar-feedback-title">{t('rooms.algorithm.equations.feedbackTitle')}</h3>
+                      <p id="ar-feedback-lesson" className="ar-feedback-lesson">{t(`rooms.algorithm.rows.${row.id}.feedbackLesson`)}</p>
+                      <button
+                        className="btn btn-cyan"
+                        onMouseDown={(event) => event.preventDefault()}
+                        onClick={() => setStep((current) => current + 1)}
+                      >
+                        {step < ROWS.length - 1
+                          ? t('rooms.algorithm.equations.nextBtn')
+                          : t('rooms.algorithm.equations.lastBtn', { friend: NARRATIVE.friend })}
+                      </button>
+                    </section>
+                )}
               </div>
             )
           })() : (

@@ -45,6 +45,7 @@ export default {
 
   /* ---- PHASE: equations ---- */
   equations: {
+    feedbackTitle: 'Equation solved: why this ad?',
     badge: 'Targeting engine · solve every equation',
     prompt:
       'Each row is a person. Fill the empty slot so the machine can output the ad it would show them.',
@@ -108,24 +109,32 @@ export default {
      factor labels keyed by column index. */
   rows: {
     r1: {
+      feedbackData: "Why a skincare cream? This profile combines a teenage girl, an interest in beauty influencers and a worry about her skin. A cream promising perfect skin is chosen because it offers a solution to that specific worry.",
+      feedbackLesson: "How does the algorithm build this profile? It can combine age entered at sign-up with followed accounts, likes and time spent on skincare videos. It uses that activity to infer an interest in skin products and select an ad designed to turn that interest into a purchase.",
       ad: 'Miracle skincare cream',
       slots: { 0: 'Girl, 13–17', 1: 'Follows beauty influencers' },
       explain:
         'A 13-year-old who follows beauty accounts and worries about her skin is served a “miracle” cream. The algorithm didn’t guess — it matched her age and her follows to an insecurity, then sold straight to it.',
     },
     r2: {
+      feedbackData: "Why a muscle-gain supplement? This person follows fitness influencers and feels too skinny. The ad promises bigger muscles: exactly the change he wants. His age range also helps place him in the audience the advertiser wants to reach.",
+      feedbackLesson: "The algorithm can use account details, followed fitness pages and interactions with workout content to build an advertising profile. In this equation, the supplement is matched to that profile because its promise of more muscle appeals to his concern about being skinny.",
       ad: 'Muscle-gain supplement',
       slots: { 1: 'Follows fitness influencers', 2: 'Insecure about being skinny' },
       explain:
         'A teen boy who follows fitness pages and feels too skinny is handed a muscle-gain supplement. His insecurity is the exact reason the ad reached him.',
     },
     r3: {
+      feedbackData: "Why a baldness cream? The decisive clue is his worry about losing hair. A product promising to stop hair loss speaks directly to that concern. Following tech channels is part of his profile, but the hair-loss concern explains this particular ad.",
+      feedbackLesson: "For example, clicks on hair-loss products or repeated views of related content can suggest that concern. An algorithm can use these recorded actions to put someone in an audience for hair-loss ads. The advertiser then offers a supposed solution to the worry.",
       ad: 'Baldness cream',
       slots: { 0: 'Man, 25–35', 1: 'Follows tech channels' },
       explain:
         'A man who fears going bald — flagged by his age and browsing — is shown a baldness “cure”. Same recipe: a private worry turned into a target.',
     },
     r4: {
+      feedbackData: "Why weight-loss pills? This person follows diet and lifestyle pages and worries about her weight. The ad offers weight loss as a quick solution, linking the product to both her interests and her concern about her body.",
+      feedbackLesson: "Following diet pages, liking weight-loss posts and watching related videos can feed an advertising profile. The algorithm uses those traces to select a matching ad. That is the mechanism behind personalised advertising: your activity helps decide which sales pitch you see.",
       ad: 'Weight-loss pills',
       slots: { 0: 'Woman, 30–45', 2: 'Insecure about her weight' },
       explain:
