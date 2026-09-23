@@ -64,11 +64,21 @@
   border-radius: var(--radius);
   border: 1px solid var(--line);
   background:
-    radial-gradient(120% 80% at 50% 0%, rgba(255, 43, 214, 0.08), transparent 60%),
+    radial-gradient(
+      120% 80% at 50% 0%,
+      rgba(255, 43, 214, 0.08),
+      transparent 60%
+    ),
     var(--panel);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 14px 26px rgba(0, 0, 0, 0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 14px 26px rgba(0, 0, 0, 0.4);
 }
-.pl-tray-label { font-size: 0.68rem; letter-spacing: 0.24em; color: var(--muted); }
+.pl-tray-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  color: var(--muted);
+}
 
 .pl-chips {
   flex: 1;
@@ -80,7 +90,9 @@
 }
 
 /* A draggable technique frame — a translucent labelled overlay. */
-.pl-frame-drag { flex: none; }
+.pl-frame-drag {
+  flex: none;
+}
 .pl-frame {
   position: relative;
   display: flex;
@@ -91,7 +103,11 @@
   border: 1px dashed rgba(255, 43, 214, 0.55);
   background: rgba(255, 43, 214, 0.1);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-  transition: transform 0.12s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+  transition:
+    transform 0.12s,
+    box-shadow 0.2s,
+    border-color 0.2s,
+    background 0.2s;
 }
 .pl-frame-drag:hover .pl-frame {
   transform: translateY(-2px);
@@ -107,6 +123,26 @@
   text-transform: uppercase;
   color: #ffdaf6;
 }
+/* When the frame is laid over a poster, the label must NOT cover the headline.
+   Pin it as a compact placard at the top edge instead of centring it. */
+.pl-freeframe .pl-frame-label {
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 90%;
+  font-size: 0.58rem;
+  letter-spacing: 0.03em;
+  color: #fff;
+  background: rgba(18, 3, 14, 0.85);
+  padding: 2px 7px 3px;
+  border-radius: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
 .pl-frame-note {
   font-size: 0.6rem;
   letter-spacing: 0.08em;
@@ -121,12 +157,34 @@
   border: 2px solid var(--magenta);
   opacity: 0.85;
 }
-.pl-frame-corner.tl { top: 3px; left: 3px; border-right: none; border-bottom: none; }
-.pl-frame-corner.tr { top: 3px; right: 3px; border-left: none; border-bottom: none; }
-.pl-frame-corner.bl { bottom: 3px; left: 3px; border-right: none; border-top: none; }
-.pl-frame-corner.br { bottom: 3px; right: 3px; border-left: none; border-top: none; }
+.pl-frame-corner.tl {
+  top: 3px;
+  left: 3px;
+  border-right: none;
+  border-bottom: none;
+}
+.pl-frame-corner.tr {
+  top: 3px;
+  right: 3px;
+  border-left: none;
+  border-bottom: none;
+}
+.pl-frame-corner.bl {
+  bottom: 3px;
+  left: 3px;
+  border-right: none;
+  border-top: none;
+}
+.pl-frame-corner.br {
+  bottom: 3px;
+  right: 3px;
+  border-left: none;
+  border-top: none;
+}
 
-.pl-count { text-align: center; }
+.pl-count {
+  text-align: center;
+}
 .pl-hint {
   position: absolute;
   left: 0;
@@ -162,60 +220,220 @@
   gap: 5px;
   text-align: center;
   min-height: 0;
-  padding: 14px 14px 16px;
+  padding: 9px 9px 11px;
   border-radius: var(--radius);
   border: 2px solid var(--line);
   background:
-    radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.06), transparent 60%),
+    radial-gradient(
+      120% 90% at 50% 0%,
+      rgba(255, 255, 255, 0.06),
+      transparent 60%
+    ),
     var(--panel-solid);
   color: var(--text);
   overflow: hidden;
-  transition: transform 0.14s, box-shadow 0.2s, border-color 0.2s;
+  transition:
+    transform 0.14s,
+    box-shadow 0.2s,
+    border-color 0.2s;
   font-family: var(--font-ui);
   box-shadow: 0 16px 28px rgba(0, 0, 0, 0.5);
 }
 
 /* Per-poster neon tint on the border so each ad reads distinct. */
-.pl-poster.tint-red { border-color: rgba(255, 59, 92, 0.4); }
-.pl-poster.tint-cyan { border-color: rgba(22, 242, 255, 0.4); }
-.pl-poster.tint-amber { border-color: rgba(255, 185, 43, 0.4); }
-.pl-poster.tint-purple { border-color: rgba(168, 85, 247, 0.4); }
-.pl-poster.tint-magenta { border-color: rgba(255, 43, 214, 0.4); }
-.pl-poster.tint-green { border-color: rgba(43, 255, 136, 0.4); }
+/* fomo */
+.pl-fomo {
+  border-color: rgba(16, 12, 13, 0.4);
+  background-image: url("/persuasion-lab/fomo.png");
+  background-size: cover;
+  text-align: center;
+  .pl-poster-head {
+    font-family: var(--neogroteske);
+    font-size: 1.2rem;
+    background: black;
+    color: yellow;
+    padding: 0.3rem 0.3rem;
+  }
+  .pl-poster-sub {
+    font-family: var(--font-neogrotesk);
 
-/* A frame is hovering over this drop zone — invite the drop. */
-.pl-poster.is-over {
-  border-color: var(--magenta);
-  box-shadow: var(--glow-magenta);
-  transform: translateY(-3px) scale(1.02);
+    font-size: 0.8rem;
+    color: white;
+    padding-top: 0.4rem;
+  }
+}
+.pl-social {
+  border-color: rgba(255, 59, 92, 0.4);
+  background-image: url("/persuasion-lab/social.png");
+  background-size: cover;
+  text-align: center;
+  .pl-poster-head {
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    /* text-shadow: 3px 3px 6px black; */
+    background: transparent;
+    color: rgb(255, 166, 166);
+    padding: 0.4rem 0.4rem;
+  }
+  .pl-poster-sub {
+    font-family: var(--font-serif);
+    letter-spacing: 1;
+    font-size: 0.8rem;
+    color: white;
+    padding-top: 0.1rem;
+  }
+}
+
+.pl-exagg {
+  border-color: rgba(95, 59, 255, 0.4);
+  background-image: url("/persuasion-lab/exagg.png");
+  background-size: cover;
+  text-align: center;
+  .pl-poster-head {
+    font-family: var(--font-neogrotesk);
+    font-size: 1rem;
+    /* text-shadow: 3px 3px 6px black; */
+    background: transparent;
+    color: rgb(208, 213, 238);
+    padding: 0.5rem 0.5rem;
+  }
+  .pl-poster-sub {
+    font-family: var(--font-neogrotesk);
+    letter-spacing: 1;
+    font-size: 0.8rem;
+    color: white;
+    padding-top: 0.1rem;
+  }
+}
+.pl-influencer {
+   border-color: rgba(95, 59, 255, 0.4);
+  background-image: url("/persuasion-lab/influencer.png");
+  background-size: cover;
+  text-align: center;
+  .pl-poster-head {
+    font-family: var(--font-script);
+    font-size: 1rem;
+    /* text-shadow: 3px 3px 6px black; */
+    background: transparent;
+    color: rgb(208, 213, 238);
+    padding: 0.5rem 0 0.5rem 0.5rem;
+    margin: 1rem -0.6rem 0 0 ; 
+      width: 70%;
+       align-self: flex-end;
+       /* letter-spacing: 0.1rem; */
+  }
+  .pl-poster-sub {
+    font-family: var(--font-neogrotesk);
+    font-size: 0.8rem;
+    color: white;
+    padding-top: 0.1rem;
+  }
+}
+.pl-emotional {
+  border-color: rgba(95, 59, 255, 0.4);
+  background-image: url("/persuasion-lab/emotional.png");
+  background-size: cover;
+  text-align: center;
+  .pl-poster-head {
+    font-weight: normal;
+    font-family: var(--font-neogrotesk);
+    font-size: 1rem;
+    /* text-shadow: 3px 3px 6px black; */
+    background: transparent;
+    color: rgb(208, 213, 238);
+    padding: 0.5rem 0.5rem;
+  }
+  .pl-poster-sub {
+    font-family: var(--font-neogrotesk);
+    letter-spacing: 1;
+    font-size: 0.8rem;
+    color: white;
+    padding-top: 0.1rem;
+    font-style: normal
+  }
+}
+.pl-urgency {
+  border-color: rgba(95, 59, 255, 0.4);
+  background-image: url("/persuasion-lab/urgency.png");
+  background-size: cover;
+  text-align: center;
+  .pl-poster-head {
+    font-weight: bold;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    /* text-shadow: 3px 3px 6px black; */
+    background: transparent;
+    color: rgb(10, 255, 92);
+    padding: 0.5rem 0.5rem;
+  }
+  .pl-poster-sub {
+    font-family: var(--font-display);
+    letter-spacing: 1;
+    font-size: 0.8rem;
+    color: white;
+    padding-top: 0.1rem;
+    font-style: normal
+  }
+}
+.pl-frame {
+  .pl-poster-head {
+    color: rgba(255, 255, 255, 0.0);
+    background-color: rgba(255, 255, 255, 0);
+  }
+  .pl-poster-sub {
+    color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0);
+  }
+  .pl-poster-emoji {
+    color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0);
+  }
+}
+
+.pl-poster.tint-cyan {
+  border-color: rgba(22, 242, 255, 0.4);
+}
+.pl-poster.tint-amber {
+  border-color: rgba(255, 185, 43, 0.4);
+}
+.pl-poster.tint-purple {
+  border-color: rgba(168, 85, 247, 0.4);
+}
+.pl-poster.tint-magenta {
+  border-color: rgba(255, 43, 214, 0.4);
+}
+.pl-poster.tint-green {
+  border-color: rgba(43, 255, 136, 0.4);
 }
 
 /* Correct placement — locked, letter revealed. */
 .pl-poster.framed {
-  border-color: var(--green);
-  box-shadow: var(--glow-green);
+  border-color: var(--line);
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.5);
 }
 
-/* Wrong placement — red flash. */
+/* Wrong placement remains silent and static; no flash or reaction while overlaid. */
 .pl-poster.wrong {
-  border-color: var(--red) !important;
-  box-shadow: var(--glow-red);
-  animation: pl-flash 0.6s ease;
-}
-@keyframes pl-flash {
-  0%, 100% { background-color: transparent; }
-  30% { background-color: rgba(255, 59, 92, 0.28); }
+  border-color: var(--line);
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.5);
+  animation: none;
 }
 
-.pl-poster-emoji { font-size: 1.9rem; filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5)); }
+.pl-poster-emoji {
+  font-size: 1.9rem;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
 .pl-poster-head {
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 0.9rem;
   line-height: 1.12;
-  letter-spacing: 0.01em;
 }
-.pl-poster-sub { font-size: 0.74rem; color: var(--muted); font-style: italic; }
+.pl-poster-sub {
+  font-size: 0.74rem;
+  color: var(--muted);
+  font-style: italic;
+}
 
 /* A marker ring drawn over the first occurrence of the code letter. The letter
    itself keeps its normal colour — only the circle is added. */
@@ -236,41 +454,56 @@
   box-shadow: 0 0 8px rgba(255, 207, 58, 0.75);
   pointer-events: none;
 }
+/* On the wall the poster only carries the circled letter so JS can MEASURE it;
+   its ring stays hidden (no right/wrong feedback). The visible ring is drawn on
+   the frame the player places (see .pl-frame-ring). */
+.pl-posters .pl-circled::after { display: none; }
+
+/* The frame's code-letter ring — JS sets left/top/width/height to the letter's
+   measured spot inside the matching poster, so it's present from the start and
+   lands on the letter when the frame is dropped onto that poster. */
+.pl-frame-ring {
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(-7deg);
+  border: 2px solid #ffcf3a;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 207, 58, 0.75);
+  pointer-events: none;
+  z-index: 5;
+}
 
 /* An invisible clone of the poster laid out inside a frame, so the ring lands
    exactly where the letter sits on the poster. Only the circle shows through —
    the cloned text is fully transparent. */
+/* Reuses the real .pl-poster + per-poster classes, so its internal layout is
+   IDENTICAL to the poster it targets — the ring therefore lands on the same
+   letter. It's the poster's exact size (164x190) and overlays the frame 1:1,
+   with the image/text/box all forced transparent so only the ring shows. */
 .pl-frame-ghost {
-  position: absolute;
+  position: absolute !important;
   left: 50%;
   top: 50%;
-  /* Match the REAL poster's box (134x150 with its padding) so the text wraps
-     line-for-line exactly like the poster, then scale down to the frame's
-     footprint. This keeps the ring on the same line as on the poster even for
-     long, multi-line headlines. */
-  width: 134px;
-  height: 150px;
-  padding: 9px 9px 11px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  transform: translate(-50%, -50%) scale(0.86);
+  width: 164px;
+  height: 190px;
+  transform: translate(-50%, -50%);
   transform-origin: center;
   pointer-events: none;
+  background: transparent !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: visible;
 }
-.pl-frame-ghost .pl-poster-emoji { font-size: 1.6rem; visibility: hidden; }
-.pl-frame-ghost .pl-poster-head {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 0.74rem;
-  line-height: 1.1;
-  letter-spacing: 0.01em;
-  text-align: center;
-  color: transparent;
+.pl-frame-ghost .pl-poster-head,
+.pl-frame-ghost .pl-poster-sub {
+  color: transparent !important;
+  background: transparent !important;
+  border-color: transparent !important;
 }
-.pl-frame-ghost .pl-poster-sub { font-size: 0.62rem; font-style: italic; color: transparent; }
+/* Match the wall poster's FLATTENED sizing (see .pl-posters rules below) so the
+   ghost's text lays out identically and its ring lands on the same letter. */
+.pl-frame-ghost .pl-poster-head { font-size: 0.74rem; line-height: 1.1; }
+.pl-frame-ghost .pl-poster-sub { font-size: 0.62rem; }
 
 /* The translucent labelled frame sitting on top of a matched poster. */
 .pl-frame-overlay {
@@ -328,16 +561,32 @@
   font-size: 1.3rem;
 }
 @keyframes pl-pop {
-  from { transform: scale(0.2); opacity: 0; }
-  60% { transform: scale(1.15); }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Ghost of a frame while dragging keeps its overlay look. */
-.dnd-ghost .pl-frame { box-shadow: var(--glow-magenta); }
+.dnd-ghost .pl-frame {
+  box-shadow: var(--glow-magenta);
+}
 
 /* ---------- Password / exit terminal ---------- */
-.pl-terminal-wrap { max-width: 620px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+.pl-terminal-wrap {
+  max-width: 620px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
 
 .pl-terminal {
   border-radius: var(--radius);
@@ -364,13 +613,30 @@
   background: var(--magenta);
   box-shadow: var(--glow-magenta);
 }
-.pl-term-body { padding: 18px 18px 22px; display: flex; flex-direction: column; gap: 14px; }
-.pl-term-prompt { color: var(--cyan); font-size: 0.9rem; }
+.pl-term-body {
+  padding: 18px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.pl-term-prompt {
+  color: var(--cyan);
+  font-size: 0.9rem;
+}
 
-.pl-term-letters { display: flex; gap: 8px; flex-wrap: wrap; }
+.pl-term-letters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
 
-.pl-term-input { gap: 10px; }
-.pl-term-caret { color: var(--magenta); font-size: 1.1rem; }
+.pl-term-input {
+  gap: 10px;
+}
+.pl-term-caret {
+  color: var(--magenta);
+  font-size: 1.1rem;
+}
 
 /* ============================================================
    Reworked scene: poster wall (LEFT) · free-frame pile (CENTRE)
@@ -391,10 +657,10 @@
    perspective (opposite tilt to the centre frames). */
 .pl-posters {
   flex: none;
-  width: 430px;
+  width: 730px;
   display: grid;
-  grid-template-columns: repeat(3, 134px);
-  grid-auto-rows: 150px;
+  grid-template-columns: repeat(3, 164px);
+  grid-auto-rows: 190px;
   gap: 10px;
   align-content: center;
   /* nudge the wall a little right and up */
@@ -405,11 +671,11 @@
   transform: rotateY(10deg);
   transform-origin: left center;
 }
-.pl-posters .pl-poster { padding: 9px 9px 11px; box-shadow: 0 12px 22px rgba(0, 0, 0, 0.5); }
+/* .pl-posters .pl-poster { padding: 9px 9px 11px; box-shadow: 0 12px 22px rgba(0, 0, 0, 0.5); }
 .pl-posters .pl-poster-emoji { font-size: 1.6rem; }
 .pl-posters .pl-poster-head { font-size: 0.74rem; line-height: 1.1; }
-.pl-posters .pl-poster-sub { font-size: 0.62rem; }
-.pl-posters .pl-letter-tile { width: 28px; height: 28px; font-size: 1.05rem; bottom: 5px; right: 5px; }
+.pl-posters .pl-poster-sub { font-size: 0.62rem; } 
+.pl-posters .pl-letter-tile { width: 28px; height: 28px; font-size: 1.05rem; bottom: 5px; right: 5px; } */
 
 /* RIGHT — the computer lives inside the persuasion.png scene. An invisible
    hotspot sits over it; clicking opens the computer screen (below). Position
@@ -458,8 +724,14 @@
   animation: pl-screen-in 0.22s ease both;
 }
 @keyframes pl-screen-in {
-  from { opacity: 0; transform: scale(1.02); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 .pl-screen-close {
   position: absolute;
@@ -475,10 +747,18 @@
   cursor: pointer;
   box-shadow: var(--glow-magenta);
 }
-.pl-screen-close:hover { background: rgba(255, 43, 214, 0.16); }
+.pl-screen-close:hover {
+  background: rgba(255, 43, 214, 0.16);
+}
 /* Nudge onto the monitor with top/left (NOT transform) so the wrong-password
    `shake` animation — which drives transform — doesn't override it and jump. */
-.pl-screen .pl-terminal { position: relative; top: -80px; left: 35px; width: 100%; max-width: 460px; }
+.pl-screen .pl-terminal {
+  position: relative;
+  top: -80px;
+  left: 35px;
+  width: 100%;
+  max-width: 460px;
+}
 /* The "access denied" banner floats below the terminal so it never grows the
    box (which would push the whole screen down when a wrong password is tried). */
 .pl-screen .pl-term-body .banner.wrong {
@@ -488,22 +768,42 @@
   right: 0;
   margin: 0;
 }
-.pl-screen .pl-term-body { padding: 16px; gap: 12px; }
-.pl-screen .pl-term-letters { gap: 6px; }
-.pl-screen .pl-letter-tile.small { width: 30px; height: 36px; font-size: 1.1rem; }
+.pl-screen .pl-term-body {
+  padding: 16px;
+  gap: 12px;
+}
+.pl-screen .pl-term-letters {
+  gap: 6px;
+}
+.pl-screen .pl-letter-tile.small {
+  width: 30px;
+  height: 36px;
+  font-size: 1.1rem;
+}
 
-.pl-terminal.locked { opacity: 0.95; border-color: var(--line); box-shadow: 0 14px 26px rgba(0, 0, 0, 0.5); }
-.pl-terminal.locked .pl-term-dot { background: var(--muted); box-shadow: none; }
-.pl-term-locked { color: var(--muted); font-size: 0.8rem; line-height: 1.35; text-align: center; margin: 0; }
+.pl-terminal.locked {
+  opacity: 0.95;
+  border-color: var(--line);
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.5);
+}
+.pl-terminal.locked .pl-term-dot {
+  background: var(--muted);
+  box-shadow: none;
+}
+.pl-term-locked {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+  text-align: center;
+  margin: 0;
+}
 
 /* CENTRE — free-floating, overlapping technique frames, tilted into the
    room's perspective and shaped like tall standing frames with a mark. */
 .pl-freeframe {
   position: absolute;
-  /* Posters recede in the plane (further columns shrink), so a full-size
-     134px frame reads too big. Sized down to match the apparent size of the
-     mid-wall posters the frames actually hover over. */
-  width: 118px;
+  width: 164px;
+  height: 190px;
   cursor: grab;
   touch-action: none;
   user-select: none;
@@ -516,18 +816,79 @@
   transform: rotateY(10deg);
   transform-origin: left center;
 }
-.pl-freeframe.dragging { cursor: grabbing; }
+.pl-freeframe.dragging {
+  cursor: grabbing;
+}
+/* Snapped onto its poster after a correct match — settled, but still draggable. */
+.pl-freeframe.locked {
+  filter: drop-shadow(2px 5px 8px rgba(0, 0, 0, 0.4));
+}
+.pl-freeframe.locked .pl-frame {
+  background: rgba(255, 43, 214, 0.04);
+  border-color: rgba(43, 255, 136, 0.55); /* green = confirmed match */
+}
 .pl-freeframe .pl-frame {
   cursor: inherit;
-  min-height: 132px; /* scaled down to match the receded posters */
-  padding: 10px 10px 12px;
-  gap: 7px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 9px 9px 11px;
+  gap: 5px;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  border-width: 2px;
   background: rgba(255, 43, 214, 0.09);
-  transition: transform 0.15s ease, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s,
+    border-color 0.2s,
+    background 0.2s;
+  text-align: center;
 }
-.pl-freeframe .pl-frame-label { text-align: center; }
+/* .pl-freeframe .pl-poster-emoji {
+  font-size: 1.6rem;
+  opacity: 0;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
+.pl-freeframe .pl-poster-head {
+  color: rgba(255, 255, 255, 0);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.74rem;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+.pl-freeframe .pl-poster-sub {
+  color: rgba(255, 255, 255, 0.1);
+  font-size: 0.62rem;
+  line-height: normal;
+} */
+.pl-freeframe-technique {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #d4ffe6;
+  background: var(--magenta-dim);
+  padding: 0.1rem 0.4rem 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: bold;
+  line-height: 1;
+  text-transform: uppercase;
+  text-align: center;
+}
+.pl-letter-highlight {
+  /* background:
+    yellow;
+    mix-blend-mode: difference; */
+  border: yellow 1px solid;
+  border-radius: 4px;
+
+  opacity: 1;
+}
 /* the circular "mark" where the hidden letter is read once framed */
 .pl-frame-mark {
   margin-top: auto;
@@ -538,11 +899,21 @@
   box-shadow: inset 0 0 12px rgba(255, 43, 214, 0.22);
 }
 .pl-freeframe:hover .pl-frame {
-  border-color: var(--magenta);
-  background: rgba(255, 43, 214, 0.16);
-  box-shadow: var(--glow-magenta);
+  border-color: rgba(255, 43, 214, 0.55);
+  background: rgba(255, 43, 214, 0.09);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 .pl-freeframe.dragging .pl-frame {
-  transform: scale(1.05);
-  box-shadow: var(--glow-magenta);
+  transform: none;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+.pl-freeframe.locked {
+  opacity: 1;
+  filter: drop-shadow(3px 10px 16px rgba(0, 0, 0, 0.55));
+}
+.pl-freeframe.locked .pl-frame {
+  border-color: rgba(255, 43, 214, 0.55);
+  background: rgba(255, 43, 214, 0.09);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  transform: none;
 }

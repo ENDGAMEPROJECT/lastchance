@@ -727,7 +727,9 @@ export default {
             "2% off"
           ]
         }
-      }
+      },
+      "learnLead": "A guaranteed “win”?",
+      "learnBody": "Spin wheels, daily login bonuses and loot boxes are engagement and advertising tricks, not generosity. They are rigged so you almost always “win” something — usually a tiny discount like 30¢ off — because feeling lucky makes you keep playing, share the app, and spend more. A prize you always get, worth almost nothing, isn't a gift. It's bait."
     },
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
@@ -806,7 +808,8 @@ export default {
         "learnLabel": "Real tool, real habit:",
         "learn": "a reverse image search checks whether a “handmade”, “unique” or “real” product photo is actually stolen, mass-produced across dozens of dropshipping stores, or AI-generated. No results at all can mean the image is fake.",
         "hint": "Search first, then classify all three.",
-        "confirm": "Confirm classifications →"
+        "confirm": "Confirm classifications →",
+        "stampHere": "Stamp here"
       },
       "products": [
         {
@@ -878,6 +881,31 @@ export default {
         "help": "Match each emoji on a sticky-note to its letter to read the hidden label.",
         "noSelection": "No post selected",
         "erase": "Delete last letter"
+      },
+      "explain": {
+        "title": "Besides the ad — what about the product?",
+        "body": "You've spotted how these posts are packaged. But is the product itself what they claim? A reverse image search helps you check: instead of typing words, you search with a photo, and it finds everywhere that exact picture appears online.",
+        "useShop": "Love a piece of clothing you saw in a post? Reverse-search the photo to find where you can actually buy it.",
+        "useVerify": "Not sure an influencer's product is genuine? Reverse-search it to see if it's really unique — or the same mass-produced item everyone's selling.",
+        "searchLabel": "reverse image search",
+        "searching": "Searching the web…",
+        "dragHint": "↓ Drag the seller's photo into a reverse image search",
+        "queryCaption": "Seller says: “one-of-a-kind handmade jacket” · $180",
+        "resultsLabel": "Same photo found on:",
+        "takeawayLabel": "The catch:",
+        "takeaway": "That “unique handmade” jacket is the same mass-produced item selling for $9–14 on dozens of dropshipping shops. The photo gave it away.",
+        "continue": "Now try it yourself →"
+      },
+      "labelFeedback": {
+        "title": "Sponsored posts must be labeled",
+        "intro": "When a creator is paid, partnered with, or gifted a product, they have to disclose it — clearly and up front. A hidden ad dressed up as a genuine recommendation is exactly what you just labeled. Here's how to tell them apart:",
+        "paidDesc": "The creator is paid by the brand to post about it.",
+        "paidExample": "Tell-tale signs: an affiliate link, or a personal discount code like “LUNA20”.",
+        "collabDesc": "A creative partnership, made together with the brand.",
+        "collabExample": "Tell-tale signs: a “paid partnership” tag, or #ad on a co-created post.",
+        "giftedDesc": "The creator was sent the product for free.",
+        "giftedExample": "Tell-tale signs: “gifted”, or “thanks @brand for sending this” — a free item, no payment.",
+        "continue": "Got it →"
       }
     },
     "algorithm": {
@@ -910,6 +938,7 @@ export default {
         "continue": "Enter the targeting engine →"
       },
       "equations": {
+        "feedbackTitle": "Equation solved: why this ad?",
         "badge": "Targeting engine · solve every equation",
         "prompt": "Fill the missing slot to complete each person's ad.",
         "adFlag": "AD ACTIVATED",
@@ -930,7 +959,9 @@ export default {
         "profileP4": " (fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
         "logEvidence": "Log this evidence ✓",
         "finalLessonTitle": "What you learned",
-        "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you."
+        "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you.",
+        "nextBtn": "Next equation →",
+        "lastBtn": "See {friend}’s profile →"
       },
       "cols": [
         "Demographic",
@@ -943,28 +974,32 @@ export default {
           "slots": {
             "0": "Girl, 13–17",
             "1": "Follows beauty influencers"
-          }
+          },
+          "feedbackLesson": "How does the algorithm build this profile? It can combine age entered at sign-up with followed accounts, likes and time spent on skincare videos. It uses that activity to infer an interest in skin products and select an ad designed to turn that interest into a purchase."
         },
         "r2": {
           "ad": "Muscle-gain supplement",
           "slots": {
             "1": "Follows fitness influencers",
             "2": "Insecure about being skinny"
-          }
+          },
+          "feedbackLesson": "The algorithm can use account details, followed fitness pages and interactions with workout content to build an advertising profile. In this equation, the supplement is matched to that profile because its promise of more muscle appeals to his concern about being skinny."
         },
         "r3": {
           "ad": "Baldness cream",
           "slots": {
             "0": "Man, 25–35",
             "1": "Follows tech channels"
-          }
+          },
+          "feedbackLesson": "For example, clicks on hair-loss products or repeated views of related content can suggest that concern. An algorithm can use these recorded actions to put someone in an audience for hair-loss ads. The advertiser then offers a supposed solution to the worry."
         },
         "r4": {
           "ad": "Weight-loss pills",
           "slots": {
             "0": "Woman, 30–45",
             "2": "Insecure about her weight"
-          }
+          },
+          "feedbackLesson": "Following diet pages, liking weight-loss posts and watching related videos can feed an advertising profile. The algorithm uses those traces to select a matching ad. That is the mechanism behind personalised advertising: your activity helps decide which sales pitch you see."
         }
       },
       "tiles": {
