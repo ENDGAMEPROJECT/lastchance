@@ -65,21 +65,21 @@ const PRODUCTS = [
   {
     id: 'mug',
     seller: 'artisan_clay_co',
-    emoji: '☕',
+    // emoji: '☕',
     hue: 'linear-gradient(135deg, #d9b38c, #8a5a3b)',
     verdict: 'mass', // it is mass-produced, not handmade
   },
   {
     id: 'novapad',
     seller: 'novapad_x_deals',
-    emoji: '📱',
+    // emoji: '📱',
     hue: 'linear-gradient(135deg, #7a2ce0, #2b6bff)',
     verdict: 'ai', // the image is AI-generated / fake
   },
   {
     id: 'cupcakes',
     seller: 'cornerst_bakery',
-    emoji: '🧁',
+    // emoji: '🧁',
     hue: 'linear-gradient(135deg, #ff9fbf, #ffd36b)',
     verdict: 'legit', // this one is real
   },
@@ -238,6 +238,12 @@ export default function InfluencerAvenue({ node }) {
     setPicks((p) => ({ ...p, [id]: value }))
   }
 
+  // DEBUG ONLY: remove this function and the marked button below to restore the full first stage.
+  function skipFirstStageForDebug() {
+    setDecoderOpen(false)
+    setStage('verify')
+  }
+
   function submitVerify() {
     if (!PRODUCTS.every((p) => searched[p.id])) {
       setVerifyErr(t('rooms.influencer.stage2.errRunAll'))
@@ -280,11 +286,12 @@ export default function InfluencerAvenue({ node }) {
             <p className="ia-prompt">
               {t('rooms.influencer.stage1.prompt')}
             </p>
+            {/* DEBUG ONLY: remove this block with skipFirstStageForDebug when no longer needed. */}
             {DEBUG && (
               <button
                 type="button"
                 className="btn btn-ghost btn-sm ia-debug-skip"
-                onClick={() => setStage('verify')}
+                onClick={skipFirstStageForDebug}
               >
                 ⏭ Skip decoding (debug)
               </button>
@@ -554,9 +561,11 @@ export default function InfluencerAvenue({ node }) {
                     disabled={!!activeId}
                     className={`ia-imgtile-drag ${isShown ? 'shown' : ''}`}
                   >
-                    <div className="ia-imgtile" style={{ background: p.hue }}>
+                    <div className="ia-imgtile" style={{  
+                      backgroundImage: `url("${import.meta.env.BASE_URL}products/${p.id}.png")`,
+                      backgroundSize: "cover" }}>
                       <span className="ia-imgtile-emoji">{p.emoji}</span>
-                      <span className="ia-imgtile-name t-xs">{copy.name}</span>
+                      <span className="ia-imgtile-name">{copy.name}</span>
                       <span className={`ia-imgtile-badge ${done ? 'done' : 'grab'}`} aria-hidden>{done ? '✓' : '⤓'}</span>
                       {picks[p.id] && (
                         <span className="ia-imgtile-verdict t-xs">{t(`rooms.influencer.classify.${picks[p.id]}`)}</span>
@@ -595,8 +604,11 @@ export default function InfluencerAvenue({ node }) {
                 {active && (
                   <div className="ia-engine-panel">
                     <div className="ia-engine-busy">
-                      <div className="ia-engine-thumb" style={{ background: active.hue }}>
-                        <span className="ia-imgtile-emoji">{active.emoji}</span>
+                      <div className="ia-engine-thumb" 
+                      style={{
+                        backgroundImage: `url("${import.meta.env.BASE_URL}products/${active.id}.png")`,
+                        backgroundSize: 'cover',
+                      }}>
                         <span className="ia-scan" aria-hidden />
                       </div>
                       <div className="ia-searching">
@@ -617,9 +629,13 @@ export default function InfluencerAvenue({ node }) {
                 {shown && (
                   <div className="ia-engine-panel fade-in">
                     <div className="ia-engine-result-head">
-                      <div className="ia-engine-thumb" style={{ background: shown.hue }}>
-                        <span className="ia-imgtile-emoji">{shown.emoji}</span>
-                      </div>
+                      <div
+                        className="ia-engine-thumb"
+                        style={{
+                          backgroundImage: `url("${import.meta.env.BASE_URL}products/${shown.id}.png")`,
+                          backgroundSize: 'cover',
+                        }}
+                      />
                       {/* the reserved slot — click it with a stamp in hand to press */}
                       <button
                         type="button"
