@@ -6,7 +6,7 @@ import { bgUrl } from '../../game/assets.js'
 import './pretest.css'
 
 /* Shared scene for the diagnostic conversations and the post-test review. */
-export default function InPersonTest({ script: p, masteryOpening, actions }) {
+export default function InPersonTest({ script: p, masteryOpening, actions, requirePhoneView = true }) {
   const { reducedMotion } = useGame()
   const t = useT()
   const friend = NARRATIVE.friend
@@ -14,17 +14,18 @@ export default function InPersonTest({ script: p, masteryOpening, actions }) {
   const [phase, setPhase] = useState('opening')
   const [round, setRound] = useState(0)
   const [answer, setAnswer] = useState(null)
-  const [mastery, setMastery] = useState(false)
+  const mastery = Boolean(masteryOpening)
   const [prompt, setPrompt] = useState(p.opening)
   const [phoneOpen, setPhoneOpen] = useState(false)
   const [phoneViewed, setPhoneViewed] = useState(false)
+  const needsPhoneView = requirePhoneView && !phoneViewed
   const phoneRef = useRef(null)
   const closeRef = useRef(null)
   const returnFocusRef = useRef(false)
   const speechClock = useRef({ key: '', elapsed: 0 })
   const [speechProgress, setSpeechProgress] = useState({ key: '', elapsed: 0 })
   const playerSpeaking = ['reply', 'endingYou'].includes(phase)
-  const line = phase === 'opening' || phase === 'options' ? prompt
+  const line = ['opening', 'masteryIntro', 'options'].includes(phase) ? prompt
     : phase === 'reply' ? answer.text
     : phase === 'response' ? (mastery ? (answer.correct ? rounds[round].why : rounds[round].nudge) : p.responses[round])
     : phase === 'endingFriend' ? p.endingFriend
@@ -70,17 +71,16 @@ export default function InPersonTest({ script: p, masteryOpening, actions }) {
   useEffect(() => {
     if (!speechReady || phoneOpen) return
     if (phase === 'opening') {
-      if (phoneViewed) setPhase('options')
+      if (needsPhoneView) return
+      if (mastery) {
+        setPrompt(masteryOpening)
+        setPhase('masteryIntro')
+      } else setPhase('options')
+    } else if (phase === 'masteryIntro') {
+      setPhase('options')
     } else if (phase === 'reply') {
       if (mastery) setPhase('response')
-      else if (round === rounds.length - 1) {
-        if (masteryOpening) {
-          setMastery(true)
-          setRound(0)
-          setPrompt(masteryOpening)
-          setPhase('opening')
-        } else setPhase('endingFriend')
-      }
+      else if (round === rounds.length - 1) setPhase('endingFriend')
       else if (p.responses[round]) setPhase('response')
       else {
         setRound((value) => value + 1)
@@ -95,7 +95,7 @@ export default function InPersonTest({ script: p, masteryOpening, actions }) {
         setPhase('options')
       }
     } else if (phase === 'endingFriend' && p.endingYou) setPhase('endingYou')
-  }, [speechReady, phoneOpen, phoneViewed, phase, round, rounds.length, p.responses, p.endingYou, mastery, masteryOpening, answer, line])
+  }, [speechReady, phoneOpen, needsPhoneView, phase, round, rounds.length, p.responses, p.endingYou, mastery, masteryOpening, answer, line])
 
   return (
     <div className="scene pretest-scene">
@@ -106,7 +106,7 @@ export default function InPersonTest({ script: p, masteryOpening, actions }) {
           <button
             ref={phoneRef}
             type="button"
-            className={`pretest-phone ${phoneViewed ? '' : 'is-unseen'}`}
+            className={`pretest-phone ${needsPhoneView ? 'is-unseen' : ''}`}
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => setPhoneOpen(true)}
             aria-label={t('story.product.offerLabel')}
@@ -136,7 +136,7 @@ export default function InPersonTest({ script: p, masteryOpening, actions }) {
         </div>
 
         <div className="pretest-dialogue">
-          {phase === 'options' && phoneViewed ? (
+          {phase === 'options' && !needsPhoneView ? (
             <>
               <div className="pretest-speaker">{t('story.respondPrompt', { friend })}</div>
               <div className="pretest-options">

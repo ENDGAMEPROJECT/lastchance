@@ -10,6 +10,7 @@ export default function PosttestScreen() {
   return (
     <InPersonTest
       script={script}
+      requirePhoneView={false}
       masteryOpening={t('story.mastery.banner')}
       actions={[
         { label: script.choiceClose, tone: 'green', onClick: () => finishGame('win') },
