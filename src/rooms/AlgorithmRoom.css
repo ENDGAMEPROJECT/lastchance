@@ -312,10 +312,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 2px;
   padding: 5px 8px;
   min-height: 40px;
+  height: 140px;
+  width: 200px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--line);
   background: rgba(4, 8, 20, 0.7);
@@ -323,13 +325,19 @@
   transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
 }
 .ar-ad-icon { font-size: 1.45rem; line-height: 1; filter: grayscale(0.6) brightness(0.7); transition: filter 0.25s; }
-.ar-ad-label { font-size: 0.76rem; color: var(--muted); }
+.ar-ad-label { 
+  font-size: 1.2rem; 
+  color: rgb(32, 30, 54); 
+  font-weight: bold;
+  justify-self: flex-end;
+  line-height: 1
+}
 .ar-ad.active { border-color: var(--green); box-shadow: var(--glow-green); background: rgba(43, 255, 136, 0.08); }
 .ar-ad.active .ar-ad-icon { filter: none; }
 .ar-ad.active .ar-ad-label { color: var(--text); }
 .ar-ad-flag {
   font-family: var(--font-mono);
-  font-size: 0.54rem;
+  font-size: 0.8rem;
   letter-spacing: 0.14em;
   color: var(--green);
   animation: pulse-glow 1.6s ease-in-out infinite;
