@@ -90,8 +90,17 @@ export default function InfluencerAvenue({ node }) {
   const { completeRoom, addItem, addEvidence, hasItem } = useGame()
   const t = useT()
 
-  const [stage, setStage] = useState('label') // 'label' → 'verify' → solved
+  const [stage, setStage] = useState('label') // 'label' → 'explain' → 'verify' → solved
   const [solved, setSolved] = useState(false)
+  const [searchDone, setSearchDone] = useState(false) // explainer's mock search finished → show results
+
+  // Play the explainer's "searching → results" beat each time it opens.
+  useEffect(() => {
+    if (stage !== 'explain') { setSearchDone(false); return }
+    // ~0.9s for the photo to "drag" into the bar, then the search resolves.
+    const id = window.setTimeout(() => setSearchDone(true), 1700)
+    return () => window.clearTimeout(id)
+  }, [stage])
 
   /* i18n content arrays, index-aligned with POSTS / PRODUCTS. */
   const postCopy = t('rooms.influencer.posts')
@@ -127,10 +136,11 @@ export default function InfluencerAvenue({ node }) {
 
   useEffect(() => {
     if (stage !== 'label' || !POSTS.every((post) => answers[post.id] === post.correctLabel)) return
-    // Keep all three completed words visible briefly before the next challenge.
+    // Keep all three completed words visible briefly, then explain reverse
+    // image search before the player does it for real.
     const timer = window.setTimeout(() => {
       setDecoderOpen(false)
-      setStage('verify')
+      setStage('explain')
     }, 900)
     return () => window.clearTimeout(timer)
   }, [answers, stage])
@@ -342,6 +352,84 @@ export default function InfluencerAvenue({ node }) {
                 </div>
               </section>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* ===================== TRANSITION: what is reverse image search ===================== */}
+      {stage === 'explain' && (
+        <div className="ia-stage ia-explain fade-in">
+          <div className="ia-explain-card panel clip">
+            <h3 className="ia-explain-title">{t('rooms.influencer.explain.title')}</h3>
+            <p className="ia-explain-body">{t('rooms.influencer.explain.body')}</p>
+
+            {/* Two everyday uses: find where to buy something you like, and verify a claim. */}
+            <div className="ia-explain-uses">
+              <div className="ia-explain-use">
+                <span className="ia-explain-use-icon" aria-hidden>🛍️</span>
+                <span>{t('rooms.influencer.explain.useShop')}</span>
+              </div>
+              <div className="ia-explain-use">
+                <span className="ia-explain-use-icon" aria-hidden>🔎</span>
+                <span>{t('rooms.influencer.explain.useVerify')}</span>
+              </div>
+            </div>
+
+            {/* Animated reverse-image-search mock: the jacket photo drops into a
+                search bar, it "searches", then the matching cheap shops pop up. */}
+            <div className="ia-search">
+              {/* 1 · the seller's post you want to check */}
+              <div className="ia-src">
+                <span className="ia-src-photo" aria-hidden>🧥</span>
+                <span className="ia-src-cap t-xs">{t('rooms.influencer.explain.queryCaption')}</span>
+              </div>
+
+              {/* 2 · drag its photo into a reverse image search ↓ */}
+              <div className="ia-search-draghint t-xs dim">{t('rooms.influencer.explain.dragHint')}</div>
+
+              {/* 3 · the search bar — the photo drops into it from the post above */}
+              <div className="ia-search-bar">
+                <span className="ia-search-thumb" aria-hidden>
+                  🧥
+                  <span className="ia-search-hand" aria-hidden>🫳</span>
+                </span>
+                <span className="ia-search-q">
+                  <span className="ia-search-q-text">{t('rooms.influencer.explain.searchLabel')}</span>
+                  <span className="ia-search-scan" aria-hidden />
+                </span>
+                <span className="ia-search-go" aria-hidden>🔍</span>
+              </div>
+
+              <div className="ia-search-panel">
+                {!searchDone ? (
+                  <div className="ia-search-loading">
+                    <span className="ia-search-spinner" aria-hidden />
+                    <span className="mono t-sm">{t('rooms.influencer.explain.searching')}</span>
+                  </div>
+                ) : (
+                  <div className="ia-search-out">
+                    <div className="ia-search-resultshead t-xs dim">{t('rooms.influencer.explain.resultsLabel')}</div>
+                    <div className="ia-search-results">
+                      {[['dropship-mart', '$12'], ['mega-cheap', '$9'], ['fastfinds', '$14'], ['shop2000', '$11']].map(([shop, price], i) => (
+                        <div className="ia-search-hit" key={shop} style={{ animationDelay: `${i * 0.14}s` }}>
+                          <span className="ia-search-hit-emoji" aria-hidden>🧥</span>
+                          <span className="ia-search-hit-shop t-xs">{shop}</span>
+                          <span className="ia-search-hit-price t-xs mono">{price}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="learn ia-explain-learn">
+              <b>{t('rooms.influencer.explain.takeawayLabel')}</b> {t('rooms.influencer.explain.takeaway')}
+            </div>
+
+            <button className="btn btn-purple btn-lg" onClick={() => setStage('verify')}>
+              {t('rooms.influencer.explain.continue')}
+            </button>
           </div>
         </div>
       )}

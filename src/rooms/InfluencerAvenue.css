@@ -11,6 +11,165 @@
   overflow-y: auto; /* safety: never let a tall stage push the confirm button off */
 }
 
+/* ---------- Transition: "what is reverse image search" ---------- */
+.ia-explain { align-items: center; justify-content: center; }
+.ia-explain-card {
+  max-width: 720px;
+  width: 100%;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+.ia-explain-title { font-size: 1.15rem; color: var(--purple); }
+.ia-explain-body { margin: 0; color: var(--text); font-size: 0.92rem; line-height: 1.4; max-width: 560px; }
+
+.ia-explain-uses {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  max-width: 580px;
+  text-align: left;
+}
+.ia-explain-use {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 0.85rem;
+  line-height: 1.35;
+  color: var(--text);
+}
+.ia-explain-use-icon { font-size: 1.15rem; flex: none; line-height: 1.2; }
+
+/* Animated search-engine mock */
+.ia-search {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ia-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(160, 90, 255, 0.2);
+}
+.ia-search-thumb {
+  position: relative;
+  font-size: 1.1rem;
+  width: 26px; height: 26px; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #c9a06a, #7a4f2b);
+  /* Drag the photo into the search bar from the caption area below-left. */
+  animation: ia-dragin 0.9s cubic-bezier(0.3, 0.7, 0.2, 1) both;
+}
+.ia-search-hand {
+  position: absolute;
+  right: -9px; bottom: -11px;
+  font-size: 0.95rem;
+  animation: ia-handfade 0.9s ease both;
+}
+/* The photo lifts out of the post above and drops into the search bar. */
+@keyframes ia-dragin {
+  0% { transform: translate(0, -46px) scale(1.6); opacity: 0; }
+  25% { opacity: 1; }
+  100% { transform: translate(0, 0) scale(1); opacity: 1; }
+}
+@keyframes ia-handfade { 0%, 55% { opacity: 1; } 100% { opacity: 0; } }
+
+/* 1 · the source post the photo is dragged FROM */
+.ia-src {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+.ia-src-photo {
+  width: 34px; height: 34px; flex: none;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 7px; font-size: 1.25rem;
+  background: linear-gradient(135deg, #c9a06a, #7a4f2b);
+}
+.ia-src-cap { flex: 1; text-align: left; color: var(--muted); line-height: 1.3; }
+
+/* 2 · the "drag it here" hint between the post and the search bar */
+.ia-search-draghint { text-align: center; padding: 2px 0; }
+.ia-search-q {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.ia-search-q-text { position: relative; z-index: 1; }
+/* a light beam sweeping the query field to read as "scanning" */
+.ia-search-scan {
+  position: absolute;
+  top: 0; bottom: 0; left: -35%;
+  width: 30%;
+  background: linear-gradient(90deg, transparent, rgba(160, 90, 255, 0.5), transparent);
+  /* wait for the photo to land in the bar, then start scanning */
+  animation: ia-scan 1.4s ease-in-out 0.9s infinite;
+}
+.ia-search-go { font-size: 1rem; color: var(--purple); }
+
+.ia-search-caption { text-align: left; }
+
+.ia-search-panel {
+  min-height: 96px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.ia-search-loading { display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--muted); }
+.ia-search-spinner {
+  width: 18px; height: 18px; flex: none;
+  border-radius: 50%;
+  border: 2px solid rgba(160, 90, 255, 0.3);
+  border-top-color: var(--purple);
+  animation: ia-spin 0.7s linear infinite;
+}
+.ia-search-out { display: flex; flex-direction: column; gap: 6px; }
+.ia-search-resultshead { text-align: left; }
+.ia-search-results { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.ia-search-hit {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 9px; border-radius: 8px;
+  border: 1px solid var(--line); background: rgba(255, 255, 255, 0.04);
+  opacity: 0;
+  animation: ia-pop 0.32s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.ia-search-hit-emoji { font-size: 1rem; }
+.ia-search-hit-shop { flex: 1; color: var(--text); }
+.ia-search-hit-price { color: var(--red); font-weight: 700; }
+
+@keyframes ia-scan { 0% { left: -35%; } 100% { left: 105%; } }
+@keyframes ia-spin { to { transform: rotate(360deg); } }
+@keyframes ia-pop { from { opacity: 0; transform: translateY(8px) scale(0.9); } to { opacity: 1; transform: none; } }
+
+.ia-explain-learn { text-align: left; width: 100%; max-width: 560px; }
+
 /* ---------- Stage header ---------- */
 .ia-head {
   display: flex;

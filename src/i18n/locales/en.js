@@ -731,6 +731,20 @@ export default {
     },
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
+      "explain": {
+        "title": "Besides the ad — what about the product?",
+        "body": "You've spotted how these posts are packaged. But is the product itself what they claim? A reverse image search helps you check: instead of typing words, you search with a photo, and it finds everywhere that exact picture appears online.",
+        "useShop": "Love a piece of clothing you saw in a post? Reverse-search the photo to find where you can actually buy it.",
+        "useVerify": "Not sure an influencer's product is genuine? Reverse-search it to see if it's really unique — or the same mass-produced item everyone's selling.",
+        "searchLabel": "reverse image search",
+        "searching": "Searching the web…",
+        "dragHint": "↓ Drag the seller's photo into a reverse image search",
+        "queryCaption": "Seller says: “one-of-a-kind handmade jacket” · $180",
+        "resultsLabel": "Same photo found on:",
+        "takeawayLabel": "The catch:",
+        "takeaway": "That “unique handmade” jacket is the same mass-produced item selling for $9–14 on dozens of dropshipping shops. The photo gave it away.",
+        "continue": "Now try it yourself →"
+      },
       "solvedTitle": "Influencer Avenue cleared — Data Report obtained 📄",
       "solvedText": "You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 748392 — open the Algorithm Control Room next.",
       "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
