@@ -22,9 +22,12 @@ const POSTERS = [
     letter: 'F', 
     // emoji: '⚡', 
    },
-  { id: 'social', letter: 'O', emoji: '🌟' },
+  { id: 'social', letter: 'O', emoji: '' },
   { id: 'exagg', letter: 'O', emoji: '🔥' },
-  { id: 'influencer', letter: 'L', emoji: '💄' },
+  { id: 'influencer', 
+    letter: 'L', 
+    // emoji: '💄'
+  },
   { id: 'emotional', letter: 'E', emoji: '😢' },
   { id: 'urgency', letter: 'D', emoji: '⏰' },
 ]
