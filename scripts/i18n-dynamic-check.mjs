@@ -55,6 +55,9 @@ ok(R.roulette.wheels && Object.keys(R.roulette.wheels).length >= 3, 'rooms.roule
 // algorithm: tiles.<id>, rows.<id>.{slots,ad}
 ok(R.algorithm.tiles && Object.keys(R.algorithm.tiles).length > 0, 'rooms.algorithm.tiles empty')
 ok(R.algorithm.rows && Object.keys(R.algorithm.rows).length > 0, 'rooms.algorithm.rows empty')
+for (const id of idsIn('src/rooms/AlgorithmRoom.jsx').filter((id) => /^r\d+$/.test(id))) {
+  ok(typeof R.algorithm.rows?.[id]?.feedbackLesson === 'string', `rooms.algorithm.rows.${id}.feedbackLesson missing`)
+}
 
 // persuasion: techniques.<id> + posters[]
 ok(R.persuasion.techniques && Object.keys(R.persuasion.techniques).length === 6, 'rooms.persuasion.techniques should have 6')
