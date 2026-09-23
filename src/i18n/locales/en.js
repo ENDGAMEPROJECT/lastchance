@@ -822,6 +822,7 @@ export default {
         "engineDrop": "Drag a product image here to reverse-search it",
         "trayLabel": "Your saved images — drag one into the search engine →",
         "classifyPrompt": "So this product is…",
+        "stampHere": "Stamp here",
         "searching": "Searching the web",
         "matchesTitle": "Web matches found",
         "resultTitle": "Search result",

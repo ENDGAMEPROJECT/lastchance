@@ -722,7 +722,8 @@
 /* ---------- Results panel under the engine (search + verdict happen here) ---------- */
 .ia-engine-panel { margin: 0 11px 12px; padding: 12px 12px 4px; border-top: 1px solid var(--line); flex: 1; min-height: 0; overflow-y: auto; }
 .ia-engine-result-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-.ia-engine-result-meta { display: flex; flex-direction: column; gap: 2px; }
+.ia-engine-result-meta { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.ia-engine-result-meta > div { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ia-engine-result-meta .t-sm { font-family: var(--font-display); font-weight: 700; color: var(--text); }
 .ia-engine-cols { display: grid; grid-template-columns: 1fr 230px; gap: 16px; align-items: start; }
 .ia-engine-classify { display: flex; flex-direction: column; gap: 7px; }
@@ -752,6 +753,147 @@
   background: rgba(168, 85, 247, 0.16);
   box-shadow: var(--glow-purple);
   color: #eeddff;
+}
+
+/* ---------- Verdict stamps (grab a stamp-maker, click the slot) ---------- */
+/* Reserved slot to the RIGHT of the product image. */
+.ia-stampslot {
+  position: relative;
+  flex: none;
+  width: 70px;
+  height: 62px;
+  border: 2px dashed var(--line);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.ia-stampslot.armed { border-color: var(--purple); background: rgba(160, 90, 255, 0.14); box-shadow: var(--glow-purple); }
+.ia-stampslot-ph { text-align: center; padding: 0 4px; line-height: 1.15; }
+
+.ia-stamprack { display: flex; flex-direction: column; gap: 5px; margin-top: auto; }
+
+/* A stamp-maker you grab. */
+.ia-stampmaker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 9px 5px 6px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: rgba(20, 26, 54, 0.6);
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.08s, border-color 0.2s, background 0.2s;
+}
+.ia-stampmaker:hover { border-color: var(--purple); transform: translateY(-1px); }
+.ia-stampmaker.held { border-color: var(--purple); background: rgba(160, 90, 255, 0.16); box-shadow: var(--glow-purple); } /* selected / in hand */
+.ia-stampmaker.ia-stamp-mass.inked { border-color: var(--red); }
+.ia-stampmaker.ia-stamp-ai.inked { border-color: var(--amber); }
+.ia-stampmaker.ia-stamp-legit.inked { border-color: var(--green); }
+/* A little rubber-stamp icon: knob handle + neck + inked base. */
+.ia-stampmaker-face {
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 24px;
+  margin-top: 14px; /* reserve room for the handle sticking up */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  border-radius: 3px 3px 5px 5px;
+  background: linear-gradient(180deg, #463a6b, #2a2247);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 3px solid rgba(0, 0, 0, 0.4); /* the inked base lip */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+}
+.ia-stampmaker-face::before { /* handle knob */
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 15px;
+  height: 13px;
+  border-radius: 5px 5px 2px 2px;
+  background: linear-gradient(180deg, #6a5a9c, #443a6e);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.ia-stampmaker-face::after { /* neck plate between handle and base */
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 5px;
+  border-radius: 2px;
+  background: #2a2247;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+/* handle colour matches the verdict */
+.ia-stamp-mass .ia-stampmaker-face::before { background: linear-gradient(180deg, #ff7387, #c23a52); }
+.ia-stamp-ai .ia-stampmaker-face::before { background: linear-gradient(180deg, #ffd27a, #c99a2a); }
+.ia-stamp-legit .ia-stampmaker-face::before { background: linear-gradient(180deg, #6bffab, #2ac96a); }
+.ia-stamp-label {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 0.76rem;
+  letter-spacing: 0;
+  color: #eef3ff;
+}
+
+/* The grabbed stamp riding the cursor (cursor becomes the stamp-maker). */
+.ia-holding, .ia-holding * { cursor: none !important; }
+.ia-held-stamp {
+  position: fixed;
+  left: 0; top: 0;
+  z-index: 4000;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  filter: drop-shadow(0 6px 9px rgba(0, 0, 0, 0.55));
+}
+.ia-held-stamp .ia-stampmaker-face {
+  width: 42px; height: 34px; margin-top: 20px; font-size: 1.4rem;
+  animation: ia-held-pop 0.18s ease both;
+}
+.ia-held-stamp .ia-stampmaker-face::before { top: -20px; width: 21px; height: 18px; }
+.ia-held-stamp .ia-stampmaker-face::after { top: -6px; width: 30px; height: 7px; }
+@keyframes ia-held-pop { from { transform: scale(0.5); } to { transform: scale(1); } }
+
+/* The inked imprint pressed into the slot. */
+.ia-stamp-mark {
+  position: absolute;
+  inset: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 0.58rem;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 2.5px solid;
+  border-radius: 6px;
+  transform: rotate(-11deg);
+  opacity: 0.92;
+  pointer-events: none;
+  animation: ia-stamp-press 0.34s cubic-bezier(0.2, 0.8, 0.3, 1.25) both;
+}
+.ia-stamp-mark.ia-stamp-mass { color: var(--red); border-color: var(--red); background: rgba(255, 59, 92, 0.14); }
+.ia-stamp-mark.ia-stamp-ai { color: var(--amber); border-color: var(--amber); background: rgba(255, 185, 43, 0.14); }
+.ia-stamp-mark.ia-stamp-legit { color: var(--green); border-color: var(--green); background: rgba(43, 255, 136, 0.14); }
+@keyframes ia-stamp-press {
+  0% { transform: rotate(-11deg) scale(2.6); opacity: 0; }
+  55% { transform: rotate(-11deg) scale(0.86); opacity: 1; }
+  100% { transform: rotate(-11deg) scale(1); opacity: 0.92; }
 }
 
 /* ---------- Actions ---------- */
