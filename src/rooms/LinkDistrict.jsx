@@ -231,7 +231,7 @@ function DoorPage({ type, ambiguous, t }) {
     return (
       <div
         className="door-page luna-ad"
-        style={{ backgroundImage: `url("${bgUrl('link-district/ad-luna-3.png')}")` }}
+        style={{ backgroundImage: `url("${bgUrl('link-district/ad-luna-3.png')}"`}}
       >
         <div className="luna-ad-copy">
           <div className="luna-ad-3-headline">{t('rooms.link.lunaAd3.headline')}</div>

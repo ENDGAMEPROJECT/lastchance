@@ -380,8 +380,12 @@ export default function AlgorithmRoom({ node }) {
 
                   <span className="ar-op eq">=</span>
 
-                  <div className={`ar-ad ${stepSolved ? 'active' : ''}`}>
-                    <span className="ar-ad-icon">{row.ad.icon}</span>
+                  <div className={`ar-ad ${stepSolved ? 'active' : ''}`} 
+                  style={{ 
+                    backgroundImage: `url("${import.meta.env.BASE_URL}algorithm-room/${row.id}.png")`, 
+                    backgroundSize: "cover"}}
+                  >
+                    {/* <span className="ar-ad-icon">{row.ad.icon}</span> */}
                     <span className="ar-ad-label">{t(`rooms.algorithm.rows.${row.id}.ad`)}</span>
                     {stepSolved && <span className="ar-ad-flag">{t('rooms.algorithm.equations.adFlag')}</span>}
                   </div>
