@@ -731,6 +731,17 @@ export default {
     },
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
+      "labelFeedback": {
+        "title": "Sponsored posts must be labeled",
+        "intro": "When a creator is paid, partnered with, or gifted a product, they have to disclose it — clearly and up front. A hidden ad dressed up as a genuine recommendation is exactly what you just labeled. Here's how to tell them apart:",
+        "paidDesc": "The creator is paid by the brand to post about it.",
+        "paidExample": "Tell-tale signs: an affiliate link, or a personal discount code like “LUNA20”.",
+        "collabDesc": "A creative partnership, made together with the brand.",
+        "collabExample": "Tell-tale signs: a “paid partnership” tag, or #ad on a co-created post.",
+        "giftedDesc": "The creator was sent the product for free.",
+        "giftedExample": "Tell-tale signs: “gifted”, or “thanks @brand for sending this” — a free item, no payment.",
+        "continue": "Got it →"
+      },
       "explain": {
         "title": "Besides the ad — what about the product?",
         "body": "You've spotted how these posts are packaged. But is the product itself what they claim? A reverse image search helps you check: instead of typing words, you search with a photo, and it finds everywhere that exact picture appears online.",

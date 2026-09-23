@@ -90,7 +90,7 @@ export default function InfluencerAvenue({ node }) {
   const { completeRoom, addItem, addEvidence, hasItem } = useGame()
   const t = useT()
 
-  const [stage, setStage] = useState('label') // 'label' → 'explain' → 'verify' → solved
+  const [stage, setStage] = useState('label') // 'label' → 'labelFeedback' → 'explain' → 'verify' → solved
   const [solved, setSolved] = useState(false)
   const [searchDone, setSearchDone] = useState(false) // explainer's mock search finished → show results
 
@@ -136,11 +136,11 @@ export default function InfluencerAvenue({ node }) {
 
   useEffect(() => {
     if (stage !== 'label' || !POSTS.every((post) => answers[post.id] === post.correctLabel)) return
-    // Keep all three completed words visible briefly, then explain reverse
-    // image search before the player does it for real.
+    // Keep all three completed words visible briefly, then recap what each
+    // label means (disclosure) before moving on to the reverse-search stage.
     const timer = window.setTimeout(() => {
       setDecoderOpen(false)
-      setStage('explain')
+      setStage('labelFeedback')
     }, 900)
     return () => window.clearTimeout(timer)
   }, [answers, stage])
@@ -352,6 +352,38 @@ export default function InfluencerAvenue({ node }) {
                 </div>
               </section>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* ============= FEEDBACK: what each disclosure label means ============= */}
+      {stage === 'labelFeedback' && (
+        <div className="ia-stage ia-explain fade-in">
+          <div className="ia-explain-card panel clip">
+            <h3 className="ia-explain-title">{t('rooms.influencer.labelFeedback.title')}</h3>
+            <p className="ia-explain-body">{t('rooms.influencer.labelFeedback.intro')}</p>
+
+            <div className="ia-lf-cards">
+              <div className="ia-lf-card paid">
+                <span className="ia-lf-tag">{t('rooms.influencer.labels.paid')}</span>
+                <div className="ia-lf-desc">{t('rooms.influencer.labelFeedback.paidDesc')}</div>
+                <div className="ia-lf-ex t-xs">{t('rooms.influencer.labelFeedback.paidExample')}</div>
+              </div>
+              <div className="ia-lf-card collab">
+                <span className="ia-lf-tag">{t('rooms.influencer.labels.collab')}</span>
+                <div className="ia-lf-desc">{t('rooms.influencer.labelFeedback.collabDesc')}</div>
+                <div className="ia-lf-ex t-xs">{t('rooms.influencer.labelFeedback.collabExample')}</div>
+              </div>
+              <div className="ia-lf-card gifted">
+                <span className="ia-lf-tag">{t('rooms.influencer.labels.gifted')}</span>
+                <div className="ia-lf-desc">{t('rooms.influencer.labelFeedback.giftedDesc')}</div>
+                <div className="ia-lf-ex t-xs">{t('rooms.influencer.labelFeedback.giftedExample')}</div>
+              </div>
+            </div>
+
+            <button className="btn btn-purple btn-lg" onClick={() => setStage('explain')}>
+              {t('rooms.influencer.labelFeedback.continue')}
+            </button>
           </div>
         </div>
       )}
