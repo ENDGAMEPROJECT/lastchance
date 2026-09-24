@@ -432,19 +432,6 @@ export default {
           "Phishing attempts: read every character and block disguised look-alike addresses."
         ]
       },
-      "roulette": {
-        "context\t": "Treat the prize wheel as a lesson in gamified bait.",
-        "prompts": [
-          "I do not know what to compare after spinning the wheels. ",
-          "I do not know why a guaranteed prize could be suspicious. ",
-          "I do not know how to finish the corridor."
-        ],
-        "items": [
-          "Spin at least two different wheels and watch the pointer settle. ",
-          "A guaranteed win is bait when the prize is worthless.",
-          "Spin each wheel once, then mark all four as Rigged."
-        ]
-      },
       "influencer": {
         "context": "Separate genuine recommendations from paid or fabricated signals.",
         "prompts": [
@@ -668,111 +655,35 @@ export default {
       }
     },
     "roulette": {
-      "intro": "A corridor lined with dazzling prize wheels promising you win on every spin. Give them a whirl and watch what you actually get.",
-      "solvedTitle": "Corridor cleared — you spotted the rigged wheels",
-      "solvedText": "Every wheel “wins” every single time — but the prize is always a worthless 30¢ coupon. That is not luck or generosity; it is an ad designed to make you feel lucky and spend. You saw through it.",
-      "spunBadge": "Wheels spun · {spun} / {total}",
-      "riggedBadge": "Marked rigged · {rigged} / {total}",
-      "spinAll": "🎰 Spin ALL",
       "spin": "🎰 Spin",
       "spinning": "Spinning…",
-      "markRiggedLabel": "Mark as",
-      "markRiggedWord": "Rigged",
-      "won": "🎉 You won:",
-      "wonSuffix": "!",
-      "hintSpinFirst": "Spin a couple of wheels first — watch where they land before you decide.",
-      "hintSpinThis": "Spin THIS wheel at least once before marking it. See what it does.",
-      "evidenceLabel": "The prize wheels were rigged to always land on a worthless 30¢ coupon — bait to make you spend.",
-      "wheels": {
-        "w1": {
-          "name": "MEGA SPIN",
-          "tag": "Daily bonus",
-          "segments": [
-            "Try again",
-            "5 coins",
-            "2% off",
-            "30¢ OFF",
-            "Try again",
-            "1 coin",
-            "No prize",
-            "2 coins"
-          ]
-        },
-        "w2": {
-          "name": "LUCKY WHEEL",
-          "tag": "Spin to win",
-          "segments": [
-            "1 coin",
-            "Try again",
-            "30¢ OFF",
-            "No prize",
-            "2 coins",
-            "Try again",
-            "5 coins",
-            "2% off"
-          ]
-        },
-        "w3": {
-          "name": "GOLD RUSH",
-          "tag": "Login reward",
-          "segments": [
-            "Try again",
-            "2 coins",
-            "No prize",
-            "1 coin",
-            "5 coins",
-            "30¢ OFF",
-            "Try again",
-            "2% off"
-          ]
-        },
-        "w4": {
-          "name": "JACKPOT CITY",
-          "tag": "Loot box",
-          "segments": [
-            "2 coins",
-            "Try again",
-            "1 coin",
-            "No prize",
-            "5 coins",
-            "Try again",
-            "30¢ OFF",
-            "2% off"
-          ]
-        }
-      },
-      "learnLead": "A guaranteed “win”?",
-      "learnBody": "Spin wheels, daily login bonuses and loot boxes are engagement and advertising tricks, not generosity. They are rigged so you almost always “win” something — usually a tiny discount like 30¢ off — because feeling lucky makes you keep playing, share the app, and spend more. A prize you always get, worth almost nothing, isn't a gift. It's bait.",
       "investigation": {
         "intro": "Spin each wheel. Spot the trick and explain your choice.",
         "wheelProgress": "Wheel {n} / {total}",
-        "spinAgain": "Spin again",
-        "changeVerdict": "Change my decision",
         "solvedTitle": "Corridor cleared — claims checked",
+        "spinAgain": "Spin again",
         "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked.",
         "evidence": "Rigged wheels can use conditional coupons to make you spend more, or promises of another chance to keep you playing longer.",
-        "progress": "Cases justified · {n} / {total}",
         "result": "Result: {result}",
-        "noSpin": "No spins yet",
-        "checked": "✓ Checked",
-        "inspect": "Inspect",
-        "rulesLabel": "Advertised rules:",
         "historyLabel": "Spins: {n} · Latest results:",
-        "verdictLabel": "Does the draw follow its advertised rules?",
-        "verdictCorrectRigged": "Correct: this wheel is rigged. Now explain why.",
-        "verdictCorrectFair": "Correct: this wheel is not rigged. Now explain why.",
-        "verdictWrong": "Incorrect. Review the results and try again.",
         "verdicts": {
           "rigged": "Rigged",
           "fair": "Not rigged"
         },
         "reasonLabel": "Which explanation fits this offer?",
-        "chooseReason": "Choose a reason…",
-        "check": "Check my reasoning",
         "retry": "Try another spin and compare the results. You can change your decision. Repeated results can also happen by chance.",
         "correct": "Case explained",
         "next": "Next wheel →",
         "finish": "Log the evidence ✓",
+        "observe": "Spin at least {count} times. Does it keep landing on the same slice, or do the results change? You can spin again if you are unsure.",
+        "shop": {
+          "badge": "MEGA SPIN · STORE",
+          "title": "You won a discount coupon!",
+          "coupon": "50% OFF",
+          "terms": "To add your coupon to your account, first make a purchase of at least €{amount}. Your 50% discount will be available for a later order.",
+          "reminder": "Store offer: spend at least €{amount} first to unlock your coupon for a later order."
+        },
+        "retryBait": "“No prize this time! Keep spinning — your next try could be the big win!”",
         "wheels": {
           "w1": {
             "name": "MEGA SPIN",
@@ -854,17 +765,7 @@ export default {
               "lostOnce": "“Up to 8 points” means I must receive at least 8 points."
             }
           }
-        },
-        "observe": "Spin at least {count} times. Does it keep landing on the same slice, or do the results change? You can spin again if you are unsure.",
-        "shop": {
-          "badge": "MEGA SPIN · STORE",
-          "title": "You won a discount coupon!",
-          "coupon": "50% OFF",
-          "terms": "To add your coupon to your account, first make a purchase of at least €{amount}. Your 50% discount will be available for a later order.",
-          "dismiss": "Back to the wheel",
-          "reminder": "Store offer: spend at least €{amount} first to unlock your coupon for a later order."
-        },
-        "retryBait": "“No prize this time! Keep spinning — your next try could be the big win!”"
+        }
       }
     },
     "influencer": {
