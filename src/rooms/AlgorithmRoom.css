@@ -7,6 +7,55 @@
 .ar-prompt { margin: 8px 0 0; color: var(--text); font-size: 1.05rem; }
 
 /* =========================================================
+   PHASE: DOOR — the sealed control-room entrance (image bg)
+   The door + mounted keypad come from the background image; this is just
+   the readable overlay + a glowing "way in" call to action.
+   ========================================================= */
+.ar-door-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0 34px;
+  text-align: center;
+}
+.ar-door-head {
+  max-width: 620px;
+  margin: 0 16px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(6, 10, 24, 0.72);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(2px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+.ar-door-head .ar-prompt { color: #eaf1ff; font-size: 0.98rem; }
+
+.ar-door-cta {
+  font-family: var(--font-display);
+  color: var(--cyan);
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--cyan);
+  background: rgba(4, 8, 20, 0.72);
+  box-shadow: var(--glow-cyan);
+  transition: background 0.2s;
+}
+.ar-door-scene:hover .ar-door-cta { background: rgba(22, 242, 255, 0.16); }
+
+/* =========================================================
    PHASE: UNLOCK — keypad terminal
    ========================================================= */
 .ar-unlock { display: flex; justify-content: center; }
@@ -17,12 +66,11 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* Scaled to fit inside the panel screen in the background image. */
+  transform: scale(0.9);
+  transform-origin: center;
 }
 .ar-term-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.ar-dots { display: inline-flex; gap: 5px; }
-.ar-dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); box-shadow: var(--glow-cyan); }
-.ar-dots i:nth-child(2) { background: var(--amber); box-shadow: none; }
-.ar-dots i:nth-child(3) { background: var(--red); box-shadow: none; }
 .ar-term-prompt { margin: 0; color: var(--muted); text-align: center; }
 
 .ar-code-display { display: flex; gap: 8px; justify-content: center; }
@@ -40,6 +88,32 @@
   border-radius: var(--radius-sm);
 }
 .ar-cell.filled { border-color: var(--cyan); box-shadow: var(--glow-cyan); }
+/* Access feedback: the whole code readout goes red on deny, green on grant. */
+.ar-code-display.err .ar-cell { border-color: var(--red); color: var(--red); }
+.ar-code-display.ok .ar-cell { border-color: var(--green); color: var(--green); box-shadow: 0 0 12px var(--green); }
+
+/* The access light in the terminal header. */
+.ar-access { display: inline-flex; align-items: center; }
+.ar-access-led {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid var(--line);
+  transition: background 0.15s, box-shadow 0.15s, border-color 0.15s;
+}
+.ar-access.wrong .ar-access-led {
+  background: var(--red);
+  border-color: var(--red);
+  box-shadow: 0 0 16px var(--red);
+  animation: ar-led-blink 0.4s steps(1, end) 3;
+}
+.ar-access.ok .ar-access-led {
+  background: var(--green);
+  border-color: var(--green);
+  box-shadow: 0 0 18px var(--green);
+}
+@keyframes ar-led-blink { 50% { opacity: 0.3; } }
 
 .ar-keypad {
   display: grid;
@@ -238,10 +312,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 2px;
   padding: 5px 8px;
   min-height: 40px;
+  height: 140px;
+  width: 200px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--line);
   background: rgba(4, 8, 20, 0.7);
@@ -249,13 +325,19 @@
   transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
 }
 .ar-ad-icon { font-size: 1.45rem; line-height: 1; filter: grayscale(0.6) brightness(0.7); transition: filter 0.25s; }
-.ar-ad-label { font-size: 0.76rem; color: var(--muted); }
+.ar-ad-label { 
+  font-size: 1.2rem; 
+  color: rgb(32, 30, 54); 
+  font-weight: bold;
+  justify-self: flex-end;
+  line-height: 1
+}
 .ar-ad.active { border-color: var(--green); box-shadow: var(--glow-green); background: rgba(43, 255, 136, 0.08); }
 .ar-ad.active .ar-ad-icon { filter: none; }
 .ar-ad.active .ar-ad-label { color: var(--text); }
 .ar-ad-flag {
   font-family: var(--font-mono);
-  font-size: 0.54rem;
+  font-size: 0.8rem;
   letter-spacing: 0.14em;
   color: var(--green);
   animation: pulse-glow 1.6s ease-in-out infinite;

@@ -1249,6 +1249,28 @@
 .ld-flag input {
   display: none;
 }
+/* Custom SVG cue for each option — tints from muted to cyan with selection. */
+.ld-flag-icon {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.ld-flag.on .ld-flag-icon {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  background: rgba(22, 242, 255, 0.1);
+}
+.ld-flag-label {
+  flex: 1;
+}
 .ld-check {
   width: 18px;
   height: 18px;

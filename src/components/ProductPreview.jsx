@@ -6,19 +6,26 @@ const fmt = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 
 
 /* The scam "deal" the friend is looking at: an influencer flash-sale post
    in a phone frame, with a live-ticking countdown. Pure CSS/SVG. Shown
-   beside the pre/post-test conversation for context. */
-export default function ProductPreview({ seconds = 1680, urgent = false, staticOffer = false }) {
+   beside the pre/post-test conversation for context.
+
+   By default the countdown ticks on its own from `seconds`. Pass `remaining`
+   to slave it to an external clock instead (e.g. the real game timer in the
+   post-test), so the phone and the HUD show the same number. */
+export default function ProductPreview({ seconds = 1680, urgent = false, staticOffer = false, remaining }) {
   const t = useT()
   const p = t('story.product')
+  const controlled = remaining != null
   const [left, setLeft] = useState(seconds)
 
   useEffect(() => {
+    if (controlled) return // externally driven — no internal ticking
     setLeft(seconds)
     const id = setInterval(() => setLeft((s) => (s > 0 ? s - 1 : 0)), 1000)
     return () => clearInterval(id)
-  }, [seconds])
+  }, [seconds, controlled])
 
-  const low = urgent || left <= 300
+  const shown = controlled ? Math.max(0, remaining) : left
+  const low = urgent || shown <= 300
 
   return (
     <div className="pp-phone">
@@ -53,7 +60,7 @@ export default function ProductPreview({ seconds = 1680, urgent = false, staticO
           </div>
           <div className={`pp-timer ${staticOffer ? 'static' : (low ? 'low' : '')}`}>
             <span>{staticOffer ? p.offerLabel : p.endsIn}</span>
-            {staticOffer ? <b>{p.offerUrgency}</b> : <b className="mono">{fmt(left)}</b>}
+            {staticOffer ? <b>{p.offerUrgency}</b> : <b className="mono">{fmt(shown)}</b>}
           </div>
         </div>
 

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
-import { CODES } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 import { playSound } from '../game/sound.js'
 import RoomFrame from '../components/RoomFrame.jsx'
@@ -10,45 +9,67 @@ import './AdsCorridor.css'
 
 /* CORRIDOR (between Puzzle 3 and 4) — Ads Corridor.
    Per the brief: glossy ads hide the truth in the fine print. The player
-   equips the "Truth Flashlight" earned in Algorithm Room from the bag,
-   then shines it on
-   four posters to reveal the hidden truth. Each revealed truth hides one
-   letter; in order they spell the exit code (CODES.adsCorridor === 'SAVE').
-   Type the code to open the exit. Reward: an evidence clue for Max.
+   equips the "Truth Flashlight" (earned in the Algorithm Room) from the Bag,
+   then sweeps its beam across the posters to reveal the hidden truth — a poster
+   shows its truth ONLY while the beam is on it. Each truth highlights one code
+   letter (set per language in i18n); read left-to-right across the posters in
+   display order they spell the exit code. Type it to open the exit. Reward: an
+   evidence clue for Max.
 
-   Structural data (poster id, tint, hidden letter) lives here; all display
-   text comes from i18n (rooms.ads.*). Poster text is keyed by array index
-   into rooms.ads.posters — order matters (letters spell the code). */
+   Structural data (poster id, tint, image, and which i18n entry it uses) lives
+   here; all display text — including the highlighted code letter — comes from
+   i18n (rooms.ads.posters[textIndex].letter), so the letters can be set per
+   language. The array order is the on-wall display order; reading each poster's
+   letter left-to-right spells the exit code. */
 const POSTERS = [
-  { id: 'trial', tint: 'blue', letters: 'S', image: '1-get-offer.png' },
-  { id: 'prize', tint: 'gold', letters: 'A', image: '2-get-gift.png' },
-  { id: 'rich', tint: 'green', letters: 'V', image: '3-get-rich.png' },
-  { id: 'virus', tint: 'purple', letters: 'E', image: '4-get-protection.png' },
+  // Display order 2 · 1 · 4 · 3. `textIndex` points at this poster's i18n text.
+  { id: 'prize', textIndex: 1, tint: 'gold', image: '2-get-gift.png' },
+  { id: 'trial', textIndex: 0, tint: 'blue', image: '1-get-offer.png' },
+  { id: 'virus', textIndex: 3, tint: 'purple', image: '4-get-protection.png' },
+  { id: 'rich', textIndex: 2, tint: 'green', image: '3-get-rich.png' },
 ]
+
+/* Wrap the first occurrence (case-insensitive) of `letter` in `text` with a red
+   highlight — the code letter, hidden in plain sight inside the truth. */
+function highlightLetter(text, letter) {
+  if (!text || !letter) return text
+  const idx = text.toLowerCase().indexOf(letter.toLowerCase())
+  if (idx === -1) return text
+  return (
+    <>
+      {text.slice(0, idx)}
+      <span className="ac-hl">{text[idx]}</span>
+      {text.slice(idx + 1)}
+    </>
+  )
+}
 
 export default function AdsCorridor({ node }) {
   const { completeRoom, addEvidence, hasItem } = useGame()
   const t = useT()
   const { scale } = useStage()
 
-  // The flashlight stays off until the player equips it from the bag.
+  // The flashlight stays off until the player equips it from the Bag.
   const [lightOn, setLightOn] = useState(false)
 
   // Refs for the cursor-tracked spotlight overlay.
   const wallRef = useRef(null)
   const flashRef = useRef(null)
 
-  // Which posters have been illuminated at least once.
-  const [revealed, setRevealed] = useState({}) // id -> true
+  // Which poster is under the beam right now (transient — reveals hide again).
+  const [activePoster, setActivePoster] = useState(null)
 
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
   const [solved, setSolved] = useState(false)
   const inputRef = useRef(null)
 
+  // The exit code is the highlighted letters read across the posters in display
+  // order — derived from i18n, so it follows whatever letters each language sets.
+  const posterTexts = t('rooms.ads.posters')
+  const ANSWER = POSTERS.map((p) => posterTexts[p.textIndex]?.letter || '').join('')
 
-  const ANSWER = CODES.adsCorridor // 'SAVE'
-
+  // Equipping the Truth Flashlight from the Bag switches the beam on.
   useEffect(() => {
     const onUseItem = (event) => {
       if (event.detail?.id === 'truthLight' && hasItem('truthLight')) setLightOn(true)
@@ -57,11 +78,14 @@ export default function AdsCorridor({ node }) {
     return () => window.removeEventListener('lastchance:use-item', onUseItem)
   }, [hasItem])
 
-  // Shining the light on a poster (only works while it is ON) reveals
-  // that poster's hidden fine print and remembers it for the code hint.
-  function shine(id) {
-    if (!lightOn) return
-    setRevealed((r) => (r[id] ? r : { ...r, [id]: true }))
+  // Point the flashlight at a poster to reveal its truth — but ONLY while the
+  // beam is on it. Moving the beam away reverts it to the glossy ad, so the
+  // player has to actually sweep the light to read each one.
+  function pointAt(id) {
+    if (lightOn) setActivePoster(id)
+  }
+  function leavePoster(id) {
+    setActivePoster((cur) => (cur === id ? null : cur))
   }
 
   // Move the spotlight to the cursor. We write the position straight to the
@@ -123,9 +147,13 @@ export default function AdsCorridor({ node }) {
             onMouseMove={onMouseMove}
             onTouchMove={onTouchMove}
           >
-            {POSTERS.map((p, i) => {
-              const isRevealed = !!revealed[p.id]
-              const poster = t('rooms.ads.posters')[i]
+            {POSTERS.map((p) => {
+              const isRevealed = lightOn && activePoster === p.id
+              const poster = posterTexts[p.textIndex]
+              // Prefer highlighting the code letter in the big title; only fall
+              // back to the smaller truth text if the title doesn't contain it.
+              const letterInTitle = !!poster.letter
+                && poster.truthTitle?.toLowerCase().includes(poster.letter.toLowerCase())
               const adImage = isRevealed ? p.image.replace(/\.png$/, '-truth.png') : p.image
               const adBackground = `linear-gradient(160deg, rgba(9, 12, 25, 0.16), rgba(9, 12, 25, 0.18)), url(${import.meta.env.BASE_URL}ads-corridor/${adImage})`
               return (
@@ -139,10 +167,14 @@ export default function AdsCorridor({ node }) {
                   // overflow:hidden stage makes the browser scroll it "into view",
                   // jumping the whole screen up. Keyboard (Tab+Enter) still works.
                   onMouseDown={(e) => e.preventDefault()}
-                  // Sweeping the beam over a poster (or tapping it) reveals it.
-                  onMouseMove={() => shine(p.id)}
-                  onClick={() => shine(p.id)}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); shine(p.id) } }}
+                  // Sweep the beam over a poster to reveal it; it hides again
+                  // as soon as the beam (or finger) leaves.
+                  onMouseMove={() => pointAt(p.id)}
+                  onMouseLeave={() => leavePoster(p.id)}
+                  onTouchStart={() => pointAt(p.id)}
+                  onTouchMove={() => pointAt(p.id)}
+                  onTouchEnd={() => leavePoster(p.id)}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (lightOn) setActivePoster((cur) => (cur === p.id ? null : p.id)) } }}
                 >
                   {/* Glossy front — the advertisement's shiny promise */}
                   <div className={`ac-glossy ac-${p.id}`}
@@ -164,11 +196,12 @@ export default function AdsCorridor({ node }) {
                     }
                   </div>
                   <div className={`ac-truth ac-${p.id}`}  aria-hidden={!isRevealed}>
-                    <div className={`ac-truth-title`}>{poster.truthTitle}</div>
-                    <p className="ac-truth-text">{poster.truth}</p>
-                    <div className="ac-code-frag mono">
-                      {t('rooms.ads.codeFragment')}<b>{p.letters}</b>
+                    <div className={`ac-truth-title`}>
+                      {letterInTitle ? highlightLetter(poster.truthTitle, poster.letter) : poster.truthTitle}
                     </div>
+                    <p className="ac-truth-text">
+                      {letterInTitle ? poster.truth : highlightLetter(poster.truth, poster.letter)}
+                    </p>
                   </div>
 
 
@@ -181,9 +214,8 @@ export default function AdsCorridor({ node }) {
             {lightOn && <div className="ac-flashlight" ref={flashRef} aria-hidden />}
           </div>
 
-          {/* Exit entry and learning objective */}
+          {/* Right: exit code entry */}
           <div className="ac-side">
-            {/* Exit code entry */}
             <form className="ac-exit" onSubmit={submit}>
               <label className="ac-exit-label upper t-sm dim" htmlFor="ac-code">
                 {t('rooms.ads.exitLabel')}
@@ -206,11 +238,6 @@ export default function AdsCorridor({ node }) {
               </div>
               {error && <div className="banner wrong">{error}</div>}
             </form>
-
-            {/* Learning objective */}
-            <div className="learn ac-learn">
-              <b>{t('rooms.ads.learnLabel')}</b> {t('rooms.ads.learn')}
-            </div>
           </div>
         </div>
       </div>

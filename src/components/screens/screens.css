@@ -93,6 +93,35 @@
   box-shadow: var(--glow-cyan), 0 14px 28px rgba(0, 0, 0, 0.5);
 }
 
+/* --- Enter transition: the hand-off dialogue before the tool primer --- */
+.enter-dialogue {
+  width: 100%;
+  max-width: 560px;
+  margin: 4px 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.enter-line {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+.enter-line.friend { align-self: flex-start; border-color: rgba(255, 59, 92, 0.4); }
+.enter-line.you { align-self: flex-end; border-color: rgba(22, 242, 255, 0.4); text-align: right; }
+.enter-who {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.enter-line.friend .enter-who { color: var(--red); }
+.enter-line.you .enter-who { color: var(--cyan); }
+.enter-line p { margin: 0; font-size: 0.92rem; line-height: 1.4; color: #eaf1ff; }
+
 /* --- Win / Lose share the .intro layout but stack a single card --- */
 .intro.end { max-width: 720px; }
 .intro.end .intro-card { margin-bottom: 14px; box-shadow: var(--glow-cyan), 0 18px 34px rgba(0, 0, 0, 0.45); }

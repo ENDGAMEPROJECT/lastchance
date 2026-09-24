@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useGame } from '../game/GameContext.jsx'
 import { ITEMS, EMOJI_KEY, encodeWord } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
-import { playSound } from '../game/sound.js'
+import { DEBUG } from '../game/settings.js'
+import { playSound, stopSound, preloadSound } from '../game/sound.js'
 import { useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
@@ -86,12 +88,37 @@ const PRODUCTS = [
 /* The three classification option values (labels come from i18n). */
 const CLASSIFY_OPTIONS = ['mass', 'ai', 'legit']
 
+/* Rubber-stamp faces for each verdict. */
+const STAMP_EMOJI = { mass: '🏭', ai: '🤖', legit: '✅' }
+
+/* Fine pointer (mouse/trackpad) → the held stamp follows the cursor. On a
+   coarse pointer (touch) there's no cursor to ride, so we fall back to
+   tap-a-stamp then tap-the-slot, with the selection shown by highlights. */
+const FINE_POINTER = typeof window !== 'undefined'
+  && !!window.matchMedia?.('(pointer: fine)')?.matches
+
 export default function InfluencerAvenue({ node }) {
   const { completeRoom, addItem, addEvidence, hasItem } = useGame()
   const t = useT()
 
-  const [stage, setStage] = useState('label') // 'label' → 'verify' → solved
+  const [stage, setStage] = useState('label') // 'label' → 'labelFeedback' → 'explain' → 'verify' → solved
   const [solved, setSolved] = useState(false)
+  const [searchDone, setSearchDone] = useState(false) // explainer's mock search finished → show results
+
+  // Play the explainer's "searching → results" beat each time it opens.
+  useEffect(() => {
+    if (stage !== 'explain') { setSearchDone(false); return }
+    // ~0.9s for the photo to "drag" into the bar, then the search resolves.
+    playSound('search.mp3') // searching whir (placeholder — a proper search hum would be nicer)
+    const id = window.setTimeout(() => {
+      stopSound('search.mp3')
+      playSound('twinkle.mp3') // results land
+      setSearchDone(true)
+    }, 1700)
+    return () => { window.clearTimeout(id); stopSound('search.mp3') }
+  }, [stage])
+
+  useEffect(() => { preloadSound('search.mp3'); preloadSound('stamp.mp3') }, [])
 
   /* i18n content arrays, index-aligned with POSTS / PRODUCTS. */
   const postCopy = t('rooms.influencer.posts')
@@ -127,10 +154,11 @@ export default function InfluencerAvenue({ node }) {
 
   useEffect(() => {
     if (stage !== 'label' || !POSTS.every((post) => answers[post.id] === post.correctLabel)) return
-    // Keep all three completed words visible briefly before the next challenge.
+    // Keep all three completed words visible briefly, then recap what each
+    // label means (disclosure) before moving on to the reverse-search stage.
     const timer = window.setTimeout(() => {
       setDecoderOpen(false)
-      setStage('verify')
+      setStage('labelFeedback')
     }, 900)
     return () => window.clearTimeout(timer)
   }, [answers, stage])
@@ -141,9 +169,42 @@ export default function InfluencerAvenue({ node }) {
   const [searched, setSearched] = useState({}) // productId -> true once results are in
   const [picks, setPicks] = useState({}) // productId -> chosen verdict value
   const [verifyErr, setVerifyErr] = useState('')
+  const [stampFx, setStampFx] = useState(0) // bumped on each stamp so the imprint animation replays
+  const [heldStamp, setHeldStamp] = useState(null) // the stamp-maker currently "in hand"
+  const heldRef = useRef(null)
+  const posRef = useRef({ x: 0, y: 0 }) // last cursor position (viewport px)
+
+  // While a stamp is held it follows the cursor; Esc puts it down. Only on a
+  // fine pointer — touch relies on tap-then-tap with the highlight/armed states.
+  useEffect(() => {
+    if (!heldStamp || !FINE_POINTER) return
+    const move = (e) => {
+      posRef.current = { x: e.clientX, y: e.clientY }
+      const el = heldRef.current
+      if (el) { el.style.left = `${e.clientX}px`; el.style.top = `${e.clientY}px` }
+    }
+    const key = (e) => { if (e.key === 'Escape') setHeldStamp(null) }
+    window.addEventListener('pointermove', move)
+    window.addEventListener('keydown', key)
+    return () => { window.removeEventListener('pointermove', move); window.removeEventListener('keydown', key) }
+  }, [heldStamp])
+
+  // Press the held stamp onto a product's slot.
+  function stampVerdict(id, value) {
+    pick(id, value)
+    setStampFx((n) => n + 1)
+    playSound('stamp.mp3') // the rubber-stamp ka-chunk
+  }
+  // Grab a stamp-maker (toggle it in/out of your hand); remember where it started.
+  function grabStamp(value, e) {
+    if (e) posRef.current = { x: e.clientX, y: e.clientY }
+    setHeldStamp((cur) => (cur === value ? null : value))
+  }
+  // Click the product's slot while holding a stamp → press it.
+  function applyStamp(id) { if (heldStamp) { stampVerdict(id, heldStamp); setHeldStamp(null) } }
 
   const searchTimer = useRef(null)
-  useEffect(() => () => clearTimeout(searchTimer.current), [])
+  useEffect(() => () => { clearTimeout(searchTimer.current); stopSound('search.mp3') }, [])
 
   useEffect(() => {
     const onUseItem = (event) => {
@@ -161,8 +222,11 @@ export default function InfluencerAvenue({ node }) {
     setVerifyErr('')
     if (searched[id]) { setShownId(id); return }
     setActiveId(id)
+    playSound('search.mp3') // "searching the web…" whir
     clearTimeout(searchTimer.current)
     searchTimer.current = window.setTimeout(() => {
+      stopSound('search.mp3')
+      playSound('twinkle.mp3') // results found
       setSearched((s) => ({ ...s, [id]: true }))
       setActiveId(null)
       setShownId(id)
@@ -213,11 +277,18 @@ export default function InfluencerAvenue({ node }) {
       {stage === 'label' && (
         <div className="ia-stage ia-label-stage fade-in">
           <div className="ia-head">
-            <span className="chip">{t('rooms.influencer.stage1.badge')}</span>
-            <span className="chip warn">{t('rooms.influencer.stage1.tag')}</span>
             <p className="ia-prompt">
               {t('rooms.influencer.stage1.prompt')}
             </p>
+            {DEBUG && (
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm ia-debug-skip"
+                onClick={() => setStage('verify')}
+              >
+                ⏭ Skip decoding (debug)
+              </button>
+            )}
           </div>
 
           <div className="ia-posts">
@@ -348,13 +419,120 @@ export default function InfluencerAvenue({ node }) {
         </div>
       )}
 
+      {/* ============= FEEDBACK: what each disclosure label means ============= */}
+      {stage === 'labelFeedback' && (
+        <div className="ia-stage ia-explain fade-in">
+          <div className="ia-explain-card panel clip">
+            <h3 className="ia-explain-title">{t('rooms.influencer.labelFeedback.title')}</h3>
+            <p className="ia-explain-body">{t('rooms.influencer.labelFeedback.intro')}</p>
+
+            <div className="ia-lf-cards">
+              <div className="ia-lf-card paid">
+                <span className="ia-lf-tag">{t('rooms.influencer.labels.paid')}</span>
+                <div className="ia-lf-desc">{t('rooms.influencer.labelFeedback.paidDesc')}</div>
+                <div className="ia-lf-ex t-xs">{t('rooms.influencer.labelFeedback.paidExample')}</div>
+              </div>
+              <div className="ia-lf-card collab">
+                <span className="ia-lf-tag">{t('rooms.influencer.labels.collab')}</span>
+                <div className="ia-lf-desc">{t('rooms.influencer.labelFeedback.collabDesc')}</div>
+                <div className="ia-lf-ex t-xs">{t('rooms.influencer.labelFeedback.collabExample')}</div>
+              </div>
+              <div className="ia-lf-card gifted">
+                <span className="ia-lf-tag">{t('rooms.influencer.labels.gifted')}</span>
+                <div className="ia-lf-desc">{t('rooms.influencer.labelFeedback.giftedDesc')}</div>
+                <div className="ia-lf-ex t-xs">{t('rooms.influencer.labelFeedback.giftedExample')}</div>
+              </div>
+            </div>
+
+            <button className="btn btn-purple btn-lg" onClick={() => setStage('explain')}>
+              {t('rooms.influencer.labelFeedback.continue')}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ===================== TRANSITION: what is reverse image search ===================== */}
+      {stage === 'explain' && (
+        <div className="ia-stage ia-explain fade-in">
+          <div className="ia-explain-card panel clip">
+            <h3 className="ia-explain-title">{t('rooms.influencer.explain.title')}</h3>
+            <p className="ia-explain-body">{t('rooms.influencer.explain.body')}</p>
+
+            {/* Two everyday uses: find where to buy something you like, and verify a claim. */}
+            <div className="ia-explain-uses">
+              <div className="ia-explain-use">
+                <span className="ia-explain-use-icon" aria-hidden>🛍️</span>
+                <span>{t('rooms.influencer.explain.useShop')}</span>
+              </div>
+              <div className="ia-explain-use">
+                <span className="ia-explain-use-icon" aria-hidden>🔎</span>
+                <span>{t('rooms.influencer.explain.useVerify')}</span>
+              </div>
+            </div>
+
+            {/* Animated reverse-image-search mock: the jacket photo drops into a
+                search bar, it "searches", then the matching cheap shops pop up. */}
+            <div className="ia-search">
+              {/* 1 · the seller's post you want to check */}
+              <div className="ia-src">
+                <span className="ia-src-photo" aria-hidden>🧥</span>
+                <span className="ia-src-cap t-xs">{t('rooms.influencer.explain.queryCaption')}</span>
+              </div>
+
+              {/* 2 · drag its photo into a reverse image search ↓ */}
+              <div className="ia-search-draghint t-xs dim">{t('rooms.influencer.explain.dragHint')}</div>
+
+              {/* 3 · the search bar — the photo drops into it from the post above */}
+              <div className="ia-search-bar">
+                <span className="ia-search-thumb" aria-hidden>
+                  🧥
+                  <span className="ia-search-hand" aria-hidden>🫳</span>
+                </span>
+                <span className="ia-search-q">
+                  <span className="ia-search-q-text">{t('rooms.influencer.explain.searchLabel')}</span>
+                  <span className="ia-search-scan" aria-hidden />
+                </span>
+                <span className="ia-search-go" aria-hidden>🔍</span>
+              </div>
+
+              <div className="ia-search-panel">
+                {!searchDone ? (
+                  <div className="ia-search-loading">
+                    <span className="ia-search-spinner" aria-hidden />
+                    <span className="mono t-sm">{t('rooms.influencer.explain.searching')}</span>
+                  </div>
+                ) : (
+                  <div className="ia-search-out">
+                    <div className="ia-search-resultshead t-xs dim">{t('rooms.influencer.explain.resultsLabel')}</div>
+                    <div className="ia-search-results">
+                      {[['dropship-mart', '$12'], ['mega-cheap', '$9'], ['fastfinds', '$14'], ['shop2000', '$11']].map(([shop, price], i) => (
+                        <div className="ia-search-hit" key={shop} style={{ animationDelay: `${i * 0.14}s` }}>
+                          <span className="ia-search-hit-emoji" aria-hidden>🧥</span>
+                          <span className="ia-search-hit-shop t-xs">{shop}</span>
+                          <span className="ia-search-hit-price t-xs mono">{price}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="learn ia-explain-learn">
+              <b>{t('rooms.influencer.explain.takeawayLabel')}</b> {t('rooms.influencer.explain.takeaway')}
+            </div>
+
+            <button className="btn btn-purple btn-lg" onClick={() => setStage('verify')}>
+              {t('rooms.influencer.explain.continue')}
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* ============================ STAGE 2 ============================ */}
       {stage === 'verify' && (
-        <div className="ia-stage fade-in">
+        <div className={`ia-stage fade-in ${heldStamp && FINE_POINTER ? 'ia-holding' : ''}`}>
           <div className="ia-head">
-            <span className="chip ok">{t('rooms.influencer.stage2.stage1Cleared')}</span>
-            <span className="chip">{t('rooms.influencer.stage2.badge')}</span>
-            <span className="chip warn">{t('rooms.influencer.stage2.tag')}</span>
             <p className="ia-prompt">{t('rooms.influencer.stage2.prompt')}</p>
           </div>
 
@@ -442,6 +620,21 @@ export default function InfluencerAvenue({ node }) {
                       <div className="ia-engine-thumb" style={{ background: shown.hue }}>
                         <span className="ia-imgtile-emoji">{shown.emoji}</span>
                       </div>
+                      {/* the reserved slot — click it with a stamp in hand to press */}
+                      <button
+                        type="button"
+                        className={`ia-stampslot ${heldStamp ? 'armed' : ''}`}
+                        onClick={() => applyStamp(shown.id)}
+                        aria-label={t('rooms.influencer.stage2.stampHere')}
+                      >
+                        {picks[shown.id]
+                          ? (
+                            <span key={stampFx} className={`ia-stamp-mark ia-stamp-${picks[shown.id]}`}>
+                              {t(`rooms.influencer.classify.${picks[shown.id]}`)}
+                            </span>
+                          )
+                          : <span className="ia-stampslot-ph t-xs dim">{t('rooms.influencer.stage2.stampHere')}</span>}
+                      </button>
                       <div className="ia-engine-result-meta">
                         <div className="t-sm">{shownCopy.name}</div>
                         <div className="t-xs dim mono">{shown.seller}</div>
@@ -466,14 +659,17 @@ export default function InfluencerAvenue({ node }) {
                       </div>
                       <div className="ia-engine-classify">
                         <div className="t-xs upper dim">{t('rooms.influencer.stage2.classifyPrompt')}</div>
-                        <div className="ia-segments">
+                        {/* Grab a stamp-maker; your cursor becomes it, then click the slot by the image. */}
+                        <div className="ia-stamprack">
                           {CLASSIFY_OPTIONS.map((value) => (
                             <button
                               key={value}
-                              className={`ia-seg ${picks[shown.id] === value ? 'on' : ''}`}
-                              onClick={() => pick(shown.id, value)}
+                              type="button"
+                              className={`ia-stampmaker ia-stamp-${value} ${heldStamp === value ? 'held' : ''} ${picks[shown.id] === value ? 'inked' : ''}`}
+                              onClick={(e) => grabStamp(value, e)}
                             >
-                              {t(`rooms.influencer.classify.${value}`)}
+                              <span className="ia-stampmaker-face" aria-hidden>{STAMP_EMOJI[value]}</span>
+                              <span className="ia-stamp-label">{t(`rooms.influencer.classify.${value}`)}</span>
                             </button>
                           ))}
                         </div>
@@ -494,7 +690,22 @@ export default function InfluencerAvenue({ node }) {
               {t('rooms.influencer.stage2.confirm')}
             </button>
           </div>
+
         </div>
+      )}
+
+      {/* The grabbed stamp riding the cursor — portalled to <body> so it isn't
+          offset by the scaled stage's transform. Fine pointers only. */}
+      {stage === 'verify' && heldStamp && FINE_POINTER && createPortal(
+        <div
+          className={`ia-held-stamp ia-stamp-${heldStamp}`}
+          ref={heldRef}
+          aria-hidden
+          style={{ left: `${posRef.current.x}px`, top: `${posRef.current.y}px` }}
+        >
+          <span className="ia-stampmaker-face">{STAMP_EMOJI[heldStamp]}</span>
+        </div>,
+        document.body,
       )}
 
     </RoomFrame>

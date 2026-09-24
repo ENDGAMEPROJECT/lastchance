@@ -49,6 +49,38 @@ const ROUNDS = [
 const FLAG_IDS = ['suffix', 'httpNoS', 'weirdTld', 'homoglyph', 'typo', 'httpsGood', 'lock', 'looksReal']
 const CORRECT_FLAGS = ['suffix', 'httpNoS', 'weirdTld', 'homoglyph', 'typo']
 
+/* Hand-drawn line icons for each red-flag option, so the quiz reads at a
+   glance instead of being a wall of checkboxes. Stroke uses currentColor, so
+   each icon tints with its option's state (muted → cyan when selected).
+   The five real flags get "problem" glyphs; the three decoys get reassuring
+   ones (closed padlock, shield, thumbs-up). */
+function FlagIcon({ id }) {
+  const p = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }
+  const paths = {
+    // Extra words bolted onto the address — a link bar with an appended "+".
+    suffix: <><rect x="2.5" y="7.5" width="12" height="9" rx="2" {...p} /><path d="M5.5 12h6" {...p} /><circle cx="18" cy="12" r="3.4" {...p} /><path d="M18 10.3v3.4M16.3 12h3.4" {...p} /></>,
+    // http:// — an open padlock (shackle swung out).
+    httpNoS: <><rect x="5" y="11" width="14" height="9" rx="2" {...p} /><path d="M8 11V8a4 4 0 0 1 7.6-1.7" {...p} /><path d="M12 14.5v2.4" {...p} /></>,
+    // Odd domain ending — a globe.
+    weirdTld: <><circle cx="12" cy="12" r="8.5" {...p} /><path d="M3.5 12h17" {...p} /><path d="M12 3.5c2.6 2.4 2.6 14.6 0 17c-2.6-2.4-2.6-14.6 0-17z" {...p} /></>,
+    // Look-alike characters — a magnifier inspecting a letter.
+    homoglyph: <><circle cx="10.5" cy="10.5" r="6.5" {...p} /><path d="M15.2 15.2 20 20" {...p} /><path d="M8.8 12.3 10.5 7.6l1.7 4.7M9.4 10.9h2.2" {...p} /></>,
+    // Misspelled brand — text with a wavy spellcheck underline.
+    typo: <><path d="M5 8.5h14M5 12h9" {...p} /><path d="M5 16q1.2-2 2.4 0t2.4 0 2.4 0 2.4 0" {...p} /></>,
+    // "https so it's safe" — a closed padlock (reassuring decoy).
+    httpsGood: <><rect x="5" y="11" width="14" height="9" rx="2" {...p} /><path d="M8 11V8a4 4 0 0 1 8 0v3" {...p} /><path d="M12 14.5v2.4" {...p} /></>,
+    // "there's a padlock" — a shield (reassuring decoy).
+    lock: <><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z" {...p} /></>,
+    // "looks right" — a check badge (reassuring decoy).
+    looksReal: <><circle cx="12" cy="12" r="8.5" {...p} /><path d="M8.5 12.3l2.3 2.3 4.7-4.9" {...p} /></>,
+  }
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+      {paths[id]}
+    </svg>
+  )
+}
+
 /* Render a URL with any non-ASCII (look-alike / homoglyph) characters
    highlighted — used inside the doorway to reveal what the eye can't. */
 function highlightAddr(url) {
@@ -199,7 +231,7 @@ function DoorPage({ type, ambiguous, t }) {
     return (
       <div
         className="door-page luna-ad"
-        style={{ backgroundImage: `url("${bgUrl('link-district/ad-luna-3.png')}")` }}
+        style={{ backgroundImage: `url("${bgUrl('link-district/ad-luna-3.png')}"`}}
       >
         <div className="luna-ad-copy">
           <div className="luna-ad-3-headline">{t('rooms.link.lunaAd3.headline')}</div>
@@ -489,9 +521,6 @@ export default function LinkDistrict({ node }) {
       {phase === 'block' && (
         <div className="ld-room fade-in">
           <div className="ld-crossroad">
-            <div className="ld-router-head">
-              <span className="chip">{t('rooms.link.routerBadge', { current: round + 1, total: ROUNDS.length })}</span>
-            </div>
 
             <div className="ld-stage">
               {/* Outgoing crossroad — stays put while the new one slides over it. */}
@@ -548,7 +577,6 @@ export default function LinkDistrict({ node }) {
               <div className="ld-review panel clip panel-glow-magenta">
                 <div className="ld-review-head">
                   <span className="ld-review-title">{t('rooms.link.reviewTitle')}</span>
-                  <span className="chip">{t('rooms.link.routerBadge', { current: round + 1, total: ROUNDS.length })}</span>
                 </div>
                 <ul className="ld-review-list">
                   {displayDoors.map((d) => (
@@ -580,7 +608,8 @@ export default function LinkDistrict({ node }) {
               <label key={id} className={`ld-flag ${flags[id] ? 'on' : ''}`}>
                 <input type="checkbox" checked={!!flags[id]} onChange={() => toggleFlag(id)} />
                 <span className="ld-check" />
-                <span>{t(`rooms.link.flags.${id}`)}</span>
+                <span className="ld-flag-icon"><FlagIcon id={id} /></span>
+                <span className="ld-flag-label">{t(`rooms.link.flags.${id}`)}</span>
               </label>
             ))}
           </div>

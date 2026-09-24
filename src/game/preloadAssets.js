@@ -29,6 +29,8 @@ export const GAME_IMAGES = [
   'roulette.png',
   'influencer.png',
   'algorithm.png',
+  'algorithm-door.jpg',
+  'algorithm-keypad.jpg',
   'ads.png',
   'persuasion.png',
   'persuasion_animation.gif',

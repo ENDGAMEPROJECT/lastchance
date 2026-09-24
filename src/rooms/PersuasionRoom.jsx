@@ -1,9 +1,8 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
-import { CODES } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
-import { playSound, preloadSound } from '../game/sound.js'
+import { playSound } from '../game/sound.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { useStage } from '../components/Stage.jsx'
 import './PersuasionRoom.css'
@@ -13,18 +12,34 @@ import './PersuasionRoom.css'
    labelled technique "frames" piled in the CENTRE — freely draggable
    with no gravity (they stay wherever you drop them, overlapping). Drag
    a frame onto the poster it matches: correct → the frame locks on and a
-   hidden LETTER appears; wrong → the poster flashes red and the frame
-   stays put. The letters (poster order) spell CODES.persuasion = FOOLED,
-   typed into the terminal to unlock the exit. */
+   circle is drawn around the poster's code letter (the first occurrence of
+   the per-language letter set in i18n); wrong → the poster flashes red and the
+   frame stays put. The circled letters, read left-to-right across the wall,
+   spell the terminal password. */
 
 const POSTERS = [
-  { id: 'fomo', letter: 'F', emoji: '⚡', tint: 'red' },
-  { id: 'social', letter: 'O', emoji: '🌟', tint: 'cyan' },
-  { id: 'exagg', letter: 'O', emoji: '🔥', tint: 'amber' },
-  { id: 'influencer', letter: 'L', emoji: '💄', tint: 'purple' },
-  { id: 'emotional', letter: 'E', emoji: '😢', tint: 'magenta' },
-  { id: 'urgency', letter: 'D', emoji: '⏰', tint: 'green' },
+  { id: 'fomo', emoji: '⚡', tint: 'red' },
+  { id: 'social', emoji: '🌟', tint: 'cyan' },
+  { id: 'exagg', emoji: '🔥', tint: 'amber' },
+  { id: 'influencer', emoji: '💄', tint: 'purple' },
+  { id: 'emotional', emoji: '😢', tint: 'magenta' },
+  { id: 'urgency', emoji: '⏰', tint: 'green' },
 ]
+
+/* Wrap the first occurrence (case-insensitive) of `letter` in `text` with a
+   circled-letter span. Used to ring the code letter inside a poster's copy. */
+function circleLetter(text, letter) {
+  if (!text || !letter) return text
+  const idx = text.toLowerCase().indexOf(letter.toLowerCase())
+  if (idx === -1) return text
+  return (
+    <>
+      {text.slice(0, idx)}
+      <span className="pl-circled">{text[idx]}</span>
+      {text.slice(idx + 1)}
+    </>
+  )
+}
 
 const FRAME_ORDER = ['emotional', 'fomo', 'urgency', 'social', 'influencer', 'exagg']
 
@@ -38,6 +53,16 @@ function initPositions() {
   return o
 }
 
+/* Frames shrink as they move toward the right of the wall, matching the
+   receding perspective plane (so a frame reads the same apparent size as the
+   poster it's hovering). */
+function getFrameScale(x) {
+  const minX = 0
+  const maxX = 760
+  const t = (Math.min(Math.max(x, minX), maxX) - minX) / (maxX - minX)
+  return 1 - t * 0.3
+}
+
 export default function PersuasionRoom({ node }) {
   const { completeRoom, addEvidence } = useGame()
   const t = useT()
@@ -45,11 +70,13 @@ export default function PersuasionRoom({ node }) {
 
   const posterText = t('rooms.persuasion.posters')
   const posterIndex = POSTERS.reduce((m, p, i) => ((m[p.id] = i), m), {})
+  // The terminal password is the circled letters read across the wall in poster
+  // order — derived from i18n, so it follows whatever letters each language sets.
+  const password = POSTERS.map((p) => posterText[posterIndex[p.id]]?.letter || '').join('')
   const techniqueLabel = (id) => t(`rooms.persuasion.techniques.${id}`)
   const frames = FRAME_ORDER.map((id) => ({ id, technique: techniqueLabel(id) }))
 
-  const [placed, setPlaced] = useState({}) // posterId -> true once matched
-  const [wrongPoster, setWrongPoster] = useState(null)
+  const [placement, setPlacement] = useState({}) // frameId -> posterId it's sitting on
   const [overPoster, setOverPoster] = useState(null)
   const [hint, setHint] = useState(t('rooms.persuasion.hints.start'))
   const [entry, setEntry] = useState('')
@@ -67,17 +94,65 @@ export default function PersuasionRoom({ node }) {
 
   const sceneRef = useRef(null)
   const posterRefs = useRef({})
+  const frameRefs = useRef({})
   const dragRef = useRef(null)
-  const placedRef = useRef(placed)
-  placedRef.current = placed
+  const placementRef = useRef(placement)
+  placementRef.current = placement
 
-  // Warm the pick-up chime so the first grab has no load delay.
-  useEffect(() => { preloadSound('twinkle.mp3') }, [])
+  // Ring position per poster: the code letter's centre, measured from the REAL
+  // rendered poster in its own layout coords (x/y in border-box px within the
+  // 164×190 poster, plus a diameter `d`). Intra-poster layout is unaffected by
+  // the wall's rotateY, so this is exact; the frame reuses it to draw its ring
+  // at the identical spot, so a frame dropped on its poster rings that letter.
+  const [ringPos, setRingPos] = useState({})
+  const measureRings = useCallback(() => {
+    const next = {}
+    for (const p of POSTERS) {
+      const el = posterRefs.current[p.id]
+      const mark = el?.querySelector('.pl-circled')
+      if (!mark) continue
+      const w = mark.offsetWidth, h = mark.offsetHeight
+      if (!w && !h) continue // not laid out yet — don't record a bogus 0,0
+      // Ring size tracks the line-box height, which is identical for upper and
+      // lowercase — so a lowercase glyph (o, l, e) would get an oversized ring.
+      // Tighten it for lowercase.
+      const ch = mark.textContent || ''
+      const isLower = ch && ch === ch.toLowerCase() && ch !== ch.toUpperCase()
+      const d = Math.max(w, h) * (isLower ? 1.12 : 1.28)
+      next[p.id] = { x: mark.offsetLeft + w / 2, y: mark.offsetTop + h / 2, d }
+    }
+    // Merge, never replace — a transient empty read must not wipe good values.
+    if (Object.keys(next).length) setRingPos((prev) => ({ ...prev, ...next }))
+  }, [])
+
+  // Re-measure when web fonts settle (letter metrics shift) and on window resize.
+  // Measurement is in design pixels, so the stage's scale transform is irrelevant.
+  useEffect(() => {
+    if (document.fonts?.ready) document.fonts.ready.then(() => measureRings())
+    window.addEventListener('resize', measureRings)
+    return () => window.removeEventListener('resize', measureRings)
+  }, [measureRings])
+
+  // Callback ref on the poster wall. The wall is a RoomFrame child, mounted only
+  // AFTER the player clicks "Begin" — so mount-time effects run too early. This
+  // fires the instant the wall is actually in the DOM; a ResizeObserver then
+  // keeps the rings measured across any later layout change.
+  const wallObs = useRef(null)
+  const attachWall = useCallback((el) => {
+    if (wallObs.current) { wallObs.current.disconnect(); wallObs.current = null }
+    if (el) {
+      const ro = new ResizeObserver(() => measureRings())
+      ro.observe(el)
+      wallObs.current = ro
+      requestAnimationFrame(() => measureRings())
+    }
+  }, [measureRings])
+
   // Clean up the end-animation timer on unmount.
   useEffect(() => () => clearTimeout(endTimer.current), [])
 
-  const matchedCount = Object.keys(placed).length
-  const allMatched = matchedCount === POSTERS.length
+  // Every poster now carries a frame (no right/wrong — the password is the check).
+  const allPlaced = Object.keys(placement).length === POSTERS.length
 
 
   // Convert a screen point into scene-local design pixels (undo stage scale).
@@ -85,10 +160,13 @@ export default function PersuasionRoom({ node }) {
     const r = sceneRef.current.getBoundingClientRect()
     return { x: (cx - r.left) / scale, y: (cy - r.top) / scale }
   }
-  // Which (unmatched) poster is under a screen point, if any.
+  // Which poster is under a screen point, if any — skipping ones that already
+  // hold a (different) frame.
   const posterUnder = (cx, cy) => {
+    const occupied = new Set(Object.values(placementRef.current))
+    const dragging = dragRef.current?.id
     for (const p of POSTERS) {
-      if (placedRef.current[p.id]) continue
+      if (occupied.has(p.id) && placementRef.current[dragging] !== p.id) continue
       const el = posterRefs.current[p.id]
       if (!el) continue
       const r = el.getBoundingClientRect()
@@ -106,6 +184,32 @@ export default function PersuasionRoom({ node }) {
     setZorder((z) => [...z.filter((x) => x !== id), id]) // bring to front
   }
 
+  // Snap a frame onto a poster. Because the frame and the poster live in
+  // different transform contexts (per-frame rotateY vs. the wall's), matching
+  // the poster's projected top-left directly leaves an offset. So we set a rough
+  // position, then on the next frame measure both RENDERED rects and nudge by
+  // the residual delta — the frame's projected top-left ends up exactly on the
+  // poster's, independent of transform origins.
+  function snapToPoster(frameId, posterId) {
+    const posterEl = posterRefs.current[posterId]
+    const sceneEl = sceneRef.current
+    if (!posterEl || !sceneEl) return
+    const pr = posterEl.getBoundingClientRect()
+    const sr = sceneEl.getBoundingClientRect()
+    setPos((cur) => ({ ...cur, [frameId]: { x: (pr.left - sr.left) / scale, y: (pr.top - sr.top) / scale } }))
+    // Next frame, nudge so the frame's CENTRE sits on the poster's centre — the
+    // frame is the same size as the poster, so it covers it (not a corner).
+    requestAnimationFrame(() => {
+      const frameEl = frameRefs.current[frameId]
+      if (!frameEl) return
+      const fr = frameEl.getBoundingClientRect()
+      const pr2 = posterEl.getBoundingClientRect()
+      const dx = ((pr2.left + pr2.width / 2) - (fr.left + fr.width / 2)) / scale
+      const dy = ((pr2.top + pr2.height / 2) - (fr.top + fr.height / 2)) / scale
+      setPos((cur) => ({ ...cur, [frameId]: { x: cur[frameId].x + dx, y: cur[frameId].y + dy } }))
+    })
+  }
+
   useEffect(() => {
     if (!dragId) return
     const move = (e) => {
@@ -118,7 +222,14 @@ export default function PersuasionRoom({ node }) {
     const up = (e) => {
       const d = dragRef.current
       const target = posterUnder(e.clientX, e.clientY)
-      if (d && target) tryMatch(target, d.id)
+      if (d && target) {
+        // Just place it — no right/wrong feedback; the terminal is the check.
+        setPlacement((cur) => ({ ...cur, [d.id]: target }))
+        snapToPoster(d.id, target)
+      } else if (d) {
+        // Dropped off the wall → it's no longer on any poster.
+        setPlacement((cur) => { const n = { ...cur }; delete n[d.id]; return n })
+      }
       setDragId(null)
       dragRef.current = null
       setOverPoster(null)
@@ -134,32 +245,9 @@ export default function PersuasionRoom({ node }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dragId, scale])
 
-  function tryMatch(posterId, techId) {
-    if (placed[posterId]) return
-    if (techId === posterId) {
-      const next = { ...placed, [posterId]: true }
-      setPlaced(next)
-      setWrongPoster(null)
-      playSound('twinkle.mp3') // chime on a correct frame landing
-      setHint(
-        Object.keys(next).length === POSTERS.length
-          ? t('rooms.persuasion.hints.allDone')
-          : t('rooms.persuasion.hints.correct'),
-      )
-    } else {
-      // Wrong — flash the poster; the frame stays where it was dropped.
-      playSound('wrong.mp3')
-      setWrongPoster(posterId)
-      setHint(t('rooms.persuasion.hints.wrongSpecific', {
-        clue: t(`rooms.persuasion.posterHints.${posterId}`),
-      }))
-      window.setTimeout(() => setWrongPoster((cur) => (cur === posterId ? null : cur)), 600)
-    }
-  }
-
   function submitPassword(e) {
     e.preventDefault()
-    if (entry.trim().toUpperCase() === CODES.persuasion.toUpperCase()) {
+    if (entry.trim().toUpperCase() === password.toUpperCase()) {
       addEvidence({ id: 'ev-persuasion', label: t('rooms.persuasion.evidence') })
       // Close the computer close-up, play the ending animation over the whole
       // scene for 5.1s, then settle on the end frame and reveal the cleared bar.
@@ -193,36 +281,23 @@ export default function PersuasionRoom({ node }) {
             plays cleanly; the cleared bar appears once it settles. */}
         {!ending && (<>
         {/* ---- LEFT: the poster wall ---- */}
-        <div className="pl-posters">
+        <div className="pl-posters" ref={attachWall}>
           {POSTERS.map((p) => {
-            const done = !!placed[p.id]
-            const wrong = wrongPoster === p.id
             const over = overPoster === p.id
             const copy = posterText[posterIndex[p.id]]
+            const letter = copy.letter
+            // Wrap the code letter so we can MEASURE it (the ring itself is
+            // hidden on the poster — no right/wrong feedback; the frame carries
+            // the visible ring). Prefer the headline, fall back to the sub.
+            const inHead = !!letter && copy.headline?.toLowerCase().includes(letter.toLowerCase())
             return (
               <div
                 key={p.id}
                 ref={(el) => (posterRefs.current[p.id] = el)}
-                className={`pl-poster tint-${p.tint} ${done ? 'framed' : ''} ${wrong ? 'wrong' : ''} ${over ? 'is-over' : ''}`}
+                className={`pl-poster pl-${p.id} tint-${p.tint} ${over ? 'is-over' : ''}`}
               >
-                <div className="pl-poster-emoji">{p.emoji}</div>
-                <div className="pl-poster-head">{copy.headline}</div>
-                <div className="pl-poster-sub">{copy.sub}</div>
-
-                {done && (
-                  <div className="pl-frame-overlay">
-                    <span className="pl-frame-corner tl" />
-                    <span className="pl-frame-corner tr" />
-                    <span className="pl-frame-corner bl" />
-                    <span className="pl-frame-corner br" />
-                    <span className="pl-poster-tag mono">{techniqueLabel(p.id)}</span>
-                  </div>
-                )}
-                {done && (
-                  <div className="pl-letter-tile" aria-label={t('rooms.persuasion.hiddenLetter', { letter: p.letter })}>
-                    {p.letter}
-                  </div>
-                )}
+                <div className="pl-poster-head">{inHead ? circleLetter(copy.headline, letter) : copy.headline}</div>
+                <div className="pl-poster-sub">{inHead ? copy.sub : circleLetter(copy.sub, letter)}</div>
               </div>
             )
           })}
@@ -231,7 +306,7 @@ export default function PersuasionRoom({ node }) {
         {/* ---- RIGHT: the computer in the scene — click it to open its screen ---- */}
         <button
           type="button"
-          className={`pl-computer-hotspot ${allMatched ? 'ready' : ''}`}
+          className={`pl-computer-hotspot ${allPlaced ? 'ready' : ''}`}
           onClick={() => setComputerOpen(true)}
           aria-label={t('rooms.persuasion.openComputer')}
         >
@@ -241,14 +316,27 @@ export default function PersuasionRoom({ node }) {
         {/* floating status hint */}
         <p className="pl-hint mono">{hint}</p>
 
-        {/* ---- CENTRE: free-floating overlapping frame pile ---- */}
+        {/* ---- CENTRE: free-floating draggable frames ----
+            Every frame is always present and carries its own red circle from the
+            start. The circle is auto-positioned by rendering this poster's copy
+            (transparent — text hidden, only the ring shows) and ringing the first
+            occurrence of its letter, so when the frame is dropped onto a poster
+            the ring lands exactly on that poster's matching letter. */}
         {frames.map((f) => {
-          if (placed[f.id]) return null
+          const fScale = getFrameScale(pos[f.id].x) // recede with the wall's perspective
+          const ring = ringPos[f.id] // {x,y,d} measured from the matching poster
           return (
             <div
               key={f.id}
+              ref={(el) => (frameRefs.current[f.id] = el)}
               className={`pl-freeframe ${dragId === f.id ? 'dragging' : ''}`}
-              style={{ left: pos[f.id].x, top: pos[f.id].y, zIndex: dragId === f.id ? 999 : 20 + zorder.indexOf(f.id) }}
+              style={{
+                left: pos[f.id].x,
+                top: pos[f.id].y,
+                transform: `rotateY(10deg) scale(${fScale})`,
+                transformOrigin: 'left center',
+                zIndex: dragId === f.id ? 999 : 20 + zorder.indexOf(f.id),
+              }}
               onPointerDown={(e) => onFrameDown(e, f.id)}
             >
               <span className="pl-frame">
@@ -257,8 +345,16 @@ export default function PersuasionRoom({ node }) {
                 <span className="pl-frame-corner bl" />
                 <span className="pl-frame-corner br" />
                 <span className="pl-frame-label">{f.technique}</span>
-                <span className="pl-frame-mark" aria-hidden />
               </span>
+              {/* The code-letter ring, drawn at the letter's exact spot inside
+                  the matching poster — present from the start. */}
+              {ring && (
+                <span
+                  className="pl-frame-ring"
+                  style={{ left: ring.x, top: ring.y, width: ring.d, height: ring.d }}
+                  aria-hidden
+                />
+              )}
             </div>
           )
         })}
@@ -275,7 +371,7 @@ export default function PersuasionRoom({ node }) {
               ✕
             </button>
             <form
-              className={`pl-terminal ${allMatched ? 'on' : 'locked'} ${pwError ? 'shake' : ''}`}
+              className={`pl-terminal ${allPlaced ? 'on' : 'locked'} ${pwError ? 'shake' : ''}`}
               onSubmit={submitPassword}
             >
               <div className="pl-term-bar mono">
@@ -291,7 +387,7 @@ export default function PersuasionRoom({ node }) {
                   ))}
                 </div>*/}
 
-                {allMatched ? (
+                {allPlaced ? (
                   <>
                    {/*<p className="pl-term-prompt mono">{t('rooms.persuasion.termPrompt')}</p>*/}
                     <div className="pl-term-input row">

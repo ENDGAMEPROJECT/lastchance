@@ -8,6 +8,7 @@ import GameMap from './components/GameMap.jsx'
 import RoomReview from './components/RoomReview.jsx'
 import WelcomeScreen from './components/screens/WelcomeScreen.jsx'
 import PretestScreen from './components/screens/PretestScreen.jsx'
+import EnterScreen from './components/screens/EnterScreen.jsx'
 import PosttestScreen from './components/screens/PosttestScreen.jsx'
 import { WinScreen, LoseScreen } from './components/screens/EndScreens.jsx'
 
@@ -51,6 +52,7 @@ export default function App() {
   let content
   if (screen === 'welcome') content = <WelcomeScreen />
   else if (screen === 'pretest') content = <PretestScreen />
+  else if (screen === 'enter') content = <EnterScreen />
   else if (screen === 'posttest') content = <PosttestScreen />
   else if (screen === 'win') content = <WinScreen />
   else if (screen === 'lose') content = <LoseScreen />
