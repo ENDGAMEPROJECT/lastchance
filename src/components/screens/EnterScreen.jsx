@@ -1,21 +1,49 @@
+import { useState, useEffect } from 'react'
 import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { GAME_MINUTES, NARRATIVE } from '../../game/gameData.js'
+import { bgUrl } from '../../game/assets.js'
 import './screens.css'
 
 /* Transition between the pre-test and the district map — the moment the player
-   "jacks in" to the Physical Internet. It opens on the hand-off beat ({friend}
-   sets the 30-minute ultimatum, the player invites them along), then primes the
-   two HUD tools they'll lean on (Map and Bag). "Jack in" starts the clock. */
+   "steps inside" the Physical Internet. A neon portal warp plays on arrival (a
+   wormhole rushing past, then a whiteout the instructions emerge from), so the
+   jump from the real-world chat into the digital world feels like travel rather
+   than a plain screen swap. It opens on the hand-off beat ({friend} sets the
+   30-minute ultimatum, the player invites them along), then primes the two HUD
+   tools they'll lean on (Map and Bag). "Step inside" starts the clock. */
 export default function EnterScreen() {
-  const { startGame } = useGame()
+  const { startGame, reducedMotion } = useGame()
   const t = useT()
   const friend = NARRATIVE.friend
   const vars = { friend, product: NARRATIVE.product, minutes: GAME_MINUTES }
 
+  // The portal overlay only plays with motion enabled; it clears itself once
+  // the warp finishes so it never sits in front of the buttons.
+  const [warping, setWarping] = useState(!reducedMotion)
+  useEffect(() => {
+    if (!warping) return
+    const timer = window.setTimeout(() => setWarping(false), 1900)
+    return () => window.clearTimeout(timer)
+  }, [warping])
+
   return (
-    <div className="stage-scroll">
-      <div className="intro fade-in">
+    <div className="stage-scroll enter-scroll">
+      {/* Arrive onto the actual district map — the instructions sit over it, so
+          the portal drops you into the world you're about to explore. */}
+      <div className="bg-slot" style={{ backgroundImage: `url(${bgUrl('map/map-bg.png')})` }} />
+      {warping && (
+        <div className="portal-warp" aria-hidden>
+          <div className="portal-streaks" />
+          <span className="portal-ring" />
+          <span className="portal-ring" />
+          <span className="portal-ring" />
+          <span className="portal-ring" />
+          <span className="portal-ring" />
+          <div className="portal-core" />
+        </div>
+      )}
+      <div className={`intro ${reducedMotion ? 'fade-in' : 'portal-arrive'}`}>
         <div className="intro-glyph">⏻</div>
         <div className="eyebrow accent-cyan">{t('enter.eyebrow')}</div>
         <h1 className="intro-title">

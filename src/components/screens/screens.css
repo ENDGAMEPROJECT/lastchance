@@ -128,3 +128,105 @@
 .intro.end .intro-card p { font-size: 0.92rem; }
 .evidence-list { margin-top: 8px; }
 .intro.end .learn { font-size: 0.85rem; padding: 9px 12px; }
+
+/* ============================================================
+   FANTASY PORTAL — pre-test → instructions ("step inside").
+   A neon wormhole rushes past, a core swells into a whiteout,
+   and the instructions emerge through it. Motion-only; the
+   overlay removes itself in JS once the warp finishes.
+   ============================================================ */
+.portal-warp {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 50%, #0a1430 0%, #04060f 72%);
+  animation: portal-out 1.9s ease-in forwards;
+  pointer-events: none;
+}
+@keyframes portal-out {
+  0%, 76% { opacity: 1; }
+  100%    { opacity: 0; visibility: hidden; }
+}
+
+/* Concentric rings rushing outward toward the viewer = a tunnel. */
+.portal-ring {
+  position: absolute;
+  width: 42vmin;
+  height: 42vmin;
+  border-radius: 50%;
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 26px rgba(22, 242, 255, 0.7), inset 0 0 26px rgba(22, 242, 255, 0.35);
+  opacity: 0;
+  animation: portal-ring 1.9s ease-in infinite;
+}
+.portal-ring:nth-child(2) { animation-delay: 0.30s; }
+.portal-ring:nth-child(3) {
+  animation-delay: 0.60s;
+  border-color: var(--magenta);
+  box-shadow: 0 0 26px rgba(255, 43, 214, 0.7), inset 0 0 26px rgba(255, 43, 214, 0.35);
+}
+.portal-ring:nth-child(4) { animation-delay: 0.90s; }
+.portal-ring:nth-child(5) {
+  animation-delay: 1.20s;
+  border-color: var(--magenta);
+  box-shadow: 0 0 26px rgba(255, 43, 214, 0.7), inset 0 0 26px rgba(255, 43, 214, 0.35);
+}
+@keyframes portal-ring {
+  0%   { transform: scale(0.04); opacity: 0; }
+  18%  { opacity: 1; }
+  100% { transform: scale(8.5); opacity: 0; }
+}
+
+/* Hyperspace streaks radiating from the core. */
+.portal-streaks {
+  position: absolute;
+  inset: -25%;
+  background: repeating-conic-gradient(from 0deg,
+    rgba(22, 242, 255, 0) 0deg,
+    rgba(22, 242, 255, 0) 3.4deg,
+    rgba(150, 245, 255, 0.55) 4.2deg,
+    rgba(22, 242, 255, 0) 5deg);
+  -webkit-mask: radial-gradient(circle at 50% 50%, transparent 5%, #000 42%);
+          mask: radial-gradient(circle at 50% 50%, transparent 5%, #000 42%);
+  opacity: 0;
+  animation: portal-streaks 1.9s ease-in forwards;
+}
+@keyframes portal-streaks {
+  0%   { transform: scale(0.2) rotate(0deg); opacity: 0; }
+  25%  { opacity: 0.85; }
+  100% { transform: scale(2.6) rotate(28deg); opacity: 0; }
+}
+
+/* The core swells, then blows out to a whiteout the instructions come from. */
+.portal-core {
+  position: absolute;
+  width: 8vmin;
+  height: 8vmin;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, var(--cyan) 42%, rgba(22, 242, 255, 0) 72%);
+  animation: portal-core 1.9s ease-in forwards;
+}
+@keyframes portal-core {
+  0%   { transform: scale(0.2); opacity: 0.6; }
+  60%  { transform: scale(1);   opacity: 1; }
+  73%  { transform: scale(1.5); opacity: 1; }
+  82%  { transform: scale(34);  opacity: 1; }
+  100% { transform: scale(34);  opacity: 0; }
+}
+
+/* The instructions arrive THROUGH the portal: blurred + overscaled, resolving
+   as the whiteout clears (~1.4s in, so it overlaps the core flash). */
+.intro.portal-arrive {
+  animation: portal-arrive 0.95s cubic-bezier(0.16, 0.84, 0.3, 1) 1.35s both;
+}
+@keyframes portal-arrive {
+  0%   { opacity: 0; transform: scale(1.16); filter: blur(7px) brightness(1.7); }
+  100% { opacity: 1; transform: scale(1);    filter: blur(0)   brightness(1); }
+}
+
+/* The instructions screen arrives onto the district map — show the backdrop a
+   touch clearer (matches the map screen) instead of the global 0.42. */
+.enter-scroll .bg-slot { opacity: 0.6; }
