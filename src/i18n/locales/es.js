@@ -795,12 +795,37 @@ export default {
       "labels": {
         "paid": "PAID",
         "collab": "COLLAB",
-        "gifted": "GIFTED"
+        "gifted": "GIFTED",
+        "nothing": "NOTHING"
       },
       "posts": [
         {
-          "caption": "my forever glow routine 💧 use code LUNA20",
-          "product": "skincare serum",
+          "caption": "Morning training feels so much better with GlowFuel. I’ve been using it before my workouts and I’m honestly obsessed. Use my code MIRA20 for 20% off your first order. Link in bio.",
+          "product": "Pre-workout drink",
+          "username": "MiraMoves",
+          "followers": "482K",
+          "comments": [
+            {
+              "username": "fitpaula",
+              "text": "Omg I need to try this before my next workout!"
+            },
+            {
+              "username": "runneralex",
+              "text": "Does the code work in all Europe?"
+            },
+            {
+              "username": "glowfuel_official",
+              "text": "So happy you’re loving it 💜"
+            },
+            {
+              "username": "martahealthy",
+              "text": "This looks like an ad but I actually want it hahaha"
+            },
+            {
+              "username": "gymtom",
+              "text": "Just ordered with your code!"
+            }
+          ],
           "clues": [
             "Discount code “LUNA20” in the caption",
             "Affiliate link in bio",
@@ -808,8 +833,32 @@ export default {
           ]
         },
         {
-          "caption": "new flavour drop with the team 🔋 #ad",
-          "product": "energy drink",
+          "caption": "NovaSound sent me their new AirBeat headphones to test this week. I’ll use them during tonight’s stream and share my honest thoughts after a few days. Thanks for the PR package!",
+          "product": "Wireless headphones",
+          "username": "TechWithLeo",
+          "followers": "219K",
+          "comments": [
+            {
+              "username": "streamfan88",
+              "text": "Can you test the mic quality?"
+            },
+            {
+              "username": "novasoundaudio",
+              "text": "Can’t wait to hear your thoughts!"
+            },
+            {
+              "username": "lucagames",
+              "text": "Gifted or sponsored?"
+            },
+            {
+              "username": "TechWithLeo",
+              "text": "Gifted. I’ll still be honest in the review."
+            },
+            {
+              "username": "setupqueen",
+              "text": "Please compare them with your old headset!"
+            }
+          ],
           "clues": [
             "Tagged the brand as a creative partner",
             "Co-designed the flavour together",
@@ -817,12 +866,69 @@ export default {
           ]
         },
         {
-          "caption": "sent this shaker to try 🎁 thoughts?",
-          "product": "protein shaker",
+          "caption": "So incredibly proud to share this collaboration with @The_Local_Stitch. We’ve been developing this limited-run handmade garment for months. Every piece is unique and supports local artisans. Use code LOCAL_CLARA for 15% off and first access to the drop. Link in bio.",
+          "product": "Handmade patchwork quilted jacket",
+          "username": "ClaraSees",
+          "followers": "312K ",
+          "comments": [
+            {
+              "username": "artisan_wear",
+              "text": "This looks incredible, can’t wait to see the details!"
+            },
+            {
+              "username": "needle_ninja",
+              "text": "Is there a waitlist? I need to get one."
+            },
+            {
+              "username": "glowfuel_official",
+              "text": "Obsessed with this texture! So unique 💜"
+            },
+            {
+              "username": "martahealthy",
+              "text": "Looks like an ad but I love supporting local. Ordering!"
+            },
+            {
+              "username": "gymtom",
+              "text": "Wait, I just ordered the other thing, can I combine? Lol."
+            }
+          ],
           "clues": [
             "Received the product for free",
             "No payment, no discount code",
             "“gifted” disclosure in the corner"
+          ]
+        },
+        {
+          "caption": "Okay, a mini haul because I was so excited about these discoveries! The ceramics are from a lovely small workshop, and I’m deeply in love with this book. Found some truly great pieces. Everything is genuinely just what I wanted to buy. #legithaul #smallbatch #curatedfinds #SpainFinds",
+          "product": "Cercamics",
+          "username": "RealSarahShares ",
+          "followers": "285K ",
+          "comments": [
+            {
+              "username": "artisan_wear",
+              "text": "Those dishes are gorgeous! Where did you get them?"
+            },
+            {
+              "username": "needle_ninja",
+              "text": "Love that scarf. Perfect for autumn."
+            },
+            {
+              "username": "glowfuel_official",
+              "text": "Genuine finds are the best! Looks so cosy. 💜"
+            },
+            {
+              "username": "martahealthy",
+              "text": "Finally, an actual haul! I want that plant!"
+            },
+            {
+              "username": "gymtom",
+              "text": "Wait, so is it still Spain-based? Need recommendations!"
+            }
+          ],
+          "clues": [
+            "",
+            "",
+            ""
           ]
         }
       ],

@@ -27,8 +27,6 @@ import './InfluencerAvenue.css'
 const POSTS = [
   {
     id: 'paid',
-    name: 'LUNA.BEAUTY',
-    handle: '@luna.beauty',
     verified: true,
     followers: '1.2M',
     hue: 'linear-gradient(135deg, #ff8fd4, #b06bff)', // the faux photo block
@@ -37,26 +35,31 @@ const POSTS = [
     correctLabel: 'PAID',
   },
   {
-    id: 'collab',
-    name: 'MAX_STREAMS',
-    handle: '@max_streams',
+    id: 'gifted',
     verified: true,
     followers: '850K',
-    hue: 'linear-gradient(135deg, #16f2ff, #2b6bff)',
+     hue: 'linear-gradient(135deg, #ff1100, #ffbf6b)', 
     likes: '31.7K',
     comments: '882',
-    correctLabel: 'COLLAB',
+    correctLabel: 'GIFTED',
   },
   {
-    id: 'gifted',
-    name: 'FIT_BY_JULIA',
-    handle: '@fit_by_julia',
+    id: 'collab',
     verified: false,
     followers: '670K',
-    hue: 'linear-gradient(135deg, #2bff88, #16c4a9)',
+     hue: 'linear-gradient(135deg, #8fe5ff, #6b93ff)', 
     likes: '12.9K',
     comments: '431',
-    correctLabel: 'GIFTED',
+    correctLabel: 'COLLAB',
+  },
+   {
+    id: 'nothing',
+    verified: false,
+    followers: '670K',
+     hue: 'linear-gradient(135deg, #ff7b00, #fff56b)', 
+    likes: '12.9K',
+    comments: '431',
+    correctLabel: 'NOTHING',
   },
 ]
 
@@ -99,9 +102,10 @@ const FINE_POINTER = typeof window !== 'undefined'
 
 function influencerImageUrl(id, locale) {
   const filenames = {
-    paid: { en: 'paid_en.jpg', es: 'paid_es.png', sr: 'paid_sr.png' },
-    collab: { en: 'collab_en.png', es: 'collab_es.png', sr: 'collab_sr.png' },
-    gifted: { en: 'gifted_en.jpg', es: 'gifted_es.png', sr: 'gifted_sr.png' },
+    paid: { en: 'paid_en.jpg', es: 'paid_es.png', sr: 'paid_sr.png', fi: 'paid_en.png' },
+    collab: { en: 'collab_en.png', es: 'collab_es.png', sr: 'collab_sr.png', fi: 'collab_en.png' },
+    gifted: { en: 'gifted_en.jpg', es: 'gifted_es.png', sr: 'gifted_sr.png', fi: 'gifted_en.png' },
+    nothing: { en: 'nothing_en.png', es: 'nothing_es.png', sr: 'nothing_sr.png', fi: 'nothing_en.png' },
   }
   const filename = filenames[id]?.[locale] || filenames[id]?.en
   return `${import.meta.env.BASE_URL}influencers/${filename}`
@@ -326,17 +330,17 @@ export default function InfluencerAvenue({ node }) {
                   {/* Social card header */}
                   <div className="ia-card-top">
                     <div className="ia-avatar" style={{ background: p.hue }}>
-                      {p.name.charAt(0)}
+                      {copy.username.charAt(0)}
                     </div>
                     <div className="ia-id">
                       <div className="ia-name">
-                        {p.name}
+                        {copy.username}
                         {p.verified && (
                           <span className="ia-verified" title={t('rooms.influencer.stage1.verified')}>✓</span>
                         )}
                       </div>
                       <div className="ia-handle t-xs dim">
-                        {p.handle} · {p.followers} {t('rooms.influencer.stage1.followersSuffix')}
+                        @{copy.username} · {copy.followers} {t('rooms.influencer.stage1.followersSuffix')}
                       </div>
                     </div>
                   </div>
