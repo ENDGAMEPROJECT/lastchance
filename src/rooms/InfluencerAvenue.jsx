@@ -5,7 +5,7 @@ import { ITEMS, EMOJI_KEY, encodeWord } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
-import { useT } from '../i18n/index.jsx'
+import { useI18n, useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
 import './InfluencerAvenue.css'
@@ -26,7 +26,7 @@ import './InfluencerAvenue.css'
 /* ---- Stage 1 content: the three influencer posts ---- */
 const POSTS = [
   {
-    id: 'luna',
+    id: 'paid',
     name: 'LUNA.BEAUTY',
     handle: '@luna.beauty',
     verified: true,
@@ -37,7 +37,7 @@ const POSTS = [
     correctLabel: 'PAID',
   },
   {
-    id: 'max',
+    id: 'collab',
     name: 'MAX_STREAMS',
     handle: '@max_streams',
     verified: true,
@@ -48,7 +48,7 @@ const POSTS = [
     correctLabel: 'COLLAB',
   },
   {
-    id: 'julia',
+    id: 'gifted',
     name: 'FIT_BY_JULIA',
     handle: '@fit_by_julia',
     verified: false,
@@ -97,8 +97,19 @@ const STAMP_EMOJI = { mass: '🏭', ai: '🤖', legit: '✅' }
 const FINE_POINTER = typeof window !== 'undefined'
   && !!window.matchMedia?.('(pointer: fine)')?.matches
 
+function influencerImageUrl(id, locale) {
+  const filenames = {
+    paid: { en: 'paid_en.jpg', es: 'paid_es.png', sr: 'paid_sr.png' },
+    collab: { en: 'collab_en.png', es: 'collab_es.png', sr: 'collab_sr.png' },
+    gifted: { en: 'gifted_en.jpg', es: 'gifted_es.png', sr: 'gifted_sr.png' },
+  }
+  const filename = filenames[id]?.[locale] || filenames[id]?.en
+  return `${import.meta.env.BASE_URL}influencers/${filename}`
+}
+
 export default function InfluencerAvenue({ node }) {
   const { completeRoom, addItem, addEvidence, hasItem } = useGame()
+  const { locale } = useI18n()
   const t = useT()
 
   const [stage, setStage] = useState('label') // 'label' → 'labelFeedback' → 'explain' → 'verify' → solved
@@ -330,7 +341,11 @@ export default function InfluencerAvenue({ node }) {
                     </div>
                   </div>
 
-                  <div className="ia-photo" style={{ background: p.hue }}>
+                  <div className="ia-photo"
+                    style={{
+                      backgroundImage: `url("${influencerImageUrl(p.id, locale)}")`,
+                      backgroundSize: 'cover',
+                    }}>
                     <span className="ia-photo-tag mono">{copy.product}</span>
                     <span className="ia-stats t-xs">❤️ {p.likes} · 💬 {p.comments}</span>
                   </div>
@@ -544,158 +559,159 @@ export default function InfluencerAvenue({ node }) {
           </div>
 
           <div className="ia-verify">
-          {/* Your "downloaded" product images — drag one into the engine at right. */}
-          <div className="ia-imgtray">
-            <div className="ia-imgtray-label t-xs dim">{t('rooms.influencer.stage2.trayLabel')}</div>
-            <div className="ia-imgtray-items">
-              {PRODUCTS.map((p, idx) => {
-                const done = !!searched[p.id]
-                const isShown = shownId === p.id
-                const copy = productCopy[idx]
-                return (
-                  <Draggable
-                    key={p.id}
-                    id={`img-${p.id}`}
-                    kind="image"
-                    data={{ id: p.id }}
-                    disabled={!!activeId}
-                    className={`ia-imgtile-drag ${isShown ? 'shown' : ''}`}
-                  >
-                    <div className="ia-imgtile" style={{  
-                      backgroundImage: `url("${import.meta.env.BASE_URL}products/${p.id}.png")`,
-                      backgroundSize: "cover" }}>
-                      <span className="ia-imgtile-emoji">{p.emoji}</span>
-                      <span className="ia-imgtile-name">{copy.name}</span>
-                      <span className={`ia-imgtile-badge ${done ? 'done' : 'grab'}`} aria-hidden>{done ? '✓' : '⤓'}</span>
-                      {picks[p.id] && (
-                        <span className="ia-imgtile-verdict t-xs">{t(`rooms.influencer.classify.${picks[p.id]}`)}</span>
-                      )}
-                    </div>
-                  </Draggable>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* The reverse-search engine — the search and its results happen HERE. */}
-          {(() => {
-            const active = activeId ? PRODUCTS.find((p) => p.id === activeId) : null
-            const shown = !activeId && shownId ? PRODUCTS.find((p) => p.id === shownId) : null
-            const shownCopy = shown ? productCopy[PRODUCTS.indexOf(shown)] : null
-            return (
-              <div className="ia-engine">
-                <div className="ia-engine-bar mono">
-                  <span className="ia-engine-dot" /> {t('rooms.influencer.stage2.engineBar')}
-                </div>
-                <DropZone
-                  id="reverse-engine"
-                  accept={['image']}
-                  overClassName="is-over"
-                  className="ia-engine-drop"
-                  onDrop={(data) => runSearch(data.id)}
-                >
-                  <div className="ia-engine-ph">
-                    <span className="ia-engine-icon" aria-hidden>⤓</span>
-                    <span>{t('rooms.influencer.stage2.engineDrop')}</span>
-                  </div>
-                </DropZone>
-
-                {/* Uploading + searching animation */}
-                {active && (
-                  <div className="ia-engine-panel">
-                    <div className="ia-engine-busy">
-                      <div className="ia-engine-thumb" 
-                      style={{
-                        backgroundImage: `url("${import.meta.env.BASE_URL}products/${active.id}.png")`,
-                        backgroundSize: 'cover',
+            {/* Your "downloaded" product images — drag one into the engine at right. */}
+            <div className="ia-imgtray">
+              <div className="ia-imgtray-label t-xs dim">{t('rooms.influencer.stage2.trayLabel')}</div>
+              <div className="ia-imgtray-items">
+                {PRODUCTS.map((p, idx) => {
+                  const done = !!searched[p.id]
+                  const isShown = shownId === p.id
+                  const copy = productCopy[idx]
+                  return (
+                    <Draggable
+                      key={p.id}
+                      id={`img-${p.id}`}
+                      kind="image"
+                      data={{ id: p.id }}
+                      disabled={!!activeId}
+                      className={`ia-imgtile-drag ${isShown ? 'shown' : ''}`}
+                    >
+                      <div className="ia-imgtile" style={{
+                        backgroundImage: `url("${import.meta.env.BASE_URL}products/${p.id}.png")`,
+                        backgroundSize: "cover"
                       }}>
-                        <span className="ia-scan" aria-hidden />
+                        <span className="ia-imgtile-emoji">{p.emoji}</span>
+                        <span className="ia-imgtile-name">{copy.name}</span>
+                        <span className={`ia-imgtile-badge ${done ? 'done' : 'grab'}`} aria-hidden>{done ? '✓' : '⤓'}</span>
+                        {picks[p.id] && (
+                          <span className="ia-imgtile-verdict t-xs">{t(`rooms.influencer.classify.${picks[p.id]}`)}</span>
+                        )}
                       </div>
-                      <div className="ia-searching">
-                        <div className="ia-searching-head t-xs">
-                          <span className="ia-globe" aria-hidden>🌐</span>
-                          {t('rooms.influencer.stage2.searching')}
-                          <span className="ia-dots" aria-hidden><i /><i /><i /></span>
-                        </div>
-                        <div className="ia-skels" aria-hidden>
-                          <span className="ia-skel" /><span className="ia-skel" /><span className="ia-skel" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Results + classify for the searched image */}
-                {shown && (
-                  <div className="ia-engine-panel fade-in">
-                    <div className="ia-engine-result-head">
-                      <div
-                        className="ia-engine-thumb"
-                        style={{
-                          backgroundImage: `url("${import.meta.env.BASE_URL}products/${shown.id}.png")`,
-                          backgroundSize: 'cover',
-                        }}
-                      />
-                      {/* the reserved slot — click it with a stamp in hand to press */}
-                      <button
-                        type="button"
-                        className={`ia-stampslot ${heldStamp ? 'armed' : ''}`}
-                        onClick={() => applyStamp(shown.id)}
-                        aria-label={t('rooms.influencer.stage2.stampHere')}
-                      >
-                        {picks[shown.id]
-                          ? (
-                            <span key={stampFx} className={`ia-stamp-mark ia-stamp-${picks[shown.id]}`}>
-                              {t(`rooms.influencer.classify.${picks[shown.id]}`)}
-                            </span>
-                          )
-                          : <span className="ia-stampslot-ph t-xs dim">{t('rooms.influencer.stage2.stampHere')}</span>}
-                      </button>
-                      <div className="ia-engine-result-meta">
-                        <div className="t-sm">{shownCopy.name}</div>
-                        <div className="t-xs dim mono">{shown.seller}</div>
-                      </div>
-                    </div>
-                    <div className="ia-engine-cols">
-                      <div className="ia-prod-result">
-                        <div className="t-xs upper dim">{t('rooms.influencer.stage2.matchesTitle')}</div>
-                        <ul className="ia-matches">
-                          {shownCopy.matches.slice(0, 3).map((m, i) => (
-                            <li key={i} className="ia-match" style={{ animationDelay: `${i * 90}ms` }}>
-                              <span className="ia-match-fav" style={{ background: shown.hue }} aria-hidden />
-                              <span className="ia-match-txt">
-                                <span className="ia-match-site mono">{m.site}</span>
-                                <span className="ia-match-title">{m.title}</span>
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
-                        <div className="ia-result-sum t-xs">{shownCopy.result}</div>
-                        <div className="t-xs dim ia-prod-hint">{shownCopy.hint}</div>
-                      </div>
-                      <div className="ia-engine-classify">
-                        <div className="t-xs upper dim">{t('rooms.influencer.stage2.classifyPrompt')}</div>
-                        {/* Grab a stamp-maker; your cursor becomes it, then click the slot by the image. */}
-                        <div className="ia-stamprack">
-                          {CLASSIFY_OPTIONS.map((value) => (
-                            <button
-                              key={value}
-                              type="button"
-                              className={`ia-stampmaker ia-stamp-${value} ${heldStamp === value ? 'held' : ''} ${picks[shown.id] === value ? 'inked' : ''}`}
-                              onClick={(e) => grabStamp(value, e)}
-                            >
-                              <span className="ia-stampmaker-face" aria-hidden>{STAMP_EMOJI[value]}</span>
-                              <span className="ia-stamp-label">{t(`rooms.influencer.classify.${value}`)}</span>
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                    </Draggable>
+                  )
+                })}
               </div>
-            )
-          })()}
+            </div>
+
+            {/* The reverse-search engine — the search and its results happen HERE. */}
+            {(() => {
+              const active = activeId ? PRODUCTS.find((p) => p.id === activeId) : null
+              const shown = !activeId && shownId ? PRODUCTS.find((p) => p.id === shownId) : null
+              const shownCopy = shown ? productCopy[PRODUCTS.indexOf(shown)] : null
+              return (
+                <div className="ia-engine">
+                  <div className="ia-engine-bar mono">
+                    <span className="ia-engine-dot" /> {t('rooms.influencer.stage2.engineBar')}
+                  </div>
+                  <DropZone
+                    id="reverse-engine"
+                    accept={['image']}
+                    overClassName="is-over"
+                    className="ia-engine-drop"
+                    onDrop={(data) => runSearch(data.id)}
+                  >
+                    <div className="ia-engine-ph">
+                      <span className="ia-engine-icon" aria-hidden>⤓</span>
+                      <span>{t('rooms.influencer.stage2.engineDrop')}</span>
+                    </div>
+                  </DropZone>
+
+                  {/* Uploading + searching animation */}
+                  {active && (
+                    <div className="ia-engine-panel">
+                      <div className="ia-engine-busy">
+                        <div className="ia-engine-thumb"
+                          style={{
+                            backgroundImage: `url("${import.meta.env.BASE_URL}products/${active.id}.png")`,
+                            backgroundSize: 'cover',
+                          }}>
+                          <span className="ia-scan" aria-hidden />
+                        </div>
+                        <div className="ia-searching">
+                          <div className="ia-searching-head t-xs">
+                            <span className="ia-globe" aria-hidden>🌐</span>
+                            {t('rooms.influencer.stage2.searching')}
+                            <span className="ia-dots" aria-hidden><i /><i /><i /></span>
+                          </div>
+                          <div className="ia-skels" aria-hidden>
+                            <span className="ia-skel" /><span className="ia-skel" /><span className="ia-skel" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Results + classify for the searched image */}
+                  {shown && (
+                    <div className="ia-engine-panel fade-in">
+                      <div className="ia-engine-result-head">
+                        <div
+                          className="ia-engine-thumb"
+                          style={{
+                            backgroundImage: `url("${import.meta.env.BASE_URL}products/${shown.id}.png")`,
+                            backgroundSize: 'cover',
+                          }}
+                        />
+                        {/* the reserved slot — click it with a stamp in hand to press */}
+                        <button
+                          type="button"
+                          className={`ia-stampslot ${heldStamp ? 'armed' : ''}`}
+                          onClick={() => applyStamp(shown.id)}
+                          aria-label={t('rooms.influencer.stage2.stampHere')}
+                        >
+                          {picks[shown.id]
+                            ? (
+                              <span key={stampFx} className={`ia-stamp-mark ia-stamp-${picks[shown.id]}`}>
+                                {t(`rooms.influencer.classify.${picks[shown.id]}`)}
+                              </span>
+                            )
+                            : <span className="ia-stampslot-ph t-xs dim">{t('rooms.influencer.stage2.stampHere')}</span>}
+                        </button>
+                        <div className="ia-engine-result-meta">
+                          <div className="t-sm">{shownCopy.name}</div>
+                          <div className="t-xs dim mono">{shown.seller}</div>
+                        </div>
+                      </div>
+                      <div className="ia-engine-cols">
+                        <div className="ia-prod-result">
+                          <div className="t-xs upper dim">{t('rooms.influencer.stage2.matchesTitle')}</div>
+                          <ul className="ia-matches">
+                            {shownCopy.matches.slice(0, 3).map((m, i) => (
+                              <li key={i} className="ia-match" style={{ animationDelay: `${i * 90}ms` }}>
+                                <span className="ia-match-fav" style={{ background: shown.hue }} aria-hidden />
+                                <span className="ia-match-txt">
+                                  <span className="ia-match-site mono">{m.site}</span>
+                                  <span className="ia-match-title">{m.title}</span>
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                          <div className="ia-result-sum t-xs">{shownCopy.result}</div>
+                          <div className="t-xs dim ia-prod-hint">{shownCopy.hint}</div>
+                        </div>
+                        <div className="ia-engine-classify">
+                          <div className="t-xs upper dim">{t('rooms.influencer.stage2.classifyPrompt')}</div>
+                          {/* Grab a stamp-maker; your cursor becomes it, then click the slot by the image. */}
+                          <div className="ia-stamprack">
+                            {CLASSIFY_OPTIONS.map((value) => (
+                              <button
+                                key={value}
+                                type="button"
+                                className={`ia-stampmaker ia-stamp-${value} ${heldStamp === value ? 'held' : ''} ${picks[shown.id] === value ? 'inked' : ''}`}
+                                onClick={(e) => grabStamp(value, e)}
+                              >
+                                <span className="ia-stampmaker-face" aria-hidden>{STAMP_EMOJI[value]}</span>
+                                <span className="ia-stamp-label">{t(`rooms.influencer.classify.${value}`)}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })()}
           </div>
 
           <div className="ia-actions">

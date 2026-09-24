@@ -240,6 +240,7 @@
 }
 
 .ia-post {
+  height: 550px;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -287,7 +288,7 @@
 
 .ia-photo {
   position: relative;
-  height: 74px;
+  height: 284px;
   border-radius: var(--radius-sm);
   display: flex; align-items: flex-end; justify-content: space-between;
   padding: 6px;
@@ -701,7 +702,7 @@
   border-radius: 4px;
   line-height: 1.1; 
   font-size: 0.9rem;
-  background: rgba(92, 0, 138, 0.986)
+  background: rgba(50, 5, 73, 0.712)
 
 }
 .ia-imgtile-badge {
