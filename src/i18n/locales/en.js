@@ -325,18 +325,18 @@ export default {
     }
   },
   "enter": {
-    "eyebrow": "You're Inside",
+    "eyebrow": "We are inside",
     "titleLead": "Welcome to the",
     "titleAccent": "PHYSICAL INTERNET",
     "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
-    "playerLine": "We made it — this is the Physical Internet. Stick with me and I'll show you exactly how this deal was built to fool you.",
-    "toolsTitle": "First — your gear",
+    "playerLine": "We made it. This is the Physical Internet. Let's show Max how this deal was built to fool him",
+    "toolsTitle": "First, the gear",
     "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
-    "clock": "⏱ {minutes}:00 — the countdown starts the moment we head out",
+    "clock": "⏱ {minutes}:00 starts the moment we start walking",
     "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
     "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
-    "start": "▶ Head out — the countdown begins"
+    "start": "▶ Countdown begins"
   },
   "hints": {
     "title": "Mission hints",
