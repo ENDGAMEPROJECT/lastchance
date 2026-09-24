@@ -325,18 +325,18 @@ export default {
     }
   },
   "enter": {
-    "eyebrow": "Stepping In",
-    "titleLead": "Enter the",
+    "eyebrow": "We are inside",
+    "titleLead": "Welcome to the",
     "titleAccent": "PHYSICAL INTERNET",
     "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
-    "playerLine": "Then come with me. We're going on a journey through the Physical Internet — I'll show you exactly how this deal was built to fool you.",
-    "toolsTitle": "Before we go — your gear",
+    "playerLine": "We made it. This is the Physical Internet. Let's show Max how this deal was built to fool him",
+    "toolsTitle": "First, the gear",
     "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
-    "clock": "⏱ {minutes}:00 starts the moment you step inside",
+    "clock": "⏱ {minutes}:00 starts the moment we start walking",
     "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
     "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
-    "start": "▶ Step inside — countdown begins"
+    "start": "▶ Countdown begins"
   },
   "hints": {
     "title": "Mission hints",
@@ -432,19 +432,6 @@ export default {
           "Phishing attempts: read every character and block disguised look-alike addresses."
         ]
       },
-      "roulette": {
-        "context\t": "Treat the prize wheel as a lesson in gamified bait.",
-        "prompts": [
-          "I do not know what to compare after spinning the wheels. ",
-          "I do not know why a guaranteed prize could be suspicious. ",
-          "I do not know how to finish the corridor."
-        ],
-        "items": [
-          "Spin at least two different wheels and watch the pointer settle. ",
-          "A guaranteed win is bait when the prize is worthless.",
-          "Spin each wheel once, then mark all four as Rigged."
-        ]
-      },
       "influencer": {
         "context": "Separate genuine recommendations from paid or fabricated signals.",
         "prompts": [
@@ -495,6 +482,19 @@ export default {
           "Drag and drop each poster to its persuasion technique.",
           "Each correct frame reveals one letter. ",
           "After all six matches, open the computer and enter FOOLED."
+        ]
+      },
+      "rouletteInvestigation": {
+        "context": "Spin several times and compare the results before deciding.",
+        "prompts": [
+          "What should I check?",
+          "Does winning or losing prove cheating?",
+          "How do I finish the corridor?"
+        ],
+        "items": [
+          "Spin the current wheel at least twice. Does it keep landing on the same slice? Compare the results shown beside it.",
+          "You can keep spinning before deciding. A repeated result is a clue to investigate, but can also happen by chance.",
+          "Choose Rigged or Not rigged, then select the reason that matches your observations. Read the feedback and move to the next wheel."
         ]
       }
     },
@@ -655,81 +655,118 @@ export default {
       }
     },
     "roulette": {
-      "intro": "A corridor lined with dazzling prize wheels promising you win on every spin. Give them a whirl and watch what you actually get.",
-      "solvedTitle": "Corridor cleared — you spotted the rigged wheels",
-      "solvedText": "Every wheel “wins” every single time — but the prize is always a worthless 30¢ coupon. That is not luck or generosity; it is an ad designed to make you feel lucky and spend. You saw through it.",
-      "spunBadge": "Wheels spun · {spun} / {total}",
-      "riggedBadge": "Marked rigged · {rigged} / {total}",
-      "spinAll": "🎰 Spin ALL",
       "spin": "🎰 Spin",
       "spinning": "Spinning…",
-      "markRiggedLabel": "Mark as",
-      "markRiggedWord": "Rigged",
-      "won": "🎉 You won:",
-      "wonSuffix": "!",
-      "hintSpinFirst": "Spin a couple of wheels first — watch where they land before you decide.",
-      "hintSpinThis": "Spin THIS wheel at least once before marking it. See what it does.",
-      "evidenceLabel": "The prize wheels were rigged to always land on a worthless 30¢ coupon — bait to make you spend.",
-      "wheels": {
-        "w1": {
-          "name": "MEGA SPIN",
-          "tag": "Daily bonus",
-          "segments": [
-            "Try again",
-            "5 coins",
-            "2% off",
-            "30¢ OFF",
-            "Try again",
-            "1 coin",
-            "No prize",
-            "2 coins"
-          ]
+      "investigation": {
+        "intro": "Spin each wheel. Spot the trick and explain your choice.",
+        "wheelProgress": "Wheel {n} / {total}",
+        "solvedTitle": "Corridor cleared — claims checked",
+        "spinAgain": "Spin again",
+        "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked.",
+        "evidence": "Rigged wheels can use conditional coupons to make you spend more, or promises of another chance to keep you playing longer.",
+        "result": "Result: {result}",
+        "historyLabel": "Spins: {n} · Latest results:",
+        "verdicts": {
+          "rigged": "Rigged",
+          "fair": "Not rigged"
         },
-        "w2": {
-          "name": "LUCKY WHEEL",
-          "tag": "Spin to win",
-          "segments": [
-            "1 coin",
-            "Try again",
-            "30¢ OFF",
-            "No prize",
-            "2 coins",
-            "Try again",
-            "5 coins",
-            "2% off"
-          ]
+        "reasonLabel": "Which explanation fits this offer?",
+        "retry": "Try another spin and compare the results. You can change your decision. Repeated results can also happen by chance.",
+        "correct": "Case explained",
+        "next": "Next wheel →",
+        "finish": "Log the evidence ✓",
+        "observe": "Spin at least {count} times. Does it keep landing on the same slice, or do the results change? You can spin again if you are unsure.",
+        "shop": {
+          "badge": "MEGA SPIN · STORE",
+          "title": "You won a discount coupon!",
+          "coupon": "50% OFF",
+          "terms": "To add your coupon to your account, first make a purchase of at least €{amount}. Your 50% discount will be available for a later order.",
+          "reminder": "Store offer: spend at least €{amount} first to unlock your coupon for a later order."
         },
-        "w3": {
-          "name": "GOLD RUSH",
-          "tag": "Login reward",
-          "segments": [
-            "Try again",
-            "2 coins",
-            "No prize",
-            "1 coin",
-            "5 coins",
-            "30¢ OFF",
-            "Try again",
-            "2% off"
-          ]
-        },
-        "w4": {
-          "name": "JACKPOT CITY",
-          "tag": "Loot box",
-          "segments": [
-            "2 coins",
-            "Try again",
-            "1 coin",
-            "No prize",
-            "5 coins",
-            "Try again",
-            "30¢ OFF",
-            "2% off"
-          ]
+        "retryBait": "“No prize this time! Keep spinning — your next try could be the big win!”",
+        "wheels": {
+          "w1": {
+            "name": "MEGA SPIN",
+            "segments": [
+              "5% OFF",
+              "10% OFF",
+              "15% OFF",
+              "50% OFF",
+              "20% OFF",
+              "25% OFF",
+              "30% OFF",
+              "No prize"
+            ],
+            "rules": "Spin to unlock a discount coupon — up to 50% off!",
+            "feedback": "This wheel is rigged: it is programmed to land on the 50% coupon every time. The other discounts are decoration, making a fixed offer look like a lucky win. You must then make a purchase to unlock the coupon and another to use it. The aim is to make you spend more.",
+            "options": {
+              "wonOnce": "The coupon gives me 50% off the purchase needed to unlock it.",
+              "forcedOffer": "It pushes me to buy once to unlock the coupon, then buy again to use it.",
+              "colours": "I can add the coupon to my account without buying anything."
+            }
+          },
+          "w2": {
+            "name": "LUCKY WHEEL",
+            "segments": [
+              "1 coin",
+              "2 coins",
+              "3 coins",
+              "4 coins",
+              "5 coins",
+              "6 coins",
+              "10 coins",
+              "No prize"
+            ],
+            "rules": "Free spin! Try your luck for up to 10 game coins.",
+            "feedback": "The offer is a chance to win up to 10 game coins, not a promise of 10 coins every time or money to withdraw. Smaller prizes and the visible no-prize slice fit that offer. This simulated wheel selects randomly; a few spins alone would not prove that a real wheel is fair.",
+            "options": {
+              "equalChance": "It offers a chance at up to 10 game coins, so smaller prizes or no prize fit the offer.",
+              "smallPrize": "Every free spin should give me the advertised 10 coins.",
+              "different": "The coins I win can be withdrawn as real money."
+            }
+          },
+          "w3": {
+            "name": "GOLD RUSH",
+            "segments": [
+              "Phone",
+              "Tablet",
+              "€100",
+              "Console",
+              "Headset",
+              "Laptop",
+              "€50",
+              "No prize"
+            ],
+            "rules": "Win a phone, a laptop or up to €100 — give it a spin!",
+            "feedback": "This wheel forces “No prize”, then tempts you with another chance. The aim is to keep you spending time on the game. On a site with ads, that can mean more adverts seen. Another spin does not bring you closer to a win: in this simulated wheel, the prizes cannot be selected.",
+            "options": {
+              "lostOnce": "Seven prize slices guarantee I will win within eight spins.",
+              "expensive": "Each loss makes the next spin more likely to win a big prize.",
+              "forcedLoss": "It keeps giving me nothing while using big prizes and “try again” to keep me playing."
+            }
+          },
+          "w4": {
+            "name": "BONUS DROP",
+            "segments": [
+              "1 point",
+              "2 points",
+              "3 points",
+              "4 points",
+              "8 points",
+              "5 points",
+              "6 points",
+              "No prize"
+            ],
+            "rules": "Your free bonus spin: win up to 8 game points!",
+            "feedback": "The offer is for game points, not cash or a shopping discount. Eight is the largest prize; smaller amounts and no prize are also shown on the wheel. This simulated draw is random. Winning or losing a few spins does not establish whether a real draw is fair.",
+            "options": {
+              "manyPrizes": "These points give me a discount on my next purchase.",
+              "honestLoss": "The offer is for game points, and the wheel openly includes a no-prize outcome.",
+              "lostOnce": "“Up to 8 points” means I must receive at least 8 points."
+            }
+          }
         }
-      },
-      "learnLead": "A guaranteed “win”?",
-      "learnBody": "Spin wheels, daily login bonuses and loot boxes are engagement and advertising tricks, not generosity. They are rigged so you almost always “win” something — usually a tiny discount like 30¢ off — because feeling lucky makes you keep playing, share the app, and spend more. A prize you always get, worth almost nothing, isn't a gift. It's bait."
+      }
     },
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",

@@ -285,8 +285,8 @@ export default function AlgorithmRoom({ node }) {
               <div className="ar-opt-tag">{t('rooms.algorithm.choice.optionATag')}</div>
               <div className="ar-opt-icon">🎯</div>
               <div className="ar-opt-text">
-                {t('rooms.algorithm.choice.optionABefore')}
-                <b>{t('rooms.algorithm.choice.optionABold')}</b>
+                {t('rooms.algorithm.choice.optionABefore')}{' '}
+                <b>{t('rooms.algorithm.choice.optionABold')}</b>{' '}
                 {t('rooms.algorithm.choice.optionAAfter')}
               </div>
             </button>
@@ -298,8 +298,8 @@ export default function AlgorithmRoom({ node }) {
               <div className="ar-opt-tag">{t('rooms.algorithm.choice.optionBTag')}</div>
               <div className="ar-opt-icon">🛡️</div>
               <div className="ar-opt-text">
-                {t('rooms.algorithm.choice.optionBBefore')}
-                <b>{t('rooms.algorithm.choice.optionBBold')}</b>
+                {t('rooms.algorithm.choice.optionBBefore')}{' '}
+                <b>{t('rooms.algorithm.choice.optionBBold')}</b>{' '}
                 {t('rooms.algorithm.choice.optionBAfter')}
               </div>
             </button>
