@@ -2,7 +2,7 @@ import { NODES } from './gameData.js'
 
 const ROOM_HINT_KEYS = {
   'link-district': 'link',
-  'roulette-corridor': 'roulette',
+  'roulette-corridor': 'rouletteInvestigation',
   'influencer-avenue': 'influencer',
   'algorithm-room': 'algorithm',
   'ads-corridor': 'ads',

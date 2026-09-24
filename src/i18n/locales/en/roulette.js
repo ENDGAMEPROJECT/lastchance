@@ -1,5 +1,7 @@
+import investigation from './rouletteInvestigation.js'
 /* Roulette Corridor (Gamified Bait) strings. */
 export default {
+  investigation,
   intro:
     'A corridor lined with dazzling prize wheels promising you win on every spin. Give them a whirl and watch what you actually get.',
   solvedTitle: 'Corridor cleared — you spotted the rigged wheels',

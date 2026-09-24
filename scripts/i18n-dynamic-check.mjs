@@ -3,6 +3,7 @@
 import { readFileSync } from 'node:fs'
 import en from '../src/i18n/locales/en.js'
 import { NODES, ITEMS } from '../src/game/gameData.js'
+import { ROULETTE_WHEELS, ROULETTE_SEGMENTS } from '../src/game/rouletteData.js'
 
 const problems = []
 const ok = (cond, msg) => { if (!cond) problems.push(msg) }
@@ -44,13 +45,20 @@ ok(Array.isArray(R.link.rounds) && R.link.rounds.length === 3, 'rooms.link.round
 for (const [i, r] of (R.link.rounds || []).entries())
   for (const k of ['a', 'b', 'c']) ok(has(r.notes, k), `rooms.link.rounds[${i}].notes.${k} missing`)
 
-// roulette: wheels.<id>.{segments,name,tag}
-for (const id of idsIn('src/rooms/RouletteCorridor.jsx')) {
-  const w = R.roulette.wheels?.[id]
-  if (!w) continue // ids array may include non-wheel ids; only check ones present
-  for (const f of ['segments', 'name', 'tag']) ok(has(w, f), `rooms.roulette.wheels.${id}.${f} missing`)
+// roulette: inspect the same wheel IDs and answer IDs used by the game.
+for (const wheel of ROULETTE_WHEELS) {
+  const prefix = `rooms.roulette.investigation.wheels.${wheel.id}`
+  const w = R.roulette.investigation?.wheels?.[wheel.id]
+  for (const field of ['name', 'rules', 'feedback'])
+    ok(typeof w?.[field] === 'string', `${prefix}.${field} missing`)
+  ok(Array.isArray(w?.segments) && w.segments.length === ROULETTE_SEGMENTS, `${prefix}.segments must contain eight labels`)
+  for (const id of wheel.options)
+    ok(typeof w?.options?.[id] === 'string', `${prefix}.options.${id} missing`)
 }
-ok(R.roulette.wheels && Object.keys(R.roulette.wheels).length >= 3, 'rooms.roulette.wheels looks empty')
+for (const verdict of ['rigged', 'fair'])
+  ok(typeof R.roulette.investigation?.verdicts?.[verdict] === 'string', `roulette verdict ${verdict} missing`)
+for (const field of ['context', 'prompts', 'items'])
+  ok(has(en.hints.room.rouletteInvestigation, field), `hints.room.rouletteInvestigation.${field} missing`)
 
 // algorithm: tiles.<id>, rows.<id>.{slots,ad}
 ok(R.algorithm.tiles && Object.keys(R.algorithm.tiles).length > 0, 'rooms.algorithm.tiles empty')
