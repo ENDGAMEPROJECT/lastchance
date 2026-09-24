@@ -1,0 +1,99 @@
+key	en
+rooms.roulette.investigation.intro	Spin each wheel. Spot the trick and explain your choice.
+rooms.roulette.investigation.wheelProgress	Wheel {n} / {total}
+rooms.roulette.investigation.spinAgain	Spin again
+rooms.roulette.investigation.changeVerdict	Change my decision
+rooms.roulette.investigation.solvedTitle	Corridor cleared — claims checked
+rooms.roulette.investigation.solvedText	You compared repeated spins, explained your suspicions and discovered how each wheel worked.
+rooms.roulette.investigation.evidence	Rigged wheels can use conditional coupons to make you spend more, or promises of another chance to keep you playing longer.
+rooms.roulette.investigation.progress	Cases justified · {n} / {total}
+rooms.roulette.investigation.result	Result: {result}
+rooms.roulette.investigation.noSpin	No spins yet
+rooms.roulette.investigation.checked	✓ Checked
+rooms.roulette.investigation.inspect	Inspect
+rooms.roulette.investigation.rulesLabel	Advertised rules:
+rooms.roulette.investigation.historyLabel	Spins: {n} · Latest results:
+rooms.roulette.investigation.verdictLabel	Does the draw follow its advertised rules?
+rooms.roulette.investigation.verdictCorrectRigged	Correct: this wheel is rigged. Now explain why.
+rooms.roulette.investigation.verdictCorrectFair	Correct: this wheel is not rigged. Now explain why.
+rooms.roulette.investigation.verdictWrong	Incorrect. Review the results and try again.
+rooms.roulette.investigation.verdicts.rigged	Rigged
+rooms.roulette.investigation.verdicts.fair	Not rigged
+rooms.roulette.investigation.reasonLabel	Which explanation fits this offer?
+rooms.roulette.investigation.chooseReason	Choose a reason…
+rooms.roulette.investigation.check	Check my reasoning
+rooms.roulette.investigation.retry	Try another spin and compare the results. You can change your decision. Repeated results can also happen by chance.
+rooms.roulette.investigation.correct	Case explained
+rooms.roulette.investigation.next	Next wheel →
+rooms.roulette.investigation.finish	Log the evidence ✓
+rooms.roulette.investigation.wheels.w1.name	MEGA SPIN
+rooms.roulette.investigation.wheels.w1.segments.0	5% OFF
+rooms.roulette.investigation.wheels.w1.segments.1	10% OFF
+rooms.roulette.investigation.wheels.w1.segments.2	15% OFF
+rooms.roulette.investigation.wheels.w1.segments.3	50% OFF
+rooms.roulette.investigation.wheels.w1.segments.4	20% OFF
+rooms.roulette.investigation.wheels.w1.segments.5	25% OFF
+rooms.roulette.investigation.wheels.w1.segments.6	30% OFF
+rooms.roulette.investigation.wheels.w1.segments.7	No prize
+rooms.roulette.investigation.wheels.w1.rules	Spin to unlock a discount coupon — up to 50% off!
+rooms.roulette.investigation.wheels.w1.feedback	This wheel is rigged: it is programmed to land on the 50% coupon every time. The other discounts are decoration, making a fixed offer look like a lucky win. You must then make a purchase to unlock the coupon and another to use it. The aim is to make you spend more.
+rooms.roulette.investigation.wheels.w1.options.wonOnce	The coupon gives me 50% off the purchase needed to unlock it.
+rooms.roulette.investigation.wheels.w1.options.forcedOffer	It pushes me to buy once to unlock the coupon, then buy again to use it.
+rooms.roulette.investigation.wheels.w1.options.colours	I can add the coupon to my account without buying anything.
+rooms.roulette.investigation.wheels.w2.name	LUCKY WHEEL
+rooms.roulette.investigation.wheels.w2.segments.0	1 coin
+rooms.roulette.investigation.wheels.w2.segments.1	2 coins
+rooms.roulette.investigation.wheels.w2.segments.2	3 coins
+rooms.roulette.investigation.wheels.w2.segments.3	4 coins
+rooms.roulette.investigation.wheels.w2.segments.4	5 coins
+rooms.roulette.investigation.wheels.w2.segments.5	6 coins
+rooms.roulette.investigation.wheels.w2.segments.6	10 coins
+rooms.roulette.investigation.wheels.w2.segments.7	No prize
+rooms.roulette.investigation.wheels.w2.rules	Free spin! Try your luck for up to 10 game coins.
+rooms.roulette.investigation.wheels.w2.feedback	The offer is a chance to win up to 10 game coins, not a promise of 10 coins every time or money to withdraw. Smaller prizes and the visible no-prize slice fit that offer. This simulated wheel selects randomly; a few spins alone would not prove that a real wheel is fair.
+rooms.roulette.investigation.wheels.w2.options.equalChance	It offers a chance at up to 10 game coins, so smaller prizes or no prize fit the offer.
+rooms.roulette.investigation.wheels.w2.options.smallPrize	Every free spin should give me the advertised 10 coins.
+rooms.roulette.investigation.wheels.w2.options.different	The coins I win can be withdrawn as real money.
+rooms.roulette.investigation.wheels.w3.name	GOLD RUSH
+rooms.roulette.investigation.wheels.w3.segments.0	Phone
+rooms.roulette.investigation.wheels.w3.segments.1	Tablet
+rooms.roulette.investigation.wheels.w3.segments.2	€100
+rooms.roulette.investigation.wheels.w3.segments.3	Console
+rooms.roulette.investigation.wheels.w3.segments.4	Headset
+rooms.roulette.investigation.wheels.w3.segments.5	Laptop
+rooms.roulette.investigation.wheels.w3.segments.6	€50
+rooms.roulette.investigation.wheels.w3.segments.7	No prize
+rooms.roulette.investigation.wheels.w3.rules	Win a phone, a laptop or up to €100 — give it a spin!
+rooms.roulette.investigation.wheels.w3.feedback	This wheel forces “No prize”, then tempts you with another chance. The aim is to keep you spending time on the game. On a site with ads, that can mean more adverts seen. Another spin does not bring you closer to a win: in this simulated wheel, the prizes cannot be selected.
+rooms.roulette.investigation.wheels.w3.options.lostOnce	Seven prize slices guarantee I will win within eight spins.
+rooms.roulette.investigation.wheels.w3.options.expensive	Each loss makes the next spin more likely to win a big prize.
+rooms.roulette.investigation.wheels.w3.options.forcedLoss	It keeps giving me nothing while using big prizes and “try again” to keep me playing.
+rooms.roulette.investigation.wheels.w4.name	BONUS DROP
+rooms.roulette.investigation.wheels.w4.segments.0	1 point
+rooms.roulette.investigation.wheels.w4.segments.1	2 points
+rooms.roulette.investigation.wheels.w4.segments.2	3 points
+rooms.roulette.investigation.wheels.w4.segments.3	4 points
+rooms.roulette.investigation.wheels.w4.segments.4	8 points
+rooms.roulette.investigation.wheels.w4.segments.5	5 points
+rooms.roulette.investigation.wheels.w4.segments.6	6 points
+rooms.roulette.investigation.wheels.w4.segments.7	No prize
+rooms.roulette.investigation.wheels.w4.rules	Your free bonus spin: win up to 8 game points!
+rooms.roulette.investigation.wheels.w4.feedback	The offer is for game points, not cash or a shopping discount. Eight is the largest prize; smaller amounts and no prize are also shown on the wheel. This simulated draw is random. Winning or losing a few spins does not establish whether a real draw is fair.
+rooms.roulette.investigation.wheels.w4.options.manyPrizes	These points give me a discount on my next purchase.
+rooms.roulette.investigation.wheels.w4.options.honestLoss	The offer is for game points, and the wheel openly includes a no-prize outcome.
+rooms.roulette.investigation.wheels.w4.options.lostOnce	“Up to 8 points” means I must receive at least 8 points.
+rooms.roulette.investigation.observe	Spin at least {count} times. Does it keep landing on the same slice, or do the results change? You can spin again if you are unsure.
+rooms.roulette.investigation.shop.badge	MEGA SPIN · STORE
+rooms.roulette.investigation.shop.title	You won a discount coupon!
+rooms.roulette.investigation.shop.coupon	50% OFF
+rooms.roulette.investigation.shop.terms	To add your coupon to your account, first make a purchase of at least €{amount}. Your 50% discount will be available for a later order.
+rooms.roulette.investigation.shop.dismiss	Back to the wheel
+rooms.roulette.investigation.shop.reminder	Store offer: spend at least €{amount} first to unlock your coupon for a later order.
+rooms.roulette.investigation.retryBait	“No prize this time! Keep spinning — your next try could be the big win!”
+hints.room.rouletteInvestigation.context	Spin several times and compare the results before deciding.
+hints.room.rouletteInvestigation.prompts.0	What should I check?
+hints.room.rouletteInvestigation.prompts.1	Does winning or losing prove cheating?
+hints.room.rouletteInvestigation.prompts.2	How do I finish the corridor?
+hints.room.rouletteInvestigation.items.0	Spin the current wheel at least twice. Does it keep landing on the same slice? Compare the results shown beside it.
+hints.room.rouletteInvestigation.items.1	You can keep spinning before deciding. A repeated result is a clue to investigate, but can also happen by chance.
+hints.room.rouletteInvestigation.items.2	Choose Rigged or Not rigged, then select the reason that matches your observations. Read the feedback and move to the next wheel.

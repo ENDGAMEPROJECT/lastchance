@@ -1,254 +1,225 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
+import { ROULETTE_WHEELS as WHEELS, ROULETTE_SEGMENTS, rouletteResult, correctRouletteVerdict, correctRouletteAnswer } from '../game/rouletteData.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import './RouletteCorridor.css'
 
-/* CORRIDOR — Gamified Bait (between Puzzle 1 and Puzzle 2).
-   Per the brief: a corridor of shiny prize wheels that look like
-   free money but are RIGGED. Every spin — no matter what — decelerates
-   onto the jackpot segment. Once the player has spun a few and noticed
-   the pattern, they mark each wheel "Rigged". Marking all four clears
-   the corridor. Learning point: spin-to-win / daily bonuses / loot
-   boxes are advertising & engagement tricks — nobody hands you €300
-   (or a free tablet) for a spin. */
+const SLICE = 360 / ROULETTE_SEGMENTS
+const MIN_SPINS = 2
+const preventFocusScroll = (event) => event.preventDefault()
 
-/* Each wheel: 8 segments. `jackpot` is the slice the rigged spin ALWAYS
-   lands on — deliberately a trivial "30¢ OFF" coupon, so the player sees
-   that the guaranteed "win" is worth almost nothing. Structural data
-   (id + landing slice index) lives here; all display text (name, tag,
-   segment labels) comes from i18n (rooms.roulette.wheels.<id>.*).
-   The index must match the "30¢ OFF" slot in each wheel's segments. */
-const WHEELS = [
-  { id: 'w1', jackpot: 3 }, // "30¢ OFF"
-  { id: 'w2', jackpot: 2 }, // "30¢ OFF"
-  { id: 'w3', jackpot: 5 }, // "30¢ OFF"
-  { id: 'w4', jackpot: 6 }, // "30¢ OFF"
-]
-
-const SEG = 8 // segments per wheel
-const SLICE = 360 / SEG // degrees per slice
-
-/* Segment colours (magenta-accent neon), alternating so the wheel reads. */
-const SEG_COLORS = [
-  '#ff2bd6', '#7a1a63', '#ff2bd6', '#7a1a63',
-  '#ff2bd6', '#7a1a63', '#ff2bd6', '#7a1a63',
-]
-const JACKPOT_COLOR = '#ffb92b' // amber — the "prize" always glows gold
-
-/* Build a conic-gradient string for the wheel face, highlighting the
-   jackpot slice in gold. Slice i occupies [i*SLICE, (i+1)*SLICE). */
-function wheelGradient(jackpot) {
-  const stops = []
-  for (let i = 0; i < SEG; i++) {
-    const color = i === jackpot ? JACKPOT_COLOR : SEG_COLORS[i]
-    stops.push(`${color} ${i * SLICE}deg ${(i + 1) * SLICE}deg`)
-  }
-  return `conic-gradient(from 0deg, ${stops.join(', ')})`
-}
-
-function PrizeWheel({ wheel, spinning, angle, won, onSpin, t }) {
-  const segments = t(`rooms.roulette.wheels.${wheel.id}.segments`)
-  const jackpotLabel = segments[wheel.jackpot]
+function PrizeWheel({ wheel, spinning, angle, disabled, onSpin, t }) {
+  const segments = t(`rooms.roulette.investigation.wheels.${wheel.id}.segments`)
+  const stops = segments.map((_, i) => {
+    const color = i === wheel.highlight ? '#ffb92b' : i % 2 ? '#7a1a63' : '#ff2bd6'
+    return `${color} ${i * SLICE}deg ${(i + 1) * SLICE}deg`
+  })
   return (
-    <div className="rc-wheel-wrap">
-      {/* Fixed pointer at the top — this is what the wheel lands under. */}
-      <div className="rc-pointer" aria-hidden>▼</div>
-
-      <div className="rc-wheel-face">
-        <div
-          className={`rc-wheel${spinning ? ' spinning' : ''}`}
-          style={{
-            background: wheelGradient(wheel.jackpot),
-            transform: `rotate(${angle}deg)`,
-          }}
-        >
-          {/* Slice labels, rotated to sit along the middle of each slice. */}
+    <button
+      type="button"
+      className="rc-wheel-wrap"
+      disabled={disabled}
+      onMouseDown={preventFocusScroll}
+      onClick={onSpin}
+      aria-label={`${t('rooms.roulette.spin')} — ${t(`rooms.roulette.investigation.wheels.${wheel.id}.name`)}`}
+    >
+      <span className="rc-pointer" aria-hidden="true">▼</span>
+      <span className="rc-wheel-face" aria-hidden="true">
+        <span className={`rc-wheel${spinning ? ' spinning' : ''}`} style={{ background: `conic-gradient(from 0deg, ${stops.join(', ')})`, transform: `rotate(${angle}deg)` }}>
           {segments.map((label, i) => (
-            <span
-              key={i}
-              className={`rc-seg-label${i === wheel.jackpot ? ' jackpot' : ''}`}
-              style={{ transform: `rotate(${i * SLICE + SLICE / 2}deg)` }}
-            >
-              <span className="rc-seg-text">{label}</span>
+            <span key={i} className={`rc-seg-label${i === wheel.highlight ? ' jackpot' : ''}`} style={{ transform: `rotate(${i * SLICE + SLICE / 2}deg)` }}>
+              <span className="rc-seg-text" style={{ transform: `rotate(${-angle - i * SLICE - SLICE / 2}deg)` }}>{label}</span>
             </span>
           ))}
-        </div>
-
-        {/* Glowing hub in the centre. */}
-        <div className="rc-hub">🎰</div>
-
-        {/* Win flag that pops after a spin settles. */}
-        {won && (
-          <div className="rc-win-flag fade-in">{t('rooms.roulette.won')}<b>{jackpotLabel}</b>{t('rooms.roulette.wonSuffix')}</div>
-        )}
-      </div>
-    </div>
+        </span>
+        <span className="rc-hub">🎰</span>
+      </span>
+    </button>
   )
 }
 
 export default function RouletteCorridor({ node }) {
   const { completeRoom, addEvidence } = useGame()
   const t = useT()
-
-  // Per-wheel spin angle (accumulates so it keeps turning one direction).
-  const [angles, setAngles] = useState(() => Object.fromEntries(WHEELS.map((w) => [w.id, 0])))
-  // Which wheels are currently mid-spin (buttons disabled while true).
+  const [angles, setAngles] = useState({})
   const [spinning, setSpinning] = useState({})
-  // Which wheels have finished at least one spin (show the win flag).
-  const [won, setWon] = useState({})
-  // Which wheels the player has marked as rigged.
-  const [rigged, setRigged] = useState({})
+  const [history, setHistory] = useState({})
+  const [active, setActive] = useState('w1')
+  const [answers, setAnswers] = useState({})
+  const [verified, setVerified] = useState({})
+  const [errors, setErrors] = useState({})
   const [solved, setSolved] = useState(false)
-  const [hint, setHint] = useState('')
-
-  // Guard against overlapping timers per wheel.
+  const [shopOpen, setShopOpen] = useState(false)
   const timers = useRef({})
+  const finished = useRef(false)
 
-  // Warm the spin/win sounds so the first spin has no load delay.
   useEffect(() => {
     preloadSound('roulette_spin.mp3')
     preloadSound('roulette_win.mp3')
+    const pending = timers.current
+    return () => {
+      Object.values(pending).forEach(clearTimeout)
+      stopSound('roulette_spin.mp3')
+    }
   }, [])
 
-  const spunCount = useMemo(() => Object.values(won).filter(Boolean).length, [won])
-  const riggedCount = useMemo(() => Object.values(rigged).filter(Boolean).length, [rigged])
+  const wheel = WHEELS.find((w) => w.id === active)
+  const answer = answers[active] || {}
+  const verdictCorrect = correctRouletteVerdict(wheel, answer.verdict)
+  const results = history[active] || []
+  const checkedCount = Object.values(verified).filter(Boolean).length
+  const wheelText = (id, key) => t(`rooms.roulette.investigation.wheels.${id}.${key}`)
 
-
-  /* RIGGED SPIN — always lands on the jackpot.
-     We compute the extra rotation needed so the jackpot slice ends up
-     centred under the fixed top pointer, then add several full turns for
-     the "spin" feel. The pointer sits at 0deg (top); slice j is centred
-     at j*SLICE + SLICE/2, so we must rotate by -(that) mod 360. */
   function spinWheel(w) {
-    if (spinning[w.id]) return
-    setHint('')
+    if (timers.current[w.id] || solved || verified[w.id]) return
+    setShopOpen(false)
+    setAnswers((a) => ({ ...a, [w.id]: { ...a[w.id], verdict: null } }))
+    const result = rouletteResult(w)
+    const target = (360 - (result * SLICE + SLICE / 2)) % 360
     setSpinning((s) => ({ ...s, [w.id]: true }))
-    playSound('roulette_spin.mp3') // whir while the wheel turns
-
-    const current = angles[w.id]
-    const jackpotCentre = w.jackpot * SLICE + SLICE / 2
-    // Target orientation (0..360) that puts the jackpot under the pointer.
-    const target = (360 - jackpotCentre) % 360
-    // Keep turning forward: advance to the next full-turn boundary that is at
-    // least a few spins ahead, then add the target offset. This guarantees the
-    // wheel always rotates clockwise and settles with the jackpot up top.
-    const turns = 5 // full spins for drama
-    const next = (Math.floor(current / 360) + turns) * 360 + target
-
-    setAngles((a) => ({ ...a, [w.id]: next }))
-
-    // Match the CSS transition duration; then reveal the win flag.
-    clearTimeout(timers.current[w.id])
-    timers.current[w.id] = setTimeout(() => {
+    setAngles((a) => ({ ...a, [w.id]: (Math.floor((a[w.id] || 0) / 360) + 5) * 360 + target }))
+    playSound('roulette_spin.mp3')
+    timers.current[w.id] = window.setTimeout(() => {
+      delete timers.current[w.id]
       setSpinning((s) => ({ ...s, [w.id]: false }))
-      setWon((wn) => ({ ...wn, [w.id]: true }))
-      stopSound('roulette_spin.mp3') // whir ends…
-      playSound('roulette_win.mp3') // …and the "you won!" jingle plays
+      setHistory((h) => ({ ...h, [w.id]: [...(h[w.id] || []), result] }))
+      if (w.minimumPurchase) setShopOpen(true)
+      if (!Object.keys(timers.current).length) stopSound('roulette_spin.mp3')
+      if (result !== 7) playSound('roulette_win.mp3')
     }, 4200)
   }
 
-  function spinAll() {
-    WHEELS.forEach((w) => spinWheel(w))
+  function choose(field, value) {
+    if (results.length < MIN_SPINS || spinning[active] || verified[active]) return
+    setShopOpen(false)
+    if (field === 'verdict' && value && !correctRouletteVerdict(wheel, value)) playSound('wrong.mp3')
+    setAnswers((a) => ({ ...a, [active]: { ...a[active], [field]: value } }))
+    setErrors((e) => ({ ...e, [active]: false }))
   }
 
-  /* Mark / unmark a wheel as rigged. The player must have actually spun a
-     couple of wheels first, so they experience the trick before judging. */
-  function toggleRigged(w) {
-    if (!won[w.id] && spunCount < 2) {
-      setHint(t('rooms.roulette.hintSpinFirst'))
-      return
+  function checkAnswer(reason) {
+    if (results.length < MIN_SPINS || spinning[active] || verified[active] || shopOpen) return
+    if (correctRouletteAnswer(wheel, answer.verdict, reason)) {
+      setVerified((v) => ({ ...v, [active]: true }))
+      setErrors((e) => ({ ...e, [active]: false }))
+    } else {
+      playSound('wrong.mp3')
+      setErrors((e) => ({ ...e, [active]: true }))
     }
-    if (!won[w.id]) {
-      setHint(t('rooms.roulette.hintSpinThis'))
-      return
-    }
-    setHint('')
-    setRigged((r) => {
-      const nextRigged = { ...r, [w.id]: !r[w.id] }
-      // When all four are marked rigged, the corridor is solved.
-      const allRigged = WHEELS.every((x) => nextRigged[x.id])
-      if (allRigged && !solved) {
-        setSolved(true)
-        addEvidence({
-          id: 'ev-roulette',
-          label: t('rooms.roulette.evidenceLabel'),
-        })
-      }
-      return nextRigged
-    })
+  }
+
+  function finish() {
+    if (finished.current || checkedCount !== WHEELS.length) return
+    finished.current = true
+    addEvidence({ id: 'ev-roulette', label: t('rooms.roulette.investigation.evidence') })
+    setSolved(true)
   }
 
   return (
-    <RoomFrame
-      node={node}
-      bgImage={bgUrl('roulette.png')}
-      intro={t('rooms.roulette.intro')}
-      solved={solved}
-      solvedTitle={t('rooms.roulette.solvedTitle')}
-      solvedText={t('rooms.roulette.solvedText')}
-      onContinue={() => completeRoom(node.id)}
-    >
+    <RoomFrame node={node} bgImage={bgUrl('roulette.png')}
+      intro={t('rooms.roulette.investigation.intro')}
+      solved={solved} solvedTitle={t('rooms.roulette.investigation.solvedTitle')}
+      solvedText={t('rooms.roulette.investigation.solvedText')}
+      onContinue={() => completeRoom(node.id)}>
       <div className="rc-wrap fade-in">
         <div className="rc-topbar">
-          <span className="chip warn">{t('rooms.roulette.spunBadge', { spun: spunCount, total: WHEELS.length })}</span>
-          <span className={`chip ${riggedCount === WHEELS.length ? 'ok' : ''}`}>
-            {t('rooms.roulette.riggedBadge', { rigged: riggedCount, total: WHEELS.length })}
-          </span>
-          <button className="btn btn-magenta btn-sm" onClick={spinAll}>{t('rooms.roulette.spinAll')}</button>
+          <div className="rc-wheel-heading">
+            <span className="rc-wheel-name">{wheelText(active, 'name')}</span>
+            <h3 className="rc-wheel-pitch">{wheelText(active, 'rules')}</h3>
+          </div>
+          <span className="chip">{t('rooms.roulette.investigation.wheelProgress', { n: WHEELS.findIndex((w) => w.id === active) + 1, total: WHEELS.length })}</span>
         </div>
-
-        <div className="rc-stage">
-        <div className="rc-grid">
-          {WHEELS.map((w) => {
-            const isRigged = !!rigged[w.id]
-            const isSpinning = !!spinning[w.id]
-            return (
-              <div key={w.id} className={`rc-card${isRigged ? ' rigged' : ''}`}>
-                <div className="rc-card-head">
-                  <span className="rc-wheel-name">{t(`rooms.roulette.wheels.${w.id}.name`)}</span>
-                  <span className="chip">{t(`rooms.roulette.wheels.${w.id}.tag`)}</span>
-                </div>
-
-                <PrizeWheel
-                  wheel={w}
-                  spinning={isSpinning}
-                  angle={angles[w.id]}
-                  won={!!won[w.id]}
-                  onSpin={() => spinWheel(w)}
-                  t={t}
-                />
-
-                <button
-                  className="btn btn-magenta btn-sm rc-spin-btn"
-                  onClick={() => spinWheel(w)}
-                  disabled={isSpinning}
-                >
-                  {isSpinning ? t('rooms.roulette.spinning') : t('rooms.roulette.spin')}
-                </button>
-
-                {/* Rig toggle — only meaningful after the player has spun. */}
-                <label className={`rc-rig ${isRigged ? 'on' : ''}`}>
-                  <input
-                    type="checkbox"
-                    checked={isRigged}
-                    onChange={() => toggleRigged(w)}
-                  />
-                  <span className="rc-rig-box" />
-                  <span>{t('rooms.roulette.markRiggedLabel')} <b>{t('rooms.roulette.markRiggedWord')}</b></span>
-                </label>
+        <div className="rc-play">
+          <div className="rc-machine">
+            <PrizeWheel
+              key={active}
+              wheel={wheel}
+              spinning={spinning[active]}
+              angle={angles[active] || 0}
+              disabled={!!spinning[active] || solved || !!verified[active] || verdictCorrect}
+              onSpin={() => spinWheel(wheel)}
+              t={t}
+            />
+            <div className="rc-result" aria-live="polite">
+              {spinning[active] ? t('rooms.roulette.spinning') : results.length > 0
+                ? t('rooms.roulette.investigation.result', { result: wheelText(active, 'segments')[results.at(-1)] })
+                : null}
+            </div>
+            {!verified[active] && !verdictCorrect && (
+              <button className={results.length >= MIN_SPINS ? 'rc-respin' : 'btn btn-magenta'} onMouseDown={preventFocusScroll} onClick={() => spinWheel(wheel)} disabled={!!spinning[active] || solved}>
+                {results.length ? t('rooms.roulette.investigation.spinAgain') : t('rooms.roulette.spin')}
+              </button>
+            )}
+            {shopOpen && (
+              <div className="rc-shop-offer panel fade-in" role="status" aria-labelledby="rc-shop-title">
+                <span className="chip warn">{t('rooms.roulette.investigation.shop.badge')}</span>
+                <h3 id="rc-shop-title">{t('rooms.roulette.investigation.shop.title')}</h3>
+                <div className="rc-coupon">{t('rooms.roulette.investigation.shop.coupon')}</div>
+                <p id="rc-shop-terms">{t('rooms.roulette.investigation.shop.terms', { amount: wheel.minimumPurchase })}</p>
               </div>
-            )
-          })}
-        </div>
-        </div>
-
-        {hint && <div className="banner info rc-hint">{hint}</div>}
-
-        <div className="learn rc-learn">
-          <b>{t('rooms.roulette.learnLead')}</b> {t('rooms.roulette.learnBody')}
+            )}
+            {results.length > 0 && wheel.retryBait && !spinning[active] && !verdictCorrect && !verified[active] && (
+              <div className="rc-shop-offer rc-retry-offer panel fade-in" role="status">
+                <p>{t('rooms.roulette.investigation.retryBait')}</p>
+              </div>
+            )}
+          </div>
+          <section className="rc-case panel scene-scroll" aria-live="polite">
+            {verified[active] ? (
+              <>
+                <h3 className="accent-green">{t('rooms.roulette.investigation.correct')}</h3>
+                <p>{wheelText(active, 'feedback')}</p>
+                {checkedCount === WHEELS.length
+                  ? <button className="btn btn-green" disabled={solved} onMouseDown={preventFocusScroll} onClick={finish}>{t('rooms.roulette.investigation.finish')}</button>
+                  : <button className="btn btn-cyan" onMouseDown={preventFocusScroll} onClick={() => setActive(WHEELS.find((w) => !verified[w.id]).id)}>{t('rooms.roulette.investigation.next')}</button>}
+              </>
+            ) : (
+              <>
+                {!verdictCorrect && <p className="rc-observe">{t('rooms.roulette.investigation.observe', { count: MIN_SPINS })}</p>}
+                {results.length > 0 && wheel.minimumPurchase && !shopOpen && <p className="rc-sales-message">{t('rooms.roulette.investigation.shop.reminder', { amount: wheel.minimumPurchase })}</p>}
+                {results.length > 0 && (
+                  <div className="rc-history">
+                    <b>{t('rooms.roulette.investigation.historyLabel', { n: results.length })}</b>
+                    <ol>
+                      {results.slice(-5).map((result, index) => (
+                        <li key={results.length - Math.min(results.length, 5) + index}>{wheelText(active, 'segments')[result]}</li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
+                {results.length >= MIN_SPINS && !spinning[active] && (
+                  <>
+                    <div className="rc-verdicts">
+                      {['rigged', 'fair'].map((value) => (
+                        <button
+                          key={value}
+                          className={`btn${answer.verdict === value ? verdictCorrect ? ' rc-verdict-correct' : ' rc-verdict-wrong' : ''}`}
+                          aria-pressed={answer.verdict === value}
+                          aria-invalid={answer.verdict === value && !verdictCorrect}
+                          onMouseDown={preventFocusScroll}
+                          onClick={() => choose('verdict', value)}
+                        >
+                          {t(`rooms.roulette.investigation.verdicts.${value}`)}
+                        </button>
+                      ))}
+                    </div>
+                    {verdictCorrect && (
+                      <>
+                        <h3>{t('rooms.roulette.investigation.reasonLabel')}</h3>
+                        <div className="rc-reasons">
+                          {wheel.options.map((id) => <button key={id} className="rc-reason" onMouseDown={preventFocusScroll} onClick={() => checkAnswer(id)}>{t(`rooms.roulette.investigation.wheels.${active}.options.${id}`)}</button>)}
+                        </div>
+                        {errors[active] && <p className="rc-error" role="alert">{t('rooms.roulette.investigation.retry')}</p>}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            )}
+          </section>
         </div>
       </div>
     </RoomFrame>
