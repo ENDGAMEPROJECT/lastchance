@@ -232,7 +232,7 @@
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   max-width: 1280px;
   width: 100%;
@@ -240,7 +240,8 @@
 }
 
 .ia-post {
-  height: 480px;
+  overflow-y: auto;
+  height:440px;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -288,7 +289,7 @@
 
 .ia-photo {
   position: relative;
-  height: 144px;
+  height: 184px;
   border-radius: var(--radius-sm);
   display: flex; align-items: flex-end; justify-content: space-between;
   padding: 6px;
@@ -310,7 +311,167 @@
   white-space: nowrap;
 }
 
-.ia-caption { color: var(--text); line-height: 1.25; }
+.ia-caption {
+  position: relative;
+  min-height: 2.5em;
+  color: #cbd4d6;
+  line-height: 1.25;
+  font-weight: 300;
+  overflow-wrap: anywhere;
+  margin-bottom: 8px;
+}
+.ia-caption-measure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Social comments stay compact within each post. */
+.ia-comments {
+  flex: none;
+  height: 80px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #62666e #202327;
+  list-style: none;
+  margin: 0;
+  padding: 10px 8px;
+  border-radius: 6px;
+  background: #08060e;
+  color: #89a0a3;
+  cursor: default;
+  text-align: left;
+
+}
+.ia-comment {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) 24px;
+  align-items: start;
+  gap: 8px;
+}
+.ia-comment + .ia-comment { margin-top: 6px; }
+.ia-comment-avatar {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-shadow: 0 1px 3px #000;
+}
+.ia-comment-body {
+  margin: 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.ia-comment-body strong { font-weight: 700; }
+.ia-comment-like {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 26px;
+  padding: 4px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #eceef1;
+  cursor: pointer;
+}
+.ia-comment-like svg { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.ia-comment-like:hover { color: #ff829e; }
+.ia-comment-like[aria-pressed="true"] { color: #ff557c; }
+.ia-comment-like[aria-pressed="true"] svg { fill: currentColor; }
+.ia-comments:focus-visible, .ia-comment-like:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+
+/* Expanded publication: native dialog sits outside the scaled stage. */
+.ia-view-publication {
+  display: inline;
+  vertical-align: baseline;
+  white-space: nowrap;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #a997f5;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-underline-offset: 3px;
+}
+button.ia-view-publication {
+  animation: ia-publication-glow 4s ease-in-out infinite;
+}
+@keyframes ia-publication-glow {
+  0%, 100% {
+    color: #a997f5;
+    text-shadow: 0 0 2px rgba(169, 151, 245, 0.15);
+  }
+  50% {
+    color: #f5efff;
+    text-shadow: 0 0 6px rgba(245, 239, 255, 0.8), 0 0 14px rgba(169, 151, 245, 0.6);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  button.ia-view-publication { animation: none; }
+}
+.ia-view-publication:hover { color: var(--text); text-decoration: underline; 
+  /* background-color:#443a6e */
+}
+.ia-view-publication:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.ia-publication {
+  transform: scale(0.67);
+  transform-origin: center;
+  width: min(1100px, 94vw);
+  height: min(650px, 90dvh);
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #36393e;
+  border-radius: 8px;
+  background: #202327;
+  color: #f1f1f1;
+  font-family: var(--font-ui);
+  box-shadow: 0 24px 90px #0009;
+  overflow: hidden;
+}
+.ia-publication::backdrop { background: #000b; backdrop-filter: blur(4px); }
+.ia-publication-layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(340px, 1fr); height: 100%; }
+.ia-publication-image { min-width: 0; min-height: 0; background: #08090b; }
+.ia-publication-image img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.ia-publication-details { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.ia-publication-header { display: flex; align-items: center; gap: 12px; padding: 18px; border-bottom: 1px solid #36393e; }
+.ia-publication-author { flex: 1; min-width: 0; }
+.ia-publication-author h2 { display: flex; align-items: center; gap: 6px; margin: 0 0 4px; font-size: 1rem; overflow-wrap: anywhere; }
+.ia-publication-author > span { font-size: 0.75rem; color: #a4aab3; }
+.ia-publication-close { flex: none; padding:3px; align-self: start; border: 0; border-radius: 4px; background: transparent; color: #eee; font-size: 1.7rem; line-height: 1; cursor: pointer; }
+.ia-publication-close svg { display: block; width: 1em; height: 1em; margin: auto; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.ia-publication-close:hover { background: #ffffff12; }
+.ia-publication-thread { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #62666e #202327; }
+.ia-publication-caption { margin: 0; padding: 22px 20px; font-size: 0.9rem; line-height: 1.55; overflow-wrap: anywhere; }
+.ia-publication .ia-comments { height: auto; overflow: visible; padding: 8px 20px 24px; background: transparent; color: #f1f1f1; }
+.ia-publication .ia-comment { grid-template-columns: 34px minmax(0, 1fr) 26px; gap: 12px; }
+.ia-publication .ia-comment + .ia-comment { margin-top: 24px; }
+.ia-publication .ia-comment-avatar { width: 34px; height: 34px; font-size: 0.8rem; }
+.ia-publication .ia-comment-body { font-size: 0.9rem; line-height: 1.5; }
+.ia-publication .ia-comment-like svg { width: 17px; height: 17px; }
+.ia-publication-footer { display: flex; justify-content: space-between; gap: 12px; padding: 18px 20px; border-top: 1px solid #36393e; font-size: 0.85rem; color: #adb3bc; }
+.ia-publication-likes { display: inline-flex; align-items: center; gap: 8px; }
+.ia-publication-likes svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.ia-publication-footer strong { color: #f1f1f1; }
+.ia-publication-close:focus-visible, .ia-publication-thread:focus-visible { outline: 2px solid var(--cyan); outline-offset: -3px; }
+@media (max-width: 650px) {
+  .ia-publication-layout { grid-template-columns: 1fr; grid-template-rows: 42% minmax(0, 1fr); }
+  .ia-publication-header { padding: 10px 14px; }
+  .ia-publication-caption { padding: 14px; }
+  .ia-publication-footer { padding: 10px 14px; }
+}
 
 /* Emoji sticky-note */
 .ia-note {
@@ -336,6 +497,7 @@
   display: flex; flex-wrap: wrap; gap: 5px;
   justify-content: center;
   font-size: 1.4rem; line-height: 1;
+  padding: 0.2rem 0 0.6rem 0
 }
 .ia-note-cap { margin-top: 5px; color: #7a6410; font-style: italic; }
 

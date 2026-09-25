@@ -780,6 +780,10 @@ export default {
         "openDecoder": "🔑 Open Decoder Card",
         "verified": "Verified",
         "followersSuffix": "followers",
+ "viewPublication": "View Publication",
+        "commentCount": "{count} comments",
+        "commentsTitle": "Comments",
+        "likeComment": "Like comment by {name}",
         "cluesTitle": "Disclosure clues",
         "decodeMe": "decode me →",
         "trayTitle": "Drag a label onto each post",
@@ -898,39 +902,39 @@ export default {
             "“gifted” disclosure in the corner"
           ]
         },
-        {
-          "caption": "Okay, a mini haul because I was so excited about these discoveries! The ceramics are from a lovely small workshop, and I’m deeply in love with this book. Found some truly great pieces. Everything is genuinely just what I wanted to buy. #legithaul #smallbatch #curatedfinds #SpainFinds",
-          "product": "Cercamics",
-          "username": "RealSarahShares ",
-          "followers": "285K ",
-          "comments": [
-            {
-              "username": "artisan_wear",
-              "text": "Those dishes are gorgeous! Where did you get them?"
-            },
-            {
-              "username": "needle_ninja",
-              "text": "Love that scarf. Perfect for autumn."
-            },
-            {
-              "username": "glowfuel_official",
-              "text": "Genuine finds are the best! Looks so cosy. 💜"
-            },
-            {
-              "username": "martahealthy",
-              "text": "Finally, an actual haul! I want that plant!"
-            },
-            {
-              "username": "gymtom",
-              "text": "Wait, so is it still Spain-based? Need recommendations!"
-            }
-          ],
-          "clues": [
-            "",
-            "",
-            ""
-          ]
-        }
+        // {
+        //   "caption": "Okay, a mini haul because I was so excited about these discoveries! The ceramics are from a lovely small workshop, and I’m deeply in love with this book. Found some truly great pieces. Everything is genuinely just what I wanted to buy. #legithaul #smallbatch #curatedfinds #SpainFinds",
+        //   "product": "Cercamics",
+        //   "username": "RealSarahShares ",
+        //   "followers": "285K ",
+        //   "comments": [
+        //     {
+        //       "username": "artisan_wear",
+        //       "text": "Those dishes are gorgeous! Where did you get them?"
+        //     },
+        //     {
+        //       "username": "needle_ninja",
+        //       "text": "Love that scarf. Perfect for autumn."
+        //     },
+        //     {
+        //       "username": "glowfuel_official",
+        //       "text": "Genuine finds are the best! Looks so cosy. 💜"
+        //     },
+        //     {
+        //       "username": "martahealthy",
+        //       "text": "Finally, an actual haul! I want that plant!"
+        //     },
+        //     {
+        //       "username": "gymtom",
+        //       "text": "Wait, so is it still Spain-based? Need recommendations!"
+        //     }
+        //   ],
+        //   "clues": [
+        //     "",
+        //     "",
+        //     ""
+        //   ]
+        // }
       ],
       "stage2": {
         "stage1Cleared": "Stage 1 cleared ✓",

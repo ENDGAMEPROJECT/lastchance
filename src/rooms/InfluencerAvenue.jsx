@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useGame } from '../game/GameContext.jsx'
 import { ITEMS, EMOJI_KEY, encodeWord } from '../game/gameData.js'
@@ -52,15 +52,15 @@ const POSTS = [
     comments: '431',
     correctLabel: 'COLLAB',
   },
-   {
-    id: 'nothing',
-    verified: false,
-    followers: '670K',
-     hue: 'linear-gradient(135deg, #ff7b00, #fff56b)', 
-    likes: '12.9K',
-    comments: '431',
-    correctLabel: 'NOTHING',
-  },
+  //  {
+  //   id: 'nothing',
+  //   verified: false,
+  //   followers: '670K',
+  //    hue: 'linear-gradient(135deg, #ff7b00, #fff56b)', 
+  //   likes: '12.9K',
+  //   comments: '431',
+  //   correctLabel: 'NOTHING',
+  // },
 ]
 
 /* ---- Stage 2 content: the three products for reverse image search ---- */
@@ -102,13 +102,158 @@ const FINE_POINTER = typeof window !== 'undefined'
 
 function influencerImageUrl(id, locale) {
   const filenames = {
-    paid: { en: 'paid_en.jpg', es: 'paid_es.png', sr: 'paid_sr.png', fi: 'paid_en.png' },
+    paid: { en: 'paid_en.jpg', es: 'paid_es.png', sr: 'paid_sr.png', fi: 'paid_en.jpg' },
     collab: { en: 'collab_en.png', es: 'collab_es.png', sr: 'collab_sr.png', fi: 'collab_en.png' },
-    gifted: { en: 'gifted_en.jpg', es: 'gifted_es.png', sr: 'gifted_sr.png', fi: 'gifted_en.png' },
+    gifted: { en: 'gifted_en.jpg', es: 'gifted_es.png', sr: 'gifted_sr.png', fi: 'gifted_en.jpg' },
     nothing: { en: 'nothing_en.png', es: 'nothing_es.png', sr: 'nothing_sr.png', fi: 'nothing_en.png' },
   }
   const filename = filenames[id]?.[locale] || filenames[id]?.en
-  return `${import.meta.env.BASE_URL}influencers/${filename}`
+  return bgUrl(`influencers/${filename}`)
+}
+
+function CaptionPreview({ username, caption, onOpen }) {
+  const t = useT()
+  const buttonLabel = t('rooms.influencer.stage1.viewPublication')
+  const measureRef = useRef(null)
+  const measureTextRef = useRef(null)
+  const [preview, setPreview] = useState(caption)
+
+  useLayoutEffect(() => {
+    const measure = measureRef.current
+    let active = true
+    function fitCaption() {
+      if (!active || !measure.clientWidth) return
+      const maxHeight = parseFloat(getComputedStyle(measure).lineHeight) * 2 + 1
+      const fits = (text) => {
+        measureTextRef.current.textContent = text
+        return measure.offsetHeight <= maxHeight
+      }
+      if (fits(caption)) { setPreview(caption); return }
+      const words = caption.trim().split(/\s+/)
+      let low = 0
+      let high = words.length
+      while (low < high) {
+        const middle = Math.ceil((low + high) / 2)
+        if (fits(words.slice(0, middle).join(' ') + '...')) low = middle
+        else high = middle - 1
+      }
+      setPreview(words.slice(0, low).join(' ') + '...')
+    }
+    // offsetHeight/clientWidth use design pixels, independent of stage scale.
+    fitCaption()
+    const observer = new ResizeObserver(fitCaption)
+    observer.observe(measure.parentElement)
+    document.fonts.ready.then(fitCaption)
+    document.fonts.addEventListener('loadingdone', fitCaption)
+    return () => {
+      active = false
+      observer.disconnect()
+      document.fonts.removeEventListener('loadingdone', fitCaption)
+    }
+  }, [username, caption, buttonLabel])
+
+  return (
+    <div className="ia-caption t-xs">
+      <span style={{fontWeight: "bold"}}>{username}</span>{' '}{preview}{' '}
+      <button type="button" className="ia-view-publication" aria-haspopup="dialog"
+        onMouseDown={(event) => event.preventDefault()} onClick={onOpen}>
+        {buttonLabel}
+      </button>
+      <span ref={measureRef} className="ia-caption-measure" aria-hidden="true">
+        <span style={{fontWeight: "bold"}}>{username}</span>{' '}<span ref={measureTextRef} />{' '}
+        <span className="ia-view-publication">{buttonLabel}</span>
+      </span>
+    </div>
+  )
+}
+
+function PostComments({ comments = [], hue, liked = {}, onToggle }) {
+  const t = useT()
+  // Likes are shared with the expanded publication.
+  if (!comments.length) return null
+
+  return (
+    <ul className="ia-comments" aria-label={t('rooms.influencer.stage1.commentsTitle')} tabIndex={0} onMouseDown={(event) => event.preventDefault()}>
+      {comments.map((comment, index) => (
+        <li className="ia-comment" key={index}>
+          <span className="ia-comment-avatar" aria-hidden="true"
+            style={{ background: hue, filter: `hue-rotate(${index * 47}deg)` }}>
+            {comment.username.replace(/^@/, '').charAt(0).toUpperCase()}
+          </span>
+          <p className="ia-comment-body">
+            <strong>{comment.username}</strong>{' '}{comment.text}
+          </p>
+          <button type="button" className="ia-comment-like"
+            aria-label={t('rooms.influencer.stage1.likeComment', { name: comment.username })}
+            aria-pressed={!!liked[index]}
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={(event) => {
+              event.stopPropagation()
+              onToggle(index)
+            }}>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" />
+            </svg>
+          </button>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function PublicationOverlay({ post, copy, locale, liked, onToggle, onClose }) {
+  const t = useT()
+  const dialogRef = useRef(null)
+  const username = copy.username.replace(/^@/, '').trim()
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    dialog.showModal()
+    return () => dialog.close()
+  }, [])
+
+  return createPortal(
+    <dialog ref={dialogRef} className="ia-publication" aria-labelledby="ia-publication-title"
+      onCancel={(event) => { event.preventDefault(); onClose() }}
+      onClick={(event) => { if (event.target === event.currentTarget) onClose() }}>
+      <div className="ia-publication-layout">
+        <div className="ia-publication-image">
+          <img src={influencerImageUrl(post.id, locale)} alt={copy.product} />
+        </div>
+        <div className="ia-publication-details">
+          <header className="ia-publication-header">
+            <span className="ia-avatar" style={{ background: post.hue }} aria-hidden="true">
+              {username.charAt(0).toUpperCase()}
+            </span>
+            <div className="ia-publication-author">
+              <h2 id="ia-publication-title">{username}
+                {post.verified && <span className="ia-verified" title={t('rooms.influencer.stage1.verified')}>&#10003;</span>}
+              </h2>
+              <span>{copy.followers.trim()} {t('rooms.influencer.stage1.followersSuffix')}</span>
+            </div>
+            <button type="button" className="ia-publication-close" autoFocus
+              onClick={onClose} aria-label={t('common.close')}>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+            </button>
+          </header>
+          <div className="ia-publication-thread" tabIndex={0} aria-label={t('rooms.influencer.stage1.commentsTitle')}>
+            <p className="ia-publication-caption"><strong>{username}</strong>{' '}{copy.caption}</p>
+            <PostComments comments={copy.comments} hue={post.hue} liked={liked} onToggle={onToggle} />
+          </div>
+          <footer className="ia-publication-footer">
+            <span className="ia-publication-likes">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" />
+              </svg>
+              <strong>{post.likes}</strong>
+            </span>
+            <span>{t('rooms.influencer.stage1.commentCount', { count: post.comments })}</span>
+          </footer>
+        </div>
+      </div>
+    </dialog>,
+    document.body,
+  )
 }
 
 export default function InfluencerAvenue({ node }) {
@@ -140,6 +285,19 @@ export default function InfluencerAvenue({ node }) {
   const productCopy = t('rooms.influencer.products')
 
   /* ---- Stage 1 state ---- */
+  const [publicationIndex, setPublicationIndex] = useState(null)
+  const publicationTrigger = useRef(null)
+  const [commentLikes, setCommentLikes] = useState({})
+  function toggleCommentLike(postId, index) {
+    setCommentLikes((previous) => ({
+      ...previous,
+      [postId]: { ...previous[postId], [index]: !previous[postId]?.[index] },
+    }))
+  }
+  function closePublication() {
+    setPublicationIndex(null)
+    publicationTrigger.current?.focus({ preventScroll: true })
+  }
   const [answers, setAnswers] = useState({}) // postId -> decoded letters
   const [selectedPostId, setSelectedPostId] = useState(null)
   const [decoderOpen, setDecoderOpen] = useState(false)
@@ -294,6 +452,12 @@ export default function InfluencerAvenue({ node }) {
       reward={ITEMS.dataReport}
       onContinue={() => completeRoom(node.id)}
     >
+      {publicationIndex !== null && (
+        <PublicationOverlay post={POSTS[publicationIndex]} copy={postCopy[publicationIndex]} locale={locale}
+          liked={commentLikes[POSTS[publicationIndex].id]}
+          onToggle={(index) => toggleCommentLike(POSTS[publicationIndex].id, index)}
+          onClose={closePublication} />
+      )}
       {/* ============================ STAGE 1 ============================ */}
       {stage === 'label' && (
         <div className="ia-stage ia-label-stage fade-in">
@@ -354,7 +518,15 @@ export default function InfluencerAvenue({ node }) {
                     <span className="ia-stats t-xs">❤️ {p.likes} · 💬 {p.comments}</span>
                   </div>
 
-                  <div className="ia-caption t-xs">{copy.caption}</div>
+                  <CaptionPreview username={copy.username} caption={copy.caption}
+                    onOpen={(event) => {
+                      event.stopPropagation()
+                      publicationTrigger.current = event.currentTarget
+                      setPublicationIndex(idx)
+                    }} />
+
+                  {/* <PostComments comments={copy.comments} hue={p.hue}
+                    liked={commentLikes[p.id]} onToggle={(index) => toggleCommentLike(p.id, index)} /> */}
 
                   {/* Emoji sticky-note to decode */}
                   <div className="ia-note">
@@ -364,7 +536,7 @@ export default function InfluencerAvenue({ node }) {
                         <span key={i}>{e}</span>
                       ))}
                     </div>
-                    <div className="ia-note-cap t-xs">{t('rooms.influencer.stage1.decodeMe')}</div>
+                    {/* <div className="ia-note-cap t-xs">{t('rooms.influencer.stage1.decodeMe')}</div> */}
                   </div>
 
                   <button

@@ -72,7 +72,7 @@ ok(R.persuasion.techniques && Object.keys(R.persuasion.techniques).length === 6,
 ok(Array.isArray(R.persuasion.posters) && R.persuasion.posters.length === 6, 'rooms.persuasion.posters should have 6')
 
 // influencer: posts[], products[], classify.<value>
-ok(Array.isArray(R.influencer.posts) && R.influencer.posts.length === 4, 'rooms.influencer.posts should have 4')
+ok(Array.isArray(R.influencer.posts) && R.influencer.posts.length === 3, 'rooms.influencer.posts should have 3')
 ok(Array.isArray(R.influencer.products) && R.influencer.products.length === 3, 'rooms.influencer.products should have 3')
 ok(R.influencer.classify && Object.keys(R.influencer.classify).length >= 3, 'rooms.influencer.classify looks empty')
 
