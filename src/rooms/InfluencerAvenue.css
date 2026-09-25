@@ -232,15 +232,15 @@
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
-  max-width: 1080px;
+  max-width: 1280px;
   width: 100%;
   margin: 0 auto;
 }
 
 .ia-post {
-  height: 550px;
+  height: 480px;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -288,7 +288,7 @@
 
 .ia-photo {
   position: relative;
-  height: 284px;
+  height: 144px;
   border-radius: var(--radius-sm);
   display: flex; align-items: flex-end; justify-content: space-between;
   padding: 6px;
@@ -378,7 +378,7 @@
   flex: none;
   height: 148px;
   width: 100%;
-  max-width: 1080px;
+  max-width: 1280px;
   margin: 0 auto;
 }
 .ia-decoder {
