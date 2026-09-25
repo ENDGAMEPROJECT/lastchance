@@ -15,7 +15,7 @@
 .rc-wheel-name { color: var(--magenta); font-family: var(--font-display); font-size: 0.9rem; letter-spacing: 0.08em; }
 .rc-wheel-pitch { margin: 5px 0 0; font-size: 1.05rem; line-height: 1.35; color: var(--amber); text-wrap: balance; }
 .rc-play { flex: 1; min-height: 0; display: grid; grid-template-columns: 420px 1fr; grid-template-rows: minmax(0, 1fr); align-items: center; gap: 36px; }
-.rc-machine { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; align-self: start; padding-top: 10px; }
+.rc-machine { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; align-self: center; }
 .rc-machine > .btn { padding: 8px 22px; }
 .rc-wheel-wrap { position: relative; width: 340px; height: 340px; flex: none; display: block; padding: 0; border: 0; border-radius: 50%; background: transparent; color: inherit; font: inherit; appearance: none; cursor: pointer; }
 .rc-wheel-wrap:disabled { cursor: default; }

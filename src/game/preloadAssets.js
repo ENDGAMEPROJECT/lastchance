@@ -86,7 +86,6 @@ const ASSET_IMAGES = [
   'influencers/paid_sr.png',
   'influencers/collab_en.png',
   'influencers/collab_es.png',
-  'influencers/collab1_es.png',
   'influencers/collab_sr.png',
   'influencers/gifted_en.jpg',
   'influencers/gifted_es.png',
