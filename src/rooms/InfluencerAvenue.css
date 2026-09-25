@@ -405,6 +405,9 @@
 }
 .ia-decoder-target { margin-left: auto; color: var(--cyan); font-size: 0.75rem; }
 .ia-decoder-erase, .ia-decoder-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 42px;
   height: 30px;
   flex: none;
@@ -415,6 +418,12 @@
   font-size: 1.4rem;
   line-height: 1;
   cursor: pointer;
+}
+/* Line-style backspace glyph — same colour as the card's decoded letters. */
+.ia-erase-icon {
+  width: 22px;
+  height: 22px;
+  color: #eeddff;
 }
 .ia-decoder-close { width: 30px; margin-left: 4px; }
 .ia-decoder-erase {

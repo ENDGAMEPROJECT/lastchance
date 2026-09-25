@@ -170,7 +170,15 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0
   position: relative;
 }
 .panel.clip {
-  clip-path: polygon(0 12px, 12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+  /* Chamfer all FOUR corners the same, so a card never mixes cut corners with
+     the rounded ones .panel's border-radius would otherwise leave. Applies
+     everywhere .panel.clip is used (cards + popup modals) for a consistent look. */
+  clip-path: polygon(
+    12px 0, calc(100% - 12px) 0,
+    100% 12px, 100% calc(100% - 12px),
+    calc(100% - 12px) 100%, 12px 100%,
+    0 calc(100% - 12px), 0 12px
+  );
 }
 .panel-glow-cyan { box-shadow: var(--glow-cyan); border-color: rgba(22,242,255,0.4); }
 .panel-glow-magenta { box-shadow: var(--glow-magenta); border-color: rgba(255,43,214,0.4); }
