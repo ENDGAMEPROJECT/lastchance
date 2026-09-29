@@ -806,9 +806,8 @@ export default {
         "paid": "PAID",
         "collab": "COLLAB",
         "gifted": "GIFTED",
-        "nothing": "NOTHING"
-        "gifted": "GIFTED",
-        "nothing": "NOTHING"
+        "nothing": "NOTHING",
+
       },
       "posts": [
         {
