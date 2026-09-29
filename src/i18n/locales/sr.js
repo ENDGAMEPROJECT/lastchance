@@ -1,125 +1,128 @@
 /* AUTO-GENERATED from the translation Google Sheet by `npm run i18n:import`. Do not edit by hand. */
 export default {
   "common": {
-    "continue": "Continue →",
-    "begin": "▶ Step inside",
-    "submit": "Submit",
-    "enter": "Enter",
-    "next": "Next",
-    "locked": "Locked",
-    "cleared": "✓ Cleared",
-    "enterNode": "▶ Enter",
-    "back": "Back",
-    "close": "Close"
+    "continue": "Nastavi →",
+    "begin": "▶ Uđi unutra",
+    "submit": "Pošalji",
+    "enter": "Unesi",
+    "next": "Dalje",
+    "locked": "Zaključano",
+    "cleared": "✓ Završeno",
+    "enterNode": "▶ Uđi",
+    "back": "Nazad",
+    "close": "Zatvori"
   },
   "welcome": {
-    "eyebrow": "Player Setup",
-    "titleLead": "LAST CHANCE",
-    "titleAccent": "TO ESCAPE",
-    "tagline": "// an escape room about ads, scams & fraudulent websites",
-    "subtitle": "Set up your player, then jack into the Physical Internet.",
-    "aliasLabel": "Choose an alias",
-    "aliasPlaceholder": "e.g. Ne0nRunner",
-    "ageLabel": "Your age",
-    "agePlaceholder": "e.g. 14",
-    "languageLabel": "Language",
-    "start": "⏻ Enter",
-    "aliasError": "Enter an alias to continue.",
-    "ageError": "Enter a valid age (1–120)."
+    "eyebrow": "Podešavanje igrača",
+    "titleLead": "POSLEDNJA ŠANSA",
+    "titleAccent": "ZA BEKSTVO",
+    "tagline": "// escape room o oglasima, prevarama i lažnim veb-sajtovima",
+    "subtitle": "Podesi svog igrača, a zatim se poveži na Fizički internet.",
+    "aliasLabel": "Izaberi nadimak",
+    "aliasPlaceholder": "npr. Ne0nRunner",
+    "ageLabel": "Tvoje godine",
+    "agePlaceholder": "npr. 14",
+    "languageLabel": "Jezik",
+    "start": "⏻ Uđi",
+    "aliasError": "Unesi nadimak da bi nastavio/la.",
+    "ageError": "Unesi ispravan broj godina (1–120)."
   },
   "hud": {
-    "logo": "LAST CHANCE TO ESCAPE",
-    "expires": "offer expires in",
-    "tminus": "T-MINUS",
-    "map": "🗺 Map",
-    "bag": "🎒 Bag",
-    "muteSound": "Mute sound",
-    "unmuteSound": "Unmute sound",
-    "inventoryTitle": "Inventory & Evidence",
-    "tools": "Tools & Rewards",
-    "noTools": "Nothing collected yet. Solve puzzles to earn tools.",
-    "evidenceHeading": "Evidence on the deal",
-    "noEvidence": "Collect proof in each district to convince {friend} at the end.",
-    "hints": "💡 Савети"
+    "logo": "POSLEDNJA ŠANSA ZA BEKSTVO",
+    "expires": "ponuda ističe za",
+    "tminus": "ODBROJAVANJE",
+    "map": "🗺 Mapa",
+    "bag": "🎒 Torba",
+    "muteSound": "Isključi zvuk",
+    "unmuteSound": "Uključi zvuk",
+    "inventoryTitle": "Inventar i dokazi",
+    "tools": "Alati i nagrade",
+    "noTools": "Još ništa nije prikupljeno. Reši zagonetke da bi osvojio/la alate.",
+    "evidenceHeading": "Dokazi o ponudi",
+    "noEvidence": "Prikupi dokaze u svakom okrugu kako bi na kraju ubedio/la {prijatelja}.",
+    "hints": "💡 Saveti"
   },
   "intro": {
-    "eyebrow": "Educational Escape Room",
-    "titleLead": "THE",
-    "titleAccent": "PHYSICAL INTERNET",
-    "tagline": "// ads · scams · fraudulent websites — decoded",
-    "situationTitle": "The situation",
-    "hook": "Your friend {friend} just found a viral deal on {product} — 90% off, \"today only\". It looks incredible… which is exactly why you think it is a scam.",
-    "context": "To show {friend} how scams and advertising really work, you both jack into a physical version of the Internet — a neon city where shops, social platforms and ads become districts you can walk through.",
-    "clock": "⏱ {minutes}:00 on the clock",
-    "mission": "You have {minutes} minutes — the time before the offer expires — to travel through the Physical Internet, gather evidence about how ads and scams work, and convince {friend} not to buy. If the timer hits zero, {friend} buys it.",
+    "eyebrow": "Edukativni escape room",
+    "titleLead": "/",
+    "titleAccent": "FIZIČKI INTERNET",
+    "tagline": "// oglasi · prevare · lažni veb-sajtovi — razotkriveni",
+    "situationTitle": "Situacija",
+    "hook": "Tvoj prijatelj {friend} upravo je pronašao viralnu ponudu za {product} — 90% popusta, „samo danas“. Deluje neverovatno… upravo zato misliš da je prevara.",
+    "context": "Da biste {prijatelju} pokazali kako prevare i oglašavanje zaista funkcionišu, oboje se povezujete na fizičku verziju Interneta — neonski grad u kojem prodavnice, društvene platforme i oglasi postaju okruzi kroz koje možete da se krećete.",
+    "clock": "⏱ {minutes}:00 na satu",
+    "mission": "Imaš {minutes} minuta — toliko vremena pre nego što ponuda istekne — da prođeš kroz Fizički internet, prikupiš dokaze o tome kako funkcionišu oglasi i prevare i ubediš {friend} da ne kupuje. Ako vreme istekne, {friend} će kupiti proizvod.",
     "steps": [
       {
-        "title": "1 · Explore",
-        "text": "Four districts, two corridors. Each teaches one trick advertisers use."
+        "title": "1 · Istraži",
+        "text": "Četiri okruga, dva prolaza. U svakom ćeš naučiti po jednu taktiku koju oglašivači koriste."
       },
       {
-        "title": "2 · Gather",
-        "text": "Earn tools and evidence. Track them in your Bag and on the Map."
+        "title": "2 · Prikupi",
+        "text": "Osvoji alate i dokaze. Prati ih u svojoj Torbi i na Mapi."
       },
       {
-        "title": "3 · Convince",
-        "text": "Reach the Final Decision and use your evidence before time runs out."
+        "title": "3 · Ubedi",
+        "text": "Stigni do Konačne odluke i iskoristi svoje dokaze pre nego što vreme istekne."
       }
     ],
-    "start": "▶ Step inside — start the clock",
-    "pretest": "Pre-test: first, tell {friend} what you already think about this deal. Then enter the Internet."
+    "start": "▶ Uđi unutra — pokreni sat",
+    "pretest": "Pre-test: prvo reci {prijatelju} šta već misliš o ovoj ponudi. Zatim uđi na Internet."
   },
   "map": {
-    "eyebrow": "Physical Internet · District Map",
-    "titleLead": "Choose your next",
-    "titleAccent": "district",
-    "subtitle": "Travel the network, gather evidence, and reach the Final Decision before the offer expires.",
-    "start": "▶ START · Pre-test with {friend}",
-    "lockedTip": "Locked — finish the previous district"
+    "eyebrow": "Fizički internet · Mapa okruga",
+    "titleLead": "Izaberi sledeći",
+    "titleAccent": "okrug",
+    "subtitle": "Putuj kroz mrežu, prikupljaj dokaze i stigni do Konačne odluke pre nego što ponuda istekne.",
+    "start": "▶ START · Pre-test sa {prijateljem}",
+    "lockedTip": "Zaključano — završi prethodni okrug"
   },
   "roomframe": {
-    "clearedDefaultTitle": "District cleared",
-    "clearedDefaultText": "Nice work. The next node is unlocked on the map.",
-    "rewardLabel": "Added to your Bag — you’ll need it next"
+    "clearedDefaultTitle": "Okrug završen",
+    "clearedDefaultText": "Odlično. Sledeći čvor je otključan na mapi.",
+    "rewardLabel": "Dodato u tvoju Torbu — trebaće ti kasnije",
+    "collect": "collect",
+    "collected": "collected",
+    "addedToBag": "added to Bag"
   },
   "end": {
     "win": {
-      "eyebrow": "Mission Complete",
+      "eyebrow": "Misija završena",
       "titleLead": "{friend}",
-      "titleAccent": "DIDN'T BUY IT",
-      "tag": "// offer expired with {time} to spare",
-      "heading": "You made the case",
-      "body": "With the evidence you gathered across the Physical Internet, you showed {friend} how {product} was engineered to feel irresistible — fake links, rigged wheels, undisclosed sponsorships, algorithmic targeting and pure persuasion. {friend} closed the tab.",
-      "evidenceHeading": "Evidence presented",
-      "posttest": "Post-test: talk to {friend} again. What did you learn about spotting scams, disclosure, and why \"too good to be true\" usually is?",
-      "again": "↻ Play again"
+      "titleAccent": "NIJE KUPIO/LA",
+      "tag": "// ponuda je istekla, a ostalo je još {time}",
+      "heading": "Izneo/la si dokaze",
+      "body": "Na osnovu dokaza koje si prikupio/la širom Fizičkog interneta, pokazao/la si {prijatelju} kako je {product} osmišljen tako da deluje neodoljivo — lažni linkovi, namešteni točak, neprijavljene sponzorske saradnje, algoritamsko targetiranje i čisto ubeđivanje. {friend} je zatvorio/la karticu.",
+      "evidenceHeading": "Predočeni dokazi",
+      "posttest": "Post-test: ponovo razgovaraj sa {prijateljem}. Šta si naučio/la o prepoznavanju prevara, obavezi navođenja sponzorstava i tome zašto je ono što deluje „predobro da bi bilo istinito“ obično upravo to?",
+      "again": "↻ Igraj ponovo"
     },
     "lose": {
-      "eyebrow": "Time Expired",
-      "titleLead": "{friend}",
-      "titleAccent": "HIT \"BUY NOW\"",
-      "tag": "// the countdown reached zero",
-      "heading": "The offer got them first",
-      "body": "Before you could finish gathering proof, the fake \"today only\" countdown did its job and {friend} bought {product}. That urgency was the whole trick.",
-      "lessonLabel": "Lesson:",
-      "lesson": "artificial urgency (\"only 3 left!\", \"offer ends in 5:00\") is designed to stop you from thinking. Slow down — a real deal will still be there tomorrow.",
-      "again": "↻ Try again",
+      "eyebrow": "Vreme je isteklo",
+      "titleLead": "{prijatelj}",
+      "titleAccent": "KLIKNI „KUPI ODMAH“",
+      "tag": "// odbrojavanje je stiglo do nule",
+      "heading": "Ponuda je bila brža",
+      "body": "Pre nego što si uspeo/la da prikupiš sve dokaze, lažno odbrojavanje „samo danas“ je odradilo svoje i {prijatelj} je kupio {product}. Cela fora bila je u stvaranju osećaja hitnosti.",
+      "lessonLabel": "Pouka:",
+      "lesson": "Veštački stvoren osećaj hitnosti („ostala su samo 3 komada!“, „ponuda ističe za 5:00“) osmišljen je tako da te spreči da razmisliš. Uspori — prava ponuda će biti tu i sutra.",
+      "again": "↻ Pokušaj ponovo",
       "reasons": {
         "timeUp": {
-          "heading": "The offer got them first",
-          "body": "Before you could finish convincing {friend}, the fake \"today only\" countdown hit zero — and {friend} bought {product}. That urgency was the whole trick."
+          "heading": "Ponuda je bila brža",
+          "body": "Pre nego što si uspeo/la da ubediš {prijatelja}, lažno odbrojavanje „samo danas“ stiglo je do nule — i {prijatelj} je kupio/la {proizvod}. Taj osećaj hitnosti bio je cela fora."
         },
         "choseBuy": {
-          "heading": "Out of arguments",
-          "body": "You ran out of ways to convince {friend}. Still unconvinced, {friend} decided to go for it and bought {product}."
+          "heading": "Ponestalo ti je argumenata",
+          "body": "Ponestalo ti je načina da ubediš {prijatelja}. I dalje neubeđen/a, {prijatelj} je odlučio/la da rizikuje i kupio/la {proizvod}."
         },
         "notEnoughEvidenceConvincing": {
-          "heading": "Convincing — but not enough proof",
-          "body": "{friend}: \"It sounds convincing… but I didn't get to see enough evidence in the Physical Internet. I'm buying it.\" — {friend} bought {product}."
+          "heading": "Ubedljivo — ali bez dovoljno dokaza",
+          "body": "{prijatelj}: „Deluje ubedljivo… ali nisam stigao/la da vidim dovoljno dokaza u Fizičkom internetu. Kupiću ga.“ — {prijatelj} je kupio/la {proizvod}."
         },
         "notEnoughEvidenceUnconvincing": {
-          "heading": "Not convinced",
-          "body": "{friend}: \"You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it.\" — {friend} bought {product}."
+          "heading": "Nisi ubedio/la",
+          "body": "{prijatelj}: „Nisi me ubedio/la — a nisam video/la ni dovoljno dokaza u Fizičkom internetu. Kupiću ga.“ — {prijatelj} je kupio/la {proizvod}."
         }
       }
     }
@@ -127,435 +130,436 @@ export default {
   "story": {
     "product": {
       "handle": "luna.deals",
-      "sponsored": "Sponsored",
+      "sponsored": "Sponzorisano",
       "url": "tech-bargalns.com",
       "name": "NovaPad X",
-      "saleBadge": "⚡ FLASH SALE",
+      "saleBadge": "⚡ BRZA RASPRODAJA",
       "wasPrice": "$600",
       "nowPrice": "$49",
-      "offerLabel": "Ponuda od 30 minuta",
+      "offerLabel": "Ponuda traje 30 minuta",
       "endsIn": "Ends in\n",
       "offerUrgency": "Požuri pre nego što nestane!",
-      "buy": "BUY NOW",
-      "caption": "OMG they dropped the NovaPad X to $49?! 😱🔥 Grab it before it’s gone! #deal #ad",
-      "likes": "12.4k likes"
+      "buy": "KUPI ODMAH",
+      "caption": "OMG, spustili su cenu NovaPad X na samo $49?! 😱🔥 Ugrabi ga pre nego što nestane! #ponuda #oglas",
+      "likes": "12,4k lajkova"
     },
-    "roundLabel": "Round {n} · {title}",
-    "respondPrompt": "Respond to {friend}",
-    "you": "You",
-    "diagnosticNote": "No wrong answers here — just tell me what you think.",
+    "roundLabel": "Runda {n} · {title}",
+    "respondPrompt": "Odgovori {prijatelju}",
+    "you": "Ti",
+    "diagnosticNote": "Ovde nema pogrešnih odgovora — samo reci šta misliš.",
     "rounds": [
       {
-        "title": "The Timer",
+        "title": "Tajmer",
         "options": [
           {
             "k": "A",
-            "text": "A company can't profit selling a $600 NovaPad X for $49. They'd go bankrupt, so it's fake.",
-            "correct": false
+            "text": "Kompanija ne može da zaradi ako prodaje NovaPad X za $49 umesto za $600. Bankrotirala bi, dakle, ponuda je lažna.",
+            "correct": "NETAČNO"
           },
           {
             "k": "B",
-            "text": "That 30-minute countdown is just a high-pressure tactic to make you panic and buy without thinking.",
-            "correct": true
+            "text": "Odbrojavanje od 30 minuta je samo taktika stvaranja pritiska kako bi te uspaničili i naveli da kupiš bez razmišljanja.",
+            "correct": "TAČNO"
           },
           {
             "k": "C",
-            "text": "Look at the comments first. If people in the thread say it's a scam, don't buy it.",
-            "correct": false
+            "text": "Prvo pogledaj komentare. Ako ljudi u komentarima kažu da je prevara, nemoj da kupuješ.",
+            "correct": "NETAČNO"
           },
           {
             "k": "D",
-            "text": "For $49, it's probably just a cheap, broken knockoff anyway.",
-            "correct": false
+            "text": "Za $49 je verovatno samo neka jeftina, pokvarena kopija.",
+            "correct": "NETAČNO"
           }
         ],
-        "why": "Exactly — the ticking clock is manufactured urgency, built to make you act before you think.",
-        "nudge": "Think about what that ticking clock is really doing to you."
+        "why": "Upravo tako — odbrojavanje je veštački stvoren osećaj hitnosti, osmišljen da te navede da reaguješ pre nego što razmisliš.",
+        "nudge": "Razmisli šta ti to odbrojavanje zapravo radi."
       },
       {
-        "title": "The Source & Feed",
+        "title": "Izvor i fid",
         "options": [
           {
             "k": "A",
-            "text": "Your phone is listening to us. We talked about tablets yesterday and the app used the mic.",
-            "correct": false
+            "text": "Tvoj telefon nas prisluškuje. Juče smo pričali o tabletima, a aplikacija je koristila mikrofon.",
+            "correct": "NETAČNO"
           },
           {
             "k": "B",
-            "text": "Does her profile have a verified checkmark? If not, it's a fake clone account impersonating her.",
-            "correct": false
+            "text": "Da li njen profil ima verifikacionu oznaku? Ako nema, to je lažni nalog koji se predstavlja kao ona.",
+            "correct": "NETAČNO"
           },
           {
             "k": "C",
-            "text": "Your phone must have a virus or spyware forcing these specific ads onto your screen.",
-            "correct": false
+            "text": "Tvoj telefon sigurno ima virus ili špijunski softver koji ti prikazuje baš ove oglase.",
+            "correct": "NETAČNO"
           },
           {
             "k": "D",
-            "text": "The platform's algorithm is tracking you. It fed your search history straight to predatory ad networks.",
-            "correct": true
+            "text": "Algoritam platforme te prati. Prosledio je tvoju istoriju pretrage direktno mrežama koje plasiraju agresivne oglase.",
+            "correct": "TAČNO"
           }
         ],
-        "why": "Right — it's not the mic or magic. Your search history was profiled and sold to ad networks.",
-        "nudge": "It's not the mic or a virus — think about what the platform already knows about you."
+        "why": "Tako je — nije u pitanju mikrofon niti neka magija. Tvoja istorija pretrage je analizirana i prodata oglasnim mrežama.",
+        "nudge": "Nije mikrofon niti virus — razmisli o tome šta platforma već zna o tebi."
       },
       {
-        "title": "The Destination",
+        "title": "Odredište",
         "options": [
           {
             "k": "A",
-            "text": "Look at the address bar. The URL says tech-bargalns.com — an 'l' instead of an 'i'. It's a spoofed domain.",
-            "correct": true
+            "text": "Pogledaj adresnu traku. URL glasi tech-bargalns.com — umesto slova „i“ nalazi se slovo „l“. To je lažni domen.",
+            "correct": "TAČNO"
           },
           {
             "k": "B",
-            "text": "Check the lock icon. No https:// means your connection isn't encrypted, so it's a scam.",
-            "correct": false
+            "text": "Proveri ikonicu katanca. Ako nema https://, veza nije šifrovana, što znači da je u pitanju prevara.",
+            "correct": "NETAČNO"
           },
           {
             "k": "C",
-            "text": "Don't type your card in. As long as you use Apple Pay or PayPal, you're 100% safe.",
-            "correct": false
+            "text": "Nemoj unositi podatke kartice. Ako koristiš Apple Pay ili PayPal, 100% si bezbedan/na.",
+            "correct": "NETAČNO"
           },
           {
             "k": "D",
-            "text": "Scroll to the bottom. No 'Copyright 2026' text is how you know it's fake.",
-            "correct": false
+            "text": "Skroluj do dna stranice. Ako nema teksta „Copyright 2026“, znaćeš da je sajt lažan.",
+            "correct": "NETAČNO"
           }
         ],
-        "why": "Yes — read the URL letter by letter. 'bargalns' with an 'l' is a look-alike domain, not the real store.",
-        "nudge": "The real tell is in the address bar itself — read it character by character."
+        "why": "Tako je — čitaj URL slovo po slovo. „bargalns“ sa slovom „l“ je domen koji oponaša pravi, a ne domen prave prodavnice.",
+        "nudge": "Pravi trag nalazi se u samoj adresnoj traci — čitaj je znak po znak."
       }
     ],
     "pretest": {
-      "eyebrow": "The Deal",
+      "eyebrow": "Ponuda",
       "debugTag": "Pre-test",
-      "title": "A message from {friend}",
-      "opening": "Look at this! An influencer I follow just posted a flash sale — the $600 NovaPad X for only $49! There are just 30 minutes left on the countdown. I'm entering my card info right now.",
+      "title": "Poruka od {prijatelja}",
+      "opening": "Pogledaj ovo! Influenserka koju pratim upravo je objavila brzu rasprodaju — NovaPad X koji košta $600 sada je samo $49! Odbrojavanje pokazuje da je ostalo još samo 30 minuta. Upravo unosim podatke svoje kartice.",
       "responses": [
-        "Whatever the reason for the setup, I don't want to miss out before the clock hits zero! Plus, she's a massive influencer — she wouldn't post something random. But the weird part is how this ad even knew I wanted a tablet. It popped up right at the top of my feed.",
-        "Look, there are a million theories about how algorithms and accounts handle ads, but I'm looking at the actual store page right now. It has the official brand logo, great reviews, and a secure checkout."
+        "Kakav god da je razlog za sve ovo, ne želim da propustim ponudu pre nego što odbrojavanje dođe do nule! Osim toga, ona je poznata influenserka — ne bi objavila nešto nasumično. Ali čudno je kako je ovaj oglas uopšte znao da želim tablet. Pojavio se odmah na vrhu mog fid-a.",
+        "Slušaj, postoji milion teorija o tome kako algoritmi i nalozi prikazuju oglase, ali ja upravo gledam stranicu prodavnice. Ima zvanični logo brenda, odlične recenzije i bezbedno plaćanje."
       ],
-      "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running — you've got until it hits zero, thirty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
-      "endingYou": "Deal. Let's look behind the screen.",
-      "begin": "▶ Look behind the screen"
+      "endingFriend": "Slušaj, možeš da analiziraš stranicu koliko god želiš, ali meni sve deluje u redu! Samo si paranoičan/na. Odbrojavanje i dalje traje — imaš još trideset minuta, odnosno dok ne stigne do nule, da dokažeš da je ovo zaista prevara. U suprotnom, kliknuću na kupovinu.",
+      "endingYou": "Važi. Hajde da pogledamo šta se dešava iza ekrana.",
+      "begin": "▶ Pogledaj šta se dešava iza ekrana"
     },
     "posttest": {
-      "eyebrow": "The Final Call",
+      "eyebrow": "Konačna odluka",
       "debugTag": "Post-test",
-      "title": "{friend} is having second thoughts",
-      "opening": "Wow, the countdown is down to the last 2 minutes! I'm staring at my card info, but everything we just went through has me second-guessing myself. Okay — I'm not sure I should buy it… help me out.",
+      "title": "{Prijatelj} se predomišlja",
+      "opening": "Vau, odbrojavanje je stiglo do poslednja 2 minuta! Gledam u podatke svoje kartice, ali sve kroz šta smo upravo prošli tera me da se predomislim. Dobro — nisam siguran/na da treba da kupim… pomozi mi.",
       "responses": [
-        "I hear you, but the pressure feels so real with that clock ticking right in front of me. And it's not just the timer — I keep thinking it came from one of my favourite creators. But there's still the mystery of how it ended up on my radar.",
-        "Man, the way everything's handled behind the scenes on these apps is wild. But at the end of the day, I'm still staring at this checkout page trying to decide if it's safe to type my details in."
+        "Razumem te, ali pritisak deluje toliko stvarno dok gledam kako vreme otkucava. I nije samo tajmer — stalno razmišljam o tome da je ponuda došla od jedne od mojih omiljenih kreatorki. Ali i dalje mi nije jasno kako mi se uopšte pojavila.",
+        "Čoveče, način na koji se sve odvija iza kulisa ovih aplikacija je neverovatan. Ali na kraju krajeva, i dalje gledam ovu stranicu za plaćanje i pokušavam da odlučim da li je bezbedno da unesem svoje podatke."
       ],
-      "endingFriend": "Ugh, you've given me a lot to process, but I need to choose right now — the timer's about to hit zero. Based on everything we looked at, give it to me straight: do I close this tab and protect my data, or take the risk and buy it?",
-      "choiceClose": "Close the tab. It’s a scam.",
-      "choiceBuy": "Hit buy. Let’s risk it.",
-      "retryFriend": "You still haven't convinced me… but the countdown's not at zero yet. Do you want to try again, or should I just buy it?",
-      "retryAgain": "Try again to convince {friend}",
-      "retryGiveUp": "Let {friend} buy the tablet"
+      "endingFriend": "Uh, dao/la si mi mnogo toga o čemu treba da razmislim, ali moram odmah da odlučim — tajmer samo što nije stigao do nule. Na osnovu svega što smo pogledali, reci mi direktno: da li da zatvorim ovu karticu i zaštitim svoje podatke ili da rizikujem i kupim?",
+      "choiceClose": "Zatvori karticu. Ovo je prevara.",
+      "choiceBuy": "Klikni na kupovinu. Hajde da rizikujemo.",
+      "retryFriend": "Još uvek me nisi ubedio/la… ali odbrojavanje još nije stiglo do nule. Hoćeš li pokušati ponovo ili da samo kupim tablet?",
+      "retryAgain": "Pokušaj ponovo da ubediš {prijatelja}",
+      "retryGiveUp": "Pusti {prijatelju} da kupi tablet"
     },
     "mastery": {
-      "banner": "One more time — I am still not convinced. Give me the strongest reason for each."
+      "banner": "Još jednom — još uvek nisam ubeđen/a. Daj mi najjači razlog za svaku opciju."
     }
   },
   "nodes": {
     "start": {
-      "title": "Start",
-      "subtitle": "Pre-test · The message from {friend}",
-      "blurb": "Where it began — {friend} sent you the deal and asked what you think.",
-      "kind": "gate"
+      "title": "Počni",
+      "subtitle": "Pre-test · Poruka od {prijatelja}",
+      "blurb": "Gde je sve počelo — {Prijatelj} ti je poslao/la ponudu i pitao/la šta misliš.",
+      "kind": "kapija"
     },
     "link-district": {
-      "title": "Link District",
-      "subtitle": "Puzzle 1 · Fraudulent Links",
-      "blurb": "A router-block of doors. Only one URL is the real store — block the fakes.",
-      "kind": "puzzle"
+      "title": "Okrug sa linkovima",
+      "subtitle": "Zagonetka 1 · Lažni linkovi",
+      "blurb": "Blok sa vratima na ruteru. Samo jedan URL vodi do prave prodavnice — blokiraj lažne.",
+      "kind": "zagonetka"
     },
     "roulette-corridor": {
-      "title": "Roulette Corridor",
-      "subtitle": "Corridor · Gamified Bait",
-      "blurb": "Prize wheels that always win. Prove they are rigged to pass.",
-      "kind": "corridor"
+      "title": "Koridor ruleta",
+      "subtitle": "Koridor · Mamac kroz igru",
+      "blurb": "Točkovi nagrade koji uvek donose dobitak. Dokaži da su namešteni da bi prošao/la.",
+      "kind": "koridor"
     },
     "influencer-avenue": {
-      "title": "Influencer Avenue",
-      "subtitle": "Puzzle 2 · Labels & Fakes",
-      "blurb": "Decode the sponsorship labels, then check which products are actually real.",
-      "kind": "puzzle"
+      "title": "Avenija influensera",
+      "subtitle": "Zagonetka 2 · Oznake i lažne tvrdnje",
+      "blurb": "Razotkrij oznake sponzorstava, a zatim proveri koji proizvodi su zaista stvarni.",
+      "kind": "zagonetka"
     },
     "algorithm-room": {
-      "title": "Algorithm Control Room",
-      "subtitle": "Puzzle 3 · Personalization",
-      "blurb": "Feed the targeting equations to see how the algorithm profiles a person.",
-      "kind": "puzzle"
+      "title": "Kontrolna soba algoritma",
+      "subtitle": "Zagonetka 3 · Personalizacija",
+      "blurb": "Unesi jednačine za targetiranje i pogledaj kako algoritam pravi profil korisnika.",
+      "kind": "zagonetka"
     },
     "ads-corridor": {
-      "title": "Ads Corridor",
-      "subtitle": "Corridor · The Truth Behind",
-      "blurb": "Shine the Truth Light on the posters to read what the ad really says.",
-      "kind": "corridor"
+      "title": "Koridor oglasa",
+      "subtitle": "Koridor · Istina iza",
+      "blurb": "Osvetli plakate Svetlom istine da bi pročitao/la šta oglas zaista poručuje.",
+      "kind": "koridor"
     },
     "persuasion-room": {
-      "title": "Persuasion Lab",
-      "subtitle": "Puzzle 4 · Persuasion Techniques",
-      "blurb": "Frame each ad with the trick it uses. Reveal the letters, form the password.",
-      "kind": "puzzle"
+      "title": "Laboratorija ubeđivanja",
+      "subtitle": "Zagonetka 4 · Tehnike ubeđivanja",
+      "blurb": "Upari svaki oglas sa trikom koji koristi. Otkrij slova i sastavi lozinku.",
+      "kind": "zagonetka"
     },
     "final-decision": {
-      "title": "Final Decision",
-      "subtitle": "Convince {friend}",
-      "blurb": "Present your evidence before the offer countdown runs out.",
-      "kind": "final"
+      "title": "Konačna odluka",
+      "subtitle": "Ubedi {prijatelja}",
+      "blurb": "Predstavi svoje dokaze pre nego što odbrojavanje ponude istekne.",
+      "kind": "konačno"
     }
   },
   "items": {
     "emojiCard": {
-      "name": "Emoji Decoding Card",
-      "desc": "A key that maps emojis to letters. Use it to read the sponsorship sticky-notes in Influencer Avenue."
+      "name": "Kartica za dekodiranje emodžija",
+      "desc": "Ključ koji povezuje emodžije sa slovima. Koristi ga da pročitaš poruke sa oznakama sponzorstava u Aveniji influensera."
     },
     "dataReport": {
-      "name": "Data Report on {friend}",
-      "desc": "A dossier of the data brokers hold on {friend}. The highlighted digits open the Algorithm Control Room."
+      "name": "Izveštaj o podacima za {prijatelja}",
+      "desc": "Dosije sa podacima koje posrednici podataka imaju o {prijatelju}. Obeležene cifre otključavaju Kontrolnu sobu algoritma."
     },
     "truthLight": {
-      "name": "Truth Flashlight",
-      "desc": "Reveals the fine print hidden behind the glossy posters in the Ads Corridor."
+      "name": "Lampa istine",
+      "desc": "Otkriva sitna slova skrivena iza sjajnih plakata u Koridoru oglasa."
     }
   },
   "enter": {
-    "eyebrow": "We are inside",
-    "titleLead": "Welcome to the",
-    "titleAccent": "PHYSICAL INTERNET",
-    "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
-    "playerLine": "We made it. This is the Physical Internet. Let's show Max how this deal was built to fool him",
-    "toolsTitle": "First, the gear",
-    "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
-    "clock": "⏱ {minutes}:00 starts the moment we start walking",
-    "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
-    "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
-    "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
-    "start": "▶ Countdown begins"
+    "eyebrow": "Unutra smo",
+    "titleLead": "Dobro došao/la u",
+    "titleAccent": "FIZIČKI INTERNET",
+    "friendLine": "U redu — imaš {minuta} minuta da me ubediš da je ova ponuda prevara. Ako odbrojavanje stigne do nule, kupiću {proizvod}.",
+    "playerLine": "Uspeli smo. Ovo je Fizički internet. Hajde da pokažemo Maksu kako je ova ponuda osmišljena da ga prevari",
+    "toolsTitle": "Prvo, oprema",
+    "toolsIntro": "Dve stvari putuju sa tobom svuda po ovom prostoru. Naći ćeš ih u traci na vrhu ekrana.",
+    "clock": "⏱ {minuta}:00 počinje onog trenutka kada krenemo da hodamo",
+    "mission": "Prođi kroz okruge, prikupi dokaze o tome kako prevara funkcioniše i vrati se do {prijatelja} pre nego što ponuda istekne.",
+    "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga — završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
+    "bagText": "Tvoji alati i dokazi koje prikupiš. Otvori ih da bi koristio/la predmete u zagonetkama i pregledao/la dokaze koje ćeš pokazati {prijatelju}.",
+    "start": "▶ Odbrojavanje počinje"
   },
   "hints": {
-    "title": "Mission hints",
-    "defaultPrompt": "I do not know how to use this clue yet.",
-    "briefLabel": "Mission status",
-    "progressLabel": "Mission progress",
+    "title": "Saveti za misiju",
+    "defaultPrompt": "Još ne znam kako da upotrebim ovaj trag.",
+    "briefLabel": "Status misije",
+    "progressLabel": "Napredak misije",
     "brief": {
-      "welcome": "Prepare your run",
-      "pretest": "Read the deal before you enter the network",
-      "map": "Choose the next district in the evidence trail",
-      "room": "Solve the district and log what you discover",
-      "posttest": "Use your evidence to protect Max",
-      "win": "Run complete: review what protected you",
-      "lose": "Time expired: review the warning signs"
+      "welcome": "Pripremi se za igru",
+      "pretest": "Pročitaj ponudu pre nego što uđeš u mrežu",
+      "map": "Izaberi sledeći okrug u nizu dokaza",
+      "room": "Reši zagonetku u okrugu i zabeleži šta si otkrio/la",
+      "posttest": "Iskoristi dokaze da zaštitiš Maksa",
+      "win": "Igra završena: pogledaj šta te je zaštitilo",
+      "lose": "Vreme je isteklo: pogledaj znakove upozorenja"
     },
     "stats": {
-      "time": "Time left",
-      "districts": "Districts",
-      "tools": "Tools",
-      "evidence": "Evidence"
+      "time": "Preostalo vreme",
+      "districts": "Okrugi",
+      "tools": "Alati",
+      "evidence": "Dokazi"
     },
-    "targetLabel": "Current objective",
-    "noTarget": "Return to the map to choose an available district.",
+    "targetLabel": "Trenutni cilj",
+    "noTarget": "Vrati se na mapu da izabereš dostupan okrug.",
     "mapObjective": {
-      "title": "Open {district}",
-      "text": "This is the next available room in the investigation. Enter it from the map when you are ready to begin the challenge."
+      "title": "Otvori {okrug}",
+      "text": "Ovo je sledeća dostupna prostorija u istrazi. Uđi u nju sa mape kada budeš spreman/na da započneš izazov."
     },
     "objectives": {
       "pretest": {
-        "title": "Complete the pre-test conversation",
-        "text": "Read Max’s message, choose the response that best explains your first impression, and use the final button to enter the Physical Internet."
+        "title": "Završi razgovor pre testa",
+        "text": "Pročitaj Maksovu poruku, izaberi odgovor koji najbolje opisuje tvoj prvi utisak i pritisni završno dugme da uđeš u Fizički internet."
       },
       "posttest": {
-        "title": "Make the final call",
-        "text": "Use the evidence you collected to explain the warning signs and decide whether Max should close the tab."
+        "title": "Donesi konačnu odluku",
+        "text": "Iskoristi prikupljene dokaze da objasniš znakove upozorenja i odlučiš da li Maks treba da zatvori karticu."
       }
     },
     "pretest": {
-      "context": "Build your first impression before the investigation begins.",
+      "context": "Formiraj prvi utisak pre nego što istraga počne.",
       "prompts": [
-        "I do not know how to recognise pressure in this offer.",
-        "I do not know what makes the influencer or page trustworthy.",
-        "I do not know which doubts I should carry into the investigation."
+        "Ne znam kako da prepoznam pritisak u ovoj ponudi.",
+        "Ne znam zbog čega su influenser ili stranica pouzdani.",
+        "Ne znam koje nedoumice treba da imam na umu tokom istrage."
       ],
       "items": [
-        "Notice the countdown, the huge discount, and the promise of a limited-time deal. ",
-        "Ask yourself whether the influencer, comments, and polished page are enough to prove the offer is safe.",
-        "Keep your first concerns in mind. The districts ahead will give you evidence to test them."
+        "Obrati pažnju na odbrojavanje, ogroman popust i obećanje da je ponuda vremenski ograničena.",
+        "Zapitaj se da li su influenser, komentari i profesionalno uređena stranica dovoljni da dokažu da je ponuda bezbedna.",
+        "Imaj na umu svoje prve nedoumice. Okrugi koji slede pružiće ti dokaze kojima možeš da ih proveriš."
       ]
     },
     "map": {
-      "context": "Choose an unlocked district and follow the evidence trail.",
+      "context": "Izaberi otključani okrug i prati trag dokaza.",
       "prompts": [
-        "I do not know which station I can enter next. ",
-        "I do not know how the district chain works. ",
-        "I do not know when my tools will become useful."
+        "Ne znam koju stanicu mogu sledeću da posetim.",
+        "Ne znam kako funkcioniše niz okruga.",
+        "Ne znam kada će mi alati biti korisni."
       ],
       "items": [
-        "A bright station is ready to explore; a dim station is still locked. ",
-        "The districts are designed as a chain, so finishing one unlocks the next. ",
-        "Check your Bag after each solved district: new tools help with later puzzles."
+        "Osvetljena stanica je spremna za istraživanje; zatamnjena stanica je i dalje zaključana.",
+        "Okrugi su povezani u niz, tako da završetak jednog otključava sledeći.",
+        "Proveri svoju Torbu nakon svakog završenog okruga: novi alati će ti pomoći u kasnijim zagonetkama."
       ]
     },
     "posttest": {
-      "context        ": "Use what you discovered to help your friend make the final call.",
+      "context        ": "Iskoristi ono što si otkrio/la da pomogneš prijatelju da donese konačnu odluku.",
       "prompts": [
-        "I do not know how to separate real evidence from persuasive decoration. ",
-        "I do not know which warning signs matter most. ",
-        "I do not know how to explain the risk before choosing."
+        "Ne znam kako da razlikujem stvarne dokaze od uverljivih ukrasa.",
+        "Ne znam koji znakovi upozorenja su najvažniji.",
+        "Ne znam kako da objasnim rizik pre nego što donesem odluku."
       ],
       "items": [
-        "Separate manufactured urgency from a genuinely good offer.",
-        "Remember that a familiar creator or a polished page is not proof of safety. ",
-        "Use the evidence in your Bag to explain the risk before choosing."
+        "Razlikuj veštački stvoren osećaj hitnosti od zaista dobre ponude.",
+        "Zapamti da poznati kreator ili profesionalno uređena stranica nisu dokaz bezbednosti.",
+        "Iskoristi dokaze iz svoje Torbe da objasniš rizik pre nego što doneseš odluku."
       ]
     },
     "room": {
       "link": {
-        "context": "Inspect every URL. Small spelling changes can hide a fake destination.",
+        "context": "Proveri svaki URL. Male promene u pisanju mogu sakriti lažno odredište.",
         "prompts": [
-          "I do not know how to spot the extra words in these domains. ",
-          "I do not know how to check whether the connection and domain ending are suspicious.",
-          "I do not know how to identify disguised or look-alike characters."
+          "Ne znam kako da uočim dodatne reči u ovim domenima.",
+          "Ne znam kako da proverim da li su veza i završetak domena sumnjivi.",
+          "Ne znam kako da prepoznam prikrivene ili znakove koji oponašaju druge znakove."
         ],
         "items": [
-          "Compare the domains letter by letter.",
-          "Watch for look-alike characters and unusual endings. ",
-          "The safest link is the one that matches the real store exactly."
+          "Uporedi domene slovo po slovo.",
+          "Obrati pažnju na znakove koji oponašaju druge znakove i neuobičajene završetke.",
+          "Najbezbedniji je link koji se u potpunosti podudara sa pravim veb-sajtom prodavnice."
         ],
         "rounds": [
-          "Common suffixes: keep the genuine domain open and block the two addresses that add words after the real name. ",
-          "HTTP vs HTTPS: keep the genuine store open and block both doors using http://. ",
-          "Phishing attempts: read every character and block disguised look-alike addresses."
+          "Uobičajeni nastavci: ostavi otvoren pravi domen, a blokiraj dve adrese koje dodaju reči nakon pravog naziva.",
+          "HTTP naspram HTTPS: ostavi otvoren pravi veb-sajt prodavnice, a blokiraj obe adrese koje koriste http://.",
+          "Pokušaji fišinga: pročitaj svaki znak i blokiraj adrese koje oponašaju prave."
         ]
       },
       "influencer": {
-        "context": "Separate genuine recommendations from paid or fabricated signals.",
+        "context": "Razlikuj autentične preporuke od plaćenih ili izmišljenih signala.",
         "prompts": [
-          "I do not know how to decode the disclosure on each post. ",
-          "I do not know what to do after I label the posts.",
-          "I do not know how to classify the three product images."
+          "Ne znam kako da protumačim napomenu o sponzorstvu na svakoj objavi.",
+          "Ne znam šta da uradim nakon što označim objave.",
+          "Ne znam kako da klasifikujem tri slike proizvoda."
         ],
         "items": [
-          "Use the Emoji Decoding Card to identify",
-          "Run the reverse image search on all three products.",
-          "The mug is mass-produced, the NovaPad image is AI-generated, and the cupcakes are genuine."
+          "Koristi karticu za dešifrovanje emodžija da identifikuješ",
+          "Pokreni pretragu obrnutom pretragom slike za sva tri proizvoda.",
+          "Šolja je masovno proizvedena, slika NovaPada je generisana pomoću veštačke inteligencije, a kolačići su autentični."
         ]
       },
       "algorithm": {
-        "context": "Follow the data trail behind the personalized feed.",
+        "context": "Prati trag podataka iza personalizovanog fida.",
         "prompts": [
-          "I do not know which code opens the targeting engine.",
-          "I do not know how to choose the missing factor in an equation.",
-          "I do not know how the completed profile explains the NovaPad ad."
+          "Ne znam koji kod otvara mehanizam za targetiranje.",
+          "Ne znam kako da izaberem faktor koji nedostaje u jednačini.",
+          "Ne znam kako popunjen profil objašnjava oglas za NovaPad."
         ],
         "items": [
-          "Use the six highlighted digits on the report. Search on the bag. ",
-          "Match the missing factor to the person and the ad.",
-          "The engine combines age, interests, searches and insecurities."
+          "Koristi šest označenih cifara u izveštaju. Pretraži Torbu.",
+          "Poveži faktor koji nedostaje sa osobom i oglasom.",
+          "Mehanizam kombinuje godine, interesovanja, pretrage i nesigurnosti."
         ]
       },
       "ads": {
-        "context": "Slow down the visual pressure and inspect what the ad is doing.",
+        "context": "Uspori vizuelni pritisak i pažljivo pogledaj šta oglas pokušava da uradi.",
         "prompts": [
-          "I do not know how to make the Truth Flashlight work.",
-          "I do not know what to look for under each poster. ",
-          "I do not know how to assemble the exit code."
+          "Ne znam kako da pokrenem Svetiljku istine.",
+          "Ne znam šta da tražim ispod svakog postera.",
+          "Ne znam kako da sastavim izlazni kod."
         ],
         "items": [
-          "Charge and sweep the flashlight across the wall. ",
-          "Read the fine print, not the large promise. ",
-          "Reveal all four hidden letters in poster order. They spell SAVE, which is the code for the exit."
+          "Napuni svetiljku i osvetli njome ceo zid.",
+          "Pročitaj sitna slova, a ne veliko obećanje.",
+          "Otkrij sva četiri skrivena slova redom kojim se pojavljuju na posterima. Dobićeš SAVE, što je kod za izlaz."
         ]
       },
       "persuasion": {
-        "context": "Use the terminal to expose the final persuasion techniques.",
+        "context": "Koristi terminal da otkriješ poslednje tehnike ubeđivanja.",
         "prompts": [
-          "I do not know how to match a technique to a poster.",
-          "I do not know what the glowing letters are for.",
-          "I do not know what password to enter in the computer."
+          "Ne znam kako da povežem tehniku sa posterom.",
+          "Ne znam čemu služe svetleća slova.",
+          "Ne znam koju lozinku da unesem u računar."
         ],
         "items": [
-          "Drag and drop each poster to its persuasion technique.",
-          "Each correct frame reveals one letter. ",
-          "After all six matches, open the computer and enter FOOLED."
+          "Prevuci svaki poster do odgovarajuće tehnike ubeđivanja.",
+          "Svaki tačno uparen poster otkriva jedno slovo.",
+          "Kada napraviš svih šest podudaranja, otvori računar i unesi FOOLED."
         ]
       },
       "rouletteInvestigation": {
-        "context": "Spin several times and compare the results before deciding.",
+        "context": "Zavrtite nekoliko puta i uporedite rezultate pre nego što donesete odluku.",
         "prompts": [
-          "What should I check?",
-          "Does winning or losing prove cheating?",
-          "How do I finish the corridor?"
+          "Šta treba da proverim?",
+          "Da li pobeda ili poraz dokazuju da je točak namešten?",
+          "Kako da završim koridor?"
         ],
         "items": [
-          "Spin the current wheel at least twice. Does it keep landing on the same slice? Compare the results shown beside it.",
-          "You can keep spinning before deciding. A repeated result is a clue to investigate, but can also happen by chance.",
-          "Choose Rigged or Not rigged, then select the reason that matches your observations. Read the feedback and move to the next wheel."
+          "Zavrtite trenutni točak najmanje dva puta. Da li se stalno zaustavlja na istom polju? Uporedi rezultate prikazane pored njega.",
+          "Možeš da nastaviš da vrtiš točak pre nego što doneseš odluku. Ponavljanje istog rezultata je znak koji treba istražiti, ali može se desiti i slučajno.",
+          "Izaberi „Namešten“ ili „Nije namešten“, a zatim odaberi razlog koji odgovara tvojim zapažanjima. Pročitaj povratnu informaciju i pređi na sledeći točak."
         ]
       }
     },
     "end": {
       "win": {
-        "context": "You made it. Review the evidence that changed the decision.",
+        "context": "Uspeo/la si. Pogledaj dokaze koji su promenili odluku.",
         "items": [
-          "Name the red flags that mattered most.",
-          "Keep checking URLs, disclosures, targeting and urgency",
-          "A pause before buying is a powerful safety tool."
+          "Navedi znakove upozorenja koji su bili najvažniji.",
+          "Nastavi da proveravaš URL adrese, napomene o sponzorstvu, targetiranje i osećaj hitnosti.",
+          "Zastati pre kupovine moćan je alat za bezbednost."
         ]
       },
       "lose": {
-        "context": "The timer ran out, but the lesson is still available.",
+        "context": "Vreme je isteklo, ali lekcija je i dalje dostupna.",
         "items": [
-          "Urgency interrupts careful thinking.",
-          "A countdown does not make an offer trustworthy. ",
-          "Pause and verify through an independent source."
+          "Osećaj hitnosti ometa pažljivo razmišljanje.",
+          "Odbrojavanje ne znači da je ponuda pouzdana.",
+          "Zastani i proveri informacije putem nezavisnog izvora."
         ]
       }
     }
   },
   "rooms": {
     "link": {
-      "intro": "A router with three doors. Each is a link claiming to be a store. Shut the fraudulent ones.",
-      "solvedTitle": "Link District cleared · Emoji Decoding Card obtained 🔑",
-      "solvedText": "You blocked every fake and learned what makes a URL suspicious. The card unlocks the labels in Influencer Avenue.",
-      "routerBadge": "Crossroads {current} / {total}",
-      "peek": "🔍 Open to peek inside",
-      "closeDoor": "✕ Close door",
-      "doorHelp": "Open a door to peek at the site inside · read the address · use “Block” to shut the fraudulent ones",
-      "tapToBlock": "Tap a door to block the link · tap again to unblock",
-      "addressHint": "The padlock & “https” mean the connection is private — NOT that the site is trustworthy.",
-      "linkTip": "A link — you can only check its real security once you open it",
-      "barNotSecure": "Not secure",
-      "barLookalike": "⚠ Look-alike letters",
-      "secureConn": "Encrypted connection (https)",
-      "insecureConn": "Not secure — unencrypted http connection",
-      "blockThis": "🔒 Block this link",
-      "unblock": "↺ Unblock",
-      "inspect": "Inspect the address & preview.",
-      "realStore": "↧ real store",
-      "blocked": "BLOCKED",
-      "hint": "Remember: block the fakes, keep the one real door open.",
-      "nextRouter": "Advance to the next crossroads →",
-      "finalRouter": "Advance →",
-      "reviewTitle": "Why those doors?",
-      "errStillOpen": "At least one fraudulent link is still open. Block every fake before continuing.",
-      "errBlockedSafe": "You blocked the real store! That is the one safe door — leave it open.",
-      "justifyLeadLabel": "Why did you block them?",
-      "justifyLead": "Being able to explain the red flags matters more than a lucky guess. Tick every real warning sign — and nothing that only looks reassuring.",
-      "justifyErrWrong": "Some of those are not actually red flags — https, padlocks and nice photos do NOT prove a site is safe.",
-      "justifyErrMissing": "A few red flags are still unchecked. Look again at the fake URLs.",
-      "submitReasoning": "Submit reasoning",
+      "debugSkip": "Preskoči vrata i završni test (debug)",
+      "intro": "Ruter sa troja vrata. Svaka su link koji vodi do prodavnice. Zatvori lažna.",
+      "solvedTitle": "Okrug sa linkovima završen · Dobijena kartica za dešifrovanje emodžija 🔑",
+      "solvedText": "Blokirao/la si sve lažne linkove i naučio/la šta čini URL sumnjivim. Kartica otključava oznake u Aveniji influensera.",
+      "routerBadge": "Raskrsnica {current} / {total}",
+      "peek": "🔍 Otvori da zaviriš unutra",
+      "closeDoor": "✕ Zatvori vrata",
+      "doorHelp": "Otvori vrata da zaviriš na stranicu · pročitaj adresu · koristi „Blokiraj“ da zatvoriš lažna vrata",
+      "tapToBlock": "Dodirni vrata da blokiraš link · dodirni ponovo da ga odblokiraš",
+      "addressHint": "Katanac i „https“ znače da je veza privatna — NE da je stranica pouzdana.",
+      "linkTip": "Link — tek kada ga otvoriš možeš da proveriš njegovu stvarnu bezbednost",
+      "barNotSecure": "Nije bezbedno",
+      "barLookalike": "⚠ Znakovi koji oponašaju druge znakove",
+      "secureConn": "Šifrovana veza (https)",
+      "insecureConn": "Nije bezbedno — nešifrovana http veza",
+      "blockThis": "🔒 Blokiraj ovaj link",
+      "unblock": "↺ Odblokiraj",
+      "inspect": "Proveri adresu i pregled stranice.",
+      "realStore": "↧ prava prodavnica",
+      "blocked": "BLOKIRANO",
+      "hint": "Zapamti: blokiraj lažne linkove, a prava vrata ostavi otvorena.",
+      "nextRouter": "Pređi na sledeću raskrsnicu →",
+      "finalRouter": "Pređi →",
+      "reviewTitle": "Zašto baš ta vrata?",
+      "errStillOpen": "Najmanje jedan lažni link je i dalje otvoren. Blokiraj sve lažne linkove pre nego što nastaviš.",
+      "errBlockedSafe": "Blokirao/la si pravu prodavnicu! To su jedina bezbedna vrata — ostavi ih otvorena.",
+      "justifyLeadLabel": "Zašto si ih blokirao/la?",
+      "justifyLead": "Važno je da umeš da objasniš znakove upozorenja, a ne samo da pogodiš. Označi svaki stvarni znak upozorenja — i ništa što samo deluje kao da pruža sigurnost.",
+      "justifyErrWrong": "Neki od ovih znakova zapravo nisu znakovi upozorenja — https, katanci i lepe fotografije NE dokazuju da je stranica bezbedna.",
+      "justifyErrMissing": "Nekoliko znakova upozorenja još uvek nije označeno. Ponovo pogledaj lažne URL adrese.",
+      "submitReasoning": "Pošalji obrazloženje",
       "preview": {
-        "newArrivals": "NEW ARRIVALS",
-        "storeCaption": "Effortless style, every day.",
-        "megaSale": "⚠ MEGA SALE — TODAY ONLY! ⚠",
-        "shopNow": "SHOP NOW!",
-        "shopBar": "DISCOUNT SHOPZ ▤",
-        "limited": "⚠ LIMITED TIME!!! ⚠"
+        "newArrivals": "NOVO U PONUDI",
+        "storeCaption": "Jednostavan stil, svakog dana.",
+        "megaSale": "⚠ MEGA RASPRODAJA — SAMO DANAS! ⚠",
+        "shopNow": "KUPI ODMAH!",
+        "shopBar": "SHOPZ SA POPUSTOM ▤",
+        "limited": "⚠ VREMENSKI OGRANIČENA PONUDA!!! ⚠"
       },
       "rounds": [
         {
@@ -655,152 +659,179 @@ export default {
       }
     },
     "roulette": {
-      "spin": "🎰 Spin",
-      "spinning": "Spinning…",
+      "spin": "🎰 Vrti",
+      "spinning": "Vrtenje…",
       "investigation": {
-        "intro": "Spin each wheel. Spot the trick and explain your choice.",
-        "wheelProgress": "Wheel {n} / {total}",
-        "solvedTitle": "Corridor cleared — claims checked",
-        "spinAgain": "Spin again",
-        "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked.",
-        "evidence": "Rigged wheels can use conditional coupons to make you spend more, or promises of another chance to keep you playing longer.",
-        "result": "Result: {result}",
-        "historyLabel": "Spins: {n} · Latest results:",
+        "debugSkip": "Preskoči rulet (debug)",
+        "intro": "Zavrti svaki točak. Prepoznaj tehniku i objasni svoj izbor.",
+        "wheelProgress": "Točak {n} / {ukupno}",
+        "solvedTitle": "Koridor završen — tvrdnje proverene",
+        "spinAgain": "Zavrti ponovo",
+        "solvedText": "Uporedio/la si ponovljena vrtenja, objasnio/la svoje sumnje i otkrio/la kako je svaki točak funkcionisao.",
+        "evidence": "Namešteni točkovi mogu koristiti uslovne kupone kako bi te naveli da potrošiš više ili obećanja o novoj šansi kako bi te zadržali u igri duže.",
+        "result": "Rezultat: {rezultat}",
+        "historyLabel": "Vrtenja: {n} · Najnoviji rezultati:",
         "verdicts": {
-          "rigged": "Rigged",
-          "fair": "Not rigged"
+          "rigged": "Namešten",
+          "fair": "Nije namešten"
         },
-        "reasonLabel": "Which explanation fits this offer?",
-        "retry": "Try another spin and compare the results. You can change your decision. Repeated results can also happen by chance.",
-        "correct": "Case explained",
-        "next": "Next wheel →",
-        "finish": "Log the evidence ✓",
-        "observe": "Spin at least {count} times. Does it keep landing on the same slice, or do the results change? You can spin again if you are unsure.",
+        "reasonLabel": "Koje objašnjenje odgovara ovoj ponudi?",
+        "retry": "Probaj još jedno vrtenje i uporedi rezultate. Možeš promeniti svoju odluku. Ponavljanje istih rezultata može se desiti i slučajno.",
+        "correct": "Slučaj objašnjen",
+        "next": "Sledeći točak →",
+        "finish": "Zabeleži dokaz ✓",
+        "observe": "Zavrti najmanje {broj} puta. Da li se stalno zaustavlja na istom polju ili se rezultati menjaju? Možeš ponovo da zavrtiš ako nisi siguran/na.",
         "shop": {
-          "badge": "MEGA SPIN · STORE",
-          "title": "You won a discount coupon!",
-          "coupon": "50% OFF",
-          "terms": "To add your coupon to your account, first make a purchase of at least €{amount}. Your 50% discount will be available for a later order.",
-          "reminder": "Store offer: spend at least €{amount} first to unlock your coupon for a later order."
+          "badge": "MEGA VRTEŠKA · PRODAVNICA",
+          "title": "Osvojio/la si kupon za popust!",
+          "coupon": "50% POPUSTA",
+          "terms": "Da bi dodao/la kupon na svoj nalog, prvo moraš da obaviš kupovinu od najmanje €{iznos}. Tvoj popust od 50% biće dostupan za neku narednu kupovinu.",
+          "reminder": "Ponuda prodavnice: prvo potroši najmanje €{iznos} da bi otključao/la kupon za neku narednu kupovinu."
         },
-        "retryBait": "“No prize this time! Keep spinning — your next try could be the big win!”",
+        "retryBait": "„Ovog puta nema nagrade! Nastavi da vrtiš — sledeći pokušaj mogao bi da bude veliki dobitak!“",
         "wheels": {
           "w1": {
-            "name": "MEGA SPIN",
+            "name": "MEGA VRTEŠKA",
             "segments": [
-              "5% OFF",
-              "10% OFF",
-              "15% OFF",
-              "50% OFF",
-              "20% OFF",
-              "25% OFF",
-              "30% OFF",
-              "No prize"
+              "5% POPUSTA",
+              "10% POPUSTA",
+              "15% POPUSTA",
+              "50% POPUSTA",
+              "20% POPUSTA",
+              "25% POPUSTA",
+              "30% POPUSTA",
+              "Nema nagrade"
             ],
-            "rules": "Spin to unlock a discount coupon — up to 50% off!",
-            "feedback": "This wheel is rigged: it is programmed to land on the 50% coupon every time. The other discounts are decoration, making a fixed offer look like a lucky win. You must then make a purchase to unlock the coupon and another to use it. The aim is to make you spend more.",
+            "rules": "Vrti da otključaš kupon za popust — do 50% popusta!",
+            "feedback": "Ovaj točak je namešten: programiran je tako da se svaki put zaustavi na kuponu od 50%. Ostali popusti su samo ukras, zbog čega fiksna ponuda izgleda kao dobitak zahvaljujući sreći. Zatim moraš da obaviš jednu kupovinu da bi otključao/la kupon, a drugu da bi ga iskoristio/la. Cilj je da potrošiš više.",
             "options": {
-              "wonOnce": "The coupon gives me 50% off the purchase needed to unlock it.",
-              "forcedOffer": "It pushes me to buy once to unlock the coupon, then buy again to use it.",
-              "colours": "I can add the coupon to my account without buying anything."
+              "wonOnce": "Kupon mi daje 50% popusta na kupovinu potrebnu da bih ga otključao/la.",
+              "forcedOffer": "Navodi me da jednom kupim nešto da bih otključao/la kupon, a zatim ponovo da kupim nešto da bih ga iskoristio/la.",
+              "colours": "Mogu da dodam kupon na svoj nalog bez ikakve kupovine."
             }
           },
           "w2": {
-            "name": "LUCKY WHEEL",
+            "name": "SREĆNI TOČAK",
             "segments": [
-              "1 coin",
-              "2 coins",
-              "3 coins",
-              "4 coins",
-              "5 coins",
-              "6 coins",
-              "10 coins",
-              "No prize"
+              "1 novčić",
+              "2 novčića",
+              "3 novčića",
+              "4 novčića",
+              "5 novčića",
+              "6 novčića",
+              "10 novčića",
+              "Nema nagrade"
             ],
-            "rules": "Free spin! Try your luck for up to 10 game coins.",
-            "feedback": "The offer is a chance to win up to 10 game coins, not a promise of 10 coins every time or money to withdraw. Smaller prizes and the visible no-prize slice fit that offer. This simulated wheel selects randomly; a few spins alone would not prove that a real wheel is fair.",
+            "rules": "Besplatno vrtenje! Okušaj sreću i osvoji do 10 novčića u igri.",
+            "feedback": "Ponuda predstavlja šansu da osvojiš do 10 novčića u igri, a ne obećanje da ćeš svaki put dobiti 10 novčića niti novac koji možeš podići. Manje nagrade i vidljivo polje bez nagrade odgovaraju toj ponudi. Ovaj simulirani točak bira nasumično; nekoliko vrtenja samo po sebi ne bi dokazalo da je pravi točak pošten.",
             "options": {
-              "equalChance": "It offers a chance at up to 10 game coins, so smaller prizes or no prize fit the offer.",
-              "smallPrize": "Every free spin should give me the advertised 10 coins.",
-              "different": "The coins I win can be withdrawn as real money."
+              "equalChance": "Nudi šansu da osvojiš do 10 novčića u igri, pa manje nagrade ili izostanak nagrade odgovaraju ponudi.",
+              "smallPrize": "Svako besplatno vrtenje trebalo bi da mi donese oglašenih 10 novčića.",
+              "different": "Novčići koje osvojim mogu se podići kao pravi novac."
             }
           },
           "w3": {
-            "name": "GOLD RUSH",
+            "name": "ZLATNA GROZNICA",
             "segments": [
-              "Phone",
+              "Telefon",
               "Tablet",
-              "€100",
-              "Console",
-              "Headset",
+              "100€",
+              "Konzola",
+              "Slušalice",
               "Laptop",
-              "€50",
-              "No prize"
+              "50€",
+              "Nema nagrade"
             ],
-            "rules": "Win a phone, a laptop or up to €100 — give it a spin!",
-            "feedback": "This wheel forces “No prize”, then tempts you with another chance. The aim is to keep you spending time on the game. On a site with ads, that can mean more adverts seen. Another spin does not bring you closer to a win: in this simulated wheel, the prizes cannot be selected.",
+            "rules": "Osvoji telefon, laptop ili do 100 € — zavrti točak!",
+            "feedback": "Ovaj točak namešta rezultat na „Nema nagrade“, a zatim te mami novom šansom. Cilj je da nastaviš da trošiš vreme na igru. Na sajtu sa oglasima, to može značiti da vidiš više oglasa. Novo vrtenje te ne približava dobitku: na ovom simuliranom točku nagrade se ne mogu dobiti.",
             "options": {
-              "lostOnce": "Seven prize slices guarantee I will win within eight spins.",
-              "expensive": "Each loss makes the next spin more likely to win a big prize.",
-              "forcedLoss": "It keeps giving me nothing while using big prizes and “try again” to keep me playing."
+              "lostOnce": "Sedam polja sa nagradama garantuju da ću dobiti nagradu u roku od osam vrtenja.",
+              "expensive": "Svaki gubitak čini da je sledeće vrtenje verovatnije dobitno sa velikom nagradom.",
+              "forcedLoss": "Stalno mi ne daje ništa, dok koristi velike nagrade i „pokušaj ponovo“ da bi me zadržao u igri."
             }
           },
           "w4": {
-            "name": "BONUS DROP",
+            "name": "BONUS DOBITAK",
             "segments": [
-              "1 point",
-              "2 points",
-              "3 points",
-              "4 points",
-              "8 points",
-              "5 points",
-              "6 points",
-              "No prize"
+              "1 poen",
+              "2 poena",
+              "3 poena",
+              "4 poena",
+              "8 poena",
+              "5 poena",
+              "6 poena",
+              "Nema nagrade"
             ],
-            "rules": "Your free bonus spin: win up to 8 game points!",
-            "feedback": "The offer is for game points, not cash or a shopping discount. Eight is the largest prize; smaller amounts and no prize are also shown on the wheel. This simulated draw is random. Winning or losing a few spins does not establish whether a real draw is fair.",
+            "rules": "Tvoje besplatno bonus vrtenje: osvoji do 8 poena u igri!",
+            "feedback": "Ponuda se odnosi na poene u igri, a ne na novac ili popust pri kupovini. Osam je najveća nagrada; na točku su prikazani i manji iznosi i polje bez nagrade. Ovo simulirano izvlačenje je nasumično. Pobeda ili gubitak u nekoliko vrtenja ne dokazuje da li je stvarno izvlačenje pošteno.",
             "options": {
-              "manyPrizes": "These points give me a discount on my next purchase.",
-              "honestLoss": "The offer is for game points, and the wheel openly includes a no-prize outcome.",
-              "lostOnce": "“Up to 8 points” means I must receive at least 8 points."
+              "manyPrizes": "Ovi poeni mi daju popust pri sledećoj kupovini.",
+              "honestLoss": "Ponuda se odnosi na poene u igri, a točak jasno uključuje i ishod bez nagrade.",
+              "lostOnce": "„Do 8 poena“ znači da moram dobiti najmanje 8 poena."
             }
           }
         }
       }
     },
     "influencer": {
-      "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
-      "solvedTitle": "Influencer Avenue cleared — Data Report obtained 📄",
-      "solvedText": "You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 748392 — open the Algorithm Control Room next.",
-      "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
+      "intro": "Neonska avenija bilborda i fidova influensera. Pogledaj iza sjaja: označi sponzorisane objave, a zatim proveri šta su proizvodi zapravo.",
+      "solvedTitle": "Avenija influensera završena — Dobijen Izveštaj o podacima 📄",
+      "solvedText": "Otkrio/la si skrivene oglase i lažnu fotografiju proizvoda. Označene cifre na Izveštaju o podacima — 748392 — otvaraju Kontrolnu sobu algoritma.",
+      "evidenceLabel": "Objave su skrivale plaćene promocije, a fotografija proizvoda je generisana pomoću veštačke inteligencije bez ikakvih stvarnih rezultata.",
       "stage1": {
-        "badge": "Stage 1 / 2",
-        "tag": "Content labelling",
-        "prompt": "Choose the right label for each post",
-        "openDecoder": "🔑 Open Decoder Card",
-        "verified": "Verified",
-        "followersSuffix": "followers",
-        "cluesTitle": "Disclosure clues",
-        "decodeMe": "decode me →",
-        "trayTitle": "Drag a label onto each post",
-        "dropPlaceholder": "drop label",
-        "correct": "✓ {label}",
-        "wrong": "✗ wrong label",
-        "learnLabel": "Why it matters:",
-        "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
-        "hint": "Tap or drag a label chip, then drop it on the matching post.",
+        "badge": "Faza 1 / 2",
+        "tag": "Označavanje sadržaja",
+        "prompt": "Izaberi odgovarajuću oznaku za svaku objavu",
+        "openDecoder": "🔑 Otvori karticu za dešifrovanje",
+        "verified": "Potvrđeno",
+        "viewPublication": "Pogledaj objavu",
+        "followersSuffix": "pratilaca",
+        "cluesTitle": "Tragovi oznake",
+        "decodeMe": "dešifruj me →",
+        "trayTitle": "Prevuci oznaku na svaku objavu",
+        "dropPlaceholder": "prevuci oznaku",
+        "correct": "✓ {oznaka}",
+        "wrong": "✗ pogrešna oznaka",
+        "learnLabel": "Zašto je važno:",
+        "learn": "sponzorisani sadržaj mora biti jasno označen. #oglas, poklonjeni proizvod, partnerski link ili kod za popust ukazuju na oglašavanje — čak i kada je predstavljeno kao lična preporuka.",
+        "hint": "Dodirni ili prevuci oznaku, a zatim je postavi na odgovarajuću objavu.",
         "selectPost": "Select Post",
         "answerProgress": "{count} / {total}"
       },
       "labels": {
-        "paid": "PAID",
-        "collab": "COLLAB",
-        "gifted": "GIFTED"
+        "paid": "PLAĆENO",
+        "collab": "SARADNJA",
+        "gifted": "POKLONJENO",
+        "nothing": "NIŠTA"
       },
       "posts": [
         {
-          "caption": "my forever glow routine 💧 use code LUNA20",
-          "product": "skincare serum",
+          "caption": "Morning training feels so much better with GlowFuel. I’ve been using it before my workouts and I’m honestly obsessed. Use my code MIRA20 for 20% off your first order. Link in bio.",
+          "product": "Pre-workout drink",
+          "username": "MiraMoves",
+          "followers": "482K",
+          "comments": [
+            {
+              "username": "fitpaula",
+              "text": "Omg I need to try this before my next workout!"
+            },
+            {
+              "username": "runneralex",
+              "text": "Does the code work in all Europe?"
+            },
+            {
+              "username": "glowfuel_official",
+              "text": "So happy you’re loving it 💜"
+            },
+            {
+              "username": "martahealthy",
+              "text": "This looks like an ad but I actually want it hahaha"
+            },
+            {
+              "username": "gymtom",
+              "text": "Just ordered with your code!"
+            }
+          ],
           "clues": [
             "Discount code “LUNA20” in the caption",
             "Affiliate link in bio",
@@ -808,8 +839,32 @@ export default {
           ]
         },
         {
-          "caption": "new flavour drop with the team 🔋 #ad",
-          "product": "energy drink",
+          "caption": "NovaSound sent me their new AirBeat headphones to test this week. I’ll use them during tonight’s stream and share my honest thoughts after a few days. Thanks for the PR package!",
+          "product": "Wireless headphones",
+          "username": "TechWithLeo",
+          "followers": "219K",
+          "comments": [
+            {
+              "username": "streamfan88",
+              "text": "Can you test the mic quality?"
+            },
+            {
+              "username": "novasoundaudio",
+              "text": "Can’t wait to hear your thoughts!"
+            },
+            {
+              "username": "lucagames",
+              "text": "Gifted or sponsored?"
+            },
+            {
+              "username": "TechWithLeo",
+              "text": "Gifted. I’ll still be honest in the review."
+            },
+            {
+              "username": "setupqueen",
+              "text": "Please compare them with your old headset!"
+            }
+          ],
           "clues": [
             "Tagged the brand as a creative partner",
             "Co-designed the flavour together",
@@ -817,12 +872,69 @@ export default {
           ]
         },
         {
-          "caption": "sent this shaker to try 🎁 thoughts?",
-          "product": "protein shaker",
+          "caption": "So incredibly proud to share this collaboration with @The_Local_Stitch. We’ve been developing this limited-run handmade garment for months. Every piece is unique and supports local artisans. Use code LOCAL_CLARA for 15% off and first access to the drop. Link in bio.",
+          "product": "Handmade patchwork quilted jacket",
+          "username": "ClaraSees",
+          "followers": "312K ",
+          "comments": [
+            {
+              "username": "artisan_wear",
+              "text": "This looks incredible, can’t wait to see the details!"
+            },
+            {
+              "username": "needle_ninja",
+              "text": "Is there a waitlist? I need to get one."
+            },
+            {
+              "username": "glowfuel_official",
+              "text": "Obsessed with this texture! So unique 💜"
+            },
+            {
+              "username": "martahealthy",
+              "text": "Looks like an ad but I love supporting local. Ordering!"
+            },
+            {
+              "username": "gymtom",
+              "text": "Wait, I just ordered the other thing, can I combine? Lol."
+            }
+          ],
           "clues": [
             "Received the product for free",
             "No payment, no discount code",
             "“gifted” disclosure in the corner"
+          ]
+        },
+        {
+          "caption": "Okay, a mini haul because I was so excited about these discoveries! The ceramics are from a lovely small workshop, and I’m deeply in love with this book. Found some truly great pieces. Everything is genuinely just what I wanted to buy. #legithaul #smallbatch #curatedfinds #SpainFinds",
+          "product": "Cercamics",
+          "username": "RealSarahShares ",
+          "followers": "285K ",
+          "comments": [
+            {
+              "username": "artisan_wear",
+              "text": "Those dishes are gorgeous! Where did you get them?"
+            },
+            {
+              "username": "needle_ninja",
+              "text": "Love that scarf. Perfect for autumn."
+            },
+            {
+              "username": "glowfuel_official",
+              "text": "Genuine finds are the best! Looks so cosy. 💜"
+            },
+            {
+              "username": "martahealthy",
+              "text": "Finally, an actual haul! I want that plant!"
+            },
+            {
+              "username": "gymtom",
+              "text": "Wait, so is it still Spain-based? Need recommendations!"
+            }
+          ],
+          "clues": [
+            "",
+            "",
+            ""
           ]
         }
       ],
@@ -946,116 +1058,116 @@ export default {
       }
     },
     "algorithm": {
-      "intro": "A humming mainframe crunches data into targeted ads. Get inside, then teach it to profile a person.",
-      "solvedTitle": "Algorithm Control Room cracked · Evidence logged 🧠",
-      "solvedText": "You watched the machine turn {friend}'s age, interests and insecurities into a single ad. That is not luck — it is a profile.",
-      "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
+      "intro": "Glavni računar zuji dok obrađuje podatke i pretvara ih u ciljane oglase. Uđi unutra, a zatim ga nauči da napravi profil osobe.",
+      "solvedTitle": "Kontrolna soba algoritma probijena · Dokaz zabeležen 🧠",
+      "solvedText": "Gledao/la si kako mašina pretvara godine, interesovanja i nesigurnosti {prijatelja} u jedan oglas. To nije sreća — to je profil.",
+      "evidence": "Oglas je algoritam odabrao na osnovu godina, interesovanja i nesigurnosti {prijatelja}.",
       "unlock": {
-        "badge": "ACCESS · Algorithm Control Room",
-        "prompt": "Enter the 6-digit code.",
-        "error": "Access denied — that code is wrong.",
-        "submit": "Unlock →"
+        "badge": "PRISTUP · Kontrolna soba algoritma",
+        "prompt": "Unesi šestocifreni kod.",
+        "error": "Pristup odbijen — taj kod nije ispravan.",
+        "submit": "Otključaj →"
       },
       "choice": {
-        "badge": "System question · privacy trade-off",
-        "prompt": "Which future do you want?",
-        "optionATag": "Option A",
-        "optionABefore": "See",
-        "optionABold": "fewer, personalised",
-        "optionAAfter": "ads — but your personal data is collected.",
-        "optionBTag": "Option B",
-        "optionBBefore": "See",
-        "optionBBold": "many more",
-        "optionBAfter": "ads and ad-breaks — but far less of your data is collected.",
-        "wrongTitle": "Wrong answer.",
-        "wrongText": "You just traded your privacy for convenience. “Personalised” is the algorithm — fewer ads means it is collecting and profiling more of your data to pick them.",
-        "goodTitle": "Good answer.",
-        "goodText": "More ads is annoying, but you kept your data and partly slipped the personalisation algorithm. Convenience is the bait it uses to make profiling feel like a favour.",
-        "afterNote": "Either way, the machine still tries to profile everyone. Let’s see how.",
-        "continue": "Enter the targeting engine →"
+        "badge": "Sistemsko pitanje · kompromis privatnosti",
+        "prompt": "Koju budućnost želiš?",
+        "optionATag": "Opcija A",
+        "optionABefore": "Vidi",
+        "optionABold": "manje, personalizovanih",
+        "optionAAfter": "oglasa — ali se prikupljaju tvoji lični podaci.",
+        "optionBTag": "Opcija B",
+        "optionBBefore": "Vidi",
+        "optionBBold": "mnogo više",
+        "optionBAfter": "oglasa i reklamnih pauza — ali se prikuplja mnogo manje tvojih podataka.",
+        "wrongTitle": "Pogrešan odgovor.",
+        "wrongText": "Upravo si menjao/la privatnost za praktičnost. „Personalizovano“ je rezultat algoritma — manje oglasa znači da se prikuplja i profilira više tvojih podataka kako bi ih odabrao.",
+        "goodTitle": "Tačan odgovor.",
+        "goodText": "Više oglasa je dosadno, ali sačuvao/la si svoje podatke i delimično izbegao/la algoritam za personalizaciju. Praktičnost je mamac kojim te navodi da profilisanje doživiš kao uslugu.",
+        "afterNote": "U svakom slučaju, mašina i dalje pokušava da napravi profil svakoga. Hajde da vidimo kako.",
+        "continue": "Uđi u mehanizam za targetiranje →"
       },
       "equations": {
-        "feedbackTitle": "Equation solved: why this ad?",
-        "badge": "Targeting engine · solve every equation",
-        "prompt": "Fill the missing slot to complete each person's ad.",
-        "adFlag": "AD ACTIVATED",
-        "slotPlaceholder": "＋ drop tile",
-        "stepBadge": "Equation {n} / {total}",
-        "profileBadge": "Profile complete",
-        "dragHint": "Drag the missing factor into the equation — the one that fits this exact person.",
-        "wrongHint": "That factor doesn’t fit this person. Look at what the ad is really selling.",
-        "navTerminal": "Ad Terminal",
-        "terminalTitle": "AD-OUTPUT TERMINAL",
-        "profileTitle": "▚ PROFILE RECONSTRUCTED ▚",
-        "profileP1": "The engine cross-referenced",
-        "profileB1": "{friend}’s age",
-        "profileP2": " (a teen boy),",
-        "profileB2": "his interests",
-        "profileP3": " (gaming, new tech, the NovaPad X he keeps searching) and ",
-        "profileB3": "his insecurities",
-        "profileP4": " (fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
-        "logEvidence": "Log this evidence ✓",
-        "finalLessonTitle": "What you learned",
-        "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you.",
-        "nextBtn": "Next equation →",
-        "lastBtn": "See {friend}’s profile →"
+        "feedbackTitle": "Jednačina rešena: zašto ovaj oglas?",
+        "badge": "Mehanizam za targetiranje · reši svaku jednačinu",
+        "prompt": "Popuni polje koje nedostaje da dovršiš oglas za svaku osobu.",
+        "adFlag": "OGLAS AKTIVIRAN",
+        "slotPlaceholder": "＋ prevuci pločicu",
+        "stepBadge": "Jednačina {n} / {ukupno}",
+        "profileBadge": "Profil završen",
+        "dragHint": "Prevuci faktor koji nedostaje u jednačinu — onaj koji odgovara baš ovoj osobi.",
+        "wrongHint": "Taj faktor ne odgovara ovoj osobi. Pogledaj šta oglas zaista prodaje.",
+        "navTerminal": "Terminal za oglase",
+        "terminalTitle": "TERMINAL ZA IZLAZ OGLASA",
+        "profileTitle": "▚ PROFIL REKONSTRUISAN ▚",
+        "profileP1": "Mehanizam je ukrstio",
+        "profileB1": "godine {prijatelja}",
+        "profileP2": "(tinejdžer),",
+        "profileB2": "njegova interesovanja",
+        "profileP3": "(igrice, nova tehnologija, NovaPad X koji stalno pretražuje) i",
+        "profileB3": "njegove nesigurnosti",
+        "profileP4": "(uklapanje, strah da će propustiti ponudu). Rezultat je bio jedan savršeno ciljani oglas — upravo ona ponuda za NovaPad X „90% popusta“. Nije slučajno što je {prijatelj} video taj oglas.",
+        "logEvidence": "Zabeleži ovaj dokaz ✓",
+        "finalLessonTitle": "Ono što si naučio/la",
+        "finalLesson": "Personalizovani oglasi kombinuju tvoje aktivnosti, interesovanja i nesigurnosti kako bi te targetirali.",
+        "nextBtn": "Sledeća jednačina →",
+        "lastBtn": "Pogledaj profil {prijatelja} →"
       },
       "cols": [
-        "Demographic",
-        "Follows / likes",
-        "Insecurities"
+        "Demografski podaci",
+        "Prati / lajkuje",
+        "Nesigurnosti"
       ],
       "rows": {
         "r1": {
-          "ad": "Miracle skincare cream",
+          "ad": "Čudesna krema za negu kože",
           "slots": {
-            "0": "Girl, 13–17",
-            "1": "Follows beauty influencers"
+            "0": "Devojka, 13–17",
+            "1": "Prati influenserke iz oblasti lepote"
           },
           "feedbackLesson": "How does the algorithm build this profile? It can combine age entered at sign-up with followed accounts, likes and time spent on skincare videos. It uses that activity to infer an interest in skin products and select an ad designed to turn that interest into a purchase."
         },
         "r2": {
-          "ad": "Muscle-gain supplement",
+          "ad": "Suplement za povećanje mišićne mase",
           "slots": {
-            "1": "Follows fitness influencers",
-            "2": "Insecure about being skinny"
+            "1": "Prati influensere iz oblasti fitnesa",
+            "2": "Nesigurna zbog mršavosti"
           },
-          "feedbackLesson": "The algorithm can use account details, followed fitness pages and interactions with workout content to build an advertising profile. In this equation, the supplement is matched to that profile because its promise of more muscle appeals to his concern about being skinny."
+          "feedbackLesson": "Algoritam može da koristi podatke o nalogu, stranice o fitnesu koje korisnik prati i interakcije sa sadržajem o vežbanju kako bi napravio profil za oglašavanje. U ovoj jednačini, suplement odgovara tom profilu jer njegovo obećanje o većoj mišićnoj masi privlači njegovu zabrinutost zbog mršavosti."
         },
         "r3": {
-          "ad": "Baldness cream",
+          "ad": "Krema protiv ćelavosti",
           "slots": {
-            "0": "Man, 25–35",
-            "1": "Follows tech channels"
+            "0": "Muškarac, 25–35",
+            "1": "Prati tehnološke kanale"
           },
-          "feedbackLesson": "For example, clicks on hair-loss products or repeated views of related content can suggest that concern. An algorithm can use these recorded actions to put someone in an audience for hair-loss ads. The advertiser then offers a supposed solution to the worry."
+          "feedbackLesson": "Na primer, klikovi na proizvode protiv opadanja kose ili ponovljeno gledanje povezanog sadržaja mogu ukazivati na tu zabrinutost. Algoritam može da koristi te zabeležene aktivnosti kako bi nekoga svrstao u publiku za oglase protiv opadanja kose. Oglašivač zatim nudi navodno rešenje za tu brigu."
         },
         "r4": {
-          "ad": "Weight-loss pills",
+          "ad": "Tablete za mršavljenje",
           "slots": {
-            "0": "Woman, 30–45",
-            "2": "Insecure about her weight"
+            "0": "Žena, 30–45",
+            "2": "Nesigurna zbog svoje težine"
           },
-          "feedbackLesson": "Following diet pages, liking weight-loss posts and watching related videos can feed an advertising profile. The algorithm uses those traces to select a matching ad. That is the mechanism behind personalised advertising: your activity helps decide which sales pitch you see."
+          "feedbackLesson": "Praćenje stranica o ishrani, lajkovanje objava o mršavljenju i gledanje povezanih video-snimaka mogu doprineti izgradnji profila za oglašavanje. Algoritam koristi te tragove da izabere odgovarajući oglas. To je mehanizam iza personalizovanog oglašavanja: tvoje aktivnosti pomažu da se odluči koju prodajnu poruku ćeš videti."
         }
       },
       "tiles": {
-        "t-skin": "Insecure about her skin",
-        "t-boy": "Boy, 15–25",
-        "t-bald": "Worried about going bald",
-        "t-diet": "Follows diet & lifestyle pages",
-        "t-retiree": "Retired, 65+",
-        "t-tween": "Kid, 8–12",
-        "t-gran": "Woman, 60+",
-        "t-dad": "Dad, in his 40s",
-        "t-pets": "Follows pet accounts",
-        "t-gamer": "Follows gaming channels",
-        "t-cook": "Follows cooking pages",
-        "t-travel": "Follows travel bloggers",
-        "t-money": "Anxious about money",
-        "t-lonely": "Afraid of being left out",
-        "t-height": "Self-conscious about height",
-        "t-teeth": "Worried about their teeth"
+        "t-skin": "Nesigurna zbog svoje kože",
+        "t-boy": "Dečak, 15–25",
+        "t-bald": "Zabrinut zbog ćelavljenja",
+        "t-diet": "Prati stranice o ishrani i životnom stilu",
+        "t-retiree": "Penzioner, 65+",
+        "t-tween": "Dete, 8–12",
+        "t-gran": "Žena, 60+",
+        "t-dad": "Otac, u četrdesetim",
+        "t-pets": "Prati naloge o kućnim ljubimcima",
+        "t-gamer": "Prati kanale o gejmingu",
+        "t-cook": "Prati stranice o kuvanju",
+        "t-travel": "Prati blogere koji pišu o putovanjima",
+        "t-money": "Zabrinut zbog novca",
+        "t-lonely": "Plaši se da će biti izostavljen",
+        "t-height": "Nesiguran zbog svoje visine",
+        "t-teeth": "Zabrinut zbog svojih zuba"
       },
       "report": {
         "modalTitle": "Izveštaj podataka · Maksov profil",
@@ -1112,9 +1224,9 @@ export default {
         ]
       },
       "door": {
-        "badge": "Control Room · Sealed",
-        "prompt": "The Algorithm Control Room is locked. A keypad is mounted on the door — step up to it and enter the 6-digit code from your Data Report.",
-        "action": "Use the keypad →"
+        "badge": "Kontrolna soba · Zapečaćena",
+        "prompt": "Kontrolna soba algoritma je zaključana. Na vratima se nalazi tastatura — priđi joj i unesi šestocifreni kod iz svog Izveštaja o podacima.",
+        "action": "Koristi tastaturu →"
       }
     },
     "ads": {
@@ -1180,125 +1292,125 @@ export default {
       ]
     },
     "persuasion": {
-      "intro": "A gallery of glossy ads. Each one leans on a single persuasion trick — name it by framing the poster.",
-      "solvedTitle": "Persuasion Lab cleared — password FOOLED",
-      "solvedText": "Once you can name the trick — FOMO, urgency, a borrowed celebrity — it stops working on you. That is the whole defence.",
+      "intro": "Galerija sjajnih oglasa. Svaki se oslanja na jednu tehniku ubeđivanja — prepoznaj je tako što ćeš uokviriti poster.",
+      "solvedTitle": "Laboratorija ubeđivanja završena — lozinka FOOLED",
+      "solvedText": "Kada umeš da prepoznaš tehniku — FOMO, osećaj hitnosti, pozivanje na poznatu ličnost — ona više ne deluje na tebe. To je cela zaštita.",
       "learn": {
-        "lead": "Spot the trick.",
-        "body": "Ads persuade with named techniques: FOMO (fear of missing out), social proof (\"everyone's buying it\"), exaggeration, influencer endorsement, emotional appeal and urgency. Real campaigns often stack several of these at once to slip past your judgement."
+        "lead": "Prepoznaj tehniku.",
+        "body": "Oglasi koriste poznate tehnike ubeđivanja: FOMO (strah da ćeš nešto propustiti), društveni dokaz („svi to kupuju“), preuveličavanje, preporuku influensera, apelovanje na emocije i osećaj hitnosti. Stvarne kampanje često kombinuju nekoliko ovih tehnika kako bi zaobišle tvoju sposobnost prosuđivanja."
       },
-      "trayLabel": "TECHNIQUE FRAMES",
+      "trayLabel": "OKVIRI TEHNIKA",
       "hints": {
-        "start": "Drag a technique frame onto the poster it fits — or tap the frame, then tap the poster.",
-        "allDone": "All six framed — the letters spell a password. Click the computer to type it in.",
-        "correct": "Correct — a letter surfaced. Keep framing the rest.",
-        "wrong": "That technique does not match this ad. Frame returned — try another.",
-        "wrongSpecific": "Not quite. Look again: {clue}"
+        "start": "Prevuci okvir sa tehnikom na poster kojem odgovara — ili dodirni okvir, a zatim poster.",
+        "allDone": "Svih šest je uokvireno — slova čine lozinku. Klikni na računar da je uneseš.",
+        "correct": "Tačno — pojavilo se jedno slovo. Nastavi da uokviruješ ostale.",
+        "wrong": "Ta tehnika ne odgovara ovom oglasu. Okvir je vraćen — pokušaj ponovo.",
+        "wrongSpecific": "Nije baš tako. Pogledaj ponovo: {trag}"
       },
-      "dragHint": "Drag onto its poster",
-      "count": "Framed {matched} / {total}",
+      "dragHint": "Prevuci na odgovarajući poster",
+      "count": "Uokvireno {upareno} / {ukupno}",
       "posters": [
         {
-          "headline": "ONLY 3 LEFT IN STOCK!",
-          "sub": "Don't miss out!",
+          "headline": "JOŠ SAMO 3 KOMADA NA STANJU!",
+          "sub": "Ne propusti priliku!",
           "letter": "F"
         },
         {
-          "headline": "Over 2 MILLION people already bought this!",
-          "sub": "Join the crowd.",
+          "headline": "Više od 2 MILIONA ljudi je ovo već kupilo!",
+          "sub": "Pridruži se masi.",
           "letter": "O"
         },
         {
-          "headline": "Lose 10kg in just 3 DAYS — guaranteed miracle!",
-          "sub": "Results not typical.",
+          "headline": "Izgubi 10 kg za samo 3 DANA — čudesan rezultat zagarantovan!",
+          "sub": "Rezultati nisu tipični.",
           "letter": "O"
         },
         {
-          "headline": "As seen on @StarCeleb's page — she LOVES it!",
-          "sub": "#ad",
+          "headline": "Pogledajte na stranici @StarCeleb — ona OBOŽAVA ovaj proizvod!",
+          "sub": "#oglas",
           "letter": "L"
         },
         {
-          "headline": "Don't let your family down.",
-          "sub": "They deserve better.",
+          "headline": "Nemoj izneveriti svoju porodicu.",
+          "sub": "Zaslužuju bolje.",
           "letter": "E"
         },
         {
-          "headline": "OFFER ENDS IN 04:59 — buy NOW before it's gone!",
-          "sub": "Tick, tock…",
+          "headline": "PONUDA ISTIČE ZA 04:59 — KUPI ODMAH pre nego što nestane!",
+          "sub": "Tik-tak…",
           "letter": "D"
         }
       ],
       "techniques": {
         "fomo": "FOMO",
-        "social": "Social Proof",
-        "exagg": "Exaggeration",
-        "influencer": "Influencer Endorsement",
-        "emotional": "Emotional Appeal",
-        "urgency": "Urgency"
+        "social": "Društveni dokaz",
+        "exagg": "Preuveličavanje",
+        "influencer": "Preporuka influensera",
+        "emotional": "Apelovanje na emocije",
+        "urgency": "Osećaj hitnosti"
       },
       "passwordLearn": {
-        "lead": "Named and disarmed.",
-        "body": "Six posters, six tricks. The letters they hid, read left to right, are the exit password — proof you saw through every one."
+        "lead": "Prepoznata i onesposobljena.",
+        "body": "Šest postera, šest tehnika. Slova koja su skrivali, pročitana sleva nadesno, čine lozinku za izlaz — dokaz da si prozreo/la svaku od njih."
       },
-      "openComputer": "Use the computer →",
-      "closeComputer": "Close the screen",
-      "termBar": "PERSUASION-LAB · EXIT TERMINAL",
-      "termPrompt": "> Enter the password formed by the revealed letters:",
-      "termLocked": "Frame all six posters to reveal the password letters.",
-      "termPlaceholder": "type the password",
-      "termInputLabel": "Exit password",
-      "unlock": "Unlock →",
-      "pwError": "Access denied. Read the glowing letters in poster order and try again.",
-      "hiddenLetter": "hidden letter {letter}",
-      "evidence": "Every poster used a named persuasion trick — FOMO, social proof, urgency and more."
+      "openComputer": "Koristi računar →",
+      "closeComputer": "Zatvori ekran",
+      "termBar": "LABORATORIJA UBEĐIVANJA · IZLAZNI TERMINAL",
+      "termPrompt": "> Unesi lozinku sastavljenu od otkrivenih slova:",
+      "termLocked": "Uokviri svih šest postera da otkriješ slova lozinke.",
+      "termPlaceholder": "unesi lozinku",
+      "termInputLabel": "Lozinka za izlaz",
+      "unlock": "Otključaj →",
+      "pwError": "Pristup odbijen. Pročitaj svetleća slova redom kojim se pojavljuju na posterima i pokušaj ponovo.",
+      "hiddenLetter": "skriveno slovo {slovo}",
+      "evidence": "Svaki poster koristio je prepoznatljivu tehniku ubeđivanja — FOMO, društveni dokaz, osećaj hitnosti i još mnogo toga."
     },
     "final": {
-      "intro": "{friend}'s thumb is on \"Buy Now\" for {product}. Present the evidence you gathered and talk them down.",
-      "solvedTitle": "{friend} is convinced — close the deal",
-      "solvedText": "Present your case and end the run.",
+      "intro": "prijatelj} je prstom na dugmetu „Kupi odmah“ za {proizvod}. Predoči mu prikupljene dokaze i odgovori ga od kupovine.",
+      "solvedTitle": "{prijatelj} je ubeđen — zaključi ponudu",
+      "solvedText": "Predoči svoje argumente i završi igru.",
       "replies": {
-        "ev-links": "“Wait… the link wasn't even the real store? I didn't look at the address.”",
-        "ev-roulette": "“The spin-to-win wheel was rigged? I thought I got lucky…”",
-        "ev-influencer": "“So that influencer was paid and the photo was AI? It looked so real.”",
-        "ev-algo": "“They targeted me on purpose? That's why it kept following me around.”",
-        "ev-ads": "“Hidden €59 a month?! The ad only ever showed me the 90% off.”",
-        "ev-persuasion": "“'Today only', '2 left'… it was all just pressure tricks on me.”",
-        "generic": "“Huh… okay, that one actually makes me stop and think.”"
+        "ev-links": "„Čekaj… link čak nije vodio do prave prodavnice? Nisam ni pogledao/la adresu.“",
+        "ev-roulette": "„Točak „zavrti i osvoji“ je bio namešten? Mislio/la sam da sam imao/la sreće…“",
+        "ev-influencer": "„Znači, influenser je bio plaćen, a fotografija je napravljena pomoću veštačke inteligencije? Delovala je tako stvarno.“",
+        "ev-algo": "„Namerno su me targetirali? Zato mi se stalno pojavljivalo.“",
+        "ev-ads": "„Skrivenih 59 € mesečno?! Oglas mi je sve vreme prikazivao samo popust od 90%.“",
+        "ev-persuasion": "„Samo danas“, „još 2 komada“… sve su to bili trikovi za stvaranje pritiska na mene.“",
+        "generic": "„Hm… u redu, zbog ovoga ću ipak zastati i razmisliti.“"
       },
       "pushback": [
-        "“Come on, it's 90% off — TODAY ONLY. If I wait, it's gone!”",
-        "“Okay, but… everybody in the group chat is buying it. It has 12k reviews!”",
-        "“Alright, alright, maybe. But the timer says 4 minutes left…”"
+        "„Ma daj, 90% je sniženo — SAMO DANAS. Ako sačekam, ponuda nestaje!“",
+        "„Dobro, ali… svi iz grupe to kupuju. Ima 12 hiljada recenzija!“",
+        "„Dobro, dobro, možda. Ali tajmer pokazuje da su ostala još 4 minuta…“"
       ],
-      "convincedLine": "“…okay. I'm not buying it. Thanks for stopping me — I nearly clicked it.”",
+      "convincedLine": "„…u redu. Neću kupiti. Hvala što si me zaustavio/la — zamalo da kliknem.“",
       "fallbackArguments": [
-        "The store link is a look-alike domain, not the official shop.",
-        "A 90%-off \"today only\" price is the classic too-good-to-be-true bait.",
-        "The real cost is hidden — a small \"subscription\" buried in the fine print.",
-        "Countdown timers and \"only 2 left\" are manufactured pressure, not facts."
+        "Link prodavnice vodi na domen koji oponaša pravi, a ne na zvanični veb-sajt prodavnice.",
+        "Cena snižena 90% uz poruku „samo danas“ klasičan je mamac koji deluje predobro da bi bio istinit.",
+        "Pravi trošak je skriven — mala „pretplata“ navedena sitnim slovima u uslovima.",
+        "Odbrojavanje i poruke poput „još samo 2 komada“ veštački stvaraju pritisak, nisu činjenice."
       ],
-      "moodHyped": "HYPED",
-      "moodConvinced": "convinced",
-      "doubtLabel": "{friend}'s doubt",
-      "doubtConvinced": "· convinced",
-      "deckTitle": "Make your case",
-      "deckFallback": "No field evidence on record — argue from the fundamentals below.",
-      "deckEvidence": "These are the clues you collected across the Physical Internet.",
-      "deckSelect": "Select the arguments to present ({chosen}/{required} minimum).",
-      "actionsReady": "Strong case. Hit them with it.",
-      "actionsNeed": "Stack at least {required} arguments before you confront {friend}.",
-      "convinceButton": "🛑 Convince {friend}",
-      "learnLabel": "The real defence:",
-      "learnPre": "no single trick catches every scam — slowing down does. Before you buy, stack the checks: read the ",
+      "moodHyped": "UZBUĐEN",
+      "moodConvinced": "ubeđen",
+      "doubtLabel": "sumnja {prijatelja}",
+      "doubtConvinced": "· ubeđen",
+      "deckTitle": "Iznesi svoje argumente",
+      "deckFallback": "Nema zabeleženih dokaza iz igre — koristi osnovne činjenice u nastavku kao argumente.",
+      "deckEvidence": "Ovo su tragovi koje si prikupio/la širom Fizičkog interneta.",
+      "deckSelect": "Izaberi argumente koje želiš da izneseš ({izabrano}/{potrebno} minimum).",
+      "actionsReady": "Imaš jake argumente. Iznesi ih.",
+      "actionsNeed": "Izaberi najmanje {potrebno} argumenata pre nego što se suočiš sa {prijateljem}.",
+      "convinceButton": "🛑 Ubedi {prijatelja}",
+      "learnLabel": "Prava zaštita:",
+      "learnPre": "nijedan trik sam po sebi ne otkriva svaku prevaru — ali usporavanje pomaže. Pre nego što kupiš, proveri sve: pročitaj",
       "learnUrl": "URL",
-      "learnMid1": ", look for the ",
-      "learnDisclosure": "disclosure",
-      "learnMid2": ", find the ",
-      "learnPrice": "true price",
-      "learnMid3": ", and name the ",
-      "learnPressure": "pressure tactic",
-      "learnPost": ". Evidence beats urgency every time."
+      "learnMid1": ", traži oznaku",
+      "learnDisclosure": "oznaku",
+      "learnMid2": ", pronađi",
+      "learnPrice": "pravu cenu",
+      "learnMid3": ", i prepoznaj",
+      "learnPressure": "tehniku stvaranja pritiska",
+      "learnPost": ". Dokazi su uvek važniji od osećaja hitnosti."
     }
   }
 }

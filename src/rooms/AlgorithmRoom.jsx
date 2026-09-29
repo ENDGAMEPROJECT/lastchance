@@ -99,7 +99,7 @@ const TRAY = [
 const COL_KIND = ['demographic', 'follows', 'insecurity']
 
 export default function AlgorithmRoom({ node }) {
-  const { completeRoom, addEvidence, addItem } = useGame()
+  const { completeRoom, addEvidence } = useGame()
   const t = useT()
   const [phase, setPhase] = useState('door') // 'door' | 'unlock' | 'choice' | 'equations'
   const [solved, setSolved] = useState(false)
@@ -175,8 +175,7 @@ export default function AlgorithmRoom({ node }) {
       id: 'ev-algo',
       label: t('rooms.algorithm.evidence', { friend: NARRATIVE.friend }),
     })
-    // Reward: the Truth Flashlight the player will need in the Ads Corridor.
-    addItem(ITEMS.truthLight)
+    // RoomFrame awards the Truth Flashlight when the player collects it.
     setSolved(true)
   }
 

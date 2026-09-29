@@ -10,7 +10,9 @@
   gap: 12px;
 }
 .rc-topbar { display: grid; grid-template-columns: 420px 1fr; align-items: center; gap: 36px; }
-.rc-topbar > .chip { justify-self: start; }
+.rc-topbar-actions { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.rc-topbar-actions > .chip { margin: 0; }
+.rc-debug-skip { flex: none; }
 .rc-wheel-heading { text-align: center; }
 .rc-wheel-name { color: var(--magenta); font-family: var(--font-display); font-size: 0.9rem; letter-spacing: 0.08em; }
 .rc-wheel-pitch { margin: 5px 0 0; font-size: 1.05rem; line-height: 1.35; color: var(--amber); text-wrap: balance; }

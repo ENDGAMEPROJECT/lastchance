@@ -89,18 +89,21 @@ export const NODES = [
 export const ITEMS = {
   emojiCard: {
     id: 'emojiCard',
+    image: 'objects/emoji-decoding-card.png',
     name: 'Emoji Decoding Card',
     icon: '🔑',
     desc: 'A key that maps emojis to letters. Use it to read the sponsorship sticky-notes in Influencer Avenue.',
   },
   dataReport: {
     id: 'dataReport',
+    image: 'objects/max-report.png',
     name: 'Data Report on Max',
     icon: '📄',
     desc: 'A dossier of the data brokers hold on Max. The highlighted digits open the Algorithm Control Room.',
   },
   truthLight: {
     id: 'truthLight',
+    image: 'objects/flashlight.png',
     name: 'Truth Flashlight',
     icon: '🔦',
     desc: 'Reveals the fine print hidden behind the glossy posters in the Ads Corridor.',

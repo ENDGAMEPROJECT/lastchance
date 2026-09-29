@@ -1,5 +1,6 @@
 /* Roulette investigation display text. Structural rules live in game/rouletteData.js. */
 export default {
+  "debugSkip": "Skip roulette (debug)",
   "intro": "Spin each wheel. Spot the trick and explain your choice.",
   "wheelProgress": "Wheel {n} / {total}",
   "spinAgain": "Spin again",

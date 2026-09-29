@@ -2,7 +2,7 @@ import { useMemo, useState, useCallback, useRef, useEffect } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { ITEMS } from '../game/gameData.js'
-import { settings } from '../game/settings.js'
+import { DEBUG, settings } from '../game/settings.js'
 import { bgUrl } from '../game/assets.js'
 import { playSound, preloadSound } from '../game/sound.js'
 import RoomFrame from '../components/RoomFrame.jsx'
@@ -396,7 +396,7 @@ function DoorPage({ type, ambiguous, t }) {
 }
 
 export default function LinkDistrict({ node }) {
-  const { completeRoom, addItem, addEvidence, setLinkRound } = useGame()
+  const { completeRoom, addEvidence, setLinkRound } = useGame()
   const t = useT()
   const cfg = settings.linkDistrict
   const [round, setRound] = useState(0)
@@ -492,6 +492,21 @@ export default function LinkDistrict({ node }) {
     setFlags((f) => ({ ...f, [id]: !f[id] }))
   }
 
+  function finishRoom() {
+    addEvidence({ id: 'ev-links', label: 'The “deal” link was a look-alike domain, not the real store.' })
+    setPhase('done')
+  }
+
+  function skipRoomForDebug() {
+    if (!DEBUG || phase === 'done') return
+    clearTimeout(bgTimer.current)
+    setAdvancing(false)
+    setOutgoing(null)
+    setReviewing(false)
+    setBg(bgUrl('link.gif'))
+    finishRoom()
+  }
+
   function submitJustify() {
     const chosen = Object.keys(flags).filter((k) => flags[k])
     const missing = CORRECT_FLAGS.filter((id) => !chosen.includes(id))
@@ -500,9 +515,7 @@ export default function LinkDistrict({ node }) {
       playSound('wrong.mp3')
       return setJustifyErr(wrong.length ? t('rooms.link.justifyErrWrong') : t('rooms.link.justifyErrMissing'))
     }
-    addItem(ITEMS.emojiCard)
-    addEvidence({ id: 'ev-links', label: 'The “deal” link was a look-alike domain, not the real store.' })
-    setPhase('done')
+    finishRoom()
   }
 
   const touched = Object.values(blocked).some(Boolean)
@@ -518,6 +531,12 @@ export default function LinkDistrict({ node }) {
       reward={ITEMS.emojiCard}
       onContinue={() => completeRoom(node.id)}
     >
+      {DEBUG && phase !== 'done' && (
+        <button type="button" className="btn btn-ghost btn-sm ld-debug-skip"
+          onMouseDown={(event) => event.preventDefault()} onClick={skipRoomForDebug}>
+          {t('rooms.link.debugSkip')}
+        </button>
+      )}
       {phase === 'block' && (
         <div className="ld-room fade-in">
           <div className="ld-crossroad">

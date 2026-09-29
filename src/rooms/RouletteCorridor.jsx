@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
+import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
 import { ROULETTE_WHEELS as WHEELS, ROULETTE_SEGMENTS, rouletteResult, correctRouletteVerdict, correctRouletteAnswer } from '../game/rouletteData.js'
 import RoomFrame from '../components/RoomFrame.jsx'
@@ -111,11 +112,27 @@ export default function RouletteCorridor({ node }) {
     }
   }
 
-  function finish() {
-    if (finished.current || checkedCount !== WHEELS.length) return
+  function finishRoom() {
+    if (finished.current) return
     finished.current = true
     addEvidence({ id: 'ev-roulette', label: t('rooms.roulette.investigation.evidence') })
     setSolved(true)
+  }
+
+  function finish() {
+    if (checkedCount !== WHEELS.length) return
+    finishRoom()
+  }
+
+  function skipRoomForDebug() {
+    if (!DEBUG || finished.current) return
+    Object.values(timers.current).forEach(clearTimeout)
+    Object.keys(timers.current).forEach((id) => { delete timers.current[id] })
+    setSpinning({})
+    setShopOpen(false)
+    stopSound('roulette_spin.mp3')
+    stopSound('roulette_win.mp3')
+    finishRoom()
   }
 
   return (
@@ -130,7 +147,15 @@ export default function RouletteCorridor({ node }) {
             <span className="rc-wheel-name">{wheelText(active, 'name')}</span>
             <h3 className="rc-wheel-pitch">{wheelText(active, 'rules')}</h3>
           </div>
-          <span className="chip">{t('rooms.roulette.investigation.wheelProgress', { n: WHEELS.findIndex((w) => w.id === active) + 1, total: WHEELS.length })}</span>
+          <div className="rc-topbar-actions">
+            <span className="chip">{t('rooms.roulette.investigation.wheelProgress', { n: WHEELS.findIndex((w) => w.id === active) + 1, total: WHEELS.length })}</span>
+            {DEBUG && !solved && (
+              <button type="button" className="btn btn-ghost btn-sm rc-debug-skip"
+                onMouseDown={preventFocusScroll} onClick={skipRoomForDebug}>
+                {t('rooms.roulette.investigation.debugSkip')}
+              </button>
+            )}
+          </div>
         </div>
         <div className="rc-play">
           <div className="rc-machine">

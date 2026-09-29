@@ -1,5 +1,6 @@
 /* Link District (Puzzle 1 · Fraudulent Links) strings. */
 export default {
+  debugSkip: "Skip doors and final test (debug)",
   intro:
     "A router with three doors. Each is a link claiming to be a store. Shut the fraudulent ones.",
   solvedTitle: "Link District cleared · Emoji Decoding Card obtained 🔑",

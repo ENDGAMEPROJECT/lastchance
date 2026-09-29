@@ -5,4 +5,4 @@ const BASE = import.meta.env.BASE_URL
 
 /* URL for an image in public/bg, or a public subfolder such as link-district. */
 export const bgUrl = (name) =>
-   name.startsWith('link-district/') ? `${BASE}${name}` : `${BASE}bg/${name}`
+   (name.startsWith('link-district/') || name.startsWith('objects/')) ? `${BASE}${name}` : `${BASE}bg/${name}`

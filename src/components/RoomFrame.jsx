@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { NARRATIVE } from '../game/gameData.js'
+import { bgUrl } from '../game/assets.js'
 import './RoomFrame.css'
 
 const NODE_ICON = {
@@ -24,7 +25,7 @@ const NODE_ICON = {
    - node: current node (title/subtitle/accent)
    - intro: the task explanation, shown on the briefing card
    - bgImage: optional background image slot
-   - solved / solvedTitle / solvedText / onContinue: the cleared bar
+   - solved / solvedText / reward / onContinue: the cleared overlay and collect step
    - children: the interactive puzzle UI (mounted only after Begin)
 */
 export default function RoomFrame({
@@ -33,17 +34,46 @@ export default function RoomFrame({
   bgImage,
   dimBackground = false,
   solved = false,
-  solvedTitle,
   solvedText,
   reward = null,
   onContinue,
   children,
 }) {
   const t = useT()
-  const { startRoom } = useGame()
+  const { startRoom, addItem, hasItem, screen } = useGame()
   const accent = node?.accent || 'cyan'
   const vars = { friend: NARRATIVE.friend }
   const [started, setStarted] = useState(false)
+  const collectRef = useRef(null)
+  const continueRef = useRef(null)
+  const collected = !!reward && hasItem(reward.id)
+  const canContinue = !reward || collected
+  const rewardName = reward ? t(`items.${reward.id}.name`, vars) : ''
+
+  useEffect(() => {
+    if (!started || !solved || screen !== 'room') return
+    const target = canContinue ? continueRef.current : collectRef.current
+    target?.focus({ preventScroll: true })
+  }, [started, solved, screen, canContinue])
+
+  function collectReward() {
+    if (reward && !hasItem(reward.id)) addItem(reward)
+  }
+
+  function keepFocusInOverlay(event) {
+    if (event.key !== 'Tab') return
+    const buttons = [...event.currentTarget.querySelectorAll('button:not(:disabled)')]
+    if (!buttons.length) return
+    const first = buttons[0]
+    const last = buttons[buttons.length - 1]
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault()
+      last.focus({ preventScroll: true })
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault()
+      first.focus({ preventScroll: true })
+    }
+  }
 
   // Titles and "Puzzle N ·" subtitles are metadata clutter inside a room — the
   // map already names each district. Rooms show only their task brief + icon.
@@ -76,32 +106,55 @@ export default function RoomFrame({
         <>
           {/* The task brief is shown once on the entry briefing card; during
               play the puzzle speaks for itself, so no persistent header. */}
-          <div className="room-body swap-in">{children}</div>
+          <div className="room-body swap-in" inert={solved ? '' : undefined} aria-hidden={solved || undefined}>{children}</div>
 
           {solved && (
-            <div className="room-cleared-overlay fade-in">
-              <div className="room-cleared panel clip panel-glow-green">
-                <div className="cleared-left">
-                  <span className="cleared-badge">✓</span>
-                  <div>
-                    <div className="cleared-title">{solvedTitle || t('roomframe.clearedDefaultTitle')}</div>
-                    <div className="cleared-text muted t-sm">{solvedText || t('roomframe.clearedDefaultText')}</div>
-                  </div>
+            <div className="room-cleared-overlay" onKeyDown={keepFocusInOverlay}>
+              <section className="room-cleared" role="dialog" aria-modal="true"
+                aria-labelledby="room-cleared-title" aria-describedby="room-cleared-description">
+                <div className="cleared-summary">
+                  <span className="cleared-badge" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" /></svg>
+                  </span>
+                  <h2 id="room-cleared-title" className="cleared-title">{t('roomframe.clearedDefaultTitle')}</h2>
+                  <p id="room-cleared-description" className="cleared-text">
+                    {solvedText || t('roomframe.clearedDefaultText')}
+                  </p>
                 </div>
 
                 {reward && (
-                  <div className="cleared-reward">
-                    <span className="reward-icon" aria-hidden>{reward.icon}</span>
+                  <section className={`cleared-reward ${collected ? 'is-collected' : ''}`} aria-labelledby="cleared-reward-name">
+                    <div className="reward-art" aria-hidden="true"
+                      style={reward.image ? { backgroundImage: `url("${bgUrl(reward.image)}")` } : undefined}>
+                      {!reward.image && <span className="reward-icon">{reward.icon}</span>}
+                    </div>
                     <div className="reward-info">
                       <div className="reward-eyebrow">{t('roomframe.rewardLabel')}</div>
-                      <div className="reward-name">{t(`items.${reward.id}.name`, vars)}</div>
-                      <div className="reward-desc t-xs">{t(`items.${reward.id}.desc`, vars)}</div>
+                      <h3 id="cleared-reward-name" className="reward-name">{rewardName}</h3>
+                      <p className="reward-desc">{t(`items.${reward.id}.desc`, vars)}</p>
+                      <button ref={collectRef} type="button" className="btn btn-amber reward-collect"
+                        disabled={collected} onClick={collectReward}
+                        onMouseDown={(event) => event.preventDefault()}>
+                        {collected && <svg className="reward-collected-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>}
+                      <span>{collected ? <> {rewardName} {t('roomframe.collected')} </> : t('roomframe.collect')}</span> 
+                      </button>
+                      <p className="reward-confirmation" role="status">
+                        {collected ? <>{rewardName} {t('roomframe.addedToBag')} </> : ''}
+                      </p>
                     </div>
-                  </div>
+                  </section>
                 )}
 
-                <button className="btn btn-green" onClick={onContinue}>{t('common.continue')}</button>
-              </div>
+                {canContinue && (
+                  <div className="cleared-actions">
+                    <button ref={continueRef} type="button" className="btn btn-green"
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => { if (!reward || hasItem(reward.id)) onContinue?.() }}>
+                      {t('common.continue')}
+                    </button>
+                  </div>
+                )}
+              </section>
             </div>
           )}
         </>

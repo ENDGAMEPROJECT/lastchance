@@ -108,7 +108,7 @@ function influencerImageUrl(id, locale) {
 }
 
 export default function InfluencerAvenue({ node }) {
-  const { completeRoom, addItem, addEvidence, hasItem } = useGame()
+  const { completeRoom, addEvidence, hasItem } = useGame()
   const { locale } = useI18n()
   const t = useT()
 
@@ -270,8 +270,7 @@ export default function InfluencerAvenue({ node }) {
       setVerifyErr(t('rooms.influencer.stage2.errWrong'))
       return
     }
-    // Both stages cleared — grant the rewards and mark solved.
-    addItem(ITEMS.dataReport)
+    // Both stages cleared: log evidence; RoomFrame handles reward collection.
     addEvidence({
       id: 'ev-influencer',
       label: t('rooms.influencer.evidenceLabel'),
