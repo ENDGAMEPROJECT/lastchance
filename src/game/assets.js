@@ -5,4 +5,8 @@ const BASE = import.meta.env.BASE_URL
 
 /* URL for an image in public/bg, or a public subfolder such as link-district. */
 export const bgUrl = (name) =>
-   (name.startsWith('link-district/') || name.startsWith('objects/')) ? `${BASE}${name}` : `${BASE}bg/${name}`
+   (name.startsWith('link-district/') || name.startsWith('influencers/')) ? `${BASE}${name}` : `${BASE}bg/${name}`
+
+/* URL for any file in public/ by its full sub-path (e.g. 'ads-corridor/x.png',
+   'persuasion-lab/fomo.png') — no implied 'bg/' prefix. */
+export const assetUrl = (path) => `${BASE}${path}`

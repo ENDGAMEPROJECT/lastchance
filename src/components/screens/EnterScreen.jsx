@@ -63,7 +63,7 @@ export default function EnterScreen() {
         </div>
 
         <div className="intro-body">
-          <div className="intro-card panel clip panel-glow-cyan">
+          <div className="intro-card panel panel-glow-cyan">
             <h3 className="accent-cyan">{t('enter.toolsTitle')}</h3>
             <p className="muted">{t('enter.toolsIntro', vars)}</p>
             <div className="intro-mission">
@@ -74,12 +74,18 @@ export default function EnterScreen() {
 
           <div className="intro-steps">
             <div className="intro-step panel">
-              <b>{t('hud.map')}</b>
-              <span>{t('enter.mapText', vars)}</span>
+              <span className="intro-step-icon" aria-hidden>{t('hud.map').split(' ')[0]}</span>
+              <div className="intro-step-body">
+                <b>{t('hud.map').split(' ').slice(1).join(' ')}</b>
+                <span>{t('enter.mapText', vars)}</span>
+              </div>
             </div>
             <div className="intro-step panel">
-              <b>{t('hud.bag')}</b>
-              <span>{t('enter.bagText', vars)}</span>
+              <span className="intro-step-icon" aria-hidden>{t('hud.bag').split(' ')[0]}</span>
+              <div className="intro-step-body">
+                <b>{t('hud.bag').split(' ').slice(1).join(' ')}</b>
+                <span>{t('enter.bagText', vars)}</span>
+              </div>
             </div>
           </div>
         </div>
