@@ -377,14 +377,21 @@ export default function AlgorithmRoom({ node }) {
                   ))}
 
                   <span className="ar-op eq">=</span>
+                  <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.4rem"
+                  }}>
+                    <div className={`ar-ad ${stepSolved ? 'active' : ''}`}
+                      style={{
+                        backgroundImage: `url("${import.meta.env.BASE_URL}algorithm-room/${row.id}.png")`,
+                        backgroundSize: "cover"
+                      }}
+                    >
+                      {/* <span className="ar-ad-icon">{row.ad.icon}</span> */}
+                      <span className="ar-ad-label">{t(`rooms.algorithm.rows.${row.id}.ad`)}</span>
 
-                  <div className={`ar-ad ${stepSolved ? 'active' : ''}`} 
-                  style={{ 
-                    backgroundImage: `url("${import.meta.env.BASE_URL}algorithm-room/${row.id}.png")`, 
-                    backgroundSize: "cover"}}
-                  >
-                    {/* <span className="ar-ad-icon">{row.ad.icon}</span> */}
-                    <span className="ar-ad-label">{t(`rooms.algorithm.rows.${row.id}.ad`)}</span>
+                    </div>
                     {stepSolved && <span className="ar-ad-flag">{t('rooms.algorithm.equations.adFlag')}</span>}
                   </div>
                 </div>
@@ -409,23 +416,23 @@ export default function AlgorithmRoom({ node }) {
                     {wrongFlash && <div className="banner wrong shake ar-wrong">{t('rooms.algorithm.equations.wrongHint')}</div>}
                   </div>
                 ) : (
-                    <section
-                      className="ar-feedback panel panel-glow-cyan fade-in"
-                      aria-labelledby="ar-feedback-title"
-                      aria-live="polite"
+                  <section
+                    className="ar-feedback panel panel-glow-cyan fade-in"
+                    aria-labelledby="ar-feedback-title"
+                    aria-live="polite"
+                  >
+                    <h3 id="ar-feedback-title">{t('rooms.algorithm.equations.feedbackTitle')}</h3>
+                    <p id="ar-feedback-lesson" className="ar-feedback-lesson">{t(`rooms.algorithm.rows.${row.id}.feedbackLesson`)}</p>
+                    <button
+                      className="btn btn-cyan"
+                      onMouseDown={(event) => event.preventDefault()}
+                      onClick={() => setStep((current) => current + 1)}
                     >
-                      <h3 id="ar-feedback-title">{t('rooms.algorithm.equations.feedbackTitle')}</h3>
-                      <p id="ar-feedback-lesson" className="ar-feedback-lesson">{t(`rooms.algorithm.rows.${row.id}.feedbackLesson`)}</p>
-                      <button
-                        className="btn btn-cyan"
-                        onMouseDown={(event) => event.preventDefault()}
-                        onClick={() => setStep((current) => current + 1)}
-                      >
-                        {step < ROWS.length - 1
-                          ? t('rooms.algorithm.equations.nextBtn')
-                          : t('rooms.algorithm.equations.lastBtn', { friend: NARRATIVE.friend })}
-                      </button>
-                    </section>
+                      {step < ROWS.length - 1
+                        ? t('rooms.algorithm.equations.nextBtn')
+                        : t('rooms.algorithm.equations.lastBtn', { friend: NARRATIVE.friend })}
+                    </button>
+                  </section>
                 )}
               </div>
             )
