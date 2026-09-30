@@ -186,7 +186,7 @@ export default function HUD() {
                   className={`bag-item panel ${it.id === 'dataReport' ? 'bag-item-report' : ''} ${deniedItem === it.id ? 'bag-item-denied' : ''}`}
                   onClick={() => useItem(it)}
                 >
-                  <div className="bag-icon">{it.icon}</div>
+                  <div><img className="bag-icon" src={it.image}></img></div>
                   <div>
                     <div className="bag-name">{t(`items.${it.id}.name`, { friend: NARRATIVE.friend })}</div>
                     <div className="bag-desc muted t-xs">{t(`items.${it.id}.desc`, { friend: NARRATIVE.friend })}</div>
