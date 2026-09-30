@@ -6,6 +6,7 @@ import { playSound } from '../game/sound.js'
 import { useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
+import MaxReport from './MaxReport.jsx'
 import './AlgorithmRoom.css'
 
 /* PUZZLE 3 — Personalization / the targeting algorithm.
@@ -380,6 +381,7 @@ export default function AlgorithmRoom({ node }) {
                   <div style={{
                     display: "flex",
                     flexDirection: "column",
+                    justifyContent: "center",
                     gap: "0.4rem"
                   }}>
                     <div className={`ar-ad ${stepSolved ? 'active' : ''}`}
@@ -441,6 +443,8 @@ export default function AlgorithmRoom({ node }) {
             <div className="ar-final scene-scroll fade-in">
               <div className="ar-term-screen panel clip panel-glow-cyan">
                 <div className="ar-dw-title">{t('rooms.algorithm.equations.terminalTitle')}</div>
+                <MaxReport />
+
                 <div className="ar-profile">
                   <div className="ar-profile-title">{t('rooms.algorithm.equations.profileTitle')}</div>
                   <p>

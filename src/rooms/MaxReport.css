@@ -1,0 +1,57 @@
+.max-report {
+  --loop-start: 3.8s;
+  display: block;
+  width: 100%;
+  flex: none;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+}
+/* Entrance runs once. Only the data continues looping after all panels appear. */
+.max-report-block {
+  animation: max-report-enter .9s ease-out var(--enter) both;
+}
+.max-report-bar {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation:
+    max-report-bar-in .9s ease-out var(--enter) backwards,
+    max-report-bars var(--duration, 4s) ease-in-out var(--loop-start) infinite;
+}
+.max-report-meter {
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation:
+    max-report-meter-in .9s ease-out var(--enter) backwards,
+    max-report-meters var(--duration, 5s) ease-in-out var(--loop-start) infinite;
+}
+/* Keep radar vertices and their dots together as the profile changes. */
+.max-report-radar {
+  transform-origin: 0 0;
+  animation:
+    max-report-radar-in .9s ease-out var(--enter) backwards,
+    max-report-radar 6s ease-in-out var(--loop-start) infinite;
+}
+.max-report-dot {
+  animation:
+    max-report-dot-in .9s ease-out var(--enter) backwards,
+    max-report-dot var(--duration, 3s) ease-in-out var(--loop-start) infinite;
+}
+.max-report-ring {
+  animation: max-report-ring var(--duration, 8s) ease-in-out var(--loop-start) infinite;
+}
+.max-report-scan { animation: max-report-scan 8s linear var(--loop-start) infinite; }
+@keyframes max-report-enter { from { opacity: 0; } to { opacity: 1; } }
+@keyframes max-report-bar-in { from { transform: scaleY(.05); } to { transform: scaleY(1); } }
+@keyframes max-report-meter-in { from { transform: scaleX(.05); } to { transform: scaleX(1); } }
+@keyframes max-report-radar-in { from { transform: scale(.2); } to { transform: scale(1); } }
+@keyframes max-report-dot-in { from { transform: translateX(-12px); } to { transform: translateX(0); } }
+@keyframes max-report-bars { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.45); } }
+@keyframes max-report-meters { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(.45); } }
+@keyframes max-report-radar { 0%, 100% { transform: scale(1); } 50% { transform: scale(.75, .85); } }
+@keyframes max-report-dot { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(var(--travel)); } }
+@keyframes max-report-ring { 0%, 100% { stroke-dashoffset: 0; } 50% { stroke-dashoffset: 35; } }
+@keyframes max-report-scan { to { transform: translateY(390px); } }
+@media (prefers-reduced-motion: reduce) {
+  .max-report * { animation: none; }
+}

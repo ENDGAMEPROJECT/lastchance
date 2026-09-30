@@ -347,7 +347,8 @@
   color: var(--green);
   animation: pulse-glow 1.6s ease-in-out infinite;
   width: 100%;
-  margin: 0 auto
+  margin: 0 auto;
+  text-align: center;
 }
 
 /* ---------- shared tray ---------- */
