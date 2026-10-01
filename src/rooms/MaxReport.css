@@ -1,57 +1,190 @@
 .max-report {
-  --loop-start: 3.8s;
   display: block;
   width: 100%;
   flex: none;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 2 / 1;
   border-radius: 12px;
   overflow: hidden;
+  background: #02051a;
+  /* How long the loading screen covers the dashboard before modules power on. */
+  --load: 3.3s;
 }
-/* Entrance runs once. Only the data continues looping after all panels appear. */
-.max-report-block {
-  animation: max-report-enter .9s ease-out var(--enter) both;
+
+/* ---------- text (static: never animated) ---------- */
+.max-report text { font-family: var(--font-mono); fill: #8fd3ff; font-size: 13px; letter-spacing: .02em; }
+.max-report .mr-h { font-family: var(--font-display); font-size: 15px; font-weight: 700; fill: #d8f6ff; letter-spacing: .06em; }
+.max-report .mr-h-s { font-size: 11px; }
+.max-report .mr-h-l { font-size: 21px; letter-spacing: .1em; }
+.max-report .mr-v { fill: #eafcff; }
+.max-report .mr-big { font-family: var(--font-display); font-size: 20px; font-weight: 700; }
+.max-report .mr-xs { font-size: 11px; }
+.max-report .mr-xxs { font-size: 9px; }
+.max-report .mr-green { fill: #3dffa8; }
+.max-report .mr-magenta { fill: #f07bff; }
+
+/* ---------- shared timing: --d delay, --dur period ---------- */
+/* Panels boot up one after another (once), with a short power-on flicker. */
+.mr-panel { animation: mr-boot .8s ease-out calc(var(--d, 0s) + var(--load)) both; }
+@keyframes mr-boot {
+  0% { opacity: 0; }
+  30% { opacity: .8; }
+  40% { opacity: .25; }
+  100% { opacity: 1; }
 }
-.max-report-bar {
+
+/* A bright packet that travels around each panel frame. */
+.mr-flow {
+  fill: none;
+  stroke: #b8f8ff;
+  stroke-width: 2;
+  stroke-dasharray: 5 95;
+  animation: mr-flow var(--dur) linear calc(var(--d) + var(--load)) infinite;
+}
+@keyframes mr-flow { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+
+/* Bars rise in, then keep "processing" up and down on their own clock. */
+.mr-bar {
   transform-box: fill-box;
   transform-origin: center bottom;
   animation:
-    max-report-bar-in .9s ease-out var(--enter) backwards,
-    max-report-bars var(--duration, 4s) ease-in-out var(--loop-start) infinite;
+    mr-bar-in .9s cubic-bezier(.2, .8, .3, 1) calc(var(--d) + var(--load)) backwards,
+    mr-bar var(--dur) ease-in-out calc(var(--d) + var(--load) + .9s) infinite alternate;
 }
-.max-report-meter {
+@keyframes mr-bar-in { from { transform: scaleY(0); } }
+@keyframes mr-bar { to { transform: scaleY(var(--lo)); } }
+
+.mr-hbar {
   transform-box: fill-box;
   transform-origin: left center;
   animation:
-    max-report-meter-in .9s ease-out var(--enter) backwards,
-    max-report-meters var(--duration, 5s) ease-in-out var(--loop-start) infinite;
+    mr-hbar-in 1.2s cubic-bezier(.2, .8, .3, 1) calc(var(--d) + var(--load)) backwards,
+    mr-hbar var(--dur) ease-in-out calc(var(--d) + var(--load) + 1.2s) infinite alternate;
 }
-/* Keep radar vertices and their dots together as the profile changes. */
-.max-report-radar {
-  transform-origin: 0 0;
+@keyframes mr-hbar-in { from { transform: scaleX(0); } }
+@keyframes mr-hbar { to { transform: scaleX(var(--lo)); } }
+
+/* Line graphs draw left-to-right (data then morphs via SMIL). */
+.mr-line {
+  stroke-dasharray: 1 1;
+  animation: mr-draw 1.6s ease-out calc(var(--d) + var(--load)) backwards;
+}
+@keyframes mr-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+.mr-draw-in { transform-box: fill-box; transform-origin: center; animation: mr-grow 1.2s ease-out calc(var(--d) + var(--load)) backwards; }
+@keyframes mr-grow { from { transform: scale(0); opacity: 0; } }
+
+/* Read-out cursors and scanners. */
+.mr-cursor { opacity: .55; animation: mr-move-x var(--dur) linear calc(var(--d) + var(--load)) infinite; }
+.mr-scanx { opacity: .7; animation: mr-move-x var(--dur) ease-in-out calc(var(--d) + var(--load)) infinite alternate; }
+@keyframes mr-move-x { from { transform: translateX(0); } to { transform: translateX(var(--w)); } }
+.mr-scany { animation: mr-move-y var(--dur) linear calc(var(--d) + var(--load)) infinite; }
+@keyframes mr-move-y { from { transform: translateY(0); } to { transform: translateY(var(--h)); } }
+
+/* Circular indicators fill, then breathe. --v is the value (0–100). */
+.mr-arc {
+  stroke-dashoffset: calc(100 - var(--v));
   animation:
-    max-report-radar-in .9s ease-out var(--enter) backwards,
-    max-report-radar 6s ease-in-out var(--loop-start) infinite;
+    mr-arc-in 1.4s cubic-bezier(.2, .8, .3, 1) calc(var(--d) + var(--load)) backwards,
+    mr-arc var(--dur) ease-in-out calc(var(--d) + var(--load) + 1.4s) infinite alternate;
 }
-.max-report-dot {
-  animation:
-    max-report-dot-in .9s ease-out var(--enter) backwards,
-    max-report-dot var(--duration, 3s) ease-in-out var(--loop-start) infinite;
+@keyframes mr-arc-in { from { stroke-dashoffset: 100; } }
+@keyframes mr-arc { to { stroke-dashoffset: calc(100 - var(--v) + 8); } }
+
+.mr-spin { transform-box: fill-box; transform-origin: center; animation: mr-spin var(--dur) linear infinite; }
+.mr-spin0 { transform-origin: 0 0; animation: mr-spin var(--dur) linear infinite; }
+.mr-rev { animation-direction: reverse; }
+@keyframes mr-spin { to { transform: rotate(360deg); } }
+
+.mr-ripple {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mr-ripple var(--dur) ease-out calc(var(--d) + var(--load)) infinite;
 }
-.max-report-ring {
-  animation: max-report-ring var(--duration, 8s) ease-in-out var(--loop-start) infinite;
+@keyframes mr-ripple {
+  0% { opacity: .9; transform: scale(.3); }
+  70%, 100% { opacity: 0; transform: scale(1.6); }
 }
-.max-report-scan { animation: max-report-scan 8s linear var(--loop-start) infinite; }
-@keyframes max-report-enter { from { opacity: 0; } to { opacity: 1; } }
-@keyframes max-report-bar-in { from { transform: scaleY(.05); } to { transform: scaleY(1); } }
-@keyframes max-report-meter-in { from { transform: scaleX(.05); } to { transform: scaleX(1); } }
-@keyframes max-report-radar-in { from { transform: scale(.2); } to { transform: scale(1); } }
-@keyframes max-report-dot-in { from { transform: translateX(-12px); } to { transform: translateX(0); } }
-@keyframes max-report-bars { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.45); } }
-@keyframes max-report-meters { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(.45); } }
-@keyframes max-report-radar { 0%, 100% { transform: scale(1); } 50% { transform: scale(.75, .85); } }
-@keyframes max-report-dot { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(var(--travel)); } }
-@keyframes max-report-ring { 0%, 100% { stroke-dashoffset: 0; } 50% { stroke-dashoffset: 35; } }
-@keyframes max-report-scan { to { transform: translateY(390px); } }
+
+/* Flowing dashes along network edges and orbits. */
+.mr-dash { fill: none; stroke-dasharray: 4 6; animation: mr-dash var(--dur) linear infinite; }
+@keyframes mr-dash { to { stroke-dashoffset: -20; } }
+
+.mr-wave { animation: mr-wave var(--dur) linear infinite; }
+@keyframes mr-wave { to { transform: translateX(var(--p)); } }
+
+.mr-blink { animation: mr-blink var(--dur, 2s) steps(1) calc(var(--d, 0s) + var(--load)) infinite; }
+@keyframes mr-blink { 0%, 100% { opacity: 1; } 50% { opacity: .2; } }
+.mr-flick { animation: mr-flick var(--dur) steps(1) calc(var(--d) + var(--load)) infinite; }
+@keyframes mr-flick { 0%, 100% { opacity: .9; } 40% { opacity: .25; } 55% { opacity: .9; } 70% { opacity: .5; } }
+.mr-twinkle { animation: mr-twinkle var(--dur) ease-in-out calc(var(--d) + var(--load)) infinite alternate; }
+@keyframes mr-twinkle { from { opacity: .15; } to { opacity: 1; } }
+.mr-hex { animation: mr-hex var(--dur) ease-in-out calc(var(--d) + var(--load)) infinite alternate; fill-opacity: .15; }
+@keyframes mr-hex { to { fill-opacity: .85; } }
+.mr-pulse { animation: mr-pulse var(--dur) ease-in-out calc(var(--d) + var(--load)) infinite alternate; }
+@keyframes mr-pulse { from { opacity: .55; } to { opacity: 1; } }
+/* Interest tiles light up in turn, like the system cycling through them. */
+.mr-tile { opacity: 0; animation: mr-tile var(--dur) ease-in-out calc(var(--d) + var(--load)) infinite; }
+@keyframes mr-tile { 0%, 100% { opacity: 0; } 15%, 35% { opacity: 1; } 55% { opacity: 0; } }
+
+.mr-streak { opacity: .45; animation: mr-streak var(--dur) ease-in-out calc(var(--d) + var(--load)) infinite; }
+@keyframes mr-streak { 0% { transform: translateX(0); } 22%, 100% { transform: translateX(1900px); } }
+
 @media (prefers-reduced-motion: reduce) {
-  .max-report * { animation: none; }
+  .max-report * { animation: none !important; }
+  .max-report .mr-loader, .max-report .mr-boot-fx { display: none; }
 }
+
+/* Max's hologram: fades in after the bay boots, then breathes with a rare flicker. */
+.mr-holo { animation: mr-holo-in 1.2s ease-out calc(var(--load) + .3s) backwards, mr-holo 6s ease-in-out calc(var(--load) + 1.5s) infinite; }
+@keyframes mr-holo-in { 0% { opacity: 0; } 40% { opacity: .7; } 50% { opacity: .2; } 100% { opacity: 1; } }
+@keyframes mr-holo {
+  0%, 100% { opacity: 1; }
+  45% { opacity: .82; }
+  70% { opacity: 1; }
+  71% { opacity: .6; }
+  72% { opacity: 1; }
+}
+
+/* ---------- boot: full-screen loading screen ---------- */
+/* Covers the dashboard for --load; modules then power on at --d + --load. */
+.mr-loader { opacity: 0; animation: mr-loader var(--load) linear var(--d) both; }
+@keyframes mr-loader {
+  0% { opacity: 0; visibility: visible; }
+  6% { opacity: 1; }
+  12% { opacity: .3; }
+  16%, 86% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+.max-report .mr-ld { font-family: var(--font-display); font-weight: 700; letter-spacing: .25em; fill: #d8f8ff; }
+.max-report .mr-ld-c { fill: #36e6ff; opacity: .75; animation: mr-glitch-a .38s steps(1) infinite; }
+.max-report .mr-ld-m { fill: #e04cff; opacity: .75; animation: mr-glitch-b .46s steps(1) infinite; }
+.mr-ld-main { animation: mr-ld-flick .9s steps(1) infinite; }
+@keyframes mr-glitch-a {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-7px, 0); }
+  45% { transform: translate(5px, -2px); }
+  70% { transform: translate(-3px, 2px); }
+  85% { transform: translate(9px, 0); }
+}
+@keyframes mr-glitch-b {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(7px, 2px); }
+  50% { transform: translate(-5px, 0); }
+  75% { transform: translate(3px, -2px); }
+}
+@keyframes mr-ld-flick { 0%, 100% { opacity: 1; } 30% { opacity: .55; } 34% { opacity: 1; } 62% { opacity: .8; } 64% { opacity: .2; } 66% { opacity: 1; } }
+.mr-ld-bar { transform-box: fill-box; transform-origin: left center; animation: mr-ld-bar var(--load) cubic-bezier(.5, 0, .4, 1) var(--d) both; }
+@keyframes mr-ld-bar { 0% { transform: scaleX(0); } 35% { transform: scaleX(.42); } 55% { transform: scaleX(.48); } 100% { transform: scaleX(1); } }
+.mr-ld-sweep { animation: mr-move-y 1.6s linear infinite; }
+.mr-ld-tear { opacity: 0; animation: mr-tear var(--dur) steps(1) var(--dl) infinite; }
+@keyframes mr-tear {
+  0%, 100% { opacity: 0; transform: translateX(0); }
+  10% { opacity: .9; transform: translateX(-8px); }
+  18% { opacity: .5; transform: translateX(6px); }
+  24% { opacity: 0; }
+}
+
+/* Whole-screen interference while the system boots, then it clears. */
+.mr-boot-fx { animation: mr-fx-out .6s ease-out calc(var(--load) + 2.1s) forwards; pointer-events: none; }
+@keyframes mr-fx-out { to { opacity: 0; visibility: hidden; } }
+.mr-fx-roll { animation: mr-move-y 1.4s linear infinite; }

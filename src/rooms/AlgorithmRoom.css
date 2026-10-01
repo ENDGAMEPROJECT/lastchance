@@ -381,8 +381,15 @@
   color: var(--cyan);
   text-shadow: 0 0 10px rgba(22, 242, 255, 0.5);
   margin-bottom: 6px;
+  margin-top: 0.8rem
 }
-.ar-profile p { margin: 0; color: var(--text); font-size: 0.84rem; line-height: 1.35; }
+.ar-profile p { 
+  margin: 0; 
+  color: var(--text); 
+  font-size: 0.84rem; 
+  line-height: 1.35; 
+  margin-bottom: 0.8rem;
+}
 .ar-profile b { color: var(--cyan); }
 .ar-final-lesson {
   display: flex;
@@ -512,8 +519,11 @@
 }
 .ar-dw-title {
   font-family: var(--font-display);
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   letter-spacing: 0.18em;
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+  text-align: center;
   color: var(--cyan);
   text-shadow: 0 0 10px rgba(22, 242, 255, 0.5);
 }
