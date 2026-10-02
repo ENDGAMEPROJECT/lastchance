@@ -81,7 +81,7 @@ export const NODES = [
     component: 'PersuasionRoom',
     accent: 'magenta',
   },
-  // The finale is now the post-test conversation (see PosttestScreen),
+  // The finale is now the post-test conversation (see FinalDecision),
   // reached when the last district is cleared or the countdown ends.
 ]
 

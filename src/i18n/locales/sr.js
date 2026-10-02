@@ -1,11 +1,5 @@
 /* AUTO-GENERATED from the translation Google Sheet by `npm run i18n:import`. Do not edit by hand. */
 export default {
-  "debug": {
-    "posttestInTime": "Test · 5:00",
-    "posttestTimeout": "Test · 0:00",
-    "posttestInTimeDescription": "Ponovo pokreni završni test sa svim rešenim zagonetkama i preostalih 5 minuta",
-    "posttestTimeoutDescription": "Ponovo pokreni završni test nakon isteka vremena, sa nerešenim zagonetkama"
-  },
   "common": {
     "continue": "Nastavi →",
     "begin": "▶ Uđi unutra",
@@ -87,9 +81,9 @@ export default {
     "clearedDefaultTitle": "Okrug završen",
     "clearedDefaultText": "Odlično. Sledeći čvor je otključan na mapi.",
     "rewardLabel": "Dodato u tvoju Torbu — trebaće ti kasnije",
-    "collect": "collect",
-    "collected": "collected",
-    "addedToBag": "added to Bag"
+    "collect": "prikupi",
+    "collected": "prikupljeno",
+    "addedToBag": "dodato u torbu"
   },
   "end": {
     "win": {
@@ -160,22 +154,22 @@ export default {
           {
             "k": "A",
             "text": "Kompanija ne može da zaradi ako prodaje NovaPad X za $49 umesto za $600. Bankrotirala bi, dakle, ponuda je lažna.",
-            "correct": "NETAČNO"
+            "correct": false
           },
           {
             "k": "B",
             "text": "Odbrojavanje od 30 minuta je samo taktika stvaranja pritiska kako bi te uspaničili i naveli da kupiš bez razmišljanja.",
-            "correct": "TAČNO"
+            "correct": true
           },
           {
             "k": "C",
             "text": "Prvo pogledaj komentare. Ako ljudi u komentarima kažu da je prevara, nemoj da kupuješ.",
-            "correct": "NETAČNO"
+            "correct": false
           },
           {
             "k": "D",
             "text": "Za $49 je verovatno samo neka jeftina, pokvarena kopija.",
-            "correct": "NETAČNO"
+            "correct": false
           }
         ],
         "why": "Upravo tako — odbrojavanje je veštački stvoren osećaj hitnosti, osmišljen da te navede da reaguješ pre nego što razmisliš.",
@@ -187,22 +181,22 @@ export default {
           {
             "k": "A",
             "text": "Tvoj telefon nas prisluškuje. Juče smo pričali o tabletima, a aplikacija je koristila mikrofon.",
-            "correct": "NETAČNO"
+            "correct": false
           },
           {
             "k": "B",
             "text": "Da li njen profil ima verifikacionu oznaku? Ako nema, to je lažni nalog koji se predstavlja kao ona.",
-            "correct": "NETAČNO"
+            "correct": false
           },
           {
             "k": "C",
             "text": "Tvoj telefon sigurno ima virus ili špijunski softver koji ti prikazuje baš ove oglase.",
-            "correct": "NETAČNO"
+            "correct": false
           },
           {
             "k": "D",
             "text": "Algoritam platforme te prati. Prosledio je tvoju istoriju pretrage direktno mrežama koje plasiraju agresivne oglase.",
-            "correct": "TAČNO"
+            "correct": true
           }
         ],
         "why": "Tako je — nije u pitanju mikrofon niti neka magija. Tvoja istorija pretrage je analizirana i prodata oglasnim mrežama.",
@@ -214,22 +208,22 @@ export default {
           {
             "k": "A",
             "text": "Pogledaj adresnu traku. URL glasi tech-bargalns.com — umesto slova „i“ nalazi se slovo „l“. To je lažni domen.",
-            "correct": "TAČNO"
+            "correct": true
           },
           {
             "k": "B",
             "text": "Proveri ikonicu katanca. Ako nema https://, veza nije šifrovana, što znači da je u pitanju prevara.",
-            "correct": "NETAČNO"
+            "correct": false
           },
           {
             "k": "C",
             "text": "Nemoj unositi podatke kartice. Ako koristiš Apple Pay ili PayPal, 100% si bezbedan/na.",
-            "correct": "NETAČNO"
+            "correct": false
           },
           {
             "k": "D",
             "text": "Skroluj do dna stranice. Ako nema teksta „Copyright 2026“, znaćeš da je sajt lažan.",
-            "correct": "NETAČNO"
+            "correct": false
           }
         ],
         "why": "Tako je — čitaj URL slovo po slovo. „bargalns“ sa slovom „l“ je domen koji oponaša pravi, a ne domen prave prodavnice.",
@@ -253,7 +247,8 @@ export default {
       "eyebrow": "Konačna odluka",
       "debugTag": "Post-test",
       "title": "{Prijatelj} se predomišlja",
-      "opening": "Vau, odbrojavanje je stiglo do poslednja 2 minuta! Gledam u podatke svoje kartice, ali sve kroz šta smo upravo prošli tera me da se predomislim. Dobro — nisam siguran/na da treba da kupim… pomozi mi.",
+      "opening": "Вратио си се. Још гледам страницу за плаћање. Пре него што купим, реци ми шта си сазнао о овој понуди.",
+      "convinced": "Убедио си ме. Сада разумем знаке упозорења и како је ова понуда покушала да утиче на мене. Нећу купити таблет.",
       "responses": [
         "Razumem te, ali pritisak deluje toliko stvarno dok gledam kako vreme otkucava. I nije samo tajmer — stalno razmišljam o tome da je ponuda došla od jedne od mojih omiljenih kreatorki. Ali i dalje mi nije jasno kako mi se uopšte pojavila.",
         "Čoveče, način na koji se sve odvija iza kulisa ovih aplikacija je neverovatan. Ali na kraju krajeva, i dalje gledam ovu stranicu za plaćanje i pokušavam da odlučim da li je bezbedno da unesem svoje podatke."
@@ -261,9 +256,7 @@ export default {
       "endingFriend": "Uh, dao/la si mi mnogo toga o čemu treba da razmislim, ali moram odmah da odlučim — tajmer samo što nije stigao do nule. Na osnovu svega što smo pogledali, reci mi direktno: da li da zatvorim ovu karticu i zaštitim svoje podatke ili da rizikujem i kupim?",
       "choiceClose": "Zatvori karticu. Ovo je prevara.",
       "choiceBuy": "Klikni na kupovinu. Hajde da rizikujemo.",
-      "convinced": "Ubedio si me. Sada razumem znake upozorenja i kako je ova ponuda pokušala da utiče na mene. Neću kupiti tablet.",
-
-      "retryFriend": "Nisi mi dao dovoljno razloga da ne kupim tablet, pa ću ga kupiti. Još ima vremena da pokušaš ponovo: objasni mi ono u šta me još nisi ubedio.",
+      "retryFriend": "Ниси ми дао довољно разлога да не купим таблет, па ћу га купити. Још има времена да покушаш поново: објасни ми оно у шта ме још ниси убедио.",
       "retryAgain": "Pokušaj ponovo da ubediš {prijatelja}",
       "retryGiveUp": "Pusti {prijatelju} da kupi tablet"
     },
@@ -530,7 +523,6 @@ export default {
   },
   "rooms": {
     "link": {
-      "debugSkip": "Preskoči vrata i završni test (debug)",
       "intro": "Ruter sa troja vrata. Svaka su link koji vodi do prodavnice. Zatvori lažna.",
       "solvedTitle": "Okrug sa linkovima završen · Dobijena kartica za dešifrovanje emodžija 🔑",
       "solvedText": "Blokirao/la si sve lažne linkove i naučio/la šta čini URL sumnjivim. Kartica otključava oznake u Aveniji influensera.",
@@ -664,13 +656,13 @@ export default {
         "cta": "Get them now",
         "brand": "Magnum Shop",
         "text": "Offer valid from 19 to 29 september"
-      }
+      },
+      "debugSkip": "Прескочи врата и завршни тест (debug)"
     },
     "roulette": {
       "spin": "🎰 Vrti",
       "spinning": "Vrtenje…",
       "investigation": {
-        "debugSkip": "Preskoči rulet (debug)",
         "intro": "Zavrti svaki točak. Prepoznaj tehniku i objasni svoj izbor.",
         "wheelProgress": "Točak {n} / {ukupno}",
         "solvedTitle": "Koridor završen — tvrdnje proverene",
@@ -778,7 +770,8 @@ export default {
               "lostOnce": "„Do 8 poena“ znači da moram dobiti najmanje 8 poena."
             }
           }
-        }
+        },
+        "debugSkip": "Прескочи рулете (debug)"
       }
     },
     "influencer": {
@@ -803,6 +796,9 @@ export default {
         "learnLabel": "Zašto je važno:",
         "learn": "sponzorisani sadržaj mora biti jasno označen. #oglas, poklonjeni proizvod, partnerski link ili kod za popust ukazuju na oglašavanje — čak i kada je predstavljeno kao lična preporuka.",
         "hint": "Dodirni ili prevuci oznaku, a zatim je postavi na odgovarajuću objavu.",
+        "commentsTitle": "Коментари",
+        "commentCount": "Коментари: {count}",
+        "likeComment": "Означи да ти се свиђа коментар корисника {name}",
         "selectPost": "Select Post",
         "answerProgress": "{count} / {total}"
       },
@@ -910,39 +906,6 @@ export default {
             "Received the product for free",
             "No payment, no discount code",
             "“gifted” disclosure in the corner"
-          ]
-        },
-        {
-          "caption": "Okay, a mini haul because I was so excited about these discoveries! The ceramics are from a lovely small workshop, and I’m deeply in love with this book. Found some truly great pieces. Everything is genuinely just what I wanted to buy. #legithaul #smallbatch #curatedfinds #SpainFinds",
-          "product": "Cercamics",
-          "username": "RealSarahShares ",
-          "followers": "285K ",
-          "comments": [
-            {
-              "username": "artisan_wear",
-              "text": "Those dishes are gorgeous! Where did you get them?"
-            },
-            {
-              "username": "needle_ninja",
-              "text": "Love that scarf. Perfect for autumn."
-            },
-            {
-              "username": "glowfuel_official",
-              "text": "Genuine finds are the best! Looks so cosy. 💜"
-            },
-            {
-              "username": "martahealthy",
-              "text": "Finally, an actual haul! I want that plant!"
-            },
-            {
-              "username": "gymtom",
-              "text": "Wait, so is it still Spain-based? Need recommendations!"
-            }
-          ],
-          "clues": [
-            "",
-            "",
-            ""
           ]
         }
       ],
@@ -1238,63 +1201,63 @@ export default {
       }
     },
     "ads": {
-      "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
-      "solvedTitle": "Corridor cleared — you read the fine print",
-      "solvedText": "The exit hisses open — you logged the hidden €59/month auto-renewal as evidence. Ads shouting “free”, “you won” or “$0 today” usually bury the real cost in tiny print, so always read  what you're agreeing to before you tap.",
-      "pickup": "You pick up the Truth Flashlight 🔦",
-      "torchCharging": "🔦 Charging…",
-      "torchOn": "🔦 Flashlight ON",
-      "torchOff": "🔦 Truth Flashlight",
-      "hintCharging": "The cheap torch flickers awake — bait ads love to waste a moment of your time…",
-      "hintOn": "Sweep the beam across the dark wall — each poster lights up and reveals the truth.",
-      "hintOff": "Switch it on, then sweep the beam over the posters to reveal what they really say.",
-      "glossyCta": "TAP TO CLAIM →",
-      "fineprint": "* terms & conditions apply",
-      "truthTag": "THE TRUTH",
-      "codeFragment": "hidden letter:",
-      "shineRevealed": "✓ Revealed",
-      "shineReady": "🔦 Shine light here",
-      "shineOff": "Turn on the light first",
-      "codeAssembled": "ACCESS CODE assembled:",
+      "intro": "Neonski servisni tunel oblijepljen sa četiri svetleća reklamna postera. Deluju velikodušno. Nisu.",
+      "solvedTitle": "Koridor očišćen — pročitali ste sitna slova",
+      "solvedText": "Izlaz se šišteći otvara — zabeležili ste skrivenu automatsku obnovu pretplate od 59 € mesečno kao dokaz. Oglasi koji viču „besplatno“, „osvojili ste“ ili „0 $ danas“ obično kriju stvarnu cenu u sitnim slovima, zato uvek pročitajte na šta pristajete pre nego što kliknete.",
+      "pickup": "Uzimate baterijsku lampu Istine 🔦",
+      "torchCharging": "🔦 Punjenje…",
+      "torchOn": "🔦 Lampa UKLJUČENA",
+      "torchOff": "🔦 Baterijska lampa Istine",
+      "hintCharging": "Jeftina lampa treperi i pali se — mamljivi oglasi vole da vam uzmu trenutak vremena…",
+      "hintOn": "Pređite snopom svetlosti preko mračnog zida — svaki poster će zasvetleti i otkriti istinu.",
+      "hintOff": "Uključite je, zatim pređite snopom preko postera da otkrijete šta zaista piše.",
+      "glossyCta": "DODIRNI DA PREUZMEŠ →",
+      "fineprint": "* primenjuju se odredbe i uslovi",
+      "truthTag": "ISTINA",
+      "codeFragment": "skriveno slovo:",
+      "shineRevealed": "✓ Otkriveno",
+      "shineReady": "🔦 Osvetli ovde",
+      "shineOff": "Prvo uključi svetlo",
+      "codeAssembled": "PRISTUPNI KOD sastavljen:",
       "codeLetters": "S-A-V-E",
-      "exitLabel": "Enter the 4-letter code to open the exit",
+      "exitLabel": "Unesi kod od 4 slova da otvoriš izlaz",
       "exitPlaceholder": "????",
-      "exitButton": "Open exit →",
-      "errCode": "That is not the code. Illuminate all four posters and read the letters hiding in the fine print.",
-      "learnLabel": "Read the fine print.",
-      "learn": "Ads shouting “free”, “you won” or “$0 today” usually hide the real cost in tiny print below — always read what you are actually agreeing to before you tap.",
-      "evidence": "Behind the “free trial” ad was a hidden €59/month auto-renewing subscription.",
+      "exitButton": "Otvori izlaz →",
+      "errCode": "To nije kod. Osvetlite sva četiri postera i pročitajte slova skrivena u sitnim slovima.",
+      "learnLabel": "Pročitajte sitna slova.",
+      "learn": "Oglasi koji viču „besplatno“, „osvojili ste“ ili „0 $ danas“ obično kriju stvarnu cenu u sitnim slovima ispod — uvek pročitajte na šta zapravo pristajete pre nego što kliknete.",
+      "evidence": "Iza oglasa „besplatna proba“ krila se pretplata od 59 € mesečno koja se automatski obnavlja.",
       "posters": [
         {
-          "glossyTitle": "FREE 30-DAY TRIAL!",
-          "glossyBody": "Try NovaCloud Premium — $0 today!",
+          "glossyTitle": "BESPLATNA PROBA OD 30 DANA!",
+          "glossyBody": "Isprobajte NovaCloud Premium — 0 $ danas!",
           "glossyBadge": "$0",
-          "truth": "After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.",
-          "truthTitle": "Automatic renovation",
+          "truth": "Nakon mesec dana, automatski se obnavlja po ceni od 59 € mesečno. Otkazivanje zahteva poziv telefonskoj liniji koja radi 2 sata nedeljno.",
+          "truthTitle": "Automatska obnova",
           "letter": "A"
         },
         {
-          "glossyTitle": "🎉 CONGRATULATIONS!",
-          "glossyBody": "You've WON a €1,000 gift card! Tap to claim.",
+          "glossyTitle": "🎉 ČESTITAMO!",
+          "glossyBody": "OSVOJILI ste poklon-karticu od 1.000 €! Dodirnite da je preuzmete.",
           "glossyBadge": "€1,000",
-          "truth": "This 'prize' harvests your personal data and card details.",
-          "truthTitle": "👎🏼 You did NOT win anything",
+          "truth": "Ova „nagrada“ prikuplja vaše lične podatke i podatke kartice.",
+          "truthTitle": "👎🏼 NISTE ništa osvojili",
           "letter": "S"
         },
         {
-          "glossyTitle": "📈 GET RICH QUICK!",
-          "glossyBody": "Turn €100 into €10,000 in one week — guaranteed!",
+          "glossyTitle": "📈 BRZO SE OBOGATITE!",
+          "glossyBody": "Pretvorite 100 € u 10.000 € za nedelju dana — garantovano!",
           "glossyBadge": "×100",
-          "truth": "Every euro you “invest” is gone, and the sky-high “returns” on screen are fake.",
-          "truthTitle": "A pure scam",
+          "truth": "Svaki evro koji „uložite“ je izgubljen, a ogromni „prinosi“ na ekranu su lažni.",
+          "truthTitle": "Čista prevara",
           "letter": "E"
         },
         {
-          "glossyTitle": "🛡️ VIRUS DETECTED!",
-          "glossyBody": "Your device may be at risk — download SecureNow FREE!",
-          "glossyBadge": "FREE",
-          "truth": "The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad.",
-          "truthTitle": "You didn´t have a virus... but now you do",
+          "glossyTitle": "🛡️ VIRUS OTKRIVEN!",
+          "glossyBody": "Vaš uređaj je možda ugrožen — preuzmite SecureNow BESPLATNO!",
+          "glossyBadge": "BESPLATNO",
+          "truth": "Upozorenje je lažno, a „antivirus“ JE zlonamerni softver. Prava upozorenja nikad ne dolaze iz oglasa.",
+          "truthTitle": "Niste imali virus... ali ga sada imate",
           "letter": "V"
         }
       ]
@@ -1372,53 +1335,12 @@ export default {
       "pwError": "Pristup odbijen. Pročitaj svetleća slova redom kojim se pojavljuju na posterima i pokušaj ponovo.",
       "hiddenLetter": "skriveno slovo {slovo}",
       "evidence": "Svaki poster koristio je prepoznatljivu tehniku ubeđivanja — FOMO, društveni dokaz, osećaj hitnosti i još mnogo toga."
-    },
-    "final": {
-      "intro": "prijatelj} je prstom na dugmetu „Kupi odmah“ za {proizvod}. Predoči mu prikupljene dokaze i odgovori ga od kupovine.",
-      "solvedTitle": "{prijatelj} je ubeđen — zaključi ponudu",
-      "solvedText": "Predoči svoje argumente i završi igru.",
-      "replies": {
-        "ev-links": "„Čekaj… link čak nije vodio do prave prodavnice? Nisam ni pogledao/la adresu.“",
-        "ev-roulette": "„Točak „zavrti i osvoji“ je bio namešten? Mislio/la sam da sam imao/la sreće…“",
-        "ev-influencer": "„Znači, influenser je bio plaćen, a fotografija je napravljena pomoću veštačke inteligencije? Delovala je tako stvarno.“",
-        "ev-algo": "„Namerno su me targetirali? Zato mi se stalno pojavljivalo.“",
-        "ev-ads": "„Skrivenih 59 € mesečno?! Oglas mi je sve vreme prikazivao samo popust od 90%.“",
-        "ev-persuasion": "„Samo danas“, „još 2 komada“… sve su to bili trikovi za stvaranje pritiska na mene.“",
-        "generic": "„Hm… u redu, zbog ovoga ću ipak zastati i razmisliti.“"
-      },
-      "pushback": [
-        "„Ma daj, 90% je sniženo — SAMO DANAS. Ako sačekam, ponuda nestaje!“",
-        "„Dobro, ali… svi iz grupe to kupuju. Ima 12 hiljada recenzija!“",
-        "„Dobro, dobro, možda. Ali tajmer pokazuje da su ostala još 4 minuta…“"
-      ],
-      "convincedLine": "„…u redu. Neću kupiti. Hvala što si me zaustavio/la — zamalo da kliknem.“",
-      "fallbackArguments": [
-        "Link prodavnice vodi na domen koji oponaša pravi, a ne na zvanični veb-sajt prodavnice.",
-        "Cena snižena 90% uz poruku „samo danas“ klasičan je mamac koji deluje predobro da bi bio istinit.",
-        "Pravi trošak je skriven — mala „pretplata“ navedena sitnim slovima u uslovima.",
-        "Odbrojavanje i poruke poput „još samo 2 komada“ veštački stvaraju pritisak, nisu činjenice."
-      ],
-      "moodHyped": "UZBUĐEN",
-      "moodConvinced": "ubeđen",
-      "doubtLabel": "sumnja {prijatelja}",
-      "doubtConvinced": "· ubeđen",
-      "deckTitle": "Iznesi svoje argumente",
-      "deckFallback": "Nema zabeleženih dokaza iz igre — koristi osnovne činjenice u nastavku kao argumente.",
-      "deckEvidence": "Ovo su tragovi koje si prikupio/la širom Fizičkog interneta.",
-      "deckSelect": "Izaberi argumente koje želiš da izneseš ({izabrano}/{potrebno} minimum).",
-      "actionsReady": "Imaš jake argumente. Iznesi ih.",
-      "actionsNeed": "Izaberi najmanje {potrebno} argumenata pre nego što se suočiš sa {prijateljem}.",
-      "convinceButton": "🛑 Ubedi {prijatelja}",
-      "learnLabel": "Prava zaštita:",
-      "learnPre": "nijedan trik sam po sebi ne otkriva svaku prevaru — ali usporavanje pomaže. Pre nego što kupiš, proveri sve: pročitaj",
-      "learnUrl": "URL",
-      "learnMid1": ", traži oznaku",
-      "learnDisclosure": "oznaku",
-      "learnMid2": ", pronađi",
-      "learnPrice": "pravu cenu",
-      "learnMid3": ", i prepoznaj",
-      "learnPressure": "tehniku stvaranja pritiska",
-      "learnPost": ". Dokazi su uvek važniji od osećaja hitnosti."
     }
+  },
+  "debug": {
+    "posttestInTimeDescription": "Поново покрени завршни тест са свим решеним загонеткама и преосталих 5 минута",
+    "posttestInTime": "Тест · 5:00",
+    "posttestTimeoutDescription": "Поново покрени завршни тест након истека времена, са нерешеним загонеткама",
+    "posttestTimeout": "Тест · 0:00"
   }
 }

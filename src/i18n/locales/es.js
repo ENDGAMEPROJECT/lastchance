@@ -1,11 +1,5 @@
 /* AUTO-GENERATED from the translation Google Sheet by `npm run i18n:import`. Do not edit by hand. */
 export default {
-  "debug": {
-    "posttestInTime": "Test · 5:00",
-    "posttestTimeout": "Test · 0:00",
-    "posttestInTimeDescription": "Reiniciar el post-test con todos los puzles completados y 5 minutos restantes",
-    "posttestTimeoutDescription": "Reiniciar el post-test con el tiempo agotado y puzles sin terminar"
-  },
   "common": {
     "continue": "Continue →",
     "begin": "▶ Step inside",
@@ -89,7 +83,7 @@ export default {
     "rewardLabel": "Added to your Bag — you’ll need it next",
     "collect": "collect",
     "collected": "collected",
-    "addedToBag": "added to Bag"
+    "addedToBag": "added to bag"
   },
   "end": {
     "win": {
@@ -253,7 +247,8 @@ export default {
       "eyebrow": "The Final Call",
       "debugTag": "Post-test",
       "title": "{friend} is having second thoughts",
-      "opening": "Wow, the countdown is down to the last 2 minutes! I'm staring at my card info, but everything we just went through has me second-guessing myself. Okay — I'm not sure I should buy it… help me out.",
+      "opening": "Has vuelto. Sigo mirando la página de pago. Antes de comprar, cuéntame qué has aprendido sobre esta oferta.",
+      "convinced": "Me has convencido. Ahora entiendo las señales de alerta y cómo esta oferta intentaba influir en mí. No voy a comprar la tablet.",
       "responses": [
         "I hear you, but the pressure feels so real with that clock ticking right in front of me. And it's not just the timer — I keep thinking it came from one of my favourite creators. But there's still the mystery of how it ended up on my radar.",
         "Man, the way everything's handled behind the scenes on these apps is wild. But at the end of the day, I'm still staring at this checkout page trying to decide if it's safe to type my details in."
@@ -261,8 +256,6 @@ export default {
       "endingFriend": "Ugh, you've given me a lot to process, but I need to choose right now — the timer's about to hit zero. Based on everything we looked at, give it to me straight: do I close this tab and protect my data, or take the risk and buy it?",
       "choiceClose": "Close the tab. It’s a scam.",
       "choiceBuy": "Hit buy. Let’s risk it.",
-      "convinced": "Me has convencido. Ahora entiendo las señales de alerta y cómo esta oferta intentaba influir en mí. No voy a comprar la tablet.",
-
       "retryFriend": "No me has dado suficientes razones para no comprarla, así que voy a comprar la tablet. Todavía puedes intentarlo de nuevo: explícame los puntos sobre los que aún no me has convencido.",
       "retryAgain": "Try again to convince {friend}",
       "retryGiveUp": "Let {friend} buy the tablet"
@@ -530,7 +523,6 @@ export default {
   },
   "rooms": {
     "link": {
-      "debugSkip": "Saltar puertas y prueba final (debug)",
       "intro": "A router with three doors. Each is a link claiming to be a store. Shut the fraudulent ones.",
       "solvedTitle": "Link District cleared · Emoji Decoding Card obtained 🔑",
       "solvedText": "You blocked every fake and learned what makes a URL suspicious. The card unlocks the labels in Influencer Avenue.",
@@ -664,13 +656,13 @@ export default {
         "cta": "Get them now",
         "brand": "Magnum Shop",
         "text": "Offer valid from 19 to 29 september"
-      }
+      },
+      "debugSkip": "Saltar puertas y test final (debug)"
     },
     "roulette": {
       "spin": "🎰 Spin",
       "spinning": "Spinning…",
       "investigation": {
-        "debugSkip": "Saltar ruleta (debug)",
         "intro": "Spin each wheel. Spot the trick and explain your choice.",
         "wheelProgress": "Wheel {n} / {total}",
         "solvedTitle": "Corridor cleared — claims checked",
@@ -778,7 +770,8 @@ export default {
               "lostOnce": "“Up to 8 points” means I must receive at least 8 points."
             }
           }
-        }
+        },
+        "debugSkip": "Saltar ruletas (debug)"
       }
     },
     "influencer": {
@@ -794,10 +787,6 @@ export default {
         "verified": "Verified",
         "viewPublication": "View Publication",
         "followersSuffix": "followers",
-        "viewPublication": "Ver publicaci?n",
-        "commentCount": "{count} comentarios",
-        "commentsTitle": "Comentarios",
-        "likeComment": "Me gusta el comentario de {name}",
         "cluesTitle": "Disclosure clues",
         "decodeMe": "decode me →",
         "trayTitle": "Drag a label onto each post",
@@ -807,6 +796,9 @@ export default {
         "learnLabel": "Why it matters:",
         "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
         "hint": "Tap or drag a label chip, then drop it on the matching post.",
+        "commentsTitle": "Comentarios",
+        "commentCount": "{count} comentarios",
+        "likeComment": "Dar me gusta al comentario de {name}",
         "selectPost": "Select Post",
         "answerProgress": "{count} / {total}"
       },
@@ -914,39 +906,6 @@ export default {
             "Received the product for free",
             "No payment, no discount code",
             "“gifted” disclosure in the corner"
-          ]
-        },
-        {
-          "caption": "Okay, a mini haul because I was so excited about these discoveries! The ceramics are from a lovely small workshop, and I’m deeply in love with this book. Found some truly great pieces. Everything is genuinely just what I wanted to buy. #legithaul #smallbatch #curatedfinds #SpainFinds",
-          "product": "Cercamics",
-          "username": "RealSarahShares ",
-          "followers": "285K ",
-          "comments": [
-            {
-              "username": "artisan_wear",
-              "text": "Those dishes are gorgeous! Where did you get them?"
-            },
-            {
-              "username": "needle_ninja",
-              "text": "Love that scarf. Perfect for autumn."
-            },
-            {
-              "username": "glowfuel_official",
-              "text": "Genuine finds are the best! Looks so cosy. 💜"
-            },
-            {
-              "username": "martahealthy",
-              "text": "Finally, an actual haul! I want that plant!"
-            },
-            {
-              "username": "gymtom",
-              "text": "Wait, so is it still Spain-based? Need recommendations!"
-            }
-          ],
-          "clues": [
-            "",
-            "",
-            ""
           ]
         }
       ],
@@ -1376,53 +1335,12 @@ export default {
       "pwError": "Access denied. Read the glowing letters in poster order and try again.",
       "hiddenLetter": "hidden letter {letter}",
       "evidence": "Every poster used a named persuasion trick — FOMO, social proof, urgency and more."
-    },
-    "final": {
-      "intro": "{friend}'s thumb is on \"Buy Now\" for {product}. Present the evidence you gathered and talk them down.",
-      "solvedTitle": "{friend} is convinced — close the deal",
-      "solvedText": "Present your case and end the run.",
-      "replies": {
-        "ev-links": "“Wait… the link wasn't even the real store? I didn't look at the address.”",
-        "ev-roulette": "“The spin-to-win wheel was rigged? I thought I got lucky…”",
-        "ev-influencer": "“So that influencer was paid and the photo was AI? It looked so real.”",
-        "ev-algo": "“They targeted me on purpose? That's why it kept following me around.”",
-        "ev-ads": "“Hidden €59 a month?! The ad only ever showed me the 90% off.”",
-        "ev-persuasion": "“'Today only', '2 left'… it was all just pressure tricks on me.”",
-        "generic": "“Huh… okay, that one actually makes me stop and think.”"
-      },
-      "pushback": [
-        "“Come on, it's 90% off — TODAY ONLY. If I wait, it's gone!”",
-        "“Okay, but… everybody in the group chat is buying it. It has 12k reviews!”",
-        "“Alright, alright, maybe. But the timer says 4 minutes left…”"
-      ],
-      "convincedLine": "“…okay. I'm not buying it. Thanks for stopping me — I nearly clicked it.”",
-      "fallbackArguments": [
-        "The store link is a look-alike domain, not the official shop.",
-        "A 90%-off \"today only\" price is the classic too-good-to-be-true bait.",
-        "The real cost is hidden — a small \"subscription\" buried in the fine print.",
-        "Countdown timers and \"only 2 left\" are manufactured pressure, not facts."
-      ],
-      "moodHyped": "HYPED",
-      "moodConvinced": "convinced",
-      "doubtLabel": "{friend}'s doubt",
-      "doubtConvinced": "· convinced",
-      "deckTitle": "Make your case",
-      "deckFallback": "No field evidence on record — argue from the fundamentals below.",
-      "deckEvidence": "These are the clues you collected across the Physical Internet.",
-      "deckSelect": "Select the arguments to present ({chosen}/{required} minimum).",
-      "actionsReady": "Strong case. Hit them with it.",
-      "actionsNeed": "Stack at least {required} arguments before you confront {friend}.",
-      "convinceButton": "🛑 Convince {friend}",
-      "learnLabel": "The real defence:",
-      "learnPre": "no single trick catches every scam — slowing down does. Before you buy, stack the checks: read the ",
-      "learnUrl": "URL",
-      "learnMid1": ", look for the ",
-      "learnDisclosure": "disclosure",
-      "learnMid2": ", find the ",
-      "learnPrice": "true price",
-      "learnMid3": ", and name the ",
-      "learnPressure": "pressure tactic",
-      "learnPost": ". Evidence beats urgency every time."
     }
+  },
+  "debug": {
+    "posttestInTimeDescription": "Reiniciar el post-test con todos los retos completados y 5 minutos restantes",
+    "posttestInTime": "Test · 5:00",
+    "posttestTimeoutDescription": "Reiniciar el post-test con el tiempo agotado y retos sin terminar",
+    "posttestTimeout": "Test · 0:00"
   }
 }
