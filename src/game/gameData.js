@@ -8,6 +8,7 @@ export const GAME_MINUTES = 30
 
 export const NARRATIVE = {
   friend: 'Max',
+  player: 'Mia',
   product: 'the "NovaPad X" tablet',
   hook:
     'Your friend Max just found a viral deal on the NovaPad X — 90% off, "today only". ' +

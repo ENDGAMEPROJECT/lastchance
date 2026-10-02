@@ -6,6 +6,9 @@ import { bgUrl } from '../../game/assets.js'
 import { passedPosttest } from '../../game/posttestOutcome.js'
 import './pretest.css'
 
+// How long a speech bubble / the answer panel takes to fade out (matches pretest.css).
+const FADE_MS = 350
+
 /* Shared scene for the diagnostic conversations and the post-test review. */
 export default function InPersonTest({ script: p, masteryOpening, actions = [], requirePhoneView = true, assessment = false, questionIndices, skipOpening = false, assessmentEnding, onComplete }) {
   const { reducedMotion } = useGame()
@@ -17,6 +20,9 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
   const [round, setRound] = useState(0)
   const [answer, setAnswer] = useState(null)
   const [answers, setAnswers] = useState([])
+  // The option just clicked: the panel fades out before the reply starts.
+  const [choosing, setChoosing] = useState(null)
+  const chooseTimer = useRef(0)
   const mastery = Boolean(masteryOpening)
   const [prompt, setPrompt] = useState(skipOpening ? masteryOpening : p.opening)
   const completed = useRef(false)
@@ -39,6 +45,38 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
   const elapsed = speechProgress.key === speechKey ? speechProgress.elapsed : 0
   const speechReady = phase === 'options' || elapsed >= readingTime
   const visibleLetters = reducedMotion || phase === 'options' ? line.length : Math.floor(elapsed / 18)
+  const showActions = phase === (p.endingYou ? 'endingYou' : 'endingFriend') && speechReady && actions.length > 0
+  const showOptions = phase === 'options' && !needsPhoneView
+  // While the player must answer, the bubble slides up to make room below it.
+  const asking = showOptions || showActions
+  // Lines that flow into the options keep their bubble (it only slides up);
+  // every other line fades out at the end of its reading time.
+  const lastRound = round === rounds.length - 1
+  const continuesIntoOptions = phase === 'masteryIntro' || (phase === 'opening' && !mastery)
+    || (phase === 'response' && (!lastRound || (mastery && !assessment && !answer?.correct)))
+  const hasNextLine = !(phase === 'options' || phase === 'endingYou' || (phase === 'opening' && needsPhoneView)
+    || (phase === 'endingFriend' && !p.endingYou && !assessment))
+  const leaving = Boolean(choosing)
+    || (!reducedMotion && hasNextLine && !continuesIntoOptions && elapsed >= readingTime - FADE_MS)
+
+  function choose(option) {
+    if (choosing) return
+    const commit = () => {
+      setChoosing(null)
+      setAnswer(option)
+      setAnswers((previous) => {
+        const next = [...previous]
+        next[round] = option.correct === true
+        return next
+      })
+      setPhase('reply')
+    }
+    if (reducedMotion) return commit()
+    setChoosing(option)
+    chooseTimer.current = window.setTimeout(commit, FADE_MS)
+  }
+
+  useEffect(() => () => window.clearTimeout(chooseTimer.current), [])
 
   function closePhone() {
     setPhoneOpen(false)
@@ -131,59 +169,58 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
           </button>
         </div>
 
+        {/* Darkens the scene while the player has to answer. */}
+        <div className={`pretest-shade ${asking ? 'is-on' : ''}`} aria-hidden="true" />
+
+        {/* Keyed by speaker + text: a new line remounts (fades in); the same
+            line flowing into the options stays mounted and just slides up. */}
         <div
-          className={`pretest-speech ${playerSpeaking ? 'is-player' : ''} ${line.length > 210 ? 'is-long' : ''}`}
+          key={`${playerSpeaking}:${line}`}
+          className={`pretest-speech ${playerSpeaking ? 'is-player' : 'is-friend'} ${asking ? 'is-asking' : ''} ${leaving ? 'is-leaving' : ''}`}
           aria-label={playerSpeaking ? t('story.you') : friend}
         >
+          <div className="pretest-speech-name" data-text={playerSpeaking ? NARRATIVE.player : friend} aria-hidden="true">{playerSpeaking ? NARRATIVE.player : friend}</div>
           <p className="pretest-line" aria-label={line} aria-live="polite" aria-atomic="true">
             <span aria-hidden="true">
               <span className="pretest-line-visible">{line.slice(0, visibleLetters)}</span>
               <span className="pretest-line-pending">{line.slice(visibleLetters)}</span>
             </span>
           </p>
-          {!speechReady && (
-            <span className="pretest-reading-progress" aria-hidden="true" style={{ width: `${Math.min(100, elapsed / readingTime * 100)}%` }} />
-          )}
+          {/* Bottom rule doubles as the reading-time line. */}
+          <span className="pretest-reading-track" aria-hidden="true">
+            <span className="pretest-reading-progress" style={{ width: `${speechReady ? 100 : Math.min(100, elapsed / readingTime * 100)}%` }} />
+          </span>
         </div>
 
-        <div className="pretest-dialogue">
-          {phase === 'options' && !needsPhoneView ? (
-            <>
-              <div className="pretest-speaker">{t('story.respondPrompt', { friend })}</div>
-              <div className="pretest-options">
-                {rounds[round].options.map((option) => (
-                  <button
-                    key={`${round}-${option.k}`}
-                    type="button"
-                    className="pretest-option"
-                    onMouseDown={(event) => event.preventDefault()}
-                    onClick={() => {
-                      setAnswer(option)
-                      setAnswers((previous) => {
-                        const next = [...previous]
-                        next[round] = option.correct === true
-                        return next
-                      })
-                      setPhase('reply')
-                    }}
-                  >
-                    <span>{option.text}</span>
-                  </button>
-                ))}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="pretest-line-row">
-                {phase === (p.endingYou ? 'endingYou' : 'endingFriend') && speechReady && actions.map((action) => (
-                  <button key={action.label} className={`btn btn-${action.tone}`} onMouseDown={(event) => event.preventDefault()} onClick={() => action.onClick({ passed: passedPosttest(answers, rounds.length) })}>
-                    {action.label}
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
+        {showOptions && (
+          <div className={`pretest-choices ${choosing ? 'is-leaving' : ''}`}>
+            <div className="pretest-choices-tab">{t('story.respondPrompt', { friend })}</div>
+            <div className="pretest-options">
+              {rounds[round].options.map((option) => (
+                <button
+                  key={`${round}-${option.k}`}
+                  type="button"
+                  className={`pretest-option ${choosing === option ? 'is-chosen' : ''}`}
+                  disabled={Boolean(choosing)}
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={() => choose(option)}
+                >
+                  <span>{option.text}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {showActions && (
+          <div className="pretest-choices pretest-actions">
+            {actions.map((action) => (
+              <button key={action.label} className={`btn btn-${action.tone}`} onMouseDown={(event) => event.preventDefault()} onClick={() => action.onClick({ passed: passedPosttest(answers, rounds.length) })}>
+                {action.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       {phoneOpen && (
