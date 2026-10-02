@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { NARRATIVE } from '../../game/gameData.js'
 import { bgUrl } from '../../game/assets.js'
+import { posttestOutcome } from '../../game/posttestOutcome.js'
 import InPersonTest from './InPersonTest.jsx'
 import './conversation-screen.css'
 
@@ -10,33 +11,29 @@ import './conversation-screen.css'
    final decision. What that decision means depends on how the player got here:
 
    - Puzzles finished in time (timedOut === false):
-       SUCCESS ("close the tab") → the friend doesn't buy → win.
-       FAIL ("hit buy") → retry while the clock still runs, or let the friend
+       SUCCESS (correct answers + "close the tab") → friend doesn't buy.
+       FAIL (incorrect answers or "hit buy") → retry while time remains, or let the friend
        buy the tablet. If the countdown hits zero the reducer ends the run.
    - Time ran out before finishing (timedOut === true):
        The friend buys either way — SUCCESS and FAIL only change the copy on
        the lose screen ("convincing but not enough evidence" vs "not convinced").
 
-   Entering retry resumes the (otherwise frozen) post-test clock via
-   startPosttestDecision, so the extra attempts stay under time pressure. */
+   The remaining time covers the post-test and retries. A player who already
+   ran out of time can finish the post-test, but cannot prevent the purchase. */
 export default function PosttestScreen() {
-  const { finishGame, startPosttestDecision, timedOut } = useGame()
+  const { finishGame, startPosttestDecision, timedOut, timeLeft } = useGame()
   const t = useT()
   const script = t('story.posttest')
   const vars = { friend: NARRATIVE.friend, product: NARRATIVE.product }
   const [phase, setPhase] = useState('test') // 'test' | 'retry'
   const [run, setRun] = useState(0) // bump to replay the mastery pass
 
-  // SUCCESS — player told the friend to close the tab.
-  const onSuccess = () =>
-    timedOut ? finishGame('lose', 'notEnoughEvidenceConvincing') : finishGame('win')
+  useEffect(() => { startPosttestDecision() }, [startPosttestDecision])
 
-  // FAIL — player told the friend to buy it.
-  const onFail = () => {
-    if (timedOut) { finishGame('lose', 'notEnoughEvidenceUnconvincing'); return }
-    // Finished in time → another attempt, now under the live countdown.
-    startPosttestDecision()
-    setPhase('retry')
+  const resolveAttempt = (passed) => {
+    const result = posttestOutcome({ timedOut, timeLeft, passed })
+    if (result.outcome === 'retry') setPhase('retry')
+    else finishGame(result.outcome, result.reason)
   }
 
   if (phase === 'retry') {
@@ -71,10 +68,11 @@ export default function PosttestScreen() {
       key={run}
       script={script}
       requirePhoneView={false}
+      assessment
       masteryOpening={t('story.mastery.banner')}
       actions={[
-        { label: script.choiceClose, tone: 'green', onClick: onSuccess },
-        { label: script.choiceBuy, tone: 'magenta', onClick: onFail },
+        { label: script.choiceClose, tone: 'green', onClick: ({ passed }) => resolveAttempt(passed) },
+        { label: script.choiceBuy, tone: 'magenta', onClick: () => resolveAttempt(false) },
       ]}
     />
   )

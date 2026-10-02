@@ -25,7 +25,7 @@ function initialProgress() {
   return p
 }
 
-const initialState = {
+export const initialState = {
   // Debug: skip the welcome/pretest and land on the map (or a ?screen= jump).
   screen: DEBUG ? DEBUG_SCREEN || 'map' : 'welcome', // 'welcome' | 'pretest' | 'enter' | 'map' | 'room' | 'posttest' | 'win' | 'lose'
   player: { alias: '', age: '' },
@@ -44,7 +44,7 @@ const initialState = {
   reducedMotion: false,
 }
 
-function reducer(state, action) {
+export function reducer(state, action) {
   switch (action.type) {
     case 'SUBMIT_WELCOME':
       return { ...state, player: action.player, screen: 'pretest' }
@@ -59,15 +59,19 @@ function reducer(state, action) {
 
     case 'FINISH':
       // Final decision from the post-test resolves the game.
+      if (state.screen === 'win' || state.screen === 'lose') return state
+      if (action.outcome === 'win' && (state.timedOut || state.timeLeft <= 0)) {
+        return { ...state, screen: 'lose', running: false, loseReason: state.timedOut ? 'notEnoughEvidenceConvincing' : 'timeUp' }
+      }
       return { ...state, screen: action.outcome, running: false, loseReason: action.reason ?? state.loseReason }
 
     case 'START_POSTTEST_DECISION':
-      // The friend asks for the final call: reveal the clock, and — unless the
-      // player already ran out of time before the puzzles — resume the
-      // countdown so the retry loop races a real deadline.
+      if (state.screen !== 'posttest') return state
+      // Keep the remaining deadline visible throughout the assessment and retries.
       return { ...state, postDecision: true, running: !state.timedOut && state.timeLeft > 0 }
 
     case 'OPEN_NODE': {
+      if (['posttest', 'win', 'lose'].includes(state.screen)) return state
       if (state.progress[action.id] !== 'available') return state
       const returningToRoom = state.activeNodeId === action.id
       return {
@@ -81,6 +85,7 @@ function reducer(state, action) {
     }
 
     case 'REVIEW_NODE':
+      if (['posttest', 'win', 'lose'].includes(state.screen)) return state
       if (state.progress[action.id] !== 'done') return state
       return { ...state, screen: 'review', reviewNodeId: action.id }
 
@@ -91,12 +96,14 @@ function reducer(state, action) {
       return { ...state, linkRound: action.round }
 
     case 'GO_MAP':
+      if (['posttest', 'win', 'lose'].includes(state.screen)) return state
       return { ...state, screen: 'map', reviewNodeId: null }
 
     case 'GOTO_SCREEN': // debug-only jump
       return { ...state, screen: action.screen, activeNodeId: null, reviewNodeId: null }
 
     case 'COMPLETE_NODE': {
+      if (state.timedOut || ['posttest', 'win', 'lose'].includes(state.screen)) return state
       const idx = NODES.findIndex((n) => n.id === action.id)
       if (idx === -1) return state
       const progress = { ...state.progress, [action.id]: 'done' }
@@ -112,10 +119,9 @@ function reducer(state, action) {
         reviewNodeId: null,
         roomStarted: false,
         linkRound: null,
-        // Finished in time: freeze the clock on entering the post-test. It
-        // stays hidden through the diagnostic/mastery Q&A and only resumes
-        // when the final decision begins (START_POSTTEST_DECISION).
-        running: allDone ? false : state.running,
+        // The assessment and retries share the remaining puzzle time.
+        postDecision: allDone ? true : state.postDecision,
+        running: allDone ? state.timeLeft > 0 : state.running,
       }
     }
 
@@ -143,7 +149,7 @@ function reducer(state, action) {
         }
         // Out of time before finishing the puzzles → still face the friend in
         // the post-test (last chance), but flagged as timed out.
-        return { ...state, timeLeft: 0, running: false, timedOut: true, screen: 'posttest' }
+        return { ...state, timeLeft: 0, running: false, timedOut: true, screen: 'posttest', postDecision: true, activeNodeId: null, reviewNodeId: null, roomStarted: false, linkRound: null }
       }
       return { ...state, timeLeft: t }
     }

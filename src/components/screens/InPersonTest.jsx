@@ -3,10 +3,11 @@ import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { NARRATIVE } from '../../game/gameData.js'
 import { bgUrl } from '../../game/assets.js'
+import { passedPosttest } from '../../game/posttestOutcome.js'
 import './pretest.css'
 
 /* Shared scene for the diagnostic conversations and the post-test review. */
-export default function InPersonTest({ script: p, masteryOpening, actions, requirePhoneView = true }) {
+export default function InPersonTest({ script: p, masteryOpening, actions, requirePhoneView = true, assessment = false }) {
   const { reducedMotion } = useGame()
   const t = useT()
   const friend = NARRATIVE.friend
@@ -14,6 +15,7 @@ export default function InPersonTest({ script: p, masteryOpening, actions, requi
   const [phase, setPhase] = useState('opening')
   const [round, setRound] = useState(0)
   const [answer, setAnswer] = useState(null)
+  const [answers, setAnswers] = useState([])
   const mastery = Boolean(masteryOpening)
   const [prompt, setPrompt] = useState(p.opening)
   const [phoneOpen, setPhoneOpen] = useState(false)
@@ -88,14 +90,14 @@ export default function InPersonTest({ script: p, masteryOpening, actions, requi
       }
     } else if (phase === 'response') {
       setPrompt(line)
-      if (mastery && !answer.correct) setPhase('options')
+      if (mastery && !assessment && !answer.correct) setPhase('options')
       else if (round === rounds.length - 1) setPhase('endingFriend')
       else {
         setRound((value) => value + 1)
         setPhase('options')
       }
     } else if (phase === 'endingFriend' && p.endingYou) setPhase('endingYou')
-  }, [speechReady, phoneOpen, needsPhoneView, phase, round, rounds.length, p.responses, p.endingYou, mastery, masteryOpening, answer, line])
+  }, [speechReady, phoneOpen, needsPhoneView, phase, round, rounds.length, p.responses, p.endingYou, mastery, masteryOpening, assessment, answer, line])
 
   return (
     <div className="scene pretest-scene">
@@ -148,6 +150,11 @@ export default function InPersonTest({ script: p, masteryOpening, actions, requi
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => {
                       setAnswer(option)
+                      setAnswers((previous) => {
+                        const next = [...previous]
+                        next[round] = option.correct === true
+                        return next
+                      })
                       setPhase('reply')
                     }}
                   >
@@ -160,7 +167,7 @@ export default function InPersonTest({ script: p, masteryOpening, actions, requi
             <>
               <div className="pretest-line-row">
                 {phase === (p.endingYou ? 'endingYou' : 'endingFriend') && speechReady && actions.map((action) => (
-                  <button key={action.label} className={`btn btn-${action.tone}`} onMouseDown={(event) => event.preventDefault()} onClick={action.onClick}>
+                  <button key={action.label} className={`btn btn-${action.tone}`} onMouseDown={(event) => event.preventDefault()} onClick={() => action.onClick({ passed: passedPosttest(answers, rounds.length) })}>
                     {action.label}
                   </button>
                 ))}
