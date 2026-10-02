@@ -7,17 +7,19 @@ import { passedPosttest } from '../../game/posttestOutcome.js'
 import './pretest.css'
 
 /* Shared scene for the diagnostic conversations and the post-test review. */
-export default function InPersonTest({ script: p, masteryOpening, actions, requirePhoneView = true, assessment = false }) {
+export default function InPersonTest({ script: p, masteryOpening, actions = [], requirePhoneView = true, assessment = false, questionIndices, skipOpening = false, assessmentEnding, onComplete }) {
   const { reducedMotion } = useGame()
   const t = useT()
   const friend = NARRATIVE.friend
-  const rounds = t('story.rounds')
-  const [phase, setPhase] = useState('opening')
+  const allRounds = t('story.rounds')
+  const rounds = questionIndices ? questionIndices.map((index) => allRounds[index]) : allRounds
+  const [phase, setPhase] = useState(skipOpening ? 'options' : 'opening')
   const [round, setRound] = useState(0)
   const [answer, setAnswer] = useState(null)
   const [answers, setAnswers] = useState([])
   const mastery = Boolean(masteryOpening)
-  const [prompt, setPrompt] = useState(p.opening)
+  const [prompt, setPrompt] = useState(skipOpening ? masteryOpening : p.opening)
+  const completed = useRef(false)
   const [phoneOpen, setPhoneOpen] = useState(false)
   const [phoneViewed, setPhoneViewed] = useState(false)
   const needsPhoneView = requirePhoneView && !phoneViewed
@@ -30,7 +32,7 @@ export default function InPersonTest({ script: p, masteryOpening, actions, requi
   const line = ['opening', 'masteryIntro', 'options'].includes(phase) ? prompt
     : phase === 'reply' ? answer.text
     : phase === 'response' ? (mastery ? (answer.correct ? rounds[round].why : rounds[round].nudge) : p.responses[round])
-    : phase === 'endingFriend' ? p.endingFriend
+    : phase === 'endingFriend' ? (assessmentEnding ? assessmentEnding(passedPosttest(answers, rounds.length)) : p.endingFriend)
     : phase === 'endingYou' ? p.endingYou : ''
   const speechKey = `${mastery}:${phase}:${round}:${line}`
   const readingTime = Math.max(3500, line.length * 18 + 1500, line.trim().split(/\s+/).length * 280 + 800)
@@ -72,6 +74,13 @@ export default function InPersonTest({ script: p, masteryOpening, actions, requi
 
   useEffect(() => {
     if (!speechReady || phoneOpen) return
+    if (assessment && onComplete && phase === 'endingFriend') {
+      if (!completed.current) {
+        completed.current = true
+        onComplete(answers)
+      }
+      return
+    }
     if (phase === 'opening') {
       if (needsPhoneView) return
       if (mastery) {
@@ -97,7 +106,7 @@ export default function InPersonTest({ script: p, masteryOpening, actions, requi
         setPhase('options')
       }
     } else if (phase === 'endingFriend' && p.endingYou) setPhase('endingYou')
-  }, [speechReady, phoneOpen, needsPhoneView, phase, round, rounds.length, p.responses, p.endingYou, mastery, masteryOpening, assessment, answer, line])
+  }, [speechReady, phoneOpen, needsPhoneView, phase, round, rounds.length, p.responses, p.endingYou, mastery, masteryOpening, assessment, answer, answers, onComplete, line])
 
   return (
     <div className="scene pretest-scene">

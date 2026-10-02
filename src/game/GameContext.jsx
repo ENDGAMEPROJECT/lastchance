@@ -9,7 +9,7 @@
 
 import { createContext, useContext, useReducer, useEffect, useCallback, useRef } from 'react'
 import { NODES, GAME_MINUTES, ITEMS } from './gameData.js'
-import { DEBUG, DEBUG_SCREEN } from './settings.js'
+import { DEBUG, DEBUG_SCREEN, DEBUG_POSTTEST_SCENARIO } from './settings.js'
 import { playSound, preloadSound } from './sound.js'
 
 const GameContext = createContext(null)
@@ -25,11 +25,35 @@ function initialProgress() {
   return p
 }
 
-export const initialState = {
+function debugPosttestState(state, scenario) {
+  const timedOut = scenario === 'timeout'
+  return {
+    ...state,
+    screen: 'posttest',
+    timedOut,
+    timeLeft: timedOut ? 0 : 300,
+    running: !timedOut,
+    postDecision: true,
+    posttestSession: state.posttestSession + 1,
+    loseReason: null,
+    activeNodeId: null,
+    reviewNodeId: null,
+    roomStarted: false,
+    linkRound: null,
+    progress: Object.fromEntries(NODES.map((node, i) => [
+      node.id, !timedOut || i < 2 ? 'done' : i === 2 ? 'available' : 'locked',
+    ])),
+    inventory: timedOut ? [ITEMS.emojiCard] : Object.values(ITEMS),
+    evidence: [],
+  }
+}
+
+const baseInitialState = {
   // Debug: skip the welcome/pretest and land on the map (or a ?screen= jump).
   screen: DEBUG ? DEBUG_SCREEN || 'map' : 'welcome', // 'welcome' | 'pretest' | 'enter' | 'map' | 'room' | 'posttest' | 'win' | 'lose'
   player: { alias: '', age: '' },
   timedOut: false, // ran out of time BEFORE finishing the puzzles
+  posttestSession: 0,
   loseReason: null, // why the friend bought — picks the lose-screen copy
   postDecision: false, // post-test reached the final call → clock runs & shows
   activeNodeId: null,
@@ -43,6 +67,10 @@ export const initialState = {
   running: false,
   reducedMotion: false,
 }
+
+export const initialState = DEBUG && DEBUG_SCREEN === 'posttest'
+  ? debugPosttestState(baseInitialState, DEBUG_POSTTEST_SCENARIO)
+  : baseInitialState
 
 export function reducer(state, action) {
   switch (action.type) {
@@ -100,6 +128,7 @@ export function reducer(state, action) {
       return { ...state, screen: 'map', reviewNodeId: null }
 
     case 'GOTO_SCREEN': // debug-only jump
+      if (DEBUG && action.screen === 'posttest') return debugPosttestState(state, action.scenario)
       return { ...state, screen: action.screen, activeNodeId: null, reviewNodeId: null }
 
     case 'COMPLETE_NODE': {
@@ -161,7 +190,7 @@ export function reducer(state, action) {
       return { ...state, reducedMotion: !state.reducedMotion }
 
     case 'RESET':
-      return { ...initialState, progress: initialProgress(), reducedMotion: state.reducedMotion }
+      return { ...initialState, posttestSession: state.posttestSession + 1, reducedMotion: state.reducedMotion }
 
     default:
       return state
@@ -198,7 +227,7 @@ export function GameProvider({ children }) {
   const startGame = useCallback(() => dispatch({ type: 'START_GAME' }), [])
   const finishGame = useCallback((outcome, reason) => dispatch({ type: 'FINISH', outcome, reason }), [])
   const startPosttestDecision = useCallback(() => dispatch({ type: 'START_POSTTEST_DECISION' }), [])
-  const gotoScreen = useCallback((screen) => dispatch({ type: 'GOTO_SCREEN', screen }), [])
+  const gotoScreen = useCallback((screen, scenario) => dispatch({ type: 'GOTO_SCREEN', screen, scenario }), [])
   const openNode = useCallback((id) => dispatch({ type: 'OPEN_NODE', id }), [])
   const reviewNode = useCallback((id) => dispatch({ type: 'REVIEW_NODE', id }), [])
   const startRoom = useCallback(() => dispatch({ type: 'START_ROOM' }), [])

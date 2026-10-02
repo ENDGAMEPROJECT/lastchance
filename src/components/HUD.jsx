@@ -7,6 +7,7 @@ import { isMuted, setMuted } from '../game/sound.js'
 import { getHintContext, getHintPlan } from '../game/hints.js'
 import Modal from './Modal.jsx'
 import DataReport from './DataReport.jsx'
+import DebugPosttestButtons from './DebugPosttestButtons.jsx'
 import './HUD.css'
 
 /* Persistent top bar: countdown, mission recap, inventory & map access. */
@@ -92,6 +93,7 @@ export default function HUD() {
         )}
 
         <div className="hud-right">
+          {DEBUG && ['posttest', 'win', 'lose'].includes(screen) && <DebugPosttestButtons />}
           {DEBUG && <span className="chip bad hud-debug">🐞 DEBUG</span>}
           {showHints && (
             <button

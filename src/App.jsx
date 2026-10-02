@@ -30,7 +30,7 @@ const ROOMS = {
 }
 
 export default function App() {
-  const { screen, activeNode, reducedMotion } = useGame()
+  const { screen, activeNode, reducedMotion, posttestSession } = useGame()
 
   useEffect(() => {
     document.body.classList.toggle('reduced-motion', reducedMotion)
@@ -53,7 +53,7 @@ export default function App() {
   if (screen === 'welcome') content = <WelcomeScreen />
   else if (screen === 'pretest') content = <PretestScreen />
   else if (screen === 'enter') content = <EnterScreen />
-  else if (screen === 'posttest') content = <PosttestScreen />
+  else if (screen === 'posttest') content = <PosttestScreen key={posttestSession} />
   else if (screen === 'win') content = <WinScreen />
   else if (screen === 'lose') content = <LoseScreen />
   else if (screen === 'review') content = <RoomReview />

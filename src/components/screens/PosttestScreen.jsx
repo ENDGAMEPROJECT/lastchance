@@ -3,7 +3,7 @@ import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { NARRATIVE } from '../../game/gameData.js'
 import { bgUrl } from '../../game/assets.js'
-import { posttestOutcome } from '../../game/posttestOutcome.js'
+import { mergePosttestAnswers, passedPosttest, pendingPosttestQuestions, posttestOutcome } from '../../game/posttestOutcome.js'
 import InPersonTest from './InPersonTest.jsx'
 import './conversation-screen.css'
 
@@ -11,9 +11,9 @@ import './conversation-screen.css'
    final decision. What that decision means depends on how the player got here:
 
    - Puzzles finished in time (timedOut === false):
-       SUCCESS (correct answers + "close the tab") → friend doesn't buy.
-       FAIL (incorrect answers or "hit buy") → retry while time remains, or let the friend
-       buy the tablet. If the countdown hits zero the reducer ends the run.
+       SUCCESS (all answers correct) → friend doesn't buy.
+       FAIL → retry only unanswered/incorrect questions while time remains.
+       If the countdown hits zero the reducer ends the run.
    - Time ran out before finishing (timedOut === true):
        The friend buys either way — SUCCESS and FAIL only change the copy on
        the lose screen ("convincing but not enough evidence" vs "not convinced").
@@ -27,10 +27,16 @@ export default function PosttestScreen() {
   const vars = { friend: NARRATIVE.friend, product: NARRATIVE.product }
   const [phase, setPhase] = useState('test') // 'test' | 'retry'
   const [run, setRun] = useState(0) // bump to replay the mastery pass
+  const totalQuestions = t('story.rounds').length
+  const [answers, setAnswers] = useState(() => Array(totalQuestions).fill(false))
+  const [questionIndices, setQuestionIndices] = useState(() => pendingPosttestQuestions([], totalQuestions))
 
   useEffect(() => { startPosttestDecision() }, [startPosttestDecision])
 
-  const resolveAttempt = (passed) => {
+  const resolveAttempt = (attempt) => {
+    const nextAnswers = mergePosttestAnswers(answers, questionIndices, attempt)
+    setAnswers(nextAnswers)
+    const passed = passedPosttest(nextAnswers, totalQuestions)
     const result = posttestOutcome({ timedOut, timeLeft, passed })
     if (result.outcome === 'retry') setPhase('retry')
     else finishGame(result.outcome, result.reason)
@@ -46,15 +52,14 @@ export default function PosttestScreen() {
             <div className="pt-retry-actions">
               <button
                 className="btn btn-lg btn-green"
-                onClick={() => { setRun((n) => n + 1); setPhase('test') }}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => {
+                  setQuestionIndices(pendingPosttestQuestions(answers, totalQuestions))
+                  setRun((n) => n + 1)
+                  setPhase('test')
+                }}
               >
                 {t('story.posttest.retryAgain', vars)}
-              </button>
-              <button
-                className="btn btn-lg btn-magenta"
-                onClick={() => finishGame('lose', 'choseBuy')}
-              >
-                {t('story.posttest.retryGiveUp', vars)}
               </button>
             </div>
           </div>
@@ -69,11 +74,13 @@ export default function PosttestScreen() {
       script={script}
       requirePhoneView={false}
       assessment
+      questionIndices={questionIndices}
+      skipOpening={run > 0}
+      onComplete={resolveAttempt}
+      assessmentEnding={(passed) => timedOut
+        ? t(passed ? 'end.lose.reasons.notEnoughEvidenceConvincing.body' : 'end.lose.reasons.notEnoughEvidenceUnconvincing.body', vars)
+        : t(passed ? 'story.posttest.convinced' : 'story.posttest.retryFriend', vars)}
       masteryOpening={t('story.mastery.banner')}
-      actions={[
-        { label: script.choiceClose, tone: 'green', onClick: ({ passed }) => resolveAttempt(passed) },
-        { label: script.choiceBuy, tone: 'magenta', onClick: () => resolveAttempt(false) },
-      ]}
     />
   )
 }

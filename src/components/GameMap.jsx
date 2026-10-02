@@ -4,6 +4,7 @@ import { useT } from '../i18n/index.jsx'
 import { NARRATIVE } from '../game/gameData.js'
 import { DEBUG } from '../game/settings.js'
 import { bgUrl } from '../game/assets.js'
+import DebugPosttestButtons from './DebugPosttestButtons.jsx'
 import './GameMap.css'
 
 /* Art key per node id — the file-name stem under public/bg/map, which holds a
@@ -299,7 +300,7 @@ export default function GameMap() {
           <div className="map-debug">
             <span className="chip bad">🐞 DEBUG · jump to</span>
             <button className="btn btn-sm btn-ghost" onClick={() => gotoScreen('pretest')}>Pre-test</button>
-            <button className="btn btn-sm btn-ghost" onClick={() => gotoScreen('posttest')}>Post-test</button>
+            <DebugPosttestButtons />
             <button className="btn btn-sm btn-ghost" onClick={() => gotoScreen('win')}>Win</button>
             <button className="btn btn-sm btn-ghost" onClick={() => gotoScreen('lose')}>Lose</button>
           </div>

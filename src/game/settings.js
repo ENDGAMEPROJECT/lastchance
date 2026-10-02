@@ -13,6 +13,7 @@
    ?screen=posttest, ?screen=pretest, ?screen=win, ?screen=lose. */
 const _params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null
 export const DEBUG_SCREEN = (_params && _params.get('screen')) || null
+export const DEBUG_POSTTEST_SCENARIO = _params?.get('scenario') === 'timeout' ? 'timeout' : 'inTime'
 export const DEBUG =
   (import.meta.env && import.meta.env.VITE_DEBUG === 'true') ||
   (_params ? _params.has('debug') || !!DEBUG_SCREEN : false)

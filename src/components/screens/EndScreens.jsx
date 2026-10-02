@@ -27,7 +27,6 @@ export function WinScreen() {
               </ul>
             </>
           )}
-          <div className="learn" style={{ marginTop: 16 }}>{t('end.win.posttest', vars)}</div>
         </div>
 
         <button className="btn btn-green btn-lg" onClick={reset}>{t('end.win.again')}</button>
@@ -61,9 +60,6 @@ export function LoseScreen() {
         <div className="intro-card panel clip" style={{ borderColor: 'rgba(255,59,92,0.4)', boxShadow: 'var(--glow-red)' }}>
           <h3 style={{ color: 'var(--red)' }}>{heading}</h3>
           <p>{body}</p>
-          <div className="learn" style={{ marginTop: 14, borderColor: 'var(--red)', background: 'rgba(255,59,92,0.08)' }}>
-            <b style={{ color: 'var(--red)' }}>{t('end.lose.lessonLabel')}</b> {t('end.lose.lesson')}
-          </div>
         </div>
 
         <button className="btn btn-cyan btn-lg" onClick={reset}>{t('end.lose.again')}</button>

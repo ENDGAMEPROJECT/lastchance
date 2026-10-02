@@ -1,5 +1,11 @@
 /* AUTO-GENERATED from the translation Google Sheet by `npm run i18n:import`. Do not edit by hand. */
 export default {
+  "debug": {
+    "posttestInTime": "Test · 5:00",
+    "posttestTimeout": "Test · 0:00",
+    "posttestInTimeDescription": "Ponovo pokreni završni test sa svim rešenim zagonetkama i preostalih 5 minuta",
+    "posttestTimeoutDescription": "Ponovo pokreni završni test nakon isteka vremena, sa nerešenim zagonetkama"
+  },
   "common": {
     "continue": "Nastavi →",
     "begin": "▶ Uđi unutra",
@@ -255,7 +261,9 @@ export default {
       "endingFriend": "Uh, dao/la si mi mnogo toga o čemu treba da razmislim, ali moram odmah da odlučim — tajmer samo što nije stigao do nule. Na osnovu svega što smo pogledali, reci mi direktno: da li da zatvorim ovu karticu i zaštitim svoje podatke ili da rizikujem i kupim?",
       "choiceClose": "Zatvori karticu. Ovo je prevara.",
       "choiceBuy": "Klikni na kupovinu. Hajde da rizikujemo.",
-      "retryFriend": "Još uvek me nisi ubedio/la… ali odbrojavanje još nije stiglo do nule. Hoćeš li pokušati ponovo ili da samo kupim tablet?",
+      "convinced": "Ubedio si me. Sada razumem znake upozorenja i kako je ova ponuda pokušala da utiče na mene. Neću kupiti tablet.",
+
+      "retryFriend": "Nisi mi dao dovoljno razloga da ne kupim tablet, pa ću ga kupiti. Još ima vremena da pokušaš ponovo: objasni mi ono u šta me još nisi ubedio.",
       "retryAgain": "Pokušaj ponovo da ubediš {prijatelja}",
       "retryGiveUp": "Pusti {prijatelju} da kupi tablet"
     },

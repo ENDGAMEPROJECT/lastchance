@@ -59,6 +59,9 @@ Handy for jumping straight to a screen or unlocking every node while building.
 
 - Turn on with `npm run dev:debug`, or append **`?debug`** to the URL (`localhost:5173/?debug`).
 - **`?screen=<name>`** jumps straight to a screen (implies debug): `pretest`, `posttest`, `win`, `lose`.
+- **`?screen=posttest&scenario=inTime`**: all puzzles completed, 5 minutes left.
+- **`?screen=posttest&scenario=timeout`**: time expired before all puzzles were completed; the post-test runs without a countdown.
+- Debug buttons **Test · 5:00** and **Test · 0:00** on the Map and post-test/end-screen HUD restart either case with fresh answers.
 - When on, the Map shows all nodes unlocked plus "jump to" buttons for the test/end screens.
 - Flags live in `src/game/settings.js` (`DEBUG`, `DEBUG_SCREEN`).
 

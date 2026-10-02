@@ -1,5 +1,11 @@
 /* AUTO-GENERATED from the translation Google Sheet by `npm run i18n:import`. Do not edit by hand. */
 export default {
+  "debug": {
+    "posttestInTime": "Testi · 5:00",
+    "posttestTimeout": "Testi · 0:00",
+    "posttestInTimeDescription": "Aloita lopputesti uudelleen: kaikki pulmat ratkaistu ja 5 minuuttia jäljellä",
+    "posttestTimeoutDescription": "Aloita lopputesti uudelleen: aika loppui ennen kaikkien pulmien ratkaisemista"
+  },
   "common": {
     "continue": "Continue →",
     "begin": "▶ Step inside",
@@ -255,7 +261,9 @@ export default {
       "endingFriend": "Ugh, you've given me a lot to process, but I need to choose right now — the timer's about to hit zero. Based on everything we looked at, give it to me straight: do I close this tab and protect my data, or take the risk and buy it?",
       "choiceClose": "Close the tab. It’s a scam.",
       "choiceBuy": "Hit buy. Let’s risk it.",
-      "retryFriend": "You still haven't convinced me… but the countdown's not at zero yet. Do you want to try again, or should I just buy it?",
+      "convinced": "Sait minut vakuuttuneeksi. Nyt ymmärrän varoitusmerkit ja sen, miten tämä tarjous yritti vaikuttaa minuun. En osta tablettia.",
+
+      "retryFriend": "Et ole antanut minulle tarpeeksi syitä jättää tabletti ostamatta, joten aion ostaa sen. Voit vielä yrittää uudelleen: selitä ne kohdat, joista et ole vielä vakuuttanut minua.",
       "retryAgain": "Try again to convince {friend}",
       "retryGiveUp": "Let {friend} buy the tablet"
     },
