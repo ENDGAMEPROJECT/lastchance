@@ -1,11 +1,5 @@
 /* AUTO-GENERATED from the translation Google Sheet by `npm run i18n:import`. Do not edit by hand. */
 export default {
-  "debug": {
-    "posttestInTime": "Test · 5:00",
-    "posttestTimeout": "Test · 0:00",
-    "posttestInTimeDescription": "Restart the post-test with all puzzles completed and 5 minutes left",
-    "posttestTimeoutDescription": "Restart the post-test after time ran out with puzzles unfinished"
-  },
   "common": {
     "continue": "Continue →",
     "begin": "▶ Step inside",
@@ -89,7 +83,7 @@ export default {
     "rewardLabel": "Added to your Bag — you’ll need it next",
     "collect": "collect",
     "collected": "collected",
-    "addedToBag": "added to Bag"
+    "addedToBag": "added to bag"
   },
   "end": {
     "win": {
@@ -253,7 +247,8 @@ export default {
       "eyebrow": "The Final Call",
       "debugTag": "Post-test",
       "title": "{friend} is having second thoughts",
-      "opening": "Wow, the countdown is down to the last 2 minutes! I'm staring at my card info, but everything we just went through has me second-guessing myself. Okay — I'm not sure I should buy it… help me out.",
+      "opening": "You're back. I'm still looking at the checkout page. Before I buy, tell me what you learned about this offer.",
+      "convinced": "You've convinced me. Now I understand the warning signs and how this offer tried to influence me. I'm not buying the tablet.",
       "responses": [
         "I hear you, but the pressure feels so real with that clock ticking right in front of me. And it's not just the timer — I keep thinking it came from one of my favourite creators. But there's still the mystery of how it ended up on my radar.",
         "Man, the way everything's handled behind the scenes on these apps is wild. But at the end of the day, I'm still staring at this checkout page trying to decide if it's safe to type my details in."
@@ -261,9 +256,7 @@ export default {
       "endingFriend": "Ugh, you've given me a lot to process, but I need to choose right now — the timer's about to hit zero. Based on everything we looked at, give it to me straight: do I close this tab and protect my data, or take the risk and buy it?",
       "choiceClose": "Close the tab. It’s a scam.",
       "choiceBuy": "Hit buy. Let’s risk it.",
-      "convinced": "You've convinced me. Now I understand the warning signs and how this offer tried to influence me. I'm not buying the tablet.",
-
-      "retryFriend": "You haven't given me enough reasons not to buy it, so I'm going to buy the tablet. There's still time to try again: explain the points you haven't convinced me about yet.",
+      "retryFriend": "You haven't given me enough reasons not to buy it, so I'm going to buy the tablet. There's still time to try again: explain the points you haven't convinced me about yet",
       "retryAgain": "Try again to convince {friend}",
       "retryGiveUp": "Let {friend} buy the tablet"
     },
@@ -530,7 +523,6 @@ export default {
   },
   "rooms": {
     "link": {
-      "debugSkip": "Skip doors and final test (debug)",
       "intro": "A router with three doors. Each is a link claiming to be a store. Shut the fraudulent ones.",
       "solvedTitle": "Link District cleared · Emoji Decoding Card obtained 🔑",
       "solvedText": "You blocked every fake and learned what makes a URL suspicious. The card unlocks the labels in Influencer Avenue.",
@@ -664,13 +656,13 @@ export default {
         "cta": "Get them now",
         "brand": "Magnum Shop",
         "text": "Offer valid from 19 to 29 september"
-      }
+      },
+      "debugSkip": "Skip doors and final test (debug)"
     },
     "roulette": {
       "spin": "🎰 Spin",
       "spinning": "Spinning…",
       "investigation": {
-        "debugSkip": "Skip roulette (debug)",
         "intro": "Spin each wheel. Spot the trick and explain your choice.",
         "wheelProgress": "Wheel {n} / {total}",
         "solvedTitle": "Corridor cleared — claims checked",
@@ -778,7 +770,8 @@ export default {
               "lostOnce": "“Up to 8 points” means I must receive at least 8 points."
             }
           }
-        }
+        },
+        "debugSkip": "Skip roulette (debug)"
       }
     },
     "influencer": {
@@ -794,10 +787,6 @@ export default {
         "verified": "Verified",
         "viewPublication": "View Publication",
         "followersSuffix": "followers",
- "viewPublication": "View Publication",
-        "commentCount": "{count} comments",
-        "commentsTitle": "Comments",
-        "likeComment": "Like comment by {name}",
         "cluesTitle": "Disclosure clues",
         "decodeMe": "decode me →",
         "trayTitle": "Drag a label onto each post",
@@ -807,6 +796,9 @@ export default {
         "learnLabel": "Why it matters:",
         "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
         "hint": "Tap or drag a label chip, then drop it on the matching post.",
+        "commentsTitle": "Comments",
+        "commentCount": "{count} comments",
+        "likeComment": "Like comment by {name}",
         "selectPost": "Select Post",
         "answerProgress": "{count} / {total}"
       },
@@ -814,37 +806,10 @@ export default {
         "paid": "PAID",
         "collab": "COLLAB",
         "gifted": "GIFTED",
-        "nothing": "NOTHING",
-
+        "nothing": "NOTHING"
       },
       "posts": [
         {
-          "caption": "Morning training feels so much better with GlowFuel. I’ve been using it before my workouts and I’m honestly obsessed. Use my code MIRA20 for 20% off your first order. Link in bio.",
-          "product": "Pre-workout drink",
-          "username": "MiraMoves",
-          "followers": "482K",
-          "comments": [
-            {
-              "username": "fitpaula",
-              "text": "Omg I need to try this before my next workout!"
-            },
-            {
-              "username": "runneralex",
-              "text": "Does the code work in all Europe?"
-            },
-            {
-              "username": "glowfuel_official",
-              "text": "So happy you’re loving it 💜"
-            },
-            {
-              "username": "martahealthy",
-              "text": "This looks like an ad but I actually want it hahaha"
-            },
-            {
-              "username": "gymtom",
-              "text": "Just ordered with your code!"
-            }
-          ],
           "caption": "Morning training feels so much better with GlowFuel. I’ve been using it before my workouts and I’m honestly obsessed. Use my code MIRA20 for 20% off your first order. Link in bio.",
           "product": "Pre-workout drink",
           "username": "MiraMoves",
@@ -904,32 +869,6 @@ export default {
               "text": "Please compare them with your old headset!"
             }
           ],
-          "caption": "NovaSound sent me their new AirBeat headphones to test this week. I’ll use them during tonight’s stream and share my honest thoughts after a few days. Thanks for the PR package!",
-          "product": "Wireless headphones",
-          "username": "TechWithLeo",
-          "followers": "219K",
-          "comments": [
-            {
-              "username": "streamfan88",
-              "text": "Can you test the mic quality?"
-            },
-            {
-              "username": "novasoundaudio",
-              "text": "Can’t wait to hear your thoughts!"
-            },
-            {
-              "username": "lucagames",
-              "text": "Gifted or sponsored?"
-            },
-            {
-              "username": "TechWithLeo",
-              "text": "Gifted. I’ll still be honest in the review."
-            },
-            {
-              "username": "setupqueen",
-              "text": "Please compare them with your old headset!"
-            }
-          ],
           "clues": [
             "Tagged the brand as a creative partner",
             "Co-designed the flavour together",
@@ -963,105 +902,12 @@ export default {
               "text": "Wait, I just ordered the other thing, can I combine? Lol."
             }
           ],
-          "caption": "So incredibly proud to share this collaboration with @The_Local_Stitch. We’ve been developing this limited-run handmade garment for months. Every piece is unique and supports local artisans. Use code LOCAL_CLARA for 15% off and first access to the drop. Link in bio.",
-          "product": "Handmade patchwork quilted jacket",
-          "username": "ClaraSees",
-          "followers": "312K ",
-          "comments": [
-            {
-              "username": "artisan_wear",
-              "text": "This looks incredible, can’t wait to see the details!"
-            },
-            {
-              "username": "needle_ninja",
-              "text": "Is there a waitlist? I need to get one."
-            },
-            {
-              "username": "glowfuel_official",
-              "text": "Obsessed with this texture! So unique 💜"
-            },
-            {
-              "username": "martahealthy",
-              "text": "Looks like an ad but I love supporting local. Ordering!"
-            },
-            {
-              "username": "gymtom",
-              "text": "Wait, I just ordered the other thing, can I combine? Lol."
-            }
-          ],
           "clues": [
             "Received the product for free",
             "No payment, no discount code",
             "“gifted” disclosure in the corner"
           ]
-        },
-        {
-          "caption": "Okay, a mini haul because I was so excited about these discoveries! The ceramics are from a lovely small workshop, and I’m deeply in love with this book. Found some truly great pieces. Everything is genuinely just what I wanted to buy. #legithaul #smallbatch #curatedfinds #SpainFinds",
-          "product": "Cercamics",
-          "username": "RealSarahShares ",
-          "followers": "285K ",
-          "comments": [
-            {
-              "username": "artisan_wear",
-              "text": "Those dishes are gorgeous! Where did you get them?"
-            },
-            {
-              "username": "needle_ninja",
-              "text": "Love that scarf. Perfect for autumn."
-            },
-            {
-              "username": "glowfuel_official",
-              "text": "Genuine finds are the best! Looks so cosy. 💜"
-            },
-            {
-              "username": "martahealthy",
-              "text": "Finally, an actual haul! I want that plant!"
-            },
-            {
-              "username": "gymtom",
-              "text": "Wait, so is it still Spain-based? Need recommendations!"
-            }
-          ],
-          "clues": [
-            "",
-            "",
-            ""
-          ]
         }
-        //},
-        // {
-        //   "caption": "Okay, a mini haul because I was so excited about these discoveries! The ceramics are from a lovely small workshop, and I’m deeply in love with this book. Found some truly great pieces. Everything is genuinely just what I wanted to buy. #legithaul #smallbatch #curatedfinds #SpainFinds",
-        //   "product": "Cercamics",
-        //   "username": "RealSarahShares ",
-        //   "followers": "285K ",
-        //   "comments": [
-        //     {
-        //       "username": "artisan_wear",
-        //       "text": "Those dishes are gorgeous! Where did you get them?"
-        //     },
-        //     {
-        //       "username": "needle_ninja",
-        //       "text": "Love that scarf. Perfect for autumn."
-        //     },
-        //     {
-        //       "username": "glowfuel_official",
-        //       "text": "Genuine finds are the best! Looks so cosy. 💜"
-        //     },
-        //     {
-        //       "username": "martahealthy",
-        //       "text": "Finally, an actual haul! I want that plant!"
-        //     },
-        //     {
-        //       "username": "gymtom",
-        //       "text": "Wait, so is it still Spain-based? Need recommendations!"
-        //     }
-        //   ],
-        //   "clues": [
-        //     "",
-        //     "",
-        //     ""
-        //   ]
-        // }
       ],
       "stage2": {
         "stage1Cleared": "Stage 1 cleared ✓",
@@ -1489,53 +1335,12 @@ export default {
       "pwError": "Access denied. Read the glowing letters in poster order and try again.",
       "hiddenLetter": "hidden letter {letter}",
       "evidence": "Every poster used a named persuasion trick — FOMO, social proof, urgency and more."
-    },
-    "final": {
-      "intro": "{friend}'s thumb is on \"Buy Now\" for {product}. Present the evidence you gathered and talk them down.",
-      "solvedTitle": "{friend} is convinced — close the deal",
-      "solvedText": "Present your case and end the run.",
-      "replies": {
-        "ev-links": "“Wait… the link wasn't even the real store? I didn't look at the address.”",
-        "ev-roulette": "“The spin-to-win wheel was rigged? I thought I got lucky…”",
-        "ev-influencer": "“So that influencer was paid and the photo was AI? It looked so real.”",
-        "ev-algo": "“They targeted me on purpose? That's why it kept following me around.”",
-        "ev-ads": "“Hidden €59 a month?! The ad only ever showed me the 90% off.”",
-        "ev-persuasion": "“'Today only', '2 left'… it was all just pressure tricks on me.”",
-        "generic": "“Huh… okay, that one actually makes me stop and think.”"
-      },
-      "pushback": [
-        "“Come on, it's 90% off — TODAY ONLY. If I wait, it's gone!”",
-        "“Okay, but… everybody in the group chat is buying it. It has 12k reviews!”",
-        "“Alright, alright, maybe. But the timer says 4 minutes left…”"
-      ],
-      "convincedLine": "“…okay. I'm not buying it. Thanks for stopping me — I nearly clicked it.”",
-      "fallbackArguments": [
-        "The store link is a look-alike domain, not the official shop.",
-        "A 90%-off \"today only\" price is the classic too-good-to-be-true bait.",
-        "The real cost is hidden — a small \"subscription\" buried in the fine print.",
-        "Countdown timers and \"only 2 left\" are manufactured pressure, not facts."
-      ],
-      "moodHyped": "HYPED",
-      "moodConvinced": "convinced",
-      "doubtLabel": "{friend}'s doubt",
-      "doubtConvinced": "· convinced",
-      "deckTitle": "Make your case",
-      "deckFallback": "No field evidence on record — argue from the fundamentals below.",
-      "deckEvidence": "These are the clues you collected across the Physical Internet.",
-      "deckSelect": "Select the arguments to present ({chosen}/{required} minimum).",
-      "actionsReady": "Strong case. Hit them with it.",
-      "actionsNeed": "Stack at least {required} arguments before you confront {friend}.",
-      "convinceButton": "🛑 Convince {friend}",
-      "learnLabel": "The real defence:",
-      "learnPre": "no single trick catches every scam — slowing down does. Before you buy, stack the checks: read the ",
-      "learnUrl": "URL",
-      "learnMid1": ", look for the ",
-      "learnDisclosure": "disclosure",
-      "learnMid2": ", find the ",
-      "learnPrice": "true price",
-      "learnMid3": ", and name the ",
-      "learnPressure": "pressure tactic",
-      "learnPost": ". Evidence beats urgency every time."
     }
+  },
+  "debug": {
+    "posttestInTimeDescription": "Restart the post-test with all puzzles completed and 5 minutes left",
+    "posttestInTime": "Test · 5:00",
+    "posttestTimeoutDescription": "Restart the post-test after time ran out with puzzles unfinished",
+    "posttestTimeout": "Test · 0:00"
   }
 }

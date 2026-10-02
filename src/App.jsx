@@ -9,7 +9,7 @@ import RoomReview from './components/RoomReview.jsx'
 import WelcomeScreen from './components/screens/WelcomeScreen.jsx'
 import PretestScreen from './components/screens/PretestScreen.jsx'
 import EnterScreen from './components/screens/EnterScreen.jsx'
-import PosttestScreen from './components/screens/PosttestScreen.jsx'
+import FinalDecision from './rooms/FinalDecision.jsx'
 import { WinScreen, LoseScreen } from './components/screens/EndScreens.jsx'
 
 // Districts & corridors
@@ -53,7 +53,7 @@ export default function App() {
   if (screen === 'welcome') content = <WelcomeScreen />
   else if (screen === 'pretest') content = <PretestScreen />
   else if (screen === 'enter') content = <EnterScreen />
-  else if (screen === 'posttest') content = <PosttestScreen key={posttestSession} />
+  else if (screen === 'posttest') content = <FinalDecision key={posttestSession} />
   else if (screen === 'win') content = <WinScreen />
   else if (screen === 'lose') content = <LoseScreen />
   else if (screen === 'review') content = <RoomReview />
