@@ -140,7 +140,7 @@ const ICONS = {
   vr: 'M-24 -6Q-24 -13 -16 -13H16Q24 -13 24 -6V5Q24 12 16 12H6L0 6L-6 12H-16Q-24 12 -24 5ZM-24 -3H-29M24 -3H29M-14 -2H-4M4 -2H14',
 }
 
-export default function MaxReport({ figure = assetUrl('algorithm-room/max-figure-nobg.png') }) {
+export default function MaxReport({ figure = assetUrl('algorithm-room/max-figure-nobg.png'), dim = 0.35 }) {
   const id = useId().replace(/:/g, '')
   const ref = (name) => `url(#${id}-${name})`
 
@@ -264,7 +264,7 @@ export default function MaxReport({ figure = assetUrl('algorithm-room/max-figure
   const days = L.days || []
 
   return (
-    <svg className="max-report" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={L.title}>
+    <svg className="max-report" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={L.title} style={{ '--ui-dim': dim }}>
       <defs>
         <linearGradient id={`${id}-panel`} x2="0" y2="1"><stop stopColor="#071233"/><stop offset="1" stopColor="#040920"/></linearGradient>
         <linearGradient id={`${id}-bar`} x2="0" y2="1"><stop stopColor={C.cyan}/><stop offset=".6" stopColor={C.blue}/><stop offset="1" stopColor={C.violet}/></linearGradient>
@@ -535,35 +535,6 @@ export default function MaxReport({ figure = assetUrl('algorithm-room/max-figure
           </g>
         ))}
       </g>
-      {figure && (
-        // Source is 1024×1536 with feet at ~94% height: scaled to stand on the platform at (800, 720).
-        <g clipPath={ref('bay')}>
-          <image className="mr-holo" href={figure} x="600" y="144" width="410" height="614"/>
-        </g>
-      )}
-      {/* Labels sit above the figure so its glow never dims them. */}
-      <g className="mr-panel" style={{ '--d': '.1s' }}>
-        {[0, 1, 2, 3].map((i) => <rect key={i} x="680" y={150 + i * 12} width={i % 2 ? 12 : 22} height="5" fill={C.cyan} opacity=".8"/>)}
-        {[0, 1, 2, 3, 4, 5].map((i) => <rect key={i} className="mr-blink" x="912" y={300 + i * 14} width="8" height="8" fill="none" stroke={C.cyan} style={timing(i * .3, 2.4)}/>)}
-        {text(920, 132, L.scanComplete, 'mr-t mr-xs', 'end')}
-        <path className="mr-line" d="M854 138H920" pathLength="1" stroke={C.cyan} style={{ '--d': '1.4s' }}/>
-        {L.states?.map((s, i) => (
-          <g key={i}>
-            <circle className={i === 3 ? 'mr-blink' : undefined} cx="672" cy={520 + i * 22} r="5" fill={i === 3 ? C.cyan : 'none'} stroke={C.cyan} strokeWidth="1.5" style={timing(0, 1.4)}/>
-            {text(682, 524 + i * 22, s, 'mr-t mr-xs')}
-          </g>
-        ))}
-        {text(920, 636, L.lastSeen, 'mr-t mr-xs', 'end')}
-        {text(920, 652, '2025.04.27', 'mr-v mr-xs', 'end')}
-        {text(920, 668, '21:36:12', 'mr-v mr-xs', 'end')}
-        {[[700, 260], [900, 420], [705, 430], [895, 560]].map(([x, y], i) => (
-          <path key={i} className="mr-blink" d={`M${x - 6} ${y}H${x + 6}M${x} ${y - 6}V${y + 6}`} stroke={C.cyan} style={timing(i * .6, 3)}/>
-        ))}
-      </g>
-      <g clipPath={ref('slot')}>
-        <rect className="mr-scany" x="690" y="90" width="220" height="18" fill={ref('beam')} style={timing(.5, 4.8, { '--h': '620px' })}/>
-        <rect className="mr-scany" x="690" y="90" width="220" height="2" fill="#9ff6ff" opacity=".6" style={timing(2.1, 4.8, { '--h': '620px' })}/>
-      </g>
 
       {panel('system', 660, 754, 280, 42, L.system, 1.65, <>
         {ring('sys', 828, 775, 11, 62, 1.7, C.cyan, 4)}
@@ -788,6 +759,45 @@ export default function MaxReport({ figure = assetUrl('algorithm-room/max-figure
         ))}
       </>, true)}
 
+      {/* ---------- ambient light streaks ---------- */}
+      {[[250, 9, 1.5], [596, 12, 6]].map(([y, dur, d]) => (
+        <rect key={y} className="mr-streak" x="-300" y={y} width="300" height="2" fill={ref('streak')} style={timing(d, dur)}/>
+      ))}
+
+      {/* Dims the whole UI; Max (drawn after) keeps full brightness. Strength: `dim` prop. */}
+      <rect className="mr-dim" width={W} height={H} fill="#000"/>
+      {figure && (
+        // Source is 1024×1536 with feet at ~94% height: scaled to stand on the platform at (800, 720).
+        <g clipPath={ref('bay')}>
+          <image className="mr-holo" href={figure} x="600" y="144" width="410" height="614"/>
+        </g>
+      )}
+      <g clipPath={ref('slot')}>
+        <rect className="mr-scany" x="690" y="90" width="220" height="18" fill={ref('beam')} style={timing(.5, 4.8, { '--h': '620px' })}/>
+        <rect className="mr-scany" x="690" y="90" width="220" height="2" fill="#9ff6ff" opacity=".6" style={timing(2.1, 4.8, { '--h': '620px' })}/>
+      </g>
+      {/* Bay labels sit above the figure (its glow would hide them) but share the UI dimming. */}
+      <g className="mr-dimmed">
+      <g className="mr-panel" style={{ '--d': '.1s' }}>
+        {[0, 1, 2, 3].map((i) => <rect key={i} x="680" y={150 + i * 12} width={i % 2 ? 12 : 22} height="5" fill={C.cyan} opacity=".8"/>)}
+        {[0, 1, 2, 3, 4, 5].map((i) => <rect key={i} className="mr-blink" x="912" y={300 + i * 14} width="8" height="8" fill="none" stroke={C.cyan} style={timing(i * .3, 2.4)}/>)}
+        {text(920, 132, L.scanComplete, 'mr-t mr-xs', 'end')}
+        <path className="mr-line" d="M854 138H920" pathLength="1" stroke={C.cyan} style={{ '--d': '1.4s' }}/>
+        {L.states?.map((s, i) => (
+          <g key={i}>
+            <circle className={i === 3 ? 'mr-blink' : undefined} cx="672" cy={520 + i * 22} r="5" fill={i === 3 ? C.cyan : 'none'} stroke={C.cyan} strokeWidth="1.5" style={timing(0, 1.4)}/>
+            {text(682, 524 + i * 22, s, 'mr-t mr-xs')}
+          </g>
+        ))}
+        {text(920, 636, L.lastSeen, 'mr-t mr-xs', 'end')}
+        {text(920, 652, '2025.04.27', 'mr-v mr-xs', 'end')}
+        {text(920, 668, '21:36:12', 'mr-v mr-xs', 'end')}
+        {[[700, 260], [900, 420], [705, 430], [895, 560]].map(([x, y], i) => (
+          <path key={i} className="mr-blink" d={`M${x - 6} ${y}H${x + 6}M${x} ${y - 6}V${y + 6}`} stroke={C.cyan} style={timing(i * .6, 3)}/>
+        ))}
+      </g>
+      </g>
+
       {loader()}
 
       {/* ---------- boot interference: scanlines, rolling bar, tearing ---------- */}
@@ -801,10 +811,6 @@ export default function MaxReport({ figure = assetUrl('algorithm-room/max-figure
         ))}
       </g>
 
-      {/* ---------- ambient light streaks ---------- */}
-      {[[250, 9, 1.5], [596, 12, 6]].map(([y, dur, d]) => (
-        <rect key={y} className="mr-streak" x="-300" y={y} width="300" height="2" fill={ref('streak')} style={timing(d, dur)}/>
-      ))}
     </svg>
   )
 }

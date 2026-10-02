@@ -188,3 +188,7 @@
 .mr-boot-fx { animation: mr-fx-out .6s ease-out calc(var(--load) + 2.1s) forwards; pointer-events: none; }
 @keyframes mr-fx-out { to { opacity: 0; visibility: hidden; } }
 .mr-fx-roll { animation: mr-move-y 1.4s linear infinite; }
+
+/* UI dimming: a dark layer over every module; Max is drawn above it at full brightness. */
+.mr-dim { opacity: var(--ui-dim, .35); pointer-events: none; }
+.mr-dimmed { opacity: calc(1 - var(--ui-dim, .35)); }
