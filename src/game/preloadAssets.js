@@ -40,6 +40,8 @@ const BG_IMAGES = [
   'persuasion_end.png',
   'computer.png',
   'objects/emoji-decoding-card.png',
+  'objects/max-report.png',
+  'objects/flashlight.png',
   'rewards/data-report.svg',
   'rewards/truth-flashlight.svg',
   'conversation.png',
@@ -97,10 +99,15 @@ const ASSET_IMAGES = [
   'influencers/nothing_en.png',
   'influencers/nothing_es.png',
   'influencers/nothing_sr.png',
-  // Product art.
+  // Product art + reverse-image-search result variants.
   'products/cupcakes.png',
+  'products/cupcakes1.png',
+  'products/cupcakes2.png',
+  'products/cupcakes3.png',
   'products/mug.png',
   'products/novapad.png',
+  'products/novapad1.png',
+  'products/novapad2.png',
 ]
 
 export const GAME_IMAGES = [

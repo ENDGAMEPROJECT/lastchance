@@ -119,7 +119,11 @@ export default function PersuasionRoom({ node }) {
       const ch = mark.textContent || ''
       const isLower = ch && ch === ch.toLowerCase() && ch !== ch.toUpperCase()
       const d = Math.max(w, h) * (isLower ? 1.12 : 1.28)
-      next[p.id] = { x: mark.offsetLeft + w / 2, y: mark.offsetTop + h / 2, d }
+      // offsetLeft/offsetTop are measured from the poster's PADDING edge (inside
+      // its border); the frame ring is positioned from the frame's border-box
+      // edge. Add the poster's border width (clientLeft/clientTop) so both use
+      // the same origin.
+      next[p.id] = { x: mark.offsetLeft + el.clientLeft + w / 2, y: mark.offsetTop + el.clientTop + h / 2, d }
     }
     // Merge, never replace — a transient empty read must not wipe good values.
     if (Object.keys(next).length) setRingPos((prev) => ({ ...prev, ...next }))
@@ -138,8 +142,10 @@ export default function PersuasionRoom({ node }) {
   // fires the instant the wall is actually in the DOM; a ResizeObserver then
   // keeps the rings measured across any later layout change.
   const wallObs = useRef(null)
+  const wallElRef = useRef(null) // the .pl-posters element (for coplanar snapping)
   const attachWall = useCallback((el) => {
     if (wallObs.current) { wallObs.current.disconnect(); wallObs.current = null }
+    wallElRef.current = el
     if (el) {
       const ro = new ResizeObserver(() => measureRings())
       ro.observe(el)
@@ -147,6 +153,11 @@ export default function PersuasionRoom({ node }) {
       requestAnimationFrame(() => measureRings())
     }
   }, [measureRings])
+
+  // Per-placed-frame rotateY axis: the transform-origin X (frame-local px) that
+  // puts the frame's rotation axis on the WALL's centre axis, so a snapped frame
+  // is coplanar with the tilted wall and its ring lands exactly on the letter.
+  const [placedOrigin, setPlacedOrigin] = useState({}) // frameId -> originX (px)
 
   // Clean up the end-animation timer on unmount.
   useEffect(() => () => clearTimeout(endTimer.current), [])
@@ -184,30 +195,33 @@ export default function PersuasionRoom({ node }) {
     setZorder((z) => [...z.filter((x) => x !== id), id]) // bring to front
   }
 
-  // Snap a frame onto a poster. Because the frame and the poster live in
-  // different transform contexts (per-frame rotateY vs. the wall's), matching
-  // the poster's projected top-left directly leaves an offset. So we set a rough
-  // position, then on the next frame measure both RENDERED rects and nudge by
-  // the residual delta — the frame's projected top-left ends up exactly on the
-  // poster's, independent of transform origins.
+  // Sum offsetLeft/offsetTop up the offsetParent chain to `ancestor` → an
+  // element's PRE-transform layout position in `ancestor`'s coordinate space
+  // (unaffected by the wall's/ frame's rotateY, unlike getBoundingClientRect).
+  function layoutPos(el, ancestor) {
+    let x = 0, y = 0, node = el
+    while (node && node !== ancestor) { x += node.offsetLeft; y += node.offsetTop; node = node.offsetParent }
+    return { x, y }
+  }
+
+  // Snap a frame onto a poster so it's COPLANAR with the tilted wall. We place
+  // the frame at the poster's exact layout position (same pre-transform box) and
+  // set its rotateY origin onto the wall's centre axis — same axis, same angle,
+  // same shared perspective ⇒ the frame overlays the poster 1:1 and its ring
+  // sits exactly where the poster's letter is. No projected-rect nudging needed.
   function snapToPoster(frameId, posterId) {
     const posterEl = posterRefs.current[posterId]
+    const wallEl = wallElRef.current
     const sceneEl = sceneRef.current
-    if (!posterEl || !sceneEl) return
-    const pr = posterEl.getBoundingClientRect()
-    const sr = sceneEl.getBoundingClientRect()
-    setPos((cur) => ({ ...cur, [frameId]: { x: (pr.left - sr.left) / scale, y: (pr.top - sr.top) / scale } }))
-    // Next frame, nudge so the frame's CENTRE sits on the poster's centre — the
-    // frame is the same size as the poster, so it covers it (not a corner).
-    requestAnimationFrame(() => {
-      const frameEl = frameRefs.current[frameId]
-      if (!frameEl) return
-      const fr = frameEl.getBoundingClientRect()
-      const pr2 = posterEl.getBoundingClientRect()
-      const dx = ((pr2.left + pr2.width / 2) - (fr.left + fr.width / 2)) / scale
-      const dy = ((pr2.top + pr2.height / 2) - (fr.top + fr.height / 2)) / scale
-      setPos((cur) => ({ ...cur, [frameId]: { x: cur[frameId].x + dx, y: cur[frameId].y + dy } }))
-    })
+    if (!posterEl || !wallEl || !sceneEl) return
+    const p = layoutPos(posterEl, sceneEl) // poster top-left in scene coords
+    // The wall rotates around its LEFT edge (transform-origin: left center). The
+    // frame sits at the poster's position (poster.offsetLeft to the right of the
+    // wall's left edge), so to share that same axis its origin must be that far
+    // to its LEFT: originX = -poster.offsetLeft.
+    const originX = -posterEl.offsetLeft
+    setPos((cur) => ({ ...cur, [frameId]: { x: p.x, y: p.y } }))
+    setPlacedOrigin((cur) => ({ ...cur, [frameId]: originX }))
   }
 
   useEffect(() => {
@@ -323,7 +337,15 @@ export default function PersuasionRoom({ node }) {
             occurrence of its letter, so when the frame is dropped onto a poster
             the ring lands exactly on that poster's matching letter. */}
         {frames.map((f) => {
-          const fScale = getFrameScale(pos[f.id].x) // recede with the wall's perspective
+          // A placed frame must be FULL SIZE so its ring maps 1:1 onto the
+          // poster's letter. Only the free-floating pile fakes recession with
+          // getFrameScale — keeping that scale on a snapped frame shrinks it
+          // relative to the full-size poster and drags the ring off the letter.
+          const placed = !!placement[f.id]
+          const fScale = placed ? 1 : getFrameScale(pos[f.id].x)
+          // Placed → rotate around the wall's centre axis (coplanar with the
+          // wall). Free → rotate around the frame's own left edge for the pile.
+          const originX = placed && placedOrigin[f.id] != null ? placedOrigin[f.id] : null
           const ring = ringPos[f.id] // {x,y,d} measured from the matching poster
           return (
             <div
@@ -334,7 +356,7 @@ export default function PersuasionRoom({ node }) {
                 left: pos[f.id].x,
                 top: pos[f.id].y,
                 transform: `rotateY(10deg) scale(${fScale})`,
-                transformOrigin: 'left center',
+                transformOrigin: originX != null ? `${originX}px center` : 'left center',
                 zIndex: dragId === f.id ? 999 : 20 + zorder.indexOf(f.id),
               }}
               onPointerDown={(e) => onFrameDown(e, f.id)}

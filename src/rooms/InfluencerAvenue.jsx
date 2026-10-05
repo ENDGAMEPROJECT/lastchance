@@ -88,6 +88,16 @@ const PRODUCTS = [
   },
 ]
 
+/* Reverse-image-search result thumbnails per product: the "same" item found on
+   several sites, shown as slightly different listing photos. Falls back to the
+   product's own image when no variants were provided. Files live in
+   public/products/. Cycled across the result rows. */
+const RESULT_THUMBS = {
+  mug: ['mug.png'],
+  novapad: ['novapad1.png', 'novapad2.png'],
+  cupcakes: ['cupcakes1.png', 'cupcakes2.png', 'cupcakes3.png'],
+}
+
 /* The three classification option values (labels come from i18n). */
 const CLASSIFY_OPTIONS = ['mass', 'ai', 'legit']
 
@@ -865,15 +875,24 @@ export default function InfluencerAvenue({ node }) {
                         <div className="ia-prod-result">
                           <div className="t-xs upper dim">{t('rooms.influencer.stage2.matchesTitle')}</div>
                           <ul className="ia-matches">
-                            {shownCopy.matches.slice(0, 3).map((m, i) => (
+                            {(() => { const thumbs = RESULT_THUMBS[shown.id] || [`${shown.id}.png`]; return (
+                            shownCopy.matches.slice(0, 3).map((m, i) => (
                               <li key={i} className="ia-match" style={{ animationDelay: `${i * 90}ms` }}>
-                                <span className="ia-match-fav" style={{ background: shown.hue }} aria-hidden />
+                                <span
+                                  className="ia-match-fav"
+                                  style={{
+                                    backgroundImage: `url("${import.meta.env.BASE_URL}products/${thumbs[i % thumbs.length]}")`,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                  }}
+                                  aria-hidden
+                                />
                                 <span className="ia-match-txt">
                                   <span className="ia-match-site mono">{m.site}</span>
                                   <span className="ia-match-title">{m.title}</span>
                                 </span>
                               </li>
-                            ))}
+                            )) )})()}
                           </ul>
                           <div className="ia-result-sum t-xs">{shownCopy.result}</div>
                           <div className="t-xs dim ia-prod-hint">{shownCopy.hint}</div>
