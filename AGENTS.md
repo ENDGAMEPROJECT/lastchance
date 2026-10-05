@@ -87,7 +87,7 @@ after touching any `t('...')` key or locale file.
   to many frames × ~20ms (e.g. 50×20ms), not one frame with delay=1.
 - **Non-breaking spaces.** Copy pasted into `en.js` has occasionally introduced U+00A0, which
   breaks exact-match string edits. Normalize to plain spaces if an edit won't match.
-- **Debug jumps.** `?debug`, `?screen=pretest|posttest|win|lose`, or `npm run dev:debug`.
+- **Debug jumps.** `?debug`, `?screen=pretest|enter|posttest|win|lose`, or `npm run dev:debug`. `skipToPortal()` (GameContext) + `DebugPortalButton` skip the intro to the portal arrival — debug only.
 
 ## Deploy
 

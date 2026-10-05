@@ -10,7 +10,10 @@
    (e.g. http://localhost:5173/?debug). Off in normal builds.
 
    ?screen=<name> jumps straight to a screen (and implies debug), e.g.
-   ?screen=posttest, ?screen=pretest, ?screen=win, ?screen=lose. */
+   ?screen=posttest, ?screen=pretest, ?screen=win, ?screen=lose, or
+   ?screen=enter to start at the portal arrival (intro skipped). In debug, a
+   "Skip intro → Portal" button does the same from the welcome/pre-test HUD
+   and the map's jump bar. */
 const _params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null
 export const DEBUG_SCREEN = (_params && _params.get('screen')) || null
 export const DEBUG_POSTTEST_SCENARIO = _params?.get('scenario') === 'timeout' ? 'timeout' : 'inTime'

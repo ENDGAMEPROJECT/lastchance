@@ -8,11 +8,12 @@ import { getHintContext, getHintPlan } from '../game/hints.js'
 import Modal from './Modal.jsx'
 import DataReport from './DataReport.jsx'
 import DebugPosttestButtons from './DebugPosttestButtons.jsx'
+import DebugPortalButton from './DebugPortalButton.jsx'
 import './HUD.css'
 
 /* Persistent top bar: countdown, mission recap, inventory & map access. */
 export default function HUD() {
-  const { screen, activeNodeId, roomStarted, linkRound, timeLeft, inventory, evidence, progress, goMap, postDecision } = useGame()
+  const { screen, activeNodeId, roomStarted, linkRound, timeLeft, inventory, evidence, progress, goMap, postDecision, enterTour } = useGame()
   const t = useT()
   const [bagOpen, setBagOpen] = useState(false)
   const [reportOpen, setReportOpen] = useState(false)
@@ -93,6 +94,10 @@ export default function HUD() {
   const preGame = screen === 'welcome' || screen === 'pretest' || screen === 'enter'
   const showTimer = !preGame && (screen !== 'posttest' || postDecision)
   const showNav = !preGame && screen !== 'posttest'
+  // The portal arrival walks the player through Map and Bag: the buttons appear
+  // there for show (not clickable yet) and the one being explained is highlighted.
+  const touring = screen === 'enter' && Boolean(enterTour)
+  const tourClass = (target) => (touring ? `hud-tour-btn ${enterTour === target ? 'is-focus' : ''}` : '')
   // Hints only help where there's a live objective — a puzzle room, or the map
   // pointing at the next district. Elsewhere (setup, conversations, endings)
   // there's nothing to hint, so don't offer the button.
@@ -133,6 +138,7 @@ export default function HUD() {
           )}
           {fullscreenError && <span role="alert" className="t-xs">{t('hud.fullscreenError')}</span>}
           {DEBUG && ['posttest', 'win', 'lose'].includes(screen) && <DebugPosttestButtons />}
+          {DEBUG && ['welcome', 'pretest'].includes(screen) && <DebugPortalButton />}
           {DEBUG && <span className="chip bad hud-debug">🐞 DEBUG</span>}
           {showHints && (
             <button
@@ -152,13 +158,15 @@ export default function HUD() {
           >
             {muted ? '🔇' : '🔊'}
           </button>
-          {showNav && screen !== 'map' && (
-            <button className="btn btn-cyan btn-sm" onClick={goMap}>
+          {(showNav || touring) && screen !== 'map' && (
+            <button className={`btn btn-cyan btn-sm ${tourClass('map')}`} data-tour="map"
+              onClick={touring ? undefined : goMap} tabIndex={touring ? -1 : undefined} aria-disabled={touring || undefined}>
               {t('hud.map')}
             </button>
           )}
-          {showNav && (
-            <button className="btn btn-purple btn-sm" onClick={() => setBagOpen(true)}>
+          {(showNav || touring) && (
+            <button className={`btn btn-purple btn-sm ${tourClass('bag')}`} data-tour="bag"
+              onClick={touring ? undefined : () => setBagOpen(true)} tabIndex={touring ? -1 : undefined} aria-disabled={touring || undefined}>
               {t('hud.bag')} {inventory.length > 0 && <b className="bag-count">{inventory.length}</b>}
             </button>
           )}

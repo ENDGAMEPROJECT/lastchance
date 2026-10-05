@@ -1,37 +1,180 @@
 import { useState, useEffect } from 'react'
 import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
+import { useStage } from '../Stage.jsx'
 import { GAME_MINUTES, NARRATIVE } from '../../game/gameData.js'
 import { bgUrl } from '../../game/assets.js'
 import './screens.css'
+import './pretest.css'
+import './enter.css'
 
-/* Transition between the pre-test and the district map — the moment the player
-   "steps inside" the Physical Internet. A neon portal warp plays on arrival (a
-   wormhole rushing past, then a whiteout the instructions emerge from), so the
-   jump from the real-world chat into the digital world feels like travel rather
-   than a plain screen swap. It opens on the hand-off beat ({friend} sets the
-   30-minute ultimatum, the player invites them along), then primes the two HUD
-   tools they'll lean on (Map and Bag). "Step inside" starts the clock. */
+const WARP_MS = 1900
+const FADE_MS = 350 // matches the speech-band fade in pretest.css
+const BACKDROPS = {
+  friend: 'max-talking-ph-internet.png',
+  player: 'player-talking-ph-internet.png',
+  tour: 'no-one-talking-ph-internet.png',
+}
+const readingTime = (text) => Math.max(3500, text.length * 18 + 1500, text.trim().split(/\s+/).length * 280 + 800)
+
+// Fixed spark layout (percent of the art), so it is stable across renders.
+const SPARKS = Array.from({ length: 14 }, (_, i) => {
+  const r = (n) => { const v = Math.sin((i + 1) * n * 12.9898) * 43758.5453; return v - Math.floor(v) }
+  return {
+    left: `${4 + r(1) * 92}%`,
+    top: `${10 + r(2) * 78}%`,
+    '--delay': `${(r(3) * 6).toFixed(2)}s`,
+    '--dur': `${(2.4 + r(4) * 3).toFixed(2)}s`,
+    '--dx': `${((r(5) - 0.5) * 40).toFixed(0)}px`,
+    '--dy': `${(-(10 + r(6) * 30)).toFixed(0)}px`,
+    '--c': i % 3 === 0 ? '#ff2bd6' : '#16f2ff',
+  }
+})
+
+/* The portal arrival: after the warp, a short Max/Mia exchange inside the
+   Physical Internet, then a walkthrough of the two HUD tools (Map, then Bag —
+   each highlighted with its explanation underneath), and Mia's last line.
+   Only then does "Countdown begins" appear; it starts the clock. Every step
+   advances on its own after its reading time (shown by the timeline). */
 export default function EnterScreen() {
-  const { startGame, reducedMotion } = useGame()
+  const { startGame, reducedMotion, setEnterTour } = useGame()
   const t = useT()
+  const { scale } = useStage()
   const friend = NARRATIVE.friend
   const vars = { friend, product: NARRATIVE.product, minutes: GAME_MINUTES }
 
-  // The portal overlay only plays with motion enabled; it clears itself once
-  // the warp finishes so it never sits in front of the buttons.
+  const steps = [
+    { who: 'friend', text: t('enter.friendLine', vars) },
+    { who: 'player', text: t('enter.playerLine', vars) },
+    { who: 'player', text: t('enter.mission', vars) },
+    { who: 'tour', target: 'map', title: t('hud.map'), text: t('enter.mapText', vars) },
+    { who: 'tour', target: 'bag', title: t('hud.bag'), text: t('enter.bagText', vars) },
+    { who: 'player', text: t('enter.finalLine', vars) },
+  ]
+
+  // The portal overlay only plays with motion enabled; the dialogue starts once it clears.
   const [warping, setWarping] = useState(!reducedMotion)
   useEffect(() => {
     if (!warping) return
-    const timer = window.setTimeout(() => setWarping(false), 1900)
+    const timer = window.setTimeout(() => setWarping(false), WARP_MS)
     return () => window.clearTimeout(timer)
   }, [warping])
 
+  const [stepIndex, setStepIndex] = useState(0)
+  const [clock, setClock] = useState({ step: 0, ms: 0 })
+  const step = steps[stepIndex]
+  const isLast = stepIndex === steps.length - 1
+  const total = readingTime(step.text)
+  const elapsed = clock.step === stepIndex ? clock.ms : 0
+  const canStart = isLast && elapsed >= total
+  const leaving = !reducedMotion && !isLast && elapsed >= total - FADE_MS
+  const visibleLetters = reducedMotion ? step.text.length : Math.floor(elapsed / 18)
+  const progress = `${Math.min(100, (elapsed / total) * 100)}%`
+
+  // Reading clock: pauses while the tab is hidden, then moves to the next step.
+  useEffect(() => {
+    if (warping) return
+    let ms = 0
+    const timer = window.setInterval(() => {
+      if (document.hidden) return
+      ms = Math.min(total, ms + 50)
+      setClock({ step: stepIndex, ms })
+      if (ms >= total) {
+        window.clearInterval(timer)
+        if (!isLast) setStepIndex((i) => i + 1)
+      }
+    }, 50)
+    return () => window.clearInterval(timer)
+  }, [warping, stepIndex, total, isLast])
+
+  // Tell the HUD which tool to reveal / highlight.
+  const tour = stepIndex < 3 ? null : step.who === 'tour' ? step.target : 'done'
+  useEffect(() => { setEnterTour(tour) }, [tour, setEnterTour])
+
+  // Place the explanation under the highlighted HUD button. The button lives in
+  // the HUD (outside this screen), so track its position every frame while shown.
+  const [anchorX, setAnchorX] = useState(null)
+  const [root, setRoot] = useState(null)
+  useEffect(() => {
+    if (step.who !== 'tour' || !root) return
+    let frame = 0
+    const measure = () => {
+      const button = document.querySelector(`[data-tour="${step.target}"]`)
+      if (button) {
+        const b = button.getBoundingClientRect()
+        const r = root.getBoundingClientRect()
+        const x = (b.left + b.width / 2 - r.left) / scale
+        setAnchorX((prev) => (prev != null && Math.abs(prev - x) < 0.5 ? prev : x))
+      }
+      frame = window.requestAnimationFrame(measure)
+    }
+    measure()
+    return () => window.cancelAnimationFrame(frame)
+  }, [step.who, step.target, root, scale])
+
+  const backdrop = step.who
+  const name = step.who === 'player' ? NARRATIVE.player : friend
+  const captionW = 360
+  const captionLeft = anchorX == null ? null : Math.min(1280 - 16 - captionW, Math.max(16, anchorX - captionW + 40))
+
   return (
-    <div className="stage-scroll enter-scroll">
-      {/* Arrive onto the actual district map — the instructions sit over it, so
-          the portal drops you into the world you're about to explore. */}
-      <div className="bg-slot" style={{ backgroundImage: `url(${bgUrl('map/map-bg.png')})` }} />
+    <div className="scene pretest-scene enter-scene" ref={setRoot}>
+      <div className={`pretest-content ${reducedMotion ? 'fade-in' : 'enter-arrive'}`}>
+        <div className="pretest-art">
+          {Object.entries(BACKDROPS).map(([key, file]) => (
+            <img key={key} className={`pretest-backdrop enter-backdrop ${backdrop === key ? 'is-visible' : ''}`} src={bgUrl(file)} alt="" />
+          ))}
+          {/* Subtle life in the scene: drifting sparks and rare glitch slices. */}
+          {!reducedMotion && (
+            <div className="enter-fx" aria-hidden="true">
+              <div className="enter-glitch" style={{ backgroundImage: `url(${bgUrl(BACKDROPS[backdrop])})` }} />
+              <div className="enter-glitch enter-glitch-b" style={{ backgroundImage: `url(${bgUrl(BACKDROPS[backdrop])})` }} />
+              {SPARKS.map((style, i) => <span key={i} className="enter-spark" style={style} />)}
+            </div>
+          )}
+        </div>
+
+        {/* Arrival title, only during the opening exchange. */}
+        <div className={`enter-head ${stepIndex < 3 ? '' : 'is-hidden'}`}>
+          <div className="eyebrow accent-cyan">{t('enter.eyebrow')}</div>
+          <h1 className="enter-title">
+            {t('enter.titleLead')} <span className="grad">{t('enter.titleAccent')}</span>
+          </h1>
+        </div>
+
+        {!warping && step.who !== 'tour' && (
+          <div key={stepIndex} className={`pretest-speech ${step.who === 'player' ? 'is-player' : 'is-friend'} ${leaving ? 'is-leaving' : ''}`}>
+            <div className="pretest-speech-name" data-text={name} aria-hidden="true">{name}</div>
+            <p className="pretest-line" aria-label={step.text} aria-live="polite" aria-atomic="true">
+              <span aria-hidden="true">
+                <span className="pretest-line-visible">{step.text.slice(0, visibleLetters)}</span>
+                <span className="pretest-line-pending">{step.text.slice(visibleLetters)}</span>
+              </span>
+            </p>
+            <span className="pretest-reading-track" aria-hidden="true">
+              <span className="pretest-reading-progress" style={{ width: progress }} />
+            </span>
+          </div>
+        )}
+
+        {!warping && step.who === 'tour' && captionLeft != null && (
+          <div key={stepIndex} className={`enter-caption is-${step.target} ${leaving ? 'is-leaving' : ''}`}
+            style={{ left: captionLeft, width: captionW, '--arrow': `${anchorX - captionLeft}px` }} aria-live="polite">
+            <b className="enter-caption-title">{step.title}</b>
+            <p>{step.text}</p>
+            <span className="enter-caption-track" aria-hidden="true">
+              <span className="enter-caption-progress" style={{ width: progress }} />
+            </span>
+          </div>
+        )}
+
+        {canStart && (
+          <button className="btn btn-cyan btn-lg jack-in enter-start" onClick={startGame}>
+            {t('enter.start')}
+          </button>
+        )}
+      </div>
+
       {warping && (
         <div className="portal-warp" aria-hidden>
           <div className="portal-streaks" />
@@ -43,57 +186,6 @@ export default function EnterScreen() {
           <div className="portal-core" />
         </div>
       )}
-      <div className={`intro ${reducedMotion ? 'fade-in' : 'portal-arrive'}`}>
-        <div className="intro-glyph">⏻</div>
-        <div className="eyebrow accent-cyan">{t('enter.eyebrow')}</div>
-        <h1 className="intro-title">
-          {t('enter.titleLead')} <span className="grad">{t('enter.titleAccent')}</span>
-        </h1>
-
-        {/* The hand-off: the challenge, then the invitation. */}
-        <div className="enter-dialogue">
-          <div className="enter-line friend">
-            <span className="enter-who">{friend}</span>
-            <p>{t('enter.friendLine', vars)}</p>
-          </div>
-          <div className="enter-line you">
-            <span className="enter-who">{t('story.you')}</span>
-            <p>{t('enter.playerLine', vars)}</p>
-          </div>
-        </div>
-
-        <div className="intro-body">
-          <div className="intro-card panel panel-glow-cyan">
-            <h3 className="accent-cyan">{t('enter.toolsTitle')}</h3>
-            <p className="muted">{t('enter.toolsIntro', vars)}</p>
-            <div className="intro-mission">
-              <span className="chip warn">{t('enter.clock', vars)}</span>
-              <p>{t('enter.mission', vars)}</p>
-            </div>
-          </div>
-
-          <div className="intro-steps">
-            <div className="intro-step panel">
-              <span className="intro-step-icon" aria-hidden>{t('hud.map').split(' ')[0]}</span>
-              <div className="intro-step-body">
-                <b>{t('hud.map').split(' ').slice(1).join(' ')}</b>
-                <span>{t('enter.mapText', vars)}</span>
-              </div>
-            </div>
-            <div className="intro-step panel">
-              <span className="intro-step-icon" aria-hidden>{t('hud.bag').split(' ')[0]}</span>
-              <div className="intro-step-body">
-                <b>{t('hud.bag').split(' ').slice(1).join(' ')}</b>
-                <span>{t('enter.bagText', vars)}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button className="btn btn-cyan btn-lg jack-in" onClick={startGame}>
-          {t('enter.start')}
-        </button>
-      </div>
     </div>
   )
 }

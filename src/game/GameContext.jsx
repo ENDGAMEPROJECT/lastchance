@@ -66,6 +66,9 @@ const baseInitialState = {
   timeLeft: START_SECONDS,
   running: false,
   reducedMotion: false,
+  // Portal-arrival walkthrough of the HUD: null (not shown) | 'map' | 'bag'
+  // (that button highlighted) | 'done' (both shown, none highlighted).
+  enterTour: null,
 }
 
 export const initialState = DEBUG && DEBUG_SCREEN === 'posttest'
@@ -80,10 +83,10 @@ export function reducer(state, action) {
     case 'ENTER_INTERNET':
       // Pre-test → the "jack in" transition (explains Map/Bag). Clock is not
       // running yet; START_GAME starts it when the player commits.
-      return { ...state, screen: 'enter' }
+      return { ...state, screen: 'enter', enterTour: null }
 
     case 'START_GAME':
-      return { ...state, screen: 'map', running: true, timeLeft: START_SECONDS, linkRound: null }
+      return { ...state, screen: 'map', running: true, timeLeft: START_SECONDS, linkRound: null, enterTour: null }
 
     case 'FINISH':
       // Final decision from the post-test resolves the game.
@@ -126,6 +129,15 @@ export function reducer(state, action) {
     case 'GO_MAP':
       if (['posttest', 'win', 'lose'].includes(state.screen)) return state
       return { ...state, screen: 'map', reviewNodeId: null }
+
+    case 'DEBUG_SKIP_TO_PORTAL':
+      // Debug-only: skip the welcome + pre-test and land on the "step inside"
+      // portal arrival, clock stopped (START_GAME starts it as in a real run).
+      if (!DEBUG) return state
+      return { ...state, screen: 'enter', running: false, activeNodeId: null, reviewNodeId: null, enterTour: null }
+
+    case 'SET_ENTER_TOUR':
+      return state.enterTour === action.step ? state : { ...state, enterTour: action.step }
 
     case 'GOTO_SCREEN': // debug-only jump
       if (DEBUG && action.screen === 'posttest') return debugPosttestState(state, action.scenario)
@@ -228,6 +240,8 @@ export function GameProvider({ children }) {
   const finishGame = useCallback((outcome, reason) => dispatch({ type: 'FINISH', outcome, reason }), [])
   const startPosttestDecision = useCallback(() => dispatch({ type: 'START_POSTTEST_DECISION' }), [])
   const gotoScreen = useCallback((screen, scenario) => dispatch({ type: 'GOTO_SCREEN', screen, scenario }), [])
+  const skipToPortal = useCallback(() => dispatch({ type: 'DEBUG_SKIP_TO_PORTAL' }), [])
+  const setEnterTour = useCallback((step) => dispatch({ type: 'SET_ENTER_TOUR', step }), [])
   const openNode = useCallback((id) => dispatch({ type: 'OPEN_NODE', id }), [])
   const reviewNode = useCallback((id) => dispatch({ type: 'REVIEW_NODE', id }), [])
   const startRoom = useCallback(() => dispatch({ type: 'START_ROOM' }), [])
@@ -258,6 +272,8 @@ export function GameProvider({ children }) {
     finishGame,
     startPosttestDecision,
     gotoScreen,
+    skipToPortal,
+    setEnterTour,
     openNode,
     reviewNode,
     startRoom,
