@@ -12,12 +12,7 @@
    ============================================================ */
 
 import { createContext, useContext, useMemo, useState, useCallback } from 'react'
-import en from './locales/en.js'
-import es from './locales/es.js'
-import fi from './locales/fi.js'
-import sr from './locales/sr.js'
-
-const LOCALES = { en, es, fi, sr }
+import LOCALES from './dictionaries.js'
 export const AVAILABLE_LOCALES = Object.keys(LOCALES)
 const DEFAULT_LOCALE = 'en'
 

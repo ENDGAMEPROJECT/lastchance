@@ -49,6 +49,7 @@
 /* Compact square icon button for the sound toggle. */
 .hud-mute { padding-left: 9px; padding-right: 9px; font-size: 1rem; line-height: 1; }
 .hud-hints { white-space: nowrap; }
+.hud-fullscreen { display: inline-flex; align-items: center; justify-content: center; padding-left: 9px; padding-right: 9px; }
 
 .hint-target { margin-bottom: 16px; padding: 13px; border-color: rgba(22, 242, 255, 0.25); background: rgba(22, 242, 255, 0.04); }
 .hint-target h4 { margin: 4px 0 3px; color: var(--cyan); font-family: var(--font-display); }

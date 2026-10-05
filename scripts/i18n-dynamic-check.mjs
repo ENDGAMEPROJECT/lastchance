@@ -1,7 +1,8 @@
 // Validate DYNAMIC t(`...${id}...`) keys by importing the real id
 // lists (gameData) and each room's fragment, then checking membership.
 import { readFileSync } from 'node:fs'
-import en from '../src/i18n/locales/en.js'
+import dictionaries from '../src/i18n/dictionaries.js'
+const { en } = dictionaries
 import { NODES, ITEMS } from '../src/game/gameData.js'
 import { ROULETTE_WHEELS, ROULETTE_SEGMENTS } from '../src/game/rouletteData.js'
 

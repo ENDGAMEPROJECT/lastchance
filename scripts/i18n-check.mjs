@@ -1,7 +1,8 @@
 // Temporary verification: does every static t('...') key resolve in en?
 import { readdirSync, readFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
-import en from '../src/i18n/locales/en.js'
+import dictionaries from '../src/i18n/dictionaries.js'
+const { en } = dictionaries
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {

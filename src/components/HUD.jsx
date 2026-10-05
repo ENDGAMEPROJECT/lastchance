@@ -20,6 +20,27 @@ export default function HUD() {
   const [hintsOpen, setHintsOpen] = useState(false)
   const [muted, setMutedState] = useState(isMuted())
   const toggleMute = () => setMutedState(setMuted(!muted))
+  const [fullscreen, setFullscreen] = useState(Boolean(document.fullscreenElement))
+  const [fullscreenError, setFullscreenError] = useState(false)
+
+  useEffect(() => {
+    const syncFullscreen = () => {
+      setFullscreen(Boolean(document.fullscreenElement))
+      setFullscreenError(false)
+    }
+    document.addEventListener('fullscreenchange', syncFullscreen)
+    return () => document.removeEventListener('fullscreenchange', syncFullscreen)
+  }, [])
+
+  const toggleFullscreen = async () => {
+    setFullscreenError(false)
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen()
+      else await document.documentElement.requestFullscreen()
+    } catch {
+      setFullscreenError(true)
+    }
+  }
   const hintContext = getHintContext(screen, activeNodeId)
   const hints = t(`hints.${hintContext}.items`)
   const hintPlan = getHintPlan(screen, activeNodeId, progress)
@@ -93,6 +114,24 @@ export default function HUD() {
         )}
 
         <div className="hud-right">
+          {document.fullscreenEnabled && (
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm hud-fullscreen"
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={toggleFullscreen}
+              aria-label={fullscreen ? t('hud.exitFullscreen') : t('hud.enterFullscreen')}
+              title={fullscreen ? t('hud.exitFullscreen') : t('hud.enterFullscreen')}
+              aria-pressed={fullscreen}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                <path d={fullscreen
+                  ? 'M9 3v6H3m12-6v6h6M3 15h6v6m6 0v-6h6'
+                  : 'M9 3H3v6m12-6h6v6M3 15v6h6m6 0h6v-6'} />
+              </svg>
+            </button>
+          )}
+          {fullscreenError && <span role="alert" className="t-xs">{t('hud.fullscreenError')}</span>}
           {DEBUG && ['posttest', 'win', 'lose'].includes(screen) && <DebugPosttestButtons />}
           {DEBUG && <span className="chip bad hud-debug">🐞 DEBUG</span>}
           {showHints && (
