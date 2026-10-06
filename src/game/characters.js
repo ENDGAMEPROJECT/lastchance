@@ -20,7 +20,7 @@ export function getNarrative(character = 'mia') {
     friendId,
     friendGender: CHARACTERS[friendId].gender,
     friendProfileImage: CHARACTERS[friendId].profileImage,
-    reportImage: friendId === 'max' ? 'objects/max-report.png' : 'rewards/data-report.svg',
+    reportImage: `objects/${friendId}-report.png`, // max-report.png / mia-report.png
     playerTalkingImage: CONVERSATION_IMAGES[playerId][playerId],
     friendTalkingImage: CONVERSATION_IMAGES[playerId][friendId],
     playerInternetImage: CHARACTERS[playerId].internetImage,

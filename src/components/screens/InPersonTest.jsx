@@ -27,6 +27,9 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
   const completed = useRef(false)
   const [phoneOpen, setPhoneOpen] = useState(false)
   const [phoneViewed, setPhoneViewed] = useState(false)
+  // Highlight strength only: strong pulse until the phone is clicked, then a
+  // soft border pulse (independent of requirePhoneView, so post-test too).
+  const [phoneClicked, setPhoneClicked] = useState(false)
   const needsPhoneView = requirePhoneView && !phoneViewed
   const phoneRef = useRef(null)
   const closeRef = useRef(null)
@@ -152,12 +155,14 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
         <div className="pretest-art">
           <img className={`pretest-backdrop ${playerSpeaking ? '' : 'is-visible'}`} src={bgUrl(narrative.friendTalkingImage)} alt="" />
           <img className={`pretest-backdrop ${playerSpeaking ? 'is-visible' : ''}`} src={bgUrl(narrative.playerTalkingImage)} alt="" />
+          {/* Darkens the scene while the player has to answer (below the phone). */}
+          <div className={`pretest-shade ${asking ? 'is-on' : ''}`} aria-hidden="true" />
           <button
             ref={phoneRef}
             type="button"
-            className={`pretest-phone ${narrative.character === 'max' ? 'phone-mia' : ''} ${needsPhoneView ? 'is-unseen' : ''}`}
+            className={`pretest-phone ${narrative.character === 'max' ? 'phone-mia' : ''} ${phoneClicked ? '' : 'is-unseen'} ${asking ? 'is-dimmed' : ''}`}
             onMouseDown={(event) => event.preventDefault()}
-            onClick={() => setPhoneOpen(true)}
+            onClick={() => { setPhoneClicked(true); setPhoneOpen(true) }}
             aria-label={t('story.product.offerLabel')}
             title={t('story.product.offerLabel')}
             aria-haspopup="dialog"
@@ -170,9 +175,6 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
             </svg>
           </button>
         </div>
-
-        {/* Darkens the scene while the player has to answer. */}
-        <div className={`pretest-shade ${asking ? 'is-on' : ''}`} aria-hidden="true" />
 
         {/* Keyed by speaker + text: a new line remounts (fades in); the same
             line flowing into the options stays mounted and just slides up. */}

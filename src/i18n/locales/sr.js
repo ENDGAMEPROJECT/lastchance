@@ -80,7 +80,6 @@ export default {
   "roomframe": {
     "clearedDefaultTitle": "Okrug završen",
     "clearedDefaultText": "Odlično. Sledeći čvor je otključan na mapi.",
-    "rewardLabel": "Dodato u tvoju Torbu — trebaće ti kasnije",
     "collect": "prikupi",
     "collected": "prikupljeno",
     "addedToBag": "dodato u torbu"
@@ -618,7 +617,8 @@ export default {
         "oldPrice": "600$",
         "discount": "49$",
         "text": "Hurry up! Offer ends in limited time.",
-        "brand": "luna wears"
+        "cta": "BUY NOW!!",
+        "timePressure": "Only 30 mins left!!"
       },
       "shoesAd1": {
         "headline": "BRAND NEW SNEAKERS",
@@ -777,7 +777,7 @@ export default {
     "influencer": {
       "intro": "Neonska avenija bilborda i fidova influensera. Pogledaj iza sjaja: označi sponzorisane objave, a zatim proveri šta su proizvodi zapravo.",
       "solvedTitle": "Avenija influensera završena — Dobijen Izveštaj o podacima 📄",
-      "solvedText": "Otkrio/la si skrivene oglase i lažnu fotografiju proizvoda. Označene cifre na Izveštaju o podacima — 748392 — otvaraju Kontrolnu sobu algoritma.",
+      "solvedText": "Otkrio/la si skrivene oglase i lažnu fotografiju proizvoda. ",
       "evidenceLabel": "Objave su skrivale plaćene promocije, a fotografija proizvoda je generisana pomoću veštačke inteligencije bez ikakvih stvarnih rezultata.",
       "stage1": {
         "badge": "Faza 1 / 2",

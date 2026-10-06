@@ -129,7 +129,6 @@ export default function RoomFrame({
                       {!reward.image && <span className="reward-icon">{reward.icon}</span>}
                     </div>
                     <div className="reward-info">
-                      <div className="reward-eyebrow">{t('roomframe.rewardLabel')}</div>
                       <h3 id="cleared-reward-name" className="reward-name">{rewardName}</h3>
                       <p className="reward-desc">{t(`items.${reward.id}.desc`, vars)}</p>
                       <button ref={collectRef} type="button" className="btn btn-amber reward-collect"

@@ -9,6 +9,7 @@ import Modal from './Modal.jsx'
 import DataReport from './DataReport.jsx'
 import DebugPosttestButtons from './DebugPosttestButtons.jsx'
 import DebugPortalButton from './DebugPortalButton.jsx'
+import DebugCharacterButton from './DebugCharacterButton.jsx'
 import './HUD.css'
 
 /* Persistent top bar: countdown, mission recap, inventory & map access. */
@@ -140,6 +141,7 @@ export default function HUD() {
           {DEBUG && ['posttest', 'win', 'lose'].includes(screen) && <DebugPosttestButtons />}
           {DEBUG && ['welcome', 'pretest'].includes(screen) && <DebugPortalButton />}
           {DEBUG && <span className="chip bad hud-debug">🐞 DEBUG</span>}
+          {DEBUG && <DebugCharacterButton />}
           {showHints && (
             <button
               className="btn btn-amber btn-sm hud-hints"

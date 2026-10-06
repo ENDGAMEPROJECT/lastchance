@@ -43,6 +43,7 @@ const BG_IMAGES = [
   'algorithm-room/mia-figure-nobg.png',
   'objects/emoji-decoding-card.png',
   'objects/max-report.png',
+  'objects/mia-report.png',
   'objects/flashlight.png',
   'rewards/data-report.svg',
   'rewards/truth-flashlight.svg',

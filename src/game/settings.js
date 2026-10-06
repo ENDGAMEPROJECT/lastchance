@@ -13,10 +13,14 @@
    ?screen=posttest, ?screen=pretest, ?screen=win, ?screen=lose, or
    ?screen=enter to start at the portal arrival (intro skipped). In debug, a
    "Skip intro → Portal" button does the same from the welcome/pre-test HUD
-   and the map's jump bar. */
+   and the map's jump bar.
+
+   ?character=max starts a debug session playing as Max (default Mia); the
+   HUD's "Playing as" debug button switches character at any time. */
 const _params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null
 export const DEBUG_SCREEN = (_params && _params.get('screen')) || null
 export const DEBUG_POSTTEST_SCENARIO = _params?.get('scenario') === 'timeout' ? 'timeout' : 'inTime'
+export const DEBUG_CHARACTER = _params?.get('character') === 'max' ? 'max' : 'mia'
 export const DEBUG =
   (import.meta.env && import.meta.env.VITE_DEBUG === 'true') ||
   (_params ? _params.has('debug') || !!DEBUG_SCREEN : false)

@@ -80,7 +80,6 @@ export default {
   "roomframe": {
     "clearedDefaultTitle": "District cleared",
     "clearedDefaultText": "Nice work. The next node is unlocked on the map.",
-    "rewardLabel": "Added to your Bag — you’ll need it next",
     "collect": "collect",
     "collected": "collected",
     "addedToBag": "added to bag"
@@ -340,8 +339,7 @@ export default {
     "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
     "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
-    "start": "▶ Countdown begins",
-    "finalLine": "Come on, the {minutes}:00 countdown starts the moment we start walking."
+    "start": "▶ Countdown begins"
   },
   "hints": {
     "title": "Mission hints",
@@ -619,7 +617,8 @@ export default {
         "oldPrice": "600$",
         "discount": "49$",
         "text": "Hurry up! Offer ends in limited time.",
-        "brand": "luna wears"
+        "cta": "BUY NOW!!",
+        "timePressure": "Only 30 mins left!!"
       },
       "shoesAd1": {
         "headline": "BRAND NEW SNEAKERS",
@@ -778,7 +777,7 @@ export default {
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
       "solvedTitle": "Influencer Avenue cleared — Data Report obtained 📄",
-      "solvedText": "You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 748392 — open the Algorithm Control Room next.",
+      "solvedText": "You exposed the hidden ads and the fake product photo.",
       "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
       "stage1": {
         "badge": "Stage 1 / 2",
@@ -1342,8 +1341,6 @@ export default {
     "posttestInTimeDescription": "Restart the post-test with all puzzles completed and 5 minutes left",
     "posttestInTime": "Test · 5:00",
     "posttestTimeoutDescription": "Restart the post-test after time ran out with puzzles unfinished",
-    "posttestTimeout": "Test · 0:00",
-    "skipToPortalDescription": "Skip the welcome and pre-test and arrive through the portal",
-    "skipToPortal": "Skip intro → Portal"
+    "posttestTimeout": "Test · 0:00"
   }
 }

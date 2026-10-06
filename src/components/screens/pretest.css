@@ -42,21 +42,46 @@
   stroke-width: 1.5;
   stroke-linejoin: round;
 }
-.pretest-phone.is-unseen path {
+/* The phone is always highlighted so the player can go back to it: until it
+   has been clicked it pulses strongly (lit fill + glow); afterwards the border
+   stays faint and the fill keeps a light tint with a barely-there pulse. */
+.pretest-phone path {
   stroke: #dbffff;
-  animation: pretest-phone-glow 1.8s ease-in-out infinite;
+  stroke-opacity: 0.3;
+  animation: pretest-phone-seen 3.2s ease-in-out infinite;
 }
-.pretest-phone:hover path, .pretest-phone:focus-visible path {
+.pretest-phone.is-unseen path { stroke-opacity: 1; animation: pretest-phone-glow 1.8s ease-in-out infinite; }
+.pretest-phone { transition: opacity 0.45s ease; }
+/* While answering, the scene is dimmed but the phone stays above it at full
+   opacity; once clicked, it pulses more clearly than its quiet resting state
+   so it still reads against the darker scene. */
+.pretest-phone.is-dimmed:not(.is-unseen) path {
+  stroke-opacity: 0.75;
+  animation: pretest-phone-asking 2.2s ease-in-out infinite;
+}
+.pretest-phone:hover path, .pretest-phone:focus-visible path,
+.pretest-phone.is-dimmed:hover path, .pretest-phone.is-dimmed:focus-visible path {
+  animation: none; /* a running pulse would override the hover look */
   stroke: #fff;
+  stroke-opacity: 1;
   fill: rgba(190, 255, 255, 0.24);
   filter: drop-shadow(0 0 4px #a3fcff);
+}
+@keyframes pretest-phone-seen {
+  0%, 100% { fill: rgba(190, 255, 255, 0.08); }
+  50% { fill: rgba(205, 255, 255, 0.24); }
+}
+@keyframes pretest-phone-asking {
+  0%, 100% { fill: rgba(190, 255, 255, 0.12); filter: drop-shadow(0 0 1px rgba(163, 252, 255, 0.5)); }
+  50% { fill: rgba(215, 255, 255, 0.4); filter: drop-shadow(0 0 6px #a3fcff); }
 }
 @keyframes pretest-phone-glow {
   0%, 100% { fill: rgba(190, 255, 255, 0.06); filter: drop-shadow(0 0 2px #a3fcff); }
   50% { fill: rgba(220, 255, 255, 0.45); filter: drop-shadow(0 0 6px #a3fcff); }
 }
 
-/* Scene darkens while the player chooses an answer. */
+/* Scene darkens while the player chooses an answer. It lives inside
+   .pretest-art, below the phone, so the phone's glow stays on top. */
 .pretest-shade {
   position: absolute;
   inset: 0;
@@ -290,6 +315,7 @@
 }
 .pretest-phone-view img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .pretest-phone-close { position: absolute; top: 16px; right: 20px; }
+.reduced-motion .pretest-phone path { animation: none; fill: rgba(190, 255, 255, 0.12); }
 .reduced-motion .pretest-phone.is-unseen path {
   animation: none;
   fill: rgba(190, 255, 255, 0.2);
@@ -299,6 +325,7 @@
 .reduced-motion .pretest-choices,
 .reduced-motion .pretest-shade { transition: none; }
 @media (prefers-reduced-motion: reduce) {
+  .pretest-phone path { animation: none; fill: rgba(190, 255, 255, 0.12); }
   .pretest-phone.is-unseen path { animation: none; fill: rgba(190, 255, 255, 0.2); filter: drop-shadow(0 0 4px #a3fcff); }
   .pretest-speech, .pretest-choices, .pretest-shade { transition: none; animation: none; }
   .pretest-speech-name, .pretest-speech-name::before, .pretest-speech-name::after { animation: none; }

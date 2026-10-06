@@ -95,12 +95,15 @@ export const ITEMS = {
     icon: '🔑',
     desc: 'A key that maps emojis to letters. Use it to read the sponsorship sticky-notes in Influencer Avenue.',
   },
+  // The report is about the FRIEND, so it depends on who the player is: the
+  // shown name/desc come from i18n (items.dataReport, with {friend}) and the
+  // image from getNarrative().reportImage (objects/max-report.png or
+  // objects/mia-report.png). No fixed image here on purpose.
   dataReport: {
     id: 'dataReport',
-    image: 'objects/max-report.png',
-    name: 'Data Report on Max',
+    name: 'Data Report on {friend}',
     icon: '📄',
-    desc: 'A dossier of the data brokers hold on Max. The highlighted digits open the Algorithm Control Room.',
+    desc: 'A dossier of the data brokers hold on {friend}. The highlighted digits open the Algorithm Control Room.',
   },
   truthLight: {
     id: 'truthLight',

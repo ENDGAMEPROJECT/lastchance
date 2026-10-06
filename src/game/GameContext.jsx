@@ -11,7 +11,7 @@ import { createContext, useContext, useReducer, useEffect, useCallback, useRef, 
 import { getNarrative } from './characters.js'
 import { NarrativeContext } from './NarrativeContext.jsx'
 import { NODES, GAME_MINUTES, ITEMS } from './gameData.js'
-import { DEBUG, DEBUG_SCREEN, DEBUG_POSTTEST_SCENARIO } from './settings.js'
+import { DEBUG, DEBUG_SCREEN, DEBUG_POSTTEST_SCENARIO, DEBUG_CHARACTER } from './settings.js'
 import { playSound, preloadSound } from './sound.js'
 
 const GameContext = createContext(null)
@@ -53,7 +53,7 @@ function debugPosttestState(state, scenario) {
 const baseInitialState = {
   // Debug: skip the welcome/pretest and land on the map (or a ?screen= jump).
   screen: DEBUG ? DEBUG_SCREEN || 'map' : 'welcome', // 'welcome' | 'pretest' | 'enter' | 'map' | 'room' | 'posttest' | 'win' | 'lose'
-  player: { alias: '', age: '', character: 'mia' },
+  player: { alias: '', age: '', character: DEBUG ? DEBUG_CHARACTER : 'mia' }, // debug: ?character=max
   timedOut: false, // ran out of time BEFORE finishing the puzzles
   posttestSession: 0,
   loseReason: null, // why the friend bought — picks the lose-screen copy
@@ -140,6 +140,11 @@ export function reducer(state, action) {
 
     case 'SET_ENTER_TOUR':
       return state.enterTour === action.step ? state : { ...state, enterTour: action.step }
+
+    case 'DEBUG_SET_CHARACTER':
+      // Debug-only: switch which character the player plays (text + images follow).
+      if (!DEBUG) return state
+      return { ...state, player: { ...state.player, character: action.character === 'max' ? 'max' : 'mia' } }
 
     case 'GOTO_SCREEN': // debug-only jump
       if (DEBUG && action.screen === 'posttest') return debugPosttestState(state, action.scenario)
@@ -244,6 +249,7 @@ export function GameProvider({ children }) {
   const startPosttestDecision = useCallback(() => dispatch({ type: 'START_POSTTEST_DECISION' }), [])
   const gotoScreen = useCallback((screen, scenario) => dispatch({ type: 'GOTO_SCREEN', screen, scenario }), [])
   const skipToPortal = useCallback(() => dispatch({ type: 'DEBUG_SKIP_TO_PORTAL' }), [])
+  const setCharacter = useCallback((character) => dispatch({ type: 'DEBUG_SET_CHARACTER', character }), [])
   const setEnterTour = useCallback((step) => dispatch({ type: 'SET_ENTER_TOUR', step }), [])
   const openNode = useCallback((id) => dispatch({ type: 'OPEN_NODE', id }), [])
   const reviewNode = useCallback((id) => dispatch({ type: 'REVIEW_NODE', id }), [])
@@ -277,6 +283,7 @@ export function GameProvider({ children }) {
     startPosttestDecision,
     gotoScreen,
     skipToPortal,
+    setCharacter,
     setEnterTour,
     openNode,
     reviewNode,
