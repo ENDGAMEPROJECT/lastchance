@@ -27,7 +27,7 @@ to fit the window and letterboxed (`components/Stage.jsx`), so the layout never 
 
 Flow of screens (see the `screen` state in `GameContext`, routed in `App.jsx`):
 
-1. **Welcome** — pick an alias + age and a language.
+1. **Welcome** — pick an alias, age, language, and character (Mia or Max). Mia helps Max spot the NovaPad scam; Max helps Mia instead. This choice controls the speakers, hints, data report and ending throughout the run. The Algorithm Control Room displays the friend's figure: `max-figure-nobg.png` when playing Mia, `mia-figure-nobg.png` when playing Max.
 2. **Pre-test chat** — a messaging-app conversation with **Max**, who shows a viral flash-sale
    post (a live phone **Product Preview** with a spoofed URL and a ticking "today only" timer)
    and asks whether he should buy. This diagnoses the player's starting instincts.

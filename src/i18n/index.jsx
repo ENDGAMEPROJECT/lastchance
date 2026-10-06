@@ -13,6 +13,8 @@
 
 import { createContext, useContext, useMemo, useState, useCallback } from 'react'
 import LOCALES from './dictionaries.js'
+import { useNarrative } from '../game/NarrativeContext.jsx'
+import { characterTemplates, characterVars, mapText, interpolate } from './characterText.js'
 export const AVAILABLE_LOCALES = Object.keys(LOCALES)
 const DEFAULT_LOCALE = 'en'
 
@@ -30,11 +32,6 @@ const I18nContext = createContext(null)
 
 function lookup(dict, key) {
   return key.split('.').reduce((acc, part) => (acc == null ? acc : acc[part]), dict)
-}
-
-function interpolate(value, vars) {
-  if (typeof value !== 'string' || !vars) return value
-  return value.replace(/\{(\w+)\}/g, (m, name) => (name in vars ? String(vars[name]) : m))
 }
 
 export function I18nProvider({ children, initialLocale = DEFAULT_LOCALE }) {
@@ -66,5 +63,23 @@ export function useI18n() {
 
 /* Convenience hook: const t = useT() */
 export function useT() {
-  return useI18n().t
+  const { locale } = useI18n()
+  const narrative = useNarrative()
+  const translations = useMemo(() => {
+    const vars = characterVars(narrative)
+    const templates = characterTemplates(LOCALES[locale] || LOCALES[DEFAULT_LOCALE], narrative, locale)
+    const fallback = characterTemplates(LOCALES[DEFAULT_LOCALE], narrative, DEFAULT_LOCALE)
+    return { vars, templates, fallback, bound: mapText(templates, (text) => interpolate(text, vars)), boundFallback: mapText(fallback, (text) => interpolate(text, vars)) }
+  }, [locale, narrative])
+
+  return useCallback((key, vars) => {
+    const template = lookup(translations.templates, key) ?? lookup(translations.fallback, key)
+    if (template === undefined) {
+      if (import.meta?.env?.DEV) console.warn(`[i18n] missing key: ${key}`)
+      return key
+    }
+    if (typeof template === 'string') return interpolate(template, { ...translations.vars, ...vars })
+    if (vars) return mapText(template, (text) => interpolate(text, { ...translations.vars, ...vars }))
+    return lookup(translations.bound, key) ?? lookup(translations.boundFallback, key)
+  }, [translations])
 }

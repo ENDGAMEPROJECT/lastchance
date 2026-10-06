@@ -1,6 +1,6 @@
 import { Fragment, useMemo, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
-import { CODES, ITEMS, NARRATIVE } from '../game/gameData.js'
+import { CODES, ITEMS } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 import { playSound } from '../game/sound.js'
 import { useT } from '../i18n/index.jsx'
@@ -100,7 +100,7 @@ const TRAY = [
 const COL_KIND = ['demographic', 'follows', 'insecurity']
 
 export default function AlgorithmRoom({ node }) {
-  const { completeRoom, addEvidence } = useGame()
+  const { completeRoom, addEvidence, narrative } = useGame()
   const t = useT()
   const [phase, setPhase] = useState('door') // 'door' | 'unlock' | 'choice' | 'equations'
   const [solved, setSolved] = useState(false)
@@ -174,7 +174,7 @@ export default function AlgorithmRoom({ node }) {
   function finish() {
     addEvidence({
       id: 'ev-algo',
-      label: t('rooms.algorithm.evidence', { friend: NARRATIVE.friend }),
+      label: t('rooms.algorithm.evidence', { friend: narrative.friend }),
     })
     // RoomFrame awards the Truth Flashlight when the player collects it.
     setSolved(true)
@@ -193,7 +193,7 @@ export default function AlgorithmRoom({ node }) {
       intro={t('rooms.algorithm.intro')}
       solved={solved}
       solvedTitle={t('rooms.algorithm.solvedTitle')}
-      solvedText={t('rooms.algorithm.solvedText', { friend: NARRATIVE.friend })}
+      solvedText={t('rooms.algorithm.solvedText', { friend: narrative.friend })}
       reward={ITEMS.truthLight}
       onContinue={() => completeRoom(node.id)}
     >
@@ -432,7 +432,7 @@ export default function AlgorithmRoom({ node }) {
                     >
                       {step < ROWS.length - 1
                         ? t('rooms.algorithm.equations.nextBtn')
-                        : t('rooms.algorithm.equations.lastBtn', { friend: NARRATIVE.friend })}
+                        : t('rooms.algorithm.equations.lastBtn', { friend: narrative.friend })}
                     </button>
                   </section>
                 )}
@@ -449,12 +449,12 @@ export default function AlgorithmRoom({ node }) {
                   <div className="ar-profile-title">{t('rooms.algorithm.equations.profileTitle')}</div>
                   <p>
                     {t('rooms.algorithm.equations.profileP1')}
-                    <b>{t('rooms.algorithm.equations.profileB1', { friend: NARRATIVE.friend })}</b>
+                    <b>{t('rooms.algorithm.equations.profileB1', { friend: narrative.friend })}</b>
                     {t('rooms.algorithm.equations.profileP2')}
                     <b>{t('rooms.algorithm.equations.profileB2')}</b>
                     {t('rooms.algorithm.equations.profileP3')}
                     <b>{t('rooms.algorithm.equations.profileB3')}</b>
-                    {t('rooms.algorithm.equations.profileP4', { friend: NARRATIVE.friend })}
+                    {t('rooms.algorithm.equations.profileP4', { friend: narrative.friend })}
                   </p>
                 </div>
                 {!solved && (

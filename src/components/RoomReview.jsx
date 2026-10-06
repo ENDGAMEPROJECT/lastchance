@@ -1,6 +1,5 @@
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
-import { NARRATIVE } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 
 const ROOM_KEY = {
@@ -13,9 +12,9 @@ const ROOM_KEY = {
 }
 
 export default function RoomReview() {
-  const { reviewNodeData, goMap } = useGame()
+  const { reviewNodeData, goMap, narrative } = useGame()
   const t = useT()
-  const vars = { friend: NARRATIVE.friend }
+  const vars = { friend: narrative.friend }
   const roomKey = reviewNodeData ? ROOM_KEY[reviewNodeData.id] : null
 
   if (!reviewNodeData || !roomKey) return null

@@ -29,28 +29,33 @@ function WinSky() {
 }
 
 export function WinScreen() {
-  const { timeLeft, evidence, reset } = useGame()
+  const { timeLeft, evidence, reset, narrative } = useGame()
   const t = useT()
-  const vars = { friend: NARRATIVE.friend, product: NARRATIVE.product, time: formatTime(timeLeft) }
+  const vars = { friend: narrative.friend, product: narrative.product, time: formatTime(timeLeft) }
 
   return (
     <div className="stage-scroll win-scene">
       <WinSky />
-      <img className="offer-phone-only" src={assetUrl("bg/offer-phone-only.png")}></img>
+      {/* <img className="offer-phone-only" src={assetUrl("bg/offer-phone-only.png")}></img> */}
       {/* Max and Mia, bottom-left (public/ending/player-won.png). */}
       <img className="win-players" src={assetUrl('ending/player-won.png')} alt="" />
-      <div className="intro end fade-in">
-        <div className="intro-glyph win-glyph">✓</div>
-        <div className="eyebrow" style={{ color: 'var(--green)' }}>{t('end.win.eyebrow')}</div>
+      <div className="win-title-container">
+         <div className="eyebrow" style={{ color: 'var(--green)' }}>{t('end.win.eyebrow')} 
+            <span className="intro-glyph win-glyph">✓</span>
+        </div>
         <h1 className="intro-title">{t('end.win.titleLead', vars)} <span className="grad">{t('end.win.titleAccent')}</span></h1>
         <p className="intro-tag mono">{t('end.win.tag', vars)}</p>
+          {/* <h3 className="win-congrats">{t('end.win.heading')}</h3> */}
+          <p className="win-description">{t('end.win.body', vars)}</p>
+      </div>
+      <div className="intro end fade-in">
+       
 
-        <div className="intro-card panel clip panel-glow-cyan">
-          <h3 className="accent-green">{t('end.win.heading')}</h3>
-          <p>{t('end.win.body', vars)}</p>
+        <div className="intro-card panel-light clip panel-glow-cyan">
+        
           {evidence.length > 0 && (
             <>
-              <div className="eyebrow" style={{ color: 'var(--green)', marginTop: 14 }}>{t('end.win.evidenceHeading')}</div>
+              <div className="eyebrow" style={{ color: '#16624c', marginTop: 14 }}>{t('end.win.evidenceHeading')}</div>
               <ul className="evidence-list">
                 {evidence.map((e) => (<li key={e.id}><span className="ev-dot" />{e.label}</li>))}
               </ul>
@@ -65,9 +70,9 @@ export function WinScreen() {
 }
 
 export function LoseScreen() {
-  const { reset, loseReason } = useGame()
+  const { reset, loseReason, narrative } = useGame()
   const t = useT()
-  const vars = { friend: NARRATIVE.friend, product: NARRATIVE.product }
+  const vars = { friend: narrative.friend, product: narrative.product }
 
   // Per-outcome heading/body, falling back to the generic time-up copy. The
   // reducer sets loseReason: 'timeUp' | 'choseBuy' |

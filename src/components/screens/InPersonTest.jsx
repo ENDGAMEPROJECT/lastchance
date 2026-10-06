@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
-import { NARRATIVE } from '../../game/gameData.js'
 import { bgUrl } from '../../game/assets.js'
 import { passedPosttest } from '../../game/posttestOutcome.js'
 import './pretest.css'
@@ -11,9 +10,9 @@ const FADE_MS = 350
 
 /* Shared scene for the diagnostic conversations and the post-test review. */
 export default function InPersonTest({ script: p, masteryOpening, actions = [], requirePhoneView = true, assessment = false, questionIndices, skipOpening = false, assessmentEnding, onComplete }) {
-  const { reducedMotion } = useGame()
+  const { reducedMotion, narrative } = useGame()
   const t = useT()
-  const friend = NARRATIVE.friend
+  const friend = narrative.friend
   const allRounds = t('story.rounds')
   const rounds = questionIndices ? questionIndices.map((index) => allRounds[index]) : allRounds
   const [phase, setPhase] = useState(skipOpening ? 'options' : 'opening')
@@ -28,6 +27,9 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
   const completed = useRef(false)
   const [phoneOpen, setPhoneOpen] = useState(false)
   const [phoneViewed, setPhoneViewed] = useState(false)
+  // Highlight strength only: strong pulse until the phone is clicked, then a
+  // soft border pulse (independent of requirePhoneView, so post-test too).
+  const [phoneClicked, setPhoneClicked] = useState(false)
   const needsPhoneView = requirePhoneView && !phoneViewed
   const phoneRef = useRef(null)
   const closeRef = useRef(null)
@@ -35,6 +37,7 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
   const speechClock = useRef({ key: '', elapsed: 0 })
   const [speechProgress, setSpeechProgress] = useState({ key: '', elapsed: 0 })
   const playerSpeaking = ['reply', 'endingYou'].includes(phase)
+  const miaSpeaking = (playerSpeaking ? narrative.player : friend) === 'Mia'
   const line = ['opening', 'masteryIntro', 'options'].includes(phase) ? prompt
     : phase === 'reply' ? answer.text
     : phase === 'response' ? (mastery ? (answer.correct ? rounds[round].why : rounds[round].nudge) : p.responses[round])
@@ -150,36 +153,37 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
     <div className="scene pretest-scene">
       <div className="pretest-content" inert={phoneOpen ? '' : undefined}>
         <div className="pretest-art">
-          <img className={`pretest-backdrop ${playerSpeaking ? '' : 'is-visible'}`} src={bgUrl('max-talking.png')} alt="" />
-          <img className={`pretest-backdrop ${playerSpeaking ? 'is-visible' : ''}`} src={bgUrl('player-talking.png')} alt="" />
+          <img className={`pretest-backdrop ${playerSpeaking ? '' : 'is-visible'}`} src={bgUrl(narrative.friendTalkingImage)} alt="" />
+          <img className={`pretest-backdrop ${playerSpeaking ? 'is-visible' : ''}`} src={bgUrl(narrative.playerTalkingImage)} alt="" />
+          {/* Darkens the scene while the player has to answer (below the phone). */}
+          <div className={`pretest-shade ${asking ? 'is-on' : ''}`} aria-hidden="true" />
           <button
             ref={phoneRef}
             type="button"
-            className={`pretest-phone ${needsPhoneView ? 'is-unseen' : ''}`}
+            className={`pretest-phone ${narrative.character === 'max' ? 'phone-mia' : ''} ${phoneClicked ? '' : 'is-unseen'} ${asking ? 'is-dimmed' : ''}`}
             onMouseDown={(event) => event.preventDefault()}
-            onClick={() => setPhoneOpen(true)}
+            onClick={() => { setPhoneClicked(true); setPhoneOpen(true) }}
             aria-label={t('story.product.offerLabel')}
             title={t('story.product.offerLabel')}
             aria-haspopup="dialog"
           >
-            <svg className="pretest-phone-light" viewBox="650 490 110 90" aria-hidden="true">
+            <svg className="pretest-phone-light" viewBox={narrative.character === 'max' ? '930 385 100 110' : '650 490 110 90'} aria-hidden="true">
               {/* Trace only the exposed handset; the fingers stay unlit. */}
-              <path d="M677 548 L699 511 Q704 502 713 503 L742 505 Q750 506 747 514 L730 540 C721 538 710 532 703 536 C697 539 699 546 706 550 L718 555 L721 560 C707 556 691 550 677 548 Z" />
+              <path d={narrative.character === 'max'
+                ? 'M952 431L944 405Q941 399 948 397L980 394Q987 394 990 401L1002 433L985 430L979 433L965 433Z'
+                : 'M677 548 L699 511 Q704 502 713 503 L742 505 Q750 506 747 514 L730 540 C721 538 710 532 703 536 C697 539 699 546 706 550 L718 555 L721 560 C707 556 691 550 677 548 Z'} />
             </svg>
           </button>
         </div>
-
-        {/* Darkens the scene while the player has to answer. */}
-        <div className={`pretest-shade ${asking ? 'is-on' : ''}`} aria-hidden="true" />
 
         {/* Keyed by speaker + text: a new line remounts (fades in); the same
             line flowing into the options stays mounted and just slides up. */}
         <div
           key={`${playerSpeaking}:${line}`}
-          className={`pretest-speech ${playerSpeaking ? 'is-player' : 'is-friend'} ${asking ? 'is-asking' : ''} ${leaving ? 'is-leaving' : ''}`}
+          className={`pretest-speech ${miaSpeaking ? 'is-mia' : 'is-max'} ${asking ? 'is-asking' : ''} ${leaving ? 'is-leaving' : ''}`}
           aria-label={playerSpeaking ? t('story.you') : friend}
         >
-          <div className="pretest-speech-name" data-text={playerSpeaking ? NARRATIVE.player : friend} aria-hidden="true">{playerSpeaking ? NARRATIVE.player : friend}</div>
+          <div className="pretest-speech-name" data-text={playerSpeaking ? narrative.player : friend} aria-hidden="true">{playerSpeaking ? narrative.player : friend}</div>
           <p className="pretest-line" aria-label={line} aria-live="polite" aria-atomic="true">
             <span aria-hidden="true">
               <span className="pretest-line-visible">{line.slice(0, visibleLetters)}</span>
@@ -193,7 +197,7 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
         </div>
 
         {showOptions && (
-          <div className={`pretest-choices ${choosing ? 'is-leaving' : ''}`}>
+          <div className={`pretest-choices is-${narrative.character} ${choosing ? 'is-leaving' : ''}`}>
             <div className="pretest-choices-tab">{t('story.respondPrompt', { friend })}</div>
             <div className="pretest-options">
               {rounds[round].options.map((option) => (

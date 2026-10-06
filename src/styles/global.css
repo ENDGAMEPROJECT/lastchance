@@ -169,6 +169,36 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0
   backdrop-filter: blur(8px);
   position: relative;
 }
+
+/* Light-mode panel (matches the sunny win-screen sky): frosted white glass,
+   pale blue-white border, soft daylight shadow and dark ink text. The doubled
+   selector beats the .panel-glow-* neon border/glow if both are applied. */
+.panel-light,
+.panel-light[class*="panel-glow-"] {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(238, 246, 255, 0.72));
+  border: 1px solid rgba(214, 230, 248, 0.888);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(30, 70, 120, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  position: relative;
+  p {
+      color: #16233d !important;
+  }
+  h3 {
+    color: #0f8866 !important;
+  }
+  .evidence-list {
+    
+    li {
+      color: #16233d !important;
+      }      
+  }
+}
+
+.panel-light .muted { color: #4a5a78; }
+/* Buttons inside a light panel: light fill + dark ink, keeping their accent border. */
+.panel-light .btn { background: #ffffff; color: #12304a; }
+.panel-light .btn:hover:not(:disabled) { background: #eaf5ff; }
 .panel.clip {
   /* No chamfer: clip-path cuts the border AND glow off the diagonal corners,
      leaving gaps in the neon frame (very visible on panel-glow-* panels like

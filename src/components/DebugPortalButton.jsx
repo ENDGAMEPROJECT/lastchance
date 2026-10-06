@@ -9,9 +9,9 @@ export default function DebugPortalButton() {
   const t = useT()
   if (!DEBUG) return null
   return (
-    <button className="btn btn-sm btn-ghost" title={t('debug.skipToPortalDescription')}
+    <button className="btn btn-sm btn-ghost" title={'skip To Portal'}
       onMouseDown={(event) => event.preventDefault()} onClick={skipToPortal}>
-      {t('debug.skipToPortal')}
+     {'skip To Portal'}
     </button>
   )
 }

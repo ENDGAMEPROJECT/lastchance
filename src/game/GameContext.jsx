@@ -7,9 +7,11 @@
    solved. Progress model per node: 'locked' | 'available' | 'done'.
    ============================================================ */
 
-import { createContext, useContext, useReducer, useEffect, useCallback, useRef } from 'react'
+import { createContext, useContext, useReducer, useEffect, useCallback, useRef, useMemo } from 'react'
+import { getNarrative } from './characters.js'
+import { NarrativeContext } from './NarrativeContext.jsx'
 import { NODES, GAME_MINUTES, ITEMS } from './gameData.js'
-import { DEBUG, DEBUG_SCREEN, DEBUG_POSTTEST_SCENARIO } from './settings.js'
+import { DEBUG, DEBUG_SCREEN, DEBUG_POSTTEST_SCENARIO, DEBUG_CHARACTER } from './settings.js'
 import { playSound, preloadSound } from './sound.js'
 
 const GameContext = createContext(null)
@@ -51,7 +53,7 @@ function debugPosttestState(state, scenario) {
 const baseInitialState = {
   // Debug: skip the welcome/pretest and land on the map (or a ?screen= jump).
   screen: DEBUG ? DEBUG_SCREEN || 'map' : 'welcome', // 'welcome' | 'pretest' | 'enter' | 'map' | 'room' | 'posttest' | 'win' | 'lose'
-  player: { alias: '', age: '' },
+  player: { alias: '', age: '', character: DEBUG ? DEBUG_CHARACTER : 'mia' }, // debug: ?character=max
   timedOut: false, // ran out of time BEFORE finishing the puzzles
   posttestSession: 0,
   loseReason: null, // why the friend bought — picks the lose-screen copy
@@ -78,7 +80,7 @@ export const initialState = DEBUG && DEBUG_SCREEN === 'posttest'
 export function reducer(state, action) {
   switch (action.type) {
     case 'SUBMIT_WELCOME':
-      return { ...state, player: action.player, screen: 'pretest' }
+      return { ...state, player: { ...action.player, character: action.player.character === 'max' ? 'max' : 'mia' }, screen: 'pretest' }
 
     case 'ENTER_INTERNET':
       // Pre-test → the "jack in" transition (explains Map/Bag). Clock is not
@@ -152,6 +154,11 @@ export function reducer(state, action) {
         inventory: Object.values(ITEMS),
       }
     }
+
+    case 'DEBUG_SET_CHARACTER':
+      // Debug-only: switch which character the player plays (text + images follow).
+      if (!DEBUG) return state
+      return { ...state, player: { ...state.player, character: action.character === 'max' ? 'max' : 'mia' } }
 
     case 'GOTO_SCREEN': // debug-only jump
       // A named scenario ("Test · 5:00 / 0:00") rebuilds that post-test setup.
@@ -241,6 +248,7 @@ export function reducer(state, action) {
 
 export function GameProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const narrative = useMemo(() => getNarrative(state.player.character), [state.player.character])
   const runningRef = useRef(state.running)
   runningRef.current = state.running
 
@@ -271,6 +279,7 @@ export function GameProvider({ children }) {
   const startPosttestDecision = useCallback(() => dispatch({ type: 'START_POSTTEST_DECISION' }), [])
   const gotoScreen = useCallback((screen, scenario) => dispatch({ type: 'GOTO_SCREEN', screen, scenario }), [])
   const skipToPortal = useCallback(() => dispatch({ type: 'DEBUG_SKIP_TO_PORTAL' }), [])
+  const setCharacter = useCallback((character) => dispatch({ type: 'DEBUG_SET_CHARACTER', character }), [])
   const setEnterTour = useCallback((step) => dispatch({ type: 'SET_ENTER_TOUR', step }), [])
   const gatherAllEvidence = useCallback((evidence) => dispatch({ type: 'DEBUG_GATHER_EVIDENCE', evidence }), [])
   const openNode = useCallback((id) => dispatch({ type: 'OPEN_NODE', id }), [])
@@ -293,6 +302,7 @@ export function GameProvider({ children }) {
 
   const value = {
     ...state,
+    narrative,
     NODES,
     ITEMS,
     activeNode,
@@ -304,6 +314,7 @@ export function GameProvider({ children }) {
     startPosttestDecision,
     gotoScreen,
     skipToPortal,
+    setCharacter,
     setEnterTour,
     gatherAllEvidence,
     openNode,
@@ -321,7 +332,11 @@ export function GameProvider({ children }) {
     winNow,
   }
 
-  return <GameContext.Provider value={value}>{children}</GameContext.Provider>
+  return (
+    <GameContext.Provider value={value}>
+      <NarrativeContext.Provider value={narrative}>{children}</NarrativeContext.Provider>
+    </GameContext.Provider>
+  )
 }
 
 export function useGame() {

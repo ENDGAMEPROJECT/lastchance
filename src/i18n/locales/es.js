@@ -80,7 +80,6 @@ export default {
   "roomframe": {
     "clearedDefaultTitle": "District cleared",
     "clearedDefaultText": "Nice work. The next node is unlocked on the map.",
-    "rewardLabel": "Added to your Bag — you’ll need it next",
     "collect": "collect",
     "collected": "collected",
     "addedToBag": "added to bag"
@@ -778,7 +777,7 @@ export default {
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
       "solvedTitle": "Influencer Avenue cleared — Data Report obtained 📄",
-      "solvedText": "You exposed the hidden ads and the fake product photo. The highlighted digits on the Data Report — 748392 — open the Algorithm Control Room next.",
+      "solvedText": "You exposed the hidden ads and the fake product photo. ",
       "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
       "stage1": {
         "badge": "Stage 1 / 2",

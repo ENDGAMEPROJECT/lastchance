@@ -19,8 +19,14 @@
   text-shadow: var(--glow-cyan);
   animation: pulse-glow 2.4s ease-in-out infinite;
 }
-.win-glyph { color: var(--green); text-shadow: var(--glow-green); }
-.lose-glyph { color: var(--red); text-shadow: var(--glow-red); }
+.win-glyph {
+  color: var(--green);
+  text-shadow: var(--glow-green);
+}
+.lose-glyph {
+  color: var(--red);
+  text-shadow: var(--glow-red);
+}
 
 .intro-title {
   font-family: var(--font-display);
@@ -30,7 +36,12 @@
   margin: 2px 0;
 }
 .grad {
-  background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--purple));
+  background: linear-gradient(
+    90deg,
+    var(--cyan),
+    var(--magenta),
+    var(--purple)
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -41,7 +52,12 @@
   background-clip: text;
   color: transparent;
 }
-.intro-tag { color: var(--muted); letter-spacing: 0.1em; margin: 0 0 10px; font-size: 0.82rem; }
+.intro-tag {
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  margin: 0 0 10px;
+  font-size: 0.82rem;
+}
 
 /* Situation card + steps sit side by side to save vertical space. */
 .intro-body {
@@ -57,17 +73,32 @@
   text-align: left;
   padding: 16px 20px;
   width: 100%;
-  box-shadow: var(--glow-cyan), 0 18px 34px rgba(0, 0, 0, 0.45);
+  box-shadow:
+    var(--glow-cyan),
+    0 18px 34px rgba(0, 0, 0, 0.45);
 }
-.intro-card h3 { margin-bottom: 8px; font-size: 1.05rem; }
-.intro-card p { color: var(--text); margin: 6px 0; font-size: 0.9rem; line-height: 1.35; }
-.intro-card p.muted { color: var(--muted); }
+.intro-card h3 {
+  margin-bottom: 8px;
+  font-size: 1.05rem;
+}
+.intro-card p {
+  color: var(--text);
+  margin: 6px 0;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+.intro-card p.muted {
+  color: var(--muted);
+}
 .intro-mission {
   margin-top: 12px;
   padding-top: 12px;
   border-top: 1px solid var(--line);
 }
-.intro-mission p { margin: 8px 0 0; color: #eaf1ff; }
+.intro-mission p {
+  margin: 8px 0 0;
+  color: #eaf1ff;
+}
 
 .intro-steps {
   display: flex;
@@ -83,22 +114,42 @@
   align-items: center;
   gap: 12px;
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
-  transition: transform 0.15s ease, border-color 0.2s ease;
+  transition:
+    transform 0.15s ease,
+    border-color 0.2s ease;
 }
-.intro-step:hover { transform: translateY(-2px); border-color: rgba(22, 242, 255, 0.4); }
+.intro-step:hover {
+  transform: translateY(-2px);
+  border-color: rgba(22, 242, 255, 0.4);
+}
 .intro-step-icon {
   flex: none;
   font-size: 3.4rem;
   line-height: 1;
   filter: drop-shadow(0 0 10px rgba(22, 242, 255, 0.5));
 }
-.intro-step-body { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.intro-step-body b { font-family: var(--font-display); color: var(--cyan); font-size: 0.86rem; }
-.intro-step-body span { font-size: 0.8rem; color: var(--muted); line-height: 1.3; }
+.intro-step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.intro-step-body b {
+  font-family: var(--font-display);
+  color: var(--cyan);
+  font-size: 0.86rem;
+}
+.intro-step-body span {
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.3;
+}
 
 .jack-in {
   animation: pulse-glow 2.6s ease-in-out infinite;
-  box-shadow: var(--glow-cyan), 0 14px 28px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    var(--glow-cyan),
+    0 14px 28px rgba(0, 0, 0, 0.5);
 }
 
 /* --- Enter transition: the hand-off dialogue before the tool primer --- */
@@ -116,8 +167,15 @@
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.03);
 }
-.enter-line.friend { align-self: flex-start; border-color: rgba(255, 59, 92, 0.4); }
-.enter-line.you { align-self: flex-end; border-color: rgba(22, 242, 255, 0.4); text-align: right; }
+.enter-line.friend {
+  align-self: flex-start;
+  border-color: rgba(255, 59, 92, 0.4);
+}
+.enter-line.you {
+  align-self: flex-end;
+  border-color: rgba(22, 242, 255, 0.4);
+  text-align: right;
+}
 .enter-who {
   display: block;
   font-family: var(--font-display);
@@ -126,16 +184,39 @@
   text-transform: uppercase;
   margin-bottom: 3px;
 }
-.enter-line.friend .enter-who { color: var(--red); }
-.enter-line.you .enter-who { color: var(--cyan); }
-.enter-line p { margin: 0; font-size: 0.92rem; line-height: 1.4; color: #eaf1ff; }
+.enter-line.friend .enter-who {
+  color: var(--red);
+}
+.enter-line.you .enter-who {
+  color: var(--cyan);
+}
+.enter-line p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: #eaf1ff;
+}
 
 /* --- Win / Lose share the .intro layout but stack a single card --- */
-.intro.end { max-width: 720px; }
-.intro.end .intro-card { margin-bottom: 14px; box-shadow: var(--glow-cyan), 0 18px 34px rgba(0, 0, 0, 0.45); }
-.intro.end .intro-card p { font-size: 0.92rem; }
-.evidence-list { margin-top: 8px; }
-.intro.end .learn { font-size: 0.85rem; padding: 9px 12px; }
+.intro.end {
+  max-width: 720px;
+}
+.intro.end .intro-card {
+  margin-bottom: 14px;
+  box-shadow:
+    var(--glow-cyan),
+    0 18px 34px rgba(0, 0, 0, 0.45);
+}
+.intro.end .intro-card p {
+  font-size: 0.92rem;
+}
+.evidence-list {
+  margin-top: 8px;
+}
+.intro.end .learn {
+  font-size: 0.85rem;
+  padding: 9px 12px;
+}
 
 /* ============================================================
    FANTASY PORTAL — pre-test → instructions ("step inside").
@@ -155,8 +236,14 @@
   pointer-events: none;
 }
 @keyframes portal-out {
-  0%, 76% { opacity: 1; }
-  100%    { opacity: 0; visibility: hidden; }
+  0%,
+  76% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 /* Concentric rings rushing outward toward the viewer = a tunnel. */
@@ -166,46 +253,74 @@
   height: 42vmin;
   border-radius: 50%;
   border: 2px solid var(--cyan);
-  box-shadow: 0 0 26px rgba(22, 242, 255, 0.7), inset 0 0 26px rgba(22, 242, 255, 0.35);
+  box-shadow:
+    0 0 26px rgba(22, 242, 255, 0.7),
+    inset 0 0 26px rgba(22, 242, 255, 0.35);
   opacity: 0;
   animation: portal-ring 1.9s ease-in infinite;
 }
-.portal-ring:nth-child(2) { animation-delay: 0.30s; }
-.portal-ring:nth-child(3) {
-  animation-delay: 0.60s;
-  border-color: var(--magenta);
-  box-shadow: 0 0 26px rgba(255, 43, 214, 0.7), inset 0 0 26px rgba(255, 43, 214, 0.35);
+.portal-ring:nth-child(2) {
+  animation-delay: 0.3s;
 }
-.portal-ring:nth-child(4) { animation-delay: 0.90s; }
-.portal-ring:nth-child(5) {
-  animation-delay: 1.20s;
+.portal-ring:nth-child(3) {
+  animation-delay: 0.6s;
   border-color: var(--magenta);
-  box-shadow: 0 0 26px rgba(255, 43, 214, 0.7), inset 0 0 26px rgba(255, 43, 214, 0.35);
+  box-shadow:
+    0 0 26px rgba(255, 43, 214, 0.7),
+    inset 0 0 26px rgba(255, 43, 214, 0.35);
+}
+.portal-ring:nth-child(4) {
+  animation-delay: 0.9s;
+}
+.portal-ring:nth-child(5) {
+  animation-delay: 1.2s;
+  border-color: var(--magenta);
+  box-shadow:
+    0 0 26px rgba(255, 43, 214, 0.7),
+    inset 0 0 26px rgba(255, 43, 214, 0.35);
 }
 @keyframes portal-ring {
-  0%   { transform: scale(0.04); opacity: 0; }
-  18%  { opacity: 1; }
-  100% { transform: scale(8.5); opacity: 0; }
+  0% {
+    transform: scale(0.04);
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(8.5);
+    opacity: 0;
+  }
 }
 
 /* Hyperspace streaks radiating from the core. */
 .portal-streaks {
   position: absolute;
   inset: -25%;
-  background: repeating-conic-gradient(from 0deg,
+  background: repeating-conic-gradient(
+    from 0deg,
     rgba(22, 242, 255, 0) 0deg,
     rgba(22, 242, 255, 0) 3.4deg,
     rgba(150, 245, 255, 0.55) 4.2deg,
-    rgba(22, 242, 255, 0) 5deg);
+    rgba(22, 242, 255, 0) 5deg
+  );
   -webkit-mask: radial-gradient(circle at 50% 50%, transparent 5%, #000 42%);
-          mask: radial-gradient(circle at 50% 50%, transparent 5%, #000 42%);
+  mask: radial-gradient(circle at 50% 50%, transparent 5%, #000 42%);
   opacity: 0;
   animation: portal-streaks 1.9s ease-in forwards;
 }
 @keyframes portal-streaks {
-  0%   { transform: scale(0.2) rotate(0deg); opacity: 0; }
-  25%  { opacity: 0.85; }
-  100% { transform: scale(2.6) rotate(28deg); opacity: 0; }
+  0% {
+    transform: scale(0.2) rotate(0deg);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(2.6) rotate(28deg);
+    opacity: 0;
+  }
 }
 
 /* The core swells, then blows out to a whiteout the instructions come from. */
@@ -214,15 +329,35 @@
   width: 8vmin;
   height: 8vmin;
   border-radius: 50%;
-  background: radial-gradient(circle, #fff 0%, var(--cyan) 42%, rgba(22, 242, 255, 0) 72%);
+  background: radial-gradient(
+    circle,
+    #fff 0%,
+    var(--cyan) 42%,
+    rgba(22, 242, 255, 0) 72%
+  );
   animation: portal-core 1.9s ease-in forwards;
 }
 @keyframes portal-core {
-  0%   { transform: scale(0.2); opacity: 0.6; }
-  60%  { transform: scale(1);   opacity: 1; }
-  73%  { transform: scale(1.5); opacity: 1; }
-  82%  { transform: scale(34);  opacity: 1; }
-  100% { transform: scale(34);  opacity: 0; }
+  0% {
+    transform: scale(0.2);
+    opacity: 0.6;
+  }
+  60% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  73% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  82% {
+    transform: scale(34);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(34);
+    opacity: 0;
+  }
 }
 
 /* The instructions arrive THROUGH the portal: blurred + overscaled, resolving
@@ -231,13 +366,23 @@
   animation: portal-arrive 0.95s cubic-bezier(0.16, 0.84, 0.3, 1) 1.35s both;
 }
 @keyframes portal-arrive {
-  0%   { opacity: 0; transform: scale(1.16); filter: blur(7px) brightness(1.7); }
-  100% { opacity: 1; transform: scale(1);    filter: blur(0)   brightness(1); }
+  0% {
+    opacity: 0;
+    transform: scale(1.16);
+    filter: blur(7px) brightness(1.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0) brightness(1);
+  }
 }
 
 /* The instructions screen arrives onto the district map — show the backdrop a
    touch clearer (matches the map screen) instead of the global 0.42. */
-.enter-scroll .bg-slot { opacity: 0.6; }
+.enter-scroll .bg-slot {
+  opacity: 0.6;
+}
 
 /* ---------- Win screen: sunny morning sky ---------- */
 .win-sky {
@@ -246,12 +391,14 @@
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
-  background: linear-gradient(180deg,
+  background: linear-gradient(
+    180deg,
     #3d8fe0 0%,
     #63aef0 30%,
     #95cdf6 58%,
     #cfe7f5 80%,
-    #fbe9cf 100%);
+    #fbe9cf 100%
+  );
 }
 /* Soft sun glow in the upper right. */
 .win-sun {
@@ -261,12 +408,14 @@
   width: 520px;
   height: 520px;
   border-radius: 50%;
-  background: radial-gradient(circle,
+  background: radial-gradient(
+    circle,
     rgba(255, 255, 240, 1) 0%,
     rgba(255, 249, 214, 0.95) 9%,
     rgba(255, 236, 170, 0.55) 22%,
     rgba(255, 230, 160, 0.18) 45%,
-    rgba(255, 230, 160, 0) 70%);
+    rgba(255, 230, 160, 0) 70%
+  );
 }
 /* Each lane carries one cloud across the whole stage, very slowly; the
    negative delay spreads them out so some are already mid-sky on arrival. */
@@ -276,8 +425,12 @@
   animation: win-cloud-drift var(--dur) linear var(--offset) infinite;
 }
 @keyframes win-cloud-drift {
-  from { transform: translateX(-420px); }
-  to { transform: translateX(1320px); }
+  from {
+    transform: translateX(-420px);
+  }
+  to {
+    transform: translateX(1320px);
+  }
 }
 /* A fluffy cloud from a few overlapping soft puffs. */
 .win-cloud {
@@ -286,18 +439,34 @@
   transform-origin: left center;
   filter: blur(1.5px);
   background:
-    radial-gradient(ellipse 34% 56% at 30% 58%, #fff 60%, rgba(255, 255, 255, 0) 72%),
-    radial-gradient(ellipse 30% 62% at 52% 44%, #fff 60%, rgba(255, 255, 255, 0) 72%),
-    radial-gradient(ellipse 26% 50% at 72% 60%, #fff 58%, rgba(255, 255, 255, 0) 72%),
-    radial-gradient(ellipse 46% 26% at 50% 78%, #f3f8fc 70%, rgba(243, 248, 252, 0) 80%);
+    radial-gradient(
+      ellipse 34% 56% at 30% 58%,
+      #fff 60%,
+      rgba(255, 255, 255, 0) 72%
+    ),
+    radial-gradient(
+      ellipse 30% 62% at 52% 44%,
+      #fff 60%,
+      rgba(255, 255, 255, 0) 72%
+    ),
+    radial-gradient(
+      ellipse 26% 50% at 72% 60%,
+      #fff 58%,
+      rgba(255, 255, 255, 0) 72%
+    ),
+    radial-gradient(
+      ellipse 46% 26% at 50% 78%,
+      #f3f8fc 70%,
+      rgba(243, 248, 252, 0) 80%
+    );
 }
 .offer-phone-only {
   position: absolute;
-    left: 5rem;
-    top: 5rem;
-    /* margin: auto 0; */
-    height: 500px;
-    object-fit: contain;
+  left: 5rem;
+  top: 5rem;
+  /* margin: auto 0; */
+  height: 500px;
+  object-fit: contain;
 }
 /* Max and Mia, cut out at the waist, standing in the bottom-left corner
    (between the sky and the copy). */
@@ -309,21 +478,61 @@
   width: auto;
   z-index: 0;
   pointer-events: none;
-  animation: win-players-in 1.2s cubic-bezier(.2, .8, .25, 1) 0.3s backwards;
+  animation: win-players-in 1.2s cubic-bezier(0.2, 0.8, 0.25, 1) 0.3s backwards;
 }
-@keyframes win-players-in { from { opacity: 0; transform: translateY(40px); } }
-.win-scene .intro { position: relative; z-index: 1; left: 130px; } /* room for the pair on the left */
+@keyframes win-players-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+.win-scene .intro {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0;
+} /* room for the pair on the left */
 
 /* Keep the copy readable over the bright sky. */
 .win-scene .eyebrow,
-.win-scene .intro-tag { text-shadow: 0 2px 10px rgba(10, 30, 70, 0.65), 0 0 2px rgba(10, 30, 70, 0.6); }
-.win-scene .intro-tag { color: #f4f8ff; }
+.win-scene .intro-tag {
+  text-shadow:
+    0 2px 10px rgba(10, 30, 70, 0.65),
+    0 0 2px rgba(10, 30, 70, 0.6);
+}
+.win-scene .intro-tag {
+  color: #f4f8ff;
+}
 /* The title mixes plain and gradient (transparent-filled) text: a text-shadow
    would show through the gradient letters, and a filter on the clipped span
    glitches in Chrome — so shadow the whole heading's glyphs from the parent. */
-.win-scene .intro-title { text-shadow: none; filter: drop-shadow(0 2px 6px rgba(10, 30, 70, 0.75)); }
-.win-scene .intro-title .grad { text-shadow: none; }
-.reduced-motion .win-cloud-lane { animation: none; transform: translateX(var(--x)); }
+.win-scene .intro-title {
+  text-shadow: none;
+  filter: drop-shadow(0 2px 6px rgba(10, 30, 70, 0.75));
+}
+.win-scene .intro-title .grad {
+  text-shadow: none;
+}
+.reduced-motion .win-cloud-lane {
+  animation: none;
+  transform: translateX(var(--x));
+}
+.win-title-container {
+  margin: auto;
+  text-align: center;
+  max-width: 700px;
+}
+p.win-description {
+  color: #16233d !important;
+  max-width:700px;
+}
+h3.win-congrats {
+  color: #0f8866 !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .win-cloud-lane { animation: none; transform: translateX(var(--x)); }
+  .win-cloud-lane {
+    animation: none;
+    transform: translateX(var(--x));
+  }
 }

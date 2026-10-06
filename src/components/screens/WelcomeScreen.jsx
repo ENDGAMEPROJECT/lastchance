@@ -13,6 +13,7 @@ export default function WelcomeScreen() {
   const { locale, setLocale } = useI18n()
   const [alias, setAlias] = useState('')
   const [age, setAge] = useState('')
+  const [character, setCharacter] = useState('mia')
   const [err, setErr] = useState('')
 
   const onSubmit = (e) => {
@@ -21,7 +22,7 @@ export default function WelcomeScreen() {
     const n = parseInt(age, 10)
     if (!a) return setErr(t('welcome.aliasError'))
     if (!age || Number.isNaN(n) || n < 1 || n > 120) return setErr(t('welcome.ageError'))
-    submitWelcome({ alias: a, age: n })
+    submitWelcome({ alias: a, age: n, character })
   }
 
   return (
@@ -61,6 +62,20 @@ export default function WelcomeScreen() {
             />
           </label>
         </div>
+
+        <fieldset className="welcome-character">
+          <legend>{t('welcome.characterLabel')}</legend>
+          <div className="character-picker">
+            <label className={`character-option ${character === 'mia' ? 'on' : ''}`}>
+              <input type="radio" name="character" value="mia" checked={character === 'mia'} onChange={() => setCharacter('mia')} />
+              <span>{t('welcome.characterMia')}</span>
+            </label>
+            <label className={`character-option ${character === 'max' ? 'on' : ''}`}>
+              <input type="radio" name="character" value="max" checked={character === 'max'} onChange={() => setCharacter('max')} />
+              <span>{t('welcome.characterMax')}</span>
+            </label>
+          </div>
+        </fieldset>
 
         <div className="welcome-field">
           <span>{t('welcome.languageLabel')}</span>

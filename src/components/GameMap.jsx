@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
-import { NARRATIVE } from '../game/gameData.js'
 import { DEBUG } from '../game/settings.js'
 import { bgUrl } from '../game/assets.js'
 import DebugPosttestButtons from './DebugPosttestButtons.jsx'
@@ -253,9 +252,9 @@ function useCentred(ref, deps) {
 }
 
 export default function GameMap() {
-  const { NODES, progress, openNode, reviewNode, gotoScreen } = useGame()
+  const { NODES, progress, openNode, reviewNode, gotoScreen, narrative } = useGame()
   const t = useT()
-  const vars = { friend: NARRATIVE.friend }
+  const vars = { friend: narrative.friend }
   const boardRef = useRef(null)
   const shift = useCentred(boardRef, [t])
 
