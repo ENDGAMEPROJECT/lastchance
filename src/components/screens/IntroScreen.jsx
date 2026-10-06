@@ -1,12 +1,12 @@
 import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
-import { GAME_MINUTES, NARRATIVE } from '../../game/gameData.js'
+import { GAME_MINUTES } from '../../game/gameData.js'
 import './screens.css'
 
 export default function IntroScreen() {
-  const { startGame } = useGame()
+  const { startGame, narrative } = useGame()
   const t = useT()
-  const vars = { friend: NARRATIVE.friend, product: NARRATIVE.product, minutes: GAME_MINUTES }
+  const vars = { friend: narrative.friend, product: narrative.product, minutes: GAME_MINUTES }
   const steps = t('intro.steps')
 
   return (

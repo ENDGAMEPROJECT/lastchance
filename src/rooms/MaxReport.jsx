@@ -1,11 +1,12 @@
 import { useId } from 'react'
-import { assetUrl } from '../game/assets.js'
+import { bgUrl } from '../game/assets.js'
+import { useNarrative } from '../game/NarrativeContext.jsx'
 import './MaxReport.css'
 
 /* Max's data profile: a vector rebuild of the "user analysis" dashboard.
    Every module animates on its own clock (bars breathe, lines morph, rings
    fill, nodes pulse) while all text stays static. The centre column is left
-   hosts the hologram of Max (`figure`, an image URL; defaults to his PNG).
+   hosts the hologram of the friend the player is trying to convince.
    Labels are deliberately English-only (decorative UI, never translated). */
 const W = 1600
 const H = 800
@@ -16,7 +17,6 @@ const L = {
   id: 'ID',
   age: 'AGE',
   gender: 'GENDER',
-  genderValue: 'M',
   status: 'STATUS',
   online: 'ONLINE',
   location: 'LOCATION',
@@ -140,7 +140,9 @@ const ICONS = {
   vr: 'M-24 -6Q-24 -13 -16 -13H16Q24 -13 24 -6V5Q24 12 16 12H6L0 6L-6 12H-16Q-24 12 -24 5ZM-24 -3H-29M24 -3H29M-14 -2H-4M4 -2H14',
 }
 
-export default function MaxReport({ figure = assetUrl('algorithm-room/max-figure-nobg.png'), dim = 0.35 }) {
+export default function MaxReport({ figure, dim = 0.35 }) {
+  const narrative = useNarrative()
+  const profileFigure = figure === undefined ? bgUrl(narrative.friendProfileImage) : figure
   const id = useId().replace(/:/g, '')
   const ref = (name) => `url(#${id}-${name})`
 
@@ -320,7 +322,7 @@ export default function MaxReport({ figure = assetUrl('algorithm-room/max-figure
 
       {/* ---------- column A ---------- */}
       {panel('profile', 10, 78, 330, 222, L.profile, .25, <>
-        {[[L.id, '#0427-8A'], [L.age, '17'], [L.gender, L.genderValue], [L.status, L.online], [L.location, L.locationValue], [L.joined, '2022.04.16']].map(([k, v], i) => (
+        {[[L.id, '#0427-8A'], [L.age, '17'], [L.gender, narrative.friendGender], [L.status, L.online], [L.location, L.locationValue], [L.joined, '2022.04.16']].map(([k, v], i) => (
           <g key={i}>
             {text(26, 134 + i * 25, k)}
             {text(100, 134 + i * 25, v, i === 3 ? 'mr-v mr-green' : 'mr-v')}
@@ -766,10 +768,10 @@ export default function MaxReport({ figure = assetUrl('algorithm-room/max-figure
 
       {/* Dims the whole UI; Max (drawn after) keeps full brightness. Strength: `dim` prop. */}
       <rect className="mr-dim" width={W} height={H} fill="#000"/>
-      {figure && (
+      {profileFigure && (
         // Source is 1024×1536 with feet at ~94% height: scaled to stand on the platform at (800, 720).
         <g clipPath={ref('bay')}>
-          <image className="mr-holo" href={figure} x="600" y="144" width="410" height="614"/>
+          <image className="mr-holo" href={profileFigure} x="600" y="144" width="410" height="614"/>
         </g>
       )}
       <g clipPath={ref('slot')}>

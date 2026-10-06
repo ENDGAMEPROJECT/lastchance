@@ -39,6 +39,8 @@ const BG_IMAGES = [
   'persuasion_animation.gif',
   'persuasion_end.png',
   'computer.png',
+  'algorithm-room/max-figure-nobg.png',
+  'algorithm-room/mia-figure-nobg.png',
   'objects/emoji-decoding-card.png',
   'objects/max-report.png',
   'objects/flashlight.png',
@@ -48,8 +50,10 @@ const BG_IMAGES = [
   'max-talking-ph-internet.png',
   'player-talking-ph-internet.png',
   'no-one-talking-ph-internet.png',
-  'max-talking.png',
-  'player-talking.png',
+  'max-talking-mia.png',
+  'mia-talking-mia.png',
+  'max-talking-max.png',
+  'mia-talking-max.png',
   'phone-with-ad.png',
 ]
 
@@ -71,7 +75,6 @@ const ASSET_IMAGES = [
   'algorithm-room/r2.png',
   'algorithm-room/r3.png',
   'algorithm-room/r4.png',
-  'algorithm-room/max-figure-nobg.png',
   // Link District ad panels.
   'link-district/ad-lights-1.png',
   'link-district/ad-lights-2.png',

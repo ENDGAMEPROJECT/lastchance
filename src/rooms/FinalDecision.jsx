@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
-import { NARRATIVE } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 import { mergePosttestAnswers, passedPosttest, pendingPosttestQuestions, posttestOutcome } from '../game/posttestOutcome.js'
 import InPersonTest from '../components/screens/InPersonTest.jsx'
@@ -21,10 +20,10 @@ import '../components/screens/conversation-screen.css'
    The remaining time covers the post-test and retries. A player who already
    ran out of time can finish the post-test, but cannot prevent the purchase. */
 export default function FinalDecision() {
-  const { finishGame, startPosttestDecision, timedOut, timeLeft } = useGame()
+  const { finishGame, startPosttestDecision, timedOut, timeLeft, narrative } = useGame()
   const t = useT()
   const script = t('story.posttest')
-  const vars = { friend: NARRATIVE.friend, product: NARRATIVE.product }
+  const vars = { friend: narrative.friend, product: narrative.product }
   const [phase, setPhase] = useState('test') // 'test' | 'retry'
   const [run, setRun] = useState(0) // bump to replay the mastery pass
   const totalQuestions = t('story.rounds').length

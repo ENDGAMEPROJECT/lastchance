@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { useStage } from '../Stage.jsx'
-import { GAME_MINUTES, NARRATIVE } from '../../game/gameData.js'
+import { GAME_MINUTES } from '../../game/gameData.js'
 import { bgUrl } from '../../game/assets.js'
 import { getPreloadedVideo } from '../../game/preloadAssets.js'
 import './screens.css'
@@ -19,11 +19,6 @@ const WHITE_MS = 1800
 const LOAD_WAIT_MS = 6000 // if the video hasn't started by then, skip it and go to the fade
 const BLACK_MS = 6000
 const FADE_MS = 350 // matches the speech-band fade in pretest.css
-const BACKDROPS = {
-  friend: 'max-talking-ph-internet.png',
-  player: 'player-talking-ph-internet.png',
-  tour: 'no-one-talking-ph-internet.png',
-}
 const readingTime = (text) => Math.max(3500, text.length * 18 + 1500, text.trim().split(/\s+/).length * 280 + 800)
 
 // Fixed spark layout (percent of the art), so it is stable across renders.
@@ -46,11 +41,16 @@ const SPARKS = Array.from({ length: 14 }, (_, i) => {
    Only then does "Countdown begins" appear; it starts the clock. Every step
    advances on its own after its reading time (shown by the timeline). */
 export default function EnterScreen() {
-  const { startGame, reducedMotion, setEnterTour } = useGame()
+  const { startGame, reducedMotion, setEnterTour, narrative } = useGame()
   const t = useT()
   const { scale } = useStage()
-  const friend = NARRATIVE.friend
-  const vars = { friend, product: NARRATIVE.product, minutes: GAME_MINUTES }
+  const friend = narrative.friend
+  const vars = { friend, product: narrative.product, minutes: GAME_MINUTES }
+  const backdrops = {
+    friend: narrative.friendInternetImage,
+    player: narrative.playerInternetImage,
+    tour: 'no-one-talking-ph-internet.png',
+  }
 
   const steps = [
     { who: 'friend', text: t('enter.friendLine', vars) },
@@ -159,7 +159,7 @@ export default function EnterScreen() {
   }, [step.who, step.target, root, scale])
 
   const backdrop = step.who
-  const name = step.who === 'player' ? NARRATIVE.player : friend
+  const name = step.who === 'player' ? narrative.player : friend
   const captionW = 360
   const captionLeft = anchorX == null ? null : Math.min(1280 - 16 - captionW, Math.max(16, anchorX - captionW + 40))
 
@@ -167,14 +167,14 @@ export default function EnterScreen() {
     <div className="scene pretest-scene enter-scene" ref={setRoot}>
       <div className={`pretest-content ${reducedMotion ? 'fade-in' : ''}`}>
         <div className="pretest-art">
-          {Object.entries(BACKDROPS).map(([key, file]) => (
+          {Object.entries(backdrops).map(([key, file]) => (
             <img key={key} className={`pretest-backdrop enter-backdrop ${backdrop === key ? 'is-visible' : ''}`} src={bgUrl(file)} alt="" />
           ))}
           {/* Subtle life in the scene: drifting sparks and rare glitch slices. */}
           {!reducedMotion && (
             <div className="enter-fx" aria-hidden="true">
-              <div className="enter-glitch" style={{ backgroundImage: `url(${bgUrl(BACKDROPS[backdrop])})` }} />
-              <div className="enter-glitch enter-glitch-b" style={{ backgroundImage: `url(${bgUrl(BACKDROPS[backdrop])})` }} />
+              <div className="enter-glitch" style={{ backgroundImage: `url(${bgUrl(backdrops[backdrop])})` }} />
+              <div className="enter-glitch enter-glitch-b" style={{ backgroundImage: `url(${bgUrl(backdrops[backdrop])})` }} />
               {SPARKS.map((style, i) => <span key={i} className="enter-spark" style={style} />)}
             </div>
           )}
@@ -189,7 +189,7 @@ export default function EnterScreen() {
         </div>
 
         {!intro && step.who !== 'tour' && (
-          <div key={stepIndex} className={`pretest-speech ${step.who === 'player' ? 'is-player' : 'is-friend'} ${leaving ? 'is-leaving' : ''}`}>
+          <div key={stepIndex} className={`pretest-speech ${name === 'Mia' ? 'is-mia' : 'is-max'} ${leaving ? 'is-leaving' : ''}`}>
             <div className="pretest-speech-name" data-text={name} aria-hidden="true">{name}</div>
             <p className="pretest-line" aria-label={step.text} aria-live="polite" aria-atomic="true">
               <span aria-hidden="true">

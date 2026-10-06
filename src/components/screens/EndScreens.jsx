@@ -1,6 +1,5 @@
 import { useGame, formatTime } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
-import { NARRATIVE } from '../../game/gameData.js'
 import './screens.css'
 
 /* Clouds drifting across the win sky: [top px, scale, seconds to cross, start offset 0–1, opacity]. */
@@ -28,9 +27,9 @@ function WinSky() {
 }
 
 export function WinScreen() {
-  const { timeLeft, evidence, reset } = useGame()
+  const { timeLeft, evidence, reset, narrative } = useGame()
   const t = useT()
-  const vars = { friend: NARRATIVE.friend, product: NARRATIVE.product, time: formatTime(timeLeft) }
+  const vars = { friend: narrative.friend, product: narrative.product, time: formatTime(timeLeft) }
 
   return (
     <div className="stage-scroll win-scene">
@@ -61,9 +60,9 @@ export function WinScreen() {
 }
 
 export function LoseScreen() {
-  const { reset, loseReason } = useGame()
+  const { reset, loseReason, narrative } = useGame()
   const t = useT()
-  const vars = { friend: NARRATIVE.friend, product: NARRATIVE.product }
+  const vars = { friend: narrative.friend, product: narrative.product }
 
   // Per-outcome heading/body, falling back to the generic time-up copy. The
   // reducer sets loseReason: 'timeUp' | 'choseBuy' |

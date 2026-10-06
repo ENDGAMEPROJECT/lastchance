@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
-import { NARRATIVE } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 import './RoomFrame.css'
 
@@ -40,15 +39,16 @@ export default function RoomFrame({
   children,
 }) {
   const t = useT()
-  const { startRoom, addItem, hasItem, screen } = useGame()
+  const { startRoom, addItem, hasItem, screen, narrative } = useGame()
   const accent = node?.accent || 'cyan'
-  const vars = { friend: NARRATIVE.friend }
+  const vars = { friend: narrative.friend }
   const [started, setStarted] = useState(false)
   const collectRef = useRef(null)
   const continueRef = useRef(null)
   const collected = !!reward && hasItem(reward.id)
   const canContinue = !reward || collected
   const rewardName = reward ? t(`items.${reward.id}.name`, vars) : ''
+  const rewardImage = reward?.id === 'dataReport' ? narrative.reportImage : reward?.image
 
   useEffect(() => {
     if (!started || !solved || screen !== 'room') return
@@ -125,7 +125,7 @@ export default function RoomFrame({
                 {reward && (
                   <section className={`cleared-reward ${collected ? 'is-collected' : ''}`} aria-labelledby="cleared-reward-name">
                     <div className="reward-art" aria-hidden="true"
-                      style={reward.image ? { backgroundImage: `url("${bgUrl(reward.image)}")` } : undefined}>
+                      style={rewardImage ? { backgroundImage: `url("${bgUrl(rewardImage)}")` } : undefined}>
                       {!reward.image && <span className="reward-icon">{reward.icon}</span>}
                     </div>
                     <div className="reward-info">

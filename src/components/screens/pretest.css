@@ -35,6 +35,7 @@
   outline: none;
 }
 .pretest-phone-light { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.pretest-phone.phone-mia { left: 58.125%; top: 41.666667%; width: 6.25%; height: 11.904762%; }
 .pretest-phone-light path {
   fill: transparent;
   stroke: transparent;
@@ -68,7 +69,7 @@
 
 /* ---------- speech band ---------- */
 /* Full-width translucent band framed by two rules that fade out at the ends;
-   the speaker's colour (teal = Max, magenta = player) tints rules and name tag. */
+   the speaker's colour (teal = Max, magenta = Mia) tints rules and name tag. */
 .pretest-speech {
   --tone: #2fa7a0;
   --tone-soft: rgba(47, 167, 160, 0.28);
@@ -90,7 +91,7 @@
   transition: transform 0.55s cubic-bezier(.2, .8, .25, 1), opacity 0.35s ease;
   animation: pretest-bubble-in 0.4s ease-out backwards;
 }
-.pretest-speech.is-player {
+.pretest-speech.is-mia {
   --tone: #e45cf2;
   --tone-soft: rgba(228, 92, 242, 0.3);
   --tag-bg: #2c0f37;
@@ -163,7 +164,7 @@
   0%, 96%, 99%, 100% { clip-path: inset(0 0 100% 0); transform: none; }
   97% { clip-path: inset(55% 0 20% 0); transform: translateX(3px); }
 }
-.pretest-speech.is-player .pretest-speech-name { left: auto; right: 58px; }
+.pretest-speech.is-mia .pretest-speech-name { left: auto; right: 58px; }
 
 .pretest-line { margin: 0; font-size: 20px; line-height: 1.3; letter-spacing: 0; }
 .pretest-line-pending { visibility: hidden; }
@@ -187,12 +188,22 @@
 
 /* ---------- answer panel ---------- */
 .pretest-choices {
+  --choice-frame: #e040f5;
+  --choice-tab-ink: #12001a;
+  --choice-hover: rgba(70, 12, 84, 0.96);
+  --choice-chosen: rgba(110, 18, 130, 0.96);
   position: absolute;
   left: 88px;
   right: 108px;
   bottom: 12px;
   animation: pretest-choices-in 0.45s cubic-bezier(.2, .8, .25, 1) 0.22s backwards;
   transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.pretest-choices.is-max {
+  --choice-frame: #2fa7a0;
+  --choice-tab-ink: #001a17;
+  --choice-hover: rgba(12, 70, 67, 0.96);
+  --choice-chosen: rgba(18, 110, 104, 0.96);
 }
 .pretest-choices.is-leaving { opacity: 0; transform: translateY(10px); }
 @keyframes pretest-choices-in {
@@ -202,14 +213,14 @@
 .pretest-choices-tab {
   display: table;
   padding: 6px 12px 4px;
-  background: #e040f5;
-  color: #12001a;
+  background: var(--choice-frame);
+  color: var(--choice-tab-ink);
   font-size: 18px;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-/* Magenta frame; the 2px gaps between cells read as the inner rules. */
+/* The player's colour frames the answers, including the inner rules. */
 .pretest-options {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -217,7 +228,7 @@
   grid-auto-flow: column;
   gap: 2px;
   padding: 3px 14px 3px;
-  background: #e040f5;
+  background: var(--choice-frame);
 }
 .pretest-option {
   display: flex;
@@ -236,9 +247,9 @@
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
 }
-.pretest-option:hover:not(:disabled) { background: rgba(70, 12, 84, 0.96); color: #fff; }
+.pretest-option:hover:not(:disabled) { background: var(--choice-hover); color: #fff; }
 .pretest-option:disabled { cursor: default; }
-.pretest-option.is-chosen { background: rgba(110, 18, 130, 0.96); color: #fff; }
+.pretest-option.is-chosen { background: var(--choice-chosen); color: #fff; }
 
 /* Final-turn actions reuse the panel slot. */
 .pretest-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 12px; }

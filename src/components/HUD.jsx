@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useGame, formatTime } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
-import { NARRATIVE } from '../game/gameData.js'
+import { bgUrl } from '../game/assets.js'
 import { DEBUG } from '../game/settings.js'
 import { isMuted, setMuted } from '../game/sound.js'
 import { getHintContext, getHintPlan } from '../game/hints.js'
@@ -13,7 +13,7 @@ import './HUD.css'
 
 /* Persistent top bar: countdown, mission recap, inventory & map access. */
 export default function HUD() {
-  const { screen, activeNodeId, roomStarted, linkRound, timeLeft, inventory, evidence, progress, goMap, postDecision, enterTour } = useGame()
+  const { screen, activeNodeId, roomStarted, linkRound, timeLeft, inventory, evidence, progress, goMap, postDecision, enterTour, narrative } = useGame()
   const t = useT()
   const [bagOpen, setBagOpen] = useState(false)
   const [reportOpen, setReportOpen] = useState(false)
@@ -235,10 +235,10 @@ export default function HUD() {
                   className={`bag-item panel ${it.id === 'dataReport' ? 'bag-item-report' : ''} ${deniedItem === it.id ? 'bag-item-denied' : ''}`}
                   onClick={() => useItem(it)}
                 >
-                  <div><img className="bag-icon" src={it.image}></img></div>
+                  <div><img className="bag-icon" src={bgUrl(it.id === 'dataReport' ? narrative.reportImage : it.image)} alt="" /></div>
                   <div>
-                    <div className="bag-name">{t(`items.${it.id}.name`, { friend: NARRATIVE.friend })}</div>
-                    <div className="bag-desc muted t-xs">{t(`items.${it.id}.desc`, { friend: NARRATIVE.friend })}</div>
+                    <div className="bag-name">{t(`items.${it.id}.name`, { friend: narrative.friend })}</div>
+                    <div className="bag-desc muted t-xs">{t(`items.${it.id}.desc`, { friend: narrative.friend })}</div>
                   </div>
                 </button>
               ))}
@@ -249,7 +249,7 @@ export default function HUD() {
         <div className="bag-section">
           <div className="eyebrow" style={{ color: 'var(--green)' }}>{t('hud.evidenceHeading')}</div>
           {evidence.length === 0 ? (
-            <p className="muted t-sm">{t('hud.noEvidence', { friend: NARRATIVE.friend })}</p>
+            <p className="muted t-sm">{t('hud.noEvidence', { friend: narrative.friend })}</p>
           ) : (
             <ul className="evidence-list">
               {evidence.map((e) => (
