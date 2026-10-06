@@ -44,7 +44,7 @@ function debugPosttestState(state, scenario) {
       node.id, !timedOut || i < 2 ? 'done' : i === 2 ? 'available' : 'locked',
     ])),
     inventory: timedOut ? [ITEMS.emojiCard] : Object.values(ITEMS),
-    evidence: [],
+    evidence: state.evidence, // keep what was gathered (e.g. via the debug "All evidence" button)
   }
 }
 
@@ -139,8 +139,38 @@ export function reducer(state, action) {
     case 'SET_ENTER_TOUR':
       return state.enterTour === action.step ? state : { ...state, enterTour: action.step }
 
+    case 'DEBUG_GATHER_EVIDENCE': {
+      // Debug-only: as if every district had been solved — all marked done,
+      // each room's evidence logged and every tool in the bag. Stays on the map.
+      if (!DEBUG) return state
+      const evidence = [...state.evidence]
+      action.evidence.forEach((e) => { if (!evidence.some((x) => x.id === e.id)) evidence.push(e) })
+      return {
+        ...state,
+        progress: Object.fromEntries(NODES.map((n) => [n.id, 'done'])),
+        evidence,
+        inventory: Object.values(ITEMS),
+      }
+    }
+
     case 'GOTO_SCREEN': // debug-only jump
-      if (DEBUG && action.screen === 'posttest') return debugPosttestState(state, action.scenario)
+      // A named scenario ("Test · 5:00 / 0:00") rebuilds that post-test setup.
+      if (DEBUG && action.screen === 'posttest' && action.scenario) return debugPosttestState(state, action.scenario)
+      // Plain post-test entry (the map's Final Decision node) keeps the real run
+      // state — progress, evidence, clock — exactly like clearing the last district.
+      if (action.screen === 'posttest') {
+        return {
+          ...state,
+          screen: 'posttest',
+          posttestSession: state.posttestSession + 1,
+          postDecision: true,
+          running: state.timeLeft > 0,
+          activeNodeId: null,
+          reviewNodeId: null,
+          roomStarted: false,
+          linkRound: null,
+        }
+      }
       return { ...state, screen: action.screen, activeNodeId: null, reviewNodeId: null }
 
     case 'COMPLETE_NODE': {
@@ -242,6 +272,7 @@ export function GameProvider({ children }) {
   const gotoScreen = useCallback((screen, scenario) => dispatch({ type: 'GOTO_SCREEN', screen, scenario }), [])
   const skipToPortal = useCallback(() => dispatch({ type: 'DEBUG_SKIP_TO_PORTAL' }), [])
   const setEnterTour = useCallback((step) => dispatch({ type: 'SET_ENTER_TOUR', step }), [])
+  const gatherAllEvidence = useCallback((evidence) => dispatch({ type: 'DEBUG_GATHER_EVIDENCE', evidence }), [])
   const openNode = useCallback((id) => dispatch({ type: 'OPEN_NODE', id }), [])
   const reviewNode = useCallback((id) => dispatch({ type: 'REVIEW_NODE', id }), [])
   const startRoom = useCallback(() => dispatch({ type: 'START_ROOM' }), [])
@@ -274,6 +305,7 @@ export function GameProvider({ children }) {
     gotoScreen,
     skipToPortal,
     setEnterTour,
+    gatherAllEvidence,
     openNode,
     reviewNode,
     startRoom,

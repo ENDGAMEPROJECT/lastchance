@@ -291,14 +291,38 @@
     radial-gradient(ellipse 26% 50% at 72% 60%, #fff 58%, rgba(255, 255, 255, 0) 72%),
     radial-gradient(ellipse 46% 26% at 50% 78%, #f3f8fc 70%, rgba(243, 248, 252, 0) 80%);
 }
+.offer-phone-only {
+  position: absolute;
+    left: 5rem;
+    top: 5rem;
+    /* margin: auto 0; */
+    height: 500px;
+    object-fit: contain;
+}
+/* Max and Mia, cut out at the waist, standing in the bottom-left corner
+   (between the sky and the copy). */
+.win-players {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 350px;
+  width: auto;
+  z-index: 0;
+  pointer-events: none;
+  animation: win-players-in 1.2s cubic-bezier(.2, .8, .25, 1) 0.3s backwards;
+}
+@keyframes win-players-in { from { opacity: 0; transform: translateY(40px); } }
+.win-scene .intro { position: relative; z-index: 1; left: 130px; } /* room for the pair on the left */
+
 /* Keep the copy readable over the bright sky. */
-.win-scene .intro-title,
 .win-scene .eyebrow,
 .win-scene .intro-tag { text-shadow: 0 2px 10px rgba(10, 30, 70, 0.65), 0 0 2px rgba(10, 30, 70, 0.6); }
 .win-scene .intro-tag { color: #f4f8ff; }
-/* Gradient text is transparent-filled, so a text-shadow would show through the
-   letters; shadow the glyph shapes instead. */
-.win-scene .intro-title .grad { text-shadow: none; filter: drop-shadow(0 2px 6px rgba(10, 30, 70, 0.75)); }
+/* The title mixes plain and gradient (transparent-filled) text: a text-shadow
+   would show through the gradient letters, and a filter on the clipped span
+   glitches in Chrome — so shadow the whole heading's glyphs from the parent. */
+.win-scene .intro-title { text-shadow: none; filter: drop-shadow(0 2px 6px rgba(10, 30, 70, 0.75)); }
+.win-scene .intro-title .grad { text-shadow: none; }
 .reduced-motion .win-cloud-lane { animation: none; transform: translateX(var(--x)); }
 @media (prefers-reduced-motion: reduce) {
   .win-cloud-lane { animation: none; transform: translateX(var(--x)); }

@@ -193,7 +193,9 @@ function DoorPage({ type, ambiguous, t }) {
             <p className="luna-ad-1-text">
             {t('rooms.link.lunaAd1.text')}
           </p>
-            <div className="luna-ad-1-brand">{t('rooms.link.lunaAd1.brand')}</div>
+            <div className="luna-ad-1-brand">
+               {t('rooms.link.lunaAd1.brand')}
+            </div>
           </div>
         </div>
       </div>
@@ -245,9 +247,24 @@ function DoorPage({ type, ambiguous, t }) {
           <p className="luna-ad-3-text">
             {t('rooms.link.lunaAd3.text')} 😱😱😱
           </p>
-          <div className="luna-ad-footer">
-            <div className="luna-ad-3-brand">{t('rooms.link.lunaAd3.brand')}</div>
-          </div>
+      
+            <div className="luna-ad-3-button">
+                <p style={{fontSize: "2em", 
+                textTransform: "uppercase", 
+                color: "white",
+                margin: "0",
+                height: "40px",
+              }}
+                >
+                  {t('rooms.link.lunaAd3.cta')}</p>
+              <p
+              style={{margin: "0", 
+                padding: "0 0 8px 0"
+              }}
+              >
+              {t('rooms.link.lunaAd3.timePressure')}</p>
+            </div>
+    
         </div>
 
       </div>

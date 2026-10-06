@@ -618,7 +618,8 @@ export default {
         "oldPrice": "600$",
         "discount": "49$",
         "text": "Hurry up! Offer ends in limited time.",
-        "brand": "luna wears"
+        "cta": "BUY NOW!!",
+        "timePressure": "Only 30 mins left!!"
       },
       "shoesAd1": {
         "headline": "BRAND NEW SNEAKERS",

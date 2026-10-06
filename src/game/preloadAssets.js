@@ -102,6 +102,8 @@ const ASSET_IMAGES = [
   'influencers/nothing_en.png',
   'influencers/nothing_es.png',
   'influencers/nothing_sr.png',
+  // Ending art.
+  'ending/player-won.png',
   // Product art + reverse-image-search result variants.
   'products/cupcakes.png',
   'products/cupcakes1.png',

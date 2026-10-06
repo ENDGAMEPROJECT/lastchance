@@ -1,6 +1,7 @@
 import { useGame, formatTime } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { NARRATIVE } from '../../game/gameData.js'
+import { assetUrl } from '../../game/assets.js'
 import './screens.css'
 
 /* Clouds drifting across the win sky: [top px, scale, seconds to cross, start offset 0–1, opacity]. */
@@ -35,6 +36,9 @@ export function WinScreen() {
   return (
     <div className="stage-scroll win-scene">
       <WinSky />
+      <img className="offer-phone-only" src={assetUrl("bg/offer-phone-only.png")}></img>
+      {/* Max and Mia, bottom-left (public/ending/player-won.png). */}
+      <img className="win-players" src={assetUrl('ending/player-won.png')} alt="" />
       <div className="intro end fade-in">
         <div className="intro-glyph win-glyph">✓</div>
         <div className="eyebrow" style={{ color: 'var(--green)' }}>{t('end.win.eyebrow')}</div>
