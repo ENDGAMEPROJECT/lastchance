@@ -113,6 +113,29 @@ const ASSET_IMAGES = [
   'products/novapad2.png',
 ]
 
+/* Videos (paths under public/). Each gets ONE shared <video> element, created
+   at startup with preload="auto" so it buffers in the background; the screen
+   that shows it reuses that same element (and its buffer). Don't fetch() these
+   separately — a concurrent fetch of the same URL stalls the media request. */
+const GAME_VIDEOS = [
+  'transitions-videos/abduction-scene.mp4',
+]
+const videoCache = {}
+const VIDEO_HEAD_START_MS = 10000
+
+export function getPreloadedVideo(path) {
+  if (!videoCache[path]) {
+    const video = document.createElement('video')
+    video.preload = 'auto'
+    video.muted = true
+    video.playsInline = true
+    video.src = assetUrl(path)
+    video.load()
+    videoCache[path] = video
+  }
+  return videoCache[path]
+}
+
 export const GAME_IMAGES = [
   ...BG_IMAGES.map(bgUrl),
   ...ASSET_IMAGES.map(assetUrl),
@@ -125,7 +148,20 @@ let started = false
 export function preloadGameImages() {
   if (started) return Promise.resolve()
   started = true
-  return Promise.all(
+  // Videos first: ~170 MB of image requests otherwise saturate the connections
+  // and the media request stalls for good. Images start once every video can
+  // play through (or after VIDEO_HEAD_START_MS at most). The current screen's
+  // own images load normally meanwhile; only the warm-up of later rooms waits.
+  const videosReady = Promise.race([
+    Promise.all(GAME_VIDEOS.map((path) => new Promise((resolve) => {
+      const video = getPreloadedVideo(path)
+      if (video.readyState >= 4) return resolve()
+      video.addEventListener('canplaythrough', resolve, { once: true })
+      video.addEventListener('error', resolve, { once: true })
+    }))),
+    new Promise((resolve) => window.setTimeout(resolve, VIDEO_HEAD_START_MS)),
+  ])
+  return videosReady.then(() => Promise.all(
     GAME_IMAGES.map(
       (src) =>
         new Promise((resolve) => {
@@ -135,5 +171,5 @@ export function preloadGameImages() {
           img.src = src
         }),
     ),
-  )
+  ))
 }

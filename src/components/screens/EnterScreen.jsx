@@ -4,11 +4,20 @@ import { useT } from '../../i18n/index.jsx'
 import { useStage } from '../Stage.jsx'
 import { GAME_MINUTES, NARRATIVE } from '../../game/gameData.js'
 import { bgUrl } from '../../game/assets.js'
+import { getPreloadedVideo } from '../../game/preloadAssets.js'
 import './screens.css'
 import './pretest.css'
 import './enter.css'
 
-const WARP_MS = 1900
+// Intro timeline (motion only): the tunnel video plays with the portal rings
+// over it; in its last FLASH_MS the core swells to a whiteout; the white fades
+// to black (WHITE_MS), then the black slowly fades to the scene (BLACK_MS).
+const TUNNEL_VIDEO = 'transitions-videos/abduction-scene.mp4'
+const TUNNEL_MS = 9042 // video length; replaced by the real duration once metadata loads
+const FLASH_MS = 1900
+const WHITE_MS = 1800
+const LOAD_WAIT_MS = 6000 // if the video hasn't started by then, skip it and go to the fade
+const BLACK_MS = 6000
 const FADE_MS = 350 // matches the speech-band fade in pretest.css
 const BACKDROPS = {
   friend: 'max-talking-ph-internet.png',
@@ -52,13 +61,50 @@ export default function EnterScreen() {
     { who: 'player', text: t('enter.finalLine', vars) },
   ]
 
-  // The portal overlay only plays with motion enabled; the dialogue starts once it clears.
-  const [warping, setWarping] = useState(!reducedMotion)
+  // Intro phases: 'tunnel' (video + rings, scene hidden behind solid black) →
+  // 'fade' (whiteout → black → scene) → 'done' (dialogue starts).
+  const [phase, setPhase] = useState(reducedMotion ? 'done' : 'tunnel')
+  const [tunnelMs, setTunnelMs] = useState(TUNNEL_MS)
+  // The tunnel's clock (and the core's final flash) run from when the video
+  // actually starts playing, not from mount, so a slow load doesn't desync them.
+  const [playing, setPlaying] = useState(false)
+  const intro = phase !== 'done'
   useEffect(() => {
-    if (!warping) return
-    const timer = window.setTimeout(() => setWarping(false), WARP_MS)
+    if (phase === 'done') return
+    // The tunnel normally ends on the video's 'ended' event; these are fallbacks
+    // for a video that never starts or stalls part-way.
+    const delay = phase === 'fade' ? WHITE_MS + BLACK_MS : playing ? tunnelMs + 1500 : LOAD_WAIT_MS
+    const timer = window.setTimeout(() => setPhase(phase === 'fade' ? 'done' : 'fade'), delay)
     return () => window.clearTimeout(timer)
-  }, [warping])
+  }, [phase, playing, tunnelMs])
+
+  // Mount the shared, already-buffering <video> (preloaded at startup) into the
+  // tunnel layer and play it from the start; detach it again when the tunnel ends.
+  const [videoHost, setVideoHost] = useState(null)
+  useEffect(() => {
+    if (!videoHost) return
+    const video = getPreloadedVideo(TUNNEL_VIDEO)
+    const onMeta = () => { if (video.duration) setTunnelMs(video.duration * 1000) }
+    const onPlaying = () => setPlaying(true)
+    const toFade = () => setPhase('fade')
+    video.className = 'enter-video'
+    video.addEventListener('loadedmetadata', onMeta)
+    video.addEventListener('playing', onPlaying)
+    video.addEventListener('ended', toFade)
+    video.addEventListener('error', toFade)
+    onMeta()
+    video.currentTime = 0
+    videoHost.appendChild(video)
+    video.play().catch(() => {}) // a blocked/slow start falls back to LOAD_WAIT_MS
+    return () => {
+      video.pause()
+      video.removeEventListener('loadedmetadata', onMeta)
+      video.removeEventListener('playing', onPlaying)
+      video.removeEventListener('ended', toFade)
+      video.removeEventListener('error', toFade)
+      video.remove()
+    }
+  }, [videoHost])
 
   const [stepIndex, setStepIndex] = useState(0)
   const [clock, setClock] = useState({ step: 0, ms: 0 })
@@ -73,7 +119,7 @@ export default function EnterScreen() {
 
   // Reading clock: pauses while the tab is hidden, then moves to the next step.
   useEffect(() => {
-    if (warping) return
+    if (intro) return
     let ms = 0
     const timer = window.setInterval(() => {
       if (document.hidden) return
@@ -85,7 +131,7 @@ export default function EnterScreen() {
       }
     }, 50)
     return () => window.clearInterval(timer)
-  }, [warping, stepIndex, total, isLast])
+  }, [intro, stepIndex, total, isLast])
 
   // Tell the HUD which tool to reveal / highlight.
   const tour = stepIndex < 3 ? null : step.who === 'tour' ? step.target : 'done'
@@ -119,7 +165,7 @@ export default function EnterScreen() {
 
   return (
     <div className="scene pretest-scene enter-scene" ref={setRoot}>
-      <div className={`pretest-content ${reducedMotion ? 'fade-in' : 'enter-arrive'}`}>
+      <div className={`pretest-content ${reducedMotion ? 'fade-in' : ''}`}>
         <div className="pretest-art">
           {Object.entries(BACKDROPS).map(([key, file]) => (
             <img key={key} className={`pretest-backdrop enter-backdrop ${backdrop === key ? 'is-visible' : ''}`} src={bgUrl(file)} alt="" />
@@ -142,7 +188,7 @@ export default function EnterScreen() {
           </h1>
         </div>
 
-        {!warping && step.who !== 'tour' && (
+        {!intro && step.who !== 'tour' && (
           <div key={stepIndex} className={`pretest-speech ${step.who === 'player' ? 'is-player' : 'is-friend'} ${leaving ? 'is-leaving' : ''}`}>
             <div className="pretest-speech-name" data-text={name} aria-hidden="true">{name}</div>
             <p className="pretest-line" aria-label={step.text} aria-live="polite" aria-atomic="true">
@@ -157,7 +203,7 @@ export default function EnterScreen() {
           </div>
         )}
 
-        {!warping && step.who === 'tour' && captionLeft != null && (
+        {!intro && step.who === 'tour' && captionLeft != null && (
           <div key={stepIndex} className={`enter-caption is-${step.target} ${leaving ? 'is-leaving' : ''}`}
             style={{ left: captionLeft, width: captionW, '--arrow': `${anchorX - captionLeft}px` }} aria-live="polite">
             <b className="enter-caption-title">{step.title}</b>
@@ -175,8 +221,10 @@ export default function EnterScreen() {
         )}
       </div>
 
-      {warping && (
-        <div className="portal-warp" aria-hidden>
+      {phase === 'tunnel' && <div className="enter-video-host" ref={setVideoHost} aria-hidden />}
+      {phase === 'tunnel' && (
+        <div className={`portal-warp enter-warp ${playing ? 'is-playing' : ''}`} aria-hidden
+          style={{ '--flash': `${FLASH_MS}ms`, '--flash-delay': `${Math.max(0, tunnelMs - FLASH_MS)}ms` }}>
           <div className="portal-streaks" />
           <span className="portal-ring" />
           <span className="portal-ring" />
@@ -186,6 +234,11 @@ export default function EnterScreen() {
           <div className="portal-core" />
         </div>
       )}
+      {intro && (
+        <div className={`enter-blackout ${phase === 'fade' ? 'is-fading' : ''}`}
+          style={{ '--white': `${WHITE_MS}ms`, '--black': `${BLACK_MS}ms` }} aria-hidden />
+      )}
+      {phase === 'fade' && <div className="enter-whiteout" style={{ '--white': `${WHITE_MS}ms` }} aria-hidden />}
     </div>
   )
 }

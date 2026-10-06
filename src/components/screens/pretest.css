@@ -19,6 +19,9 @@
   pointer-events: none;
 }
 .pretest-backdrop.is-visible { opacity: 1; }
+/* Crossfade between speakers' backdrops (same as the portal arrival). */
+.pretest-backdrop { transition: opacity 0.5s ease; }
+.reduced-motion .pretest-backdrop { transition: none; }
 .pretest-phone {
   position: absolute;
   left: 37.615741%;

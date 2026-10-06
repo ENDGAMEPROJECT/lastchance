@@ -3,13 +3,38 @@ import { useT } from '../../i18n/index.jsx'
 import { NARRATIVE } from '../../game/gameData.js'
 import './screens.css'
 
+/* Clouds drifting across the win sky: [top px, scale, seconds to cross, start offset 0–1, opacity]. */
+const CLOUDS = [
+  [70, 1.15, 420, 0.15, 0.95],
+  [150, 0.7, 520, 0.55, 0.8],
+  [255, 0.9, 470, 0.85, 0.9],
+  [390, 0.6, 600, 0.35, 0.7],
+  [470, 1.0, 540, 0.7, 0.75],
+]
+
+/* Morning sky behind the win screen: a sunny gradient with a few clouds
+   drifting very slowly. Pure CSS, decorative. */
+function WinSky() {
+  return (
+    <div className="win-sky" aria-hidden="true">
+      <div className="win-sun" />
+      {CLOUDS.map(([top, scale, dur, offset, opacity], i) => (
+        <div key={i} className="win-cloud-lane" style={{ top, '--dur': `${dur}s`, '--offset': `${-offset * dur}s`, '--x': `${Math.round(-420 + offset * 1740)}px` }}>
+          <div className="win-cloud" style={{ transform: `scale(${scale})`, opacity }} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export function WinScreen() {
   const { timeLeft, evidence, reset } = useGame()
   const t = useT()
   const vars = { friend: NARRATIVE.friend, product: NARRATIVE.product, time: formatTime(timeLeft) }
 
   return (
-    <div className="stage-scroll">
+    <div className="stage-scroll win-scene">
+      <WinSky />
       <div className="intro end fade-in">
         <div className="intro-glyph win-glyph">✓</div>
         <div className="eyebrow" style={{ color: 'var(--green)' }}>{t('end.win.eyebrow')}</div>
