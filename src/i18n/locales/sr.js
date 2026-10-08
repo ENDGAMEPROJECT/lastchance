@@ -339,7 +339,8 @@ export default {
     "mission": "Prođi kroz okruge, prikupi dokaze o tome kako prevara funkcioniše i vrati se do {prijatelja} pre nego što ponuda istekne.",
     "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga — završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
     "bagText": "Tvoji alati i dokazi koje prikupiš. Otvori ih da bi koristio/la predmete u zagonetkama i pregledao/la dokaze koje ćeš pokazati {prijatelju}.",
-    "start": "▶ Odbrojavanje počinje"
+    "start": "▶ Odbrojavanje počinje",
+    "finalLine": "Ready? The timer starts as soon as you open the map."
   },
   "hints": {
     "title": "Saveti za misiju",

@@ -339,7 +339,8 @@ export default {
     "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
     "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
-    "start": "▶ Countdown begins"
+    "start": "▶ Countdown begins",
+    "finalLine": "Ready? The timer starts as soon as you open the map."
   },
   "hints": {
     "title": "Mission hints",
