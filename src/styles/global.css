@@ -16,8 +16,10 @@
   /* Neon accents */
   --cyan: #16f2ff;
   --cyan-dim: #0aa9c4;
+  --magenta-light: #ff8ae8 ; 
   --magenta: #ff2bd6;
   --magenta-dim: #b21a95;
+    --purple-light: #bd7ef8;
   --purple: #a855f7;
   --purple-dim: #6d28d9;
   --green: #2bff88;
@@ -175,7 +177,7 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0
    selector beats the .panel-glow-* neon border/glow if both are applied. */
 .panel-light,
 .panel-light[class*="panel-glow-"] {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(238, 246, 255, 0.72));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(238, 246, 255, 0.42));
   border: 1px solid rgba(214, 230, 248, 0.888);
   border-radius: var(--radius);
   box-shadow: 0 10px 30px rgba(30, 70, 120, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -228,9 +230,27 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0
   cursor: pointer;
   transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
+.btn-light {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+ color: #3c3950;
+ border: #779ebc 2px solid;
+  background: rgba(144, 178, 204, 0.7);
+  border-radius: var(--radius-sm);
+  padding: 12px 22px;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
 .btn:hover:not(:disabled) { transform: translateY(-2px); }
 .btn:active:not(:disabled) { transform: translateY(0); }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-light:hover:not(:disabled) { transform: translateY(-2px); }
+.btn-light:active:not(:disabled) { transform: translateY(0); }
+.btn-light:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .btn-cyan { border-color: var(--cyan); color: #d7feff; box-shadow: var(--glow-cyan); }
 .btn-cyan:hover:not(:disabled) { background: rgba(22, 242, 255, 0.14); }

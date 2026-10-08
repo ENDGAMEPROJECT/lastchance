@@ -110,11 +110,12 @@
 .bag-desc { margin-top: 2px; line-height: 1.35; }
 
 .evidence-list { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
-.evidence-list li { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #d4ffe6; }
+.evidence-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: #d4ffe6; }
 .ev-dot { 
   width: 8px;
   height: 8px; 
   border-radius: 50%; 
+  margin-top: 0.4rem;
   background:  #0f8866 !important;
   box-shadow: var(--glow-green); flex: none; }
 
