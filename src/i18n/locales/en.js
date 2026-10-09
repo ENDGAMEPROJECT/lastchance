@@ -411,7 +411,7 @@ export default {
       ]
     },
     "posttest": {
-      "context        ": "Use what you discovered to help your friend make the final call.",
+      "context": "Use what you discovered to help your friend make the final call.",
       "prompts": [
         "I do not know how to separate real evidence from persuasive decoration. ",
         "I do not know which warning signs matter most. ",
@@ -991,7 +991,7 @@ export default {
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",
-        "prompt": "Enter the 6-digit code.",
+        "prompt": "Open the backpack and select the Data Report on {friend}. Enter the six highlighted digits.",
         "error": "Access denied — that code is wrong.",
         "submit": "Unlock →"
       },
@@ -1152,7 +1152,7 @@ export default {
       },
       "door": {
         "badge": "Control Room · Sealed",
-        "prompt": "The Algorithm Control Room is locked. A keypad is mounted on the door — step up to it and enter the 6-digit code from your Data Report.",
+        "prompt": "The Algorithm Control Room is locked. Open the backpack and select the Data Report on {friend}. Find the six highlighted digits, then use the keypad to enter the code.",
         "action": "Use the keypad →"
       }
     },

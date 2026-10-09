@@ -411,7 +411,7 @@ export default {
       ]
     },
     "posttest": {
-      "context        ": "Iskoristi ono što si otkrio/la da pomogneš prijatelju da donese konačnu odluku.",
+      "context": "Iskoristi ono što si otkrio/la da pomogneš prijatelju da donese konačnu odluku.",
       "prompts": [
         "Ne znam kako da razlikujem stvarne dokaze od uverljivih ukrasa.",
         "Ne znam koji znakovi upozorenja su najvažniji.",
@@ -991,7 +991,7 @@ export default {
       "evidence": "Oglas je algoritam odabrao na osnovu godina, interesovanja i nesigurnosti {prijatelja}.",
       "unlock": {
         "badge": "PRISTUP · Kontrolna soba algoritma",
-        "prompt": "Unesi šestocifreni kod.",
+        "prompt": "Open the backpack and select the Data Report on {friend}. Enter the six highlighted digits.",
         "error": "Pristup odbijen — taj kod nije ispravan.",
         "submit": "Otključaj →"
       },
@@ -1152,7 +1152,7 @@ export default {
       },
       "door": {
         "badge": "Kontrolna soba · Zapečaćena",
-        "prompt": "Kontrolna soba algoritma je zaključana. Na vratima se nalazi tastatura — priđi joj i unesi šestocifreni kod iz svog Izveštaja o podacima.",
+        "prompt": "The Algorithm Control Room is locked. Open the backpack and select the Data Report on {friend}. Find the six highlighted digits, then use the keypad to enter the code.",
         "action": "Koristi tastaturu →"
       }
     },

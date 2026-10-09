@@ -146,6 +146,7 @@ export default function AlgorithmRoom({ node }) {
   /* ---- unlock handlers ---- */
   // Feedback is a light + a sound, not words: green chime → unlock; red buzz → deny.
   function submitCode() {
+    if (code.length !== 6 || status === 'ok') return
     if (code === CODES.algorithmRoom) {
       setStatus('ok')
       playSound('twinkle.mp3')
@@ -153,6 +154,7 @@ export default function AlgorithmRoom({ node }) {
     } else {
       playSound('wrong.mp3')
       setStatus('wrong')
+      setCode('')
     }
   }
 
