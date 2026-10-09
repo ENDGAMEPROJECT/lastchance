@@ -25,7 +25,10 @@ export default {
     "languageLabel": "Jezik",
     "start": "⏻ Uđi",
     "aliasError": "Unesi nadimak da bi nastavio/la.",
-    "ageError": "Unesi ispravan broj godina (1–120)."
+    "ageError": "Unesi ispravan broj godina (1–120).",
+    "characterLabel": "Choose your character",
+    "characterMia": "Mia",
+    "characterMax": "Max"
   },
   "hud": {
     "logo": "POSLEDNJA ŠANSA ZA BEKSTVO",
@@ -40,7 +43,10 @@ export default {
     "noTools": "Još ništa nije prikupljeno. Reši zagonetke da bi osvojio/la alate.",
     "evidenceHeading": "Dokazi o ponudi",
     "noEvidence": "Prikupi dokaze u svakom okrugu kako bi na kraju ubedio/la {prijatelja}.",
-    "hints": "💡 Saveti"
+    "hints": "💡 Saveti",
+    "enterFullscreen": "Enter fullscreen",
+    "exitFullscreen": "Exit fullscreen",
+    "fullscreenError        ": "Fullscreen could not be activated. Please try again."
   },
   "intro": {
     "eyebrow": "Edukativni escape room",
@@ -332,7 +338,7 @@ export default {
     "titleLead": "Dobro došao/la u",
     "titleAccent": "FIZIČKI INTERNET",
     "friendLine": "U redu — imaš {minuta} minuta da me ubediš da je ova ponuda prevara. Ako odbrojavanje stigne do nule, kupiću {proizvod}.",
-    "playerLine": "Uspeli smo. Ovo je Fizički internet. Hajde da pokažemo Maksu kako je ova ponuda osmišljena da ga prevari",
+    "playerLine": "We made it. This is the Physical Internet. Let's uncover how this deal was built to fool {friend}.",
     "toolsTitle": "Prvo, oprema",
     "toolsIntro": "Dve stvari putuju sa tobom svuda po ovom prostoru. Naći ćeš ih u traci na vrhu ekrana.",
     "clock": "⏱ {minuta}:00 počinje onog trenutka kada krenemo da hodamo",
@@ -352,7 +358,7 @@ export default {
       "pretest": "Pročitaj ponudu pre nego što uđeš u mrežu",
       "map": "Izaberi sledeći okrug u nizu dokaza",
       "room": "Reši zagonetku u okrugu i zabeleži šta si otkrio/la",
-      "posttest": "Iskoristi dokaze da zaštitiš Maksa",
+      "posttest": "Use your evidence to protect {friend}",
       "win": "Igra završena: pogledaj šta te je zaštitilo",
       "lose": "Vreme je isteklo: pogledaj znakove upozorenja"
     },
@@ -371,11 +377,11 @@ export default {
     "objectives": {
       "pretest": {
         "title": "Završi razgovor pre testa",
-        "text": "Pročitaj Maksovu poruku, izaberi odgovor koji najbolje opisuje tvoj prvi utisak i pritisni završno dugme da uđeš u Fizički internet."
+        "text": "Read the message from {friend}, choose the response that best explains your first impression, and use the final button to enter the Physical Internet."
       },
       "posttest": {
         "title": "Donesi konačnu odluku",
-        "text": "Iskoristi prikupljene dokaze da objasniš znakove upozorenja i odlučiš da li Maks treba da zatvori karticu."
+        "text": "Use the evidence you collected to explain the warning signs and decide whether {friend} should close the tab."
       }
     },
     "pretest": {
@@ -773,7 +779,9 @@ export default {
           }
         },
         "debugSkip": "Прескочи рулете (debug)"
-      }
+      },
+      "solvedTitle": "Roulette Corridor cleared",
+      "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked."
     },
     "influencer": {
       "intro": "Neonska avenija bilborda i fidova influensera. Pogledaj iza sjaja: označi sponzorisane objave, a zatim proveri šta su proizvodi zapravo.",
@@ -1073,10 +1081,10 @@ export default {
         "profileTitle": "▚ PROFIL REKONSTRUISAN ▚",
         "profileP1": "Mehanizam je ukrstio",
         "profileB1": "godine {prijatelja}",
-        "profileP2": "(tinejdžer),",
-        "profileB2": "njegova interesovanja",
-        "profileP3": "(igrice, nova tehnologija, NovaPad X koji stalno pretražuje) i",
-        "profileB3": "njegove nesigurnosti",
+        "profileP2": "(a teenager),",
+        "profileB2": "interests",
+        "profileP3": "(gaming, new tech and searches for the NovaPad X) and",
+        "profileB3": "insecurities",
         "profileP4": "(uklapanje, strah da će propustiti ponudu). Rezultat je bio jedan savršeno ciljani oglas — upravo ona ponuda za NovaPad X „90% popusta“. Nije slučajno što je {prijatelj} video taj oglas.",
         "logEvidence": "Zabeleži ovaj dokaz ✓",
         "finalLessonTitle": "Ono što si naučio/la",
@@ -1142,10 +1150,10 @@ export default {
         "t-teeth": "Zabrinut zbog svojih zuba"
       },
       "report": {
-        "modalTitle": "Izveštaj podataka · Maksov profil",
+        "modalTitle": "Data Report · Profile: {friend}",
         "kicker": "KONTROLNA SOBA ALGORITMA",
-        "title": "Zapisnik ciljanih oglasa: MAX",
-        "subject": "Subjekat: Maksove aktivnosti na internetu",
+        "title": "Targeted Ad Profile Log: {friend}",
+        "subject": "Online activity · Subject: {friend}",
         "instruction": "Pregledaj aktivnosti u nastavku da vidiš kako je algoritam učio.",
         "columns": {
           "time": "VREME",

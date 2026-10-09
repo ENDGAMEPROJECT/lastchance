@@ -25,7 +25,10 @@ export default {
     "languageLabel": "Language",
     "start": "⏻ Enter",
     "aliasError": "Enter an alias to continue.",
-    "ageError": "Enter a valid age (1–120)."
+    "ageError": "Enter a valid age (1–120).",
+    "characterLabel": "Choose your character",
+    "characterMia": "Mia",
+    "characterMax": "Max"
   },
   "hud": {
     "logo": "LAST CHANCE TO ESCAPE",
@@ -40,7 +43,10 @@ export default {
     "noTools": "Nothing collected yet. Solve puzzles to earn tools.",
     "evidenceHeading": "Evidence on the deal",
     "noEvidence": "Collect proof in each district to convince {friend} at the end.",
-    "hints": "💡 Pistas"
+    "hints": "💡 Pistas",
+    "enterFullscreen": "Enter fullscreen",
+    "exitFullscreen": "Exit fullscreen",
+    "fullscreenError        ": "Fullscreen could not be activated. Please try again."
   },
   "intro": {
     "eyebrow": "Educational Escape Room",
@@ -332,7 +338,7 @@ export default {
     "titleLead": "Welcome to the",
     "titleAccent": "PHYSICAL INTERNET",
     "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
-    "playerLine": "We made it. This is the Physical Internet. Let's show Max how this deal was built to fool him",
+    "playerLine": "We made it. This is the Physical Internet. Let's uncover how this deal was built to fool {friend}.",
     "toolsTitle": "First, the gear",
     "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
     "clock": "⏱ {minutes}:00 starts the moment we start walking",
@@ -352,7 +358,7 @@ export default {
       "pretest": "Read the deal before you enter the network",
       "map": "Choose the next district in the evidence trail",
       "room": "Solve the district and log what you discover",
-      "posttest": "Use your evidence to protect Max",
+      "posttest": "Use your evidence to protect {friend}",
       "win": "Run complete: review what protected you",
       "lose": "Time expired: review the warning signs"
     },
@@ -371,11 +377,11 @@ export default {
     "objectives": {
       "pretest": {
         "title": "Complete the pre-test conversation",
-        "text": "Read Max’s message, choose the response that best explains your first impression, and use the final button to enter the Physical Internet."
+        "text": "Read the message from {friend}, choose the response that best explains your first impression, and use the final button to enter the Physical Internet."
       },
       "posttest": {
         "title": "Make the final call",
-        "text": "Use the evidence you collected to explain the warning signs and decide whether Max should close the tab."
+        "text": "Use the evidence you collected to explain the warning signs and decide whether {friend} should close the tab."
       }
     },
     "pretest": {
@@ -773,7 +779,9 @@ export default {
           }
         },
         "debugSkip": "Saltar ruletas (debug)"
-      }
+      },
+      "solvedTitle": "Roulette Corridor cleared",
+      "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked."
     },
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
@@ -1073,10 +1081,10 @@ export default {
         "profileTitle": "▚ PROFILE RECONSTRUCTED ▚",
         "profileP1": "The engine cross-referenced",
         "profileB1": "{friend}’s age",
-        "profileP2": " (a teen boy),",
-        "profileB2": "his interests",
-        "profileP3": " (gaming, new tech, the NovaPad X he keeps searching) and ",
-        "profileB3": "his insecurities",
+        "profileP2": "(a teenager),",
+        "profileB2": "interests",
+        "profileP3": "(gaming, new tech and searches for the NovaPad X) and",
+        "profileB3": "insecurities",
         "profileP4": " (fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
         "logEvidence": "Log this evidence ✓",
         "finalLessonTitle": "What you learned",
@@ -1142,10 +1150,10 @@ export default {
         "t-teeth": "Worried about their teeth"
       },
       "report": {
-        "modalTitle": "Informe de datos · Perfil de Max",
+        "modalTitle": "Data Report · Profile: {friend}",
         "kicker": "SALA DE CONTROL DEL ALGORITMO",
-        "title": "Registro de anuncios dirigidos: MAX",
-        "subject": "Sujeto: Actividad online de MAX",
+        "title": "Targeted Ad Profile Log: {friend}",
+        "subject": "Online activity · Subject: {friend}",
         "instruction": "Revisa la actividad para descubrir cómo aprendió el algoritmo.",
         "columns": {
           "time": "HORA",

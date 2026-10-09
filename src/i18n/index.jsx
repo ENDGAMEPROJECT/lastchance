@@ -14,7 +14,7 @@
 import { createContext, useContext, useMemo, useState, useCallback } from 'react'
 import LOCALES from './dictionaries.js'
 import { useNarrative } from '../game/NarrativeContext.jsx'
-import { characterTemplates, characterVars, mapText, interpolate } from './characterText.js'
+import { characterVars, mapText, interpolate } from './characterText.js'
 export const AVAILABLE_LOCALES = Object.keys(LOCALES)
 const DEFAULT_LOCALE = 'en'
 
@@ -67,8 +67,8 @@ export function useT() {
   const narrative = useNarrative()
   const translations = useMemo(() => {
     const vars = characterVars(narrative)
-    const templates = characterTemplates(LOCALES[locale] || LOCALES[DEFAULT_LOCALE], narrative, locale)
-    const fallback = characterTemplates(LOCALES[DEFAULT_LOCALE], narrative, DEFAULT_LOCALE)
+    const templates = LOCALES[locale] || LOCALES[DEFAULT_LOCALE]
+    const fallback = LOCALES[DEFAULT_LOCALE]
     return { vars, templates, fallback, bound: mapText(templates, (text) => interpolate(text, vars)), boundFallback: mapText(fallback, (text) => interpolate(text, vars)) }
   }, [locale, narrative])
 

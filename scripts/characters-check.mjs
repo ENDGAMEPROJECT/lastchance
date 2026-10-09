@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict'
 import { existsSync } from 'node:fs'
-import dictionaries from '../src/i18n/dictionaries.js'
+import dictionaries, { withLocalFallbacks } from '../src/i18n/dictionaries.js'
 import { getNarrative } from '../src/game/characters.js'
-import { characterTemplates, characterVars, interpolate, mapText } from '../src/i18n/characterText.js'
+import { characterVars, interpolate, mapText } from '../src/i18n/characterText.js'
 
 const lookup = (dict, path) => path.split('.').reduce((value, key) => value?.[key], dict)
 const max = getNarrative('max')
@@ -28,10 +28,8 @@ assert.equal(getNarrative().friend, 'Max')
 assert.equal(getNarrative('invalid').character, 'mia')
 
 for (const [locale, dictionary] of Object.entries(dictionaries)) {
-  // Preserve the current story verbatim when the player chooses Mia.
-  assert.equal(characterTemplates(dictionary, getNarrative('mia'), locale), dictionary)
-  const templates = characterTemplates(dictionary, max, locale)
-  const bound = mapText(templates, (text) => interpolate(text, characterVars(max)))
+  const original = structuredClone(dictionary)
+  const bound = mapText(dictionary, (text) => interpolate(text, characterVars(max)))
   for (const key of ['hints.objectives.pretest.text', 'hints.objectives.posttest.text', 'rooms.algorithm.report.modalTitle', 'rooms.algorithm.report.title', 'rooms.algorithm.report.subject']) {
     assert(!/Max|MAX|Maks/.test(lookup(bound, key)), `${locale}: ${key} still names Max`)
     assert(/Mia|MIA|Mij/.test(lookup(bound, key)), `${locale}: ${key} must name Mia`)
@@ -42,6 +40,26 @@ for (const [locale, dictionary] of Object.entries(dictionaries)) {
   assert.deepEqual(bound.story.rounds.map((round) => round.options.map((option) => option.correct)), dictionary.story.rounds.map((round) => round.options.map((option) => option.correct)))
   // Mentions of the female influencer remain unchanged when the roles swap.
   assert.equal(bound.story.pretest.responses[0], dictionary.story.pretest.responses[0])
-  assert.equal(dictionary.rooms.algorithm.report.title.includes('MAX'), true, 'Source dictionaries must not be mutated')
+  assert.deepEqual(dictionary, original, 'Source dictionaries must not be mutated')
+  for (const character of ['mia', 'max']) {
+    const vars = characterVars(getNarrative(character))
+    assert.equal(interpolate(dictionary.enter.playerLine, vars), dictionary.enter.playerLine.replaceAll('{friend}', vars.friend))
+    assert.equal(interpolate(dictionary.rooms.algorithm.report.title, vars), dictionary.rooms.algorithm.report.title.replaceAll('{friend}', vars.friend))
+  }
+  // Imported edits must beat local defaults, including namespace values.
+  const edited = structuredClone(dictionary)
+  edited.welcome.characterLabel = 'Sheet choice label'
+  edited.hud.enterFullscreen = 'Sheet fullscreen label'
+  edited.enter.playerLine = 'Sheet dialogue for {friend}'
+  edited.rooms.algorithm.report.entries[0].text = 'Sheet activity for {friend}'
+  const merged = withLocalFallbacks(edited, locale)
+  assert.equal(merged.welcome.characterLabel, edited.welcome.characterLabel)
+  assert.equal(merged.hud.enterFullscreen, edited.hud.enterFullscreen)
+  for (const character of ['mia', 'max']) {
+    const vars = characterVars(getNarrative(character))
+    const translated = mapText(merged, (text) => interpolate(text, vars))
+    assert.equal(translated.enter.playerLine, `Sheet dialogue for ${vars.friend}`)
+    assert.equal(translated.rooms.algorithm.report.entries[0].text, `Sheet activity for ${vars.friend}`)
+  }
 }
 console.log('Character checks passed: both roles, all locales, story references, nested translations and unchanged assessment answers.')

@@ -448,12 +448,12 @@ export default function AlgorithmRoom({ node }) {
                 <div className="ar-profile">
                   <div className="ar-profile-title">{t('rooms.algorithm.equations.profileTitle')}</div>
                   <p>
-                    {t('rooms.algorithm.equations.profileP1')}
-                    <b>{t('rooms.algorithm.equations.profileB1', { friend: narrative.friend })}</b>
-                    {t('rooms.algorithm.equations.profileP2')}
-                    <b>{t('rooms.algorithm.equations.profileB2')}</b>
-                    {t('rooms.algorithm.equations.profileP3')}
-                    <b>{t('rooms.algorithm.equations.profileB3')}</b>
+                    {t('rooms.algorithm.equations.profileP1')}{' '}
+                    <b>{t('rooms.algorithm.equations.profileB1', { friend: narrative.friend })}</b>{' '}
+                    {t('rooms.algorithm.equations.profileP2')}{' '}
+                    <b>{t('rooms.algorithm.equations.profileB2')}</b>{' '}
+                    {t('rooms.algorithm.equations.profileP3')}{' '}
+                    <b>{t('rooms.algorithm.equations.profileB3')}</b>{' '}
                     {t('rooms.algorithm.equations.profileP4', { friend: narrative.friend })}
                   </p>
                 </div>
