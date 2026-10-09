@@ -9,4 +9,8 @@
 
 The old `rooms.roulette.wheels.*` and `hints.room.roulette.*` entries no longer drive this room. New strings fall back to English until translations are supplied.
 
-Run `npm run check:i18n` after importing. Run `node scripts/roulette-check.mjs` to check forced outcomes, random slice selection and verdict/reason validation.
+Only two wheels are active: `w1` (50% coupon) and `w3` (prizes/no prize). Keep those IDs in the workbook. Rows under `rooms.roulette.investigation.wheels.w2.*` and `rooms.roulette.investigation.wheels.w4.*` can be removed; they no longer drive the game. Keep `verdicts.fair`: it remains an incorrect answer choice. The added SVG icons need no translation keys.
+
+The cleared-room review now uses `rooms.roulette.investigation.solvedTitle` and `rooms.roulette.investigation.solvedText`, matching the live puzzle. `nodes.roulette-corridor.blurb` should describe two tempting wheels without claiming that both always win.
+
+Run `npm run check:i18n` after importing. Run `node scripts/roulette-check.mjs` to check the two forced outcomes and verdict/reason validation.

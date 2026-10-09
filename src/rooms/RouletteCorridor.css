@@ -29,19 +29,25 @@
 .rc-wheel.spinning .rc-seg-text { transition: transform 4.2s cubic-bezier(0.12, 0.66, 0.05, 1); }
 .rc-seg-label { position: absolute; inset: 0; display: flex; justify-content: center; pointer-events: none; }
 .rc-seg-text {
-  margin-top: 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
   max-width: 92px;
   height: fit-content;
-  padding: 4px 7px;
+  padding: 0;
   border-radius: 5px;
-  background: rgba(6, 8, 20, 0.9);
+  background: transparent;
   color: #fff;
   font-family: var(--font-ui);
-  font-size: 1rem;
+  font-size: 0.85rem;
   line-height: 1.2;
   font-weight: 700;
   text-align: center;
 }
+.rc-prize-icon { width: 48px; height: 48px; flex: none; overflow: visible; filter: drop-shadow(0 3px 2px rgba(7, 3, 22, 0.55)); }
+.rc-seg-text > span { padding: 3px 7px; border-radius: 5px; background: rgba(6, 8, 20, 0.9); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); }
 .rc-seg-label.jackpot .rc-seg-text { color: var(--amber); }
 .rc-hub { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border-radius: 50%; background: #100718; border: 2px solid var(--magenta); box-shadow: var(--glow-magenta); }
 .rc-result { min-height: 24px; font-size: 1.05rem; font-weight: 700; color: var(--amber); text-align: center; }

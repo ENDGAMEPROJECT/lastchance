@@ -6,6 +6,7 @@ import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
 import { ROULETTE_WHEELS as WHEELS, ROULETTE_SEGMENTS, rouletteResult, correctRouletteVerdict, correctRouletteAnswer } from '../game/rouletteData.js'
 import RoomFrame from '../components/RoomFrame.jsx'
+import RoulettePrizeIcon from './RoulettePrizeIcon.jsx'
 import './RouletteCorridor.css'
 
 const SLICE = 360 / ROULETTE_SEGMENTS
@@ -32,7 +33,10 @@ function PrizeWheel({ wheel, spinning, angle, disabled, onSpin, t }) {
         <span className={`rc-wheel${spinning ? ' spinning' : ''}`} style={{ background: `conic-gradient(from 0deg, ${stops.join(', ')})`, transform: `rotate(${angle}deg)` }}>
           {segments.map((label, i) => (
             <span key={i} className={`rc-seg-label${i === wheel.highlight ? ' jackpot' : ''}`} style={{ transform: `rotate(${i * SLICE + SLICE / 2}deg)` }}>
-              <span className="rc-seg-text" style={{ transform: `rotate(${-angle - i * SLICE - SLICE / 2}deg)` }}>{label}</span>
+              <span className="rc-seg-text" style={{ transform: `rotate(${-angle - i * SLICE - SLICE / 2}deg)` }}>
+                <RoulettePrizeIcon type={wheel.icons[i]} />
+                <span>{label}</span>
+              </span>
             </span>
           ))}
         </span>

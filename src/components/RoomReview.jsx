@@ -4,7 +4,7 @@ import { bgUrl } from '../game/assets.js'
 
 const ROOM_KEY = {
   'link-district': 'link',
-  'roulette-corridor': 'roulette',
+  'roulette-corridor': 'roulette.investigation',
   'influencer-avenue': 'influencer',
   'algorithm-room': 'algorithm',
   'ads-corridor': 'ads',
