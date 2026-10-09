@@ -46,7 +46,7 @@ export default {
     "hints": "💡 Pistas",
     "enterFullscreen": "Enter fullscreen",
     "exitFullscreen": "Exit fullscreen",
-    "fullscreenError        ": "Fullscreen could not be activated. Please try again."
+    "fullscreenError": "Fullscreen could not be activated. Please try again."
   },
   "intro": {
     "eyebrow": "Educational Escape Room",
@@ -285,7 +285,7 @@ export default {
     "roulette-corridor": {
       "title": "Roulette Corridor",
       "subtitle": "Corridor · Gamified Bait",
-      "blurb": "Prize wheels that always win. Prove they are rigged to pass.",
+      "blurb": "Two wheels with tempting offers. Investigate how each tries to influence you.",
       "kind": "corridor"
     },
     "influencer-avenue": {
@@ -504,7 +504,7 @@ export default {
         "items": [
           "Spin the current wheel at least twice. Does it keep landing on the same slice? Compare the results shown beside it.",
           "You can keep spinning before deciding. A repeated result is a clue to investigate, but can also happen by chance.",
-          "Choose Rigged or Not rigged, then select the reason that matches your observations. Read the feedback and move to the next wheel."
+          "Choose Rigged or Not rigged. Read each explanation, then finish both wheels."
         ]
       }
     },
@@ -670,30 +670,27 @@ export default {
       "spin": "🎰 Spin",
       "spinning": "Spinning…",
       "investigation": {
-        "intro": "Spin each wheel. Spot the trick and explain your choice.",
+        "intro": "Spin each wheel twice. Is it rigged or not rigged?",
         "wheelProgress": "Wheel {n} / {total}",
         "solvedTitle": "Corridor cleared — claims checked",
         "spinAgain": "Spin again",
-        "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked.",
-        "evidence": "Rigged wheels can use conditional coupons to make you spend more, or promises of another chance to keep you playing longer.",
+        "solvedText": "You spotted both rigged wheels. Take your evidence to the next district.",
+        "evidence": "Game-like rewards and the feeling of being lucky can make you keep playing and spend more.",
         "result": "Result: {result}",
         "historyLabel": "Spins: {n} · Latest results:",
         "verdicts": {
           "rigged": "Rigged",
           "fair": "Not rigged"
         },
-        "reasonLabel": "Which explanation fits this offer?",
-        "retry": "Try another spin and compare the results. You can change your decision. Repeated results can also happen by chance.",
-        "correct": "Case explained",
+        "retry": "Not quite. Look at the results and try again.",
+        "correct": "Correct! This wheel is rigged.",
         "next": "Next wheel →",
         "finish": "Log the evidence ✓",
         "observe": "Spin at least {count} times. Does it keep landing on the same slice, or do the results change? You can spin again if you are unsure.",
         "shop": {
           "badge": "MEGA SPIN · STORE",
           "title": "You won a discount coupon!",
-          "coupon": "50% OFF",
-          "terms": "To add your coupon to your account, first make a purchase of at least €{amount}. Your 50% discount will be available for a later order.",
-          "reminder": "Store offer: spend at least €{amount} first to unlock your coupon for a later order."
+          "coupon": "50% OFF"
         },
         "retryBait": "“No prize this time! Keep spinning — your next try could be the big win!”",
         "wheels": {
@@ -710,32 +707,7 @@ export default {
               "No prize"
             ],
             "rules": "Spin to unlock a discount coupon — up to 50% off!",
-            "feedback": "This wheel is rigged: it is programmed to land on the 50% coupon every time. The other discounts are decoration, making a fixed offer look like a lucky win. You must then make a purchase to unlock the coupon and another to use it. The aim is to make you spend more.",
-            "options": {
-              "wonOnce": "The coupon gives me 50% off the purchase needed to unlock it.",
-              "forcedOffer": "It pushes me to buy once to unlock the coupon, then buy again to use it.",
-              "colours": "I can add the coupon to my account without buying anything."
-            }
-          },
-          "w2": {
-            "name": "LUCKY WHEEL",
-            "segments": [
-              "1 coin",
-              "2 coins",
-              "3 coins",
-              "4 coins",
-              "5 coins",
-              "6 coins",
-              "10 coins",
-              "No prize"
-            ],
-            "rules": "Free spin! Try your luck for up to 10 game coins.",
-            "feedback": "The offer is a chance to win up to 10 game coins, not a promise of 10 coins every time or money to withdraw. Smaller prizes and the visible no-prize slice fit that offer. This simulated wheel selects randomly; a few spins alone would not prove that a real wheel is fair.",
-            "options": {
-              "equalChance": "It offers a chance at up to 10 game coins, so smaller prizes or no prize fit the offer.",
-              "smallPrize": "Every free spin should give me the advertised 10 coins.",
-              "different": "The coins I win can be withdrawn as real money."
-            }
+            "feedback": "Gamification means using game elements, like points, rewards or spinning wheels, in things that aren't really games. Apps and online shops use it to make buying feel fun, so you stay longer and spend more without noticing. That's exactly what these wheels are doing."
           },
           "w3": {
             "name": "GOLD RUSH",
@@ -750,32 +722,7 @@ export default {
               "No prize"
             ],
             "rules": "Win a phone, a laptop or up to €100 — give it a spin!",
-            "feedback": "This wheel forces “No prize”, then tempts you with another chance. The aim is to keep you spending time on the game. On a site with ads, that can mean more adverts seen. Another spin does not bring you closer to a win: in this simulated wheel, the prizes cannot be selected.",
-            "options": {
-              "lostOnce": "Seven prize slices guarantee I will win within eight spins.",
-              "expensive": "Each loss makes the next spin more likely to win a big prize.",
-              "forcedLoss": "It keeps giving me nothing while using big prizes and “try again” to keep me playing."
-            }
-          },
-          "w4": {
-            "name": "BONUS DROP",
-            "segments": [
-              "1 point",
-              "2 points",
-              "3 points",
-              "4 points",
-              "8 points",
-              "5 points",
-              "6 points",
-              "No prize"
-            ],
-            "rules": "Your free bonus spin: win up to 8 game points!",
-            "feedback": "The offer is for game points, not cash or a shopping discount. Eight is the largest prize; smaller amounts and no prize are also shown on the wheel. This simulated draw is random. Winning or losing a few spins does not establish whether a real draw is fair.",
-            "options": {
-              "manyPrizes": "These points give me a discount on my next purchase.",
-              "honestLoss": "The offer is for game points, and the wheel openly includes a no-prize outcome.",
-              "lostOnce": "“Up to 8 points” means I must receive at least 8 points."
-            }
+            "feedback": "Small prizes and discounts make you feel lucky. But that little win is bait: you can end up spending more than you save. Feeling lucky also keeps you spinning for the next prize. The wheel was rigged all along: the feeling of luck is the hook."
           }
         },
         "debugSkip": "Saltar ruletas (debug)"

@@ -4,7 +4,7 @@ import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
 import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
-import { ROULETTE_WHEELS as WHEELS, ROULETTE_SEGMENTS, rouletteResult, correctRouletteVerdict, correctRouletteAnswer } from '../game/rouletteData.js'
+import { ROULETTE_WHEELS as WHEELS, ROULETTE_SEGMENTS, rouletteResult, correctRouletteVerdict } from '../game/rouletteData.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import RoulettePrizeIcon from './RoulettePrizeIcon.jsx'
 import './RouletteCorridor.css'
@@ -72,8 +72,7 @@ export default function RouletteCorridor({ node }) {
   }, [])
 
   const wheel = WHEELS.find((w) => w.id === active)
-  const answer = answers[active] || {}
-  const verdictCorrect = correctRouletteVerdict(wheel, answer.verdict)
+  const verdict = answers[active]
   const results = history[active] || []
   const checkedCount = Object.values(verified).filter(Boolean).length
   const wheelText = (id, key) => t(`rooms.roulette.investigation.wheels.${id}.${key}`)
@@ -81,7 +80,8 @@ export default function RouletteCorridor({ node }) {
   function spinWheel(w) {
     if (timers.current[w.id] || solved || verified[w.id]) return
     setShopOpen(false)
-    setAnswers((a) => ({ ...a, [w.id]: { ...a[w.id], verdict: null } }))
+    setAnswers((a) => ({ ...a, [w.id]: null }))
+    setErrors((e) => ({ ...e, [w.id]: false }))
     const result = rouletteResult(w)
     const target = (360 - (result * SLICE + SLICE / 2)) % 360
     setSpinning((s) => ({ ...s, [w.id]: true }))
@@ -91,23 +91,17 @@ export default function RouletteCorridor({ node }) {
       delete timers.current[w.id]
       setSpinning((s) => ({ ...s, [w.id]: false }))
       setHistory((h) => ({ ...h, [w.id]: [...(h[w.id] || []), result] }))
-      if (w.minimumPurchase) setShopOpen(true)
+      if (w.couponBait) setShopOpen(true)
       if (!Object.keys(timers.current).length) stopSound('roulette_spin.mp3')
       if (result !== 7) playSound('roulette_win.mp3')
     }, 4200)
   }
 
-  function choose(field, value) {
-    if (results.length < MIN_SPINS || spinning[active] || verified[active]) return
+  function chooseVerdict(value) {
+    if (results.length < MIN_SPINS || spinning[active] || verified[active] || solved) return
     setShopOpen(false)
-    if (field === 'verdict' && value && !correctRouletteVerdict(wheel, value)) playSound('wrong.mp3')
-    setAnswers((a) => ({ ...a, [active]: { ...a[active], [field]: value } }))
-    setErrors((e) => ({ ...e, [active]: false }))
-  }
-
-  function checkAnswer(reason) {
-    if (results.length < MIN_SPINS || spinning[active] || verified[active] || shopOpen) return
-    if (correctRouletteAnswer(wheel, answer.verdict, reason)) {
+    setAnswers((a) => ({ ...a, [active]: value }))
+    if (correctRouletteVerdict(wheel, value)) {
       setVerified((v) => ({ ...v, [active]: true }))
       setErrors((e) => ({ ...e, [active]: false }))
     } else {
@@ -168,7 +162,7 @@ export default function RouletteCorridor({ node }) {
               wheel={wheel}
               spinning={spinning[active]}
               angle={angles[active] || 0}
-              disabled={!!spinning[active] || solved || !!verified[active] || verdictCorrect}
+              disabled={!!spinning[active] || solved || !!verified[active]}
               onSpin={() => spinWheel(wheel)}
               t={t}
             />
@@ -177,7 +171,7 @@ export default function RouletteCorridor({ node }) {
                 ? t('rooms.roulette.investigation.result', { result: wheelText(active, 'segments')[results.at(-1)] })
                 : null}
             </div>
-            {!verified[active] && !verdictCorrect && (
+            {!verified[active] && (
               <button className={results.length >= MIN_SPINS ? 'rc-respin' : 'btn btn-magenta'} onMouseDown={preventFocusScroll} onClick={() => spinWheel(wheel)} disabled={!!spinning[active] || solved}>
                 {results.length ? t('rooms.roulette.investigation.spinAgain') : t('rooms.roulette.spin')}
               </button>
@@ -187,10 +181,9 @@ export default function RouletteCorridor({ node }) {
                 <span className="chip warn">{t('rooms.roulette.investigation.shop.badge')}</span>
                 <h3 id="rc-shop-title">{t('rooms.roulette.investigation.shop.title')}</h3>
                 <div className="rc-coupon">{t('rooms.roulette.investigation.shop.coupon')}</div>
-                <p id="rc-shop-terms">{t('rooms.roulette.investigation.shop.terms', { amount: wheel.minimumPurchase })}</p>
               </div>
             )}
-            {results.length > 0 && wheel.retryBait && !spinning[active] && !verdictCorrect && !verified[active] && (
+            {results.length > 0 && wheel.retryBait && !spinning[active] && !verified[active] && (
               <div className="rc-shop-offer rc-retry-offer panel fade-in" role="status">
                 <p>{t('rooms.roulette.investigation.retryBait')}</p>
               </div>
@@ -207,8 +200,7 @@ export default function RouletteCorridor({ node }) {
               </>
             ) : (
               <>
-                {!verdictCorrect && <p className="rc-observe">{t('rooms.roulette.investigation.observe', { count: MIN_SPINS })}</p>}
-                {results.length > 0 && wheel.minimumPurchase && !shopOpen && <p className="rc-sales-message">{t('rooms.roulette.investigation.shop.reminder', { amount: wheel.minimumPurchase })}</p>}
+                <p className="rc-observe">{t('rooms.roulette.investigation.observe', { count: MIN_SPINS })}</p>
                 {results.length > 0 && (
                   <div className="rc-history">
                     <b>{t('rooms.roulette.investigation.historyLabel', { n: results.length })}</b>
@@ -225,25 +217,17 @@ export default function RouletteCorridor({ node }) {
                       {['rigged', 'fair'].map((value) => (
                         <button
                           key={value}
-                          className={`btn${answer.verdict === value ? verdictCorrect ? ' rc-verdict-correct' : ' rc-verdict-wrong' : ''}`}
-                          aria-pressed={answer.verdict === value}
-                          aria-invalid={answer.verdict === value && !verdictCorrect}
+                          className={`btn${verdict === value ? ' rc-verdict-wrong' : ''}`}
+                          aria-pressed={verdict === value}
+                          aria-invalid={verdict === value}
                           onMouseDown={preventFocusScroll}
-                          onClick={() => choose('verdict', value)}
+                          onClick={() => chooseVerdict(value)}
                         >
                           {t(`rooms.roulette.investigation.verdicts.${value}`)}
                         </button>
                       ))}
                     </div>
-                    {verdictCorrect && (
-                      <>
-                        <h3>{t('rooms.roulette.investigation.reasonLabel')}</h3>
-                        <div className="rc-reasons">
-                          {wheel.options.map((id) => <button key={id} className="rc-reason" onMouseDown={preventFocusScroll} onClick={() => checkAnswer(id)}>{t(`rooms.roulette.investigation.wheels.${active}.options.${id}`)}</button>)}
-                        </div>
-                        {errors[active] && <p className="rc-error" role="alert">{t('rooms.roulette.investigation.retry')}</p>}
-                      </>
-                    )}
+                    {errors[active] && <p className="rc-error" role="alert">{t('rooms.roulette.investigation.retry')}</p>}
                   </>
                 )}
               </>

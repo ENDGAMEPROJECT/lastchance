@@ -46,15 +46,13 @@ ok(Array.isArray(R.link.rounds) && R.link.rounds.length === 3, 'rooms.link.round
 for (const [i, r] of (R.link.rounds || []).entries())
   for (const k of ['a', 'b', 'c']) ok(has(r.notes, k), `rooms.link.rounds[${i}].notes.${k} missing`)
 
-// roulette: inspect the same wheel IDs and answer IDs used by the game.
+// roulette: inspect the same wheel IDs used by the game. Only verdicts are chosen.
 for (const wheel of ROULETTE_WHEELS) {
   const prefix = `rooms.roulette.investigation.wheels.${wheel.id}`
   const w = R.roulette.investigation?.wheels?.[wheel.id]
   for (const field of ['name', 'rules', 'feedback'])
     ok(typeof w?.[field] === 'string', `${prefix}.${field} missing`)
   ok(Array.isArray(w?.segments) && w.segments.length === ROULETTE_SEGMENTS, `${prefix}.segments must contain eight labels`)
-  for (const id of wheel.options)
-    ok(typeof w?.options?.[id] === 'string', `${prefix}.options.${id} missing`)
 }
 for (const verdict of ['rigged', 'fair'])
   ok(typeof R.roulette.investigation?.verdicts?.[verdict] === 'string', `roulette verdict ${verdict} missing`)

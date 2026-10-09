@@ -61,11 +61,7 @@
 .rc-history li { border: 1px solid var(--line); border-radius: 6px; padding: 5px 9px; }
 .rc-verdicts { display: flex; gap: 12px; margin-bottom: 16px; }
 .rc-verdicts .btn { flex: 1; }
-.rc-verdicts .rc-verdict-correct { border-color: var(--green); color: var(--green); background: rgba(43, 255, 136, 0.14); }
 .rc-verdicts .rc-verdict-wrong { border-color: var(--red); color: var(--red); background: rgba(255, 60, 80, 0.14); }
-.rc-reasons { display: flex; flex-direction: column; gap: 8px; }
-.rc-reason { padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; color: var(--text); background: rgba(12, 20, 38, 0.9); font: inherit; font-size: 0.95rem; line-height: 1.35; text-align: left; cursor: pointer; }
-.rc-reason:hover, .rc-reason:focus-visible { border-color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
 .rc-respin, .rc-back { background: none; border: 0; padding: 6px; color: var(--muted); text-decoration: underline; font: inherit; font-size: 0.9rem; cursor: pointer; }
 .rc-respin:hover, .rc-back:hover { color: var(--cyan); }
 .rc-back { margin-top: 10px; }
@@ -89,14 +85,12 @@
   border-color: var(--amber);
   box-shadow: 0 0 24px rgba(255, 185, 43, 0.3);
 }
-.rc-shop-offer > :not(#rc-shop-terms) { flex-shrink: 0; }
-.rc-shop-offer #rc-shop-terms { min-height: 0; overflow-y: auto; }
+.rc-shop-offer > * { flex-shrink: 0; }
 .rc-shop-offer .rc-coupon { align-self: stretch; width: 100%; }
 .rc-shop-offer h3 { margin: 12px 0 10px; font-size: 1.1rem; color: var(--amber); }
 .rc-shop-offer p { margin: 0 0 12px; font-size: 0.95rem; line-height: 1.4; }
 .rc-machine > .rc-retry-offer { top: 120px; }
 .rc-retry-offer p { margin: 0; color: var(--amber); font-size: 1.15rem; }
 .rc-coupon { margin: 0 auto 12px; padding: 8px; border: 2px dashed var(--amber); border-radius: 10px; color: var(--amber); font-family: var(--font-display); font-size: 1.8rem; }
-.rc-case .rc-sales-message { color: var(--amber); font-size: 0.9rem; padding-left: 12px; border-left: 2px solid var(--amber); }
 .reduced-motion .rc-wheel.spinning,
 .reduced-motion .rc-wheel.spinning .rc-seg-text { transition: none !important; }

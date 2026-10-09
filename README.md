@@ -40,7 +40,7 @@ Flow of screens (see the `screen` state in `GameContext`, routed in `App.jsx`):
 | # | Node | Type | Teaches |
 |---|------|------|---------|
 | 1 | **Link District** | Puzzle | Spot & block fraudulent look-alike URLs (typosquatting, homoglyphs, http vs https, odd TLDs). Doors open to reveal the site; order is shuffled. Reward: *Emoji Decoding Card*. |
-| 2 | **Roulette Corridor** | Corridor | Investigate two rigged wheels: a 50% discount coupon that pushes purchases and a prize wheel that always gives no prize. Spin each at least twice and explain the motive behind the offer. Icons accompany the translated segment labels. |
+| 2 | **Roulette Corridor** | Corridor | Spin two rigged wheels at least twice each and choose Rigged or Not rigged. Correct choices reveal two short lessons: what gamification is and how feeling lucky can lead to more spending and playing. Icons accompany the translated labels; there are no extra reasoning choices. |
 | 3 | **Influencer Avenue** | Puzzle | Decode sponsorship labels (PAID/COLLAB/GIFTED) + simulated reverse-image-search to spot fake/AI products. Reward: *Data Report*. |
 | 4 | **Algorithm Control Room** | Puzzle | How personalization equations target ads using your demographics, follows & insecurities. Reward: *Truth Flashlight*. |
 | 5 | **Ads Corridor** | Corridor | A cursor-tracked "Truth Flashlight" (carried in from the Algorithm Room) burns away the gloss to reveal the fine print + a hidden exit code. |
