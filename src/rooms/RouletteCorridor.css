@@ -29,19 +29,25 @@
 .rc-wheel.spinning .rc-seg-text { transition: transform 4.2s cubic-bezier(0.12, 0.66, 0.05, 1); }
 .rc-seg-label { position: absolute; inset: 0; display: flex; justify-content: center; pointer-events: none; }
 .rc-seg-text {
-  margin-top: 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
   max-width: 92px;
   height: fit-content;
-  padding: 4px 7px;
+  padding: 0;
   border-radius: 5px;
-  background: rgba(6, 8, 20, 0.9);
+  background: transparent;
   color: #fff;
   font-family: var(--font-ui);
-  font-size: 1rem;
+  font-size: 0.85rem;
   line-height: 1.2;
   font-weight: 700;
   text-align: center;
 }
+.rc-prize-icon { width: 48px; height: 48px; flex: none; overflow: visible; filter: drop-shadow(0 3px 2px rgba(7, 3, 22, 0.55)); }
+.rc-seg-text > span { padding: 3px 7px; border-radius: 5px; background: rgba(6, 8, 20, 0.9); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); }
 .rc-seg-label.jackpot .rc-seg-text { color: var(--amber); }
 .rc-hub { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 3; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; border-radius: 50%; background: #100718; border: 2px solid var(--magenta); box-shadow: var(--glow-magenta); }
 .rc-result { min-height: 24px; font-size: 1.05rem; font-weight: 700; color: var(--amber); text-align: center; }
@@ -55,11 +61,7 @@
 .rc-history li { border: 1px solid var(--line); border-radius: 6px; padding: 5px 9px; }
 .rc-verdicts { display: flex; gap: 12px; margin-bottom: 16px; }
 .rc-verdicts .btn { flex: 1; }
-.rc-verdicts .rc-verdict-correct { border-color: var(--green); color: var(--green); background: rgba(43, 255, 136, 0.14); }
 .rc-verdicts .rc-verdict-wrong { border-color: var(--red); color: var(--red); background: rgba(255, 60, 80, 0.14); }
-.rc-reasons { display: flex; flex-direction: column; gap: 8px; }
-.rc-reason { padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; color: var(--text); background: rgba(12, 20, 38, 0.9); font: inherit; font-size: 0.95rem; line-height: 1.35; text-align: left; cursor: pointer; }
-.rc-reason:hover, .rc-reason:focus-visible { border-color: var(--cyan); background: rgba(0, 229, 255, 0.1); }
 .rc-respin, .rc-back { background: none; border: 0; padding: 6px; color: var(--muted); text-decoration: underline; font: inherit; font-size: 0.9rem; cursor: pointer; }
 .rc-respin:hover, .rc-back:hover { color: var(--cyan); }
 .rc-back { margin-top: 10px; }
@@ -83,14 +85,12 @@
   border-color: var(--amber);
   box-shadow: 0 0 24px rgba(255, 185, 43, 0.3);
 }
-.rc-shop-offer > :not(#rc-shop-terms) { flex-shrink: 0; }
-.rc-shop-offer #rc-shop-terms { min-height: 0; overflow-y: auto; }
+.rc-shop-offer > * { flex-shrink: 0; }
 .rc-shop-offer .rc-coupon { align-self: stretch; width: 100%; }
 .rc-shop-offer h3 { margin: 12px 0 10px; font-size: 1.1rem; color: var(--amber); }
 .rc-shop-offer p { margin: 0 0 12px; font-size: 0.95rem; line-height: 1.4; }
 .rc-machine > .rc-retry-offer { top: 120px; }
 .rc-retry-offer p { margin: 0; color: var(--amber); font-size: 1.15rem; }
 .rc-coupon { margin: 0 auto 12px; padding: 8px; border: 2px dashed var(--amber); border-radius: 10px; color: var(--amber); font-family: var(--font-display); font-size: 1.8rem; }
-.rc-case .rc-sales-message { color: var(--amber); font-size: 0.9rem; padding-left: 12px; border-left: 2px solid var(--amber); }
 .reduced-motion .rc-wheel.spinning,
 .reduced-motion .rc-wheel.spinning .rc-seg-text { transition: none !important; }

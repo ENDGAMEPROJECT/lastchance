@@ -1,10 +1,11 @@
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
+import { ROULETTE_WHEELS } from '../game/rouletteData.js'
 
 const ROOM_KEY = {
   'link-district': 'link',
-  'roulette-corridor': 'roulette',
+  'roulette-corridor': 'roulette.investigation',
   'influencer-avenue': 'influencer',
   'algorithm-room': 'algorithm',
   'ads-corridor': 'ads',
@@ -25,7 +26,9 @@ export default function RoomReview() {
       <div className={`room-review panel clip panel-glow-${reviewNodeData.accent} fade-in`}>
         <div className={`eyebrow accent-${reviewNodeData.accent}`}>{t(`nodes.${reviewNodeData.id}.subtitle`, vars)}</div>
         <h2>{t(`rooms.${roomKey}.solvedTitle`, vars)}</h2>
-        <p className="muted">{t(`rooms.${roomKey}.solvedText`, vars)}</p>
+        {roomKey === 'roulette.investigation'
+          ? ROULETTE_WHEELS.map((wheel) => <p className="muted" key={wheel.id}>{t(`rooms.roulette.investigation.wheels.${wheel.id}.feedback`)}</p>)
+          : <p className="muted">{t(`rooms.${roomKey}.solvedText`, vars)}</p>}
         <button className={`btn btn-${reviewNodeData.accent}`} onClick={goMap}>
           {t('common.back')}
         </button>

@@ -146,6 +146,7 @@ export default function AlgorithmRoom({ node }) {
   /* ---- unlock handlers ---- */
   // Feedback is a light + a sound, not words: green chime → unlock; red buzz → deny.
   function submitCode() {
+    if (code.length !== 6 || status === 'ok') return
     if (code === CODES.algorithmRoom) {
       setStatus('ok')
       playSound('twinkle.mp3')
@@ -153,6 +154,7 @@ export default function AlgorithmRoom({ node }) {
     } else {
       playSound('wrong.mp3')
       setStatus('wrong')
+      setCode('')
     }
   }
 
@@ -448,12 +450,12 @@ export default function AlgorithmRoom({ node }) {
                 <div className="ar-profile">
                   <div className="ar-profile-title">{t('rooms.algorithm.equations.profileTitle')}</div>
                   <p>
-                    {t('rooms.algorithm.equations.profileP1')}
-                    <b>{t('rooms.algorithm.equations.profileB1', { friend: narrative.friend })}</b>
-                    {t('rooms.algorithm.equations.profileP2')}
-                    <b>{t('rooms.algorithm.equations.profileB2')}</b>
-                    {t('rooms.algorithm.equations.profileP3')}
-                    <b>{t('rooms.algorithm.equations.profileB3')}</b>
+                    {t('rooms.algorithm.equations.profileP1')}{' '}
+                    <b>{t('rooms.algorithm.equations.profileB1', { friend: narrative.friend })}</b>{' '}
+                    {t('rooms.algorithm.equations.profileP2')}{' '}
+                    <b>{t('rooms.algorithm.equations.profileB2')}</b>{' '}
+                    {t('rooms.algorithm.equations.profileP3')}{' '}
+                    <b>{t('rooms.algorithm.equations.profileB3')}</b>{' '}
                     {t('rooms.algorithm.equations.profileP4', { friend: narrative.friend })}
                   </p>
                 </div>
