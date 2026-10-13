@@ -773,7 +773,9 @@ export default {
           }
         },
         "debugSkip": "Прескочи рулете (debug)"
-      }
+      },
+      "solvedTitle": "Roulette Corridor cleared",
+      "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked."
     },
     "influencer": {
       "intro": "Neonska avenija bilborda i fidova influensera. Pogledaj iza sjaja: označi sponzorisane objave, a zatim proveri šta su proizvodi zapravo.",

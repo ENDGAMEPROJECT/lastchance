@@ -50,7 +50,7 @@ const BG_IMAGES = [
   'conversation.png',
   'max-talking-ph-internet.png',
   'player-talking-ph-internet.png',
-  'no-one-talking-ph-internet.png',
+  'initial-ph-internet.png',
   'max-talking-mia.png',
   'mia-talking-mia.png',
   'max-talking-max.png',

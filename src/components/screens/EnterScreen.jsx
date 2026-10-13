@@ -47,9 +47,9 @@ export default function EnterScreen() {
   const friend = narrative.friend
   const vars = { friend, product: narrative.product, minutes: GAME_MINUTES }
   const backdrops = {
+    initial: 'initial-ph-internet.png',
     friend: narrative.friendInternetImage,
     player: narrative.playerInternetImage,
-    tour: 'no-one-talking-ph-internet.png',
   }
 
   const steps = [
@@ -158,7 +158,8 @@ export default function EnterScreen() {
     return () => window.cancelAnimationFrame(frame)
   }, [step.who, step.target, root, scale])
 
-  const backdrop = step.who
+  // The empty arrival scene shows until the dialogue starts (and during the HUD tour).
+  const backdrop = intro || step.who === 'tour' ? 'initial' : step.who
   const name = step.who === 'player' ? narrative.player : friend
   const captionW = 360
   const captionLeft = anchorX == null ? null : Math.min(1280 - 16 - captionW, Math.max(16, anchorX - captionW + 40))

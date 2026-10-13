@@ -773,7 +773,9 @@ export default {
           }
         },
         "debugSkip": "Saltar ruletas (debug)"
-      }
+      },
+      "solvedTitle": "Roulette Corridor cleared",
+      "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked."
     },
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
