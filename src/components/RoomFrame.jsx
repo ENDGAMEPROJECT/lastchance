@@ -88,7 +88,7 @@ export default function RoomFrame({
 
       {!started ? (
         <div className="room-briefing fade-in">
-          <div className={`briefing-card panel-light clip panel-glow-${accent}`}>
+          <div className={`briefing-card panel clip panel-glow-${accent}`}>
             <div className={`briefing-icon accent-${accent}`}>{node ? NODE_ICON[node.id] : '▶'}</div>
             <p className="briefing-text muted">{brief}</p>
             <button
