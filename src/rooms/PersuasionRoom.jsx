@@ -164,6 +164,7 @@ export default function PersuasionRoom({ node }) {
 
   // Every poster now carries a frame (no right/wrong — the password is the check).
   const allPlaced = Object.keys(placement).length === POSTERS.length
+  const allMatched = POSTERS.every((p) => placement[p.id] === p.id)
 
 
   // Convert a screen point into scene-local design pixels (undo stage scale).
@@ -320,10 +321,14 @@ export default function PersuasionRoom({ node }) {
         {/* ---- RIGHT: the computer in the scene — click it to open its screen ---- */}
         <button
           type="button"
-          className={`pl-computer-hotspot ${allPlaced ? 'ready' : ''}`}
+          className={`pl-computer-hotspot ${allMatched && !computerOpen && !dragId ? 'ready' : ''}`}
+          onMouseDown={(e) => e.preventDefault()}
           onClick={() => setComputerOpen(true)}
           aria-label={t('rooms.persuasion.openComputer')}
         >
+          <svg className="pl-computer-outline" viewBox="0 0 300 340" aria-hidden="true">
+            <path d="M 82 126 L 265 108 Q 271 108 271 115 L 271 263 Q 271 270 265 270 L 82 254 Q 76 254 76 248 L 76 133 Q 76 127 82 126 Z" />
+          </svg>
           <span className="pl-hotspot-tag mono">{t('rooms.persuasion.openComputer')}</span>
         </button>
 

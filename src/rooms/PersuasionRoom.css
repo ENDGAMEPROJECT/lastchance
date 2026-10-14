@@ -696,8 +696,41 @@
   justify-content: center;
   padding-top: 10px;
 }
-/* The clickable computer area is left completely unframed — no border, no
-   background, no glow. Only the tag hints that it's interactive. */
+/* Pulse over the monitor once every technique matches its poster. */
+.pl-computer-outline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+}
+.pl-computer-hotspot.ready .pl-computer-outline {
+  opacity: 1;
+}
+.pl-computer-outline path {
+  stroke: none;
+  fill: rgba(190, 255, 255, 0.01);
+}
+.pl-computer-hotspot.ready .pl-computer-outline path {
+  animation: pl-computer-pulse 1.8s ease-in-out infinite;
+}
+.pl-computer-hotspot.ready .pl-hotspot-tag {
+  border-color: var(--cyan);
+  box-shadow: var(--glow-cyan);
+}
+@keyframes pl-computer-pulse {
+  0%, 100% { fill: rgba(190, 255, 255, 0.01); filter: drop-shadow(0 0 1px rgba(163, 252, 255, 0.2)); }
+  50% { fill: rgba(220, 255, 255, 0.06); filter: drop-shadow(0 0 3px rgba(163, 252, 255, 0.45)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pl-computer-hotspot.ready .pl-computer-outline path {
+    animation: none;
+    fill: rgba(190, 255, 255, 0.03);
+    filter: drop-shadow(0 0 2px rgba(163, 252, 255, 0.3));
+  }
+}
 .pl-hotspot-tag {
   font-size: 0.66rem;
   letter-spacing: 0.06em;

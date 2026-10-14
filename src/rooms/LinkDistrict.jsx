@@ -420,6 +420,7 @@ export default function LinkDistrict({ node }) {
   const [blocked, setBlocked] = useState({})
   const [opened, setOpened] = useState({}) // which doors are peeked open
   const [error, setError] = useState('')
+  const [errorAttempt, setErrorAttempt] = useState(0)
   const [phase, setPhase] = useState('block') // 'block' | 'justify' | 'done'
 
   useEffect(() => {
@@ -427,6 +428,13 @@ export default function LinkDistrict({ node }) {
   }, [round, setLinkRound])
 
   const [reviewing, setReviewing] = useState(false) // showing the round's explanations
+  const [reviewReady, setReviewReady] = useState(false)
+  useEffect(() => {
+    setReviewReady(false)
+    if (!reviewing) return
+    const timer = window.setTimeout(() => setReviewReady(true), 4000)
+    return () => window.clearTimeout(timer)
+  }, [reviewing])
   const [flags, setFlags] = useState({})
   const [justifyErr, setJustifyErr] = useState('')
 
@@ -480,9 +488,10 @@ export default function LinkDistrict({ node }) {
   }, [])
 
   function confirmRound() {
-    const badOk = fakes.every((d) => blocked[d.url])
+    const remaining = fakes.filter((d) => !blocked[d.url]).length
     const safeOk = data.doors.filter((d) => d.safe).every((d) => !blocked[d.url])
-    if (!badOk) { playSound('wrong.mp3'); return setError(t('rooms.link.errStillOpen')) }
+    if (remaining || !safeOk) setErrorAttempt((attempt) => attempt + 1)
+    if (remaining) { playSound('wrong.mp3'); return setError('incomplete') }
     if (!safeOk) { playSound('wrong.mp3'); return setError(t('rooms.link.errBlockedSafe')) }
     // Round passed — explain all three doors together before moving on.
     setReviewing(true)
@@ -491,6 +500,7 @@ export default function LinkDistrict({ node }) {
   // Leave the round review and advance to the next crossroads (or the justify
   // phase after the last one).
   function proceedAfterReview() {
+    if (!reviewReady) return
     setReviewing(false)
     if (round < ROUNDS.length - 1) {
       // Snapshot the doors we're leaving so they stay put during the slide.
@@ -530,12 +540,12 @@ export default function LinkDistrict({ node }) {
     const wrong = chosen.filter((id) => !CORRECT_FLAGS.includes(id))
     if (missing.length || wrong.length) {
       playSound('wrong.mp3')
-      return setJustifyErr(wrong.length ? t('rooms.link.justifyErrWrong') : t('rooms.link.justifyErrMissing'))
+      return setJustifyErr(wrong.length ? t('rooms.link.justifyErrWrong') : t(missing.length === 1 ? 'rooms.link.justifyErrMissingOne' : 'rooms.link.justifyErrMissing', { count: missing.length }))
     }
     finishRoom()
   }
 
-  const touched = Object.values(blocked).some(Boolean)
+  const blockedCount = data.doors.filter((d) => blocked[d.url]).length
 
   return (
     <RoomFrame
@@ -602,7 +612,11 @@ export default function LinkDistrict({ node }) {
           </div>
 
           <div className="ld-actions">
-            <button className="btn btn-cyan" onClick={confirmRound} disabled={advancing || !touched}>
+            <div key={errorAttempt} role="status" className={`ld-block-progress mono ${error ? 'is-error' : ''}`}>
+              {t('rooms.link.errStillOpen', { count: blockedCount })}
+              {error && error !== 'incomplete' && <span className="ld-block-error">{error}</span>}
+            </div>
+            <button className="btn btn-cyan" onClick={confirmRound} disabled={advancing}>
               {round < ROUNDS.length - 1 ? t('rooms.link.nextRouter') : t('rooms.link.finalRouter')}
             </button>
           </div>
@@ -625,9 +639,9 @@ export default function LinkDistrict({ node }) {
                     </li>
                   ))}
                 </ul>
-                <button className="btn btn-cyan" onClick={proceedAfterReview}>
+                {reviewReady && <button className="btn btn-cyan" onClick={proceedAfterReview}>
                   {round < ROUNDS.length - 1 ? t('rooms.link.nextRouter') : t('rooms.link.finalRouter')}
-                </button>
+                </button>}
               </div>
             </div>
           )}
@@ -650,7 +664,7 @@ export default function LinkDistrict({ node }) {
             ))}
           </div>
           <div className="ld-justify-foot">
-            {justifyErr && <div className="banner wrong shake ld-banner">{justifyErr}</div>}
+            {justifyErr && <div role="status" className="banner wrong shake ld-banner">{justifyErr}</div>}
             <button className="btn btn-cyan" onClick={submitJustify}>{t('rooms.link.submitReasoning')}</button>
           </div>
         </div>

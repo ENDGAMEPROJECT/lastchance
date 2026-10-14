@@ -20,7 +20,7 @@ export default {
   trayLabel: 'TECHNIQUE FRAMES',
 
   hints: {
-    start: 'Drag a technique frame onto the poster it fits — or tap the frame, then tap the poster.',
+    start: 'Drag and drop each technique frame onto the matching poster.',
     allDone: 'All six framed — the letters spell a password. Click the computer to type it in.',
     correct: 'Correct — a letter surfaced. Keep framing the rest.',
     wrong: 'That technique does not match this ad. Frame returned — try another.',
