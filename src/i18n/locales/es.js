@@ -25,7 +25,10 @@ export default {
     "languageLabel": "Language",
     "start": "⏻ Enter",
     "aliasError": "Enter an alias to continue.",
-    "ageError": "Enter a valid age (1–120)."
+    "ageError": "Enter a valid age (1–120).",
+    "characterLabel": "Choose your character",
+    "characterMia": "Mia",
+    "characterMax": "Max"
   },
   "hud": {
     "logo": "LAST CHANCE TO ESCAPE",
@@ -40,7 +43,10 @@ export default {
     "noTools": "Nothing collected yet. Solve puzzles to earn tools.",
     "evidenceHeading": "Evidence on the deal",
     "noEvidence": "Collect proof in each district to convince {friend} at the end.",
-    "hints": "💡 Pistas"
+    "hints": "💡 Pistas",
+    "enterFullscreen": "Enter fullscreen",
+    "exitFullscreen": "Exit fullscreen",
+    "fullscreenError": "Fullscreen could not be activated. Please try again."
   },
   "intro": {
     "eyebrow": "Educational Escape Room",
@@ -279,7 +285,7 @@ export default {
     "roulette-corridor": {
       "title": "Roulette Corridor",
       "subtitle": "Corridor · Gamified Bait",
-      "blurb": "Prize wheels that always win. Prove they are rigged to pass.",
+      "blurb": "Two wheels with tempting offers. Investigate how each tries to influence you.",
       "kind": "corridor"
     },
     "influencer-avenue": {
@@ -332,14 +338,15 @@ export default {
     "titleLead": "Welcome to the",
     "titleAccent": "PHYSICAL INTERNET",
     "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
-    "playerLine": "We made it. This is the Physical Internet. Let's show Max how this deal was built to fool him",
+    "playerLine": "We made it. This is the Physical Internet. Let's uncover how this deal was built to fool {friend}.",
     "toolsTitle": "First, the gear",
     "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
     "clock": "⏱ {minutes}:00 starts the moment we start walking",
     "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
     "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
-    "start": "▶ Countdown begins"
+    "start": "▶ Countdown begins",
+    "finalLine": "Ready? The timer starts as soon as you open the map."
   },
   "hints": {
     "title": "Mission hints",
@@ -351,7 +358,7 @@ export default {
       "pretest": "Read the deal before you enter the network",
       "map": "Choose the next district in the evidence trail",
       "room": "Solve the district and log what you discover",
-      "posttest": "Use your evidence to protect Max",
+      "posttest": "Use your evidence to protect {friend}",
       "win": "Run complete: review what protected you",
       "lose": "Time expired: review the warning signs"
     },
@@ -370,11 +377,11 @@ export default {
     "objectives": {
       "pretest": {
         "title": "Complete the pre-test conversation",
-        "text": "Read Max’s message, choose the response that best explains your first impression, and use the final button to enter the Physical Internet."
+        "text": "Read the message from {friend}, choose the response that best explains your first impression, and use the final button to enter the Physical Internet."
       },
       "posttest": {
         "title": "Make the final call",
-        "text": "Use the evidence you collected to explain the warning signs and decide whether Max should close the tab."
+        "text": "Use the evidence you collected to explain the warning signs and decide whether {friend} should close the tab."
       }
     },
     "pretest": {
@@ -404,7 +411,7 @@ export default {
       ]
     },
     "posttest": {
-      "context        ": "Use what you discovered to help your friend make the final call.",
+      "context": "Use what you discovered to help your friend make the final call.",
       "prompts": [
         "I do not know how to separate real evidence from persuasive decoration. ",
         "I do not know which warning signs matter most. ",
@@ -497,7 +504,7 @@ export default {
         "items": [
           "Spin the current wheel at least twice. Does it keep landing on the same slice? Compare the results shown beside it.",
           "You can keep spinning before deciding. A repeated result is a clue to investigate, but can also happen by chance.",
-          "Choose Rigged or Not rigged, then select the reason that matches your observations. Read the feedback and move to the next wheel."
+          "Choose Rigged or Not rigged. Read each explanation, then finish both wheels."
         ]
       }
     },
@@ -545,12 +552,13 @@ export default {
       "nextRouter": "Advance to the next crossroads →",
       "finalRouter": "Advance →",
       "reviewTitle": "Why those doors?",
-      "errStillOpen": "At least one fraudulent link is still open. Block every fake before continuing.",
-      "errBlockedSafe": "You blocked the real store! That is the one safe door — leave it open.",
+      "errStillOpen": "Link{plural} blocked: {count}. Block the two fraudulent links to continue.",
+      "errBlockedSafe": "Some blocked doors are wrong. Block the two fraudulent links to continue.",
       "justifyLeadLabel": "Why did you block them?",
       "justifyLead": "Being able to explain the red flags matters more than a lucky guess. Tick every real warning sign — and nothing that only looks reassuring.",
-      "justifyErrWrong": "Some of those are not actually red flags — https, padlocks and nice photos do NOT prove a site is safe.",
-      "justifyErrMissing": "A few red flags are still unchecked. Look again at the fake URLs.",
+      "justifyErrWrong": "HTTPS, a padlock or a familiar-looking name is not a warning sign by itself, but none proves a site is safe. A familiar name can hide a typo or look-alike letter: check the full domain for those specific differences.",
+      "justifyErrMissingOne": "1 warning sign left to select. Look again at the fake URLs.",
+      "justifyErrMissing": "{count} warning signs left to select. Look again at the fake URLs.",
       "submitReasoning": "Submit reasoning",
       "preview": {
         "newArrivals": "NEW ARRIVALS",
@@ -663,30 +671,27 @@ export default {
       "spin": "🎰 Spin",
       "spinning": "Spinning…",
       "investigation": {
-        "intro": "Spin each wheel. Spot the trick and explain your choice.",
+        "intro": "Spin each wheel twice. Is it rigged or not rigged?",
         "wheelProgress": "Wheel {n} / {total}",
         "solvedTitle": "Corridor cleared — claims checked",
         "spinAgain": "Spin again",
-        "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked.",
-        "evidence": "Rigged wheels can use conditional coupons to make you spend more, or promises of another chance to keep you playing longer.",
+        "solvedText": "You spotted both rigged wheels. Take your evidence to the next district.",
+        "evidence": "Game-like rewards and the feeling of being lucky can make you keep playing and spend more.",
         "result": "Result: {result}",
         "historyLabel": "Spins: {n} · Latest results:",
         "verdicts": {
           "rigged": "Rigged",
           "fair": "Not rigged"
         },
-        "reasonLabel": "Which explanation fits this offer?",
-        "retry": "Try another spin and compare the results. You can change your decision. Repeated results can also happen by chance.",
-        "correct": "Case explained",
+        "retry": "Not quite. Look at the results and try again.",
+        "correct": "Correct! This wheel is rigged.",
         "next": "Next wheel →",
         "finish": "Log the evidence ✓",
         "observe": "Spin at least {count} times. Does it keep landing on the same slice, or do the results change? You can spin again if you are unsure.",
         "shop": {
           "badge": "MEGA SPIN · STORE",
           "title": "You won a discount coupon!",
-          "coupon": "50% OFF",
-          "terms": "To add your coupon to your account, first make a purchase of at least €{amount}. Your 50% discount will be available for a later order.",
-          "reminder": "Store offer: spend at least €{amount} first to unlock your coupon for a later order."
+          "coupon": "50% OFF"
         },
         "retryBait": "“No prize this time! Keep spinning — your next try could be the big win!”",
         "wheels": {
@@ -703,32 +708,7 @@ export default {
               "No prize"
             ],
             "rules": "Spin to unlock a discount coupon — up to 50% off!",
-            "feedback": "This wheel is rigged: it is programmed to land on the 50% coupon every time. The other discounts are decoration, making a fixed offer look like a lucky win. You must then make a purchase to unlock the coupon and another to use it. The aim is to make you spend more.",
-            "options": {
-              "wonOnce": "The coupon gives me 50% off the purchase needed to unlock it.",
-              "forcedOffer": "It pushes me to buy once to unlock the coupon, then buy again to use it.",
-              "colours": "I can add the coupon to my account without buying anything."
-            }
-          },
-          "w2": {
-            "name": "LUCKY WHEEL",
-            "segments": [
-              "1 coin",
-              "2 coins",
-              "3 coins",
-              "4 coins",
-              "5 coins",
-              "6 coins",
-              "10 coins",
-              "No prize"
-            ],
-            "rules": "Free spin! Try your luck for up to 10 game coins.",
-            "feedback": "The offer is a chance to win up to 10 game coins, not a promise of 10 coins every time or money to withdraw. Smaller prizes and the visible no-prize slice fit that offer. This simulated wheel selects randomly; a few spins alone would not prove that a real wheel is fair.",
-            "options": {
-              "equalChance": "It offers a chance at up to 10 game coins, so smaller prizes or no prize fit the offer.",
-              "smallPrize": "Every free spin should give me the advertised 10 coins.",
-              "different": "The coins I win can be withdrawn as real money."
-            }
+            "feedback": "Gamification means using game elements, like points, rewards or spinning wheels, in things that aren't really games. Apps and online shops use it to make buying feel fun, so you stay longer and spend more without noticing. That's exactly what these wheels are doing."
           },
           "w3": {
             "name": "GOLD RUSH",
@@ -743,36 +723,13 @@ export default {
               "No prize"
             ],
             "rules": "Win a phone, a laptop or up to €100 — give it a spin!",
-            "feedback": "This wheel forces “No prize”, then tempts you with another chance. The aim is to keep you spending time on the game. On a site with ads, that can mean more adverts seen. Another spin does not bring you closer to a win: in this simulated wheel, the prizes cannot be selected.",
-            "options": {
-              "lostOnce": "Seven prize slices guarantee I will win within eight spins.",
-              "expensive": "Each loss makes the next spin more likely to win a big prize.",
-              "forcedLoss": "It keeps giving me nothing while using big prizes and “try again” to keep me playing."
-            }
-          },
-          "w4": {
-            "name": "BONUS DROP",
-            "segments": [
-              "1 point",
-              "2 points",
-              "3 points",
-              "4 points",
-              "8 points",
-              "5 points",
-              "6 points",
-              "No prize"
-            ],
-            "rules": "Your free bonus spin: win up to 8 game points!",
-            "feedback": "The offer is for game points, not cash or a shopping discount. Eight is the largest prize; smaller amounts and no prize are also shown on the wheel. This simulated draw is random. Winning or losing a few spins does not establish whether a real draw is fair.",
-            "options": {
-              "manyPrizes": "These points give me a discount on my next purchase.",
-              "honestLoss": "The offer is for game points, and the wheel openly includes a no-prize outcome.",
-              "lostOnce": "“Up to 8 points” means I must receive at least 8 points."
-            }
+            "feedback": "Small prizes and discounts make you feel lucky. But that little win is bait: you can end up spending more than you save. Feeling lucky also keeps you spinning for the next prize. The wheel was rigged all along: the feeling of luck is the hook."
           }
         },
         "debugSkip": "Saltar ruletas (debug)"
-      }
+      },
+      "solvedTitle": "Roulette Corridor cleared",
+      "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked."
     },
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
@@ -913,7 +870,7 @@ export default {
         "stage1Cleared": "Stage 1 cleared ✓",
         "badge": "Stage 2 / 2",
         "tag": "Product legitimacy",
-        "prompt": "Reverse-image-search each photo, then classify what it really is.",
+        "prompt": "Reverse-image-search each photo, then classify what it really is with the stamps below.",
         "runSearch": "🔍 Run reverse image search",
         "engineBar": "reverse-image-search.io",
         "engineDrop": "Drag a product image here to reverse-search it",
@@ -929,7 +886,8 @@ export default {
         "learn": "a reverse image search checks whether a “handmade”, “unique” or “real” product photo is actually stolen, mass-produced across dozens of dropshipping stores, or AI-generated. No results at all can mean the image is fake.",
         "hint": "Search first, then classify all three.",
         "confirm": "Confirm classifications →",
-        "stampHere": "Stamp here"
+        "stampHere": "Stamp here",
+        "removeStamp": "✕ Remove stamp"
       },
       "products": [
         {
@@ -950,6 +908,10 @@ export default {
             {
               "site": "mega-bazaar.shop",
               "title": "Same photo — €1.90 / unit"
+            },
+            {
+              "site": "directmugs.net",
+              "title": "Ceramic Mug Model CM-204 — $0.95/unit"
             }
           ],
           "result": "1,240+ identical listings on 12 dropshipping sites.",
@@ -971,29 +933,33 @@ export default {
           "hint": "Only AI-art sites match. This photo was never a real product."
         },
         {
-          "name": "Local bakery cupcakes",
+          "name": "Bluetooth Speaker B766",
           "matches": [
             {
-              "site": "cornerst-bakery.com",
-              "title": "Fresh cupcakes — Corner St. Bakery"
+              "site": "technmore.com",
+              "title": "Bluetooth Speaker B766 - Tech & More"
             },
             {
-              "site": "localeats.review",
-              "title": "Review: Corner St. Bakery ★★★★☆"
+              "site": "soundgear.net",
+              "title": "Best Speakers Better Prices"
             },
             {
-              "site": "instagram.com/cornerst",
-              "title": "@cornerst · local bakery"
+              "site": "everydayelectronics.com",
+              "title": "Indoor/Outdoor Speakers / B766"
+            },
+            {
+              "site": "soundhub.com",
+              "title": "Speaker B766, Bluetooth, 12hr battery"
             }
           ],
-          "result": "3 consistent results, all the same small business.",
-          "hint": "Matches trace back to one genuine local bakery."
+          "result": "At least 4 stores have this product",
+          "hint": "Prices are similar, product images belong to official stores"
         }
       ],
       "classify": {
         "mass": "Mass-produced",
         "ai": "AI-generated",
-        "legit": "Legit"
+        "legit": "Verified"
       },
       "decoder": {
         "title": "🔑 Emoji Decoding Card",
@@ -1035,7 +1001,7 @@ export default {
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",
-        "prompt": "Enter the 6-digit code.",
+        "prompt": "Open the backpack and select the Data Report on {friend}. Enter the six highlighted digits.",
         "error": "Access denied — that code is wrong.",
         "submit": "Unlock →"
       },
@@ -1072,10 +1038,10 @@ export default {
         "profileTitle": "▚ PROFILE RECONSTRUCTED ▚",
         "profileP1": "The engine cross-referenced",
         "profileB1": "{friend}’s age",
-        "profileP2": " (a teen boy),",
-        "profileB2": "his interests",
-        "profileP3": " (gaming, new tech, the NovaPad X he keeps searching) and ",
-        "profileB3": "his insecurities",
+        "profileP2": "(a teenager),",
+        "profileB2": "interests",
+        "profileP3": "(gaming, new tech and searches for the NovaPad X) and",
+        "profileB3": "insecurities",
         "profileP4": " (fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
         "logEvidence": "Log this evidence ✓",
         "finalLessonTitle": "What you learned",
@@ -1141,10 +1107,10 @@ export default {
         "t-teeth": "Worried about their teeth"
       },
       "report": {
-        "modalTitle": "Informe de datos · Perfil de Max",
+        "modalTitle": "Data Report · Profile: {friend}",
         "kicker": "SALA DE CONTROL DEL ALGORITMO",
-        "title": "Registro de anuncios dirigidos: MAX",
-        "subject": "Sujeto: Actividad online de MAX",
+        "title": "Targeted Ad Profile Log: {friend}",
+        "subject": "Online activity · Subject: {friend}",
         "instruction": "Revisa la actividad para descubrir cómo aprendió el algoritmo.",
         "columns": {
           "time": "HORA",
@@ -1196,7 +1162,7 @@ export default {
       },
       "door": {
         "badge": "Control Room · Sealed",
-        "prompt": "The Algorithm Control Room is locked. A keypad is mounted on the door — step up to it and enter the 6-digit code from your Data Report.",
+        "prompt": "The Algorithm Control Room is locked. Open the backpack and select the Data Report on {friend}. Find the six highlighted digits, then use the keypad to enter the code.",
         "action": "Use the keypad →"
       }
     },
@@ -1272,7 +1238,7 @@ export default {
       },
       "trayLabel": "TECHNIQUE FRAMES",
       "hints": {
-        "start": "Drag a technique frame onto the poster it fits — or tap the frame, then tap the poster.",
+        "start": "Drag and drop each technique frame onto the matching poster.",
         "allDone": "All six framed — the letters spell a password. Click the computer to type it in.",
         "correct": "Correct — a letter surfaced. Keep framing the rest.",
         "wrong": "That technique does not match this ad. Frame returned — try another.",
