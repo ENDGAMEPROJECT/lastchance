@@ -28,9 +28,9 @@ export default {
   finalRouter: "Advance →",
   reviewTitle: "Why those doors?",
   errStillOpen:
-    "Links blocked: {count}. Block the two fraudulent links to continue.",
+    "Link{plural} blocked: {count}. Block the two fraudulent links to continue.",
   errBlockedSafe:
-    "You blocked the real store! That is the one safe door — leave it open.",
+    "Some blocked doors are wrong. Block the two fraudulent links to continue.",
   justifyLeadLabel: "Why did you block them?",
   justifyLead:
     "Being able to explain the red flags matters more than a lucky guess. Tick every real warning sign — and nothing that only looks reassuring.",
