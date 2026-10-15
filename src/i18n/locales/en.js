@@ -552,12 +552,13 @@ export default {
       "nextRouter": "Advance to the next crossroads →",
       "finalRouter": "Advance →",
       "reviewTitle": "Why those doors?",
-      "errStillOpen": "At least one fraudulent link is still open. Block every fake before continuing.",
-      "errBlockedSafe": "You blocked the real store! That is the one safe door — leave it open.",
+      "errStillOpen": "Link{plural} blocked: {count}. Block the two fraudulent links to continue.",
+      "errBlockedSafe": "Some blocked doors are wrong. Block the two fraudulent links to continue.",
       "justifyLeadLabel": "Why did you block them?",
       "justifyLead": "Being able to explain the red flags matters more than a lucky guess. Tick every real warning sign — and nothing that only looks reassuring.",
-      "justifyErrWrong": "Some of those are not actually red flags — https, padlocks and nice photos do NOT prove a site is safe.",
-      "justifyErrMissing": "A few red flags are still unchecked. Look again at the fake URLs.",
+      "justifyErrWrong": "HTTPS, a padlock or a familiar-looking name is not a warning sign by itself, but none proves a site is safe. A familiar name can hide a typo or look-alike letter: check the full domain for those specific differences.",
+      "justifyErrMissingOne": "1 warning sign left to select. Look again at the fake URLs.",
+      "justifyErrMissing": "{count} warning signs left to select. Look again at the fake URLs.",
       "submitReasoning": "Submit reasoning",
       "preview": {
         "newArrivals": "NEW ARRIVALS",
@@ -869,7 +870,7 @@ export default {
         "stage1Cleared": "Stage 1 cleared ✓",
         "badge": "Stage 2 / 2",
         "tag": "Product legitimacy",
-        "prompt": "Reverse-image-search each photo, then classify what it really is.",
+        "prompt": "Reverse-image-search each photo, then classify what it really is with the stamps below.",
         "runSearch": "🔍 Run reverse image search",
         "engineBar": "reverse-image-search.io",
         "engineDrop": "Drag a product image here to reverse-search it",
@@ -885,7 +886,8 @@ export default {
         "learn": "a reverse image search checks whether a “handmade”, “unique” or “real” product photo is actually stolen, mass-produced across dozens of dropshipping stores, or AI-generated. No results at all can mean the image is fake.",
         "hint": "Search first, then classify all three.",
         "confirm": "Confirm classifications →",
-        "stampHere": "Stamp here"
+        "stampHere": "Stamp here",
+        "removeStamp": "✕ Remove stamp"
       },
       "products": [
         {
@@ -906,6 +908,10 @@ export default {
             {
               "site": "mega-bazaar.shop",
               "title": "Same photo — €1.90 / unit"
+            },
+            {
+              "site": "directmugs.net",
+              "title": "Ceramic Mug Model CM-204 — $0.95/unit"
             }
           ],
           "result": "1,240+ identical listings on 12 dropshipping sites.",
@@ -927,29 +933,33 @@ export default {
           "hint": "Only AI-art sites match. This photo was never a real product."
         },
         {
-          "name": "Local bakery cupcakes",
+          "name": "Bluetooth Speaker B766",
           "matches": [
             {
-              "site": "cornerst-bakery.com",
-              "title": "Fresh cupcakes — Corner St. Bakery"
+              "site": "technmore.com",
+              "title": "Bluetooth Speaker B766 - Tech & More"
             },
             {
-              "site": "localeats.review",
-              "title": "Review: Corner St. Bakery ★★★★☆"
+              "site": "soundgear.net",
+              "title": "Best Speakers Better Prices"
             },
             {
-              "site": "instagram.com/cornerst",
-              "title": "@cornerst · local bakery"
+              "site": "everydayelectronics.com",
+              "title": "Indoor/Outdoor Speakers / B766"
+            },
+            {
+              "site": "soundhub.com",
+              "title": "Speaker B766, Bluetooth, 12hr battery"
             }
           ],
-          "result": "3 consistent results, all the same small business.",
-          "hint": "Matches trace back to one genuine local bakery."
+          "result": "At least 4 stores have this product",
+          "hint": "Prices are similar, product images belong to official stores"
         }
       ],
       "classify": {
         "mass": "Mass-produced",
         "ai": "AI-generated",
-        "legit": "Legit"
+        "legit": "Verified"
       },
       "decoder": {
         "title": "🔑 Emoji Decoding Card",
@@ -1228,7 +1238,7 @@ export default {
       },
       "trayLabel": "TECHNIQUE FRAMES",
       "hints": {
-        "start": "Drag a technique frame onto the poster it fits — or tap the frame, then tap the poster.",
+        "start": "Drag and drop each technique frame onto the matching poster.",
         "allDone": "All six framed — the letters spell a password. Click the computer to type it in.",
         "correct": "Correct — a letter surfaced. Keep framing the rest.",
         "wrong": "That technique does not match this ad. Frame returned — try another.",

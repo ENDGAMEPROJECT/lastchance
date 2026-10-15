@@ -552,12 +552,13 @@ export default {
       "nextRouter": "Pređi na sledeću raskrsnicu →",
       "finalRouter": "Pređi →",
       "reviewTitle": "Zašto baš ta vrata?",
-      "errStillOpen": "Najmanje jedan lažni link je i dalje otvoren. Blokiraj sve lažne linkove pre nego što nastaviš.",
-      "errBlockedSafe": "Blokirao/la si pravu prodavnicu! To su jedina bezbedna vrata — ostavi ih otvorena.",
+      "errStillOpen": "Link{plural} blocked: {count}. Block the two fraudulent links to continue.",
+      "errBlockedSafe": "Some blocked doors are wrong. Block the two fraudulent links to continue.",
       "justifyLeadLabel": "Zašto si ih blokirao/la?",
       "justifyLead": "Važno je da umeš da objasniš znakove upozorenja, a ne samo da pogodiš. Označi svaki stvarni znak upozorenja — i ništa što samo deluje kao da pruža sigurnost.",
-      "justifyErrWrong": "Neki od ovih znakova zapravo nisu znakovi upozorenja — https, katanci i lepe fotografije NE dokazuju da je stranica bezbedna.",
-      "justifyErrMissing": "Nekoliko znakova upozorenja još uvek nije označeno. Ponovo pogledaj lažne URL adrese.",
+      "justifyErrWrong": "HTTPS, a padlock or a familiar-looking name is not a warning sign by itself, but none proves a site is safe. A familiar name can hide a typo or look-alike letter: check the full domain for those specific differences.",
+      "justifyErrMissingOne": "1 warning sign left to select. Look again at the fake URLs.",
+      "justifyErrMissing": "{count} warning signs left to select. Look again at the fake URLs.",
       "submitReasoning": "Pošalji obrazloženje",
       "preview": {
         "newArrivals": "NOVO U PONUDI",
@@ -869,7 +870,7 @@ export default {
         "stage1Cleared": "Stage 1 cleared ✓",
         "badge": "Stage 2 / 2",
         "tag": "Product legitimacy",
-        "prompt": "Reverse-image-search each photo, then classify what it really is.",
+        "prompt": "Reverse-image-search each photo, then classify what it really is with the stamps below.",
         "runSearch": "🔍 Run reverse image search",
         "engineBar": "reverse-image-search.io",
         "engineDrop": "Drag a product image here to reverse-search it",
@@ -885,7 +886,8 @@ export default {
         "learn": "a reverse image search checks whether a “handmade”, “unique” or “real” product photo is actually stolen, mass-produced across dozens of dropshipping stores, or AI-generated. No results at all can mean the image is fake.",
         "hint": "Search first, then classify all three.",
         "confirm": "Confirm classifications →",
-        "stampHere": "Stamp here"
+        "stampHere": "Stamp here",
+        "removeStamp": "✕ Remove stamp"
       },
       "products": [
         {
@@ -906,6 +908,10 @@ export default {
             {
               "site": "mega-bazaar.shop",
               "title": "Same photo — €1.90 / unit"
+            },
+            {
+              "site": "directmugs.net",
+              "title": "Ceramic Mug Model CM-204 — $0.95/unit"
             }
           ],
           "result": "1,240+ identical listings on 12 dropshipping sites.",
@@ -927,29 +933,33 @@ export default {
           "hint": "Only AI-art sites match. This photo was never a real product."
         },
         {
-          "name": "Local bakery cupcakes",
+          "name": "Bluetooth Speaker B766",
           "matches": [
             {
-              "site": "cornerst-bakery.com",
-              "title": "Fresh cupcakes — Corner St. Bakery"
+              "site": "technmore.com",
+              "title": "Bluetooth Speaker B766 - Tech & More"
             },
             {
-              "site": "localeats.review",
-              "title": "Review: Corner St. Bakery ★★★★☆"
+              "site": "soundgear.net",
+              "title": "Best Speakers Better Prices"
             },
             {
-              "site": "instagram.com/cornerst",
-              "title": "@cornerst · local bakery"
+              "site": "everydayelectronics.com",
+              "title": "Indoor/Outdoor Speakers / B766"
+            },
+            {
+              "site": "soundhub.com",
+              "title": "Speaker B766, Bluetooth, 12hr battery"
             }
           ],
-          "result": "3 consistent results, all the same small business.",
-          "hint": "Matches trace back to one genuine local bakery."
+          "result": "At least 4 stores have this product",
+          "hint": "Prices are similar, product images belong to official stores"
         }
       ],
       "classify": {
         "mass": "Mass-produced",
         "ai": "AI-generated",
-        "legit": "Legit"
+        "legit": "Verified"
       },
       "decoder": {
         "title": "🔑 Emoji Decoding Card",
@@ -1228,7 +1238,7 @@ export default {
       },
       "trayLabel": "OKVIRI TEHNIKA",
       "hints": {
-        "start": "Prevuci okvir sa tehnikom na poster kojem odgovara — ili dodirni okvir, a zatim poster.",
+        "start": "Drag and drop each technique frame onto the matching poster.",
         "allDone": "Svih šest je uokvireno — slova čine lozinku. Klikni na računar da je uneseš.",
         "correct": "Tačno — pojavilo se jedno slovo. Nastavi da uokviruješ ostale.",
         "wrong": "Ta tehnika ne odgovara ovom oglasu. Okvir je vraćen — pokušaj ponovo.",

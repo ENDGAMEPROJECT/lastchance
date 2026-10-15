@@ -14,7 +14,7 @@
 /* ---------- Transition: "what is reverse image search" ---------- */
 .ia-explain { align-items: center; justify-content: flex-start; }
 .ia-explain-card {
-  max-width: 720px;
+  max-width: 860px;
   width: 100%;
   /* auto vertical margins center it when it fits and, unlike justify-content,
      never clip the top when it's taller than the scene (it scrolls instead). */
@@ -82,125 +82,7 @@
 }
 .ia-explain-use-icon { font-size: 1.05rem; flex: none; line-height: 1.2; }
 
-/* Animated search-engine mock */
-.ia-search {
-  width: 100%;
-  max-width: 480px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.ia-search-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: inset 0 0 0 1px rgba(160, 90, 255, 0.2);
-}
-.ia-search-thumb {
-  position: relative;
-  font-size: 1.1rem;
-  width: 26px; height: 26px; flex: none;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 6px;
-  background: linear-gradient(135deg, #c9a06a, #7a4f2b);
-  /* Drag the photo into the search bar from the caption area below-left. */
-  animation: ia-dragin 0.9s cubic-bezier(0.3, 0.7, 0.2, 1) both;
-}
-.ia-search-hand {
-  position: absolute;
-  right: -9px; bottom: -11px;
-  font-size: 0.95rem;
-  animation: ia-handfade 0.9s ease both;
-}
-/* The photo lifts out of the post above and drops into the search bar. */
-@keyframes ia-dragin {
-  0% { transform: translate(0, -46px) scale(1.6); opacity: 0; }
-  25% { opacity: 1; }
-  100% { transform: translate(0, 0) scale(1); opacity: 1; }
-}
-@keyframes ia-handfade { 0%, 55% { opacity: 1; } 100% { opacity: 0; } }
-
-/* 1 · the source post the photo is dragged FROM */
-.ia-src {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
-}
-.ia-src-photo {
-  width: 34px; height: 34px; flex: none;
-  display: flex; align-items: center; justify-content: center;
-  border-radius: 7px; font-size: 1.25rem;
-  background: linear-gradient(135deg, #c9a06a, #7a4f2b);
-}
-.ia-src-cap { flex: 1; text-align: left; color: var(--muted); line-height: 1.3; }
-
-/* 2 · the "drag it here" hint between the post and the search bar */
-.ia-search-draghint { text-align: center; padding: 2px 0; }
-.ia-search-q {
-  position: relative;
-  flex: 1;
-  overflow: hidden;
-  text-align: left;
-  color: var(--muted);
-  font-size: 0.82rem;
-}
-.ia-search-q-text { position: relative; z-index: 1; }
-/* a light beam sweeping the query field to read as "scanning" */
-.ia-search-scan {
-  position: absolute;
-  top: 0; bottom: 0; left: -35%;
-  width: 30%;
-  background: linear-gradient(90deg, transparent, rgba(160, 90, 255, 0.5), transparent);
-  /* wait for the photo to land in the bar, then start scanning */
-  animation: ia-scan 1.4s ease-in-out 0.9s infinite;
-}
-.ia-search-go { font-size: 1rem; color: var(--purple); }
-
-.ia-search-caption { text-align: left; }
-
-.ia-search-panel {
-  min-height: 72px;
-  padding: 8px 10px;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.ia-search-loading { display: flex; align-items: center; justify-content: center; gap: 10px; color: var(--muted); }
-.ia-search-spinner {
-  width: 18px; height: 18px; flex: none;
-  border-radius: 50%;
-  border: 2px solid rgba(160, 90, 255, 0.3);
-  border-top-color: var(--purple);
-  animation: ia-spin 0.7s linear infinite;
-}
-.ia-search-out { display: flex; flex-direction: column; gap: 6px; }
-.ia-search-resultshead { text-align: left; }
-.ia-search-results { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-.ia-search-hit {
-  display: flex; align-items: center; gap: 6px;
-  padding: 5px 9px; border-radius: 8px;
-  border: 1px solid var(--line); background: rgba(255, 255, 255, 0.04);
-  opacity: 0;
-  animation: ia-pop 0.32s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-.ia-search-hit-emoji { font-size: 1rem; }
-.ia-search-hit-shop { flex: 1; color: var(--text); }
-.ia-search-hit-price { color: var(--red); font-weight: 700; }
-
 @keyframes ia-scan { 0% { left: -35%; } 100% { left: 105%; } }
-@keyframes ia-spin { to { transform: rotate(360deg); } }
-@keyframes ia-pop { from { opacity: 0; transform: translateY(8px) scale(0.9); } to { opacity: 1; transform: none; } }
 
 .ia-explain-learn { text-align: left; width: 100%; max-width: 620px; font-size: 0.8rem; padding: 8px 11px; }
 
@@ -667,14 +549,6 @@ button.ia-view-publication {
 }
 .ia-prod-name { font-family: var(--font-display); font-weight: 700; color: var(--text); }
 
-.ia-prod-result {
-  text-align: left;
-  padding: 8px 10px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(168, 85, 247, 0.35);
-  background: rgba(168, 85, 247, 0.08);
-  display: flex; flex-direction: column; gap: 3px;
-}
 .ia-prod-hint { font-style: italic; }
 
 /* ---------- Reverse-image-search: scanning animation ---------- */
@@ -732,29 +606,8 @@ button.ia-view-publication {
 @keyframes ia-shimmer { to { background-position: -200% 0; } }
 
 /* ---------- Reverse-image-search: the web-match results ---------- */
-.ia-matches { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
-.ia-match {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  text-align: left;
-  animation: ia-match-in 0.35s ease both;
-}
-@keyframes ia-match-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 /* Reverse-image-search result thumbnail: the same product image, "found" on
    each matching site. */
-.ia-match-fav {
-  width: 34px;
-  height: 34px;
-  border-radius: 6px;
-  flex: none;
-  background-size: cover;
-  background-position: center;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14), 0 1px 4px rgba(0, 0, 0, 0.45);
-}
-.ia-match-txt { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
-.ia-match-site { font-size: 0.6rem; color: var(--cyan); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ia-match-title { font-size: 0.66rem; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ia-result-sum { color: var(--text); font-weight: 600; padding-top: 5px; margin-top: 1px; border-top: 1px dashed rgba(168, 85, 247, 0.3); }
 
 /* Two-column verify layout: image tray on the left, engine (with more vertical
@@ -771,64 +624,7 @@ button.ia-view-publication {
 }
 
 /* ---------- The reverse-search "engine" (drag a product image onto it) ---------- */
-.ia-engine {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  border-radius: var(--radius);
-  border: 1px solid rgba(168, 85, 247, 0.4);
-  background: rgba(12, 10, 26, 0.72);
-  overflow: hidden;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
-}
-.ia-engine-bar, .ia-engine-drop { flex: none; }
-.ia-engine-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 12px;
-  font-size: 0.78rem;
-  color: var(--cyan);
-  background: rgba(4, 8, 20, 0.7);
-  border-bottom: 1px solid var(--line);
-}
-.ia-engine-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); flex: none; }
-.ia-engine-drop {
-  min-height: 104px;
-  margin: 11px;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  border: 2px dashed rgba(168, 85, 247, 0.5);
-  border-radius: var(--radius-sm);
-  background: rgba(168, 85, 247, 0.05);
-  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
-}
-.ia-engine-drop.is-over {
-  border-color: var(--purple);
-  background: rgba(168, 85, 247, 0.14);
-  box-shadow: inset 0 0 30px rgba(168, 85, 247, 0.18);
-}
-.ia-engine-ph { display: flex; align-items: center; gap: 11px; color: var(--muted); font-size: 0.92rem; }
-.ia-engine-icon { font-size: 1.6rem; color: var(--purple); animation: ia-bob 1.8s ease-in-out infinite; }
 @keyframes ia-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
-.ia-engine-busy { display: flex; align-items: center; gap: 16px; width: 100%; }
-.ia-engine-thumb {
-  position: relative;
-  overflow: hidden;
-  flex: none;
-  width: 140px;
-  height: 120px;
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.35);
-}
-.ia-engine-thumb .ia-prod-emoji { font-size: 1.9rem; }
-.ia-engine-busy .ia-searching { flex: 1; border: none; background: none; padding: 0; }
 
 /* Draggable product image ("download" it and drop on the engine to "upload"). */
 .ia-prod-photo-drag { display: block; cursor: grab; }
@@ -861,7 +657,7 @@ button.ia-view-publication {
 .ia-imgtile {
   position: relative;
   width: 100%;
-  height: 128px;
+  height: 156px;
   border-radius: var(--radius-sm);
   display: flex;
   flex-direction: column;
@@ -897,28 +693,8 @@ button.ia-view-publication {
   padding: 0 5px;
 }
 .ia-imgtile-badge.grab { animation: ia-bob 1.8s ease-in-out infinite; }
-.ia-imgtile-badge.done { color: var(--green); background: rgba(4, 16, 10, 0.7); }
-.ia-imgtile-verdict {
-  position: absolute;
-  bottom: 5px;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  background: rgba(168, 85, 247, 0.9);
-  color: #fff;
-  padding: 1px 8px;
-  border-radius: 999px;
-  font-weight: 700;
-}
 
 /* ---------- Results panel under the engine (search + verdict happen here) ---------- */
-.ia-engine-panel { margin: 0 11px 12px; padding: 12px 12px 4px; border-top: 1px solid var(--line); flex: 1; min-height: 0; overflow-y: auto; }
-.ia-engine-result-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-.ia-engine-result-meta { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
-.ia-engine-result-meta > div { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.ia-engine-result-meta .t-sm { font-family: var(--font-display); font-weight: 700; color: var(--text); }
-.ia-engine-cols { display: grid; grid-template-columns: 1fr 230px; gap: 16px; align-items: start; }
-.ia-engine-classify { display: flex; flex-direction: column; gap: 7px; }
 .ia-engine-classify .ia-segments { grid-template-columns: 1fr; }
 
 /* Segmented classification control — three options side by side. */
@@ -952,10 +728,10 @@ button.ia-view-publication {
 .ia-stampslot {
   position: relative;
   flex: none;
-  width: 70px;
-  height: 62px;
+  width: 105px;
+  height: 93px;
   border: 2px dashed var(--line);
-  border-radius: 8px;
+  border-radius: 10px;
   background: rgba(0, 0, 0, 0.22);
   display: flex;
   align-items: center;
@@ -1032,6 +808,11 @@ button.ia-view-publication {
 .ia-stamp-mass .ia-stampmaker-face::before { background: linear-gradient(180deg, #ff7387, #c23a52); }
 .ia-stamp-ai .ia-stampmaker-face::before { background: linear-gradient(180deg, #ffd27a, #c99a2a); }
 .ia-stamp-legit .ia-stampmaker-face::before { background: linear-gradient(180deg, #6bffab, #2ac96a); }
+/* the verdict's emblem, pushed to the far right of the stamp-maker */
+.ia-stampmaker-icon { width: 26px; height: 26px; flex: none; margin-left: auto; }
+.ia-stampmaker.ia-stamp-mass .ia-stampmaker-icon { color: var(--red); }
+.ia-stampmaker.ia-stamp-ai .ia-stampmaker-icon { color: var(--amber); }
+.ia-stampmaker.ia-stamp-legit .ia-stampmaker-icon { color: var(--green); }
 .ia-stamp-label {
   font-family: var(--font-ui);
   font-weight: 500;
@@ -1063,17 +844,19 @@ button.ia-view-publication {
   position: absolute;
   inset: 4px;
   display: flex;
+  flex-direction: column;
+  gap: 3px;
   align-items: center;
   justify-content: center;
   text-align: center;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 0.58rem;
+  font-size: 0.87rem;
   line-height: 1.05;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  border: 2.5px solid;
-  border-radius: 6px;
+  border: 3.5px solid;
+  border-radius: 9px;
   transform: rotate(-11deg);
   opacity: 0.92;
   pointer-events: none;
@@ -1082,6 +865,24 @@ button.ia-view-publication {
 .ia-stamp-mark.ia-stamp-mass { color: var(--red); border-color: var(--red); background: rgba(255, 59, 92, 0.14); }
 .ia-stamp-mark.ia-stamp-ai { color: var(--amber); border-color: var(--amber); background: rgba(255, 185, 43, 0.14); }
 .ia-stamp-mark.ia-stamp-legit { color: var(--green); border-color: var(--green); background: rgba(43, 255, 136, 0.14); }
+/* The emblem above the verdict word. */
+.ia-stamp-icon { width: 34px; height: 34px; flex: none; overflow: visible; }
+.ia-stamp-mark.ia-stamp-mass .ia-stamp-icon { filter: drop-shadow(0 0 2px #3d0010) drop-shadow(0 0 5px #3d0010); }
+.ia-stamp-mark.ia-stamp-ai .ia-stamp-icon { filter: drop-shadow(0 0 2px #3d2800) drop-shadow(0 0 5px #3d2800); }
+.ia-stamp-mark.ia-stamp-legit .ia-stamp-icon { filter: drop-shadow(0 0 2px #00351a) drop-shadow(0 0 5px #00351a); }
+/* A dark halo in the stamp's own tone keeps the ink readable over photos. */
+.ia-stamp-mark.ia-stamp-mass {
+  text-shadow: 0 0 2px #3d0010, 0 0 4px #3d0010, 0 0 8px #3d0010, 0 0 14px #3d0010, 0 0 24px rgba(61, 0, 16, 0.85);
+  box-shadow: 0 0 6px 2px rgba(61, 0, 16, 0.95), 0 0 20px 6px rgba(61, 0, 16, 0.75), inset 0 0 8px 2px rgba(61, 0, 16, 0.9), inset 0 0 20px 4px rgba(61, 0, 16, 0.65);
+}
+.ia-stamp-mark.ia-stamp-ai {
+  text-shadow: 0 0 2px #3d2800, 0 0 4px #3d2800, 0 0 8px #3d2800, 0 0 14px #3d2800, 0 0 24px rgba(61, 40, 0, 0.85);
+  box-shadow: 0 0 6px 2px rgba(61, 40, 0, 0.95), 0 0 20px 6px rgba(61, 40, 0, 0.75), inset 0 0 8px 2px rgba(61, 40, 0, 0.9), inset 0 0 20px 4px rgba(61, 40, 0, 0.65);
+}
+.ia-stamp-mark.ia-stamp-legit {
+  text-shadow: 0 0 2px #00351a, 0 0 4px #00351a, 0 0 8px #00351a, 0 0 14px #00351a, 0 0 24px rgba(0, 53, 26, 0.85);
+  box-shadow: 0 0 6px 2px rgba(0, 53, 26, 0.95), 0 0 20px 6px rgba(0, 53, 26, 0.75), inset 0 0 8px 2px rgba(0, 53, 26, 0.9), inset 0 0 20px 4px rgba(0, 53, 26, 0.65);
+}
 @keyframes ia-stamp-press {
   0% { transform: rotate(-11deg) scale(2.6); opacity: 0; }
   55% { transform: rotate(-11deg) scale(0.86); opacity: 1; }
@@ -1101,3 +902,391 @@ button.ia-view-publication {
 .ia-banner { margin: 0; padding: 8px 14px; }
 /* The main CTA — make it prominent and easy to hit. */
 .ia-confirm { flex: none; white-space: nowrap; }
+
+/* ---------- Reverse-search engine — dark "lens" layout ----------
+   Slim search bar on top (the image drops in as a small chip), the searched
+   image big on black with four corner brackets, then a masonry of web matches. */
+.ia-engine {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-radius: var(--radius);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  background: #141318;
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+.ia-engine-top {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.ia-engine-logo { flex: none; height: 30px; width: auto; display: block; }
+.ia-engine-drop {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #232229;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.ia-engine-drop.is-over {
+  border-color: var(--purple);
+  background: #2c2440;
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.35), 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+.ia-engine-lens { flex: none; font-size: 0.9rem; opacity: 0.7; }
+/* The dropped image, fitted to the bar's short height. */
+.ia-engine-chip {
+  flex: none;
+  width: 32px;
+  height: 30px;
+  border-radius: 6px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+.ia-engine-ph { flex: 1; min-width: 0; color: var(--muted); font-size: 0.86rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
+.ia-engine-icon { flex: none; font-size: 1.1rem; color: var(--purple); animation: ia-bob 1.8s ease-in-out infinite; }
+.reduced-motion .ia-engine-icon { animation: none; }
+
+.ia-engine-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 12px 10px;
+}
+
+/* Big black viewer with the searched image framed by corner brackets. */
+.ia-engine-viewer {
+  position: relative;
+  flex: none;
+  height: 176px;
+  padding-top: 12px;
+  border-radius: 14px;
+  background: #050507;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.ia-engine-frame { position: relative; height: 146px; display: flex; flex: none; }
+/* the searching viewer has no remove row — centre its image instead */
+.ia-engine-viewer:not(:has(.ia-unstamp-row)) { justify-content: center; padding-top: 0; }
+.ia-unstamp-row { flex: none; height: 26px; margin-top: 9px; display: flex; align-items: center; }
+.ia-unstamp {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  color: #d8d8e0;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 3px 12px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.ia-unstamp:hover { color: #fff; border-color: var(--red); background: rgba(255, 59, 92, 0.16); }
+.ia-engine-img { height: 100%; width: auto; max-width: 420px; object-fit: contain; border-radius: 4px; display: block; }
+.ia-engine-frame .ia-scan { border-radius: 4px; }
+.ia-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 0 solid #f2f2f2;
+  pointer-events: none;
+}
+.ia-corner.tl { top: -5px; left: -5px; border-top-width: 3px; border-left-width: 3px; border-top-left-radius: 9px; }
+.ia-corner.tr { top: -5px; right: -5px; border-top-width: 3px; border-right-width: 3px; border-top-right-radius: 9px; }
+.ia-corner.bl { bottom: -5px; left: -5px; border-bottom-width: 3px; border-left-width: 3px; border-bottom-left-radius: 9px; }
+.ia-corner.br { bottom: -5px; right: -5px; border-bottom-width: 3px; border-right-width: 3px; border-bottom-right-radius: 9px; }
+/* the stamp slot sits in the viewer's bottom-right corner */
+/* the stamp slot sits centred over the image; once inked only the imprint shows */
+.ia-engine-frame .ia-stampslot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -46.5px 0 0 -52.5px; /* centre without transform (the press animation owns it) */
+  border-color: rgba(255, 255, 255, 0.22);
+  background: none;
+}
+/* subtle until a stamp is in hand, then a strong purple target */
+/* hidden until a stamp is in hand (an inked stamp stays visible) */
+.ia-engine-frame .ia-stampslot:not(.armed):not(.stamped) { visibility: hidden; }
+.ia-engine-frame .ia-stampslot.armed { border: 2px dashed #a855f7; background: none; box-shadow: none; }
+.ia-engine-frame .ia-stampslot.armed .ia-stampslot-ph {
+  color: #fff;
+  font-weight: 700;
+  opacity: 1;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.9), 0 1px 6px rgba(0, 0, 0, 0.8), 0 0 12px rgba(0, 0, 0, 0.6);
+}
+.ia-engine-frame .ia-stampslot.stamped:not(.armed) { border-color: transparent; background: none; box-shadow: none; }
+.ia-engine-panel > .ia-searching { flex: 1; min-height: 0; border: none; background: none; padding: 2px 4px; }
+
+.ia-engine-cols { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 230px; gap: 16px; }
+.ia-prod-result {
+  min-height: 0;
+  overflow-y: auto;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 4px;
+}
+.ia-engine-classify { display: flex; flex-direction: column; gap: 7px; }
+.ia-engine-classify .ia-stamprack { margin-top: 0; }
+
+/* Masonry of web matches — natural image heights, site + product title below. */
+.ia-matches { 
+  display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+   align-items: flex-start; gap: 12px; }
+.ia-matches-col { flex: 1; min-width: 0; list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.ia-match {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  text-align: left;
+  animation: ia-match-in 0.35s ease both;
+}
+@keyframes ia-match-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.ia-match-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  background: #232229;
+  margin-bottom: 3px;
+}
+.ia-match-site { display: flex; align-items: center; gap: 5px; min-width: 0; font-size: 0.68rem; color: #c9c9d1; }
+.ia-match-fav {
+  flex: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--purple);
+}
+.ia-match-site-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ia-match-title {
+  font-size: 0.74rem;
+  line-height: 1.25;
+  color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* The same verdict imprint, pressed onto the tray tile once classified. */
+.ia-imgtile-stamp {
+  inset: auto;
+  left: 50%;
+  top: 50%;
+  width: 97px;
+  height: 85px;
+  margin: -42.5px 0 0 -48.5px;
+}
+
+/* Purple scrollbars in the reverse-search stage so they stay visible on the dark UI. */
+.ia-prod-result, .ia-imgtray-items, .ia-stage {
+  scrollbar-width: thin;
+  scrollbar-color: #a855f7 rgba(168, 85, 247, 0.12);
+}
+.ia-prod-result::-webkit-scrollbar, .ia-imgtray-items::-webkit-scrollbar, .ia-stage::-webkit-scrollbar { width: 8px; }
+.ia-prod-result::-webkit-scrollbar-thumb, .ia-imgtray-items::-webkit-scrollbar-thumb, .ia-stage::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 8px; }
+.ia-prod-result::-webkit-scrollbar-track, .ia-imgtray-items::-webkit-scrollbar-track, .ia-stage::-webkit-scrollbar-track { background: rgba(168, 85, 247, 0.12); border-radius: 8px; }
+
+/* ---------- Explainer demo: scripted run of the reverse-search challenge ----------
+   Fixed 820 × 300 layout so the flying image / stamp keyframes land precisely. */
+.ia-demo {
+  position: relative;
+  flex: none;
+  width: 820px;
+  height: 330px;
+  text-align: left;
+  margin: 12px 0;
+
+}
+.ia-demo-tray { position: absolute; left: 0; top: 0; width: 120px; }
+.ia-demo-traylabel { font-size: 0.68rem; color: var(--muted); height: 16px; }
+.ia-demo-tile {
+  position: relative;
+  width: 120px;
+  height: 90px;
+  margin-top: 4px;
+  border-radius: var(--radius-sm);
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6px;
+}
+.ia-demo-tile .ia-imgtile-name { font-size: 0.74rem; }
+/* while "dragging", the original tile dims like .dnd-draggable.dnd-dragging */
+.ia-demo-tile.is-dragging { opacity: 0.25; animation: ia-demo-dim 0.1s 0.1s both; }
+@keyframes ia-demo-dim { from { opacity: 1; } to { opacity: 0.25; } }
+/* the drag copy: same size as the tile, centred on the cursor, with the
+   dnd ghost's drop shadow; it simply vanishes on drop (phase change) */
+.ia-demo-ghost {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  margin-top: 0;
+  z-index: 5;
+  box-shadow: none;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.6));
+  animation: ia-demo-drag 1.1s cubic-bezier(0.45, 0.05, 0.3, 1) 0.1s both;
+}
+/* centre (60, 65) → the bar's chip slot centre (287, 25) */
+@keyframes ia-demo-drag {
+  0% { transform: none; }
+  100% { transform: translate(227px, -40px); }
+}
+.ia-demo-cursor {
+  position: absolute;
+  left: 60px;
+  top: 65px;
+  z-index: 6;
+  width: 22px;
+  height: 22px;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
+  animation: ia-demo-drag 1.1s cubic-bezier(0.45, 0.05, 0.3, 1) 0.1s both;
+}
+
+.ia-demo-engine {
+  position: absolute;
+  left: 132px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  height: 336px;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  background: #141318;
+  overflow: hidden;
+}
+.ia-demo-top {
+  flex: none;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.ia-demo-logo { flex: none; width: 78px; height: 26px; display: block; }
+.ia-demo-bar {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px 0 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #232229;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.ia-demo-bar.is-over { transition-delay: 0.9s; border-color: var(--purple); background: #2c2440; box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.3); }
+.ia-demo-bar .ia-engine-chip { width: 30px; height: 24px; }
+.ia-demo-bar .ia-engine-ph { font-size: 0.78rem; }
+
+.ia-demo-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 10px;
+  overflow: hidden;
+}
+.ia-demo-viewer {
+  flex: none;
+  height: 116px;
+  border-radius: 12px;
+  background: #050507;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ia-demo-frame { position: relative; height: 96px; display: flex; }
+.ia-demo-img { height: 100%; width: auto; border-radius: 4px; display: block; }
+.ia-demo-frame .ia-scan { border-radius: 4px; }
+.ia-demo-frame .ia-corner { width: 14px; height: 14px; }
+/* the pressed stamp, scaled to the small viewer */
+.ia-demo-mark {
+  inset: auto;
+  left: 50%;
+  top: 50%;
+  width: 92px;
+  height: 80px;
+  margin: -40px 0 0 -46px;
+  font-size: 0.74rem;
+}
+.ia-demo-mark .ia-stamp-icon { width: 28px; height: 28px; }
+
+.ia-demo-cols { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 168px; gap: 12px; }
+.ia-demo-cols:has(> :only-child) { grid-template-columns: 1fr; }
+.ia-demo-results {
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: #a855f7 rgba(168, 85, 247, 0.12);
+}
+.ia-demo-results > * { flex: none; }
+.ia-demo-results::-webkit-scrollbar { width: 8px; }
+.ia-demo-results::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 8px; }
+.ia-demo-results::-webkit-scrollbar-track { background: rgba(168, 85, 247, 0.12); border-radius: 8px; }
+.ia-demo-classify { display: flex; flex-direction: column; gap: 5px; }
+.ia-demo-results .ia-matches, .ia-demo-results .ia-matches-col { gap: 8px; }
+.ia-demo-results .ia-match-img { border-radius: 9px; }
+.ia-demo-results .ia-match-title { font-size: 0.66rem; }
+.ia-demo-results .ia-match-site { font-size: 0.6rem; }
+.ia-demo-skels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; align-items: start; }
+.ia-demo-skels .ia-skel { width: auto !important; border-radius: 9px; }
+
+.ia-demo-rack { display: flex; flex-direction: column; gap: 4px; zoom: 0.8; }
+.ia-demo-rack .ia-stampmaker { cursor: default; }
+.ia-demo-rack .ia-stampmaker:hover { transform: none; }
+
+/* the Legit stamp flying from the rack onto the image */
+.ia-demo-flystamp {
+  position: absolute;
+  z-index: 6;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 6px 9px rgba(0, 0, 0, 0.55));
+  animation: ia-demo-fly 0.8s cubic-bezier(0.45, 0.05, 0.3, 1) both;
+}
+.ia-demo-flystamp .ia-stampmaker-face { width: 42px; height: 34px; margin-top: 20px; }
+.ia-demo-flystamp .ia-stampmaker-face::before { top: -20px; width: 21px; height: 18px; }
+.ia-demo-flystamp .ia-stampmaker-face::after { top: -6px; width: 30px; height: 7px; }
+@keyframes ia-demo-fly {
+  0% { left: 664px; top: 287px; }
+  70% { left: 476px; top: 103px; }
+  100% { left: 476px; top: 116px; }
+}
