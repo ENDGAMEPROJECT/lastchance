@@ -72,12 +72,7 @@
     opacity: 1;
   }
 }
-.ac-hint {
-  font-size: 0.8rem;
-  line-height: 1.35;
-}
-/* Instruction lines read bright white (override the muted `dim` utility). */
-.ac-side .ac-hint,
+/* Exit label reads bright white (override the muted `dim` utility). */
 .ac-side .ac-exit-label {
   color: #fff;
 }

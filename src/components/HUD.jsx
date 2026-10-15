@@ -225,7 +225,7 @@ export default function HUD() {
 
       <Modal open={bagOpen} onClose={() => setBagOpen(false)} title={t('hud.inventoryTitle')} accent="purple" width={620}>
         <div className="bag-section">
-          <div className="eyebrow" style={{ color: 'var(--purple)' }}>{t('hud.tools')}</div>
+          <div className="bag-subheading" style={{ color: 'var(--purple-light)' }}>{t('hud.tools')}</div>
           {inventory.length === 0 ? (
             <p className="muted t-sm">{t('hud.noTools')}</p>
           ) : (
@@ -240,7 +240,7 @@ export default function HUD() {
                   <div><img className="bag-icon" src={bgUrl(it.id === 'dataReport' ? narrative.reportImage : it.image)} alt="" /></div>
                   <div>
                     <div className="bag-name">{t(`items.${it.id}.name`, { friend: narrative.friend })}</div>
-                    <div className="bag-desc muted t-xs">{t(`items.${it.id}.desc`, { friend: narrative.friend })}</div>
+                    <div className="bag-desc muted t-sm">{t(`items.${it.id}.desc`, { friend: narrative.friend })}</div>
                   </div>
                 </button>
               ))}
@@ -249,7 +249,7 @@ export default function HUD() {
         </div>
 
         <div className="bag-section">
-          <div className="eyebrow" style={{ color: 'var(--green)' }}>{t('hud.evidenceHeading')}</div>
+          <div className="bag-subheading" style={{ color: 'var(--green)' }}>{t('hud.evidenceHeading')}</div>
           {evidence.length === 0 ? (
             <p className="muted t-sm">{t('hud.noEvidence', { friend: narrative.friend })}</p>
           ) : (

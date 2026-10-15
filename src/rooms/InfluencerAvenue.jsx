@@ -163,7 +163,7 @@ function CaptionPreview({ username, caption, onOpen }) {
   }, [username, caption, buttonLabel])
 
   return (
-    <div className="ia-caption t-xs">
+    <div className="ia-caption ">
       <span style={{fontWeight: "bold"}}>{username}</span>{' '}{preview}{' '}
       <button type="button" className="ia-view-publication" aria-haspopup="dialog"
         onMouseDown={(event) => event.preventDefault()} onClick={onOpen}>
@@ -471,7 +471,7 @@ export default function InfluencerAvenue({ node }) {
       {stage === 'label' && (
         <div className="ia-stage ia-label-stage fade-in">
           <div className="ia-head">
-            <p className="ia-prompt">
+            <p className="game-prompt">
               {t('rooms.influencer.stage1.prompt')}
             </p>
             {/* DEBUG ONLY: remove this block with skipFirstStageForDebug when no longer needed. */}
@@ -754,7 +754,7 @@ export default function InfluencerAvenue({ node }) {
       {stage === 'verify' && (
         <div className={`ia-stage fade-in ${heldStamp && FINE_POINTER ? 'ia-holding' : ''}`}>
           <div className="ia-head">
-            <p className="ia-prompt">{t('rooms.influencer.stage2.prompt')}</p>
+            <p className="game-prompt">{t('rooms.influencer.stage2.prompt')}</p>
           </div>
 
           <div className="ia-verify">
@@ -925,7 +925,7 @@ export default function InfluencerAvenue({ node }) {
           <div className="ia-actions">
             {verifyErr
               ? <div className="banner wrong shake ia-banner">{verifyErr}</div>
-              : <span className="dim t-sm">{t('rooms.influencer.stage2.hint')}</span>}
+              : <span className="game-prompt">{t('rooms.influencer.stage2.hint')}</span>}
             <button className="btn btn-purple btn-lg ia-confirm" onClick={submitVerify}>
               {t('rooms.influencer.stage2.confirm')}
             </button>

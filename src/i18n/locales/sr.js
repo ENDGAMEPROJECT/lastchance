@@ -25,7 +25,10 @@ export default {
     "languageLabel": "Jezik",
     "start": "⏻ Uđi",
     "aliasError": "Unesi nadimak da bi nastavio/la.",
-    "ageError": "Unesi ispravan broj godina (1–120)."
+    "ageError": "Unesi ispravan broj godina (1–120).",
+    "characterLabel": "Choose your character",
+    "characterMia": "Mia",
+    "characterMax": "Max"
   },
   "hud": {
     "logo": "POSLEDNJA ŠANSA ZA BEKSTVO",
@@ -40,7 +43,10 @@ export default {
     "noTools": "Još ništa nije prikupljeno. Reši zagonetke da bi osvojio/la alate.",
     "evidenceHeading": "Dokazi o ponudi",
     "noEvidence": "Prikupi dokaze u svakom okrugu kako bi na kraju ubedio/la {prijatelja}.",
-    "hints": "💡 Saveti"
+    "hints": "💡 Saveti",
+    "enterFullscreen": "Enter fullscreen",
+    "exitFullscreen": "Exit fullscreen",
+    "fullscreenError": "Fullscreen could not be activated. Please try again."
   },
   "intro": {
     "eyebrow": "Edukativni escape room",
@@ -279,7 +285,7 @@ export default {
     "roulette-corridor": {
       "title": "Koridor ruleta",
       "subtitle": "Koridor · Mamac kroz igru",
-      "blurb": "Točkovi nagrade koji uvek donose dobitak. Dokaži da su namešteni da bi prošao/la.",
+      "blurb": "Two wheels with tempting offers. Investigate how each tries to influence you.",
       "kind": "koridor"
     },
     "influencer-avenue": {
@@ -332,14 +338,15 @@ export default {
     "titleLead": "Dobro došao/la u",
     "titleAccent": "FIZIČKI INTERNET",
     "friendLine": "U redu — imaš {minuta} minuta da me ubediš da je ova ponuda prevara. Ako odbrojavanje stigne do nule, kupiću {proizvod}.",
-    "playerLine": "Uspeli smo. Ovo je Fizički internet. Hajde da pokažemo Maksu kako je ova ponuda osmišljena da ga prevari",
+    "playerLine": "We made it. This is the Physical Internet. Let's uncover how this deal was built to fool {friend}.",
     "toolsTitle": "Prvo, oprema",
     "toolsIntro": "Dve stvari putuju sa tobom svuda po ovom prostoru. Naći ćeš ih u traci na vrhu ekrana.",
     "clock": "⏱ {minuta}:00 počinje onog trenutka kada krenemo da hodamo",
     "mission": "Prođi kroz okruge, prikupi dokaze o tome kako prevara funkcioniše i vrati se do {prijatelja} pre nego što ponuda istekne.",
     "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga — završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
     "bagText": "Tvoji alati i dokazi koje prikupiš. Otvori ih da bi koristio/la predmete u zagonetkama i pregledao/la dokaze koje ćeš pokazati {prijatelju}.",
-    "start": "▶ Odbrojavanje počinje"
+    "start": "▶ Odbrojavanje počinje",
+    "finalLine": "Ready? The timer starts as soon as you open the map."
   },
   "hints": {
     "title": "Saveti za misiju",
@@ -351,7 +358,7 @@ export default {
       "pretest": "Pročitaj ponudu pre nego što uđeš u mrežu",
       "map": "Izaberi sledeći okrug u nizu dokaza",
       "room": "Reši zagonetku u okrugu i zabeleži šta si otkrio/la",
-      "posttest": "Iskoristi dokaze da zaštitiš Maksa",
+      "posttest": "Use your evidence to protect {friend}",
       "win": "Igra završena: pogledaj šta te je zaštitilo",
       "lose": "Vreme je isteklo: pogledaj znakove upozorenja"
     },
@@ -370,11 +377,11 @@ export default {
     "objectives": {
       "pretest": {
         "title": "Završi razgovor pre testa",
-        "text": "Pročitaj Maksovu poruku, izaberi odgovor koji najbolje opisuje tvoj prvi utisak i pritisni završno dugme da uđeš u Fizički internet."
+        "text": "Read the message from {friend}, choose the response that best explains your first impression, and use the final button to enter the Physical Internet."
       },
       "posttest": {
         "title": "Donesi konačnu odluku",
-        "text": "Iskoristi prikupljene dokaze da objasniš znakove upozorenja i odlučiš da li Maks treba da zatvori karticu."
+        "text": "Use the evidence you collected to explain the warning signs and decide whether {friend} should close the tab."
       }
     },
     "pretest": {
@@ -404,7 +411,7 @@ export default {
       ]
     },
     "posttest": {
-      "context        ": "Iskoristi ono što si otkrio/la da pomogneš prijatelju da donese konačnu odluku.",
+      "context": "Iskoristi ono što si otkrio/la da pomogneš prijatelju da donese konačnu odluku.",
       "prompts": [
         "Ne znam kako da razlikujem stvarne dokaze od uverljivih ukrasa.",
         "Ne znam koji znakovi upozorenja su najvažniji.",
@@ -497,7 +504,7 @@ export default {
         "items": [
           "Zavrtite trenutni točak najmanje dva puta. Da li se stalno zaustavlja na istom polju? Uporedi rezultate prikazane pored njega.",
           "Možeš da nastaviš da vrtiš točak pre nego što doneseš odluku. Ponavljanje istog rezultata je znak koji treba istražiti, ali može se desiti i slučajno.",
-          "Izaberi „Namešten“ ili „Nije namešten“, a zatim odaberi razlog koji odgovara tvojim zapažanjima. Pročitaj povratnu informaciju i pređi na sledeći točak."
+          "Choose Rigged or Not rigged. Read each explanation, then finish both wheels."
         ]
       }
     },
@@ -663,30 +670,27 @@ export default {
       "spin": "🎰 Vrti",
       "spinning": "Vrtenje…",
       "investigation": {
-        "intro": "Zavrti svaki točak. Prepoznaj tehniku i objasni svoj izbor.",
-        "wheelProgress": "Točak {n} / {ukupno}",
+        "intro": "Spin each wheel twice. Is it rigged or not rigged?",
+        "wheelProgress": "Točak {n} / {total}",
         "solvedTitle": "Koridor završen — tvrdnje proverene",
         "spinAgain": "Zavrti ponovo",
-        "solvedText": "Uporedio/la si ponovljena vrtenja, objasnio/la svoje sumnje i otkrio/la kako je svaki točak funkcionisao.",
-        "evidence": "Namešteni točkovi mogu koristiti uslovne kupone kako bi te naveli da potrošiš više ili obećanja o novoj šansi kako bi te zadržali u igri duže.",
-        "result": "Rezultat: {rezultat}",
+        "solvedText": "You spotted both rigged wheels. Take your evidence to the next district.",
+        "evidence": "Game-like rewards and the feeling of being lucky can make you keep playing and spend more.",
+        "result": "Rezultat: {result}",
         "historyLabel": "Vrtenja: {n} · Najnoviji rezultati:",
         "verdicts": {
           "rigged": "Namešten",
           "fair": "Nije namešten"
         },
-        "reasonLabel": "Koje objašnjenje odgovara ovoj ponudi?",
-        "retry": "Probaj još jedno vrtenje i uporedi rezultate. Možeš promeniti svoju odluku. Ponavljanje istih rezultata može se desiti i slučajno.",
-        "correct": "Slučaj objašnjen",
+        "retry": "Not quite. Look at the results and try again.",
+        "correct": "Correct! This wheel is rigged.",
         "next": "Sledeći točak →",
         "finish": "Zabeleži dokaz ✓",
-        "observe": "Zavrti najmanje {broj} puta. Da li se stalno zaustavlja na istom polju ili se rezultati menjaju? Možeš ponovo da zavrtiš ako nisi siguran/na.",
+        "observe": "Zavrti najmanje {count} puta. Da li se stalno zaustavlja na istom polju ili se rezultati menjaju? Možeš ponovo da zavrtiš ako nisi siguran/na.",
         "shop": {
           "badge": "MEGA VRTEŠKA · PRODAVNICA",
           "title": "Osvojio/la si kupon za popust!",
-          "coupon": "50% POPUSTA",
-          "terms": "Da bi dodao/la kupon na svoj nalog, prvo moraš da obaviš kupovinu od najmanje €{iznos}. Tvoj popust od 50% biće dostupan za neku narednu kupovinu.",
-          "reminder": "Ponuda prodavnice: prvo potroši najmanje €{iznos} da bi otključao/la kupon za neku narednu kupovinu."
+          "coupon": "50% POPUSTA"
         },
         "retryBait": "„Ovog puta nema nagrade! Nastavi da vrtiš — sledeći pokušaj mogao bi da bude veliki dobitak!“",
         "wheels": {
@@ -703,32 +707,7 @@ export default {
               "Nema nagrade"
             ],
             "rules": "Vrti da otključaš kupon za popust — do 50% popusta!",
-            "feedback": "Ovaj točak je namešten: programiran je tako da se svaki put zaustavi na kuponu od 50%. Ostali popusti su samo ukras, zbog čega fiksna ponuda izgleda kao dobitak zahvaljujući sreći. Zatim moraš da obaviš jednu kupovinu da bi otključao/la kupon, a drugu da bi ga iskoristio/la. Cilj je da potrošiš više.",
-            "options": {
-              "wonOnce": "Kupon mi daje 50% popusta na kupovinu potrebnu da bih ga otključao/la.",
-              "forcedOffer": "Navodi me da jednom kupim nešto da bih otključao/la kupon, a zatim ponovo da kupim nešto da bih ga iskoristio/la.",
-              "colours": "Mogu da dodam kupon na svoj nalog bez ikakve kupovine."
-            }
-          },
-          "w2": {
-            "name": "SREĆNI TOČAK",
-            "segments": [
-              "1 novčić",
-              "2 novčića",
-              "3 novčića",
-              "4 novčića",
-              "5 novčića",
-              "6 novčića",
-              "10 novčića",
-              "Nema nagrade"
-            ],
-            "rules": "Besplatno vrtenje! Okušaj sreću i osvoji do 10 novčića u igri.",
-            "feedback": "Ponuda predstavlja šansu da osvojiš do 10 novčića u igri, a ne obećanje da ćeš svaki put dobiti 10 novčića niti novac koji možeš podići. Manje nagrade i vidljivo polje bez nagrade odgovaraju toj ponudi. Ovaj simulirani točak bira nasumično; nekoliko vrtenja samo po sebi ne bi dokazalo da je pravi točak pošten.",
-            "options": {
-              "equalChance": "Nudi šansu da osvojiš do 10 novčića u igri, pa manje nagrade ili izostanak nagrade odgovaraju ponudi.",
-              "smallPrize": "Svako besplatno vrtenje trebalo bi da mi donese oglašenih 10 novčića.",
-              "different": "Novčići koje osvojim mogu se podići kao pravi novac."
-            }
+            "feedback": "Gamification means using game elements, like points, rewards or spinning wheels, in things that aren't really games. Apps and online shops use it to make buying feel fun, so you stay longer and spend more without noticing. That's exactly what these wheels are doing."
           },
           "w3": {
             "name": "ZLATNA GROZNICA",
@@ -743,36 +722,13 @@ export default {
               "Nema nagrade"
             ],
             "rules": "Osvoji telefon, laptop ili do 100 € — zavrti točak!",
-            "feedback": "Ovaj točak namešta rezultat na „Nema nagrade“, a zatim te mami novom šansom. Cilj je da nastaviš da trošiš vreme na igru. Na sajtu sa oglasima, to može značiti da vidiš više oglasa. Novo vrtenje te ne približava dobitku: na ovom simuliranom točku nagrade se ne mogu dobiti.",
-            "options": {
-              "lostOnce": "Sedam polja sa nagradama garantuju da ću dobiti nagradu u roku od osam vrtenja.",
-              "expensive": "Svaki gubitak čini da je sledeće vrtenje verovatnije dobitno sa velikom nagradom.",
-              "forcedLoss": "Stalno mi ne daje ništa, dok koristi velike nagrade i „pokušaj ponovo“ da bi me zadržao u igri."
-            }
-          },
-          "w4": {
-            "name": "BONUS DOBITAK",
-            "segments": [
-              "1 poen",
-              "2 poena",
-              "3 poena",
-              "4 poena",
-              "8 poena",
-              "5 poena",
-              "6 poena",
-              "Nema nagrade"
-            ],
-            "rules": "Tvoje besplatno bonus vrtenje: osvoji do 8 poena u igri!",
-            "feedback": "Ponuda se odnosi na poene u igri, a ne na novac ili popust pri kupovini. Osam je najveća nagrada; na točku su prikazani i manji iznosi i polje bez nagrade. Ovo simulirano izvlačenje je nasumično. Pobeda ili gubitak u nekoliko vrtenja ne dokazuje da li je stvarno izvlačenje pošteno.",
-            "options": {
-              "manyPrizes": "Ovi poeni mi daju popust pri sledećoj kupovini.",
-              "honestLoss": "Ponuda se odnosi na poene u igri, a točak jasno uključuje i ishod bez nagrade.",
-              "lostOnce": "„Do 8 poena“ znači da moram dobiti najmanje 8 poena."
-            }
+            "feedback": "Small prizes and discounts make you feel lucky. But that little win is bait: you can end up spending more than you save. Feeling lucky also keeps you spinning for the next prize. The wheel was rigged all along: the feeling of luck is the hook."
           }
         },
         "debugSkip": "Прескочи рулете (debug)"
-      }
+      },
+      "solvedTitle": "Roulette Corridor cleared",
+      "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked."
     },
     "influencer": {
       "intro": "Neonska avenija bilborda i fidova influensera. Pogledaj iza sjaja: označi sponzorisane objave, a zatim proveri šta su proizvodi zapravo.",
@@ -877,7 +833,7 @@ export default {
         },
         {
           "caption": "So incredibly proud to share this collaboration with @The_Local_Stitch. We’ve been developing this limited-run handmade garment for months. Every piece is unique and supports local artisans. Use code LOCAL_CLARA for 15% off and first access to the drop. Link in bio.",
-          "product": "Handmade patchwork quilted jacket",
+          "product": "Handmade jacket",
           "username": "ClaraSees",
           "followers": "312K ",
           "comments": [
@@ -1035,7 +991,7 @@ export default {
       "evidence": "Oglas je algoritam odabrao na osnovu godina, interesovanja i nesigurnosti {prijatelja}.",
       "unlock": {
         "badge": "PRISTUP · Kontrolna soba algoritma",
-        "prompt": "Unesi šestocifreni kod.",
+        "prompt": "Open the backpack and select the Data Report on {friend}. Enter the six highlighted digits.",
         "error": "Pristup odbijen — taj kod nije ispravan.",
         "submit": "Otključaj →"
       },
@@ -1072,10 +1028,10 @@ export default {
         "profileTitle": "▚ PROFIL REKONSTRUISAN ▚",
         "profileP1": "Mehanizam je ukrstio",
         "profileB1": "godine {prijatelja}",
-        "profileP2": "(tinejdžer),",
-        "profileB2": "njegova interesovanja",
-        "profileP3": "(igrice, nova tehnologija, NovaPad X koji stalno pretražuje) i",
-        "profileB3": "njegove nesigurnosti",
+        "profileP2": "(a teenager),",
+        "profileB2": "interests",
+        "profileP3": "(gaming, new tech and searches for the NovaPad X) and",
+        "profileB3": "insecurities",
         "profileP4": "(uklapanje, strah da će propustiti ponudu). Rezultat je bio jedan savršeno ciljani oglas — upravo ona ponuda za NovaPad X „90% popusta“. Nije slučajno što je {prijatelj} video taj oglas.",
         "logEvidence": "Zabeleži ovaj dokaz ✓",
         "finalLessonTitle": "Ono što si naučio/la",
@@ -1141,10 +1097,10 @@ export default {
         "t-teeth": "Zabrinut zbog svojih zuba"
       },
       "report": {
-        "modalTitle": "Izveštaj podataka · Maksov profil",
+        "modalTitle": "Data Report · Profile: {friend}",
         "kicker": "KONTROLNA SOBA ALGORITMA",
-        "title": "Zapisnik ciljanih oglasa: MAX",
-        "subject": "Subjekat: Maksove aktivnosti na internetu",
+        "title": "Targeted Ad Profile Log: {friend}",
+        "subject": "Online activity · Subject: {friend}",
         "instruction": "Pregledaj aktivnosti u nastavku da vidiš kako je algoritam učio.",
         "columns": {
           "time": "VREME",
@@ -1196,7 +1152,7 @@ export default {
       },
       "door": {
         "badge": "Kontrolna soba · Zapečaćena",
-        "prompt": "Kontrolna soba algoritma je zaključana. Na vratima se nalazi tastatura — priđi joj i unesi šestocifreni kod iz svog Izveštaja o podacima.",
+        "prompt": "The Algorithm Control Room is locked. Open the backpack and select the Data Report on {friend}. Find the six highlighted digits, then use the keypad to enter the code.",
         "action": "Koristi tastaturu →"
       }
     },

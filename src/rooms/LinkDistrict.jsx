@@ -636,12 +636,12 @@ export default function LinkDistrict({ node }) {
 
       {phase === 'justify' && (
         <div className="ld-justify fade-in">
-          <div className="learn">
+          <div className="learn t-sm">
             <b>{t('rooms.link.justifyLeadLabel')}</b> {t('rooms.link.justifyLead')}
           </div>
           <div className="ld-flags">
             {FLAG_IDS.map((id) => (
-              <label key={id} className={`ld-flag ${flags[id] ? 'on' : ''}`}>
+              <label key={id} className={`ld-flag t-sm ${flags[id] ? 'on' : ''}`}>
                 <input type="checkbox" checked={!!flags[id]} onChange={() => toggleFlag(id)} />
                 <span className="ld-check" />
                 <span className="ld-flag-icon"><FlagIcon id={id} /></span>

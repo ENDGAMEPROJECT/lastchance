@@ -203,7 +203,7 @@ export default function RouletteCorridor({ node }) {
               </>
             ) : (
               <>
-                {!verdictCorrect && <p className="rc-observe">{t('rooms.roulette.investigation.observe', { count: MIN_SPINS })}</p>}
+                {!verdictCorrect && <p className="game-prompt rc-observe">{t('rooms.roulette.investigation.observe', { count: MIN_SPINS })}</p>}
                 {results.length > 0 && wheel.minimumPurchase && !shopOpen && <p className="rc-sales-message">{t('rooms.roulette.investigation.shop.reminder', { amount: wheel.minimumPurchase })}</p>}
                 {results.length > 0 && (
                   <div className="rc-history">
