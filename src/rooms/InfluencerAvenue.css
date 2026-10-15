@@ -60,6 +60,7 @@
 .ia-explain-body { margin: 0; color: var(--text); font-size: 0.92rem; line-height: 1.4; max-width: 560px; }
 
 .ia-explain-body { font-size: 0.84rem; }
+.ia-explain-instructions { font-size: 0.84rem; color: var(--muted); line-height: 1.4; max-width: 560px; margin: 0 auto; }
 .ia-explain-uses {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -670,6 +671,16 @@ button.ia-view-publication {
   transition: transform 0.15s ease, border-color 0.2s, box-shadow 0.2s;
 }
 .ia-imgtile-drag:not(.dnd-disabled):hover .ia-imgtile { transform: translateY(-3px); }
+.ia-imgtile { isolation: isolate; }
+.ia-imgtile-art {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
 .ia-imgtile-drag.shown .ia-imgtile { border-color: var(--purple); box-shadow: var(--glow-purple), inset 0 0 22px rgba(0, 0, 0, 0.35); }
 .ia-imgtile-emoji { font-size: 1.7rem; filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45)); }
 .ia-imgtile-name { 
@@ -678,7 +689,7 @@ button.ia-view-publication {
   padding: 3px 6px; 
   border-radius: 4px;
   line-height: 1.1; 
-  font-size: 0.9rem;
+  font-size: 0.83rem;
   background: rgba(50, 5, 73, 0.712)
 
 }
@@ -762,7 +773,7 @@ button.ia-view-publication {
 .ia-stampmaker.held { border-color: var(--purple); background: rgba(160, 90, 255, 0.16); box-shadow: var(--glow-purple); } /* selected / in hand */
 .ia-stampmaker.ia-stamp-mass.inked { border-color: var(--red); }
 .ia-stampmaker.ia-stamp-ai.inked { border-color: var(--amber); }
-.ia-stampmaker.ia-stamp-legit.inked { border-color: var(--green); }
+.ia-stampmaker.ia-stamp-verified.inked { border-color: var(--green); }
 /* A little rubber-stamp icon: knob handle + neck + inked base. */
 .ia-stampmaker-face {
   position: relative;
@@ -807,16 +818,16 @@ button.ia-view-publication {
 /* handle colour matches the verdict */
 .ia-stamp-mass .ia-stampmaker-face::before { background: linear-gradient(180deg, #ff7387, #c23a52); }
 .ia-stamp-ai .ia-stampmaker-face::before { background: linear-gradient(180deg, #ffd27a, #c99a2a); }
-.ia-stamp-legit .ia-stampmaker-face::before { background: linear-gradient(180deg, #6bffab, #2ac96a); }
+.ia-stamp-verified .ia-stampmaker-face::before { background: linear-gradient(180deg, #6bffab, #2ac96a); }
 /* the verdict's emblem, pushed to the far right of the stamp-maker */
 .ia-stampmaker-icon { width: 26px; height: 26px; flex: none; margin-left: auto; }
 .ia-stampmaker.ia-stamp-mass .ia-stampmaker-icon { color: var(--red); }
 .ia-stampmaker.ia-stamp-ai .ia-stampmaker-icon { color: var(--amber); }
-.ia-stampmaker.ia-stamp-legit .ia-stampmaker-icon { color: var(--green); }
+.ia-stampmaker.ia-stamp-verified .ia-stampmaker-icon { color: var(--green); }
 .ia-stamp-label {
   font-family: var(--font-ui);
   font-weight: 500;
-  font-size: 0.76rem;
+  font-size: 0.9rem;
   letter-spacing: 0;
   color: #eef3ff;
 }
@@ -864,12 +875,12 @@ button.ia-view-publication {
 }
 .ia-stamp-mark.ia-stamp-mass { color: var(--red); border-color: var(--red); background: rgba(255, 59, 92, 0.14); }
 .ia-stamp-mark.ia-stamp-ai { color: var(--amber); border-color: var(--amber); background: rgba(255, 185, 43, 0.14); }
-.ia-stamp-mark.ia-stamp-legit { color: var(--green); border-color: var(--green); background: rgba(43, 255, 136, 0.14); }
+.ia-stamp-mark.ia-stamp-verified { color: var(--green); border-color: var(--green); background: rgba(43, 255, 136, 0.14); }
 /* The emblem above the verdict word. */
 .ia-stamp-icon { width: 34px; height: 34px; flex: none; overflow: visible; }
 .ia-stamp-mark.ia-stamp-mass .ia-stamp-icon { filter: drop-shadow(0 0 2px #3d0010) drop-shadow(0 0 5px #3d0010); }
 .ia-stamp-mark.ia-stamp-ai .ia-stamp-icon { filter: drop-shadow(0 0 2px #3d2800) drop-shadow(0 0 5px #3d2800); }
-.ia-stamp-mark.ia-stamp-legit .ia-stamp-icon { filter: drop-shadow(0 0 2px #00351a) drop-shadow(0 0 5px #00351a); }
+.ia-stamp-mark.ia-stamp-verified .ia-stamp-icon { filter: drop-shadow(0 0 2px #00351a) drop-shadow(0 0 5px #00351a); }
 /* A dark halo in the stamp's own tone keeps the ink readable over photos. */
 .ia-stamp-mark.ia-stamp-mass {
   text-shadow: 0 0 2px #3d0010, 0 0 4px #3d0010, 0 0 8px #3d0010, 0 0 14px #3d0010, 0 0 24px rgba(61, 0, 16, 0.85);
@@ -879,7 +890,7 @@ button.ia-view-publication {
   text-shadow: 0 0 2px #3d2800, 0 0 4px #3d2800, 0 0 8px #3d2800, 0 0 14px #3d2800, 0 0 24px rgba(61, 40, 0, 0.85);
   box-shadow: 0 0 6px 2px rgba(61, 40, 0, 0.95), 0 0 20px 6px rgba(61, 40, 0, 0.75), inset 0 0 8px 2px rgba(61, 40, 0, 0.9), inset 0 0 20px 4px rgba(61, 40, 0, 0.65);
 }
-.ia-stamp-mark.ia-stamp-legit {
+.ia-stamp-mark.ia-stamp-verified {
   text-shadow: 0 0 2px #00351a, 0 0 4px #00351a, 0 0 8px #00351a, 0 0 14px #00351a, 0 0 24px rgba(0, 53, 26, 0.85);
   box-shadow: 0 0 6px 2px rgba(0, 53, 26, 0.95), 0 0 20px 6px rgba(0, 53, 26, 0.75), inset 0 0 8px 2px rgba(0, 53, 26, 0.9), inset 0 0 20px 4px rgba(0, 53, 26, 0.65);
 }
@@ -955,6 +966,8 @@ button.ia-view-publication {
   background-position: center;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
 }
+.ia-engine-chip { overflow: hidden; }
+.ia-engine-chip-art { display: block; width: 100%; height: 100%; object-fit: cover; }
 .ia-engine-ph { flex: 1; min-width: 0; color: var(--muted); font-size: 0.86rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
 .ia-engine-icon { flex: none; font-size: 1.1rem; color: var(--purple); animation: ia-bob 1.8s ease-in-out infinite; }
 .reduced-motion .ia-engine-icon { animation: none; }
@@ -1067,7 +1080,7 @@ grid-template-columns: 1fr 1fr 1fr;
   background: #232229;
   margin-bottom: 3px;
 }
-.ia-match-site { display: flex; align-items: center; gap: 5px; min-width: 0; font-size: 0.68rem; color: #c9c9d1; }
+.ia-match-site { display: flex; align-items: center; gap: 5px; min-width: 0; font-size: 0.68rem; color: #b7b7c0; }
 .ia-match-fav {
   flex: none;
   width: 13px;
@@ -1082,9 +1095,9 @@ grid-template-columns: 1fr 1fr 1fr;
   color: #fff;
   background: var(--purple);
 }
-.ia-match-site-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ia-match-site-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.85rem;}
 .ia-match-title {
-  font-size: 0.74rem;
+  font-size: 0.85rem;
   line-height: 1.25;
   color: var(--text);
   display: -webkit-box;
@@ -1290,3 +1303,140 @@ grid-template-columns: 1fr 1fr 1fr;
   70% { left: 476px; top: 103px; }
   100% { left: 476px; top: 116px; }
 }
+
+/* ---------- Product art: photo + translatable ad copy as ONE picture ----------
+   Coordinates are in the art's own w×h box (see ProductArt), so the text
+   keeps its place and size wherever the picture is shown or dragged. */
+.ia-art { display: block; }
+.ia-art-copy { position: relative; pointer-events: none; }
+.ia-art-copy > span { position: absolute; white-space: nowrap; }
+.ia-art-old {
+  font-family: 'Open Sans', var(--font-neogrotesk);
+  font-size: 35px;
+  line-height: 1;
+  letter-spacing: -0.5px;
+  color: rgba(236, 230, 244, 0.85);
+}
+/* the slanted red strike across the old price */
+.ia-art-old::after {
+  content: '';
+  position: absolute;
+  left: -3%;
+  right: -3%;
+  top: 52%;
+  height: 3px;
+  background: #e2554b;
+  transform: rotate(-21deg);
+}
+.ia-art-price {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 66px;
+  line-height: 1;
+  color: #ffff00;
+  text-shadow: -4px -4px 0 #ff00e1, 4px 4px 0 #19f2ff;
+}
+.ia-art-urgency {
+  white-space: normal !important;
+  font-family: 'Open Sans', var(--font-neogrotesk);
+  font-size: 31px;
+  line-height: 1.07;
+  letter-spacing: -0.5px;
+  color: #fff;
+}
+.ia-art-emoji { font-size: 37px; line-height: 1; letter-spacing: 3px; }
+
+/* Ceramic mug: kraft hang-tag price + hand-lettered caption */
+.ia-art-tag {
+  padding: 7px 14px 7px 26px;
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1;
+  color: #4a2e1c;
+  background: #f3e3c6;
+  border: 1.5px solid #c9a77c;
+  border-radius: 5px 12px 12px 5px;
+  box-shadow: 0 3px 10px rgba(60, 35, 15, 0.35);
+}
+/* the punched string hole */
+.ia-art-tag::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: #8a6a4a;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+.ia-art-handmade {
+  white-space: normal !important;
+  font-family: var(--font-script);
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.02;
+  text-align: right;
+  color: #261d1d;
+  text-shadow: 0 2px 6px rgba(255, 254, 253, 0.75), 0 0 2px rgba(249, 246, 245, 0.6);
+}
+
+/* Price chip on a reverse-search result photo (Lens-style), top-left corner */
+.ia-match-media { position: relative; display: block; }
+.ia-match-price {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px 3px 6px;
+  border-radius: 999px;
+  background: #fff;
+  color: #202124;
+  font-family: var(--font-neogrotesk);
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1.2;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.ia-match-price img { width: 12px; height: 12px; display: block; }
+
+/* Bluetooth speaker: yellow sale sticker, black bold-italic grotesk, half-size decimals */
+.ia-art-sale {
+  padding: 4px 10px 5px 8px;
+  font-family: var(--font-neogrotesk);
+  font-size: 82px;
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: -1px;
+  color: #000;
+  background: #ffd800;
+}
+.ia-art-sale small { font-size: 0.4em; vertical-align: 0.82em; letter-spacing: 0; }
+
+/* Big red warning text over a result photo (e.g. the "FAKE!!!" debunk article) */
+.ia-match-overlay {
+  position: absolute;
+  inset: 0 0 3px; /* the photo, not its 3px bottom margin */
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  padding: 30px 6px;
+  text-align: center;
+  font-family: var(--font-neogrotesk);
+  font-size: 2.3rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #ff1f1f;
+  text-shadow: 3px 3px 4px #000, -1px -1px 0 #000, 1px -1px 3px #000, -1px 1px 3px #000, 0 0 10px rgba(0, 0, 0, 0.6);
+  background: rgba(255, 0, 0, 0.22); /* low-opacity red wash over the photo */
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+/* a result that is the seller's own ad (ProductArt) clips to the photo's rounded corners */
+svg.ia-match-img { overflow: hidden; height: auto; }

@@ -10,7 +10,8 @@ export default {
     "cleared": "✓ Cleared",
     "enterNode": "▶ Enter",
     "back": "Back",
-    "close": "Close"
+    "close": "Close",
+    "howToPlay": "How to play:"
   },
   "welcome": {
     "eyebrow": "Player Setup",
@@ -345,7 +346,6 @@ export default {
     "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
     "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
-    "start": "▶ Countdown begins",
     "finalLine": "Ready? The timer starts as soon as you open the map."
   },
   "hints": {
@@ -834,7 +834,7 @@ export default {
         },
         {
           "caption": "So incredibly proud to share this collaboration with @The_Local_Stitch. We’ve been developing this limited-run handmade garment for months. Every piece is unique and supports local artisans. Use code LOCAL_CLARA for 15% off and first access to the drop. Link in bio.",
-          "product": "Handmade jacket",
+          "product": "Handmade patchwork quilted jacket",
           "username": "ClaraSees",
           "followers": "312K ",
           "comments": [
@@ -874,7 +874,7 @@ export default {
         "runSearch": "🔍 Run reverse image search",
         "engineBar": "reverse-image-search.io",
         "engineDrop": "Drag a product image here to reverse-search it",
-        "trayLabel": "Your saved images — drag one into the search engine →",
+        "trayLabel": "Your saved product images ",
         "classifyPrompt": "So this product is…",
         "searching": "Searching the web",
         "matchesTitle": "Web matches found",
@@ -887,69 +887,114 @@ export default {
         "hint": "Search first, then classify all three.",
         "confirm": "Confirm classifications →",
         "stampHere": "Stamp here",
-        "removeStamp": "✕ Remove stamp"
+        "removeStamp": "Remove stamp"
       },
       "products": [
         {
-          "name": "“Handmade ceramic mug”",
+          "name": "Handmade ceramic mug",
+          "art": {
+            "price": "18,99 €",
+            "label": "Handmade artisan"
+          },
           "matches": [
             {
               "site": "aliluxe-deals.shop",
-              "title": "Ceramic Coffee Mug — bulk 500 pcs"
+              "title": "Ceramic Coffee Mug — bulk 500 pieces",
+              "price": "€417,84*"
             },
             {
               "site": "dropmart.store",
-              "title": "“Handmade” Mug · wholesale lot"
+              "title": "“Handmade” Mug · wholesale lot",
+              "price": "€1.65*"
             },
             {
               "site": "quickship-goods.net",
-              "title": "Artisan-style mug (factory direct)"
+              "title": "Rustic Ceramic Cup — Wholesale Price",
+              "price": "-"
+            },
+            {
+              "site": "artisanhome.com",
+              "title": "Artisan mug, made with love ♥︎ Support artisans!",
+              "price": "-"
+            },
+            {
+              "site": "homestylewholesale.net",
+              "title": "Ceramic Mug Model CM-204 — $0.95/unit",
+              "price": "€0.95*"
             },
             {
               "site": "mega-bazaar.shop",
-              "title": "Same photo — €1.90 / unit"
-            },
-            {
-              "site": "directmugs.net",
-              "title": "Ceramic Mug Model CM-204 — $0.95/unit"
+              "title": "Cheap ceramic mugs — €1.90 / unit",
+              "price": "€1,90*"
             }
           ],
-          "result": "1,240+ identical listings on 12 dropshipping sites.",
-          "hint": "The exact same photo appears on dozens of cheap stores."
+          "result": "Over 1,240 listings show the exact same product. ",
+          "hint": "It's also sold in large quantities at a much lower price."
         },
         {
-          "name": "“NovaPad X” promo shot",
+          "name": "NovaPad X promo shot",
+          "art": {
+            "price": "49€",
+            "urgency": "Be quick! Offer ends in limited time!",
+            "oldPrice": "600€",
+            "fake": "FAKE!!!"
+          },
           "matches": [
             {
-              "site": "thisdevicedoesnotexist.ai",
-              "title": "Generated device render · SDXL"
+              "site": "fullfact.org",
+              "title": "NovaPad X: Is This Viral Tablet Deal Too Good to Be True?"
             },
             {
               "site": "promptgallery.art",
               "title": "Sci-fi tablet — AI artwork"
+            },
+            {
+              "site": "lunawear.com-official.shop/",
+              "title": "Limited Time Offer - NovaPad Sponsored By LunaWears For Only $49"
+            },
+            {
+              "site": "fakedetector-ads-news.org",
+              "title": "IT'S FAKE! - Be careful with the NovaPad X supposedly sponsored by LunaWears"
+            },
+            {
+              "site": "mediamarket.shop",
+              "title": "Sumsang Tablet - Last generation tablets for €619,99 ",
+              "price": "€619,99*"
+            },
+            {
+              "site": "reconditioning-tech.com",
+              "title": "Tablets, Laptops and Phones / Sumsang 8",
+              "price": "€610,15*"
             }
           ],
-          "result": "0 retail listings — image traced to AI generators.",
-          "hint": "Only AI-art sites match. This photo was never a real product."
+          "result": "Image traced to AI generators. Disinformation agencies uploaded this image.",
+          "hint": "3 retail listings with great difference in prices."
         },
         {
           "name": "Bluetooth Speaker B766",
+          "art": {
+            "price": "89,95€"
+          },
           "matches": [
             {
               "site": "technmore.com",
-              "title": "Bluetooth Speaker B766 - Tech & More"
+              "title": "Bluetooth Speaker B766 - Tech & More",
+              "price": "€89,95*"
             },
             {
               "site": "soundgear.net",
-              "title": "Best Speakers Better Prices"
+              "title": "Best Speakers Better Prices",
+              "price": "€85,99*"
             },
             {
               "site": "everydayelectronics.com",
-              "title": "Indoor/Outdoor Speakers / B766"
+              "title": "Indoor/Outdoor Speakers / B766 - 89,95€ + shipping",
+              "price": "-"
             },
             {
               "site": "soundhub.com",
-              "title": "Speaker B766, Bluetooth, 12hr battery"
+              "title": "Speaker B766, Bluetooth, 12hr battery",
+              "price": "€95,45*"
             }
           ],
           "result": "At least 4 stores have this product",
@@ -959,7 +1004,7 @@ export default {
       "classify": {
         "mass": "Mass-produced",
         "ai": "AI-generated",
-        "legit": "Verified"
+        "verified": "Verified"
       },
       "decoder": {
         "title": "🔑 Emoji Decoding Card",
@@ -971,6 +1016,7 @@ export default {
       "explain": {
         "title": "Besides the ad — what about the product?",
         "body": "You've spotted how these posts are packaged. But is the product itself what they claim? A reverse image search helps you check: instead of typing words, you search with a photo, and it finds everywhere that exact picture appears online.",
+        "instructions": "First reverse search the image. Then, look at the results to judge the product's authenticity.",
         "useShop": "Love a piece of clothing you saw in a post? Reverse-search the photo to find where you can actually buy it.",
         "useVerify": "Not sure an influencer's product is genuine? Reverse-search it to see if it's really unique — or the same mass-produced item everyone's selling.",
         "searchLabel": "reverse image search",
@@ -1001,7 +1047,7 @@ export default {
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",
-        "prompt": "Open the backpack and select the Data Report on {friend}. Enter the six highlighted digits.",
+        "prompt": "Enter the six-digit code.",
         "error": "Access denied — that code is wrong.",
         "submit": "Unlock →"
       },
@@ -1162,7 +1208,7 @@ export default {
       },
       "door": {
         "badge": "Control Room · Sealed",
-        "prompt": "The Algorithm Control Room is locked. Open the backpack and select the Data Report on {friend}. Find the six highlighted digits, then use the keypad to enter the code.",
+        "prompt": "The Algorithm Control Room is locked. Find the six highlighted digits, then use the keypad to enter the code.",
         "action": "Use the keypad →"
       }
     },

@@ -109,14 +109,29 @@ const ASSET_IMAGES = [
   // Ending art.
   'ending/player-won.png',
   // Product art + reverse-image-search result variants.
-  'products/cupcakes.png',
-  'products/cupcakes1.png',
-  'products/cupcakes2.png',
-  'products/cupcakes3.png',
+  'products/logo-booble.png',
   'products/mug.png',
+  'products/mug1.png',
+  'products/mug2.png',
+  'products/mug3.png',
+  'products/mug4.png',
   'products/novapad.png',
-  'products/novapad1.png',
-  'products/novapad2.png',
+  'products/novapad-bg.jpg',
+  'products/novapad4.png',
+  'products/speaker.png',
+  'products/speaker1.png',
+  'products/speaker2.png',
+  'products/speaker3.png',
+  'products/speaker4.png',
+  'products/speaker5.png',
+  'products/shoes.png',
+  'products/shoes1.png',
+  'products/shoes2.png',
+  'products/shoes3.png',
+  'products/shoes4.png',
+  'products/shoes5.png',
+  // UI icons.
+  'icons/price-tag.svg',
 ]
 
 /* Videos (paths under public/). Each gets ONE shared <video> element, created

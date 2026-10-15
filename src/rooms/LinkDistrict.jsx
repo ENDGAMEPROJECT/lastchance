@@ -637,7 +637,7 @@ export default function LinkDistrict({ node }) {
       {phase === 'justify' && (
         <div className="ld-justify fade-in">
           <div className="learn t-sm">
-            <b>{t('rooms.link.justifyLeadLabel')}</b> {t('rooms.link.justifyLead')}
+            <b className="lead-label">{t('rooms.link.justifyLeadLabel')}</b> {t('rooms.link.justifyLead')}
           </div>
           <div className="ld-flags">
             {FLAG_IDS.map((id) => (

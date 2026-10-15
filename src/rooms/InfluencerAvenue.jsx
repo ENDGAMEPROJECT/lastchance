@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useGame } from '../game/GameContext.jsx'
 import { ITEMS, EMOJI_KEY, encodeWord } from '../game/gameData.js'
-import { bgUrl } from '../game/assets.js'
+import { bgUrl, assetUrl } from '../game/assets.js'
 import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
 import { useI18n, useT } from '../i18n/index.jsx'
@@ -16,7 +16,7 @@ import './InfluencerAvenue.css'
                 (PAID / COLLAB / GIFTED) into the selected post using the
                 Emoji Decoding Card earned in Link District.
      'verify' → run a SIMULATED reverse image search on three products,
-                then classify each (mass-produced fake / AI-generated / legit).
+                then classify each (mass-produced fake / AI-generated / verified).
    Reward: the Data Report on Max (its digits open the Algorithm Room).
 
    Structural data (handles, hues, correctLabel answer keys, verdicts) lives
@@ -68,6 +68,17 @@ const PRODUCTS = [
   {
     id: 'mug',
     seller: 'artisan_clay_co',
+    art: {
+      // rooms.influencer.products.0.art — tag sits in the blurred top-right corner,
+      // the caption over the paint palette, clear of the girl and the mug.
+      bg: 'mug.png',
+      w: 480,
+      h: 480,
+      layers: [
+        { key: 'price', className: 'ia-art-tag', x: 302, y: 54 },
+        { key: 'label', className: 'ia-art-handmade', x: 240, y: 110, w: 190 },
+      ],
+    },
     // emoji: '☕',
     hue: 'linear-gradient(135deg, #d9b38c, #8a5a3b)',
     verdict: 'mass', // it is mass-produced, not handmade
@@ -75,17 +86,39 @@ const PRODUCTS = [
   {
     id: 'novapad',
     seller: 'novapad_x_deals',
+    art: {
+      // Text-free photo + translatable ad copy laid over it (rooms.influencer.products.1.art).
+      bg: 'novapad-bg.jpg',
+      w: 480,
+      h: 406,
+      layers: [
+        { key: 'oldPrice', className: 'ia-art-old', x: 48, y: 38 },
+        { key: 'price', className: 'ia-art-price', x: 12, y: 86 },
+        { key: 'urgency', className: 'ia-art-urgency', x: 22, y: 176, w: 172 },
+        { text: '😱😱😱', className: 'ia-art-emoji', x: 20, y: 308 },
+      ],
+      // Big stamp-like text over a reverse-search result photo: { result index: art key }.
+      resultOverlays: { 3: 'fake' },
+    },
     // emoji: '📱',
     hue: 'linear-gradient(135deg, #7a2ce0, #2b6bff)',
     verdict: 'ai', // the image is AI-generated / fake
   },
   {
-    id: 'cupcakes',
-    seller: 'cornerst_bakery',
-    image: 'speaker.png', // photo shown for this product (defaults to `${id}.png`)
+    id: 'speaker',
+    seller: 'cornerst_sounds',
+    art: {
+      // rooms.influencer.products.2.art — price sticker on the grey wall right of the speaker.
+      bg: 'speaker.png',
+      w: 480,
+      h: 480,
+      layers: [
+        { key: 'price', className: 'ia-art-sale', x: 276, y: 112, splitDecimals: true },
+      ],
+    },
     // emoji: '🧁',
     hue: 'linear-gradient(135deg, #ff9fbf, #ffd36b)',
-    verdict: 'legit', // this one is real
+    verdict: 'verified', // this one is real
   },
 ]
 
@@ -93,17 +126,75 @@ const PRODUCTS = [
    several sites, shown as slightly different listing photos. Falls back to the
    product's own image when no variants were provided. Files live in
    public/products/. Cycled across the result rows. */
+const ART = 'art' // thumb that IS the seller's own ad: rendered as ProductArt, text included
 const RESULT_THUMBS = {
-  mug: ['mug3.png', 'mug2.png', 'mug.png'], // bulk factory shelf · styled "handmade" shot · the seller's photo
-  novapad: ['novapad1.png', 'novapad2.png'],
-  cupcakes: ['speaker2.png', 'speaker3.png', 'speaker4.png'],
+  mug: [ 'mug2.png', 'mug3.png', 'mug1.png', 'mug.png','mug4.png',], // bulk factory shelf · styled "handmade" shot · the seller's photo
+  novapad: ['novapad.png','novapad4.png', 'novapad.png',  'novapad.png', 'novapad1.png', 'novapad2.png'],
+  speaker: [ART,'speaker2.png', 'speaker3.png', 'speaker4.png', 'speaker5.png'],
 }
 
-/* URL of a product's own photo. */
-const productImg = (p) => `${import.meta.env.BASE_URL}products/${p.image || `${p.id}.png`}`
+/* URL of a file in public/products (base-URL aware), and of a product's own photo. */
+const productUrl = (name) => assetUrl(`products/${name}`)
+const productImg = (p) => productUrl(p.image || `${p.id}.png`)
+
+/* A sheet cell of just a dash ("-", "–", "—") or blank means "none here":
+   no price chip on that result, no copy layer on the art. */
+const hasValue = (v) => typeof v === 'string' && !/^\s*[-–—]?\s*$/.test(v)
+
+/* "89,95" -> 89 + small ",95" (decimals at half size). */
+const splitPrice = (v) => {
+  const m = /^(.*?\d)([.,]\d+)(.*)$/.exec(v || '')
+  return m ? <>{m[1]}<small>{m[2]}</small>{m[3]}</> : v
+}
+
+/* Where art copy may sit and still show inside a tray tile (~190x156, cover-
+   cropped): for a square 480 art the tile hides ~43px top & bottom, the grab
+   badge covers x>405 above y~100, and the name label covers y~360-420 mid-width. */
+
+/* A product's picture as ONE image. Products with `art` are an SVG: the photo
+   plus the ad copy as real (translated) text, laid out in the art's own
+   w×h box (design px) so the whole thing scales, crops and drags as a single
+   picture. `cover` crops to fill its box (tiles, chips); otherwise it keeps
+   its aspect ratio. */
+function ProductArt({ product, copy, cover = false, className = '', alt = '' }) {
+  const { art } = product
+  if (!art) return <img className={className} src={productImg(product)} alt={alt} draggable={false} />
+  const { w: ART_W, h: ART_H } = art
+  return (
+    <svg
+      className={`ia-art ${className}`}
+      style={{ aspectRatio: `${ART_W} / ${ART_H}` }}
+      viewBox={`0 0 ${ART_W} ${ART_H}`}
+      preserveAspectRatio={cover ? 'xMidYMid slice' : 'xMidYMid meet'}
+      role="img"
+      aria-label={alt || undefined}
+      aria-hidden={alt ? undefined : true}
+    >
+      <image
+        href={productUrl(art.bg)}
+        width={ART_W}
+        height={ART_H}
+        preserveAspectRatio="xMidYMin slice"
+      />
+      <foreignObject width={ART_W} height={ART_H}>
+        <div xmlns="http://www.w3.org/1999/xhtml" className="ia-art-copy" style={{ width: ART_W, height: ART_H }}>
+          {art.layers.filter((l) => l.text || hasValue(copy?.art?.[l.key])).map((l) => (
+            <span
+              key={l.key || l.text}
+              className={l.className}
+              style={{ left: l.x, top: l.y, width: l.w }}
+            >
+              {l.text ?? (l.splitDecimals ? splitPrice(copy?.art?.[l.key]) : copy?.art?.[l.key])}
+            </span>
+          ))}
+        </div>
+      </foreignObject>
+    </svg>
+  )
+}
 
 /* The three classification option values (labels come from i18n). */
-const CLASSIFY_OPTIONS = ['mass', 'ai', 'legit']
+const CLASSIFY_OPTIONS = ['mass', 'ai', 'verified']
 
 /* Line-art emblem pressed into an inked stamp, drawn in the stamp's colour. */
 function StampIcon({ value, className = 'ia-stamp-icon' }) {
@@ -167,7 +258,7 @@ const DEMO_MATCHES = [
   { img: 'shoes5.png', ratio: 1.13, site: 'shoefinder.net', desc: 'Same model sold by the official brand store' },
   { img: 'shoes.png', ratio: 0.71, site: 'swingfeet.shop', desc: 'Lindy hop dance shoes · handmade' },
 ]
-const DEMO_STAMPS = { mass: 'Mass-produced', ai: 'AI-generated', legit: 'Legit' }
+const DEMO_STAMPS = { mass: 'Mass-produced', ai: 'AI-generated', verified: 'verified' }
 
 /* Masonry: drop each match into the currently shortest of `n` columns. */
 function masonry(items, n) {
@@ -184,7 +275,6 @@ const DEMO_COLUMNS = masonry(DEMO_MATCHES, 3)
 function ReverseSearchDemo({ phase }) {
   const t = useT()
   const at = (p) => DEMO_PHASES.indexOf(phase) >= DEMO_PHASES.indexOf(p)
-  const img = (name) => `${import.meta.env.BASE_URL}products/${name}`
   const resultsRef = useRef(null)
 
   // Once the matches are in, slowly scroll down through them (like the player
@@ -214,7 +304,7 @@ function ReverseSearchDemo({ phase }) {
       {/* saved image the player drags */}
       <div className="ia-demo-tray">
         <div className="ia-demo-traylabel">Saved image</div>
-        <div className={`ia-demo-tile ${phase === 'drag' ? 'is-dragging' : ''}`} style={{ backgroundImage: `url("${img('shoes.png')}")` }}>
+        <div className={`ia-demo-tile ${phase === 'drag' ? 'is-dragging' : ''}`} style={{ backgroundImage: `url("${productUrl('shoes.png')}")` }}>
           <span className="ia-imgtile-name">Lindy hop shoes</span>
         </div>
       </div>
@@ -222,7 +312,7 @@ function ReverseSearchDemo({ phase }) {
       {/* full-size drag copy riding the cursor into the search bar (as the game's dnd ghost) */}
       {phase === 'drag' && (
         <>
-          <div className="ia-demo-tile ia-demo-ghost" style={{ backgroundImage: `url("${img('shoes.png')}")` }}>
+          <div className="ia-demo-tile ia-demo-ghost" style={{ backgroundImage: `url("${productUrl('shoes.png')}")` }}>
             <span className="ia-imgtile-name">Lindy hop shoes</span>
           </div>
           <svg className="ia-demo-cursor" viewBox="0 0 24 24">
@@ -233,10 +323,10 @@ function ReverseSearchDemo({ phase }) {
 
       <div className="ia-demo-engine">
         <div className="ia-demo-top">
-          <img className="ia-demo-logo" src={img('logo-booble.png')} alt="" />
+          <img className="ia-demo-logo" src={productUrl('logo-booble.png')} alt="" />
           <div className={`ia-demo-bar ${phase === 'drag' ? 'is-over' : ''}`}>
             <span className="ia-engine-lens">🔍</span>
-            {at('search') && <span className="ia-engine-chip fade-in" style={{ backgroundImage: `url("${img('shoes.png')}")` }} />}
+            {at('search') && <span className="ia-engine-chip fade-in" style={{ backgroundImage: `url("${productUrl('shoes.png')}")` }} />}
             <span className="ia-engine-ph">Drag an image here to search</span>
           </div>
         </div>
@@ -245,14 +335,14 @@ function ReverseSearchDemo({ phase }) {
           {at('search') && (
             <div className="ia-demo-viewer">
               <div className="ia-demo-frame">
-                <img className="ia-demo-img" src={img('shoes.png')} alt="" />
+                <img className="ia-demo-img" src={productUrl('shoes.png')} alt="" />
                 {phase === 'search' && <span className="ia-scan" />}
                 <i className="ia-corner tl" /><i className="ia-corner tr" />
                 <i className="ia-corner bl" /><i className="ia-corner br" />
                 {at('stamp') && (
-                  <span className="ia-stamp-mark ia-stamp-legit ia-demo-mark">
-                    <StampIcon value="legit" />
-                    {DEMO_STAMPS.legit}
+                  <span className="ia-stamp-mark ia-stamp-verified ia-demo-mark">
+                    <StampIcon value="verified" />
+                    {DEMO_STAMPS.verified}
                   </span>
                 )}
               </div>
@@ -283,7 +373,7 @@ function ReverseSearchDemo({ phase }) {
                     <ul key={c} className="ia-matches-col">
                       {col.map((m) => (
                         <li key={m.site} className="ia-match" style={{ animationDelay: `${m.i * 110}ms` }}>
-                          <img className="ia-match-img" src={img(m.img)} alt="" />
+                          <img className="ia-match-img" src={productUrl(m.img)} alt="" />
                           <span className="ia-match-site">
                             <span className="ia-match-fav">{m.site.charAt(0)}</span>
                             <span className="ia-match-site-name">{m.site}</span>
@@ -301,7 +391,7 @@ function ReverseSearchDemo({ phase }) {
                   {Object.entries(DEMO_STAMPS).map(([value, label]) => (
                     <div
                       key={value}
-                      className={`ia-stampmaker ia-stamp-${value} ${value === 'legit' && phase === 'hold' ? 'held' : ''} ${value === 'legit' && at('stamp') ? 'inked' : ''}`}
+                      className={`ia-stampmaker ia-stamp-${value} ${value === 'verified' && phase === 'hold' ? 'held' : ''} ${value === 'verified' && at('stamp') ? 'inked' : ''}`}
                     >
                       <span className="ia-stampmaker-face" />
                       <span className="ia-stamp-label">{label}</span>
@@ -315,9 +405,9 @@ function ReverseSearchDemo({ phase }) {
         </div>
       </div>
 
-      {/* the Legit stamp travelling from the rack to the image */}
+      {/* the Verified stamp travelling from the rack to the image */}
       {phase === 'hold' && (
-        <div className="ia-demo-flystamp ia-stamp-legit"><span className="ia-stampmaker-face" /></div>
+        <div className="ia-demo-flystamp ia-stamp-verified"><span className="ia-stampmaker-face" /></div>
       )}
     </div>
   )
@@ -479,7 +569,7 @@ export default function InfluencerAvenue({ node }) {
   const [demoRun, setDemoRun] = useState(0) // bumped to replay the demo
 
   // Play the explainer's demo while it's open, on a loop: drag the shoes into
-  // the bar, search, show the matches, press the Legit stamp, hold 2s, repeat.
+  // the bar, search, show the matches, press the verified stamp, hold 2s, repeat.
   useEffect(() => {
     if (stage !== 'explain') { setDemoPhase('drag'); return }
     const timers = [
@@ -901,10 +991,11 @@ export default function InfluencerAvenue({ node }) {
             </div> */}
 
             {/* Scripted demo of the next challenge, in the same UI. */}
+                <p className="ia-explain-instructions"><b className="lead-label">{t('common.howToPlay')}</b> {t('rooms.influencer.explain.instructions')}</p>
             <ReverseSearchDemo phase={demoPhase} />
 {/* 
             <div className="learn ia-explain-learn">
-              <b>{t('rooms.influencer.explain.takeawayLabel')}</b> {t('rooms.influencer.explain.takeaway')}
+              <b className="lead-label">{t('rooms.influencer.explain.takeawayLabel')}</b> {t('rooms.influencer.explain.takeaway')}
             </div> */}
 
             <button className="btn btn-purple btn-lg" onClick={() => setStage('verify')}>
@@ -939,10 +1030,8 @@ export default function InfluencerAvenue({ node }) {
                       disabled={!!activeId}
                       className={`ia-imgtile-drag ${isShown ? 'shown' : ''}`}
                     >
-                      <div className="ia-imgtile" style={{
-                        backgroundImage: `url("${productImg(p)}")`,
-                        backgroundSize: "cover"
-                      }}>
+                      <div className="ia-imgtile">
+                        <ProductArt product={p} copy={copy} cover className="ia-imgtile-art" />
                         <span className="ia-imgtile-emoji">{p.emoji}</span>
                         <span className="ia-imgtile-name">{copy.name}</span>
                         {!done && <span className="ia-imgtile-badge grab" aria-hidden>⤓</span>}
@@ -971,7 +1060,7 @@ export default function InfluencerAvenue({ node }) {
                   <div className="ia-engine-top">
                     <img
                       className="ia-engine-logo"
-                      src={`${import.meta.env.BASE_URL}products/logo-booble.png`}
+                      src={productUrl('logo-booble.png')}
                       alt={t('rooms.influencer.stage2.engineBar')}
                     />
                     <DropZone
@@ -983,11 +1072,14 @@ export default function InfluencerAvenue({ node }) {
                     >
                       <span className="ia-engine-lens" aria-hidden>🔍</span>
                       {(active || shown) && (
-                        <span
-                          className="ia-engine-chip"
-                          style={{ backgroundImage: `url("${productImg(active || shown)}")` }}
-                          aria-hidden
-                        />
+                        <span className="ia-engine-chip" aria-hidden>
+                          <ProductArt
+                            product={active || shown}
+                            copy={productCopy[PRODUCTS.indexOf(active || shown)]}
+                            cover
+                            className="ia-engine-chip-art"
+                          />
+                        </span>
                       )}
                       <span className="ia-engine-ph">{t('rooms.influencer.stage2.engineDrop')}</span>
                       <span className="ia-engine-icon" aria-hidden>⤓</span>
@@ -999,10 +1091,10 @@ export default function InfluencerAvenue({ node }) {
                     <div className="ia-engine-panel">
                       <div className="ia-engine-viewer">
                         <div className="ia-engine-frame">
-                          <img
+                          <ProductArt
+                            product={active}
+                            copy={productCopy[PRODUCTS.indexOf(active)]}
                             className="ia-engine-img"
-                            src={productImg(active)}
-                            alt=""
                           />
                           <span className="ia-scan" aria-hidden />
                           <i className="ia-corner tl" /><i className="ia-corner tr" />
@@ -1028,9 +1120,10 @@ export default function InfluencerAvenue({ node }) {
                       {/* The searched image, big on black, framed by four corner brackets. */}
                       <div className="ia-engine-viewer">
                         <div className="ia-engine-frame">
-                          <img
+                          <ProductArt
+                            product={shown}
+                            copy={shownCopy}
                             className="ia-engine-img"
-                            src={productImg(shown)}
                             alt={shownCopy.name}
                           />
                           <i className="ia-corner tl" /><i className="ia-corner tr" />
@@ -1074,16 +1167,27 @@ export default function InfluencerAvenue({ node }) {
                           <div className="ia-matches">
                             {(() => {
                               const thumbs = RESULT_THUMBS[shown.id] || [shown.image || `${shown.id}.png`]
-                              const items = shownCopy.matches.slice(0, 5).map((m, i) => ({ m, i }))
+                              const items = shownCopy.matches.map((m, i) => ({ m, i }))
                               return [0, 1, 2].map((col) => (
                                 <ul key={col} className="ia-matches-col">
                                   {items.filter(({ i }) => i % 3 === col).map(({ m, i }) => (
                                     <li key={i} className="ia-match" style={{ animationDelay: `${i * 90}ms` }}>
-                                      <img
-                                        className="ia-match-img"
-                                        src={`${import.meta.env.BASE_URL}products/${thumbs[i % thumbs.length]}`}
-                                        alt=""
-                                      />
+                                      <span className="ia-match-media">
+                                        {thumbs[i % thumbs.length] === ART && shown.art
+                                          ? <ProductArt product={shown} copy={shownCopy} className="ia-match-img" />
+                                          : <img className="ia-match-img" src={productUrl(thumbs[i % thumbs.length])} alt="" />}
+                                        {/* listing price chip (only some results carry one) */}
+                                        {hasValue(m.price) && (
+                                          <span className="ia-match-price">
+                                            <img src={assetUrl('icons/price-tag.svg')} alt="" aria-hidden />
+                                            {m.price}
+                                          </span>
+                                        )}
+                                        {(() => {
+                                          const overlay = shownCopy.art?.[shown.art?.resultOverlays?.[i]]
+                                          return hasValue(overlay) && <span className="ia-match-overlay">{overlay}</span>
+                                        })()}
+                                      </span>
                                       <span className="ia-match-site">
                                         <span className="ia-match-fav" aria-hidden>{m.site.charAt(0)}</span>
                                         <span className="ia-match-site-name">{m.site}</span>
@@ -1127,7 +1231,9 @@ export default function InfluencerAvenue({ node }) {
           <div className="ia-actions">
             {verifyErr
               ? <div className="banner wrong shake ia-banner">{verifyErr}</div>
-              : <span className="game-prompt">{t('rooms.influencer.stage2.hint')}</span>}
+              : <span className="game-prompt">
+                {/* {t('rooms.influencer.stage2.hint')} */}
+                </span>}
             <button className="btn btn-purple btn-lg ia-confirm" onClick={submitVerify}>
               {t('rooms.influencer.stage2.confirm')}
             </button>
@@ -1146,7 +1252,7 @@ export default function InfluencerAvenue({ node }) {
           style={{ left: `${posRef.current.x}px`, top: `${posRef.current.y}px` }}
         >
           <span className="ia-stampmaker-face" />
-        </div>,
+      </div>,
         document.body,
       )}
 
