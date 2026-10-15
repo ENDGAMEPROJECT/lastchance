@@ -78,7 +78,7 @@ export default function EnterScreen() {
     return () => window.clearTimeout(timer)
   }, [phase, playing, tunnelMs])
 
-  // Mount the shared, already-buffering <video> (preloaded at startup) into the
+  // Mount the shared, already-buffering <video> (preloaded during the pre-test) into the
   // tunnel layer and play it from the start; detach it again when the tunnel ends.
   const [videoHost, setVideoHost] = useState(null)
   useEffect(() => {

@@ -70,13 +70,13 @@ Handy for jumping straight to a screen or unlocking every node while building.
 ```
 src/
   main.jsx                 App bootstrap (wraps I18nProvider + GameProvider)
-  App.jsx                  Screen router + ROOMS registry + startup image preload
+  App.jsx                  Screen router + ROOMS registry + staged asset preload
   game/
     gameData.js            Node graph, items, codes, emoji key, narrative (structure)
     GameContext.jsx        Run state: screen, progress, inventory, evidence, timer
     settings.js            Tunables + DEBUG / DEBUG_SCREEN flags
     assets.js              bgUrl() — resolves public asset paths against the base URL
-    preloadAssets.js       Warms every background image into cache at startup
+    preloadAssets.js       Preloads the current screen and its next destination
     sound.js               playSound()/preloadSound()/stopSound() + global mute (persisted); base-URL aware
   i18n/
     index.jsx              useT()/useI18n() hooks, provider, {var} interpolation, locale registry
@@ -112,8 +112,8 @@ which prefixes Vite's `import.meta.env.BASE_URL` (i.e. `/` in dev, `/lastchance/
 2. In that room's component: `import { bgUrl } from '../game/assets.js'` and pass
    `<RoomFrame node={node} bgImage={bgUrl('influencer.png')} …>`.
 3. For a raw CSS background, use ``style={{ backgroundImage: `url(${bgUrl('map.png')})` }}``.
-4. Add the file name to `GAME_IMAGES` in `src/game/preloadAssets.js` so it's cached up front
-   and transitions never stall.
+4. Add the file name to the appropriate room/screen group in `src/game/preloadAssets.js`.
+   `GAME_IMAGES` collects those groups for asset checks; it is not downloaded in one batch.
 5. Tune opacity/blend in `.bg-slot` (global.css) if the image competes with the UI.
 
 **Map station art** lives in `public/bg/map/` — `map-bg.png` (the city backdrop, no path baked in;
@@ -126,6 +126,15 @@ them as `bgUrl('map/node-link-color.png')` — the folder is part of the name.
 Notes: PNGs render best around **1376×768**; animated **GIFs** are supported (browsers clamp
 very short frame delays, so encode e.g. 50 frames × 20 ms to play a 1 s loop). Prompt files
 for generating these backgrounds live in `junk/bg_prompts/` (gitignored).
+
+**Staged preloading.** Welcome loads its background, then prepares only the selected
+character's pre-test images. During the pre-test, the shared portal video, arrival art and
+map warm up. The arrival prepares the first room; the map prepares the next uncleared
+node; each room prepares its successor (or the post-test after the last room).
+Influencer images use the selected language, and reports/profile art use the friend's
+character. At most three preload requests run together, with the current screen first.
+Navigation replaces pending work, already loaded files are reused, and failed/stalled
+requests do not block the queue. Screens still render immediately.
 
 ## Sound
 

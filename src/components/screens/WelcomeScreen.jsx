@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGame } from '../../game/GameContext.jsx'
 import { useI18n, useT, AVAILABLE_LOCALES, localeName } from '../../i18n/index.jsx'
 import { bgUrl } from '../../game/assets.js'
+import { preloadGameAssets } from '../../game/preloadAssets.js'
 import './welcome.css'
 
 /* First screen: collect the player's alias + age and let them pick a
@@ -15,6 +16,10 @@ export default function WelcomeScreen() {
   const [age, setAge] = useState('')
   const [character, setCharacter] = useState('mia')
   const [err, setErr] = useState('')
+
+  useEffect(() => {
+    preloadGameAssets({ screen: 'welcome', character })
+  }, [character])
 
   const onSubmit = (e) => {
     e.preventDefault()

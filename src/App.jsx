@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useGame } from './game/GameContext.jsx'
-import { preloadGameImages } from './game/preloadAssets.js'
+import { preloadGameAssets } from './game/preloadAssets.js'
+import { useI18n } from './i18n/index.jsx'
 import Stage from './components/Stage.jsx'
 import { DndProvider } from './components/dnd/Dnd.jsx'
 import HUD from './components/HUD.jsx'
@@ -30,17 +31,24 @@ const ROOMS = {
 }
 
 export default function App() {
-  const { screen, activeNode, reducedMotion, posttestSession } = useGame()
+  const { screen, activeNode, reviewNodeId, reducedMotion, posttestSession, narrative, progress, NODES } = useGame()
+  const { locale } = useI18n()
+  const nodeId = screen === 'review' ? reviewNodeId : activeNode?.id
+  const nextNodeId = screen === 'room'
+    ? NODES[NODES.findIndex((node) => node.id === nodeId) + 1]?.id
+    : NODES.find((node) => progress[node.id] !== 'done')?.id
 
   useEffect(() => {
     document.body.classList.toggle('reduced-motion', reducedMotion)
   }, [reducedMotion])
 
-  // Preload every room/corridor background once at startup so navigation
-  // never lags waiting on a big image to download.
+  // WelcomeScreen owns its draft character selection. Later stages prepare
+  // only the current destination and the next room in the route.
   useEffect(() => {
-    preloadGameImages()
-  }, [])
+    if (screen !== 'welcome') {
+      preloadGameAssets({ screen, character: narrative.character, locale, nodeId, nextNodeId })
+    }
+  }, [screen, narrative.character, locale, nodeId, nextNodeId])
 
   const roomContent = activeNode
     ? (() => {
