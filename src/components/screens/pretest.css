@@ -24,10 +24,10 @@
 .reduced-motion .pretest-backdrop { transition: none; }
 .pretest-phone {
   position: absolute;
-  left: 37.615741%;
-  top: 49.098196%;
-  width: 6.365741%;
-  height: 9.018036%;
+  left: 37.5%;
+  top: 49.699399%;
+  width: 6.25%;
+  height: 10.02004%;
   padding: 0;
   border: none;
   background: transparent;
@@ -35,7 +35,7 @@
   outline: none;
 }
 .pretest-phone-light { display: block; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.pretest-phone.phone-mia { left: 58.125%; top: 41.666667%; width: 6.25%; height: 11.904762%; }
+.pretest-phone.phone-mia { left: 58.333333%; top: 41.883768%; width: 5.555556%; height: 10.821643%; }
 .pretest-phone-light path {
   fill: transparent;
   stroke: transparent;

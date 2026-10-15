@@ -137,21 +137,6 @@
 .enter-caption-progress { display: block; height: 100%; background: var(--tone); }
 @keyframes enter-caption-in { from { opacity: 0; transform: translateY(-8px); } }
 
-/* ---------- start ---------- */
-/* Centred without transform, and no hover lift: the button stays put. */
-.enter-start {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 168px;
-  width: fit-content;
-  margin: 0 auto;
-}
-.enter-start:hover:not(:disabled),
-.enter-start:active:not(:disabled) { transform: none; }
-.enter-start.jack-in { animation: enter-start-in 0.45s ease-out backwards, pulse-glow 2.6s ease-in-out 0.45s infinite; }
-@keyframes enter-start-in { from { opacity: 0; } }
-
 @media (prefers-reduced-motion: reduce) {
   .enter-fx { display: none; }
   .enter-blackout, .enter-whiteout, .enter-video-host, .enter-warp { display: none; }

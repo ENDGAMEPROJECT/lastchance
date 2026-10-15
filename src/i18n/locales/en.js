@@ -17,7 +17,7 @@ export default {
     "titleLead": "LAST CHANCE",
     "titleAccent": "TO ESCAPE",
     "tagline": "// an escape room about ads, scams & fraudulent websites",
-    "subtitle": "Set up your player, then step inside the Physical Internet.",
+    "subtitle": "Set up your player, then jack into the Physical Internet.",
     "aliasLabel": "Choose an alias",
     "aliasPlaceholder": "e.g. Ne0nRunner",
     "ageLabel": "Your age",
@@ -345,7 +345,6 @@ export default {
     "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
     "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
-    "start": "▶ Countdown begins",
     "finalLine": "Ready? The timer starts as soon as you open the map."
   },
   "hints": {
@@ -870,7 +869,7 @@ export default {
         "stage1Cleared": "Stage 1 cleared ✓",
         "badge": "Stage 2 / 2",
         "tag": "Product legitimacy",
-        "prompt": "Reverse-image-search each photo, then classify what it really is.",
+        "prompt": "Reverse-image-search each photo, then classify what it really is with the stamps below.",
         "runSearch": "🔍 Run reverse image search",
         "engineBar": "reverse-image-search.io",
         "engineDrop": "Drag a product image here to reverse-search it",
@@ -886,11 +885,12 @@ export default {
         "learn": "a reverse image search checks whether a “handmade”, “unique” or “real” product photo is actually stolen, mass-produced across dozens of dropshipping stores, or AI-generated. No results at all can mean the image is fake.",
         "hint": "Search first, then classify all three.",
         "confirm": "Confirm classifications →",
-        "stampHere": "Stamp here"
+        "stampHere": "Stamp here",
+        "removeStamp": "Remove stamp"
       },
       "products": [
         {
-          "name": "“Handmade ceramic mug”",
+          "name": "Handmade ceramic mug",
           "matches": [
             {
               "site": "aliluxe-deals.shop",
@@ -906,14 +906,18 @@ export default {
             },
             {
               "site": "mega-bazaar.shop",
-              "title": "Same photo — €1.90 / unit"
+              "title": "Cheap ceramic mugs — €1.90 / unit"
+            },
+            {
+              "site": "directmugs.net",
+              "title": "Ceramic Mug Model CM-204 — $0.95/unit"
             }
           ],
           "result": "1,240+ identical listings on 12 dropshipping sites.",
           "hint": "The exact same photo appears on dozens of cheap stores."
         },
         {
-          "name": "“NovaPad X” promo shot",
+          "name": "NovaPad X promo shot",
           "matches": [
             {
               "site": "thisdevicedoesnotexist.ai",
@@ -928,29 +932,33 @@ export default {
           "hint": "Only AI-art sites match. This photo was never a real product."
         },
         {
-          "name": "Local bakery cupcakes",
+          "name": "Bluetooth Speaker B766",
           "matches": [
             {
-              "site": "cornerst-bakery.com",
-              "title": "Fresh cupcakes — Corner St. Bakery"
+              "site": "technmore.com",
+              "title": "Bluetooth Speaker B766 - Tech & More"
             },
             {
-              "site": "localeats.review",
-              "title": "Review: Corner St. Bakery ★★★★☆"
+              "site": "soundgear.net",
+              "title": "Best Speakers Better Prices"
             },
             {
-              "site": "instagram.com/cornerst",
-              "title": "@cornerst · local bakery"
+              "site": "everydayelectronics.com",
+              "title": "Indoor/Outdoor Speakers / B766"
+            },
+            {
+              "site": "soundhub.com",
+              "title": "Speaker B766, Bluetooth, 12hr battery"
             }
           ],
-          "result": "3 consistent results, all the same small business.",
-          "hint": "Matches trace back to one genuine local bakery."
+          "result": "At least 4 stores have this product",
+          "hint": "Prices are similar, product images belong to official stores"
         }
       ],
       "classify": {
         "mass": "Mass-produced",
         "ai": "AI-generated",
-        "legit": "Legit"
+        "verified": "Verified"
       },
       "decoder": {
         "title": "🔑 Emoji Decoding Card",
@@ -992,7 +1000,7 @@ export default {
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",
-        "prompt": "Open the backpack and select the Data Report on {friend}. Enter the six highlighted digits.",
+        "prompt": "Enter the six-digit code.",
         "error": "Access denied — that code is wrong.",
         "submit": "Unlock →"
       },
@@ -1153,7 +1161,7 @@ export default {
       },
       "door": {
         "badge": "Control Room · Sealed",
-        "prompt": "The Algorithm Control Room is locked. Open the backpack and select the Data Report on {friend}. Find the six highlighted digits, then use the keypad to enter the code.",
+        "prompt": "The Algorithm Control Room is locked. Find the six digits, then use the keypad to enter the code.",
         "action": "Use the keypad →"
       }
     },

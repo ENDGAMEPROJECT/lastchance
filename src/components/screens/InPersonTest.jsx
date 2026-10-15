@@ -167,11 +167,11 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
             title={t('story.product.offerLabel')}
             aria-haspopup="dialog"
           >
-            <svg className="pretest-phone-light" viewBox={narrative.character === 'max' ? '930 385 100 110' : '650 490 110 90'} aria-hidden="true">
+            <svg className="pretest-phone-light" viewBox={narrative.character === 'max' ? '1008 418 96 108' : '648 496 108 100'} aria-hidden="true">
               {/* Trace only the exposed handset; the fingers stay unlit. */}
               <path d={narrative.character === 'max'
-                ? 'M952 431L944 405Q941 399 948 397L980 394Q987 394 990 401L1002 433L985 430L979 433L965 433Z'
-                : 'M677 548 L699 511 Q704 502 713 503 L742 505 Q750 506 747 514 L730 540 C721 538 710 532 703 536 C697 539 699 546 706 550 L718 555 L721 560 C707 556 691 550 677 548 Z'} />
+                ? 'M1017 434 Q1014 429 1022 428 L1058 425 Q1064 425 1067 432 L1085 479 C1074 478 1052 482 1037 486 L1036 482 L1053 473 Q1061 468 1058 464 Q1057 461 1053 463 C1045 464 1036 468 1029 471 Z M1041 498 C1057 493 1076 490 1086 488 L1089 493 C1072 493 1052 500 1041 504 Z M1048 518 C1062 510 1081 507 1093 502 L1095 507 Q1097 514 1090 515 L1080 515 L1075 513 C1065 513 1057 517 1048 518 Z'
+                : 'M676 548 L699 509 Q703 502 710 503 L742 505 Q750 506 747 514 L729 541 C721 538 710 533 704 535 Q698 536 699 542 Q699 547 706 550 L718 555 L718 560 C704 555 689 551 676 548 Z M666 560 C679 564 694 571 705 576 L702 578 C690 573 676 568 663 564 Z M657 575 C663 578 671 581 678 584 L660 582 Q654 581 655 577 Z'} />
             </svg>
           </button>
         </div>

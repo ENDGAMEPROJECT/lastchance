@@ -69,7 +69,7 @@ const baseInitialState = {
   running: false,
   reducedMotion: false,
   // Portal-arrival walkthrough of the HUD: null (not shown) | 'map' | 'bag'
-  // (that button highlighted) | 'done' (both shown, none highlighted).
+  // (steady highlight) | 'done' (both shown) | 'ready' (Map starts the run).
   enterTour: null,
 }
 

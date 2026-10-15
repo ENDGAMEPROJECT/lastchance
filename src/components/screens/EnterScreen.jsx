@@ -38,10 +38,10 @@ const SPARKS = Array.from({ length: 14 }, (_, i) => {
 /* The portal arrival: after the warp, a short Max/Mia exchange inside the
    Physical Internet, then a walkthrough of the two HUD tools (Map, then Bag —
    each highlighted with its explanation underneath), and Mia's last line.
-   Only then does "Countdown begins" appear; it starts the clock. Every step
+   Only then does the Map become clickable; opening it starts the clock. Every step
    advances on its own after its reading time (shown by the timeline). */
 export default function EnterScreen() {
-  const { startGame, reducedMotion, setEnterTour, narrative } = useGame()
+  const { reducedMotion, setEnterTour, narrative } = useGame()
   const t = useT()
   const { scale } = useStage()
   const friend = narrative.friend
@@ -133,8 +133,8 @@ export default function EnterScreen() {
     return () => window.clearInterval(timer)
   }, [intro, stepIndex, total, isLast])
 
-  // Tell the HUD which tool to reveal / highlight.
-  const tour = stepIndex < 3 ? null : step.who === 'tour' ? step.target : 'done'
+  // Reveal the tools during their explanations; enable Map after the final line.
+  const tour = canStart ? 'ready' : stepIndex < 3 ? null : step.who === 'tour' ? step.target : 'done'
   useEffect(() => { setEnterTour(tour) }, [tour, setEnterTour])
 
   // Place the explanation under the highlighted HUD button. The button lives in
@@ -213,12 +213,6 @@ export default function EnterScreen() {
               <span className="enter-caption-progress" style={{ width: progress }} />
             </span>
           </div>
-        )}
-
-        {canStart && (
-          <button className="btn btn-cyan btn-lg jack-in enter-start" onClick={startGame}>
-            {t('enter.start')}
-          </button>
         )}
       </div>
 
