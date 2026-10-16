@@ -1245,7 +1245,7 @@ export default {
           "glossyBody": "Try NovaCloud Premium — $0 today!",
           "glossyBadge": "$0",
           "truth": "After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.",
-          "truthTitle": "Automatic renovation",
+          "truthTitle": "😩 Automatic renovation",
           "letter": "A"
         },
         {
@@ -1269,7 +1269,7 @@ export default {
           "glossyBody": "Your device may be at risk — download SecureNow FREE!",
           "glossyBadge": "FREE",
           "truth": "The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad.",
-          "truthTitle": "🚨 You didn´t have a virus... but now you do",
+          "truthTitle": "🚨 You didn´t have a virus... now you do",
           "letter": "V"
         }
       ]

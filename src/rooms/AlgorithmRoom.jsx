@@ -447,7 +447,7 @@ export default function AlgorithmRoom({ node }) {
 
                 <div className="ar-profile">
                   <div className="ar-profile-title">{t('rooms.algorithm.equations.profileTitle')}</div>
-                  <p>
+                  <p className="t-sm">
                     {t('rooms.algorithm.equations.profileP1')}
                     <b>{t('rooms.algorithm.equations.profileB1', { friend: narrative.friend })}</b>
                     {t('rooms.algorithm.equations.profileP2')}

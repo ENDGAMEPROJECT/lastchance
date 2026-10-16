@@ -441,6 +441,9 @@
   display: flex;
   gap: 12px;
 }
+/* the input takes the leftover width; the button hugs its label on one line */
+.ac-exit-row .ac-field { flex: 1; min-width: 0; }
+.ac-exit-row .btn { flex: none; white-space: nowrap; }
 .ac-field {
   text-transform: uppercase;
   letter-spacing: 0.35em;

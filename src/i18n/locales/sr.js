@@ -1245,7 +1245,7 @@ export default {
           "glossyBody": "Isprobajte NovaCloud Premium — 0 $ danas!",
           "glossyBadge": "$0",
           "truth": "Nakon mesec dana, automatski se obnavlja po ceni od 59 € mesečno. Otkazivanje zahteva poziv telefonskoj liniji koja radi 2 sata nedeljno.",
-          "truthTitle": "Automatska obnova",
+          "truthTitle": "😩 Automatska obnova",
           "letter": "A"
         },
         {
@@ -1269,7 +1269,7 @@ export default {
           "glossyBody": "Vaš uređaj je možda ugrožen — preuzmite SecureNow BESPLATNO!",
           "glossyBadge": "BESPLATNO",
           "truth": "Upozorenje je lažno, a „antivirus“ JE zlonamerni softver. Prava upozorenja nikad ne dolaze iz oglasa.",
-          "truthTitle": "Niste imali virus... ali ga sada imate",
+          "truthTitle": "🚨 Niste imali virus... ali ga sada imate",
           "letter": "V"
         }
       ]

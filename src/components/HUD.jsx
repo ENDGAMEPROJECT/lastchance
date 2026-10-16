@@ -110,14 +110,16 @@ export default function HUD() {
         <div className="hud-left">
           <span className="hud-logo" aria-label={t('hud.logo')}>◉</span>
           {showTimer && <span className="hud-sub mono">{t('hud.expires')}</span>}
-        </div>
-
+       
         {showTimer && (
           <div className={`hud-timer ${low ? 'low' : ''} ${critical ? 'critical pulse' : ''}`}>
-            <span className="hud-timer-label mono">{t('hud.tminus')}</span>
+            {/* <span className="hud-timer-label mono">{t('hud.tminus')}</span> */}
             <span className="hud-timer-val mono">{formatTime(timeLeft)}</span>
           </div>
         )}
+       
+        </div>
+
 
         <div className="hud-right">
           {document.fullscreenEnabled && (
