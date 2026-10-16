@@ -141,3 +141,19 @@
   .enter-fx { display: none; }
   .enter-blackout, .enter-whiteout, .enter-video-host, .enter-warp { display: none; }
 }
+
+/* ---------- return to the real world (ReturnScreen) ---------- */
+.return-actions {
+  position: absolute;
+  right: 108px;
+  bottom: 150px;
+  z-index: 5;
+}
+.return-actions .btn { white-space: nowrap; }
+.return-whiteout {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  background: #fff;
+  pointer-events: none;
+}

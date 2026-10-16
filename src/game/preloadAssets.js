@@ -84,8 +84,11 @@ export function getAssetPreloadPlan({ screen, character = 'mia', locale = 'en', 
     case 'review':
       return {
         current: roomImages(nodeId, narrative, locale),
-        next: nextNodeId ? nextRoom : [...conversation, bgUrl('conversation.png')],
+        next: nextNodeId ? nextRoom : arrival,
+        video: nextNodeId ? undefined : PORTAL_VIDEO,
       }
+    case 'return':
+      return { current: arrival, next: [...conversation, bgUrl('conversation.png')], video: PORTAL_VIDEO }
     case 'posttest':
       return { current: [...conversation, bgUrl('conversation.png')], next: ENDING_IMAGES }
     case 'win':

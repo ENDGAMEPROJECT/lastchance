@@ -124,7 +124,7 @@ export default function HUD() {
   // where both correctly appear.)
   const preGame = screen === 'welcome' || screen === 'pretest' || screen === 'enter'
   const showTimer = !preGame && (screen !== 'posttest' || postDecision)
-  const showNav = !preGame && screen !== 'posttest'
+  const showNav = !preGame && screen !== 'posttest' && screen !== 'return'
   // The portal arrival walks the player through Map and Bag: the buttons appear
   // there for show until the final line finishes; then Map starts the run.
   const touring = screen === 'enter' && Boolean(enterTour)

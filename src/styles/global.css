@@ -441,4 +441,20 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0
   100% { opacity: 0; }
 }
 
+/* White that clears to reveal the next scene (post-test after the return portal).
+   Above the dark veil; base opacity 0 so reduced-motion just shows the scene. */
+.white-arrival {
+  position: absolute;
+  inset: 0;
+  z-index: 61;
+  pointer-events: none;
+  background: #fff;
+  opacity: 0;
+  animation: white-arrival 1.2s ease both;
+}
+@keyframes white-arrival {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 .reduced-motion, .reduced-motion * { animation: none !important; }
