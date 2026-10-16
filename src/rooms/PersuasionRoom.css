@@ -248,7 +248,7 @@
   background-size: cover;
   text-align: center;
   .pl-poster-head {
-    font-family: var(--neogroteske);
+    font-family: var(--font-neogrotesk);
     font-size: 1.2rem;
     background: black;
     color: yellow;
@@ -950,3 +950,6 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
   transform: none;
 }
+
+/* Laid out (so fonts load and rings can be measured) but not shown yet. */
+.pl-scene2.pl-loading { visibility: hidden; }
