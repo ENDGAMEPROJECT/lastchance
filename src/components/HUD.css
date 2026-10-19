@@ -85,6 +85,20 @@ gap:12px; align-items: center; justify-content: flex-start; }
   font-size: 0.7rem;
   margin-left: 4px;
 }
+.hud-bag-reminder {
+  animation: hud-bag-glow 1.2s ease-in-out infinite;
+}
+@keyframes hud-bag-glow {
+  0%, 100% { border-color: var(--purple); box-shadow: 0 0 10px rgba(168, 85, 247, 0.4); }
+  50% { border-color: #f5e3ff; color: #fff; background: rgba(168, 85, 247, 0.65); box-shadow: 0 0 18px rgba(228, 186, 255, 0.95), 0 0 38px rgba(168, 85, 247, 0.9), inset 0 0 12px rgba(245, 227, 255, 0.25); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hud-bag-reminder {
+    animation: none;
+    border-color: #e4baff;
+    box-shadow: 0 0 18px rgba(168, 85, 247, 0.6);
+  }
+}
 
 /* Inventory modal */
 .bag-section { margin-bottom: 20px; }
@@ -131,6 +145,7 @@ gap:12px; align-items: center; justify-content: flex-start; }
   width: 8px;
   height: 8px; 
   border-radius: 50%; 
+  margin-top: 0.4rem;
   background:  #0f8866 !important;
   box-shadow: var(--glow-green); flex: none; }
 
@@ -138,17 +153,25 @@ gap:12px; align-items: center; justify-content: flex-start; }
   .hint-answer { padding-left: 48px; }
 }
 
-/* Portal-arrival walkthrough: Map/Bag appear (display only), the one being
-   explained pulses with a bright ring. */
+/* Portal-arrival walkthrough: a steady ring marks the tool being explained.
+   Only the clickable Map pulses once the player can start. */
 .hud-tour-btn { cursor: default; animation: hud-tour-in 0.5s ease-out backwards; }
-.hud-tour-btn.is-focus {
+.hud-tour-btn.is-focus,
+.hud-tour-btn.is-ready {
   position: relative;
   z-index: 2;
-  animation: hud-tour-in 0.5s ease-out backwards, hud-tour-pulse 1.4s ease-in-out 0.5s infinite;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9), 0 0 12px 2px currentColor;
+}
+.hud-tour-btn.is-ready {
+  cursor: pointer;
+  animation: hud-tour-pulse 1.4s ease-in-out infinite;
 }
 @keyframes hud-tour-in { from { opacity: 0; transform: translateY(-6px) scale(0.9); } }
 @keyframes hud-tour-pulse {
   0%, 100% { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9), 0 0 12px 2px currentColor; }
   50% { box-shadow: 0 0 0 3px #fff, 0 0 26px 8px currentColor; }
 }
-.reduced-motion .hud-tour-btn.is-focus { box-shadow: 0 0 0 3px #fff, 0 0 20px 6px currentColor; }
+.reduced-motion .hud-tour-btn.is-ready { box-shadow: 0 0 0 3px #fff, 0 0 20px 6px currentColor; }
+@media (prefers-reduced-motion: reduce) {
+  .hud-tour-btn { animation: none; }
+}

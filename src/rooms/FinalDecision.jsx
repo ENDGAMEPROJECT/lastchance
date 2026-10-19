@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
@@ -24,6 +24,16 @@ export default function FinalDecision() {
   const t = useT()
   const script = t('story.posttest')
   const vars = { friend: narrative.friend, product: narrative.product }
+  // Opening exchange before the first question (friend = NPC, player = you).
+  // Memoized: this screen re-renders every clock tick.
+  const intro = useMemo(() => [
+    { who: 'friend', text: script.friend.responses[0] },
+    { who: 'player', text: script.player.responses[0] },
+    { who: 'player', text: script.player.responses[1] },
+    { who: 'friend', text: script.friend.responses[1] },
+    { who: 'player', text: script.player.responses[2] },
+    { who: 'friend', text: script.friend.responses[2] },
+  ], [script])
   const [phase, setPhase] = useState('test') // 'test' | 'retry'
   const [run, setRun] = useState(0) // bump to replay the mastery pass
   const totalQuestions = t('story.rounds').length
@@ -79,7 +89,8 @@ export default function FinalDecision() {
       assessmentEnding={(passed) => timedOut
         ? t(passed ? 'end.lose.reasons.notEnoughEvidenceConvincing.body' : 'end.lose.reasons.notEnoughEvidenceUnconvincing.body', vars)
         : t(passed ? 'story.posttest.convinced' : 'story.posttest.retryFriend', vars)}
-      masteryOpening={t('story.mastery.banner')}
+      intro={intro}
+      mastery
     />
   )
 }

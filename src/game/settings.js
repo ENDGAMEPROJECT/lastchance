@@ -37,6 +37,9 @@ export const settings = {
   /* Minutes on the offer countdown. */
   timerMinutes: 30,
 
+  /* Remind players to inspect their tools after BOTH thresholds are met. */
+  bagReminder: { clicks: 2, delayMs: 20000 },
+
   /* ---------------- Puzzle 1 · Link District ---------------- */
   linkDistrict: {
     /* Shuffle the on-screen order of the doors every round so the

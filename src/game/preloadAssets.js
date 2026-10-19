@@ -1,196 +1,205 @@
 import { bgUrl, assetUrl } from './assets.js'
+import { getNarrative } from './characters.js'
 
-/* Warm every image into the browser cache up front, so moving between the map,
-   rooms and corridors never stalls to fetch a big PNG/GIF mid-transition. Paths
-   are resolved through bgUrl()/assetUrl() (which respect Vite's base URL) so
-   preloading hits the same cache entries the app later uses — including in
-   production under '/lastchance/'. */
+// Keep only the current screen and its next destination warm. The catalogue is
+// also exported for asset checks; it is never downloaded as one big batch.
+const MAP_IMAGES = [
+  'map/map-bg.png', 'map/lock-closed.png', 'map/stand.png',
+  ...['start', 'link', 'roulette', 'influencer', 'algorithm', 'ads', 'persuasion', 'final']
+    .map((name) => `map/${name}.png`),
+].map(bgUrl)
 
-/* Every station draws the shared stand with its own prop on top. */
-const MAP_COMPOSITE = [
-  'map/stand.png',
-  'map/start.png',
-  'map/link.png',
-  'map/roulette.png',
-  'map/influencer.png',
-  'map/algorithm.png',
-  'map/ads.png',
-  'map/persuasion.png',
-  'map/final.png',
-]
+const ROOM_IMAGES = {
+  'link-district': [
+    'link.gif', 'link_transition.gif', 'objects/emoji-decoding-card.png',
+    ...['lights', 'luna', 'shoes'].flatMap((product) => [1, 2, 3].map((i) =>
+      `link-district/ad-${product}-${i}.${product === 'shoes' && i === 2 ? 'jpeg' : 'png'}`)),
+  ].map(bgUrl),
+  'roulette-corridor': [bgUrl('roulette.png')],
+  'influencer-avenue': [
+    bgUrl('influencer.png'), bgUrl('objects/emoji-decoding-card.png'),
+    ...['cupcakes', 'cupcakes1', 'cupcakes2', 'cupcakes3', 'mug', 'novapad', 'novapad1', 'novapad2']
+      .map((name) => assetUrl(`products/${name}.png`)),
+  ],
+  'algorithm-room': [
+    'algorithm-door.jpg', 'algorithm-keypad.jpg', 'algorithm.png',
+    'objects/flashlight.png',
+    ...[1, 2, 3, 4].map((i) => `algorithm-room/r${i}.png`),
+  ].map(bgUrl),
+  'ads-corridor': [
+    bgUrl('ads.png'), bgUrl('objects/flashlight.png'),
+    ...['1-get-offer', '2-get-gift', '3-get-rich', '4-get-protection']
+      .flatMap((name) => [name, `${name}-truth`])
+      .map((name) => assetUrl(`ads-corridor/${name}.png`)),
+  ],
+  'persuasion-room': [
+    ...['persuasion.png', 'computer.png', 'persuasion_animation.gif', 'persuasion_end.png'].map(bgUrl),
+    ...['emotional', 'exagg', 'fomo', 'influencer', 'social', 'urgency']
+      .map((name) => assetUrl(`persuasion-lab/${name}.png`)),
+  ],
+}
 
-/* Images in public/bg — resolved via bgUrl() (implied 'bg/' prefix). */
-const BG_IMAGES = [
-  'welcome.gif',
-  'map.png',
-  'map/map-bg.png',
-  'map/lock-closed.png',
-  ...MAP_COMPOSITE,
-  'link.gif',
-  'link.png',
-  'link_transition.gif',
-  'roulette.png',
-  'influencer.png',
-  'algorithm.png',
-  'algorithm-door.jpg',
-  'algorithm-keypad.jpg',
-  'ads.png',
-  'persuasion.png',
-  'persuasion_animation.gif',
-  'persuasion_end.png',
-  'computer.png',
-  'algorithm-room/max-figure-nobg.png',
-  'algorithm-room/mia-figure-nobg.png',
-  'objects/emoji-decoding-card.png',
-  'objects/max-report.png',
-  'objects/mia-report.png',
-  'objects/flashlight.png',
-  'rewards/data-report.svg',
-  'rewards/truth-flashlight.svg',
-  'conversation.png',
-  'max-talking-ph-internet.png',
-  'player-talking-ph-internet.png',
-  'no-one-talking-ph-internet.png',
-  'max-talking-mia.png',
-  'mia-talking-mia.png',
-  'max-talking-max.png',
-  'mia-talking-max.png',
-  'phone-with-ad.png',
-]
+const conversationImages = (narrative) => [
+  narrative.friendTalkingImage, narrative.playerTalkingImage, 'phone-with-ad.png',
+].map(bgUrl)
 
-/* Images in other public/ subfolders — resolved via assetUrl() (full path). */
-const ASSET_IMAGES = [
-  // Ads Corridor posters + their revealed "truth" variants.
-  'ads-corridor/1-get-offer.png',
-  'ads-corridor/1-get-offer-truth.png',
-  'ads-corridor/2-get-gift.png',
-  'ads-corridor/2-get-gift-truth.png',
-  'ads-corridor/3-get-rich.png',
-  'ads-corridor/3-get-rich-2.png',
-  'ads-corridor/3-get-rich-truth.png',
-  'ads-corridor/4-get-protection.png',
-  'ads-corridor/4-get-protection-truth.png',
-  'ads-corridor/4-get-protection-truth-2.png',
-  // Algorithm Room equation art.
-  'algorithm-room/r1.png',
-  'algorithm-room/r2.png',
-  'algorithm-room/r3.png',
-  'algorithm-room/r4.png',
-  // Link District ad panels.
-  'link-district/ad-lights-1.png',
-  'link-district/ad-lights-2.png',
-  'link-district/ad-lights-3.png',
-  'link-district/ad-luna-1.png',
-  'link-district/ad-luna-2.png',
-  'link-district/ad-luna-3.png',
-  'link-district/ad-shoes-1.png',
-  'link-district/ad-shoes-2.jpeg',
-  'link-district/ad-shoes-3.png',
-  // Persuasion Lab poster art.
-  'persuasion-lab/emotional.png',
-  'persuasion-lab/exagg.png',
-  'persuasion-lab/fomo.png',
-  'persuasion-lab/influencer.png',
-  'persuasion-lab/social.png',
-  'persuasion-lab/urgency.png',
-  // Influencer Avenue sponsorship labels (per-language variants).
-  'influencers/paid_en.jpg',
-  'influencers/paid_es.png',
-  'influencers/paid_sr.png',
-  'influencers/collab_en.png',
-  'influencers/collab_es.png',
-  'influencers/collab_sr.png',
-  'influencers/gifted_en.jpg',
-  'influencers/gifted_es.png',
-  'influencers/gifted_sr.png',
-  'influencers/nothing_en.png',
-  'influencers/nothing_es.png',
-  'influencers/nothing_sr.png',
-  // Ending art.
-  'ending/player-won.png',
-  // Product art + reverse-image-search result variants.
-  'products/logo-booble.png',
-  'products/mug.png',
-  'products/mug1.png',
-  'products/mug2.png',
-  'products/mug3.png',
-  'products/mug4.png',
-  'products/novapad.png',
-  'products/novapad-bg.jpg',
-  'products/novapad4.png',
-  'products/speaker.png',
-  'products/speaker1.png',
-  'products/speaker2.png',
-  'products/speaker3.png',
-  'products/speaker4.png',
-  'products/speaker5.png',
-  'products/shoes.png',
-  'products/shoes1.png',
-  'products/shoes2.png',
-  'products/shoes3.png',
-  'products/shoes4.png',
-  'products/shoes5.png',
-  // UI icons.
-  'icons/price-tag.svg',
-]
+const arrivalImages = (narrative) => [
+  'initial-ph-internet.png', narrative.friendInternetImage, narrative.playerInternetImage,
+].map(bgUrl)
 
-/* Videos (paths under public/). Each gets ONE shared <video> element, created
-   at startup with preload="auto" so it buffers in the background; the screen
-   that shows it reuses that same element (and its buffer). Don't fetch() these
-   separately — a concurrent fetch of the same URL stalls the media request. */
-const GAME_VIDEOS = [
-  'transitions-videos/abduction-scene.mp4',
-]
-const videoCache = {}
-const VIDEO_HEAD_START_MS = 10000
+function roomImages(nodeId, narrative, locale) {
+  const images = ROOM_IMAGES[nodeId] || []
+  if (nodeId === 'influencer-avenue') {
+    // Matches InfluencerAvenue's language fallback (Finnish uses English art).
+    const language = ['es', 'sr'].includes(locale) ? locale : 'en'
+    return [...images, bgUrl(narrative.reportImage), ...['paid', 'collab', 'gifted'].map((label) =>
+      bgUrl(`influencers/${label}_${language}.${language === 'en' && label !== 'collab' ? 'jpg' : 'png'}`))]
+  }
+  if (nodeId === 'algorithm-room') {
+    return [...images, bgUrl(narrative.reportImage), bgUrl(narrative.friendProfileImage)]
+  }
+  return images
+}
 
+const ENDING_IMAGES = [assetUrl('ending/player-won.png')]
+const PORTAL_VIDEO = 'transitions-videos/abduction-scene.mp4'
+
+// Debug jumps, character changes and locale changes use the same resource
+// selection as a normal playthrough.
+export function getAssetPreloadPlan({ screen, character = 'mia', locale = 'en', nodeId, nextNodeId }) {
+  const narrative = getNarrative(character)
+  const conversation = conversationImages(narrative)
+  const arrival = arrivalImages(narrative)
+  const nextRoom = roomImages(nextNodeId, narrative, locale)
+  switch (screen) {
+    case 'welcome':
+      return { current: [bgUrl('welcome.gif')], next: conversation }
+    case 'pretest':
+      return { current: conversation, next: [...arrival, ...MAP_IMAGES], video: PORTAL_VIDEO }
+    case 'enter':
+      return { current: arrival, next: [...MAP_IMAGES, ...nextRoom], video: PORTAL_VIDEO }
+    case 'map':
+      return { current: MAP_IMAGES, next: nextRoom }
+    case 'room':
+    case 'review':
+      return {
+        current: roomImages(nodeId, narrative, locale),
+        next: nextNodeId ? nextRoom : arrival,
+        video: nextNodeId ? undefined : PORTAL_VIDEO,
+      }
+    case 'return':
+      return { current: arrival, next: [...conversation, bgUrl('conversation.png')], video: PORTAL_VIDEO }
+    case 'posttest':
+      return { current: [...conversation, bgUrl('conversation.png')], next: ENDING_IMAGES }
+    case 'win':
+      return { current: ENDING_IMAGES, next: [] }
+    default:
+      return { current: [], next: [] }
+  }
+}
+
+export const GAME_IMAGES = [...new Set([
+  bgUrl('welcome.gif'), bgUrl('conversation.png'), ...MAP_IMAGES, ...ENDING_IMAGES,
+  ...['mia', 'max'].flatMap((character) => {
+    const narrative = getNarrative(character)
+    return [
+      ...conversationImages(narrative), ...arrivalImages(narrative),
+      ...Object.keys(ROOM_IMAGES).flatMap((id) =>
+        ['en', 'es', 'sr'].flatMap((locale) => roomImages(id, narrative, locale))),
+    ]
+  }),
+])]
+
+// Reuse the same <video> and buffer in EnterScreen; never fetch it separately.
+const videoCache = new Map()
 export function getPreloadedVideo(path) {
-  if (!videoCache[path]) {
+  if (!videoCache.has(path)) {
     const video = document.createElement('video')
     video.preload = 'auto'
     video.muted = true
     video.playsInline = true
     video.src = assetUrl(path)
     video.load()
-    videoCache[path] = video
+    videoCache.set(path, video)
   }
-  return videoCache[path]
+  return videoCache.get(path)
 }
 
-export const GAME_IMAGES = [
-  ...BG_IMAGES.map(bgUrl),
-  ...ASSET_IMAGES.map(assetUrl),
-]
+const MAX_CONCURRENT = 3
+const LOAD_TIMEOUT_MS = 15000
+const loaded = new Set()
+const inFlight = new Map()
+let queue = []
+let currentKeys = new Set()
 
-let started = false
+function loadImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image()
+    const finish = (success) => {
+      window.clearTimeout(timeout)
+      img.onload = null
+      img.onerror = null
+      resolve(success)
+    }
+    // A stalled/missing resource must never hold up the rest of the queue.
+    const timeout = window.setTimeout(() => finish(false), LOAD_TIMEOUT_MS)
+    img.onload = () => finish(true)
+    img.onerror = () => finish(false)
+    img.src = src
+  })
+}
 
-/* Kick off loading of every image once. Returns a promise that settles when
-   all have loaded (or errored — a missing file must never block the game). */
-export function preloadGameImages() {
-  if (started) return Promise.resolve()
-  started = true
-  // Videos first: ~170 MB of image requests otherwise saturate the connections
-  // and the media request stalls for good. Images start once every video can
-  // play through (or after VIDEO_HEAD_START_MS at most). The current screen's
-  // own images load normally meanwhile; only the warm-up of later rooms waits.
-  const videosReady = Promise.race([
-    Promise.all(GAME_VIDEOS.map((path) => new Promise((resolve) => {
-      const video = getPreloadedVideo(path)
-      if (video.readyState >= 4) return resolve()
-      video.addEventListener('canplaythrough', resolve, { once: true })
-      video.addEventListener('error', resolve, { once: true })
-    }))),
-    new Promise((resolve) => window.setTimeout(resolve, VIDEO_HEAD_START_MS)),
-  ])
-  return videosReady.then(() => Promise.all(
-    GAME_IMAGES.map(
-      (src) =>
-        new Promise((resolve) => {
-          const img = new Image()
-          img.onload = resolve
-          img.onerror = resolve // ignore failures — preloading is best-effort
-          img.src = src
-        }),
-    ),
-  ))
+function loadVideo(path) {
+  return new Promise((resolve) => {
+    const video = getPreloadedVideo(path)
+    if (video.readyState >= 4) return resolve(true)
+    const finish = (success) => {
+      window.clearTimeout(timeout)
+      video.removeEventListener('canplaythrough', onReady)
+      video.removeEventListener('error', onError)
+      resolve(success)
+    }
+    const onReady = () => finish(true)
+    const onError = () => finish(false)
+    const timeout = window.setTimeout(() => finish(false), LOAD_TIMEOUT_MS)
+    video.addEventListener('canplaythrough', onReady)
+    video.addEventListener('error', onError)
+    if (video.error) finish(false)
+  })
+}
+
+function pumpQueue() {
+  while (inFlight.size < MAX_CONCURRENT && queue.length) {
+    // Finish this screen's requests before spending bandwidth on the next one.
+    const index = queue.findIndex((job) => currentKeys.has(job.key))
+    if (index === -1 && [...inFlight.keys()].some((key) => currentKeys.has(key))) return
+    const [job] = queue.splice(index === -1 ? 0 : index, 1)
+    const promise = job.video ? loadVideo(job.video) : loadImage(job.key)
+    inFlight.set(job.key, promise)
+    promise.then((success) => {
+      if (success) loaded.add(job.key)
+    }).finally(() => {
+      inFlight.delete(job.key)
+      pumpQueue()
+    })
+  }
+}
+
+export function preloadGameAssets(stage) {
+  const { current, next, video } = getAssetPreloadPlan(stage)
+  currentKeys = new Set(current)
+  const jobs = [
+    ...current.map((key) => ({ key })),
+    ...(video ? [{ key: assetUrl(video), video }] : []),
+    ...next.map((key) => ({ key })),
+  ]
+  // Rebuild pending work on navigation. In-progress requests can finish and be
+  // reused, but outdated rooms/languages/characters do not keep draining data.
+  const seen = new Set()
+  queue = jobs.filter(({ key }) => {
+    if (seen.has(key) || loaded.has(key) || inFlight.has(key)) return false
+    seen.add(key)
+    return true
+  })
+  pumpQueue()
 }

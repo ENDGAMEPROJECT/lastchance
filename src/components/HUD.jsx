@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useGame, formatTime } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
-import { DEBUG } from '../game/settings.js'
+import { DEBUG, settings } from '../game/settings.js'
 import { isMuted, setMuted } from '../game/sound.js'
 import { getHintContext, getHintPlan } from '../game/hints.js'
 import Modal from './Modal.jsx'
@@ -14,9 +14,39 @@ import './HUD.css'
 
 /* Persistent top bar: countdown, mission recap, inventory & map access. */
 export default function HUD() {
-  const { screen, activeNodeId, roomStarted, linkRound, timeLeft, inventory, evidence, progress, goMap, postDecision, enterTour, narrative } = useGame()
+  const { screen, activeNodeId, roomStarted, linkRound, timeLeft, inventory, evidence, progress, goMap, startGame, postDecision, enterTour, narrative } = useGame()
   const t = useT()
   const [bagOpen, setBagOpen] = useState(false)
+  const [bagReminder, setBagReminder] = useState(false)
+  const neededItem = { 'influencer-avenue': 'emojiCard', 'algorithm-room': 'dataReport', 'ads-corridor': 'truthLight' }[activeNodeId]
+  const needsBag = screen === 'room' && roomStarted && progress[activeNodeId] !== 'done'
+    && Boolean(neededItem && inventory.some((item) => item.id === neededItem))
+
+  useEffect(() => {
+    setBagReminder(false)
+    if (!needsBag) return
+    let clicks = 0
+    let elapsed = false
+    let consulted = false
+    const remind = () => {
+      if (!consulted && elapsed && clicks >= settings.bagReminder.clicks) setBagReminder(true)
+    }
+    const onClick = (event) => {
+      if (event.target.closest('[data-tour="bag"]')) {
+        consulted = true
+        setBagReminder(false)
+      } else if (event.target.closest('.room-body') && !event.target.closest('.room-cleared-overlay')) {
+        clicks += 1
+        remind()
+      }
+    }
+    const timer = window.setTimeout(() => { elapsed = true; remind() }, settings.bagReminder.delayMs)
+    document.addEventListener('click', onClick, true)
+    return () => {
+      window.clearTimeout(timer)
+      document.removeEventListener('click', onClick, true)
+    }
+  }, [needsBag, activeNodeId])
   const [reportOpen, setReportOpen] = useState(false)
   const [deniedItem, setDeniedItem] = useState(null)
   const [hintsOpen, setHintsOpen] = useState(false)
@@ -94,11 +124,13 @@ export default function HUD() {
   // where both correctly appear.)
   const preGame = screen === 'welcome' || screen === 'pretest' || screen === 'enter'
   const showTimer = !preGame && (screen !== 'posttest' || postDecision)
-  const showNav = !preGame && screen !== 'posttest'
+  const showNav = !preGame && screen !== 'posttest' && screen !== 'return'
   // The portal arrival walks the player through Map and Bag: the buttons appear
-  // there for show (not clickable yet) and the one being explained is highlighted.
+  // there for show until the final line finishes; then Map starts the run.
   const touring = screen === 'enter' && Boolean(enterTour)
-  const tourClass = (target) => (touring ? `hud-tour-btn ${enterTour === target ? 'is-focus' : ''}` : '')
+  const mapReady = touring && enterTour === 'ready'
+  const mapBlocked = touring && !mapReady
+  const tourClass = (target) => (touring ? `hud-tour-btn ${enterTour === target ? 'is-focus' : ''} ${mapReady && target === 'map' ? 'is-ready' : ''}` : '')
   // Hints only help where there's a live objective — a puzzle room, or the map
   // pointing at the next district. Elsewhere (setup, conversations, endings)
   // there's nothing to hint, so don't offer the button.
@@ -164,12 +196,14 @@ export default function HUD() {
           </button>
           {(showNav || touring) && screen !== 'map' && (
             <button className={`btn btn-cyan btn-sm ${tourClass('map')}`} data-tour="map"
-              onClick={touring ? undefined : goMap} tabIndex={touring ? -1 : undefined} aria-disabled={touring || undefined}>
+              onClick={mapReady ? startGame : touring ? undefined : goMap}
+              onMouseDown={(event) => event.preventDefault()}
+              tabIndex={mapBlocked ? -1 : undefined} aria-disabled={mapBlocked || undefined}>
               {t('hud.map')}
             </button>
           )}
           {(showNav || touring) && (
-            <button className={`btn btn-purple btn-sm ${tourClass('bag')}`} data-tour="bag"
+            <button className={`btn btn-purple btn-sm ${tourClass('bag')} ${bagReminder && !bagOpen ? 'hud-bag-reminder' : ''}`} data-tour="bag"
               onClick={touring ? undefined : () => setBagOpen(true)} tabIndex={touring ? -1 : undefined} aria-disabled={touring || undefined}>
               {t('hud.bag')} {inventory.length > 0 && <b className="bag-count">{inventory.length}</b>}
             </button>

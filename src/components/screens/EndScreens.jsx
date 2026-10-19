@@ -40,7 +40,8 @@ export function WinScreen() {
       {/* Max and Mia, bottom-left (public/ending/player-won.png). */}
       <img className="win-players" src={assetUrl('ending/player-won.png')} alt="" />
       <div className="win-title-container">
-         <div className="eyebrow" style={{ color: 'var(--green)' }}>{t('end.win.eyebrow')} 
+         <div className="eyebrow" style={{ color: 'var(--green)', fontSize: "18px" }}>
+           <span>{t('end.win.eyebrow')} </span>
             <span className="intro-glyph win-glyph">✓</span>
         </div>
         <h1 className="intro-title">{t('end.win.titleLead', vars)} <span className="grad">{t('end.win.titleAccent')}</span></h1>
@@ -55,7 +56,7 @@ export function WinScreen() {
         
           {evidence.length > 0 && (
             <>
-              <div className="eyebrow" style={{ color: '#16624c', marginTop: 14 }}>{t('end.win.evidenceHeading')}</div>
+              <div className="" style={{ color: '#16624c', marginTop: 2, fontWeight: "bold", fontFamily: "var(--font-display)", fontSize: "1.2rem" }}>{t('end.win.evidenceHeading')}</div>
               <ul className="evidence-list">
                 {evidence.map((e) => (<li key={e.id}><span className="ev-dot" />{e.label}</li>))}
               </ul>
@@ -63,7 +64,7 @@ export function WinScreen() {
           )}
         </div>
 
-        <button className="btn btn-green btn-lg" onClick={reset}>{t('end.win.again')}</button>
+        <button className="btn-light btn-lg" onClick={reset}>{t('end.win.again')}</button>
       </div>
     </div>
   )

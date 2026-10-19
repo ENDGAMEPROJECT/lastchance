@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useGame } from './game/GameContext.jsx'
-import { preloadGameImages } from './game/preloadAssets.js'
+import { preloadGameAssets } from './game/preloadAssets.js'
+import { useI18n } from './i18n/index.jsx'
 import Stage from './components/Stage.jsx'
 import { DndProvider } from './components/dnd/Dnd.jsx'
 import HUD from './components/HUD.jsx'
@@ -9,6 +10,7 @@ import RoomReview from './components/RoomReview.jsx'
 import WelcomeScreen from './components/screens/WelcomeScreen.jsx'
 import PretestScreen from './components/screens/PretestScreen.jsx'
 import EnterScreen from './components/screens/EnterScreen.jsx'
+import ReturnScreen from './components/screens/ReturnScreen.jsx'
 import FinalDecision from './rooms/FinalDecision.jsx'
 import { WinScreen, LoseScreen } from './components/screens/EndScreens.jsx'
 
@@ -30,17 +32,24 @@ const ROOMS = {
 }
 
 export default function App() {
-  const { screen, activeNode, reducedMotion, posttestSession } = useGame()
+  const { screen, activeNode, reviewNodeId, reducedMotion, posttestSession, posttestEntry, narrative, progress, NODES } = useGame()
+  const { locale } = useI18n()
+  const nodeId = screen === 'review' ? reviewNodeId : activeNode?.id
+  const nextNodeId = screen === 'room'
+    ? NODES[NODES.findIndex((node) => node.id === nodeId) + 1]?.id
+    : NODES.find((node) => progress[node.id] !== 'done')?.id
 
   useEffect(() => {
     document.body.classList.toggle('reduced-motion', reducedMotion)
   }, [reducedMotion])
 
-  // Preload every room/corridor background once at startup so navigation
-  // never lags waiting on a big image to download.
+  // WelcomeScreen owns its draft character selection. Later stages prepare
+  // only the current destination and the next room in the route.
   useEffect(() => {
-    preloadGameImages()
-  }, [])
+    if (screen !== 'welcome') {
+      preloadGameAssets({ screen, character: narrative.character, locale, nodeId, nextNodeId })
+    }
+  }, [screen, narrative.character, locale, nodeId, nextNodeId])
 
   const roomContent = activeNode
     ? (() => {
@@ -53,6 +62,7 @@ export default function App() {
   if (screen === 'welcome') content = <WelcomeScreen />
   else if (screen === 'pretest') content = <PretestScreen />
   else if (screen === 'enter') content = <EnterScreen />
+  else if (screen === 'return') content = <ReturnScreen />
   else if (screen === 'posttest') content = <FinalDecision key={posttestSession} />
   else if (screen === 'win') content = <WinScreen />
   else if (screen === 'lose') content = <LoseScreen />
@@ -80,6 +90,8 @@ export default function App() {
             )}
             {content}
             <div className="transition-veil" aria-hidden />
+            {/* Out of the return portal: the post-test scene fades in from white. */}
+            {screen === 'posttest' && posttestEntry === 'white' && <div className="white-arrival" aria-hidden />}
           </div>
         </div>
       </DndProvider>

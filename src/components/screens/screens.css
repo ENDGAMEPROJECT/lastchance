@@ -13,7 +13,8 @@
   gap: 4px;
 }
 .intro-glyph {
-  font-size: 2.6rem;
+  font-size: 2.1rem;
+  margin-left: 0.1rem;
   line-height: 1;
   color: var(--cyan);
   text-shadow: var(--glow-cyan);
@@ -34,6 +35,7 @@
   font-size: 2.1rem;
   letter-spacing: 0.04em;
   margin: 2px 0;
+  
 }
 .grad {
   background: linear-gradient(
@@ -202,7 +204,7 @@
   max-width: 720px;
 }
 .intro.end .intro-card {
-  margin-bottom: 14px;
+  margin-bottom: 24px;
   box-shadow:
     var(--glow-cyan),
     0 18px 34px rgba(0, 0, 0, 0.45);
@@ -496,22 +498,51 @@
 /* Keep the copy readable over the bright sky. */
 .win-scene .eyebrow,
 .win-scene .intro-tag {
+
   text-shadow:
     0 2px 10px rgba(10, 30, 70, 0.65),
     0 0 2px rgba(10, 30, 70, 0.6);
 }
 .win-scene .intro-tag {
-  color: #f4f8ff;
+  color: #081938;
 }
 /* The title mixes plain and gradient (transparent-filled) text: a text-shadow
    would show through the gradient letters, and a filter on the clipped span
    glitches in Chrome — so shadow the whole heading's glyphs from the parent. */
+/* Win title with a border OUTSIDE the letters. -webkit-text-stroke is centred
+   on the glyph edge (half of it eats into the letter) and shows through the
+   transparent gradient text, so instead hard drop-shadows are chained on the
+   whole heading: each one shifts the already rendered shape, which grows it
+   outward by --title-outline on every side. Works the same for the plain and
+   the gradient part. The last drop-shadow is the soft depth shadow.
+   CHANGE: --title-outline (thickness) and --title-outline-color. */
 .win-scene .intro-title {
+  --title-outline: 3px;
+  --title-outline-color: rgb(54, 80, 132);
+  /* 8 small steps (4 straight + 4 diagonal) instead of 4 big ones, so diagonal
+     edges (M, Y, V, N…) stay smooth instead of stair-stepped. They add up to
+     about --title-outline in every direction: s + 2·0.707·s ≈ 2.41·s. */
+  --o-s: calc(var(--title-outline) * 0.415); /* straight step */
+  --o-d: calc(var(--title-outline) * 0.293); /* diagonal step per axis (s·0.707) */
   text-shadow: none;
-  filter: drop-shadow(0 2px 6px rgba(10, 30, 70, 0.75));
+  font-size: 3rem;
+  color: rgb(250, 252, 255);
+  filter:
+    drop-shadow(var(--o-s) 0 0 var(--title-outline-color))
+    drop-shadow(calc(-1 * var(--o-s)) 0 0 var(--title-outline-color))
+    drop-shadow(0 var(--o-s) 0 var(--title-outline-color))
+    drop-shadow(0 calc(-1 * var(--o-s)) 0 var(--title-outline-color))
+    drop-shadow(var(--o-d) var(--o-d) 0 var(--title-outline-color))
+    drop-shadow(calc(-1 * var(--o-d)) var(--o-d) 0 var(--title-outline-color))
+    drop-shadow(var(--o-d) calc(-1 * var(--o-d)) 0 var(--title-outline-color))
+    drop-shadow(calc(-1 * var(--o-d)) calc(-1 * var(--o-d)) 0 var(--title-outline-color))
+    drop-shadow(0 3px 6px rgba(10, 30, 70, 0.55));
 }
 .win-scene .intro-title .grad {
   text-shadow: none;
+ background: linear-gradient(90deg, var(--cyan), var(--magenta-light), var(--purple-light));
+    -webkit-background-clip: text;
+    background-clip: text;
 }
 .reduced-motion .win-cloud-lane {
   animation: none;

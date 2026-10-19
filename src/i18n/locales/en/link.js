@@ -28,16 +28,17 @@ export default {
   finalRouter: "Advance →",
   reviewTitle: "Why those doors?",
   errStillOpen:
-    "At least one fraudulent link is still open. Block every fake before continuing.",
+    "Link{plural} blocked: {count}. Block the two fraudulent links to continue.",
   errBlockedSafe:
-    "You blocked the real store! That is the one safe door — leave it open.",
+    "Some blocked doors are wrong. Block the two fraudulent links to continue.",
   justifyLeadLabel: "Why did you block them?",
   justifyLead:
     "Being able to explain the red flags matters more than a lucky guess. Tick every real warning sign — and nothing that only looks reassuring.",
   justifyErrWrong:
-    "Some of those are not actually red flags — https, padlocks and nice photos do NOT prove a site is safe.",
+    "HTTPS, a padlock or a familiar-looking name is not a warning sign by itself, but none proves a site is safe. A familiar name can hide a typo or look-alike letter: check the full domain for those specific differences.",
   justifyErrMissing:
-    "A few red flags are still unchecked. Look again at the fake URLs.",
+    "{count} warning signs left to select. Look again at the fake URLs.",
+  justifyErrMissingOne: "1 warning sign left to select. Look again at the fake URLs.",
   submitReasoning: "Submit reasoning",
 
   /* Preview website labels (the fake/real storefronts on each door). */

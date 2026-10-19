@@ -56,6 +56,7 @@ const baseInitialState = {
   player: { alias: '', age: '', character: DEBUG ? DEBUG_CHARACTER : 'mia' }, // debug: ?character=max
   timedOut: false, // ran out of time BEFORE finishing the puzzles
   posttestSession: 0,
+  posttestEntry: null, // 'white' when the post-test is entered out of the return portal's whiteout
   loseReason: null, // why the friend bought — picks the lose-screen copy
   postDecision: false, // post-test reached the final call → clock runs & shows
   activeNodeId: null,
@@ -69,7 +70,7 @@ const baseInitialState = {
   running: false,
   reducedMotion: false,
   // Portal-arrival walkthrough of the HUD: null (not shown) | 'map' | 'bag'
-  // (that button highlighted) | 'done' (both shown, none highlighted).
+  // (steady highlight) | 'done' (both shown) | 'ready' (Map starts the run).
   enterTour: null,
 }
 
@@ -163,6 +164,11 @@ export function reducer(state, action) {
     case 'GOTO_SCREEN': // debug-only jump
       // A named scenario ("Test · 5:00 / 0:00") rebuilds that post-test setup.
       if (DEBUG && action.screen === 'posttest' && action.scenario) return debugPosttestState(state, action.scenario)
+      // Same scenario, but starting at the return cutscene (Physical Internet
+      // dialogue → portal → white → post-test), clock paused as in a real run.
+      if (DEBUG && action.screen === 'return' && action.scenario) {
+        return { ...debugPosttestState(state, action.scenario), screen: 'return', running: false, posttestEntry: null }
+      }
       // Plain post-test entry (the map's Final Decision node) keeps the real run
       // state — progress, evidence, clock — exactly like clearing the last district.
       if (action.screen === 'posttest') {
@@ -170,6 +176,7 @@ export function reducer(state, action) {
           ...state,
           screen: 'posttest',
           posttestSession: state.posttestSession + 1,
+          posttestEntry: action.fromWhite ? 'white' : null,
           postDecision: true,
           running: state.timeLeft > 0,
           activeNodeId: null,
@@ -191,15 +198,16 @@ export function reducer(state, action) {
       return {
         ...state,
         progress,
-        // Clearing the last district ends the puzzles → into the post-test.
-        screen: allDone ? 'posttest' : 'map',
+        // Clearing the last district ends the puzzles → back to the Physical
+        // Internet for the "go back" exchange (ReturnScreen), then the post-test.
+        screen: allDone ? 'return' : 'map',
         activeNodeId: null,
         reviewNodeId: null,
         roomStarted: false,
         linkRound: null,
-        // The assessment and retries share the remaining puzzle time.
-        postDecision: allDone ? true : state.postDecision,
-        running: allDone ? state.timeLeft > 0 : state.running,
+        // The clock pauses during that cutscene; entering the post-test
+        // (GOTO_SCREEN 'posttest') sets postDecision and resumes it.
+        running: allDone ? false : state.running,
       }
     }
 
@@ -278,6 +286,8 @@ export function GameProvider({ children }) {
   const finishGame = useCallback((outcome, reason) => dispatch({ type: 'FINISH', outcome, reason }), [])
   const startPosttestDecision = useCallback(() => dispatch({ type: 'START_POSTTEST_DECISION' }), [])
   const gotoScreen = useCallback((screen, scenario) => dispatch({ type: 'GOTO_SCREEN', screen, scenario }), [])
+  // The return portal's exit: into the post-test, fading in from white.
+  const enterPosttestFromWhite = useCallback(() => dispatch({ type: 'GOTO_SCREEN', screen: 'posttest', fromWhite: true }), [])
   const skipToPortal = useCallback(() => dispatch({ type: 'DEBUG_SKIP_TO_PORTAL' }), [])
   const setCharacter = useCallback((character) => dispatch({ type: 'DEBUG_SET_CHARACTER', character }), [])
   const setEnterTour = useCallback((step) => dispatch({ type: 'SET_ENTER_TOUR', step }), [])
@@ -313,6 +323,7 @@ export function GameProvider({ children }) {
     finishGame,
     startPosttestDecision,
     gotoScreen,
+    enterPosttestFromWhite,
     skipToPortal,
     setCharacter,
     setEnterTour,

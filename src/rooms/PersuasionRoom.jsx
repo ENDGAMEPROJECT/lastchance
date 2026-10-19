@@ -41,14 +41,42 @@ function circleLetter(text, letter) {
   )
 }
 
+/* The visible INK box of a single rendered letter, relative to its span's
+   top-left (CSS px). The span's own box is the whole line box (same height for
+   "l" and "o", plus leading), which makes rings too big; canvas text metrics
+   give the glyph's real extents in the font actually in use. */
+let inkCanvas
+function glyphInk(mark) {
+  const cs = getComputedStyle(mark)
+  let ch = mark.textContent || ''
+  if (cs.textTransform === 'uppercase') ch = ch.toUpperCase()
+  else if (cs.textTransform === 'lowercase') ch = ch.toLowerCase()
+  inkCanvas ||= document.createElement('canvas')
+  const ctx = inkCanvas.getContext('2d')
+  ctx.font = `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`
+  const m = ctx.measureText(ch)
+  if (m.actualBoundingBoxAscent == null || m.fontBoundingBoxAscent == null) return null
+  // Inline content is centred in the line box: half-leading above the font's
+  // ascent puts the baseline here.
+  const halfLeading = (mark.offsetHeight - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) / 2
+  const baseline = halfLeading + m.fontBoundingBoxAscent
+  return {
+    left: -m.actualBoundingBoxLeft,
+    right: m.actualBoundingBoxRight,
+    top: baseline - m.actualBoundingBoxAscent,
+    bottom: baseline + m.actualBoundingBoxDescent,
+    fontSize: parseFloat(cs.fontSize) || 16,
+  }
+}
+
 const FRAME_ORDER = ['emotional', 'fomo', 'urgency', 'social', 'influencer', 'exagg']
 
 /* Initial overlapping positions for the centre pile (scene-local px). */
-const CENTER = { x: 470, y: 110 }
+const CENTER = { x: 590, y: 110 }
 function initPositions() {
   const o = {}
   FRAME_ORDER.forEach((id, i) => {
-    o[id] = { x: CENTER.x + i * 30, y: CENTER.y + i * 24 } // diagonal overlapping pile
+    o[id] = { x: CENTER.x + i * 15, y: CENTER.y + i * 24 } // diagonal overlapping pile
   })
   return o
 }
@@ -60,7 +88,7 @@ function getFrameScale(x) {
   const minX = 0
   const maxX = 760
   const t = (Math.min(Math.max(x, minX), maxX) - minX) / (maxX - minX)
-  return 1 - t * 0.3
+  return 1 - t * 0.22
 }
 
 export default function PersuasionRoom({ node }) {
@@ -105,6 +133,9 @@ export default function PersuasionRoom({ node }) {
   // the wall's rotateY, so this is exact; the frame reuses it to draw its ring
   // at the identical spot, so a frame dropped on its poster rings that letter.
   const [ringPos, setRingPos] = useState({})
+  // The scene stays hidden until the posters' fonts have loaded and every ring is
+  // measured with them — otherwise the rings visibly jump into place.
+  const [sceneReady, setSceneReady] = useState(false)
   const measureRings = useCallback(() => {
     const next = {}
     for (const p of POSTERS) {
@@ -113,29 +144,53 @@ export default function PersuasionRoom({ node }) {
       if (!mark) continue
       const w = mark.offsetWidth, h = mark.offsetHeight
       if (!w && !h) continue // not laid out yet — don't record a bogus 0,0
-      // Ring size tracks the line-box height, which is identical for upper and
-      // lowercase — so a lowercase glyph (o, l, e) would get an oversized ring.
-      // Tighten it for lowercase.
-      const ch = mark.textContent || ''
-      const isLower = ch && ch === ch.toLowerCase() && ch !== ch.toUpperCase()
-      const d = Math.max(w, h) * (isLower ? 1.12 : 1.28)
+      // An OVAL hugging the glyph's ink plus a small margin — narrow letters (i, l)
+      // get a tall thin oval, wide ones (m, w) a wide one. Falls back to the
+      // span's box if the browser lacks canvas text metrics.
+      const ink = glyphInk(mark) || { left: 0, right: w, top: 0, bottom: h, fontSize: h }
+      const padX = Math.max(3, ink.fontSize * 0.16)
+      const padY = Math.max(2, ink.fontSize * 0.1)
+      const rw = ink.right - ink.left + padX * 2
+      const rh = ink.bottom - ink.top + padY * 2
       // offsetLeft/offsetTop are measured from the poster's PADDING edge (inside
       // its border); the frame ring is positioned from the frame's border-box
       // edge. Add the poster's border width (clientLeft/clientTop) so both use
       // the same origin.
-      next[p.id] = { x: mark.offsetLeft + el.clientLeft + w / 2, y: mark.offsetTop + el.clientTop + h / 2, d }
+      next[p.id] = {
+        x: mark.offsetLeft + el.clientLeft + (ink.left + ink.right) / 2,
+        y: mark.offsetTop + el.clientTop + (ink.top + ink.bottom) / 2,
+        w: rw,
+        h: rh,
+      }
     }
     // Merge, never replace — a transient empty read must not wipe good values.
     if (Object.keys(next).length) setRingPos((prev) => ({ ...prev, ...next }))
   }, [])
 
-  // Re-measure when web fonts settle (letter metrics shift) and on window resize.
+  // Re-measure whenever a web font finishes loading (letter metrics shift) and on
+  // window resize. Fonts load lazily — only once the posters' text first renders,
+  // i.e. AFTER this room mounts — and the posters are fixed-size, so the wall's
+  // ResizeObserver never sees that reflow; 'loadingdone' catches every late load.
   // Measurement is in design pixels, so the stage's scale transform is irrelevant.
   useEffect(() => {
-    if (document.fonts?.ready) document.fonts.ready.then(() => measureRings())
+    const fonts = document.fonts
+    fonts?.addEventListener?.('loadingdone', measureRings)
     window.addEventListener('resize', measureRings)
-    return () => window.removeEventListener('resize', measureRings)
+    return () => {
+      fonts?.removeEventListener?.('loadingdone', measureRings)
+      window.removeEventListener('resize', measureRings)
+    }
   }, [measureRings])
+
+  // The poster copy changed (e.g. language switch) → the letter moved; re-measure
+  // after the new text is laid out.
+  const posterCopyKey = Array.isArray(posterText)
+    ? posterText.map((p) => `${p?.headline}|${p?.sub}|${p?.letter}`).join('§')
+    : ''
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => measureRings())
+    return () => cancelAnimationFrame(raf)
+  }, [posterCopyKey, measureRings])
 
   // Callback ref on the poster wall. The wall is a RoomFrame child, mounted only
   // AFTER the player clicks "Begin" — so mount-time effects run too early. This
@@ -150,7 +205,26 @@ export default function PersuasionRoom({ node }) {
       const ro = new ResizeObserver(() => measureRings())
       ro.observe(el)
       wallObs.current = ro
-      requestAnimationFrame(() => measureRings())
+      requestAnimationFrame(() => {
+        measureRings()
+        // Explicitly load every font the posters use (they only start loading
+        // once rendered), measure with them, then reveal. Capped so a font that
+        // never arrives can't keep the room hidden.
+        const fontSpecs = new Set()
+        el.querySelectorAll('.pl-poster-head, .pl-poster-sub').forEach((n) => {
+          const cs = getComputedStyle(n)
+          fontSpecs.add(`${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`)
+        })
+        const loaded = document.fonts
+          ? Promise.all([...fontSpecs].map((f) => document.fonts.load(f).catch(() => {})))
+              .then(() => document.fonts.ready)
+          : Promise.resolve()
+        const cap = new Promise((resolve) => setTimeout(resolve, 2500))
+        Promise.race([loaded, cap]).then(() => {
+          measureRings()
+          requestAnimationFrame(() => setSceneReady(true))
+        })
+      })
     }
   }, [measureRings])
 
@@ -164,6 +238,7 @@ export default function PersuasionRoom({ node }) {
 
   // Every poster now carries a frame (no right/wrong — the password is the check).
   const allPlaced = Object.keys(placement).length === POSTERS.length
+  const allMatched = POSTERS.every((p) => placement[p.id] === p.id)
 
 
   // Convert a screen point into scene-local design pixels (undo stage scale).
@@ -290,7 +365,7 @@ export default function PersuasionRoom({ node }) {
       solvedText={t('rooms.persuasion.solvedText')}
       onContinue={() => completeRoom(node.id)}
     >
-      <div className="pl-scene2 fade-in" ref={sceneRef}>
+      <div className={`pl-scene2 ${sceneReady ? 'fade-in' : 'pl-loading'}`} ref={sceneRef}>
         {/* Hide the puzzle during the end animation so the background clip
             plays cleanly; the cleared bar appears once it settles. */}
         {!ending && (<>
@@ -320,10 +395,14 @@ export default function PersuasionRoom({ node }) {
         {/* ---- RIGHT: the computer in the scene — click it to open its screen ---- */}
         <button
           type="button"
-          className={`pl-computer-hotspot ${allPlaced ? 'ready' : ''}`}
+          className={`pl-computer-hotspot ${allMatched && !computerOpen && !dragId ? 'ready' : ''}`}
+          onMouseDown={(e) => e.preventDefault()}
           onClick={() => setComputerOpen(true)}
           aria-label={t('rooms.persuasion.openComputer')}
         >
+          <svg className="pl-computer-outline" viewBox="0 0 300 340" aria-hidden="true">
+            <path d="M 82 126 L 265 108 Q 271 108 271 115 L 271 263 Q 271 270 265 270 L 82 254 Q 76 254 76 248 L 76 133 Q 76 127 82 126 Z" />
+          </svg>
           <span className="pl-hotspot-tag mono">{t('rooms.persuasion.openComputer')}</span>
         </button>
 
@@ -373,7 +452,7 @@ export default function PersuasionRoom({ node }) {
               {ring && (
                 <span
                   className="pl-frame-ring"
-                  style={{ left: ring.x, top: ring.y, width: ring.d, height: ring.d }}
+                  style={{ left: ring.x, top: ring.y, width: ring.w, height: ring.h }}
                   aria-hidden
                 />
               )}

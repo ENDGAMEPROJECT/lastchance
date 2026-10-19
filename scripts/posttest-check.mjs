@@ -29,6 +29,12 @@ assert.equal(passedPosttest([true], 3), false)
 
 let state = fresh()
 for (const id of Object.keys(state.progress)) state = reducer(state, { type: 'COMPLETE_NODE', id })
+// Clearing the last district → the "go back" cutscene, clock paused…
+assert.equal(state.screen, 'return')
+assert.equal(state.running, false)
+assert.equal(reducer(state, { type: 'TICK' }).timeLeft, state.timeLeft)
+// …then "Go back to the real world" enters the post-test and resumes the clock.
+state = reducer(state, { type: 'GOTO_SCREEN', screen: 'posttest' })
 assert.equal(state.screen, 'posttest')
 assert.equal(state.running, true)
 assert.equal(state.timedOut, false)

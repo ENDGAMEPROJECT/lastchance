@@ -38,18 +38,18 @@ const SPARKS = Array.from({ length: 14 }, (_, i) => {
 /* The portal arrival: after the warp, a short Max/Mia exchange inside the
    Physical Internet, then a walkthrough of the two HUD tools (Map, then Bag —
    each highlighted with its explanation underneath), and Mia's last line.
-   Only then does "Countdown begins" appear; it starts the clock. Every step
+   Only then does the Map become clickable; opening it starts the clock. Every step
    advances on its own after its reading time (shown by the timeline). */
 export default function EnterScreen() {
-  const { startGame, reducedMotion, setEnterTour, narrative } = useGame()
+  const { reducedMotion, setEnterTour, narrative } = useGame()
   const t = useT()
   const { scale } = useStage()
   const friend = narrative.friend
   const vars = { friend, product: narrative.product, minutes: GAME_MINUTES }
   const backdrops = {
+    initial: 'initial-ph-internet.png',
     friend: narrative.friendInternetImage,
     player: narrative.playerInternetImage,
-    tour: 'no-one-talking-ph-internet.png',
   }
 
   const steps = [
@@ -78,7 +78,7 @@ export default function EnterScreen() {
     return () => window.clearTimeout(timer)
   }, [phase, playing, tunnelMs])
 
-  // Mount the shared, already-buffering <video> (preloaded at startup) into the
+  // Mount the shared, already-buffering <video> (preloaded during the pre-test) into the
   // tunnel layer and play it from the start; detach it again when the tunnel ends.
   const [videoHost, setVideoHost] = useState(null)
   useEffect(() => {
@@ -133,8 +133,8 @@ export default function EnterScreen() {
     return () => window.clearInterval(timer)
   }, [intro, stepIndex, total, isLast])
 
-  // Tell the HUD which tool to reveal / highlight.
-  const tour = stepIndex < 3 ? null : step.who === 'tour' ? step.target : 'done'
+  // Reveal the tools during their explanations; enable Map after the final line.
+  const tour = canStart ? 'ready' : stepIndex < 3 ? null : step.who === 'tour' ? step.target : 'done'
   useEffect(() => { setEnterTour(tour) }, [tour, setEnterTour])
 
   // Place the explanation under the highlighted HUD button. The button lives in
@@ -158,7 +158,8 @@ export default function EnterScreen() {
     return () => window.cancelAnimationFrame(frame)
   }, [step.who, step.target, root, scale])
 
-  const backdrop = step.who
+  // The empty arrival scene shows until the dialogue starts (and during the HUD tour).
+  const backdrop = intro || step.who === 'tour' ? 'initial' : step.who
   const name = step.who === 'player' ? narrative.player : friend
   const captionW = 360
   const captionLeft = anchorX == null ? null : Math.min(1280 - 16 - captionW, Math.max(16, anchorX - captionW + 40))
@@ -212,12 +213,6 @@ export default function EnterScreen() {
               <span className="enter-caption-progress" style={{ width: progress }} />
             </span>
           </div>
-        )}
-
-        {canStart && (
-          <button className="btn btn-cyan btn-lg jack-in enter-start" onClick={startGame}>
-            {t('enter.start')}
-          </button>
         )}
       </div>
 

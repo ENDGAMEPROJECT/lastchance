@@ -124,11 +124,11 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Ubedljivo — ali bez dovoljno dokaza",
-          "body": "{prijatelj}: „Deluje ubedljivo… ali nisam stigao/la da vidim dovoljno dokaza u Fizičkom internetu. Kupiću ga.“ — {prijatelj} je kupio/la {proizvod}."
+          "body": "It sounds convincing… but I didn't get to see enough evidence in the Physical Internet. I'm buying it."
         },
         "notEnoughEvidenceUnconvincing": {
           "heading": "Nisi ubedio/la",
-          "body": "{prijatelj}: „Nisi me ubedio/la — a nisam video/la ni dovoljno dokaza u Fizičkom internetu. Kupiću ga.“ — {prijatelj} je kupio/la {proizvod}."
+          "body": "You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it."
         }
       }
     }
@@ -179,7 +179,9 @@ export default {
           }
         ],
         "why": "Upravo tako — odbrojavanje je veštački stvoren osećaj hitnosti, osmišljen da te navede da reaguješ pre nego što razmisliš.",
-        "nudge": "Razmisli šta ti to odbrojavanje zapravo radi."
+        "nudge": "Razmisli šta ti to odbrojavanje zapravo radi.",
+        "positiveFeedback": "You mean, the urgency makes you act before you think... What else?",
+        "negativeFeedback": "I don't know, that doesn't sound right."
       },
       {
         "title": "Izvor i fid",
@@ -206,14 +208,16 @@ export default {
           }
         ],
         "why": "Tako je — nije u pitanju mikrofon niti neka magija. Tvoja istorija pretrage je analizirana i prodata oglasnim mrežama.",
-        "nudge": "Nije mikrofon niti virus — razmisli o tome šta platforma već zna o tebi."
+        "nudge": "Nije mikrofon niti virus — razmisli o tome šta platforma već zna o tebi.",
+        "positiveFeedback": "Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. And apart from that? ",
+        "negativeFeedback": "That really doesn't make sense to me."
       },
       {
         "title": "Odredište",
         "options": [
           {
             "k": "A",
-            "text": "Pogledaj adresnu traku. URL glasi tech-bargalns.com — umesto slova „i“ nalazi se slovo „l“. To je lažni domen.",
+            "text": "Look at the address bar. The URL says \nhttps://www.lunawear.com-official.shop/ — don't you find this long URL and the word \"official\" a little suspicious?",
             "correct": true
           },
           {
@@ -233,7 +237,9 @@ export default {
           }
         ],
         "why": "Tako je — čitaj URL slovo po slovo. „bargalns“ sa slovom „l“ je domen koji oponaša pravi, a ne domen prave prodavnice.",
-        "nudge": "Pravi trag nalazi se u samoj adresnoj traci — čitaj je znak po znak."
+        "nudge": "Pravi trag nalazi se u samoj adresnoj traci — čitaj je znak po znak.",
+        "positiveFeedback": "Oh, now I remember! A suspicious URL can be a sign that a website is fake and just pretending to be the real store.",
+        "negativeFeedback": "Yeah, right, and I'm supposed to believe that?"
       }
     ],
     "pretest": {
@@ -254,11 +260,25 @@ export default {
       "debugTag": "Post-test",
       "title": "{Prijatelj} se predomišlja",
       "opening": "Вратио си се. Још гледам страницу за плаћање. Пре него што купим, реци ми шта си сазнао о овој понуди.",
-      "convinced": "Убедио си ме. Сада разумем знаке упозорења и како је ова понуда покушала да утиче на мене. Нећу купити таблет.",
+      "friend": {
+        "responses": [
+          "What just happened? Do you think any of what we saw was... real?",
+          "Yeah, about that... No offense {player}, but I really want this tablet. What if it's not a scam? I think I'm willing to take the risk!!",
+          "Just tell me the strongest reasons why you think it's a scam."
+        ]
+      },
+      "player": {
+        "responses": [
+          "Of course it was real, we saw all the reasons why the deal was a scam, remember? So that you wouldn't fall for it.",
+          "Come one, we’re going to be late to class.",
+          "{friend}! Please tell me you’re kidding..."
+        ]
+      },
       "responses": [
         "Razumem te, ali pritisak deluje toliko stvarno dok gledam kako vreme otkucava. I nije samo tajmer — stalno razmišljam o tome da je ponuda došla od jedne od mojih omiljenih kreatorki. Ali i dalje mi nije jasno kako mi se uopšte pojavila.",
         "Čoveče, način na koji se sve odvija iza kulisa ovih aplikacija je neverovatan. Ali na kraju krajeva, i dalje gledam ovu stranicu za plaćanje i pokušavam da odlučim da li je bezbedno da unesem svoje podatke."
       ],
+      "convinced": "Убедио си ме. Сада разумем знаке упозорења и како је ова понуда покушала да утиче на мене. Нећу купити таблет.",
       "endingFriend": "Uh, dao/la si mi mnogo toga o čemu treba da razmislim, ali moram odmah da odlučim — tajmer samo što nije stigao do nule. Na osnovu svega što smo pogledali, reci mi direktno: da li da zatvorim ovu karticu i zaštitim svoje podatke ili da rizikujem i kupim?",
       "choiceClose": "Zatvori karticu. Ovo je prevara.",
       "choiceBuy": "Klikni na kupovinu. Hajde da rizikujemo.",
@@ -269,6 +289,26 @@ export default {
     "mastery": {
       "banner": "Još jednom — još uvek nisam ubeđen/a. Daj mi najjači razlog za svaku opciju."
     }
+  },
+  "enter": {
+    "eyebrow": "Unutra smo",
+    "titleLead": "Dobro došao/la u",
+    "titleAccent": "FIZIČKI INTERNET",
+    "friendLine": "U redu — imaš {minuta} minuta da me ubediš da je ova ponuda prevara. Ako odbrojavanje stigne do nule, kupiću {proizvod}.",
+    "playerLine": "We made it. This is the Physical Internet. Let's uncover how this deal was built to fool {friend}.",
+    "toolsTitle": "Prvo, oprema",
+    "toolsIntro": "Dve stvari putuju sa tobom svuda po ovom prostoru. Naći ćeš ih u traci na vrhu ekrana.",
+    "clock": "⏱ {minuta}:00 počinje onog trenutka kada krenemo da hodamo",
+    "mission": "Prođi kroz okruge, prikupi dokaze o tome kako prevara funkcioniše i vrati se do {prijatelja} pre nego što ponuda istekne.",
+    "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga — završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
+    "bagText": "Tvoji alati i dokazi koje prikupiš. Otvori ih da bi koristio/la predmete u zagonetkama i pregledao/la dokaze koje ćeš pokazati {prijatelju}.",
+    "finalLine": "Ready? The timer starts as soon as you open the map."
+  },
+  "return": {
+    "playerLine": "That went well! I think we've collected more than enough evidence.",
+    "friendLine": "Let's go back already. Offer ends in {minutes} minutes.",
+    "friendLineTimeUp": "Let's go back already. The offer has already ended.",
+    "goBack": "Go back to the real world"
   },
   "nodes": {
     "start": {
@@ -333,20 +373,6 @@ export default {
       "name": "Lampa istine",
       "desc": "Otkriva sitna slova skrivena iza sjajnih plakata u Koridoru oglasa."
     }
-  },
-  "enter": {
-    "eyebrow": "Unutra smo",
-    "titleLead": "Dobro došao/la u",
-    "titleAccent": "FIZIČKI INTERNET",
-    "friendLine": "U redu — imaš {minuta} minuta da me ubediš da je ova ponuda prevara. Ako odbrojavanje stigne do nule, kupiću {proizvod}.",
-    "playerLine": "We made it. This is the Physical Internet. Let's uncover how this deal was built to fool {friend}.",
-    "toolsTitle": "Prvo, oprema",
-    "toolsIntro": "Dve stvari putuju sa tobom svuda po ovom prostoru. Naći ćeš ih u traci na vrhu ekrana.",
-    "clock": "⏱ {minuta}:00 počinje onog trenutka kada krenemo da hodamo",
-    "mission": "Prođi kroz okruge, prikupi dokaze o tome kako prevara funkcioniše i vrati se do {prijatelja} pre nego što ponuda istekne.",
-    "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga — završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
-    "bagText": "Tvoji alati i dokazi koje prikupiš. Otvori ih da bi koristio/la predmete u zagonetkama i pregledao/la dokaze koje ćeš pokazati {prijatelju}.",
-    "finalLine": "Ready? The timer starts as soon as you open the map."
   },
   "hints": {
     "title": "Saveti za misiju",

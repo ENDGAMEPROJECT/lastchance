@@ -5,13 +5,17 @@ import sr from './locales/sr.js'
 import fullscreen from './locales/fullscreen.js'
 import characters from './locales/characters.js'
 
-// Keep local interface additions independent of generated sheet translations.
-const dictionaries = Object.fromEntries(
-  Object.entries({ en, es, fi, sr }).map(([code, dictionary]) => [code, {
+// Local copy only fills missing keys. Imported sheet translations take priority.
+export function withLocalFallbacks(dictionary, code) {
+  return {
     ...dictionary,
-    welcome: { ...dictionary.welcome, ...characters[code] },
-    hud: { ...dictionary.hud, ...fullscreen[code] },
-  }]),
+    welcome: { ...characters[code], ...dictionary.welcome },
+    hud: { ...fullscreen[code], ...dictionary.hud },
+  }
+}
+
+const dictionaries = Object.fromEntries(
+  Object.entries({ en, es, fi, sr }).map(([code, dictionary]) => [code, withLocalFallbacks(dictionary, code)]),
 )
 
 export default dictionaries

@@ -1205,6 +1205,35 @@
   margin: 0;
   padding: 8px 14px;
 }
+.ld-block-progress {
+  flex: 1;
+  min-width: 0;
+  margin-right: auto;
+  padding: 12px 16px;
+  border: 1px solid rgba(22, 242, 255, 0.5);
+  border-radius: 10px;
+  background: rgba(5, 16, 28, 0.9);
+  box-shadow: 0 0 12px rgba(22, 242, 255, 0.12);
+  color: var(--cyan);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.ld-block-progress.is-error {
+  color: #ffb8c4;
+  border: 2px solid var(--red);
+  padding: 11px 15px;
+  background: rgba(90, 12, 30, 0.9);
+  box-shadow: 0 0 22px rgba(255, 59, 92, 0.5), inset 0 0 18px rgba(255, 59, 92, 0.12);
+  animation: shake 0.4s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ld-block-progress.is-error { animation: none; }
+}
+.ld-block-error {
+  display: block;
+  margin-top: 4px;
+}
 
 /* ---------- Justify phase ---------- */
 .ld-justify {
