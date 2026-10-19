@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useGame } from '../game/GameContext.jsx'
 import { ITEMS, EMOJI_KEY, encodeWord } from '../game/gameData.js'
-import { bgUrl } from '../game/assets.js'
+import { bgUrl, assetUrl } from '../game/assets.js'
 import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
 import { useI18n, useT } from '../i18n/index.jsx'
@@ -16,7 +16,7 @@ import './InfluencerAvenue.css'
                 (PAID / COLLAB / GIFTED) into the selected post using the
                 Emoji Decoding Card earned in Link District.
      'verify' → run a SIMULATED reverse image search on three products,
-                then classify each (mass-produced fake / AI-generated / legit).
+                then classify each (mass-produced fake / AI-generated / verified).
    Reward: the Data Report on Max (its digits open the Algorithm Room).
 
    Structural data (handles, hues, correctLabel answer keys, verdicts) lives
@@ -68,6 +68,17 @@ const PRODUCTS = [
   {
     id: 'mug',
     seller: 'artisan_clay_co',
+    art: {
+      // rooms.influencer.products.0.art — tag sits in the blurred top-right corner,
+      // the caption over the paint palette, clear of the girl and the mug.
+      bg: 'mug.png',
+      w: 480,
+      h: 480,
+      layers: [
+        { key: 'price', className: 'ia-art-tag', x: 302, y: 54 },
+        { key: 'label', className: 'ia-art-handmade', x: 240, y: 110, w: 190 },
+      ],
+    },
     // emoji: '☕',
     hue: 'linear-gradient(135deg, #d9b38c, #8a5a3b)',
     verdict: 'mass', // it is mass-produced, not handmade
@@ -75,16 +86,39 @@ const PRODUCTS = [
   {
     id: 'novapad',
     seller: 'novapad_x_deals',
+    art: {
+      // Text-free photo + translatable ad copy laid over it (rooms.influencer.products.1.art).
+      bg: 'novapad-bg.jpg',
+      w: 480,
+      h: 406,
+      layers: [
+        { key: 'oldPrice', className: 'ia-art-old', x: 48, y: 38 },
+        { key: 'price', className: 'ia-art-price', x: 12, y: 86 },
+        { key: 'urgency', className: 'ia-art-urgency', x: 22, y: 176, w: 172 },
+        { text: '😱😱😱', className: 'ia-art-emoji', x: 20, y: 308 },
+      ],
+      // Big stamp-like text over a reverse-search result photo: { result index: art key }.
+      resultOverlays: { 3: 'fake' },
+    },
     // emoji: '📱',
     hue: 'linear-gradient(135deg, #7a2ce0, #2b6bff)',
     verdict: 'ai', // the image is AI-generated / fake
   },
   {
-    id: 'cupcakes',
-    seller: 'cornerst_bakery',
+    id: 'speaker',
+    seller: 'cornerst_sounds',
+    art: {
+      // rooms.influencer.products.2.art — price sticker on the grey wall right of the speaker.
+      bg: 'speaker.png',
+      w: 480,
+      h: 480,
+      layers: [
+        { key: 'price', className: 'ia-art-sale', x: 276, y: 112, splitDecimals: true },
+      ],
+    },
     // emoji: '🧁',
     hue: 'linear-gradient(135deg, #ff9fbf, #ffd36b)',
-    verdict: 'legit', // this one is real
+    verdict: 'verified', // this one is real
   },
 ]
 
@@ -92,17 +126,108 @@ const PRODUCTS = [
    several sites, shown as slightly different listing photos. Falls back to the
    product's own image when no variants were provided. Files live in
    public/products/. Cycled across the result rows. */
+const ART = 'art' // thumb that IS the seller's own ad: rendered as ProductArt, text included
 const RESULT_THUMBS = {
-  mug: ['mug.png'],
-  novapad: ['novapad1.png', 'novapad2.png'],
-  cupcakes: ['cupcakes1.png', 'cupcakes2.png', 'cupcakes3.png'],
+  mug: [ 'mug2.png', 'mug3.png', 'mug1.png', 'mug.png','mug4.png',], // bulk factory shelf · styled "handmade" shot · the seller's photo
+  novapad: ['novapad.png','novapad4.png', 'novapad.png',  'novapad.png', 'novapad1.png', 'novapad2.png'],
+  speaker: [ART,'speaker2.png', 'speaker3.png', 'speaker4.png', 'speaker5.png'],
+}
+
+/* URL of a file in public/products (base-URL aware), and of a product's own photo. */
+const productUrl = (name) => assetUrl(`products/${name}`)
+const productImg = (p) => productUrl(p.image || `${p.id}.png`)
+
+/* A sheet cell of just a dash ("-", "–", "—") or blank means "none here":
+   no price chip on that result, no copy layer on the art. */
+const hasValue = (v) => typeof v === 'string' && !/^\s*[-–—]?\s*$/.test(v)
+
+/* "89,95" -> 89 + small ",95" (decimals at half size). */
+const splitPrice = (v) => {
+  const m = /^(.*?\d)([.,]\d+)(.*)$/.exec(v || '')
+  return m ? <>{m[1]}<small>{m[2]}</small>{m[3]}</> : v
+}
+
+/* Where art copy may sit and still show inside a tray tile (~190x156, cover-
+   cropped): for a square 480 art the tile hides ~43px top & bottom, the grab
+   badge covers x>405 above y~100, and the name label covers y~360-420 mid-width. */
+
+/* A product's picture as ONE image. Products with `art` are an SVG: the photo
+   plus the ad copy as real (translated) text, laid out in the art's own
+   w×h box (design px) so the whole thing scales, crops and drags as a single
+   picture. `cover` crops to fill its box (tiles, chips); otherwise it keeps
+   its aspect ratio. */
+function ProductArt({ product, copy, cover = false, className = '', alt = '' }) {
+  const { art } = product
+  if (!art) return <img className={className} src={productImg(product)} alt={alt} draggable={false} />
+  const { w: ART_W, h: ART_H } = art
+  return (
+    <svg
+      className={`ia-art ${className}`}
+      style={{ aspectRatio: `${ART_W} / ${ART_H}` }}
+      viewBox={`0 0 ${ART_W} ${ART_H}`}
+      preserveAspectRatio={cover ? 'xMidYMid slice' : 'xMidYMid meet'}
+      role="img"
+      aria-label={alt || undefined}
+      aria-hidden={alt ? undefined : true}
+    >
+      <image
+        href={productUrl(art.bg)}
+        width={ART_W}
+        height={ART_H}
+        preserveAspectRatio="xMidYMin slice"
+      />
+      <foreignObject width={ART_W} height={ART_H}>
+        <div xmlns="http://www.w3.org/1999/xhtml" className="ia-art-copy" style={{ width: ART_W, height: ART_H }}>
+          {art.layers.filter((l) => l.text || hasValue(copy?.art?.[l.key])).map((l) => (
+            <span
+              key={l.key || l.text}
+              className={l.className}
+              style={{ left: l.x, top: l.y, width: l.w }}
+            >
+              {l.text ?? (l.splitDecimals ? splitPrice(copy?.art?.[l.key]) : copy?.art?.[l.key])}
+            </span>
+          ))}
+        </div>
+      </foreignObject>
+    </svg>
+  )
 }
 
 /* The three classification option values (labels come from i18n). */
-const CLASSIFY_OPTIONS = ['mass', 'ai', 'legit']
+const CLASSIFY_OPTIONS = ['mass', 'ai', 'verified']
 
-/* Rubber-stamp faces for each verdict. */
-const STAMP_EMOJI = { mass: '🏭', ai: '🤖', legit: '✅' }
+/* Line-art emblem pressed into an inked stamp, drawn in the stamp's colour. */
+function StampIcon({ value, className = 'ia-stamp-icon' }) {
+  const common = {
+    className,
+    viewBox: '0 0 24 24',
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 1.7,
+    strokeLinecap: 'round',
+    strokeLinejoin: 'round',
+    'aria-hidden': true,
+  }
+  if (value === 'mass') return ( // classic sawtooth factory with one tall chimney
+    <svg {...common} strokeWidth={1.6}>
+      <path d="M1.5 22h21" />
+      <path d="M2.5 22V11.5l4.7-3.5v3.5l4.7-3.5v3.5l4.7-3.5v3.5H19V3h3v19" />
+      <path d="M4.6 15h2.4v2.4H4.6zM9.3 15h2.4v2.4H9.3zM14 15h2.4v2.4H14z" />
+    </svg>
+  )
+  if (value === 'ai') return ( // two sparkles, one big and one small
+    <svg {...common} fill="currentColor" strokeWidth={0.8}>
+      <path d="M10 6C10.6 10.4 12.6 12.4 17 13C12.6 13.6 10.6 15.6 10 20C9.4 15.6 7.4 13.6 3 13C7.4 12.4 9.4 10.4 10 6Z" />
+      <path d="M18 2.5C18.3 4.7 19.3 5.7 21.5 6C19.3 6.3 18.3 7.3 18 9.5C17.7 7.3 16.7 6.3 14.5 6C16.7 5.7 17.7 4.7 18 2.5Z" />
+    </svg>
+  )
+  return ( // double checkmark
+    <svg {...common} strokeWidth={2}>
+      <path d="M1.5 12.5l4.5 4.5L16 7" />
+      <path d="M11.5 15.5l1.5 1.5L23 7" />
+    </svg>
+  )
+}
 
 /* Fine pointer (mouse/trackpad) → the held stamp follows the cursor. On a
    coarse pointer (touch) there's no cursor to ride, so we fall back to
@@ -119,6 +244,173 @@ function influencerImageUrl(id, locale) {
   }
   const filename = filenames[id]?.[locale] || filenames[id]?.en
   return bgUrl(`influencers/${filename}`)
+}
+
+/* ---- Explainer demo: a scripted, non-interactive run of the reverse-search
+   challenge (same UI as stage 2). English-only copy, by request — no i18n keys. */
+const DEMO_PHASES = ['drag', 'search', 'results', 'hold', 'stamp']
+// ratio = image height / width, used to place each match in the shortest column
+const DEMO_MATCHES = [
+  { img: 'shoes1.png', ratio: 1.05, site: 'solecraft.store', desc: 'Classic leather boat shoes, brown' },
+  { img: 'shoes2.png', ratio: 1.08, site: 'vintedly.com', desc: 'Designer boat shoes · barely worn' },
+  { img: 'shoes3.png', ratio: 0.94, site: 'luxe-resale.co', desc: 'Brown leather deck shoes, size 38' },
+  { img: 'shoes4.png', ratio: 0.81, site: 'instapic.com', desc: '@styledaily · weekend look' },
+  { img: 'shoes5.png', ratio: 1.13, site: 'shoefinder.net', desc: 'Same model sold by the official brand store' },
+  { img: 'shoes.png', ratio: 0.71, site: 'swingfeet.shop', desc: 'Lindy hop dance shoes · handmade' },
+]
+const DEMO_STAMPS = { mass: 'Mass-produced', ai: 'AI-generated', verified: 'verified' }
+
+/* Masonry: drop each match into the currently shortest of `n` columns. */
+function masonry(items, n) {
+  const cols = Array.from({ length: n }, () => ({ h: 0, items: [] }))
+  items.forEach((m, i) => {
+    const col = cols.reduce((lo, c) => (c.h < lo.h ? c : lo))
+    col.items.push({ ...m, i })
+    col.h += m.ratio + 0.3 // + room for the site / caption lines
+  })
+  return cols.map((c) => c.items)
+}
+const DEMO_COLUMNS = masonry(DEMO_MATCHES, 3)
+
+function ReverseSearchDemo({ phase }) {
+  const t = useT()
+  const at = (p) => DEMO_PHASES.indexOf(phase) >= DEMO_PHASES.indexOf(p)
+  const resultsRef = useRef(null)
+
+  // Once the matches are in, slowly scroll down through them (like the player
+  // would), then glide back up to the top.
+  useEffect(() => {
+    if (phase !== 'results') return
+    const el = resultsRef.current
+    if (!el) return
+    el.scrollTop = 0
+    const ease = (k) => (k < 0.5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2)
+    const t0 = performance.now()
+    const DOWN_AT = 700, DOWN = 3000, UP_AT = 3900, UP = 1200
+    let raf = 0
+    const step = (now) => {
+      const ms = now - t0
+      const max = el.scrollHeight - el.clientHeight
+      if (ms < UP_AT) el.scrollTop = ease(Math.min(1, Math.max(0, (ms - DOWN_AT) / DOWN))) * max
+      else el.scrollTop = (1 - ease(Math.min(1, (ms - UP_AT) / UP))) * max
+      if (ms < UP_AT + UP) raf = requestAnimationFrame(step)
+    }
+    raf = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(raf)
+  }, [phase])
+
+  return (
+    <div className="ia-demo" aria-hidden>
+      {/* saved image the player drags */}
+      <div className="ia-demo-tray">
+        <div className="ia-demo-traylabel">Saved image</div>
+        <div className={`ia-demo-tile ${phase === 'drag' ? 'is-dragging' : ''}`} style={{ backgroundImage: `url("${productUrl('shoes.png')}")` }}>
+          <span className="ia-imgtile-name">Lindy hop shoes</span>
+        </div>
+      </div>
+
+      {/* full-size drag copy riding the cursor into the search bar (as the game's dnd ghost) */}
+      {phase === 'drag' && (
+        <>
+          <div className="ia-demo-tile ia-demo-ghost" style={{ backgroundImage: `url("${productUrl('shoes.png')}")` }}>
+            <span className="ia-imgtile-name">Lindy hop shoes</span>
+          </div>
+          <svg className="ia-demo-cursor" viewBox="0 0 24 24">
+            <path d="M5 3l14 8-6 1.5L10 19z" fill="#fff" stroke="#111" strokeWidth="1.4" strokeLinejoin="round" />
+          </svg>
+        </>
+      )}
+
+      <div className="ia-demo-engine">
+        <div className="ia-demo-top">
+          <img className="ia-demo-logo" src={productUrl('logo-booble.png')} alt="" />
+          <div className={`ia-demo-bar ${phase === 'drag' ? 'is-over' : ''}`}>
+            <span className="ia-engine-lens">🔍</span>
+            {at('search') && <span className="ia-engine-chip fade-in" style={{ backgroundImage: `url("${productUrl('shoes.png')}")` }} />}
+            <span className="ia-engine-ph">Drag an image here to search</span>
+          </div>
+        </div>
+
+        <div className="ia-demo-panel">
+          {at('search') && (
+            <div className="ia-demo-viewer">
+              <div className="ia-demo-frame">
+                <img className="ia-demo-img" src={productUrl('shoes.png')} alt="" />
+                {phase === 'search' && <span className="ia-scan" />}
+                <i className="ia-corner tl" /><i className="ia-corner tr" />
+                <i className="ia-corner bl" /><i className="ia-corner br" />
+                {at('stamp') && (
+                  <span className="ia-stamp-mark ia-stamp-verified ia-demo-mark">
+                    <StampIcon value="verified" />
+                    {DEMO_STAMPS.verified}
+                  </span>
+                )}
+              </div>
+            </div>
+          )}
+
+          {phase === 'search' && (
+            <div className="ia-demo-cols">
+              <div className="ia-demo-results">
+                <div className="ia-searching-head t-xs">
+                  <span className="ia-globe">🌐</span>
+                  Searching the web
+                  <span className="ia-dots"><i /><i /><i /></span>
+                </div>
+                <div className="ia-demo-skels">
+                  {[44, 64, 52].map((h, i) => <span key={i} className="ia-skel" style={{ height: h }} />)}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {at('results') && (
+            <div className="ia-demo-cols">
+              <div className="ia-demo-results" ref={resultsRef}>
+                <div className="t-xs upper dim">{t('rooms.influencer.stage2.matchesTitle')}</div>
+                <div className="ia-matches">
+                  {DEMO_COLUMNS.map((col, c) => (
+                    <ul key={c} className="ia-matches-col">
+                      {col.map((m) => (
+                        <li key={m.site} className="ia-match" style={{ animationDelay: `${m.i * 110}ms` }}>
+                          <img className="ia-match-img" src={productUrl(m.img)} alt="" />
+                          <span className="ia-match-site">
+                            <span className="ia-match-fav">{m.site.charAt(0)}</span>
+                            <span className="ia-match-site-name">{m.site}</span>
+                          </span>
+                          <span className="ia-match-title">{m.desc}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ))}
+                </div>
+              </div>
+              <div className="ia-demo-classify">
+                <div className="t-xs upper dim">{t('rooms.influencer.stage2.classifyPrompt')}</div>
+                <div className="ia-demo-rack">
+                  {Object.entries(DEMO_STAMPS).map(([value, label]) => (
+                    <div
+                      key={value}
+                      className={`ia-stampmaker ia-stamp-${value} ${value === 'verified' && phase === 'hold' ? 'held' : ''} ${value === 'verified' && at('stamp') ? 'inked' : ''}`}
+                    >
+                      <span className="ia-stampmaker-face" />
+                      <span className="ia-stamp-label">{label}</span>
+                      <StampIcon value={value} className="ia-stampmaker-icon" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* the Verified stamp travelling from the rack to the image */}
+      {phase === 'hold' && (
+        <div className="ia-demo-flystamp ia-stamp-verified"><span className="ia-stampmaker-face" /></div>
+      )}
+    </div>
+  )
 }
 
 function CaptionPreview({ username, caption, onOpen }) {
@@ -163,7 +455,7 @@ function CaptionPreview({ username, caption, onOpen }) {
   }, [username, caption, buttonLabel])
 
   return (
-    <div className="ia-caption t-xs">
+    <div className="ia-caption ">
       <span style={{fontWeight: "bold"}}>{username}</span>{' '}{preview}{' '}
       <button type="button" className="ia-view-publication" aria-haspopup="dialog"
         onMouseDown={(event) => event.preventDefault()} onClick={onOpen}>
@@ -273,20 +565,22 @@ export default function InfluencerAvenue({ node }) {
 
   const [stage, setStage] = useState('label') // 'label' → 'labelFeedback' → 'explain' → 'verify' → solved
   const [solved, setSolved] = useState(false)
-  const [searchDone, setSearchDone] = useState(false) // explainer's mock search finished → show results
+  const [demoPhase, setDemoPhase] = useState('drag') // explainer's scripted reverse-search demo
+  const [demoRun, setDemoRun] = useState(0) // bumped to replay the demo
 
-  // Play the explainer's "searching → results" beat each time it opens.
+  // Play the explainer's demo while it's open, on a loop: drag the shoes into
+  // the bar, search, show the matches, press the verified stamp, hold 2s, repeat.
   useEffect(() => {
-    if (stage !== 'explain') { setSearchDone(false); return }
-    // ~0.9s for the photo to "drag" into the bar, then the search resolves.
-    playSound('search.mp3') // searching whir (placeholder — a proper search hum would be nicer)
-    const id = window.setTimeout(() => {
-      stopSound('search.mp3')
-      playSound('twinkle.mp3') // results land
-      setSearchDone(true)
-    }, 1700)
-    return () => { window.clearTimeout(id); stopSound('search.mp3') }
-  }, [stage])
+    if (stage !== 'explain') { setDemoPhase('drag'); return }
+    const timers = [
+      [1300, () => { setDemoPhase('search'); playSound('search.mp3') }],
+      [3200, () => { stopSound('search.mp3'); playSound('twinkle.mp3'); setDemoPhase('results') }],
+      [8600, () => setDemoPhase('hold')],
+      [9500, () => { setDemoPhase('stamp'); playSound('stamp.mp3') }],
+      [11500, () => { setDemoPhase('drag'); setDemoRun((n) => n + 1) }],
+    ].map(([ms, fn]) => window.setTimeout(fn, ms))
+    return () => { timers.forEach(window.clearTimeout); stopSound('search.mp3') }
+  }, [stage, demoRun])
 
   useEffect(() => { preloadSound('search.mp3'); preloadSound('stamp.mp3') }, [])
 
@@ -383,6 +677,11 @@ export default function InfluencerAvenue({ node }) {
     if (e) posRef.current = { x: e.clientX, y: e.clientY }
     setHeldStamp((cur) => (cur === value ? null : value))
   }
+  // Peel a product's stamp off again (it becomes unclassified).
+  function removeStamp(id) {
+    setVerifyErr('')
+    setPicks((p) => { const next = { ...p }; delete next[id]; return next })
+  }
   // Click the product's slot while holding a stamp → press it.
   function applyStamp(id) { if (heldStamp) { stampVerdict(id, heldStamp); setHeldStamp(null) } }
 
@@ -424,7 +723,7 @@ export default function InfluencerAvenue({ node }) {
   // DEBUG ONLY: remove this function and the marked button below to restore the full first stage.
   function skipFirstStageForDebug() {
     setDecoderOpen(false)
-    setStage('verify')
+    setStage('explain') // land on the reverse-search instructions, not the challenge itself
   }
 
   function submitVerify() {
@@ -471,7 +770,7 @@ export default function InfluencerAvenue({ node }) {
       {stage === 'label' && (
         <div className="ia-stage ia-label-stage fade-in">
           <div className="ia-head">
-            <p className="ia-prompt">
+            <p className="game-prompt">
               {t('rooms.influencer.stage1.prompt')}
             </p>
             {/* DEBUG ONLY: remove this block with skipFirstStageForDebug when no longer needed. */}
@@ -678,7 +977,7 @@ export default function InfluencerAvenue({ node }) {
             <p className="ia-explain-body">{t('rooms.influencer.explain.body')}</p>
 
             {/* Two everyday uses: find where to buy something you like, and verify a claim. */}
-            <div className="ia-explain-uses">
+            {/* <div className="ia-explain-uses">
               <div className="ia-explain-use">
                 <span className="ia-explain-use-icon" aria-hidden>🛍️</span>
                 <span>{t('rooms.influencer.explain.useShop')}</span>
@@ -687,59 +986,15 @@ export default function InfluencerAvenue({ node }) {
                 <span className="ia-explain-use-icon" aria-hidden>🔎</span>
                 <span>{t('rooms.influencer.explain.useVerify')}</span>
               </div>
-            </div>
+            </div> */}
 
-            {/* Animated reverse-image-search mock: the jacket photo drops into a
-                search bar, it "searches", then the matching cheap shops pop up. */}
-            <div className="ia-search">
-              {/* 1 · the seller's post you want to check */}
-              <div className="ia-src">
-                <span className="ia-src-photo" aria-hidden>🧥</span>
-                <span className="ia-src-cap t-xs">{t('rooms.influencer.explain.queryCaption')}</span>
-              </div>
-
-              {/* 2 · drag its photo into a reverse image search ↓ */}
-              <div className="ia-search-draghint t-xs dim">{t('rooms.influencer.explain.dragHint')}</div>
-
-              {/* 3 · the search bar — the photo drops into it from the post above */}
-              <div className="ia-search-bar">
-                <span className="ia-search-thumb" aria-hidden>
-                  🧥
-                  <span className="ia-search-hand" aria-hidden>🫳</span>
-                </span>
-                <span className="ia-search-q">
-                  <span className="ia-search-q-text">{t('rooms.influencer.explain.searchLabel')}</span>
-                  <span className="ia-search-scan" aria-hidden />
-                </span>
-                <span className="ia-search-go" aria-hidden>🔍</span>
-              </div>
-
-              <div className="ia-search-panel">
-                {!searchDone ? (
-                  <div className="ia-search-loading">
-                    <span className="ia-search-spinner" aria-hidden />
-                    <span className="mono t-sm">{t('rooms.influencer.explain.searching')}</span>
-                  </div>
-                ) : (
-                  <div className="ia-search-out">
-                    <div className="ia-search-resultshead t-xs dim">{t('rooms.influencer.explain.resultsLabel')}</div>
-                    <div className="ia-search-results">
-                      {[['dropship-mart', '$12'], ['mega-cheap', '$9'], ['fastfinds', '$14'], ['shop2000', '$11']].map(([shop, price], i) => (
-                        <div className="ia-search-hit" key={shop} style={{ animationDelay: `${i * 0.14}s` }}>
-                          <span className="ia-search-hit-emoji" aria-hidden>🧥</span>
-                          <span className="ia-search-hit-shop t-xs">{shop}</span>
-                          <span className="ia-search-hit-price t-xs mono">{price}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
+            {/* Scripted demo of the next challenge, in the same UI. */}
+                <p className="ia-explain-instructions"><b className="lead-label">{t('common.howToPlay')}</b> {t('rooms.influencer.explain.instructions')}</p>
+            <ReverseSearchDemo phase={demoPhase} />
+{/* 
             <div className="learn ia-explain-learn">
-              <b>{t('rooms.influencer.explain.takeawayLabel')}</b> {t('rooms.influencer.explain.takeaway')}
-            </div>
+              <b className="lead-label">{t('rooms.influencer.explain.takeawayLabel')}</b> {t('rooms.influencer.explain.takeaway')}
+            </div> */}
 
             <button className="btn btn-purple btn-lg" onClick={() => setStage('verify')}>
               {t('rooms.influencer.explain.continue')}
@@ -752,7 +1007,7 @@ export default function InfluencerAvenue({ node }) {
       {stage === 'verify' && (
         <div className={`ia-stage fade-in ${heldStamp && FINE_POINTER ? 'ia-holding' : ''}`}>
           <div className="ia-head">
-            <p className="ia-prompt">{t('rooms.influencer.stage2.prompt')}</p>
+            <p className="game-prompt">{t('rooms.influencer.stage2.prompt')}</p>
           </div>
 
           <div className="ia-verify">
@@ -773,15 +1028,16 @@ export default function InfluencerAvenue({ node }) {
                       disabled={!!activeId}
                       className={`ia-imgtile-drag ${isShown ? 'shown' : ''}`}
                     >
-                      <div className="ia-imgtile" style={{
-                        backgroundImage: `url("${import.meta.env.BASE_URL}products/${p.id}.png")`,
-                        backgroundSize: "cover"
-                      }}>
+                      <div className="ia-imgtile">
+                        <ProductArt product={p} copy={copy} cover className="ia-imgtile-art" />
                         <span className="ia-imgtile-emoji">{p.emoji}</span>
                         <span className="ia-imgtile-name">{copy.name}</span>
-                        <span className={`ia-imgtile-badge ${done ? 'done' : 'grab'}`} aria-hidden>{done ? '✓' : '⤓'}</span>
+                        {!done && <span className="ia-imgtile-badge grab" aria-hidden>⤓</span>}
                         {picks[p.id] && (
-                          <span className="ia-imgtile-verdict t-xs">{t(`rooms.influencer.classify.${picks[p.id]}`)}</span>
+                          <span className={`ia-stamp-mark ia-stamp-${picks[p.id]} ia-imgtile-stamp`}>
+                            <StampIcon value={picks[p.id]} />
+                            {t(`rooms.influencer.classify.${picks[p.id]}`)}
+                          </span>
                         )}
                       </div>
                     </Draggable>
@@ -797,42 +1053,60 @@ export default function InfluencerAvenue({ node }) {
               const shownCopy = shown ? productCopy[PRODUCTS.indexOf(shown)] : null
               return (
                 <div className="ia-engine">
-                  <div className="ia-engine-bar mono">
-                    <span className="ia-engine-dot" /> {t('rooms.influencer.stage2.engineBar')}
-                  </div>
-                  <DropZone
-                    id="reverse-engine"
-                    accept={['image']}
-                    overClassName="is-over"
-                    className="ia-engine-drop"
-                    onDrop={(data) => runSearch(data.id)}
-                  >
-                    <div className="ia-engine-ph">
+                  {/* Search bar: the engine's "logo" + a slim pill you drop the image into.
+                      The dropped image shrinks to fit the bar's height, like a query chip. */}
+                  <div className="ia-engine-top">
+                    <img
+                      className="ia-engine-logo"
+                      src={productUrl('logo-booble.png')}
+                      alt={t('rooms.influencer.stage2.engineBar')}
+                    />
+                    <DropZone
+                      id="reverse-engine"
+                      accept={['image']}
+                      overClassName="is-over"
+                      className="ia-engine-drop"
+                      onDrop={(data) => runSearch(data.id)}
+                    >
+                      <span className="ia-engine-lens" aria-hidden>🔍</span>
+                      {(active || shown) && (
+                        <span className="ia-engine-chip" aria-hidden>
+                          <ProductArt
+                            product={active || shown}
+                            copy={productCopy[PRODUCTS.indexOf(active || shown)]}
+                            cover
+                            className="ia-engine-chip-art"
+                          />
+                        </span>
+                      )}
+                      <span className="ia-engine-ph">{t('rooms.influencer.stage2.engineDrop')}</span>
                       <span className="ia-engine-icon" aria-hidden>⤓</span>
-                      <span>{t('rooms.influencer.stage2.engineDrop')}</span>
-                    </div>
-                  </DropZone>
+                    </DropZone>
+                  </div>
 
                   {/* Uploading + searching animation */}
                   {active && (
                     <div className="ia-engine-panel">
-                      <div className="ia-engine-busy">
-                        <div className="ia-engine-thumb"
-                          style={{
-                            backgroundImage: `url("${import.meta.env.BASE_URL}products/${active.id}.png")`,
-                            backgroundSize: 'cover',
-                          }}>
+                      <div className="ia-engine-viewer">
+                        <div className="ia-engine-frame">
+                          <ProductArt
+                            product={active}
+                            copy={productCopy[PRODUCTS.indexOf(active)]}
+                            className="ia-engine-img"
+                          />
                           <span className="ia-scan" aria-hidden />
+                          <i className="ia-corner tl" /><i className="ia-corner tr" />
+                          <i className="ia-corner bl" /><i className="ia-corner br" />
                         </div>
-                        <div className="ia-searching">
-                          <div className="ia-searching-head t-xs">
-                            <span className="ia-globe" aria-hidden>🌐</span>
-                            {t('rooms.influencer.stage2.searching')}
-                            <span className="ia-dots" aria-hidden><i /><i /><i /></span>
-                          </div>
-                          <div className="ia-skels" aria-hidden>
-                            <span className="ia-skel" /><span className="ia-skel" /><span className="ia-skel" />
-                          </div>
+                      </div>
+                      <div className="ia-searching">
+                        <div className="ia-searching-head t-xs">
+                          <span className="ia-globe" aria-hidden>🌐</span>
+                          {t('rooms.influencer.stage2.searching')}
+                          <span className="ia-dots" aria-hidden><i /><i /><i /></span>
+                        </div>
+                        <div className="ia-skels" aria-hidden>
+                          <span className="ia-skel" /><span className="ia-skel" /><span className="ia-skel" />
                         </div>
                       </div>
                     </div>
@@ -841,57 +1115,88 @@ export default function InfluencerAvenue({ node }) {
                   {/* Results + classify for the searched image */}
                   {shown && (
                     <div className="ia-engine-panel fade-in">
-                      <div className="ia-engine-result-head">
-                        <div
-                          className="ia-engine-thumb"
-                          style={{
-                            backgroundImage: `url("${import.meta.env.BASE_URL}products/${shown.id}.png")`,
-                            backgroundSize: 'cover',
-                          }}
-                        />
-                        {/* the reserved slot — click it with a stamp in hand to press */}
-                        <button
-                          type="button"
-                          className={`ia-stampslot ${heldStamp ? 'armed' : ''}`}
-                          onClick={() => applyStamp(shown.id)}
-                          aria-label={t('rooms.influencer.stage2.stampHere')}
-                        >
-                          {picks[shown.id]
-                            ? (
-                              <span key={stampFx} className={`ia-stamp-mark ia-stamp-${picks[shown.id]}`}>
-                                {t(`rooms.influencer.classify.${picks[shown.id]}`)}
-                              </span>
-                            )
-                            : <span className="ia-stampslot-ph t-xs dim">{t('rooms.influencer.stage2.stampHere')}</span>}
-                        </button>
-                        <div className="ia-engine-result-meta">
-                          <div className="t-sm">{shownCopy.name}</div>
-                          <div className="t-xs dim mono">{shown.seller}</div>
+                      {/* The searched image, big on black, framed by four corner brackets. */}
+                      <div className="ia-engine-viewer">
+                        <div className="ia-engine-frame">
+                          <ProductArt
+                            product={shown}
+                            copy={shownCopy}
+                            className="ia-engine-img"
+                            alt={shownCopy.name}
+                          />
+                          <i className="ia-corner tl" /><i className="ia-corner tr" />
+                          <i className="ia-corner bl" /><i className="ia-corner br" />
+                          {/* the reserved slot over the image — click it with a stamp in hand to press */}
+                          <button
+                            type="button"
+                            className={`ia-stampslot ${heldStamp ? 'armed' : ''} ${picks[shown.id] ? 'stamped' : ''}`}
+                            onClick={() => applyStamp(shown.id)}
+                            aria-label={t('rooms.influencer.stage2.stampHere')}
+                          >
+                            {picks[shown.id]
+                              ? (
+                                <span key={stampFx} className={`ia-stamp-mark ia-stamp-${picks[shown.id]}`}>
+                                  <StampIcon value={picks[shown.id]} />
+                                  {t(`rooms.influencer.classify.${picks[shown.id]}`)}
+                                </span>
+                              )
+                              : <span className="ia-stampslot-ph t-xs dim">{t('rooms.influencer.stage2.stampHere')}</span>}
+                          </button>
+                        </div>
+                        {/* under the image: peel the stamp off (row kept so the image never jumps) */}
+                        <div className="ia-unstamp-row">
+                          {picks[shown.id] && (
+                            <button
+                              type="button"
+                              className="ia-unstamp"
+                              onMouseDown={(e) => e.preventDefault()}
+                              onClick={() => removeStamp(shown.id)}
+                            >
+                              ✕ {t('rooms.influencer.stage2.removeStamp')}
+                            </button>
+                          )}
                         </div>
                       </div>
                       <div className="ia-engine-cols">
                         <div className="ia-prod-result">
                           <div className="t-xs upper dim">{t('rooms.influencer.stage2.matchesTitle')}</div>
-                          <ul className="ia-matches">
-                            {(() => { const thumbs = RESULT_THUMBS[shown.id] || [`${shown.id}.png`]; return (
-                            shownCopy.matches.slice(0, 3).map((m, i) => (
-                              <li key={i} className="ia-match" style={{ animationDelay: `${i * 90}ms` }}>
-                                <span
-                                  className="ia-match-fav"
-                                  style={{
-                                    backgroundImage: `url("${import.meta.env.BASE_URL}products/${thumbs[i % thumbs.length]}")`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                  }}
-                                  aria-hidden
-                                />
-                                <span className="ia-match-txt">
-                                  <span className="ia-match-site mono">{m.site}</span>
-                                  <span className="ia-match-title">{m.title}</span>
-                                </span>
-                              </li>
-                            )) )})()}
-                          </ul>
+                          {/* Masonry of web matches: each photo at its natural aspect ratio,
+                              site name on top, product title underneath. */}
+                          <div className="ia-matches">
+                            {(() => {
+                              const thumbs = RESULT_THUMBS[shown.id] || [shown.image || `${shown.id}.png`]
+                              const items = shownCopy.matches.map((m, i) => ({ m, i }))
+                              return [0, 1, 2].map((col) => (
+                                <ul key={col} className="ia-matches-col">
+                                  {items.filter(({ i }) => i % 3 === col).map(({ m, i }) => (
+                                    <li key={i} className="ia-match" style={{ animationDelay: `${i * 90}ms` }}>
+                                      <span className="ia-match-media">
+                                        {thumbs[i % thumbs.length] === ART && shown.art
+                                          ? <ProductArt product={shown} copy={shownCopy} className="ia-match-img" />
+                                          : <img className="ia-match-img" src={productUrl(thumbs[i % thumbs.length])} alt="" />}
+                                        {/* listing price chip (only some results carry one) */}
+                                        {hasValue(m.price) && (
+                                          <span className="ia-match-price">
+                                            <img src={assetUrl('icons/price-tag.svg')} alt="" aria-hidden />
+                                            {m.price}
+                                          </span>
+                                        )}
+                                        {(() => {
+                                          const overlay = shownCopy.art?.[shown.art?.resultOverlays?.[i]]
+                                          return hasValue(overlay) && <span className="ia-match-overlay">{overlay}</span>
+                                        })()}
+                                      </span>
+                                      <span className="ia-match-site">
+                                        <span className="ia-match-fav" aria-hidden>{m.site.charAt(0)}</span>
+                                        <span className="ia-match-site-name">{m.site}</span>
+                                      </span>
+                                      <span className="ia-match-title">{m.title}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              ))
+                            })()}
+                          </div>
                           <div className="ia-result-sum t-xs">{shownCopy.result}</div>
                           <div className="t-xs dim ia-prod-hint">{shownCopy.hint}</div>
                         </div>
@@ -906,8 +1211,9 @@ export default function InfluencerAvenue({ node }) {
                                 className={`ia-stampmaker ia-stamp-${value} ${heldStamp === value ? 'held' : ''} ${picks[shown.id] === value ? 'inked' : ''}`}
                                 onClick={(e) => grabStamp(value, e)}
                               >
-                                <span className="ia-stampmaker-face" aria-hidden>{STAMP_EMOJI[value]}</span>
+                                <span className="ia-stampmaker-face" aria-hidden />
                                 <span className="ia-stamp-label">{t(`rooms.influencer.classify.${value}`)}</span>
+                                <StampIcon value={value} className="ia-stampmaker-icon" />
                               </button>
                             ))}
                           </div>
@@ -923,7 +1229,9 @@ export default function InfluencerAvenue({ node }) {
           <div className="ia-actions">
             {verifyErr
               ? <div className="banner wrong shake ia-banner">{verifyErr}</div>
-              : <span className="dim t-sm">{t('rooms.influencer.stage2.hint')}</span>}
+              : <span className="game-prompt">
+                {/* {t('rooms.influencer.stage2.hint')} */}
+                </span>}
             <button className="btn btn-purple btn-lg ia-confirm" onClick={submitVerify}>
               {t('rooms.influencer.stage2.confirm')}
             </button>
@@ -941,8 +1249,8 @@ export default function InfluencerAvenue({ node }) {
           aria-hidden
           style={{ left: `${posRef.current.x}px`, top: `${posRef.current.y}px` }}
         >
-          <span className="ia-stampmaker-face">{STAMP_EMOJI[heldStamp]}</span>
-        </div>,
+          <span className="ia-stampmaker-face" />
+      </div>,
         document.body,
       )}
 
