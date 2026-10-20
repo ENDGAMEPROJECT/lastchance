@@ -153,8 +153,8 @@ gap:12px; align-items: center; justify-content: flex-start; }
   color: var(--light-purple);
 }
 .evidence-list { 
-  list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
-.evidence-list li { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #d4ffe6; }
+  list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; }
+.evidence-list li { display: flex; align-items: start; gap: 10px; font-size: 0.9rem; color: #d4ffe6; }
 .ev-dot { 
   width: 8px;
   height: 8px; 

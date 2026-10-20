@@ -40,7 +40,7 @@ export function WinScreen() {
       {/* Max and Mia, bottom-left (public/ending/player-won.png). */}
       <img className="win-players" src={assetUrl('ending/player-won.png')} alt="" />
       <div className="win-title-container">
-         <div className="eyebrow" style={{ color: 'var(--green)', fontSize: "18px" }}>
+         <div className="eyebrow" style={{ color: 'var(--green)', fontSize: "16px", fontWeight: "bold" }}>
            <span>{t('end.win.eyebrow')} </span>
             <span className="intro-glyph win-glyph">✓</span>
         </div>
