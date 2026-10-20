@@ -8,25 +8,23 @@
 
 /* =========================================================
    PHASE: DOOR — the sealed control-room entrance (image bg)
-   The door + mounted keypad come from the background image; this is just
-   the readable overlay + a glowing "way in" call to action.
+   The door + mounted keypad come from the background image; only the
+   keypad has a hit target, aligned with the background's cover sizing.
    ========================================================= */
 .ar-door-scene {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  border: none;
-  background: none;
-  cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 4px 0 34px;
+  padding: 4px 0 0;
   text-align: center;
 }
 .ar-door-head {
+  position: relative;
+  z-index: 1;
   max-width: 620px;
   margin: 0 16px;
   padding: 12px 18px;
@@ -40,24 +38,96 @@
   align-items: center;
 }
 
-.ar-door-cta {
-  font-family: var(--font-retro);
-  color: var(--cyan);
-  font-size: 1.35rem;
-  letter-spacing: 0.04em;
-  padding: 10px 18px;
-  border-radius: 10px;
-  border: 1px solid var(--cyan);
-  background: rgba(4, 8, 20, 0.72);
-  box-shadow: var(--glow-cyan);
-  transition: background 0.2s;
+.ar-door-keypad-map {
+  position: absolute;
+  /* Match the fixed stage, including scene padding and the body's max-width. */
+  left: calc(50% - 640px);
+  top: -12px;
+  width: 1280px;
+  height: calc(100% + 28px);
+  pointer-events: none;
+  overflow: visible;
 }
-.ar-door-scene:hover .ar-door-cta { background: rgba(22, 242, 255, 0.16); }
+.ar-door-keypad {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  outline: none;
+}
+/* Light the complete pictured panel, including its frame, using the original
+   artwork rather than drawing a separate border over it. */
+.ar-door-keypad::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--keypad-image);
+  background-size: 1372px 768px;
+  background-position: -826px -317px;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  border-radius: 4px;
+  filter: brightness(1.8);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.ar-door-keypad:hover::before,
+.ar-door-keypad:focus-visible::before {
+  opacity: 0.85;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ar-door-keypad::before { transition: none; }
+}
 
 /* =========================================================
    PHASE: UNLOCK — keypad terminal
    ========================================================= */
 .ar-unlock { display: flex; justify-content: center; }
+.ar-keypad-back {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 64px;
+  height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(94, 171, 210, 0.4);
+  border-radius: 10px;
+  color: #a8dfff;
+  background: linear-gradient(180deg, rgba(22, 38, 58, 0.94), rgba(8, 15, 28, 0.94));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: color 0.18s, border-color 0.18s, background 0.18s;
+}
+.ar-keypad-back svg {
+  display: block;
+  width: 32px;
+  height: 24px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ar-keypad-back:hover:not(:disabled),
+.ar-keypad-back:active:not(:disabled) {
+  transform: none;
+  color: #d7f3ff;
+  border-color: #79c6eb;
+  background: rgba(26, 52, 76, 0.96);
+}
+.ar-keypad-back:focus-visible {
+  outline: 2px solid #79c6eb;
+  outline-offset: 3px;
+}
 .ar-terminal {
   width: 100%;
   max-width: 420px;

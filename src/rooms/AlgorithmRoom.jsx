@@ -11,7 +11,7 @@ import './AlgorithmRoom.css'
 
 /* PUZZLE 3 — Personalization / the targeting algorithm.
    Phases, driven by `phase` state:
-     'door'      → the sealed control-room door; step up to reach the keypad.
+     'door'      → click the keypad mounted on the sealed control-room door.
      'unlock'    → type the 6-digit code off the Data Report.
      'choice'    → the privacy trade-off (personalised ads vs. your data).
      'equations' → the core puzzle: a giant computer solving "targeting
@@ -201,25 +201,43 @@ export default function AlgorithmRoom({ node }) {
       onContinue={() => completeRoom(node.id)}
     >
       {/* ================= PHASE: DOOR ================= */}
-      {/* The sealed door (with its mounted keypad) is the background image; the
-          whole scene is a button that steps up to the keypad terminal. */}
+      {/* Match the background's cover sizing so only its mounted keypad is clickable. */}
       {phase === 'door' && (
-        <button
-          type="button"
-          className="ar-door-scene fade-in"
-          onClick={() => { playSound('open_door.mp3'); setPhase('unlock') }}
-          aria-label={t('rooms.algorithm.door.action')}
-        >
-          <span className="ar-door-head">
-            <span className="game-prompt">{t('rooms.algorithm.door.prompt')}</span>
-          </span>
-          <span className="ar-door-cta">{t('rooms.algorithm.door.action')}</span>
-        </button>
+        <div className="ar-door-scene fade-in">
+          <div className="ar-door-head">
+            <p className="ar-prompt">{t('rooms.algorithm.door.prompt')}</p>
+          </div>
+          <svg className="ar-door-keypad-map" viewBox="0 0 1372 768" preserveAspectRatio="xMidYMid slice" focusable="false">
+            <foreignObject x="826" y="317" width="65" height="77">
+              <button
+                type="button"
+                className="ar-door-keypad"
+                style={{ '--keypad-image': `url(${bgUrl('algorithm-door.jpg')})` }}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => { playSound('open_door.mp3'); setPhase('unlock') }}
+                aria-label={t('rooms.algorithm.door.action')}
+              />
+            </foreignObject>
+          </svg>
+        </div>
       )}
 
       {/* ================= PHASE: UNLOCK ================= */}
       {phase === 'unlock' && (
         <div className="ar-unlock fade-in">
+          <button
+            type="button"
+            className="btn btn-ghost ar-keypad-back"
+            aria-label={t('common.back')}
+            title={t('common.back')}
+            disabled={status === 'ok'}
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={() => { setStatus('idle'); setPhase('door') }}
+          >
+            <svg viewBox="0 0 32 24" aria-hidden="true" focusable="false">
+              <path d="M13 4 5 12l8 8M5 12h23" />
+            </svg>
+          </button>
           <div className="ar-terminal panel clip panel-glow-cyan">
             <div className="ar-term-head">
               {/* Access light: red on a wrong code, green when it unlocks. */}
