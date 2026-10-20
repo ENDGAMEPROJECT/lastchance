@@ -59,6 +59,7 @@ const baseInitialState = {
   posttestEntry: null, // 'white' when the post-test is entered out of the return portal's whiteout
   loseReason: null, // why the friend bought — picks the lose-screen copy
   postDecision: false, // post-test reached the final call → clock runs & shows
+  returnTalked: false, // the Physical Internet "go back" exchange has played → Final Decision is lit
   activeNodeId: null,
   reviewNodeId: null,
   roomStarted: false,
@@ -167,7 +168,7 @@ export function reducer(state, action) {
       // Same scenario, but starting at the return cutscene (Physical Internet
       // dialogue → portal → white → post-test), clock paused as in a real run.
       if (DEBUG && action.screen === 'return' && action.scenario) {
-        return { ...debugPosttestState(state, action.scenario), screen: 'return', running: false, posttestEntry: null }
+        return { ...debugPosttestState(state, action.scenario), screen: 'return', running: false, posttestEntry: null, returnTalked: false }
       }
       // Plain post-test entry (the map's Final Decision node) keeps the real run
       // state — progress, evidence, clock — exactly like clearing the last district.
@@ -199,7 +200,8 @@ export function reducer(state, action) {
         ...state,
         progress,
         // Clearing the last district ends the puzzles → back to the Physical
-        // Internet for the "go back" exchange (ReturnScreen), then the post-test.
+        // Internet for the "go back" exchange (ReturnScreen), then the map,
+        // whose Final Decision opens the portal into the post-test.
         screen: allDone ? 'return' : 'map',
         activeNodeId: null,
         reviewNodeId: null,
@@ -210,6 +212,12 @@ export function reducer(state, action) {
         running: allDone ? false : state.running,
       }
     }
+
+    case 'FINISH_RETURN_TALK':
+      // The "go back" exchange is over → back on the map, where only the Final
+      // Decision is left (it opens the portal). The clock stays paused.
+      if (state.screen !== 'return') return state
+      return { ...state, screen: 'map', returnTalked: true }
 
     case 'WIN':
       return { ...state, screen: 'win', running: false }
@@ -288,6 +296,7 @@ export function GameProvider({ children }) {
   const gotoScreen = useCallback((screen, scenario) => dispatch({ type: 'GOTO_SCREEN', screen, scenario }), [])
   // The return portal's exit: into the post-test, fading in from white.
   const enterPosttestFromWhite = useCallback(() => dispatch({ type: 'GOTO_SCREEN', screen: 'posttest', fromWhite: true }), [])
+  const finishReturnTalk = useCallback(() => dispatch({ type: 'FINISH_RETURN_TALK' }), [])
   const skipToPortal = useCallback(() => dispatch({ type: 'DEBUG_SKIP_TO_PORTAL' }), [])
   const setCharacter = useCallback((character) => dispatch({ type: 'DEBUG_SET_CHARACTER', character }), [])
   const setEnterTour = useCallback((step) => dispatch({ type: 'SET_ENTER_TOUR', step }), [])
@@ -324,6 +333,7 @@ export function GameProvider({ children }) {
     startPosttestDecision,
     gotoScreen,
     enterPosttestFromWhite,
+    finishReturnTalk,
     skipToPortal,
     setCharacter,
     setEnterTour,

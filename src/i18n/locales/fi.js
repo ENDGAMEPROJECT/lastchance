@@ -299,7 +299,7 @@ export default {
     "toolsTitle": "First, the gear",
     "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
     "clock": "⏱ {minutes}:00 starts the moment we start walking",
-    "mission": "We'll have to travel the through the districts, gather evidence about how the scam works, and get back to school before the offer expires.",
+    "mission": "We’ll have to explore the districts, gather evidence of how the scam works, and make it back to school before the offer expires!",
     "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
     "finalLine": "Ready? The timer starts as soon as you open the map."
@@ -308,7 +308,7 @@ export default {
     "playerLine": "That went well! I think we've collected more than enough evidence.",
     "friendLine": "Let's go back already. Offer ends in {minutes} minutes.",
     "friendLineTimeUp": "Let's go back already. The offer has already ended.",
-    "goBack": "Go back to the real world"
+    "goBack": "Head to exit"
   },
   "nodes": {
     "start": {
@@ -354,7 +354,7 @@ export default {
       "kind": "puzzle"
     },
     "final-decision": {
-      "title": "Final Decision",
+      "title": "Exit",
       "subtitle": "Convince {friend}",
       "blurb": "Present your evidence before the offer countdown runs out.",
       "kind": "final"

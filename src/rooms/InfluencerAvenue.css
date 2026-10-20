@@ -362,7 +362,7 @@ button.ia-view-publication {
   align-self: center;
   width: 82%;
   padding: 12px 10px 8px;
-  background: linear-gradient(160deg, #fff4b8, #ffe479);
+  background: linear-gradient(160deg, #FFFFFF, #fdffdc);
   color: #4a3a00;
   border-radius: 4px;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
@@ -1329,7 +1329,7 @@ grid-template-columns: 1fr 1fr 1fr;
   transform: rotate(-21deg);
 }
 .ia-art-price {
-  font-family: 'Press Start 2P', monospace;
+  font-family: 'Game Emoji', 'Press Start 2P', monospace;
   font-size: 66px;
   line-height: 1;
   color: #ffff00;

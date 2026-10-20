@@ -131,7 +131,7 @@ export default function RoomFrame({
                   <section className={`cleared-reward ${collected ? 'is-collected' : ''}`} aria-labelledby="cleared-reward-name">
                     <div className="reward-art" aria-hidden="true"
                       style={rewardImage ? { backgroundImage: `url("${bgUrl(rewardImage)}")` } : undefined}>
-                      {!reward.image && <span className="reward-icon">{reward.icon}</span>}
+                      {!rewardImage && <span className="reward-icon">{reward.icon}</span>}
                     </div>
                     <div className="reward-info">
                       <h3 id="cleared-reward-name" className="reward-name">{rewardName}</h3>

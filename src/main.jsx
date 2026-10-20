@@ -4,6 +4,9 @@ import App from './App.jsx'
 import { GameProvider } from './game/GameContext.jsx'
 import { I18nProvider } from './i18n/index.jsx'
 import './styles/global.css'
+import { loadEmojiFont } from './game/emojiFont.js'
+
+loadEmojiFont()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

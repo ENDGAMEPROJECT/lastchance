@@ -253,7 +253,7 @@ function useCentred(ref, deps) {
 }
 
 export default function GameMap() {
-  const { NODES, progress, openNode, reviewNode, gotoScreen, narrative } = useGame()
+  const { NODES, progress, openNode, reviewNode, gotoScreen, narrative, returnTalked, reducedMotion } = useGame()
   const t = useT()
   const vars = { friend: narrative.friend }
   const boardRef = useRef(null)
@@ -265,8 +265,9 @@ export default function GameMap() {
 
   /* The six playable districts, book-ended by the two story stations. "Start"
      is a signpost only — the pre-test's exit restarts the countdown, so it must
-     not be re-openable mid-run. The Final Decision is normally auto-entered when
-     the last district is cleared; the click path covers debug mode. */
+     not be re-openable mid-run. The Final Decision lights up (and pulses white)
+     once the last district is cleared and the Physical Internet exchange has
+     played; it then opens the portal back to the real world → post-test. */
   const stations = [
     { id: 'start', art: 'start', kind: 'gate', accent: 'cyan', status: 'done' },
     ...NODES.map((n) => ({
@@ -282,8 +283,9 @@ export default function GameMap() {
       art: 'final',
       kind: 'gate',
       accent: 'magenta',
-      status: allDone || DEBUG ? 'available' : 'locked',
-      onOpen: () => gotoScreen('posttest'),
+      status: (allDone && returnTalked) || DEBUG ? 'available' : 'locked',
+      calling: allDone && returnTalked,
+      onOpen: () => gotoScreen(returnTalked && !reducedMotion ? 'return' : 'posttest'),
     },
   ]
 
@@ -328,7 +330,7 @@ export default function GameMap() {
           return (
             <button
               key={s.id}
-              className={`mnode accent-${s.accent} ${s.status} ${s.kind}`}
+              className={`mnode accent-${s.accent} ${s.status} ${s.kind} ${s.calling ? 'is-calling' : ''}`}
               /* stack by depth: a station lower on the board is nearer the
                  viewer, so it overlaps the ones behind it */
               style={{ left: `${x}px`, top: `${y}px`, zIndex: Math.round(y) }}

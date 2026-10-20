@@ -152,6 +152,27 @@
   50% { opacity: 1; }
 }
 
+/* Final Decision, once it is the only thing left: a steady white heartbeat —
+   podium, floor glow and label all swell and settle on the same beat. */
+.mnode.is-calling .mnode-art { animation: mnode-calling 1.4s ease-in-out infinite; }
+.mnode.is-calling .mnode-glow {
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.6), transparent 70%);
+  animation: mnode-calling-glow 1.4s ease-in-out infinite;
+}
+.mnode.is-calling .mnode-label { animation: mnode-calling-label 1.4s ease-in-out infinite; }
+@keyframes mnode-calling {
+  0%, 100% { filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.2)) brightness(1); }
+  50% { filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.9)) brightness(1.25); }
+}
+@keyframes mnode-calling-glow {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+@keyframes mnode-calling-label {
+  0%, 100% { box-shadow: 0 0 8px -2px rgba(255, 255, 255, 0.35); }
+  50% { box-shadow: 0 0 20px 1px rgba(255, 255, 255, 0.9); }
+}
+
 .mnode.done { color: var(--green); }
 .mnode.done .mnode-label { color: #d4ffe6; }
 .mnode-check {

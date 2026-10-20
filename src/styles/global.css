@@ -42,17 +42,17 @@
   --glow-red: 0 0 8px rgba(255, 59, 92, 0.6), 0 0 22px rgba(255, 59, 92, 0.35);
 
   /* Local design roles: each family is loaded above from Google Fonts. */
-  --font-serif: 'Source Serif 4', Georgia, serif;
-  --font-script: 'Lobster Two', cursive;
-  --font-retro: 'Chakra Petch', 'Segoe UI', sans-serif;
-  --font-neogrotesk: 'Roboto', 'Segoe UI', sans-serif;
-  --font-futuristic: 'Orbitron', 'Segoe UI', sans-serif;
-  --font-narrow: 'Roboto Condensed', 'Arial Narrow', sans-serif;
+  --font-serif: 'Game Emoji', 'Source Serif 4', Georgia, serif;
+  --font-script: 'Game Emoji', 'Lobster Two', cursive;
+  --font-retro: 'Game Emoji', 'Chakra Petch', 'Segoe UI', sans-serif;
+  --font-neogrotesk: 'Game Emoji', 'Roboto', 'Segoe UI', sans-serif;
+  --font-futuristic: 'Game Emoji', 'Orbitron', 'Segoe UI', sans-serif;
+  --font-narrow: 'Game Emoji', 'Roboto Condensed', 'Arial Narrow', sans-serif;
 
   /* Existing component roles, preserved for compatibility. */
   --font-display: var(--font-futuristic);
   --font-ui: var(--font-retro);
-  --font-mono: 'JetBrains Mono', 'SFMono-Regular', ui-monospace, monospace;
+  --font-mono: 'Game Emoji', 'JetBrains Mono', 'SFMono-Regular', ui-monospace, monospace;
   --font-subheading: var(--font-retro);
 }
 

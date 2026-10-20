@@ -21,10 +21,11 @@ const BLACK_MS = 1000
 const readingTime = (text) => Math.max(4500, text.length * 18 + 1500, text.trim().split(/\s+/).length * 280 + 800)
 
 /* Back in the Physical Internet after the last district: a short player/friend
-   exchange, then "Go back to the real world" → the portal tunnel → post-test.
-   The clock is paused here (COMPLETE_NODE) and resumes in the post-test. */
+   exchange, then "Go back to the real world" → the map. Its Final Decision
+   station brings the player back here, straight into the portal tunnel →
+   post-test. The clock is paused here (COMPLETE_NODE) and resumes in the post-test. */
 export default function ReturnScreen() {
-  const { reducedMotion, narrative, timeLeft, gotoScreen, enterPosttestFromWhite } = useGame()
+  const { reducedMotion, narrative, timeLeft, returnTalked, finishReturnTalk, enterPosttestFromWhite } = useGame()
   const t = useT()
   const vars = {
     friend: narrative.friend,
@@ -40,8 +41,9 @@ export default function ReturnScreen() {
   ]
 
   // 'arrive' (black → slow fade-in) → 'talk' → 'tunnel' (video + portal
-  // rings) → 'white' → post-test.
-  const [phase, setPhase] = useState(reducedMotion ? 'talk' : 'arrive')
+  // rings) → 'white' → post-test. The talk ends on the map; coming back from
+  // its Final Decision starts at the tunnel.
+  const [phase, setPhase] = useState(returnTalked ? 'tunnel' : reducedMotion ? 'talk' : 'arrive')
   useEffect(() => {
     if (phase !== 'arrive') return
     const timer = window.setTimeout(() => setPhase('talk'), HOLD_BLACK_MS + BLACK_MS)
@@ -73,11 +75,6 @@ export default function ReturnScreen() {
     }, 50)
     return () => window.clearInterval(timer)
   }, [phase, stepIndex, total, isLast])
-
-  const goBack = () => {
-    if (reducedMotion) gotoScreen('posttest')
-    else setPhase('tunnel')
-  }
 
   // Tunnel: play the shared, preloaded portal video; its end (or a stall) cuts
   // to white, then into the post-test.
@@ -147,7 +144,7 @@ export default function ReturnScreen() {
 
         {phase === 'talk' && dialogDone && (
           <div className="return-actions fade-in">
-            <button type="button" className="btn btn-cyan btn-lg" onMouseDown={(e) => e.preventDefault()} onClick={goBack}>
+            <button type="button" className="btn btn-cyan btn-lg" onMouseDown={(e) => e.preventDefault()} onClick={finishReturnTalk}>
               {t('return.goBack')}
             </button>
           </div>

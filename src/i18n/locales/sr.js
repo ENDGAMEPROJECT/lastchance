@@ -299,7 +299,7 @@ export default {
     "toolsTitle": "Prvo, oprema",
     "toolsIntro": "Dve stvari putuju sa tobom svuda po ovom prostoru. Naći ćeš ih u traci na vrhu ekrana.",
     "clock": "⏱ {minuta}:00 počinje onog trenutka kada krenemo da hodamo",
-    "mission": "We'll have to travel the through the districts, gather evidence about how the scam works, and get back to school before the offer expires.",
+    "mission": "We’ll have to explore the districts, gather evidence of how the scam works, and make it back to school before the offer expires!",
     "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga — završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
     "bagText": "Tvoji alati i dokazi koje prikupiš. Otvori ih da bi koristio/la predmete u zagonetkama i pregledao/la dokaze koje ćeš pokazati {prijatelju}.",
     "finalLine": "Ready? The timer starts as soon as you open the map."
@@ -308,7 +308,7 @@ export default {
     "playerLine": "That went well! I think we've collected more than enough evidence.",
     "friendLine": "Let's go back already. Offer ends in {minutes} minutes.",
     "friendLineTimeUp": "Let's go back already. The offer has already ended.",
-    "goBack": "Go back to the real world"
+    "goBack": "Head to exit"
   },
   "nodes": {
     "start": {
@@ -354,7 +354,7 @@ export default {
       "kind": "zagonetka"
     },
     "final-decision": {
-      "title": "Konačna odluka",
+      "title": "Exit",
       "subtitle": "Ubedi {prijatelja}",
       "blurb": "Predstavi svoje dokaze pre nego što odbrojavanje ponude istekne.",
       "kind": "konačno"

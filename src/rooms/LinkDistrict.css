@@ -231,7 +231,7 @@
   padding: 0 1px;
 }
 .ld-baraddr {
-  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Game Emoji', -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 0.58rem;
   color: #9fb0e0;
   white-space: nowrap;
@@ -436,7 +436,7 @@
 /* Proportional, browser-like font so look-alikes (rn≈m, Cyrillic
    homoglyphs) are genuinely hard to spot — as in a real address bar. */
 .ld-url {
-  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Game Emoji', -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-size: 0.81rem;
   color: #e2eaff;
   text-align: center;
@@ -876,7 +876,7 @@
 }
 .luna-ad-1-text {
   font-family: var(--font-script), sans-serif;
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-style: italic;
   line-height: 1;
   text-align: center;
@@ -906,16 +906,17 @@
   color: #000000;
   font-family: var(--font-serif);
   background: #ff9100;
-  font-size: 2rem;
+  font-size: 1.9rem;
   line-height: 0.9;
   font-weight: 600;
   padding: 0.2rem 0.7rem 0.4rem 0.7rem;
   overflow-wrap: anywhere;
 }
 .luna-ad-2-text {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-align: center;
   margin-top: 0.3rem;
+  line-height: 1.2
 }
 .luna-ad-2-cta {
   display: flex;
