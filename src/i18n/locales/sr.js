@@ -295,11 +295,11 @@ export default {
     "titleLead": "Dobro došao/la u",
     "titleAccent": "FIZIČKI INTERNET",
     "friendLine": "U redu — imaš {minuta} minuta da me ubediš da je ova ponuda prevara. Ako odbrojavanje stigne do nule, kupiću {proizvod}.",
-    "playerLine": "We made it. This is the Physical Internet. Let's uncover how this deal was built to fool {friend}.",
+    "playerLine": "Yes, we have a deal. Let's uncover why this offer is a scam, and how it was built.",
     "toolsTitle": "Prvo, oprema",
     "toolsIntro": "Dve stvari putuju sa tobom svuda po ovom prostoru. Naći ćeš ih u traci na vrhu ekrana.",
     "clock": "⏱ {minuta}:00 počinje onog trenutka kada krenemo da hodamo",
-    "mission": "Prođi kroz okruge, prikupi dokaze o tome kako prevara funkcioniše i vrati se do {prijatelja} pre nego što ponuda istekne.",
+    "mission": "We'll have to travel the through the districts, gather evidence about how the scam works, and get back to school before the offer expires.",
     "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga — završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
     "bagText": "Tvoji alati i dokazi koje prikupiš. Otvori ih da bi koristio/la predmete u zagonetkama i pregledao/la dokaze koje ćeš pokazati {prijatelju}.",
     "finalLine": "Ready? The timer starts as soon as you open the map."

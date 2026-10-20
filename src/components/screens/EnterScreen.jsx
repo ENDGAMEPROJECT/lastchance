@@ -183,7 +183,7 @@ export default function EnterScreen() {
 
         {/* Arrival title, only during the opening exchange. */}
         <div className={`enter-head ${stepIndex < 3 ? '' : 'is-hidden'}`}>
-          <div className="eyebrow accent-cyan">{t('enter.eyebrow')}</div>
+          {/* <div className="eyebrow accent-cyan">{t('enter.eyebrow')}</div> */}
           <h1 className="enter-title">
             {t('enter.titleLead')} <span className="grad">{t('enter.titleAccent')}</span>
           </h1>

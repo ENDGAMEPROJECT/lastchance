@@ -295,11 +295,11 @@ export default {
     "titleLead": "Welcome to the",
     "titleAccent": "PHYSICAL INTERNET",
     "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
-    "playerLine": "We made it. This is the Physical Internet. Let's uncover how this deal was built to fool {friend}.",
+    "playerLine": "Yes, we have a deal. Let's uncover why this offer is a scam, and how it was built.",
     "toolsTitle": "First, the gear",
     "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
     "clock": "⏱ {minutes}:00 starts the moment we start walking",
-    "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
+    "mission": "We'll have to travel the through the districts, gather evidence about how the scam works, and get back to school before the offer expires.",
     "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
     "finalLine": "Ready? The timer starts as soon as you open the map."
