@@ -4,6 +4,7 @@ import { useT } from '../i18n/index.jsx'
 import { ITEMS } from '../game/gameData.js'
 import { DEBUG, settings } from '../game/settings.js'
 import { bgUrl } from '../game/assets.js'
+import { useReadingGate } from '../game/readingGate.js'
 import { playSound, preloadSound } from '../game/sound.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import './LinkDistrict.css'
@@ -428,13 +429,6 @@ export default function LinkDistrict({ node }) {
   }, [round, setLinkRound])
 
   const [reviewing, setReviewing] = useState(false) // showing the round's explanations
-  const [reviewReady, setReviewReady] = useState(false)
-  useEffect(() => {
-    setReviewReady(false)
-    if (!reviewing) return
-    const timer = window.setTimeout(() => setReviewReady(true), 4000)
-    return () => window.clearTimeout(timer)
-  }, [reviewing])
   const [flags, setFlags] = useState({})
   const [justifyErr, setJustifyErr] = useState('')
 
@@ -476,6 +470,8 @@ export default function LinkDistrict({ node }) {
     [round],
   )
   const fakes = useMemo(() => data.doors.filter((d) => !d.safe), [data])
+  // The round review's button appears only once its notes have been read.
+  const reviewReady = useReadingGate(displayDoors.map((d) => roundText.notes[d.id]), reviewing)
 
   const togglePeek = useCallback((url) => {
     setOpened((o) => ({ ...o, [url]: !o[url] }))

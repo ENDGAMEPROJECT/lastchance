@@ -2,6 +2,7 @@ import { Fragment, useMemo, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { CODES, ITEMS } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
+import { useReadingGate } from '../game/readingGate.js'
 import { playSound } from '../game/sound.js'
 import { useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
@@ -120,6 +121,15 @@ export default function AlgorithmRoom({ node }) {
 
   const tileById = useMemo(() => Object.fromEntries(TRAY.map((tile) => [tile.id, tile])), [])
   const blankSlot = (row) => row.slots.find((s) => s.blank)
+
+  // Feedback can't be skipped: each equation's lesson and the final profile
+  // only show their button once they've had time to be read.
+  const currentRow = ROWS[step]
+  const lessonRead = useReadingGate(currentRow ? t(`rooms.algorithm.rows.${currentRow.id}.feedbackLesson`) : '',
+    phase === 'equations' && !!currentRow && placements[currentRow.id] === blankSlot(currentRow).tileId, 5000)
+  const profileRead = useReadingGate(
+    ['P1', 'B1', 'P2', 'B2', 'P3', 'B3', 'P4'].map((part) => t(`rooms.algorithm.equations.profile${part}`, { friend: narrative.friend })),
+    phase === 'equations' && !currentRow)
 
   /* Per-equation options: the correct tile + up to four SAME-CATEGORY
      distractors, arranged deterministically so the answer isn't always in the
@@ -446,7 +456,7 @@ export default function AlgorithmRoom({ node }) {
                   >
                     <h3 id="ar-feedback-title">{t('rooms.algorithm.equations.feedbackTitle')}</h3>
                     <p id="ar-feedback-lesson" className="ar-feedback-lesson t-md">{t(`rooms.algorithm.rows.${row.id}.feedbackLesson`)}</p>
-                    <button
+                    {lessonRead && <button
                       className="btn btn-cyan"
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => setStep((current) => current + 1)}
@@ -454,7 +464,7 @@ export default function AlgorithmRoom({ node }) {
                       {step < ROWS.length - 1
                         ? t('rooms.algorithm.equations.nextBtn')
                         : t('rooms.algorithm.equations.lastBtn', { friend: narrative.friend })}
-                    </button>
+                    </button>}
                   </section>
                 )}
               </div>
@@ -478,7 +488,7 @@ export default function AlgorithmRoom({ node }) {
                     {t('rooms.algorithm.equations.profileP4', { friend: narrative.friend })}
                   </p>
                 </div>
-                {!solved && (
+                {!solved && profileRead && (
                   <button className="btn btn-green btn-lg" onClick={finish}>
                     {t('rooms.algorithm.equations.logEvidence')}
                   </button>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
+import { useReadingGate } from '../game/readingGate.js'
 import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
 import { ROULETTE_WHEELS as WHEELS, ROULETTE_SEGMENTS, rouletteResult, correctRouletteVerdict } from '../game/rouletteData.js'
@@ -76,6 +77,8 @@ export default function RouletteCorridor({ node }) {
   const results = history[active] || []
   const checkedCount = Object.values(verified).filter(Boolean).length
   const wheelText = (id, key) => t(`rooms.roulette.investigation.wheels.${id}.${key}`)
+  // A verified wheel's feedback must be read before Next / Finish appears.
+  const feedbackRead = useReadingGate(wheelText(active, 'feedback'), !!verified[active])
 
   function spinWheel(w) {
     if (timers.current[w.id] || solved || verified[w.id]) return
@@ -194,9 +197,9 @@ export default function RouletteCorridor({ node }) {
               <>
                 <h3 className="accent-green">{t('rooms.roulette.investigation.correct')}</h3>
                 <p>{wheelText(active, 'feedback')}</p>
-                {checkedCount === WHEELS.length
+                {feedbackRead && (checkedCount === WHEELS.length
                   ? <button className="btn btn-green" disabled={solved} onMouseDown={preventFocusScroll} onClick={finish}>{t('rooms.roulette.investigation.finish')}</button>
-                  : <button className="btn btn-cyan" onMouseDown={preventFocusScroll} onClick={() => setActive(WHEELS.find((w) => !verified[w.id]).id)}>{t('rooms.roulette.investigation.next')}</button>}
+                  : <button className="btn btn-cyan" onMouseDown={preventFocusScroll} onClick={() => setActive(WHEELS.find((w) => !verified[w.id]).id)}>{t('rooms.roulette.investigation.next')}</button>)}
               </>
             ) : (
               <>

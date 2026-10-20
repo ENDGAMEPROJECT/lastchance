@@ -73,10 +73,12 @@ export default function WelcomeScreen() {
           <div className="character-picker">
             <label className={`character-option ${character === 'mia' ? 'on' : ''}`}>
               <input type="radio" name="character" value="mia" checked={character === 'mia'} onChange={() => setCharacter('mia')} />
+              <img className="character-figure" src={bgUrl('algorithm-room/mia-figure-nobg.png')} alt="" draggable={false} />
               <span>{t('welcome.characterMia')}</span>
             </label>
             <label className={`character-option ${character === 'max' ? 'on' : ''}`}>
               <input type="radio" name="character" value="max" checked={character === 'max'} onChange={() => setCharacter('max')} />
+              <img className="character-figure" src={bgUrl('algorithm-room/max-figure-nobg.png')} alt="" draggable={false} />
               <span>{t('welcome.characterMax')}</span>
             </label>
           </div>

@@ -57,7 +57,8 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
     : phase === 'endingFriend' ? (assessmentEnding ? assessmentEnding(passedPosttest(answers, rounds.length)) : p.endingFriend)
     : phase === 'endingYou' ? p.endingYou : ''
   const speechKey = `${mastery}:${phase}:${round}:${introIndex}:${line}`
-  const readingTime = Math.max(3500, line.length * 18 + 1500, line.trim().split(/\s+/).length * 280 + 800)
+  // Lines clear briskly while still leaving ~260 wpm to read.
+  const readingTime = Math.max(2800, line.length * 18 + 1000, line.trim().split(/\s+/).length * 230 + 600)
   const elapsed = speechProgress.key === speechKey ? speechProgress.elapsed : 0
   const speechReady = phase === 'options' || elapsed >= readingTime
   const visibleLetters = reducedMotion || phase === 'options' ? line.length : Math.floor(elapsed / 18)
