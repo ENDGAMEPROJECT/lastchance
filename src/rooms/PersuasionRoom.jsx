@@ -407,7 +407,7 @@ export default function PersuasionRoom({ node }) {
         </button>
 
         {/* floating status hint */}
-        <p className="pl-hint mono">{hint}</p>
+        <p className="game-prompt pl-hint">{hint}</p>
 
         {/* ---- CENTRE: free-floating draggable frames ----
             Every frame is always present and carries its own red circle from the

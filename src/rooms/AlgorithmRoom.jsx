@@ -147,6 +147,7 @@ export default function AlgorithmRoom({ node }) {
   // Feedback is a light + a sound, not words: green chime → unlock; red buzz → deny.
   function submitCode() {
     if (code.length !== 6 || status === 'ok') return
+    if (code.length !== 6 || status === 'ok') return
     if (code === CODES.algorithmRoom) {
       setStatus('ok')
       playSound('twinkle.mp3')
@@ -245,7 +246,7 @@ export default function AlgorithmRoom({ node }) {
               </span>
             </div>
 
-            <p className="ar-term-prompt">
+            <p className="game-prompt ar-term-prompt">
               {t('rooms.algorithm.unlock.prompt')}
             </p>
 
@@ -292,7 +293,7 @@ export default function AlgorithmRoom({ node }) {
       {phase === 'choice' && (
         <div className="ar-choice fade-in">
           <div className="ar-choice-head">
-            <p className="ar-prompt">
+            <p className="game-prompt">
               {t('rooms.algorithm.choice.prompt')}
             </p>
           </div>
@@ -361,7 +362,7 @@ export default function AlgorithmRoom({ node }) {
             const stepSolved = placedId === blankSlot(row).tileId
             return (
               <div className="ar-step scene-scroll">
-                <p className="ar-prompt ar-mini-prompt">{t('rooms.algorithm.equations.prompt')}</p>
+                <p className="game-prompt ar-mini-prompt">{t('rooms.algorithm.equations.prompt')}</p>
 
                 {/* The single equation */}
                 <div className={`ar-equation ${stepSolved ? 'solved' : ''} ${wrongFlash ? 'wrong' : ''}`}>
@@ -420,7 +421,7 @@ export default function AlgorithmRoom({ node }) {
 
                 {!stepSolved ? (
                   <div className="ar-opts">
-                    <div className="ar-opts-hint dim t-sm">{t('rooms.algorithm.equations.dragHint')}</div>
+                    <div className="ar-opts-hint muted t-sm">{t('rooms.algorithm.equations.dragHint')}</div>
                     <div className="ar-opts-tiles">
                       {OPTIONS_BY_ROW[row.id].map((id) => (
                         <Draggable
@@ -444,7 +445,7 @@ export default function AlgorithmRoom({ node }) {
                     aria-live="polite"
                   >
                     <h3 id="ar-feedback-title">{t('rooms.algorithm.equations.feedbackTitle')}</h3>
-                    <p id="ar-feedback-lesson" className="ar-feedback-lesson">{t(`rooms.algorithm.rows.${row.id}.feedbackLesson`)}</p>
+                    <p id="ar-feedback-lesson" className="ar-feedback-lesson t-md">{t(`rooms.algorithm.rows.${row.id}.feedbackLesson`)}</p>
                     <button
                       className="btn btn-cyan"
                       onMouseDown={(event) => event.preventDefault()}
@@ -467,13 +468,13 @@ export default function AlgorithmRoom({ node }) {
 
                 <div className="ar-profile">
                   <div className="ar-profile-title">{t('rooms.algorithm.equations.profileTitle')}</div>
-                  <p>
-                    {t('rooms.algorithm.equations.profileP1')}{' '}
-                    <b>{t('rooms.algorithm.equations.profileB1', { friend: narrative.friend })}</b>{' '}
-                    {t('rooms.algorithm.equations.profileP2')}{' '}
-                    <b>{t('rooms.algorithm.equations.profileB2')}</b>{' '}
-                    {t('rooms.algorithm.equations.profileP3')}{' '}
-                    <b>{t('rooms.algorithm.equations.profileB3')}</b>{' '}
+                  <p className="t-sm">
+                    {t('rooms.algorithm.equations.profileP1')}
+                    <b>{t('rooms.algorithm.equations.profileB1', { friend: narrative.friend })}</b>
+                    {t('rooms.algorithm.equations.profileP2')}
+                    <b>{t('rooms.algorithm.equations.profileB2')}</b>
+                    {t('rooms.algorithm.equations.profileP3')}
+                    <b>{t('rooms.algorithm.equations.profileB3')}</b>
                     {t('rooms.algorithm.equations.profileP4', { friend: narrative.friend })}
                   </p>
                 </div>

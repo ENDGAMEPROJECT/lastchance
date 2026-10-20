@@ -124,11 +124,11 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Convincing — but not enough proof",
-          "body": "{friend}: \"It sounds convincing… but I didn't get to see enough evidence in the Physical Internet. I'm buying it.\" — {friend} bought {product}."
+          "body": "It sounds convincing… but I didn't get to see enough evidence in the Physical Internet. I'm buying it."
         },
         "notEnoughEvidenceUnconvincing": {
           "heading": "Not convinced",
-          "body": "{friend}: \"You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it.\" — {friend} bought {product}."
+          "body": "You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it."
         }
       }
     }
@@ -179,7 +179,9 @@ export default {
           }
         ],
         "why": "Exactly — the ticking clock is manufactured urgency, built to make you act before you think.",
-        "nudge": "Think about what that ticking clock is really doing to you."
+        "nudge": "Think about what that ticking clock is really doing to you.",
+        "positiveFeedback": "You mean, the urgency makes you act before you think... What else?",
+        "negativeFeedback": "I don't know, that doesn't sound right."
       },
       {
         "title": "The Source & Feed",
@@ -206,14 +208,16 @@ export default {
           }
         ],
         "why": "Right — it's not the mic or magic. Your search history was profiled and sold to ad networks.",
-        "nudge": "It's not the mic or a virus — think about what the platform already knows about you."
+        "nudge": "It's not the mic or a virus — think about what the platform already knows about you.",
+        "positiveFeedback": "Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. And apart from that? ",
+        "negativeFeedback": "That really doesn't make sense to me."
       },
       {
         "title": "The Destination",
         "options": [
           {
             "k": "A",
-            "text": "Look at the address bar. The URL says tech-bargalns.com — an 'l' instead of an 'i'. It's a spoofed domain.",
+            "text": "Look at the address bar. The URL says \nhttps://www.lunawear.com-official.shop/ — don't you find this long URL and the word \"official\" a little suspicious?",
             "correct": true
           },
           {
@@ -233,7 +237,9 @@ export default {
           }
         ],
         "why": "Yes — read the URL letter by letter. 'bargalns' with an 'l' is a look-alike domain, not the real store.",
-        "nudge": "The real tell is in the address bar itself — read it character by character."
+        "nudge": "The real tell is in the address bar itself — read it character by character.",
+        "positiveFeedback": "Oh, now I remember! A suspicious URL can be a sign that a website is fake and just pretending to be the real store.",
+        "negativeFeedback": "Yeah, right, and I'm supposed to believe that?"
       }
     ],
     "pretest": {
@@ -254,11 +260,25 @@ export default {
       "debugTag": "Post-test",
       "title": "{friend} is having second thoughts",
       "opening": "Tulit takaisin. Katselen yhä maksusivua. Ennen kuin ostan, kerro, mitä opit tästä tarjouksesta.",
-      "convinced": "Sait minut vakuuttuneeksi. Nyt ymmärrän varoitusmerkit ja sen, miten tämä tarjous yritti vaikuttaa minuun. En osta tablettia.",
+      "friend": {
+        "responses": [
+          "What just happened? Do you think any of what we saw was... real?",
+          "Yeah, about that... No offense {player}, but I really want this tablet. What if it's not a scam? I think I'm willing to take the risk!!",
+          "Just tell me the strongest reasons why you think it's a scam."
+        ]
+      },
+      "player": {
+        "responses": [
+          "Of course it was real, we saw all the reasons why the deal was a scam, remember? So that you wouldn't fall for it.",
+          "Come one, we’re going to be late to class.",
+          "{friend}! Please tell me you’re kidding..."
+        ]
+      },
       "responses": [
         "I hear you, but the pressure feels so real with that clock ticking right in front of me. And it's not just the timer — I keep thinking it came from one of my favourite creators. But there's still the mystery of how it ended up on my radar.",
         "Man, the way everything's handled behind the scenes on these apps is wild. But at the end of the day, I'm still staring at this checkout page trying to decide if it's safe to type my details in."
       ],
+      "convinced": "Sait minut vakuuttuneeksi. Nyt ymmärrän varoitusmerkit ja sen, miten tämä tarjous yritti vaikuttaa minuun. En osta tablettia.",
       "endingFriend": "Ugh, you've given me a lot to process, but I need to choose right now — the timer's about to hit zero. Based on everything we looked at, give it to me straight: do I close this tab and protect my data, or take the risk and buy it?",
       "choiceClose": "Close the tab. It’s a scam.",
       "choiceBuy": "Hit buy. Let’s risk it.",
@@ -269,6 +289,26 @@ export default {
     "mastery": {
       "banner": "One more time — I am still not convinced. Give me the strongest reason for each."
     }
+  },
+  "enter": {
+    "eyebrow": "We are inside",
+    "titleLead": "Welcome to the",
+    "titleAccent": "PHYSICAL INTERNET",
+    "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
+    "playerLine": "We made it. This is the Physical Internet. Let's uncover how this deal was built to fool {friend}.",
+    "toolsTitle": "First, the gear",
+    "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
+    "clock": "⏱ {minutes}:00 starts the moment we start walking",
+    "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
+    "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
+    "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
+    "finalLine": "Ready? The timer starts as soon as you open the map."
+  },
+  "return": {
+    "playerLine": "That went well! I think we've collected more than enough evidence.",
+    "friendLine": "Let's go back already. Offer ends in {minutes} minutes.",
+    "friendLineTimeUp": "Let's go back already. The offer has already ended.",
+    "goBack": "Go back to the real world"
   },
   "nodes": {
     "start": {
@@ -333,26 +373,6 @@ export default {
       "name": "Truth Flashlight",
       "desc": "Reveals the fine print hidden behind the glossy posters in the Ads Corridor."
     }
-  },
-  "enter": {
-    "eyebrow": "We are inside",
-    "titleLead": "Welcome to the",
-    "titleAccent": "PHYSICAL INTERNET",
-    "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
-    "playerLine": "We made it. This is the Physical Internet. Let's uncover how this deal was built to fool {friend}.",
-    "toolsTitle": "First, the gear",
-    "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
-    "clock": "⏱ {minutes}:00 starts the moment we start walking",
-    "mission": "Travel the districts, gather evidence about how the scam works, and get back to {friend} before the offer expires.",
-    "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
-    "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
-    "finalLine": "Ready? The timer starts as soon as you open the map."
-  },
-  "return": {
-    "playerLine": "That went well! I think we've collected more than enough evidence.",
-    "friendLine": "Let's go back already. Offer ends in {minutes} minutes.",
-    "friendLineTimeUp": "Let's go back already. The offer has already ended.",
-    "goBack": "Go back to the real world"
   },
   "hints": {
     "title": "Mission hints",

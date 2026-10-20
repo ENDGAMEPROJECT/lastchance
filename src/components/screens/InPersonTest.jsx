@@ -8,22 +8,29 @@ import './pretest.css'
 // How long a speech bubble / the answer panel takes to fade out (matches pretest.css).
 const FADE_MS = 350
 
-/* Shared scene for the diagnostic conversations and the post-test review. */
-export default function InPersonTest({ script: p, masteryOpening, actions = [], requirePhoneView = true, assessment = false, questionIndices, skipOpening = false, assessmentEnding, onComplete }) {
+/* Shared scene for the diagnostic conversations and the post-test review.
+   `intro`: optional opening exchange [{ who: 'friend'|'player', text }] played
+   before the first question instead of `script.opening` (post-test). Its last
+   friend line stays up as the prompt over the options — and is the prompt again
+   when a retry skips the intro (`skipOpening`). `mastery`: replies to each
+   answer react to it (post-test: positive/negativeFeedback; otherwise why/nudge). */
+export default function InPersonTest({ script: p, intro, mastery = false, actions = [], requirePhoneView = true, assessment = false, questionIndices, skipOpening = false, assessmentEnding, onComplete }) {
   const { reducedMotion, narrative } = useGame()
   const t = useT()
   const friend = narrative.friend
   const allRounds = t('story.rounds')
   const rounds = questionIndices ? questionIndices.map((index) => allRounds[index]) : allRounds
-  const [phase, setPhase] = useState(skipOpening ? 'options' : 'opening')
+  const hasIntro = Array.isArray(intro) && intro.length > 0
+  const introPrompt = hasIntro ? [...intro].reverse().find((l) => l.who === 'friend')?.text || '' : ''
+  const [phase, setPhase] = useState(skipOpening ? 'options' : hasIntro ? 'intro' : 'opening')
+  const [introIndex, setIntroIndex] = useState(0)
   const [round, setRound] = useState(0)
   const [answer, setAnswer] = useState(null)
   const [answers, setAnswers] = useState([])
   // The option just clicked: the panel fades out before the reply starts.
   const [choosing, setChoosing] = useState(null)
   const chooseTimer = useRef(0)
-  const mastery = Boolean(masteryOpening)
-  const [prompt, setPrompt] = useState(skipOpening ? masteryOpening : p.opening)
+  const [prompt, setPrompt] = useState(hasIntro ? introPrompt : p.opening)
   const completed = useRef(false)
   const [phoneOpen, setPhoneOpen] = useState(false)
   const [phoneViewed, setPhoneViewed] = useState(false)
@@ -36,14 +43,20 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
   const returnFocusRef = useRef(false)
   const speechClock = useRef({ key: '', elapsed: 0 })
   const [speechProgress, setSpeechProgress] = useState({ key: '', elapsed: 0 })
-  const playerSpeaking = ['reply', 'endingYou'].includes(phase)
+  const playerSpeaking = ['reply', 'endingYou'].includes(phase) || (phase === 'intro' && intro[introIndex].who === 'player')
   const miaSpeaking = (playerSpeaking ? narrative.player : friend) === 'Mia'
-  const line = ['opening', 'masteryIntro', 'options'].includes(phase) ? prompt
+  // Post-test (assessment) reacts with positive/negativeFeedback; other mastery
+  // passes keep the explanatory why/nudge.
+  const masteryReply = () => assessment
+    ? (answer.correct ? rounds[round].positiveFeedback : rounds[round].negativeFeedback)
+    : (answer.correct ? rounds[round].why : rounds[round].nudge)
+  const line = ['opening', 'options'].includes(phase) ? prompt
+    : phase === 'intro' ? intro[introIndex].text
     : phase === 'reply' ? answer.text
-    : phase === 'response' ? (mastery ? (answer.correct ? rounds[round].why : rounds[round].nudge) : p.responses[round])
+    : phase === 'response' ? (mastery ? masteryReply() : p.responses[round])
     : phase === 'endingFriend' ? (assessmentEnding ? assessmentEnding(passedPosttest(answers, rounds.length)) : p.endingFriend)
     : phase === 'endingYou' ? p.endingYou : ''
-  const speechKey = `${mastery}:${phase}:${round}:${line}`
+  const speechKey = `${mastery}:${phase}:${round}:${introIndex}:${line}`
   const readingTime = Math.max(3500, line.length * 18 + 1500, line.trim().split(/\s+/).length * 280 + 800)
   const elapsed = speechProgress.key === speechKey ? speechProgress.elapsed : 0
   const speechReady = phase === 'options' || elapsed >= readingTime
@@ -55,7 +68,8 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
   // Lines that flow into the options keep their bubble (it only slides up);
   // every other line fades out at the end of its reading time.
   const lastRound = round === rounds.length - 1
-  const continuesIntoOptions = phase === 'masteryIntro' || (phase === 'opening' && !mastery)
+  const lastIntroLine = phase === 'intro' && introIndex === intro.length - 1
+  const continuesIntoOptions = lastIntroLine || (phase === 'opening' && !mastery)
     || (phase === 'response' && (!lastRound || (mastery && !assessment && !answer?.correct)))
   const hasNextLine = !(phase === 'options' || phase === 'endingYou' || (phase === 'opening' && needsPhoneView)
     || (phase === 'endingFriend' && !p.endingYou && !assessment))
@@ -122,13 +136,11 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
       }
       return
     }
-    if (phase === 'opening') {
+    if (phase === 'intro') {
+      if (introIndex < intro.length - 1) setIntroIndex((i) => i + 1)
+      else setPhase('options')
+    } else if (phase === 'opening') {
       if (needsPhoneView) return
-      if (mastery) {
-        setPrompt(masteryOpening)
-        setPhase('masteryIntro')
-      } else setPhase('options')
-    } else if (phase === 'masteryIntro') {
       setPhase('options')
     } else if (phase === 'reply') {
       if (mastery) setPhase('response')
@@ -147,7 +159,7 @@ export default function InPersonTest({ script: p, masteryOpening, actions = [], 
         setPhase('options')
       }
     } else if (phase === 'endingFriend' && p.endingYou) setPhase('endingYou')
-  }, [speechReady, phoneOpen, needsPhoneView, phase, round, rounds.length, p.responses, p.endingYou, mastery, masteryOpening, assessment, answer, answers, onComplete, line])
+  }, [speechReady, phoneOpen, needsPhoneView, phase, round, rounds.length, p.responses, p.endingYou, mastery, assessment, answer, answers, onComplete, line, introIndex, intro])
 
   return (
     <div className="scene pretest-scene">
