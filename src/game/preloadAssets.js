@@ -73,7 +73,7 @@ export function getAssetPreloadPlan({ screen, character = 'mia', locale = 'en', 
   const nextRoom = roomImages(nextNodeId, narrative, locale)
   switch (screen) {
     case 'welcome':
-      return { current: [bgUrl('welcome.gif')], next: conversation }
+      return { current: [bgUrl('welcome.gif'), bgUrl('algorithm-room/mia-figure-nobg.png'), bgUrl('algorithm-room/max-figure-nobg.png')], next: conversation }
     case 'pretest':
       return { current: conversation, next: [...arrival, ...MAP_IMAGES], video: PORTAL_VIDEO }
     case 'enter':

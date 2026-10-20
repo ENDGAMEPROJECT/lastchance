@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { useGame } from '../game/GameContext.jsx'
 import { ITEMS, EMOJI_KEY, encodeWord } from '../game/gameData.js'
 import { bgUrl, assetUrl } from '../game/assets.js'
+import { useReadingGate } from '../game/readingGate.js'
 import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
 import { useI18n, useT } from '../i18n/index.jsx'
@@ -566,6 +567,11 @@ export default function InfluencerAvenue({ node }) {
   const [stage, setStage] = useState('label') // 'label' → 'labelFeedback' → 'explain' → 'verify' → solved
   const [solved, setSolved] = useState(false)
   const [demoPhase, setDemoPhase] = useState('drag') // explainer's scripted reverse-search demo
+  // The label recap and the reverse-search explainer can't be skipped: their
+  // continue buttons appear once the text has had time to be read.
+  const labelFeedbackRead = useReadingGate(['intro', 'paidDesc', 'paidExample', 'collabDesc', 'collabExample', 'giftedDesc', 'giftedExample']
+    .map((key) => t(`rooms.influencer.labelFeedback.${key}`)), stage === 'labelFeedback', 15000)
+  const explainRead = useReadingGate([t('rooms.influencer.explain.body'), t('rooms.influencer.explain.instructions')], stage === 'explain')
   const [demoRun, setDemoRun] = useState(0) // bumped to replay the demo
 
   // Play the explainer's demo while it's open, on a loop: drag the shoes into
@@ -962,9 +968,9 @@ export default function InfluencerAvenue({ node }) {
               </div>
             </div>
 
-            <button className="btn btn-purple btn-lg" onClick={() => setStage('explain')}>
+            {labelFeedbackRead && <button className="btn btn-purple btn-lg" onClick={() => setStage('explain')}>
               {t('rooms.influencer.labelFeedback.continue')}
-            </button>
+            </button>}
           </div>
         </div>
       )}
@@ -996,9 +1002,9 @@ export default function InfluencerAvenue({ node }) {
               <b className="lead-label">{t('rooms.influencer.explain.takeawayLabel')}</b> {t('rooms.influencer.explain.takeaway')}
             </div> */}
 
-            <button className="btn btn-purple btn-lg" onClick={() => setStage('verify')}>
+            {explainRead && <button className="btn btn-purple btn-lg" onClick={() => setStage('verify')}>
               {t('rooms.influencer.explain.continue')}
-            </button>
+            </button>}
           </div>
         </div>
       )}

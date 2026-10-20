@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
+import { useReadingGate } from '../game/readingGate.js'
 import './RoomFrame.css'
 
 const NODE_ICON = {
@@ -49,12 +50,16 @@ export default function RoomFrame({
   const canContinue = !reward || collected
   const rewardName = reward ? t(`items.${reward.id}.name`, vars) : ''
   const rewardImage = reward?.id === 'dataReport' ? narrative.reportImage : reward?.image
+  const clearedText = solvedText || t('roomframe.clearedDefaultText')
+  // The cleared feedback can't be skipped: its buttons appear once it's been
+  // read. Rooms that hand over an item keep the wait short (3s).
+  const clearedRead = useReadingGate(clearedText, started && solved, reward ? 3000 : undefined)
 
   useEffect(() => {
-    if (!started || !solved || screen !== 'room') return
+    if (!started || !solved || !clearedRead || screen !== 'room') return
     const target = canContinue ? continueRef.current : collectRef.current
     target?.focus({ preventScroll: true })
-  }, [started, solved, screen, canContinue])
+  }, [started, solved, clearedRead, screen, canContinue])
 
   function collectReward() {
     if (reward && !hasItem(reward.id)) addItem(reward)
@@ -118,7 +123,7 @@ export default function RoomFrame({
                   </span>
                   <h2 id="room-cleared-title" className="cleared-title">{t('roomframe.clearedDefaultTitle')}</h2>
                   <p id="room-cleared-description" className="cleared-text">
-                    {solvedText || t('roomframe.clearedDefaultText')}
+                    {clearedText}
                   </p>
                 </div>
 
@@ -131,12 +136,12 @@ export default function RoomFrame({
                     <div className="reward-info">
                       <h3 id="cleared-reward-name" className="reward-name">{rewardName}</h3>
                       <p className="reward-desc">{t(`items.${reward.id}.desc`, vars)}</p>
-                      <button ref={collectRef} type="button" className="btn btn-amber reward-collect"
+                      {clearedRead && <button ref={collectRef} type="button" className="btn btn-amber reward-collect"
                         disabled={collected} onClick={collectReward}
                         onMouseDown={(event) => event.preventDefault()}>
                         {collected && <svg className="reward-collected-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>}
                       <span>{collected ? <> {rewardName} {t('roomframe.collected')} </> : t('roomframe.collect')}</span> 
-                      </button>
+                      </button>}
                       <p className="reward-confirmation" role="status">
                         {collected ? <>{rewardName} {t('roomframe.addedToBag')} </> : ''}
                       </p>
@@ -144,7 +149,7 @@ export default function RoomFrame({
                   </section>
                 )}
 
-                {canContinue && (
+                {canContinue && clearedRead && (
                   <div className="cleared-actions">
                     <button ref={continueRef} type="button" className="btn btn-green"
                       onMouseDown={(event) => event.preventDefault()}
