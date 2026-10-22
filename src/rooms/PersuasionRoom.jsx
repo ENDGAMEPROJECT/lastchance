@@ -3,6 +3,7 @@ import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
 import { playSound } from '../game/sound.js'
+import { useRoomProgress } from '../game/roomProgress.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { useStage } from '../components/Stage.jsx'
 import './PersuasionRoom.css'
@@ -239,6 +240,7 @@ export default function PersuasionRoom({ node }) {
   // Every poster now carries a frame (no right/wrong — the password is the check).
   const allPlaced = Object.keys(placement).length === POSTERS.length
   const allMatched = POSTERS.every((p) => placement[p.id] === p.id)
+  useRoomProgress(POSTERS.filter((p) => placement[p.id] === p.id).length) // each frame on its poster
 
 
   // Convert a screen point into scene-local design pixels (undo stage scale).

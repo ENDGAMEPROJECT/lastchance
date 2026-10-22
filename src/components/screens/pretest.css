@@ -330,3 +330,10 @@
   .pretest-speech, .pretest-choices, .pretest-shade { transition: none; animation: none; }
   .pretest-speech-name, .pretest-speech-name::before, .pretest-speech-name::after { animation: none; }
 }
+
+/* Mobile breakpoint (see styles/global.css): the chat lines and answer
+   choices are sized in px, so boost them explicitly. */
+@media (max-width: 920px) {
+  .pretest-line { font-size: calc(20px * var(--text-boost, 1)); }
+  .pretest-option { font-size: calc(19px * var(--text-boost, 1)); }
+}

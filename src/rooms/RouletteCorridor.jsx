@@ -5,6 +5,7 @@ import { bgUrl } from '../game/assets.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
+import { useRoomProgress } from '../game/roomProgress.js'
 import { ROULETTE_WHEELS as WHEELS, ROULETTE_SEGMENTS, rouletteResult, correctRouletteVerdict } from '../game/rouletteData.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import RoulettePrizeIcon from './RoulettePrizeIcon.jsx'
@@ -59,6 +60,7 @@ export default function RouletteCorridor({ node }) {
   const [errors, setErrors] = useState({})
   const [solved, setSolved] = useState(false)
   const [shopOpen, setShopOpen] = useState(false)
+  useRoomProgress(Object.values(verified).filter(Boolean).length) // each wheel verified
   const timers = useRef({})
   const finished = useRef(false)
 

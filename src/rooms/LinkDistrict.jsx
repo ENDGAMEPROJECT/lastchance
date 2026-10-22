@@ -6,6 +6,7 @@ import { DEBUG, settings } from '../game/settings.js'
 import { bgUrl } from '../game/assets.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { playSound, preloadSound } from '../game/sound.js'
+import { useRoomProgress } from '../game/roomProgress.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import './LinkDistrict.css'
 
@@ -439,6 +440,8 @@ export default function LinkDistrict({ node }) {
   // A snapshot of the crossroad we're leaving, kept on-screen while the new
   // one slides in over it during the transition.
   const [outgoing, setOutgoing] = useState(null)
+  // Each passed crossroad (and the move to the justify step) is progress.
+  useRoomProgress(`${round}|${reviewing}|${phase}`)
   const bgTimer = useRef(null)
   const playTransition = useCallback(() => {
     clearTimeout(bgTimer.current)

@@ -6,6 +6,7 @@ import { bgUrl, assetUrl } from '../game/assets.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
+import { useRoomProgress } from '../game/roomProgress.js'
 import { useI18n, useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
@@ -654,6 +655,8 @@ export default function InfluencerAvenue({ node }) {
   const [verifyErr, setVerifyErr] = useState('')
   const [stampFx, setStampFx] = useState(0) // bumped on each stamp so the imprint animation replays
   const [heldStamp, setHeldStamp] = useState(null) // the stamp-maker currently "in hand"
+  // Progress: each correctly decoded label, each stage, each reverse search.
+  useRoomProgress(`${stage}|${POSTS.filter((p) => answers[p.id] === p.correctLabel).length}|${Object.keys(searched).length}`)
   const heldRef = useRef(null)
   const posRef = useRef({ x: 0, y: 0 }) // last cursor position (viewport px)
 
@@ -857,7 +860,7 @@ export default function InfluencerAvenue({ node }) {
                     type="button"
                     className={`ia-answer ${state}`}
                     aria-pressed={selected}
-                    aria-label={t('rooms.influencer.stage1.selectPost', { name: p.name })}
+                    aria-label={t('rooms.influencer.stage1.selectPost', { name: copy.username })}
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => setSelectedPostId(p.id)}
                   >
@@ -883,7 +886,9 @@ export default function InfluencerAvenue({ node }) {
                 <div className="ia-decoder-head">
                   <strong>{t('rooms.influencer.decoder.title')}</strong>
                   <span className="ia-decoder-target mono" aria-live="polite">
-                    {selectedPost?.name || t('rooms.influencer.decoder.noSelection')}
+                    {selectedPost
+                      ? postCopy[POSTS.indexOf(selectedPost)]?.username
+                      : t('rooms.influencer.decoder.noSelection')}
                   </span>
                   <button
                     type="button"

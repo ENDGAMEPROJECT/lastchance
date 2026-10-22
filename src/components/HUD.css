@@ -113,6 +113,20 @@ gap:12px; align-items: center; justify-content: flex-start; }
     box-shadow: 0 0 18px rgba(168, 85, 247, 0.6);
   }
 }
+.hud-hint-reminder {
+  animation: hud-hint-glow 1.2s ease-in-out infinite;
+}
+@keyframes hud-hint-glow {
+  0%, 100% { border-color: var(--amber); box-shadow: 0 0 10px rgba(255, 185, 43, 0.4); }
+  50% { border-color: #fff1cc; color: #fff; background: rgba(255, 185, 43, 0.45); box-shadow: 0 0 18px rgba(255, 225, 150, 0.95), 0 0 38px rgba(255, 185, 43, 0.9), inset 0 0 12px rgba(255, 241, 204, 0.25); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hud-hint-reminder {
+    animation: none;
+    border-color: #ffe08a;
+    box-shadow: 0 0 18px rgba(255, 185, 43, 0.6);
+  }
+}
 
 /* Inventory modal */
 .bag-section { margin-bottom: 20px; }

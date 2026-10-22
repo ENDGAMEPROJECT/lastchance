@@ -22,6 +22,11 @@ export default function Stage({ children }) {
     const compute = () => {
       const s = Math.min(window.innerWidth / width, window.innerHeight / height)
       setScale(s)
+      // Mobile text boost (only read by the ≤920px media query in global.css):
+      // enough to bring the 17px body text up to minTextPx on screen, capped.
+      const { minTextPx, maxTextBoost } = settings.mobile
+      const boost = Math.min(maxTextBoost, Math.max(1, minTextPx / (17 * s)))
+      document.documentElement.style.setProperty('--text-boost', boost.toFixed(3))
     }
     compute()
     window.addEventListener('resize', compute)

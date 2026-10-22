@@ -74,6 +74,16 @@ body {
   overflow: hidden;
 }
 
+/* ---- Mobile breakpoint (≤920px, = settings.mobile.breakpoint) ----
+   The stage is scaled down to fit small screens, so text is enlarged by
+   --text-boost (set by Stage from the current scale). Almost all text sizes
+   are in rem, so raising the root size carries them; body text is 17px so it
+   is restated in rem. Above 920px nothing here applies. */
+@media (max-width: 920px) {
+  html { font-size: calc(16px * var(--text-boost, 1)); }
+  body { font-size: 1.0625rem; }
+}
+
 /* Animated city-grid backdrop applied to the app root */
 .app-shell {
   position: relative;

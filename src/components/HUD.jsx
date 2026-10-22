@@ -5,6 +5,7 @@ import { bgUrl } from '../game/assets.js'
 import { DEBUG, settings } from '../game/settings.js'
 import { isMuted, setMuted } from '../game/sound.js'
 import { getHintContext, getHintPlan } from '../game/hints.js'
+import { ROOM_PROGRESS_EVENT } from '../game/roomProgress.js'
 import Modal from './Modal.jsx'
 import DataReport from './DataReport.jsx'
 import DebugPosttestButtons from './DebugPosttestButtons.jsx'
@@ -50,6 +51,51 @@ export default function HUD() {
   const [reportOpen, setReportOpen] = useState(false)
   const [deniedItem, setDeniedItem] = useState(null)
   const [hintsOpen, setHintsOpen] = useState(false)
+  const [hintReminder, setHintReminder] = useState(false)
+
+  // Light up Hints when the player looks stuck in an unsolved room: enough
+  // clicks AND no puzzle progress for a while. Progress (reported by the room
+  // via useRoomProgress) restarts both counts; opening Hints turns the glow off
+  // until the next bit of progress.
+  const needsHint = screen === 'room' && roomStarted && progress[activeNodeId] !== 'done'
+  useEffect(() => {
+    setHintReminder(false)
+    if (!needsHint) return
+    const { clicks: minClicks, idleMs, idleMsWithItem } = settings.hintReminder
+    const waitMs = neededItem ? idleMsWithItem : idleMs
+    let timer
+    let clicks = 0
+    let elapsed = false
+    let consulted = false
+    const remind = () => {
+      if (!consulted && elapsed && clicks >= minClicks) setHintReminder(true)
+    }
+    const restart = () => {
+      window.clearTimeout(timer)
+      clicks = 0
+      elapsed = false
+      consulted = false
+      setHintReminder(false)
+      timer = window.setTimeout(() => { elapsed = true; remind() }, waitMs)
+    }
+    const onClick = (event) => {
+      if (event.target.closest('.hud-hints')) {
+        consulted = true
+        setHintReminder(false)
+      } else if (event.target.closest('.room-body') && !event.target.closest('.room-cleared-overlay')) {
+        clicks += 1
+        remind()
+      }
+    }
+    restart()
+    document.addEventListener('click', onClick, true)
+    window.addEventListener(ROOM_PROGRESS_EVENT, restart)
+    return () => {
+      window.clearTimeout(timer)
+      document.removeEventListener('click', onClick, true)
+      window.removeEventListener(ROOM_PROGRESS_EVENT, restart)
+    }
+  }, [needsHint, activeNodeId, neededItem])
   const [muted, setMutedState] = useState(isMuted())
   const toggleMute = () => setMutedState(setMuted(!muted))
   const [fullscreen, setFullscreen] = useState(Boolean(document.fullscreenElement))
@@ -178,7 +224,7 @@ export default function HUD() {
           {DEBUG && <DebugCharacterButton />}
           {showHints && (
             <button
-              className="btn btn-amber btn-sm hud-hints"
+              className={`btn btn-amber btn-sm hud-hints ${hintReminder && !hintsOpen ? 'hud-hint-reminder' : ''}`}
               onClick={() => setHintsOpen(true)}
               aria-label={t('hud.hints')}
               title={t('hud.hints')}

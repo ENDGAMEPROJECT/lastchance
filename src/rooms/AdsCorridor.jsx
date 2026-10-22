@@ -3,6 +3,7 @@ import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
 import { playSound } from '../game/sound.js'
+import { useRoomProgress } from '../game/roomProgress.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { useStage } from '../components/Stage.jsx'
 import './AdsCorridor.css'
@@ -58,6 +59,12 @@ export default function AdsCorridor({ node }) {
 
   // Which poster is under the beam right now (transient — reveals hide again).
   const [activePoster, setActivePoster] = useState(null)
+  // Posters whose truth has been read under the beam at least once.
+  const [seen, setSeen] = useState({})
+  useEffect(() => {
+    if (activePoster) setSeen((s) => (s[activePoster] ? s : { ...s, [activePoster]: true }))
+  }, [activePoster])
+  useRoomProgress(`${lightOn}|${Object.keys(seen).length}`) // beam on, then each poster read
 
   const [code, setCode] = useState('')
   const [error, setError] = useState('')

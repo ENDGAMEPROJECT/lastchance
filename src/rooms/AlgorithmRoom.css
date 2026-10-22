@@ -204,8 +204,6 @@
 .ar-key:active { transform: translateY(2px); }
 .ar-key.alt { color: var(--muted); font-size: 1rem; }
 
-.ar-unlock-actions { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.ar-unlock-actions .btn-cyan { width: 100%; }
 .ar-hint { text-align: center; margin: 0; }
 
 /* =========================================================

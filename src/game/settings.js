@@ -34,11 +34,26 @@ export const settings = {
     height: 720,
   },
 
+  /* Mobile (viewport ≤ breakpoint — keep in sync with the 920px media query in
+     styles/global.css). The scaled-down stage makes text tiny on phones, so
+     running text is boosted until it renders at least `minTextPx` on screen,
+     but never more than `maxTextBoost`× its desktop size (the layout is fixed). */
+  mobile: {
+    breakpoint: 920,
+    minTextPx: 13,
+    maxTextBoost: 1.5,
+  },
+
   /* Minutes on the offer countdown. */
   timerMinutes: 30,
 
   /* Remind players to inspect their tools after BOTH thresholds are met. */
   bagReminder: { clicks: 2, delayMs: 20000 },
+
+  /* Light up the Hints button once the player has clicked at least `clicks`
+     times in a room AND made no puzzle progress for the wait (rooms with a tool
+     to use wait longer). Progress restarts both counts. */
+  hintReminder: { clicks: 4, idleMs: 30000, idleMsWithItem: 40000 },
 
   /* ---------------- Puzzle 1 · Link District ---------------- */
   linkDistrict: {

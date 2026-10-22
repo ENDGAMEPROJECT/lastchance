@@ -1,9 +1,10 @@
-import { Fragment, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { CODES, ITEMS } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { playSound } from '../game/sound.js'
+import { useRoomProgress } from '../game/roomProgress.js'
 import { useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
@@ -117,6 +118,7 @@ export default function AlgorithmRoom({ node }) {
   const [step, setStep] = useState(0) // current equation index; ROWS.length = the profile
   const [placements, setPlacements] = useState({}) // rowId -> tileId placed in its blank slot
   const [wrongFlash, setWrongFlash] = useState(false) // transient wrong-tile feedback
+  useRoomProgress(`${phase}|${step}`) // door → keypad → choice → each solved equation
 
 
   const tileById = useMemo(() => Object.fromEntries(TRAY.map((tile) => [tile.id, tile])), [])
@@ -155,17 +157,32 @@ export default function AlgorithmRoom({ node }) {
 
   /* ---- unlock handlers ---- */
   // Feedback is a light + a sound, not words: green chime → unlock; red buzz → deny.
-  function submitCode() {
-    if (code.length !== 6 || status === 'ok') return
-    if (code.length !== 6 || status === 'ok') return
-    if (code === CODES.algorithmRoom) {
+  // The code is checked as soon as the sixth digit goes in; a wrong code shakes
+  // briefly with its digits visible, then clears itself for the next try.
+  const clearTimer = useRef(null)
+  useEffect(() => () => window.clearTimeout(clearTimer.current), [])
+
+  function checkCode(entry) {
+    if (entry === CODES.algorithmRoom) {
       setStatus('ok')
       playSound('twinkle.mp3')
       window.setTimeout(() => setPhase('choice'), 850)
     } else {
       playSound('wrong.mp3')
       setStatus('wrong')
-      setCode('')
+      clearTimer.current = window.setTimeout(() => setCode(''), 700)
+    }
+  }
+
+  function pressKey(k) {
+    if (status === 'ok' || code.length === 6) return // locked while a full code is being judged
+    setStatus('idle') // clear the red light on the next keypress
+    if (k === 'C') setCode('')
+    else if (k === '⌫') setCode(code.slice(0, -1))
+    else {
+      const next = code + k
+      setCode(next)
+      if (next.length === 6) checkCode(next)
     }
   }
 
@@ -276,24 +293,13 @@ export default function AlgorithmRoom({ node }) {
                   key={k}
                   className={`ar-key ${k === 'C' || k === '⌫' ? 'alt' : ''}`}
                   disabled={status === 'ok'}
-                  onClick={() => {
-                    if (status === 'ok') return
-                    setStatus('idle') // clear the red light on the next keypress
-                    if (k === 'C') setCode('')
-                    else if (k === '⌫') setCode((c) => c.slice(0, -1))
-                    else if (code.length < 6) setCode((c) => c + k)
-                  }}
+                  onClick={() => pressKey(k)}
                 >
                   {k}
                 </button>
               ))}
             </div>
 
-            <div className="ar-unlock-actions">
-              <button className="btn btn-cyan" onClick={submitCode} disabled={code.length !== 6 || status === 'ok'}>
-                {t('rooms.algorithm.unlock.submit')}
-              </button>
-            </div>
 
           </div>
         </div>
