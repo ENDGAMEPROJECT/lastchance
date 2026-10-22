@@ -3,6 +3,7 @@ import { useGame } from './game/GameContext.jsx'
 import { preloadGameAssets } from './game/preloadAssets.js'
 import { useI18n } from './i18n/index.jsx'
 import Stage from './components/Stage.jsx'
+import { IS_PHONE } from './game/device.js'
 import { DndProvider } from './components/dnd/Dnd.jsx'
 import HUD from './components/HUD.jsx'
 import GameMap from './components/GameMap.jsx'
@@ -75,7 +76,9 @@ export default function App() {
   const transitionKey = activeNode ? `node:${activeNode.id}` : screen
 
   return (
-    <Stage>
+    // Phones: the welcome screen is laid out (and held) in portrait; the rest
+    // of the game stays landscape however the phone is turned.
+    <Stage portrait={IS_PHONE && screen === 'welcome'}>
       <DndProvider>
         <div className="stage">
           <HUD />

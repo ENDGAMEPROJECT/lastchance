@@ -95,7 +95,7 @@ function getFrameScale(x) {
 export default function PersuasionRoom({ node }) {
   const { completeRoom, addEvidence } = useGame()
   const t = useT()
-  const { scale } = useStage()
+  const { scale, toView, viewRect } = useStage()
 
   const posterText = t('rooms.persuasion.posters')
   const posterIndex = POSTERS.reduce((m, p, i) => ((m[p.id] = i), m), {})
@@ -243,10 +243,12 @@ export default function PersuasionRoom({ node }) {
   useRoomProgress(POSTERS.filter((p) => placement[p.id] === p.id).length) // each frame on its poster
 
 
-  // Convert a screen point into scene-local design pixels (undo stage scale).
+  // Convert a screen point into scene-local design pixels (undo stage scale,
+  // and the phone-orientation rotation if any).
   const toLocal = (cx, cy) => {
-    const r = sceneRef.current.getBoundingClientRect()
-    return { x: (cx - r.left) / scale, y: (cy - r.top) / scale }
+    const r = viewRect(sceneRef.current.getBoundingClientRect())
+    const p = toView(cx, cy)
+    return { x: (p.x - r.left) / scale, y: (p.y - r.top) / scale }
   }
   // Which poster is under a screen point, if any — skipping ones that already
   // hold a (different) frame.

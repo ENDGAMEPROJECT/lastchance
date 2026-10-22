@@ -2,7 +2,7 @@
 
 .welcome-card {
   width: 100%;
-  max-width: 640px;
+  max-width: 520px;
   text-align: center;
   padding: 18px 34px 22px;
   display: flex;
@@ -24,6 +24,7 @@
   font-weight: 900;
   font-size: 1.85rem;
   letter-spacing: 0.04em;
+  line-height: 1.2;
   margin: 2px 0;
 }
 .welcome-tag { color: var(--muted); letter-spacing: 0.08em; font-size: 0.92rem; margin: 0 0 8px; }
@@ -81,13 +82,44 @@
 .welcome-character { width: 100%; margin: 0 0 10px; padding: 0; border: 0; text-align: left; }
 .welcome-character legend { margin-bottom: 6px; font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
 .character-picker { display: flex; gap: 10px; }
-.character-option { position: relative; display: flex; flex: 1; flex-direction: column; gap: 4px; align-items: center; padding: 6px 14px 8px; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+.character-option 
+{ position: relative; display: flex; width:100%; align-items: center; justify-content: center; height: 120px; padding: 6px 14px; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; overflow: hidden; transition: border-color 0.2s, background 0.2s; }
 .character-option:hover { border-color: var(--cyan); }
 .character-option.on { border-color: var(--cyan); background: rgba(22, 242, 255, 0.12); }
-.character-option input { position: absolute; top: 10px; left: 12px; accent-color: var(--cyan); margin: 0; }
-.character-option > span { order: -1; }
-.character-figure { height: 82px; width: auto; object-fit: contain; pointer-events: none; opacity: 0.55; filter: grayscale(0.5); transition: opacity 0.2s, filter 0.2s; }
+/* The radio stays for keyboard/screen-reader use but isn't shown. */
+.character-option input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; pointer-events: none; }
+/* The figure fills most of the button's height… */
+.character-figure { position: relative; z-index: 1; height: 100%; width: auto; object-fit: contain; pointer-events: none; opacity: 0.55; filter: grayscale(0.5); transition: opacity 0.2s, filter 0.2s; }
 .character-option.on .character-figure { opacity: 1; filter: drop-shadow(0 0 8px rgba(22, 242, 255, 0.45)); }
+/* Tint each hologram towards its name colour: Mia pink, Max blue. */
+.character-option.is-mia .character-figure { filter: hue-rotate(72deg) saturate(0.7) grayscale(0.5); }
+.character-option.is-mia.on .character-figure { filter: hue-rotate(72deg) saturate(0.75) brightness(0.55) drop-shadow(0 0 8px rgba(255, 43, 214, 0.5)); }
+.character-option.is-max .character-figure { filter: saturate(1.3) grayscale(0.5); }
+.character-option.is-max.on .character-figure { filter: saturate(1.4) brightness(0.55) drop-shadow(0 0 8px rgba(61, 139, 255, 0.55)); }
+/* Selected: the figure is darkened (glow kept bright) so the name on top reads clearly. */
+/* …with the name big, bold, uppercase and faint, centred on top of it. */
+.character-name {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 3.25rem; /* 4× the 17px body text it used before */
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  opacity: 0.22;
+  pointer-events: none;
+  transition: color 0.2s, opacity 0.2s;
+  letter-spacing: 0.12em;
+}
+.character-option.is-mia .character-name { color: #f2b8e8; } /* whitish, desaturated pink */
+.character-option.is-max .character-name { color: #b8d2f5; } /* whitish, desaturated blue */
+/* The picked character's name stands out: stronger, and in the character's colour. */
+.character-option.on .character-name { opacity: 0.5; }
+.character-option.is-mia.on .character-name { color: #fdbff0; }
+.character-option.is-max.on .character-name { color: #5c9dff; }
 .character-option:focus-within { outline: 2px solid var(--cyan); outline-offset: 2px; }
 
 /* Hide number input spinners for a cleaner look */

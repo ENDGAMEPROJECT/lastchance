@@ -7,6 +7,7 @@ import DebugPosttestButtons from './DebugPosttestButtons.jsx'
 import DebugPortalButton from './DebugPortalButton.jsx'
 import DebugEvidenceButton from './DebugEvidenceButton.jsx'
 import { DebugReturnButtons } from './DebugPosttestButtons.jsx'
+import { useStage } from './Stage.jsx'
 import './GameMap.css'
 
 /* Art key per node id — the file-name stem under public/bg/map, which holds a
@@ -223,6 +224,7 @@ const ROAD = (() => {
 function useCentred(ref, deps) {
   const [shift, setShift] = useState(0)
   const [tick, setTick] = useState(0)
+  const { viewRect } = useStage() // undoes a phone-orientation rotation, if any
 
   // Late webfont swaps change label widths without re-rendering — re-measure.
   useEffect(() => {
@@ -232,12 +234,12 @@ function useCentred(ref, deps) {
   useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
-    const board = el.getBoundingClientRect()
+    const board = viewRect(el.getBoundingClientRect())
     if (!board.width) return
     let min = Infinity
     let max = -Infinity
     for (const part of el.querySelectorAll('.mnode, .mnode-label')) {
-      const r = part.getBoundingClientRect()
+      const r = viewRect(part.getBoundingClientRect())
       if (!r.width) continue
       min = Math.min(min, r.left)
       max = Math.max(max, r.right)
@@ -247,7 +249,7 @@ function useCentred(ref, deps) {
     const scale = board.width / BOARD.w
     const off = ((board.left + board.right) / 2 - (min + max) / 2) / scale
     if (Math.abs(off) > 0.5) setShift((s) => s + off)
-  }, [ref, shift, tick, ...deps])
+  }, [ref, shift, tick, viewRect, ...deps])
 
   return shift
 }

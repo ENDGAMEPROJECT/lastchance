@@ -31,7 +31,7 @@ export function useDnd() {
 }
 
 export function DndProvider({ children }) {
-  const { scale } = useStage()
+  const { scale, rotated, toView, viewportEl } = useStage()
   const zones = useRef(new Map()) // id -> { getEl, accepts, onDrop }
   const [drag, setDrag] = useState(null) // active pointer drag
   const [overId, setOverId] = useState(null)
@@ -107,18 +107,25 @@ export function DndProvider({ children }) {
   return (
     <DndContext.Provider value={value}>
       {children}
-      {drag && drag.moved &&
-        createPortal(
-          <div className="dnd-ghost" style={{ left: drag.x, top: drag.y, width: drag.w, height: drag.h }}>
+      {drag && drag.moved && (() => {
+        // The ghost lives in the viewport (outside the scaled stage); on a
+        // phone turned against the game's orientation that viewport is
+        // rotated, so map the pointer and the item's size into its space.
+        const p = toView(drag.x, drag.y)
+        const w = rotated ? drag.h : drag.w
+        const h = rotated ? drag.w : drag.h
+        return createPortal(
+          <div className="dnd-ghost" style={{ left: p.x, top: p.y, width: w, height: h }}>
             <div
               className="dnd-ghost-inner"
-              style={{ width: drag.w / scale, height: drag.h / scale, transform: `scale(${scale})` }}
+              style={{ width: w / scale, height: h / scale, transform: `scale(${scale})` }}
             >
               {drag.children}
             </div>
           </div>,
-          document.body,
-        )}
+          viewportEl || document.body,
+        )
+      })()}
     </DndContext.Provider>
   )
 }

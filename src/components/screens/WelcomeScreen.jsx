@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useGame } from '../../game/GameContext.jsx'
 import { useI18n, useT, AVAILABLE_LOCALES, localeName } from '../../i18n/index.jsx'
 import { bgUrl } from '../../game/assets.js'
 import { preloadGameAssets } from '../../game/preloadAssets.js'
+import { IS_PHONE } from '../../game/device.js'
+import RotatePrompt from './RotatePrompt.jsx'
 import './welcome.css'
 
 /* First screen: collect the player's alias + age and let them pick a
@@ -16,6 +18,9 @@ export default function WelcomeScreen() {
   const [age, setAge] = useState('')
   const [character, setCharacter] = useState('mia')
   const [err, setErr] = useState('')
+  // Phones: the validated entry waits behind the "turn your phone" screen.
+  const [pending, setPending] = useState(null)
+  const continueToGame = useCallback(() => submitWelcome(pending), [pending, submitWelcome])
 
   useEffect(() => {
     preloadGameAssets({ screen: 'welcome', character })
@@ -27,15 +32,17 @@ export default function WelcomeScreen() {
     const n = parseInt(age, 10)
     if (!a) return setErr(t('welcome.aliasError'))
     if (!age || Number.isNaN(n) || n < 1 || n > 120) return setErr(t('welcome.ageError'))
-    submitWelcome({ alias: a, age: n, character })
+    const entry = { alias: a, age: n, character }
+    if (IS_PHONE) setPending(entry)
+    else submitWelcome(entry)
   }
 
   return (
     <div className="scene welcome-scene">
       <div className="bg-slot" style={{ backgroundImage: `url(${bgUrl('welcome.gif')})` }} />
       <form className="welcome-card panel clip panel-glow-cyan fade-in" onSubmit={onSubmit}>
-        <div className="welcome-glyph">◉</div>
-        <div className="eyebrow">{t('welcome.eyebrow')}</div>
+        {/* <div className="welcome-glyph">◉</div>
+        <div className="eyebrow">{t('welcome.eyebrow')}</div> */}
         <h1 className="welcome-title">
           {t('welcome.titleLead')} <span className="grad">{t('welcome.titleAccent')}</span>
         </h1>
@@ -71,15 +78,15 @@ export default function WelcomeScreen() {
         <fieldset className="welcome-character">
           <legend>{t('welcome.characterLabel')}</legend>
           <div className="character-picker">
-            <label className={`character-option ${character === 'mia' ? 'on' : ''}`}>
+            <label className={`character-option is-mia ${character === 'mia' ? 'on' : ''}`}>
               <input type="radio" name="character" value="mia" checked={character === 'mia'} onChange={() => setCharacter('mia')} />
               <img className="character-figure" src={bgUrl('algorithm-room/mia-figure-nobg.png')} alt="" draggable={false} />
-              <span>{t('welcome.characterMia')}</span>
+              <span className="character-name">{t('welcome.characterMia')}</span>
             </label>
-            <label className={`character-option ${character === 'max' ? 'on' : ''}`}>
+            <label className={`character-option is-max ${character === 'max' ? 'on' : ''}`}>
               <input type="radio" name="character" value="max" checked={character === 'max'} onChange={() => setCharacter('max')} />
               <img className="character-figure" src={bgUrl('algorithm-room/max-figure-nobg.png')} alt="" draggable={false} />
-              <span>{t('welcome.characterMax')}</span>
+              <span className="character-name">{t('welcome.characterMax')}</span>
             </label>
           </div>
         </fieldset>
@@ -104,6 +111,7 @@ export default function WelcomeScreen() {
 
         <button type="submit" className="btn btn-cyan btn-lg welcome-start">{t('welcome.start')}</button>
       </form>
+      {pending && <RotatePrompt onContinue={continueToGame} />}
     </div>
   )
 }

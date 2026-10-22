@@ -278,6 +278,14 @@ h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0
 .btn-ghost { background: transparent; box-shadow: none; }
 .btn-lg { padding: 15px 33px; font-size: 1.15rem; }
 .btn-sm { padding: 6px 12px; font-size: 0.87rem; }
+/* Mobile breakpoint (≤920px, = settings.mobile.breakpoint): buttons ~33%
+   bigger (font + padding) for touch. Kept right after the base sizes so these
+   win; the round mobile HUD buttons set their own sizes. */
+@media (max-width: 920px) {
+  .btn { font-size: calc(1rem * 1.33); padding: 16px 29px; }
+  .btn-sm { font-size: calc(0.87rem * 1.33); padding: 8px 16px; }
+  .btn-lg { font-size: calc(1.15rem * 1.33); padding: 20px 44px; }
+}
 
 /* ---------- Inputs ---------- */
 .field {

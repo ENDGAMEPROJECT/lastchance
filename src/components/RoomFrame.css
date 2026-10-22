@@ -150,3 +150,77 @@
 .reward-confirmation { min-height: 1.4em; margin: 8px 0 0; color: #b6f5cd; font-size: 0.72rem; line-height: 1.4; }
 .cleared-actions { display: flex; justify-content: center; padding: 16px 24px; border-top: 1px solid rgba(43, 255, 136, 0.12); }
 @media (prefers-reduced-motion: reduce) { .room-cleared { animation: none; } }
+
+/* Mobile breakpoint (≤920px, = settings.mobile.breakpoint): the cleared-room
+   pop-over spans 75% of the 1280px game width. */
+@media (max-width: 920px) {
+  .room-cleared { max-width: calc(1280px * 0.75); }
+  /* Room-entry instructions: 70% of the game width, text spanning the card. */
+  .briefing-card { max-width: calc(1280px * 0.7); }
+  .briefing-text { max-width: none; }
+  /* District-cleared feedback: text at the dialogue-line size (as the Hints &
+     Bag pop-overs), spanning the wider card. */
+  .cleared-text,
+  .reward-desc { font-size: calc(20px * var(--text-boost, 1)); }
+  /* "{object} added to bag" is a small status line under the button. */
+  .reward-confirmation { font-size: calc(14px * var(--text-boost, 1)); }
+  .reward-collect { margin-top: 20px; }
+  /* The collected-tick inside the button, bigger for touch. */
+  .reward-collected-tick { width: 28px; height: 28px; }
+  .cleared-text { max-width: none; }
+  /* The tick sits before the title on one centred line; the text wraps below. */
+  .cleared-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    column-gap: 16px;
+  }
+  .cleared-badge { flex: none; margin-bottom: 0; }
+  .cleared-text { flex-basis: 100%; }
+}
+
+/* ---------- Reward reveal (desktop and mobile) ----------
+   The reward object fades in quickly, flashes bright, then keeps a softly
+   pulsing golden halo. The halo is a drop-shadow, so it follows the image's
+   own outline (the card's rounded corners) rather than a circle. Only
+   opacity/filter are animated, so the art's static tilt (transform) is kept.
+   Layering: the art box's flash (reward-appear) and the halo pulse both
+   animate `filter`, so they can't share an element — the image is moved up
+   into ::before (inheriting the inline background-image; the box's own copy is
+   hidden) and the halo pulses there. */
+.reward-art {
+  position: relative;
+  background-size: 0 0;
+  animation: reward-appear 0.9s ease-out 0.15s both;
+  --halo-min: 6px;
+  --halo-max: 12px;
+}
+.reward-art::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  animation: reward-halo 2.4s ease-in-out 1.05s infinite;
+}
+.reward-art .reward-icon { position: relative; }
+@keyframes reward-appear {
+  0% { opacity: 0; filter: brightness(1); }
+  30% { opacity: 1; filter: brightness(1); }
+  50% { opacity: 1; filter: brightness(2.4) drop-shadow(0 0 16px rgba(255, 225, 140, 1)); }
+  100% { opacity: 1; filter: brightness(1) drop-shadow(0 0 0 rgba(255, 225, 140, 0)); }
+}
+@keyframes reward-halo {
+  0%, 100% { filter: drop-shadow(0 0 calc(var(--halo-min) / 2) rgba(255, 220, 130, 0.9)) drop-shadow(0 0 var(--halo-min) rgba(255, 190, 60, 0.75)); }
+  50% { filter: drop-shadow(0 0 calc(var(--halo-max) / 2) rgba(255, 230, 150, 1)) drop-shadow(0 0 var(--halo-max) rgba(255, 190, 60, 0.95)); }
+}
+.reduced-motion .reward-art,
+.reduced-motion .reward-art::before { animation: none; }
+/* Mobile breakpoint (≤920px): the stage is scaled down, so the halo spreads
+   wider to read at that size. */
+@media (max-width: 920px) {
+  .reward-art { --halo-min: 16px; --halo-max: 30px; }
+}

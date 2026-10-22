@@ -1,0 +1,72 @@
+/* "Turn your phone" screen (phones only). Lives outside the scaled stage, so
+   sizes here are real screen pixels. */
+.rotate-prompt {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+  background: radial-gradient(900px 700px at 50% 40%, #0a0e1e, #02030a 75%);
+  color: var(--text);
+  animation: fade-in 0.3s ease both;
+}
+
+/* The phone turns from portrait to landscape, pauses, turns back, repeats. */
+.rotate-phone {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 6px;
+}
+.rotate-phone > svg:first-child {
+  width: 66px;
+  height: 110px;
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 3;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px rgba(22, 242, 255, 0.55));
+  animation: rotate-phone-turn 2.6s ease-in-out infinite;
+}
+.rotate-phone-screen { fill: rgba(22, 242, 255, 0.12); stroke-width: 1.5; }
+.rotate-arrow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: var(--magenta);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.8;
+  animation: rotate-arrow-fade 2.6s ease-in-out infinite;
+}
+@keyframes rotate-phone-turn {
+  0%, 15% { transform: rotate(0deg); }
+  45%, 75% { transform: rotate(90deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes rotate-arrow-fade {
+  0%, 10% { opacity: 0.85; }
+  40%, 100% { opacity: 0; }
+}
+
+.rotate-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--cyan);
+  text-shadow: var(--glow-cyan);
+}
+.rotate-text { margin: 0; max-width: 320px; font-size: 17px; line-height: 1.45; color: var(--muted); }
+
+.reduced-motion .rotate-phone > svg:first-child { animation: none; transform: rotate(90deg); }
+.reduced-motion .rotate-arrow { animation: none; opacity: 0; }

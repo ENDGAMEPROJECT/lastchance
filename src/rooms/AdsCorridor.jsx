@@ -48,7 +48,7 @@ function highlightLetter(text, letter) {
 export default function AdsCorridor({ node }) {
   const { completeRoom, addEvidence, hasItem } = useGame()
   const t = useT()
-  const { scale } = useStage()
+  const { scale, toView, viewRect } = useStage()
 
   // The flashlight stays off until the player equips it from the Bag.
   const [lightOn, setLightOn] = useState(false)
@@ -103,9 +103,10 @@ export default function AdsCorridor({ node }) {
     if (!el) return
     // Measure against the beam element's OWN box (it extends past the wall),
     // so the light hole tracks the cursor no matter how far it overflows.
-    const rect = el.getBoundingClientRect()
-    el.style.setProperty('--Xpos', `${(clientX - rect.left) / scale}px`)
-    el.style.setProperty('--Ypos', `${(clientY - rect.top) / scale}px`)
+    const rect = viewRect(el.getBoundingClientRect())
+    const p = toView(clientX, clientY) // undo a phone-orientation rotation, if any
+    el.style.setProperty('--Xpos', `${(p.x - rect.left) / scale}px`)
+    el.style.setProperty('--Ypos', `${(p.y - rect.top) / scale}px`)
   }
   const onMouseMove = (e) => { if (lightOn) moveBeam(e.clientX, e.clientY) }
   const onTouchMove = (e) => {

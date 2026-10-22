@@ -129,6 +129,42 @@ gap:12px; align-items: center; justify-content: flex-start; }
 }
 
 /* Inventory modal */
+/* Bag tabs: Tools | Evidence (styled like the old section subheadings). */
+.bag-tabs { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 1px solid var(--line); }
+.bag-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: -1px;
+  padding: 8px 14px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-retro);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.bag-tab:hover { color: var(--text); }
+.bag-tab-tools.is-active { color: var(--purple-light); border-bottom-color: currentColor; }
+.bag-tab-evidence.is-active { color: var(--green); border-bottom-color: currentColor; }
+.bag-tab-count {
+  min-width: 20px;
+  padding: 1px 6px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  line-height: 1.4;
+  text-align: center;
+}
+.bag-panels { display: grid; }
+.bag-panels > .bag-section { grid-area: 1 / 1; margin-bottom: 0; }
+.bag-panels > .bag-section.is-hidden { visibility: hidden; }
 .bag-section { margin-bottom: 20px; }
 .bag-section:last-child { margin-bottom: 0; }
 .bag-grid { display: grid; gap: 10px; margin-top: 10px; }
@@ -202,4 +238,168 @@ gap:12px; align-items: center; justify-content: flex-start; }
 .reduced-motion .hud-tour-btn.is-ready { box-shadow: 0 0 0 3px #fff, 0 0 20px 6px currentColor; }
 @media (prefers-reduced-motion: reduce) {
   .hud-tour-btn { animation: none; }
+}
+
+/* ---- Mobile HUD (≤920px, = settings.mobile.breakpoint) ----
+   The top bar is gone. The timer floats inside the game box; the side columns
+   (fullscreen + sound on the left, Hints / Map / Bag on the right) are
+   portalled to <body> and fixed to the screen edges, so they keep the same
+   distance from them whatever the phone's shape — in the letterbox on a long,
+   short phone, over the game on a squarer one. Sizes there are real screen px
+   (no stage scaling). A right-hand button unfolds into a labelled pill on the
+   first tap and opens on the second. Only rendered on mobile. */
+@media (max-width: 920px) {
+  .hud-m {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .hud-m-debug { pointer-events: auto; }
+
+  /* Timer as a retractable drawer hanging from the top edge: bigger, flush to
+     the top, rounded only at the bottom, and see-through. Closed, it slides up
+     until only its tab peeks out. (The slide is on the wrapper, not the timer,
+     so it can't fight the timer's own pulse animation.) */
+  .hud-m-drawer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: max-content;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: auto;
+    transition: transform 0.3s ease;
+  }
+  .hud-m-drawer.is-closed { transform: translateY(calc(-100% + 30px)); }
+  .hud-m-drawer-tab {
+    width: 84px;
+    height: 30px;
+    padding: 0;
+    border: 1px solid rgba(22, 242, 255, 0.4);
+    border-top: 0;
+    border-radius: 0 0 14px 14px;
+    background: rgba(8, 11, 26, 0.45);
+    color: var(--cyan);
+    opacity: 0.8;
+    cursor: pointer;
+  }
+  .hud-m-drawer-tab svg { width: 28px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
+  .hud-m .hud-m-timer {
+    cursor: pointer;
+    padding: 6px 40px 10px;
+    border-top: 0;
+    border-radius: 0 0 22px 22px;
+    background: rgba(8, 11, 26, 0.45);
+    opacity: 0.8;
+  }
+  .hud-m .hud-m-timer .hud-timer-val { font-size: 60px; line-height: 1.1; }
+  .hud-m-debug {
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    width: max-content;
+    margin: 0 auto;
+    display: flex;
+    gap: 8px;
+  }
+
+  .hud-m-col {
+    position: fixed;
+    top: 3rem;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  /* Portal transitions (the tunnel video at the start and end, and their
+     black/white fades) cover the whole game, HUD included; the edge buttons
+     live outside the game box, so hide them explicitly while one plays. */
+  body:has(.enter-blackout, .enter-video-host, .enter-whiteout, .return-whiteout) .hud-m-edges { display: none; }
+  .hud-m-left { left: max(12px, env(safe-area-inset-left)); align-items: flex-start; }
+  .hud-m-right { right: max(12px, env(safe-area-inset-right)); align-items: flex-end; }
+
+  .hud-m-edges .hud-m-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    border-width: 3px;
+    border-radius: 999px;
+    font-size: 30px;
+    line-height: 1;
+    background: linear-gradient(145deg, rgba(40, 70, 120, 0.95), rgba(10, 16, 40, 0.95));
+  }
+  /* Tinted gradient fills, one per button colour. The extra .hud-m-col keeps
+     them above the global .btn-*:hover backgrounds, which otherwise wipe the
+     colour on tap (mobile keeps :hover after a touch). */
+  .hud-m-edges .hud-m-col .hud-m-btn.btn-ghost { border-color: rgba(22, 242, 255, 0.45); }
+  .hud-m-edges .hud-m-col .hud-m-btn.btn-amber { background: linear-gradient(145deg, rgba(255, 185, 43, 0.75), rgba(120, 60, 0, 0.95)); }
+  .hud-m-edges .hud-m-col .hud-m-btn.btn-cyan { background: linear-gradient(145deg, rgba(22, 242, 255, 0.6), rgba(0, 60, 110, 0.95)); }
+  .hud-m-edges .hud-m-col .hud-m-btn.btn-purple { background: linear-gradient(145deg, rgba(190, 110, 255, 0.75), rgba(60, 10, 110, 0.95)); }
+  .hud-m-edges .hud-m-btn svg { width: 32px; height: 32px; }
+
+  /* First tap: the icon unfolds into an icon + label pill (anchored right). */
+  /* All three unfold together and share the widest one's length. */
+  .hud-m-edges .hud-m-nav.is-expanded {
+    width: 100%;
+    padding: 0 22px;
+    font-size: 18px;
+    white-space: nowrap;
+    animation: hud-m-unfold 0.18s ease-out;
+  }
+  @keyframes hud-m-unfold { from { opacity: 0.6; } }
+
+  /* Bag count: a round badge pinned on the button's top-right rim. */
+  .hud-m-edges .hud-m-btn .bag-count {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    display: grid;
+    place-items: center;
+    min-width: 24px;
+    height: 24px;
+    margin: 0;
+    padding: 0 5px;
+    border: 2px solid #0a0d1c;
+    border-radius: 999px;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+  .hud-m-alert { max-width: 180px; font-size: 12px; }
+
+  /* Hints & Bag pop-overs: 75% of the 1280px game width (!important beats the
+     inline maxWidth and the 85% mobile modal default), and their text set at
+     the dialogue-line size (.pretest-line on mobile) instead of the smaller
+     desktop sizes. */
+  .modal.hud-modal {
+    width: calc(1280px * 0.75);
+    max-width: calc(1280px * 0.75) !important;
+  }
+  .hud-modal .hint-target p,
+  .hud-modal .hints-context,
+  .hud-modal .hint-trigger,
+  .hud-modal .hint-answer,
+  .hud-modal .bag-desc,
+  .hud-modal .muted,
+  .hud-modal .evidence-list li { font-size: calc(20px * var(--text-boost, 1)); }
+  /* Their subtitles grow by the same factor as that text (body 17px → dialogue
+     20px, i.e. ×20/17), so the hierarchy is kept. */
+  .hud-modal .eyebrow { font-size: calc(0.72rem * 20 / 17); }
+  .hud-modal .hint-target h4 { font-size: calc(1.0625rem * 20 / 17); }
+  .hud-modal .bag-subheading { font-size: calc(1rem * 20 / 17); }
+  .hud-modal .bag-tab { font-size: calc(1rem * 20 / 17); }
+  .hud-modal .bag-tab-count { font-size: calc(0.7rem * 20 / 17); }
+  .hud-modal .bag-name { font-size: calc(1.1rem * 20 / 17); }
 }

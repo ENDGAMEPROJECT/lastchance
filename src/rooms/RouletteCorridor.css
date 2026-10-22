@@ -19,6 +19,7 @@
 .rc-play { flex: 1; min-height: 0; display: grid; grid-template-columns: 420px 1fr; grid-template-rows: minmax(0, 1fr); align-items: center; gap: 36px; }
 .rc-machine { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; align-self: center; }
 .rc-machine > .btn { padding: 8px 22px; }
+@media (max-width: 920px) { .rc-machine > .btn { padding: 11px 29px; } } /* mobile: ~33% bigger buttons */
 .rc-wheel-wrap { position: relative; width: 340px; height: 340px; flex: none; display: block; padding: 0; border: 0; border-radius: 50%; background: transparent; color: inherit; font: inherit; appearance: none; cursor: pointer; }
 .rc-wheel-wrap:disabled { cursor: default; }
 .rc-wheel-wrap:focus-visible { outline: 3px solid var(--cyan); outline-offset: 8px; }

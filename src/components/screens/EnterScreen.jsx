@@ -43,7 +43,7 @@ const SPARKS = Array.from({ length: 14 }, (_, i) => {
 export default function EnterScreen() {
   const { reducedMotion, setEnterTour, narrative } = useGame()
   const t = useT()
-  const { scale } = useStage()
+  const { scale, viewRect } = useStage()
   const friend = narrative.friend
   const vars = { friend, product: narrative.product, minutes: GAME_MINUTES }
   const backdrops = {
@@ -147,8 +147,9 @@ export default function EnterScreen() {
     const measure = () => {
       const button = document.querySelector(`[data-tour="${step.target}"]`)
       if (button) {
-        const b = button.getBoundingClientRect()
-        const r = root.getBoundingClientRect()
+        // viewRect undoes a phone-orientation rotation, if any
+        const b = viewRect(button.getBoundingClientRect())
+        const r = viewRect(root.getBoundingClientRect())
         const x = (b.left + b.width / 2 - r.left) / scale
         setAnchorX((prev) => (prev != null && Math.abs(prev - x) < 0.5 ? prev : x))
       }
@@ -156,7 +157,7 @@ export default function EnterScreen() {
     }
     measure()
     return () => window.cancelAnimationFrame(frame)
-  }, [step.who, step.target, root, scale])
+  }, [step.who, step.target, root, scale, viewRect])
 
   // The empty arrival scene shows until the dialogue starts (and during the HUD tour).
   const backdrop = intro || step.who === 'tour' ? 'initial' : step.who

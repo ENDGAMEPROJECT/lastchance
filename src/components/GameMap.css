@@ -203,3 +203,20 @@
 
 /* Start / Final Decision are story signposts, not puzzles. */
 .mnode.gate:disabled:not(.locked) { cursor: default; }
+
+/* Mobile breakpoint (≤920px, = settings.mobile.breakpoint): the debug jump row
+   floats over the bottom of the map instead of pushing the map down. */
+@media (max-width: 920px) {
+  .map-debug {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 70px; /* clear of the HUD debug row (As Mia) below */
+    z-index: 5;
+    margin: 0 auto;
+  }
+  /* The header's fade-in animates transform, which would make the header the
+     row's anchor; an opacity-only fade lets it anchor to the whole map. */
+  .map-head.fade-in { animation-name: map-head-in; }
+  @keyframes map-head-in { from { opacity: 0; } to { opacity: 1; } }
+}
