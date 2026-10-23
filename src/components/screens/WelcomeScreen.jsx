@@ -7,6 +7,9 @@ import { IS_PHONE } from '../../game/device.js'
 import RotatePrompt from './RotatePrompt.jsx'
 import './welcome.css'
 
+// Flag per language (drawn by the self-hosted emoji font, see game/emojiFont.js).
+const FLAGS = { en: '🇬🇧', es: '🇪🇸', fi: '🇫🇮', sr: '🇷🇸' }
+
 /* First screen: collect the player's alias + age and let them pick a
    language. The language list is populated from the registered locales,
    so new languages appear automatically. */
@@ -101,7 +104,7 @@ export default function WelcomeScreen() {
                 className={`lang-chip ${locale === code ? 'on' : ''}`}
                 onClick={() => setLocale(code)}
               >
-                {localeName(code)} <em className="mono">{code}</em>
+                {localeName(code)} <span className="lang-flag" aria-hidden="true">{FLAGS[code]}</span>
               </button>
             ))}
           </div>
@@ -109,7 +112,10 @@ export default function WelcomeScreen() {
 
         {err && <div className="banner wrong shake">{err}</div>}
 
-        <button type="submit" className="btn btn-cyan btn-lg welcome-start">{t('welcome.start')}</button>
+        <button type="submit" className="btn btn-cyan btn-lg welcome-start">
+          <svg className="welcome-start-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v8M6.6 6.6a7.5 7.5 0 1 0 10.8 0" /></svg>
+          {t('welcome.start')}
+        </button>
       </form>
       {pending && <RotatePrompt onContinue={continueToGame} />}
     </div>

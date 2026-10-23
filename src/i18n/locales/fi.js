@@ -24,7 +24,7 @@ export default {
     "ageLabel": "Your age",
     "agePlaceholder": "e.g. 14",
     "languageLabel": "Language",
-    "start": "⏻ Enter",
+    "start": "Enter",
     "aliasError": "Enter an alias to continue.",
     "ageError": "Enter a valid age (1–120).",
     "characterLabel": "Choose your character",

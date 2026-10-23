@@ -241,8 +241,8 @@ gap:12px; align-items: center; justify-content: flex-start; }
 }
 
 /* ---- Mobile HUD (≤920px, = settings.mobile.breakpoint) ----
-   The top bar is gone. The timer floats inside the game box; the side columns
-   (fullscreen + sound on the left, Hints / Map / Bag on the right) are
+   The top bar is gone. The side columns (fullscreen + sound on the left;
+   the timer above Hints / Map / Bag on the right) are
    portalled to <body> and fixed to the screen edges, so they keep the same
    distance from them whatever the phone's shape — in the letterbox on a long,
    short phone, over the game on a squarer one. Sizes there are real screen px
@@ -257,46 +257,19 @@ gap:12px; align-items: center; justify-content: flex-start; }
   }
   .hud-m-debug { pointer-events: auto; }
 
-  /* Timer as a retractable drawer hanging from the top edge: bigger, flush to
-     the top, rounded only at the bottom, and see-through. Closed, it slides up
-     until only its tab peeks out. (The slide is on the wrapper, not the timer,
-     so it can't fight the timer's own pulse animation.) */
-  .hud-m-drawer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: max-content;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    pointer-events: auto;
-    transition: transform 0.3s ease;
+  /* Timer: a plain read-out pinned to the top-right corner of the screen, on
+     its own — not part of the Hints / Map / Bag column. */
+  .hud-m-edges .hud-m-timer {
+    position: fixed;
+    top: max(16px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
+    z-index: 50;
+    gap: 0;
+    padding: 2px 10px;
+    background: rgba(8, 11, 26, 0.6);
+    pointer-events: none;
   }
-  .hud-m-drawer.is-closed { transform: translateY(calc(-100% + 30px)); }
-  .hud-m-drawer-tab {
-    width: 84px;
-    height: 30px;
-    padding: 0;
-    border: 1px solid rgba(22, 242, 255, 0.4);
-    border-top: 0;
-    border-radius: 0 0 14px 14px;
-    background: rgba(8, 11, 26, 0.45);
-    color: var(--cyan);
-    opacity: 0.8;
-    cursor: pointer;
-  }
-  .hud-m-drawer-tab svg { width: 28px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
-  .hud-m .hud-m-timer {
-    cursor: pointer;
-    padding: 6px 40px 10px;
-    border-top: 0;
-    border-radius: 0 0 22px 22px;
-    background: rgba(8, 11, 26, 0.45);
-    opacity: 0.8;
-  }
-  .hud-m .hud-m-timer .hud-timer-val { font-size: 60px; line-height: 1.1; }
+  .hud-m-edges .hud-m-timer .hud-timer-val { font-size: 17px; line-height: 1.1; }
   .hud-m-debug {
     position: absolute;
     bottom: 12px;
@@ -322,6 +295,14 @@ gap:12px; align-items: center; justify-content: flex-start; }
   body:has(.enter-blackout, .enter-video-host, .enter-whiteout, .return-whiteout) .hud-m-edges { display: none; }
   .hud-m-left { left: max(12px, env(safe-area-inset-left)); align-items: flex-start; }
   .hud-m-right { right: max(12px, env(safe-area-inset-right)); align-items: flex-end; }
+  /* Welcome screen: fullscreen + sound side by side in the top-right corner. */
+  .hud-m-edges.is-welcome .hud-m-left {
+    top: max(20px, env(safe-area-inset-top));
+    left: auto;
+    right: max(20px, env(safe-area-inset-right));
+    flex-direction: row;
+    align-items: center;
+  }
 
   .hud-m-edges .hud-m-btn {
     position: relative;

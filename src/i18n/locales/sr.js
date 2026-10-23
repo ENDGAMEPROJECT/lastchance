@@ -24,7 +24,7 @@ export default {
     "ageLabel": "Tvoje godine",
     "agePlaceholder": "npr. 14",
     "languageLabel": "Jezik",
-    "start": "⏻ Uđi",
+    "start": "Uđi",
     "aliasError": "Unesi nadimak da bi nastavio/la.",
     "ageError": "Unesi ispravan broj godina (1–120).",
     "characterLabel": "Choose your character",

@@ -184,7 +184,6 @@ export default function HUD() {
   // unfolds all three to show their labels, and a second tap on one opens it.
   // Tapping anywhere else folds them back.
   const [expanded, setExpanded] = useState(false)
-  const [timerOpen, setTimerOpen] = useState(true) // mobile timer drawer pulled down?
   useEffect(() => { setExpanded(false) }, [screen, activeNodeId, mobile])
   useEffect(() => {
     if (!expanded) return
@@ -232,27 +231,6 @@ export default function HUD() {
 
   const mobileHud = (
     <div className="hud-m">
-      {showTimer && (
-        // Retractable drawer: tap the timer or its tab to slide it up out of
-        // the way (only the tab stays visible) and tap the tab to pull it back.
-        <div className={`hud-m-drawer ${timerOpen ? '' : 'is-closed'}`}>
-          <div className={`hud-timer hud-m-timer ${low ? 'low' : ''} ${critical ? 'critical pulse' : ''}`}
-            onClick={() => setTimerOpen(false)}>
-            <span className="hud-timer-val mono">{formatTime(timeLeft)}</span>
-          </div>
-          <button
-            type="button"
-            className="hud-m-drawer-tab"
-            onMouseDown={(event) => event.preventDefault()}
-            onClick={() => setTimerOpen((open) => !open)}
-            aria-label={timerOpen ? t('hud.hideTimer') : t('hud.showTimer')}
-            title={timerOpen ? t('hud.hideTimer') : t('hud.showTimer')}
-            aria-expanded={timerOpen}
-          >
-            <svg viewBox="0 0 24 12" aria-hidden="true"><path d={timerOpen ? 'M4 10l8-7 8 7' : 'M4 2l8 7 8-7'} /></svg>
-          </button>
-        </div>
-      )}
       {DEBUG && (
         <div className="hud-m-debug">
           {['posttest', 'win', 'lose'].includes(screen) && <DebugPosttestButtons />}
@@ -265,7 +243,7 @@ export default function HUD() {
           box, so they're portalled out of the stage (into the viewport, which
           a phone may have turned to keep the game landscape): on a long, short phone
           they sit in the letterbox; on a squarer one they overlap the game. */}
-      {createPortal(<div className="hud-m-edges">
+      {createPortal(<div className={`hud-m-edges ${screen === 'welcome' ? 'is-welcome' : ''}`}>
       <div className="hud-m-col hud-m-left">
         {document.fullscreenEnabled && (
           <button
@@ -298,6 +276,7 @@ export default function HUD() {
       </div>
 
       <div className="hud-m-col hud-m-right">
+      
         {showHints && (
           <button
             type="button"
@@ -345,6 +324,12 @@ export default function HUD() {
           </button>
         )}
       </div>
+
+      {showTimer && (
+        <div className={`hud-timer hud-m-timer ${low ? 'low' : ''} ${critical ? 'critical pulse' : ''}`}>
+          <span className="hud-timer-val mono">{formatTime(timeLeft)}</span>
+        </div>
+      )}
       </div>, viewportEl || document.body)}
     </div>
   )
