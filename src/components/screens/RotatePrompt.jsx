@@ -4,9 +4,13 @@ import { useT } from '../../i18n/index.jsx'
 import { isLandscape } from '../../game/device.js'
 import './rotate.css'
 
+// Not turned by then → carry on anyway (the game rotates itself to fit).
+const GIVE_UP_MS = 15000
+
 /* Phones only: shown between the portrait welcome screen and the landscape
    game. An animated phone turns sideways while the player is asked to do the
-   same; once the phone is actually in landscape we carry on by ourselves.
+   same; once the phone is actually in landscape we carry on by ourselves —
+   or after GIVE_UP_MS if it never is.
    It's portalled to <body>, outside the stage, so it
    always reads upright in the phone's real orientation. */
 export default function RotatePrompt({ onContinue }) {
@@ -26,10 +30,12 @@ export default function RotatePrompt({ onContinue }) {
       if (isLandscape()) timer = window.setTimeout(finish, 700)
     }
     check()
+    const giveUp = window.setTimeout(finish, GIVE_UP_MS)
     window.addEventListener('resize', check)
     window.addEventListener('orientationchange', check)
     return () => {
       window.clearTimeout(timer)
+      window.clearTimeout(giveUp)
       window.removeEventListener('resize', check)
       window.removeEventListener('orientationchange', check)
     }

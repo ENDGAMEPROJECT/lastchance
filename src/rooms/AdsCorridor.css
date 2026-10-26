@@ -77,8 +77,13 @@
   color: #fff;
 }
 
-/* ---------- The corridor wall ---------- */
+/* ---------- The corridor wall ----------
+   Posters are artwork: everything in them (and the flashlight beam) is sized
+   in --pu ("poster unit") instead of rem, because on phones rem is enlarged
+   (--text-boost) while the posters keep their size, which broke the layouts.
+   Change --pu to scale the posters' whole design at once. */
 .ac-wall {
+  --pu: 16px;
   position: relative;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -128,12 +133,12 @@
   --Ypos: 50%;
   background:
     radial-gradient(
-      circle 8em at var(--Xpos) var(--Ypos),
+      circle calc(8 * 1.0625 * var(--pu)) at var(--Xpos) var(--Ypos),
       rgba(255, 214, 150, 0.12),
-      transparent 6em
+      transparent calc(6 * 1.0625 * var(--pu))
     ),
     radial-gradient(
-      circle 8em at var(--Xpos) var(--Ypos),
+      circle calc(8 * 1.0625 * var(--pu)) at var(--Xpos) var(--Ypos),
       rgba(4, 5, 13, 0) 0,
       rgba(4, 5, 13, 0.9) 100%
     );
@@ -141,6 +146,7 @@
 
 /* ---------- Poster ---------- */
 .ac-poster {
+  font-size: calc(1.0625 * var(--pu)); /* the 17px body text, pinned */
   position: relative;
   z-index: 1;
   display: flex;
@@ -204,7 +210,7 @@
   right: 8px;
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 0.82rem;
+  font-size: calc(0.82 * var(--pu));
   padding: 3px 8px;
   border-radius: 999px;
   background: rgba(0, 0, 0, 0.35);
@@ -220,20 +226,23 @@
 .ac-glossy-title {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 1.5rem;
+  font-size: calc(1.5 * var(--pu));
   line-height: 1.05;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
 }
+#glossy-title-prize {
+    text-shadow: 0 2px 6px rgba(255, 255, 255, 0.35);
+}
 .ac-glossy-body {
   margin-top: 5px;
-  font-weight: 600;
-  font-size: 0.72rem;
+  font-weight: 500;
+  font-size: calc(1.1 * var(--pu));
 }
 .ac-glossy-cta {
   margin-top: 7px;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 0.64rem;
+  font-size: calc(0.64 * var(--pu));
   letter-spacing: 0.06em;
   padding: 4px 10px;
   border-radius: 6px;
@@ -247,7 +256,7 @@
   bottom: 5px;
   left: 0;
   right: 0;
-  font-size: 0.46rem;
+  font-size: calc(0.46 * var(--pu));
   opacity: 0.6;
   letter-spacing: 0.02em;
 }
@@ -256,7 +265,7 @@
 .ac-trial {
   .ac-truth-title {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: calc(1.5 * var(--pu));
     line-height: 1.05;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
     font-weight: 900;
@@ -275,14 +284,21 @@
   .ac-glossy-title{
     font-family: var(--font-narrow);
     font-weight: 900;
-    font-size: 1.5rem;
+    font-size: calc(1.5 * var(--pu));
     line-height: 1.05;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    text-shadow: 0 2px 6px rgba(255, 255,255, 0.35);
+    margin-bottom: 6px
+  }
+  .ac-glossy-body {
+    font-weight: 900;
+    line-height: 1.15;
+    text-shadow: 0 2px 6px rgba(255, 255,255, 0.35);
+        margin-bottom: 6px
   }
   .ac-truth-title  {
     font-family: var(--font-narrow);
     font-weight: 900;
-    font-size: 1.5rem;
+    font-size: calc(1.5 * var(--pu));
     line-height: 1.05;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
     color: rgb(178, 178, 253);
@@ -300,8 +316,8 @@
   .ac-truth-title {
     font-family: var(--font-neogrotesk);
     font-weight: 900;
-    margin-top: -2rem;
-    font-size: 2rem;
+    margin-top: calc(-2 * var(--pu));
+    font-size: calc(2 * var(--pu));
     color: rgb(181, 255, 181);
     text-align: right;
     width: 50%;
@@ -311,9 +327,9 @@
     text-transform: uppercase
   }
   .ac-glossy-body {
-    margin-top: 1rem;
+    margin-top: calc(1 * var(--pu));
     font-weight: 500;
-    font-size: 0.8rem;
+    font-size: calc(1.1 * var(--pu));
     text-align: right;
     align-self: flex-end;
     width: 60%;
@@ -329,16 +345,16 @@
   .ac-glossy-title {
     font-family: var(--font-mono);
     font-weight: 900;
-    margin-top: 8rem;
-    font-size: 2rem;
+    margin-top: calc(8 * var(--pu));
+    font-size: calc(2 * var(--pu));
     line-height: 1.05;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.836);
   }
   .ac-truth-title {
     font-family: var(--font-mono);
     font-weight: 900;
-    margin-top: 12rem;
-    font-size: 1.2rem;
+    margin-top: calc(12 * var(--pu));
+    font-size: calc(1.2 * var(--pu));
     line-height: 0.9;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.678);
     
@@ -377,7 +393,7 @@
 
 .ac-truth-tag {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: calc(0.6 * var(--pu));
   letter-spacing: 0.24em;
   color: var(--amber);
   text-transform: uppercase;
@@ -385,7 +401,7 @@
 .ac-truth-text {
   margin: 0;
   color: var(--text);
-  font-size: 0.7rem;
+  font-size: calc(0.7 * var(--pu));
   line-height: 1.3;
 }
 /* The code letter, hidden in the truth text — first occurrence, red. */

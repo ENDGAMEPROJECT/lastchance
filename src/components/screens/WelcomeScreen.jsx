@@ -19,14 +19,18 @@ export default function WelcomeScreen() {
   const { locale, setLocale } = useI18n()
   const [alias, setAlias] = useState('')
   const [age, setAge] = useState('')
-  const [character, setCharacter] = useState('mia')
+  // Nothing picked by default: the player must choose a character and a
+  // language before entering (the phone keyboard's "go" key submits the form
+  // straight from the inputs, which used to skip both pickers).
+  const [character, setCharacter] = useState(null)
+  const [languageChosen, setLanguageChosen] = useState(false)
   const [err, setErr] = useState('')
   // Phones: the validated entry waits behind the "turn your phone" screen.
   const [pending, setPending] = useState(null)
   const continueToGame = useCallback(() => submitWelcome(pending), [pending, submitWelcome])
 
   useEffect(() => {
-    preloadGameAssets({ screen: 'welcome', character })
+    preloadGameAssets({ screen: 'welcome', character: character || 'mia' })
   }, [character])
 
   const onSubmit = (e) => {
@@ -35,6 +39,8 @@ export default function WelcomeScreen() {
     const n = parseInt(age, 10)
     if (!a) return setErr(t('welcome.aliasError'))
     if (!age || Number.isNaN(n) || n < 1 || n > 120) return setErr(t('welcome.ageError'))
+    if (!character) return setErr(t('welcome.characterError'))
+    if (!languageChosen) return setErr(t('welcome.languageError'))
     const entry = { alias: a, age: n, character }
     if (IS_PHONE) setPending(entry)
     else submitWelcome(entry)
@@ -82,12 +88,12 @@ export default function WelcomeScreen() {
           <legend>{t('welcome.characterLabel')}</legend>
           <div className="character-picker">
             <label className={`character-option is-mia ${character === 'mia' ? 'on' : ''}`}>
-              <input type="radio" name="character" value="mia" checked={character === 'mia'} onChange={() => setCharacter('mia')} />
+              <input type="radio" name="character" value="mia" checked={character === 'mia'} onChange={() => { setErr(''); setCharacter('mia') }} />
               <img className="character-figure" src={bgUrl('algorithm-room/mia-figure-nobg.png')} alt="" draggable={false} />
               <span className="character-name">{t('welcome.characterMia')}</span>
             </label>
             <label className={`character-option is-max ${character === 'max' ? 'on' : ''}`}>
-              <input type="radio" name="character" value="max" checked={character === 'max'} onChange={() => setCharacter('max')} />
+              <input type="radio" name="character" value="max" checked={character === 'max'} onChange={() => { setErr(''); setCharacter('max') }} />
               <img className="character-figure" src={bgUrl('algorithm-room/max-figure-nobg.png')} alt="" draggable={false} />
               <span className="character-name">{t('welcome.characterMax')}</span>
             </label>
@@ -101,8 +107,9 @@ export default function WelcomeScreen() {
               <button
                 type="button"
                 key={code}
-                className={`lang-chip ${locale === code ? 'on' : ''}`}
-                onClick={() => setLocale(code)}
+                className={`lang-chip ${languageChosen && locale === code ? 'on' : ''}`}
+                aria-pressed={languageChosen && locale === code}
+                onClick={() => { setErr(''); setLocale(code); setLanguageChosen(true) }}
               >
                 {localeName(code)} <span className="lang-flag" aria-hidden="true">{FLAGS[code]}</span>
               </button>

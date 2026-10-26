@@ -219,4 +219,8 @@
      row's anchor; an opacity-only fade lets it anchor to the whole map. */
   .map-head.fade-in { animation-name: map-head-in; }
   @keyframes map-head-in { from { opacity: 0; } to { opacity: 1; } }
+  /* The board (stations + road) reads ~10% bigger on phones. A transform, so
+     the layout and the station maths are untouched; useCentred measures the
+     scaled box, so the centring still holds. */
+  .map-board { transform: scale(1.1); }
 }

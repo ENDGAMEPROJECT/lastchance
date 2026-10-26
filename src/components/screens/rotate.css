@@ -61,7 +61,7 @@
 
 .rotate-title {
   margin: 0;
-  font-family: var(--font-display);
+  font-family: var(--font-retro);
   font-size: 26px;
   color: var(--cyan);
   text-shadow: var(--glow-cyan);

@@ -609,8 +609,14 @@
   align-self: flex-end;
 }
 
-/* ---------- Mini website pages (shown inside an opened doorway) ---------- */
+/* ---------- Mini website pages (shown inside an opened doorway) ----------
+   Each page is artwork: everything inside is sized in --pu ("page unit")
+   instead of rem, because on phones rem is enlarged (--text-boost) while the
+   doorway stays the same size, which broke the layouts. Change --pu on a page
+   to scale its whole design at once. */
 .door-page {
+  --pu: 16px;
+  font-size: calc(1.0625 * var(--pu)); /* the 17px body text, pinned */
   position: absolute;
   inset: 0;
   display: flex;
@@ -660,7 +666,7 @@
   padding: 10px;
 }
 .dp-bar {
-  font-size: 0.6rem;
+  font-size: calc(0.6 * var(--pu));
   font-weight: 800;
   letter-spacing: 0.08em;
 }
@@ -676,7 +682,7 @@
   border-radius: 4px;
 }
 .dp-cap {
-  font-size: 0.6rem;
+  font-size: calc(0.6 * var(--pu));
   color: #46507a;
 }
 
@@ -708,7 +714,7 @@
   max-width: 100%;
   color: #fff8a2;
   font-family: Impact, var(--font-display), sans-serif;
-  font-size: 2rem;
+  font-size: calc(2 * var(--pu));
   line-height: 0.9;
   overflow-wrap: anywhere;
   text-transform: uppercase;
@@ -717,7 +723,7 @@
   max-width: 100%;
   color: #fff8a2;
   font-family: Impact, var(--font-display), sans-serif;
-  font-size: 2rem;
+  font-size: calc(2 * var(--pu));
   line-height: 0.9;
   overflow-wrap: anywhere;
   text-transform: uppercase;
@@ -733,7 +739,7 @@
   background: rgba(25, 118, 210, 0.18);
   color: #fff;
   font-family: var(--font-ui);
-  font-size: 0.66rem;
+  font-size: calc(0.66 * var(--pu));
   line-height: 1.1;
   white-space: nowrap;
   pointer-events: auto;
@@ -741,14 +747,14 @@
 .shoes-ad-1-cta b {
   flex: none;
   margin-left: 4px;
-  font-size: 0.85rem;
+  font-size: calc(0.85 * var(--pu));
 }
 .shoes-ad-1-brand {
-  margin-bottom: 0.3rem;
+  margin-bottom: calc(0.3 * var(--pu));
   color: #fff;
   font-weight: bold;
   font-family: var(--font-ui);
-  font-size: 0.8rem;
+  font-size: calc(0.8 * var(--pu));
   font-weight: 900;
   line-height: 0.9;
   text-transform: uppercase;
@@ -759,7 +765,7 @@
   max-width: 100%;
   color: #fca2ff;
   font-family: var(--font-display), sans-serif;
-  font-size: 2rem;
+  font-size: calc(2 * var(--pu));
   line-height: 0.9;
   font-weight: bold;
   overflow-wrap: anywhere;
@@ -769,18 +775,18 @@
   max-width: 100%;
   color: #fca2ff;
   font-family: var(--font-display), sans-serif;
-  font-size: 1.5rem;
+  font-size: calc(1.5 * var(--pu));
   font-weight: 300;
   line-height: 0.9;
   overflow-wrap: anywhere;
   text-transform: uppercase;
 }
 .shoes-ad-2-brand {
-  margin-bottom: 0.3rem;
+  margin-bottom: calc(0.3 * var(--pu));
   color: #fff;
   font-weight: bold;
   font-family: var(--font-neogrotesk);
-  font-size: 1.5rem;
+  font-size: calc(1.5 * var(--pu));
   font-weight: 900;
   line-height: 0.9;
   text-transform: uppercase;
@@ -798,7 +804,7 @@
   color: rgb(142, 255, 131);
   background: rgb(247, 0, 255);
   font-family: var(--font-neogrotesk);
-  font-size: 1.6rem;
+  font-size: calc(1.6 * var(--pu));
   text-transform: uppercase;
   line-height: 0.9;
   pointer-events: auto;
@@ -808,31 +814,31 @@
   max-width: 100%;
   color: #000000;
   font-family: Roboto, var(--font-display), sans-serif;
-  font-size: 0.9rem;
+  font-size: calc(0.9 * var(--pu));
   line-height: 1;
   background-color: rgba(255, 198, 206, 0.801);
   overflow-wrap: anywhere;
   border-radius: 4px;
-  padding: 0.3rem;
+  padding: calc(0.3 * var(--pu));
 }
 .shoes-ad-3-second-headline {
   max-width: 100%;
   color: #ffffff;
   font-family: Roboto, var(--font-display), sans-serif;
-  font-size: 1.4rem;
+  font-size: calc(1.4 * var(--pu));
   line-height: 1;
   background-color: #00000063;
   overflow-wrap: anywhere;
   border-radius: 4px;
-  padding: 0.3rem;
-  margin: 0 0.4rem 0.4rem 0;
+  padding: calc(0.3 * var(--pu));
+  margin: 0 calc(0.4 * var(--pu)) calc(0.4 * var(--pu)) 0;
 }
 .shoes-ad-3-brand {
-  margin-bottom: 0.3rem;
+  margin-bottom: calc(0.3 * var(--pu));
   color: #000000;
   font-weight: bold;
   font-family: var(--font-ui);
-  font-size: 0.85rem;
+  font-size: calc(0.85 * var(--pu));
   font-weight: 900;
   line-height: 0.9;
   text-transform: uppercase;
@@ -859,7 +865,7 @@
 .luna-ad-1-headline {
   max-width: 100%;
   color: #ffffff;
-  font-size: 1.6rem;
+  font-size: calc(1.6 * var(--pu));
   line-height: 1;
   font-weight: 900;
   overflow-wrap: anywhere;
@@ -867,55 +873,55 @@
     font-family: var(--font-script), sans-serif;
 }
 .luna-ad-1-second-headline {
-  font-size: 4.4rem;
+  font-size: calc(4.4 * var(--pu));
   width: 15%;
-  margin-top: 1.8rem;
+  margin-top: calc(1.8 * var(--pu));
   font-weight: 900;
   line-height: 0.9;
    color: pink
 }
 .luna-ad-1-text {
   font-family: var(--font-script), sans-serif;
-  font-size: 2.2rem;
+  font-size: calc(2.2 * var(--pu));
   font-style: italic;
   line-height: 1;
   text-align: center;
-  margin: 0.3rem;
+  margin: calc(0.3 * var(--pu));
   font-weight: bold;
   color: #ffffff
 }
 .luna-ad-1-brand {
-  font-size: 1.15rem;
+  font-size: calc(1.15 * var(--pu));
   font-weight: normal;
   text-align: center;
   align-self: center;
-  margin-top: 0.4rem;
-  letter-spacing: 0.33rem;
+  margin-top: calc(0.4 * var(--pu));
+  letter-spacing: calc(0.33 * var(--pu));
 }
 /*second ad luna*/
 .luna-ad-2-brand {
-  font-size: 1.55rem;
+  font-size: calc(1.55 * var(--pu));
   font-weight: normal;
   text-align: center;
   align-self: center;
-  margin-top: -0.4rem;
-  letter-spacing: 0.33rem;
+  margin-top: calc(-0.4 * var(--pu));
+  letter-spacing: calc(0.33 * var(--pu));
 }
 .luna-ad-2-headline {
   max-width: 100%;
   color: #000000;
   font-family: var(--font-serif);
   background: #ff9100;
-  font-size: 1.9rem;
+  font-size: calc(1.9 * var(--pu));
   line-height: 0.9;
   font-weight: 600;
-  padding: 0.2rem 0.7rem 0.4rem 0.7rem;
+  padding: calc(0.2 * var(--pu)) calc(0.7 * var(--pu)) calc(0.4 * var(--pu)) calc(0.7 * var(--pu));
   overflow-wrap: anywhere;
 }
 .luna-ad-2-text {
-  font-size: 0.75rem;
+  font-size: calc(0.75 * var(--pu));
   text-align: center;
-  margin-top: 0.3rem;
+  margin-top: calc(0.3 * var(--pu));
   line-height: 1.2
 }
 .luna-ad-2-cta {
@@ -931,7 +937,7 @@
   background: rgba(255, 255, 255, 0.452);
   color: #000000;
   font-family: var(--font-ui);
-  font-size: 1rem;
+  font-size: calc(1 * var(--pu));
   line-height: 1.1;
   white-space: nowrap;
   pointer-events: auto;
@@ -942,12 +948,12 @@
   color: #ffffff;
   font-family: Roboto, var(--font-display), sans-serif;
   font-weight: 800;
-  font-size: 2.4rem;
+  font-size: calc(2.4 * var(--pu));
   line-height: 1;
-  margin-top: -0.5rem;
+  margin-top: calc(-0.5 * var(--pu));
   overflow-wrap: anywhere;
   border-radius: 4px;
-  padding: 0 0.3rem;
+  padding: 0 calc(0.3 * var(--pu));
 }
 .luna-ad-3-prices {
   display: flex;
@@ -956,11 +962,11 @@
 .luna-ad-3-discount {
   color: rgb(200, 255, 0);
   font-family: var(--font-retro);
-  font-size: 4rem;
+  font-size: calc(4 * var(--pu));
   font-weight: 700;
-  margin-top: -1rem;
+  margin-top: calc(-1 * var(--pu));
   text-shadow: 5px 5px 0px rgb(26, 224, 75);
-  max-height: 5rem;
+  max-height: calc(5 * var(--pu));
 }
 .luna-ad-3-oldprice {
   text-decoration: line-through red 2px;
@@ -972,11 +978,11 @@
   font-weight: bold;
   color: black;
   display: inline;
-  font-size: 1.2rem;
-  padding: 0 0.4rem;
+  font-size: calc(1.2 * var(--pu));
+  padding: 0 calc(0.4 * var(--pu));
 }
 .luna-ad-3-text {
-  font-size: 1rem;
+  font-size: calc(1 * var(--pu));
   color: #fff;
   width: 50%;
   line-height: 1.1;
@@ -988,8 +994,8 @@
   font-weight: bold;
   text-align: center;
   align-self: center;
-  margin-top: 0.4rem;
-  bottom: 0.5rem
+  margin-top: calc(0.4 * var(--pu));
+  bottom: calc(0.5 * var(--pu))
 }
 
 /*LIGHTS AD*/
@@ -1010,8 +1016,8 @@
   background-color: #ff0000;
   color: #fff;
   font-weight: bold;
-  font-size: 2rem;
-  padding: 0rem 0.2rem;
+  font-size: calc(2 * var(--pu));
+  padding: calc(0 * var(--pu)) calc(0.2 * var(--pu));
 }
 /*first ad lights*/
 .lights-ad-1-discounts {
@@ -1035,23 +1041,23 @@
 .lights-ad-1-headline {
   color: #ffffff;
   font-weight: bold;
-  font-size: 1.2rem;
-  margin-bottom: 0.2rem;
+  font-size: calc(1.2 * var(--pu));
+  margin-bottom: calc(0.2 * var(--pu));
 }
 .lights-ad-1-second-headline {
   transform: rotate(-5deg);
   background-color: #ffffff;
   color: #ff0000;
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: calc(1.4 * var(--pu));
   text-transform: uppercase;
   text-align: center;
-  margin-bottom: 0.4rem;
+  margin-bottom: calc(0.4 * var(--pu));
 }
 .lights-ad-1-brand {
   color: #e5ff00;
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: calc(1.3 * var(--pu));
   text-align: center;
   letter-spacing: 0.1em;
 }
@@ -1060,9 +1066,9 @@
 .lights-ad-2-headline-container {
   position: absolute;
   top: 40%;
-  margin: 0 1rem;
+  margin: 0 calc(1 * var(--pu));
   font-family: var(--font-retro);
-  font-size: 1.8rem;
+  font-size: calc(1.8 * var(--pu));
   line-height: 1;
   font-weight: 900;
   color: yellow;
@@ -1072,15 +1078,15 @@
 .lights-ad-2-brand {
   color: #9d99ff;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: calc(1.1 * var(--pu));
   text-align: center;
-  margin-top: -0.5rem;
+  margin-top: calc(-0.5 * var(--pu));
   letter-spacing: 0.2em;
 }
 .lights-ad-2-second-headline {
-  margin: 0.7rem auto 0.8rem auto;
+  margin: calc(0.7 * var(--pu)) auto calc(0.8 * var(--pu)) auto;
   font-family: var(--font-retro);
-  font-size: 1.3rem;
+  font-size: calc(1.3 * var(--pu));
   line-height: 1;
   font-weight: 400;
   color: yellow;
@@ -1090,18 +1096,18 @@
 
 /*third ad lights*/
 .lights-ad-3-brand {
-  font-size: 1.7rem;
+  font-size: calc(1.7 * var(--pu));
   text-align: center;
-  margin-top: -0.7rem;
+  margin-top: calc(-0.7 * var(--pu));
   color: rgb(217, 141, 255);
 }
 .lights-ad-3-headline {
-  font-size: 2.4rem;
+  font-size: calc(2.4 * var(--pu));
   text-align: center;
   color: rgb(217, 141, 255);
   font-weight: 800;
   line-height: 0.9;
-  margin-bottom: 0.8rem;
+  margin-bottom: calc(0.8 * var(--pu));
   text-shadow: 2px 2px 5px rgb(136, 146, 255);
 }
 .lights-ad-3-cta {
@@ -1110,7 +1116,7 @@
   justify-content: space-between;
   justify-self: center;
   margin-top: 7px;
-  margin-bottom: 1.2rem;
+  margin-bottom: calc(1.2 * var(--pu));
   padding: 4px 10px;
   border-radius: 4px;
   overflow: hidden;
@@ -1118,13 +1124,13 @@
   background: rgb(178, 0, 166);
   color: #fff;
   font-family: var(--font-neogrotesk);
-  font-size: 1.2rem;
+  font-size: calc(1.2 * var(--pu));
   line-height: 1.1;
   white-space: nowrap;
   pointer-events: auto;
 }
 .lights-ad-3-text {
-  font-size: 0.7rem;
+  font-size: calc(0.7 * var(--pu));
   text-align: center;
   color: #fff;
   letter-spacing: 0.1em;
@@ -1144,7 +1150,7 @@
   top: 8px;
   left: 8px;
   right: 8px;
-  font-size: 0.5rem;
+  font-size: calc(0.5 * var(--pu));
   font-weight: 800;
   background: #111;
   color: #ffd400;
@@ -1154,14 +1160,14 @@
 .dp-off {
   font-family: var(--font-display);
   font-weight: 900;
-  font-size: 1.9rem;
+  font-size: calc(1.9 * var(--pu));
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 .dp-shop {
   background: #000;
   padding: 4px 12px;
   border-radius: 4px;
-  font-size: 0.6rem;
+  font-size: calc(0.6 * var(--pu));
   font-weight: 700;
 }
 
@@ -1173,22 +1179,22 @@
 }
 .dp-shopbar {
   align-self: stretch;
-  font-size: 0.55rem;
+  font-size: calc(0.55 * var(--pu));
   font-weight: 800;
   color: #7a2ce0;
 }
 .dp-prod {
-  font-size: 2.4rem;
+  font-size: calc(2.4 * var(--pu));
   margin: auto 0 0;
 }
 .dp-price {
   font-family: var(--font-display);
   font-weight: 900;
   color: #d10038;
-  font-size: 1.3rem;
+  font-size: calc(1.3 * var(--pu));
 }
 .dp-limited {
-  font-size: 0.48rem;
+  font-size: calc(0.48 * var(--pu));
   color: #d10038;
   font-weight: 800;
 }

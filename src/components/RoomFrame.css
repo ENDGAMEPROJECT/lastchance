@@ -158,9 +158,10 @@
   /* Room-entry instructions: 70% of the game width, text spanning the card. */
   .briefing-card { max-width: calc(1280px * 0.7); }
   .briefing-text { max-width: none; }
-  /* District-cleared feedback: text at the dialogue-line size (as the Hints &
-     Bag pop-overs), spanning the wider card. */
-  .cleared-text,
+  /* Briefing and district-cleared text match the dialogue lines on phones
+     (.pretest-line in pretest.css). */
+  .briefing-text,
+  .cleared-text { font-size: calc(20px * 1.08 * var(--text-boost, 1)); margin: 12px; }
   .reward-desc { font-size: calc(20px * var(--text-boost, 1)); }
   /* "{object} added to bag" is a small status line under the button. */
   .reward-confirmation { font-size: calc(14px * var(--text-boost, 1)); }

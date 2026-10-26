@@ -1,9 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { bgUrl } from '../../game/assets.js'
 import { passedPosttest } from '../../game/posttestOutcome.js'
+import DialogNav from './DialogNav.jsx'
 import './pretest.css'
+
+// The speech band sits 30px above the bottom (pretest.css). Lifting it by the
+// answer panel's top edge (its own bottom offset + height) minus that puts it
+// right on the panel; ASK_GAP adds clear air between the two.
+const SPEECH_BOTTOM = 30
+const ASK_GAP = 16
 
 // How long a speech bubble / the answer panel takes to fade out (matches pretest.css).
 const FADE_MS = 350
@@ -42,6 +49,7 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
   const closeRef = useRef(null)
   const returnFocusRef = useRef(false)
   const speechClock = useRef({ key: '', elapsed: 0 })
+  const readKeys = useRef(new Set()) // lines already read: coming Back shows them complete
   const [speechProgress, setSpeechProgress] = useState({ key: '', elapsed: 0 })
   const playerSpeaking = ['reply', 'endingYou'].includes(phase) || (phase === 'intro' && intro[introIndex].who === 'player')
   const miaSpeaking = (playerSpeaking ? narrative.player : friend) === 'Mia'
@@ -64,18 +72,32 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
   const visibleLetters = reducedMotion || phase === 'options' ? line.length : Math.floor(elapsed / 18)
   const showActions = phase === (p.endingYou ? 'endingYou' : 'endingFriend') && speechReady && actions.length > 0
   const showOptions = phase === 'options' && !needsPhoneView
-  // While the player must answer, the bubble slides up to make room below it.
+  // While the player must answer, the bubble slides up to make room below it —
+  // by exactly the answer panel's height, which varies with the options' text.
   const asking = showOptions || showActions
-  // Lines that flow into the options keep their bubble (it only slides up);
-  // every other line fades out at the end of its reading time.
-  const lastRound = round === rounds.length - 1
-  const lastIntroLine = phase === 'intro' && introIndex === intro.length - 1
-  const continuesIntoOptions = lastIntroLine || (phase === 'opening' && !mastery)
-    || (phase === 'response' && (!lastRound || (mastery && !assessment && !answer?.correct)))
+  const [choicesEl, setChoicesEl] = useState(null)
+  const [askShift, setAskShift] = useState(null)
+  useLayoutEffect(() => {
+    if (!choicesEl) return
+    // offsetHeight is in design px (ignores the stage's scale transform).
+    const measure = () => setAskShift(parseFloat(getComputedStyle(choicesEl).bottom) + choicesEl.offsetHeight - SPEECH_BOTTOM + ASK_GAP)
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(choicesEl)
+    return () => observer.disconnect()
+  }, [choicesEl])
+  // Lines don't advance on their own: once the reading time is over, Next
+  // shows. Back re-shows the previous line of the current stretch, but never
+  // undoes an answer (the player's reply and the opening have no Back).
   const hasNextLine = !(phase === 'options' || phase === 'endingYou' || (phase === 'opening' && needsPhoneView)
     || (phase === 'endingFriend' && !p.endingYou && !assessment))
+  const canNext = speechReady && !phoneOpen && hasNextLine
+  const prevPhase = phase === 'intro' && introIndex > 0 ? 'intro'
+    : phase === 'response' ? 'reply'
+    : phase === 'endingFriend' && answer ? (mastery ? 'response' : 'reply')
+    : phase === 'endingYou' ? 'endingFriend'
+    : null
   const leaving = Boolean(choosing)
-    || (!reducedMotion && hasNextLine && !continuesIntoOptions && elapsed >= readingTime - FADE_MS)
 
   function choose(option) {
     if (choosing) return
@@ -104,16 +126,19 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
   // browser tab pauses this clock, so no dialogue is skipped offscreen.
   useEffect(() => {
     if (speechClock.current.key !== speechKey) {
-      speechClock.current = { key: speechKey, elapsed: 0 }
+      speechClock.current = { key: speechKey, elapsed: readKeys.current.has(speechKey) ? readingTime : 0 }
       setSpeechProgress(speechClock.current)
     }
-    if (phase === 'options' || phoneOpen) return
+    if (phase === 'options' || phoneOpen || speechClock.current.elapsed >= readingTime) return
     const timer = window.setInterval(() => {
       if (document.hidden) return
       const next = Math.min(readingTime, speechClock.current.elapsed + 50)
       speechClock.current = { key: speechKey, elapsed: next }
       setSpeechProgress(speechClock.current)
-      if (next >= readingTime) window.clearInterval(timer)
+      if (next >= readingTime) {
+        window.clearInterval(timer)
+        readKeys.current.add(speechKey)
+      }
     }, 50)
     return () => window.clearInterval(timer)
   }, [speechKey, readingTime, phase, phoneOpen])
@@ -128,8 +153,14 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
     }
   }, [phoneOpen])
 
-  useEffect(() => {
-    if (!speechReady || phoneOpen) return
+  function goPrev() {
+    if (prevPhase === 'intro') setIntroIndex((i) => i - 1)
+    else if (prevPhase) setPhase(prevPhase)
+  }
+
+  // Next: move on from the current line (only offered once it has been read).
+  function goNext() {
+    if (!canNext) return
     if (assessment && onComplete && phase === 'endingFriend') {
       if (!completed.current) {
         completed.current = true
@@ -160,7 +191,7 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
         setPhase('options')
       }
     } else if (phase === 'endingFriend' && p.endingYou) setPhase('endingYou')
-  }, [speechReady, phoneOpen, needsPhoneView, phase, round, rounds.length, p.responses, p.endingYou, mastery, assessment, answer, answers, onComplete, line, introIndex, intro])
+  }
 
   return (
     <div className="scene pretest-scene">
@@ -194,6 +225,7 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
         <div
           key={`${playerSpeaking}:${line}`}
           className={`pretest-speech ${miaSpeaking ? 'is-mia' : 'is-max'} ${asking ? 'is-asking' : ''} ${leaving ? 'is-leaving' : ''}`}
+          style={askShift != null ? { '--ask-shift': `${askShift}px` } : undefined}
           aria-label={playerSpeaking ? t('story.you') : friend}
         >
           <div className="pretest-speech-name" data-text={playerSpeaking ? narrative.player : friend} aria-hidden="true">{playerSpeaking ? narrative.player : friend}</div>
@@ -207,10 +239,13 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
           <span className="pretest-reading-track" aria-hidden="true">
             <span className="pretest-reading-progress" style={{ width: `${speechReady ? 100 : Math.min(100, elapsed / readingTime * 100)}%` }} />
           </span>
+          {!asking && !choosing && (
+            <DialogNav canPrev={Boolean(prevPhase)} canNext={canNext} onPrev={goPrev} onNext={goNext} />
+          )}
         </div>
 
         {showOptions && (
-          <div className={`pretest-choices is-${narrative.character} ${choosing ? 'is-leaving' : ''}`}>
+          <div ref={setChoicesEl} className={`pretest-choices is-${narrative.character} ${choosing ? 'is-leaving' : ''}`}>
             <div className="pretest-choices-tab">{t('story.respondPrompt', { friend })}</div>
             <div className="pretest-options">
               {rounds[round].options.map((option) => (
@@ -230,7 +265,7 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
         )}
 
         {showActions && (
-          <div className="pretest-choices pretest-actions">
+          <div ref={setChoicesEl} className="pretest-choices pretest-actions">
             {actions.map((action) => (
               <button key={action.label} className={`btn btn-${action.tone}`} onMouseDown={(event) => event.preventDefault()} onClick={() => action.onClick({ passed: passedPosttest(answers, rounds.length) })}>
                 {action.label}

@@ -134,7 +134,9 @@
   background: linear-gradient(90deg, transparent, var(--tone) 6%, var(--tone) 94%, transparent);
 }
 /* Room for the answer panel: the band slides up while the player answers. */
-.pretest-speech.is-asking { transform: translateY(-176px); opacity: 0.6; }
+/* --ask-shift is the answer panel's measured height (InPersonTest); 176px is
+   only the fallback for the first frame. */
+.pretest-speech.is-asking { transform: translateY(calc(-1 * var(--ask-shift, 176px))); opacity: 0.6; }
 .pretest-speech.is-leaving { opacity: 0; }
 @keyframes pretest-bubble-in {
   from { opacity: 0; }
@@ -191,7 +193,7 @@
 }
 .pretest-speech.is-mia .pretest-speech-name { left: auto; right: 58px; }
 
-.pretest-line { margin: 0; font-size: 20px; line-height: 1.3; letter-spacing: 0; }
+.pretest-line { margin: 0; font-family: var(--font-neogrotesk); font-size: 20px; line-height: 1.3; letter-spacing: 0; }
 .pretest-line-pending { visibility: hidden; }
 
 /* Bottom rule = reading-time line: a faint track that fills in the speaker's colour. */
@@ -265,9 +267,9 @@
   background: #050308;
   color: #e9e6ef;
   text-align: left;
-  font-family: inherit;
-  font-size: 19px;
-  line-height: 1.25;
+  font-family: var(--font-neogrotesk);
+  font-size: 20px;
+  line-height: 1.3;
   letter-spacing: 0;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
@@ -331,9 +333,66 @@
   .pretest-speech-name, .pretest-speech-name::before, .pretest-speech-name::after { animation: none; }
 }
 
+/* ---------- Back / Next (DialogNav) ----------
+   Square icon buttons just outside the speech band, level with its bottom
+   edge: Back in the left margin, Next in the right one — whoever is speaking.
+   On a tour caption they hang below the box, at its two bottom corners. */
+.dlg-nav {
+  --nav-size: 44px;
+  --nav-gap: 10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  z-index: 3;
+}
+.dlg-nav-btn {
+  position: absolute;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  width: var(--nav-size);
+  height: var(--nav-size);
+  padding: 0;
+  border: 1px solid var(--tone-soft, rgba(255, 255, 255, 0.3));
+  border-radius: 0;
+  background: rgba(8, 10, 22, 0.82);
+  color: #e9e6ef;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}
+.dlg-nav-prev { right: calc(100% + var(--nav-gap)); }
+.dlg-nav-next { left: calc(100% + var(--nav-gap)); }
+.dlg-nav.is-caption .dlg-nav-btn { bottom: auto; top: var(--nav-gap); }
+.dlg-nav.is-caption .dlg-nav-prev { left: auto; right: calc(var(--nav-size) + var(--nav-gap)); }
+.dlg-nav.is-caption .dlg-nav-next { left: auto; right: 0; }
+.dlg-nav-btn svg { width: 45%; height: 45%; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.dlg-nav-btn:hover:not(:disabled) { color: #fff; border-color: var(--tone, #16f2ff); box-shadow: 0 0 10px var(--tone-soft, rgba(22, 242, 255, 0.3)); }
+.dlg-nav-btn:focus-visible { outline: 2px solid var(--tone, #16f2ff); outline-offset: 2px; }
+.dlg-nav-btn:disabled { opacity: 0.35; cursor: default; }
+/* Next is the way forward: lit in the speaker's colour, and fades in when the
+   reading time runs out. */
+.dlg-nav-next:not(:disabled) { border-color: var(--tone, #16f2ff); color: #fff; box-shadow: 0 0 8px var(--tone-soft, rgba(22, 242, 255, 0.3)); animation: dlg-nav-in 0.3s ease-out; }
+@keyframes dlg-nav-in { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .dlg-nav-next { animation: none; } }
+
 /* Mobile breakpoint (see styles/global.css): the chat lines and answer
    choices are sized in px, so boost them explicitly. */
 @media (max-width: 920px) {
-  .pretest-line { font-size: calc(20px * var(--text-boost, 1)); }
-  .pretest-option { font-size: calc(19px * var(--text-boost, 1)); }
+  /* Back / Next become round touch targets, 46 real screen px whatever the
+     stage's scale; the speech band's side margins widen to hold them. */
+  .dlg-nav { --nav-size: calc(46px / var(--stage-scale, 1)); --nav-gap: calc(8px / var(--stage-scale, 1)); }
+  .dlg-nav-btn { border-width: calc(2px / var(--stage-scale, 1)); border-radius: 999px; }
+  .pretest-speech {
+    left: max(88px, var(--nav-margin));
+    right: max(108px, var(--nav-margin));
+    --nav-margin: calc(62px / var(--stage-scale, 1));
+  }
+
+  /* Dialogue lines and answer options read 8% larger on phones. */
+  .pretest-line { font-size: calc(20px * 1.08 * var(--text-boost, 1)); }
+  .pretest-option { font-size: calc(20px * 1.08 * var(--text-boost, 1)); }
+  /* The answer panel spans the whole width, 8px from the edges. */
+  .pretest-choices { left: 8px; right: 8px; bottom: 8px; }
 }

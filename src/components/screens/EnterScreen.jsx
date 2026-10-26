@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { useStage } from '../Stage.jsx'
 import { GAME_MINUTES } from '../../game/gameData.js'
 import { bgUrl } from '../../game/assets.js'
 import { getPreloadedVideo } from '../../game/preloadAssets.js'
+import { DEBUG } from '../../game/settings.js'
+import DialogNav from './DialogNav.jsx'
 import './screens.css'
 import './pretest.css'
 import './enter.css'
@@ -18,7 +20,6 @@ const FLASH_MS = 1900
 const WHITE_MS = 1800
 const LOAD_WAIT_MS = 6000 // if the video hasn't started by then, skip it and go to the fade
 const BLACK_MS = 6000
-const FADE_MS = 350 // matches the speech-band fade in pretest.css
 const readingTime = (text) => Math.max(3500, text.length * 18 + 1500, text.trim().split(/\s+/).length * 280 + 800)
 
 // Fixed spark layout (percent of the art), so it is stable across renders.
@@ -36,10 +37,11 @@ const SPARKS = Array.from({ length: 14 }, (_, i) => {
 })
 
 /* The portal arrival: after the warp, a short Max/Mia exchange inside the
-   Physical Internet, then a walkthrough of the two HUD tools (Map, then Bag —
+   Physical Internet, then a walkthrough of the HUD tools (Map, Bag, Hints —
    each highlighted with its explanation underneath), and Mia's last line.
-   Only then does the Map become clickable; opening it starts the clock. Every step
-   advances on its own after its reading time (shown by the timeline). */
+   Only then does the Map become clickable; opening it starts the clock. Each
+   step waits for its reading time (shown by the timeline), then the player
+   moves on with Next (or goes Back to re-read; read steps come back complete). */
 export default function EnterScreen() {
   const { reducedMotion, setEnterTour, narrative } = useGame()
   const t = useT()
@@ -58,6 +60,7 @@ export default function EnterScreen() {
     { who: 'player', text: t('enter.mission', vars) },
     { who: 'tour', target: 'map', title: t('hud.map'), text: t('enter.mapText', vars) },
     { who: 'tour', target: 'bag', title: t('hud.bag'), text: t('enter.bagText', vars) },
+    { who: 'tour', target: 'hints', title: t('hud.hints'), text: t('enter.hintsText', vars) },
     { who: 'player', text: t('enter.finalLine', vars) },
   ]
 
@@ -69,14 +72,19 @@ export default function EnterScreen() {
   // actually starts playing, not from mount, so a slow load doesn't desync them.
   const [playing, setPlaying] = useState(false)
   const intro = phase !== 'done'
+  // Debug only: freeze the whole arrival (timers, dialogue, CSS animations and
+  // the tunnel video) to inspect a moment, e.g. the "Physical Internet" title.
+  const [paused, setPaused] = useState(false)
+  const pausedRef = useRef(paused)
+  pausedRef.current = paused
   useEffect(() => {
-    if (phase === 'done') return
+    if (phase === 'done' || paused) return
     // The tunnel normally ends on the video's 'ended' event; these are fallbacks
     // for a video that never starts or stalls part-way.
     const delay = phase === 'fade' ? WHITE_MS + BLACK_MS : playing ? tunnelMs + 1500 : LOAD_WAIT_MS
     const timer = window.setTimeout(() => setPhase(phase === 'fade' ? 'done' : 'fade'), delay)
     return () => window.clearTimeout(timer)
-  }, [phase, playing, tunnelMs])
+  }, [phase, playing, tunnelMs, paused])
 
   // Mount the shared, already-buffering <video> (preloaded during the pre-test) into the
   // tunnel layer and play it from the start; detach it again when the tunnel ends.
@@ -105,6 +113,12 @@ export default function EnterScreen() {
       video.remove()
     }
   }, [videoHost])
+  useEffect(() => {
+    const video = videoHost?.querySelector('video')
+    if (!video) return
+    if (paused) video.pause()
+    else video.play().catch(() => {})
+  }, [paused, videoHost])
 
   const [stepIndex, setStepIndex] = useState(0)
   const [clock, setClock] = useState({ step: 0, ms: 0 })
@@ -113,33 +127,42 @@ export default function EnterScreen() {
   const total = readingTime(step.text)
   const elapsed = clock.step === stepIndex ? clock.ms : 0
   const canStart = isLast && elapsed >= total
-  const leaving = !reducedMotion && !isLast && elapsed >= total - FADE_MS
+  const stepRead = elapsed >= total
+  const doneSteps = useRef(new Set())
+  const goNext = () => setStepIndex((i) => Math.min(steps.length - 1, i + 1))
+  const goPrev = () => setStepIndex((i) => Math.max(0, i - 1))
   const visibleLetters = reducedMotion ? step.text.length : Math.floor(elapsed / 18)
   const progress = `${Math.min(100, (elapsed / total) * 100)}%`
 
-  // Reading clock: pauses while the tab is hidden, then moves to the next step.
+  // Reading clock: pauses while the tab is hidden; a step read before (the
+  // player came Back) starts complete.
   useEffect(() => {
     if (intro) return
+    if (doneSteps.current.has(stepIndex)) {
+      setClock({ step: stepIndex, ms: total })
+      return
+    }
     let ms = 0
     const timer = window.setInterval(() => {
-      if (document.hidden) return
+      if (document.hidden || pausedRef.current) return
       ms = Math.min(total, ms + 50)
       setClock({ step: stepIndex, ms })
       if (ms >= total) {
         window.clearInterval(timer)
-        if (!isLast) setStepIndex((i) => i + 1)
+        doneSteps.current.add(stepIndex)
       }
     }, 50)
     return () => window.clearInterval(timer)
-  }, [intro, stepIndex, total, isLast])
+  }, [intro, stepIndex, total])
 
   // Reveal the tools during their explanations; enable Map after the final line.
   const tour = canStart ? 'ready' : stepIndex < 3 ? null : step.who === 'tour' ? step.target : 'done'
   useEffect(() => { setEnterTour(tour) }, [tour, setEnterTour])
 
-  // Place the explanation under the highlighted HUD button. The button lives in
-  // the HUD (outside this screen), so track its position every frame while shown.
-  const [anchorX, setAnchorX] = useState(null)
+  // Place the explanation next to the highlighted HUD button, never over it.
+  // The button lives in the HUD (outside this screen), so track its box (in
+  // design px, relative to this screen) every frame while shown.
+  const [anchor, setAnchor] = useState(null)
   const [root, setRoot] = useState(null)
   useEffect(() => {
     if (step.who !== 'tour' || !root) return
@@ -150,8 +173,13 @@ export default function EnterScreen() {
         // viewRect undoes a phone-orientation rotation, if any
         const b = viewRect(button.getBoundingClientRect())
         const r = viewRect(root.getBoundingClientRect())
-        const x = (b.left + b.width / 2 - r.left) / scale
-        setAnchorX((prev) => (prev != null && Math.abs(prev - x) < 0.5 ? prev : x))
+        const box = {
+          left: (b.left - r.left) / scale,
+          right: (b.right - r.left) / scale,
+          top: (b.top - r.top) / scale,
+          bottom: (b.bottom - r.top) / scale,
+        }
+        setAnchor((prev) => (prev && ['left', 'right', 'top', 'bottom'].every((k) => Math.abs(prev[k] - box[k]) < 0.5) ? prev : box))
       }
       frame = window.requestAnimationFrame(measure)
     }
@@ -162,11 +190,47 @@ export default function EnterScreen() {
   // The empty arrival scene shows until the dialogue starts (and during the HUD tour).
   const backdrop = intro || step.who === 'tour' ? 'initial' : step.who
   const name = step.who === 'player' ? narrative.player : friend
-  const captionW = 360
-  const captionLeft = anchorX == null ? null : Math.min(1280 - 16 - captionW, Math.max(16, anchorX - captionW + 40))
+  const captionW = 550
+  // How tall the caption is including the Back/Next row hanging under it, so
+  // it can be kept clear of the screen's bottom edge (design px).
+  const [captionEl, setCaptionEl] = useState(null)
+  const [captionReach, setCaptionReach] = useState(0)
+  useLayoutEffect(() => {
+    if (!captionEl) return
+    const measure = () => {
+      const btn = captionEl.querySelector('.dlg-nav-btn')
+      setCaptionReach(captionEl.offsetHeight + (btn ? btn.offsetTop + btn.offsetHeight : 0))
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(captionEl)
+    return () => observer.disconnect()
+  }, [captionEl])
+  const sceneH = root?.offsetHeight || 720
+  const CAPTION_GAP = 14
+  // Desktop: the button is in the top bar, above this screen → the caption
+  // hangs below it, arrow pointing up. Phones: the buttons are a column down
+  // the right edge, over the screen → the caption sits to the button's left,
+  // arrow pointing right, so it covers neither that button nor the next one.
+  const captionSide = anchor != null && anchor.bottom > 4
+  let caption = null
+  if (anchor) {
+    const midX = (anchor.left + anchor.right) / 2
+    const midY = (anchor.top + anchor.bottom) / 2
+    if (captionSide) {
+      const left = Math.min(1280 - 16 - captionW, Math.max(16, anchor.left - CAPTION_GAP - captionW))
+      // Level with the button, but lifted if the caption plus its Back/Next
+      // row would run off the bottom (the Bag sits low in the phone column).
+      const top = Math.max(14, Math.min(anchor.top, sceneH - 14 - captionReach))
+      caption = { style: { left, top, width: captionW, '--arrow-y': `${midY - top}px` } }
+    } else {
+      const left = Math.min(1280 - 16 - captionW, Math.max(16, midX - captionW + 40))
+      caption = { style: { left, top: Math.max(14, anchor.bottom + CAPTION_GAP), width: captionW, '--arrow': `${midX - left}px` } }
+    }
+  }
 
   return (
-    <div className="scene pretest-scene enter-scene" ref={setRoot}>
+    <div className={`scene pretest-scene enter-scene ${paused ? 'is-paused' : ''}`} ref={setRoot}>
       <div className={`pretest-content ${reducedMotion ? 'fade-in' : ''}`}>
         <div className="pretest-art">
           {Object.entries(backdrops).map(([key, file]) => (
@@ -186,12 +250,12 @@ export default function EnterScreen() {
         <div className={`enter-head ${stepIndex < 3 ? '' : 'is-hidden'}`}>
           {/* <div className="eyebrow accent-cyan">{t('enter.eyebrow')}</div> */}
           <h1 className="enter-title">
-            {t('enter.titleLead')} <span className="grad">{t('enter.titleAccent')}</span>
+            {t('enter.titleLead')} <span className="grad-light">{t('enter.titleAccent')}</span>
           </h1>
         </div>
 
         {!intro && step.who !== 'tour' && (
-          <div key={stepIndex} className={`pretest-speech ${name === 'Mia' ? 'is-mia' : 'is-max'} ${leaving ? 'is-leaving' : ''}`}>
+          <div key={stepIndex} className={`pretest-speech ${name === 'Mia' ? 'is-mia' : 'is-max'}`}>
             <div className="pretest-speech-name" data-text={name} aria-hidden="true">{name}</div>
             <p className="pretest-line" aria-label={step.text} aria-live="polite" aria-atomic="true">
               <span aria-hidden="true">
@@ -202,17 +266,19 @@ export default function EnterScreen() {
             <span className="pretest-reading-track" aria-hidden="true">
               <span className="pretest-reading-progress" style={{ width: progress }} />
             </span>
+            <DialogNav canPrev={stepIndex > 0} canNext={stepRead && !isLast} onPrev={goPrev} onNext={goNext} />
           </div>
         )}
 
-        {!intro && step.who === 'tour' && captionLeft != null && (
-          <div key={stepIndex} className={`enter-caption is-${step.target} ${leaving ? 'is-leaving' : ''}`}
-            style={{ left: captionLeft, width: captionW, '--arrow': `${anchorX - captionLeft}px` }} aria-live="polite">
+        {!intro && step.who === 'tour' && caption && (
+          <div key={stepIndex} ref={setCaptionEl} className={`enter-caption is-${step.target} ${captionSide ? 'is-side' : ''}`}
+            style={caption.style} aria-live="polite">
             <b className="enter-caption-title">{step.title}</b>
             <p>{step.text}</p>
             <span className="enter-caption-track" aria-hidden="true">
               <span className="enter-caption-progress" style={{ width: progress }} />
             </span>
+            <DialogNav className="is-caption" holdNext canPrev={stepIndex > 0} canNext={stepRead && !isLast} onPrev={goPrev} onNext={goNext} />
           </div>
         )}
       </div>
@@ -235,6 +301,12 @@ export default function EnterScreen() {
           style={{ '--white': `${WHITE_MS}ms`, '--black': `${BLACK_MS}ms` }} aria-hidden />
       )}
       {phase === 'fade' && <div className="enter-whiteout" style={{ '--white': `${WHITE_MS}ms` }} aria-hidden />}
+      {DEBUG && (
+        <button type="button" className="btn btn-sm btn-ghost enter-debug-pause"
+          onMouseDown={(event) => event.preventDefault()} onClick={() => setPaused((p) => !p)}>
+          {paused ? 'Resume' : 'Pause'}
+        </button>
+      )}
     </div>
   )
 }

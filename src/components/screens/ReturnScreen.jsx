@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useGame, formatTime } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { bgUrl } from '../../game/assets.js'
 import { getPreloadedVideo } from '../../game/preloadAssets.js'
+import DialogNav from './DialogNav.jsx'
 import './screens.css'
 import './pretest.css'
 import './enter.css'
@@ -13,7 +14,6 @@ const TUNNEL_MS = 9042 // video length; replaced by the real duration once metad
 const FLASH_MS = 1900
 const LOAD_WAIT_MS = 6000 // video never started → go on anyway
 const WHITE_HOLD_MS = 2000 // the core's whiteout holds on white before the post-test fades in
-const FADE_MS = 350
 // Arrival, as after the first portal trip: hold on black, then the black slowly
 // fades to the scene (same curve and length as EnterScreen's BLACK_MS).
 const HOLD_BLACK_MS = 1500
@@ -56,13 +56,19 @@ export default function ReturnScreen() {
   const total = readingTime(step.text)
   const elapsed = clock.step === stepIndex ? clock.ms : 0
   const dialogDone = isLast && elapsed >= total
-  const leaving = !reducedMotion && !isLast && elapsed >= total - FADE_MS
+  const stepRead = elapsed >= total
+  const doneSteps = useRef(new Set())
   const visibleLetters = reducedMotion ? step.text.length : Math.floor(elapsed / 18)
   const progress = `${Math.min(100, (elapsed / total) * 100)}%`
 
-  // Reading clock: pauses while the tab is hidden, then moves to the next line.
+  // Reading clock: pauses while the tab is hidden; Next moves on once it's
+  // full. A line read before (the player came Back) starts complete.
   useEffect(() => {
     if (phase !== 'talk') return
+    if (doneSteps.current.has(stepIndex)) {
+      setClock({ step: stepIndex, ms: total })
+      return
+    }
     let ms = 0
     const timer = window.setInterval(() => {
       if (document.hidden) return
@@ -70,11 +76,11 @@ export default function ReturnScreen() {
       setClock({ step: stepIndex, ms })
       if (ms >= total) {
         window.clearInterval(timer)
-        if (!isLast) setStepIndex((i) => i + 1)
+        doneSteps.current.add(stepIndex)
       }
     }, 50)
     return () => window.clearInterval(timer)
-  }, [phase, stepIndex, total, isLast])
+  }, [phase, stepIndex, total])
 
   // Tunnel: play the shared, preloaded portal video; its end (or a stall) cuts
   // to white, then into the post-test.
@@ -128,7 +134,7 @@ export default function ReturnScreen() {
         </div>
 
         {phase === 'talk' && (
-          <div key={stepIndex} className={`pretest-speech ${name === 'Mia' ? 'is-mia' : 'is-max'} ${leaving ? 'is-leaving' : ''}`}>
+          <div key={stepIndex} className={`pretest-speech ${name === 'Mia' ? 'is-mia' : 'is-max'}`}>
             <div className="pretest-speech-name" data-text={name} aria-hidden="true">{name}</div>
             <p className="pretest-line" aria-label={step.text} aria-live="polite" aria-atomic="true">
               <span aria-hidden="true">
@@ -139,6 +145,9 @@ export default function ReturnScreen() {
             <span className="pretest-reading-track" aria-hidden="true">
               <span className="pretest-reading-progress" style={{ width: progress }} />
             </span>
+            <DialogNav canPrev={stepIndex > 0} canNext={stepRead && !isLast}
+              onPrev={() => setStepIndex((i) => Math.max(0, i - 1))}
+              onNext={() => setStepIndex((i) => Math.min(steps.length - 1, i + 1))} />
           </div>
         )}
 

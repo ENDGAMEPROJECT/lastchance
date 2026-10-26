@@ -8,7 +8,7 @@ export default {
     "next": "Dalje",
     "locked": "Zaključano",
     "cleared": "✓ Završeno",
-    "enterNode": "▶ Uđi",
+    "enterNode": "Uđi",
     "back": "Nazad",
     "close": "Zatvori",
     "howToPlay": "How to play:"
@@ -24,12 +24,18 @@ export default {
     "ageLabel": "Tvoje godine",
     "agePlaceholder": "npr. 14",
     "languageLabel": "Jezik",
-    "start": "Uđi",
+    "start": "⏻ Uđi",
     "aliasError": "Unesi nadimak da bi nastavio/la.",
     "ageError": "Unesi ispravan broj godina (1–120).",
+    "characterError": "Izaberi lika da nastaviš.",
+    "languageError": "Izaberi jezik da nastaviš.",
     "characterLabel": "Choose your character",
     "characterMia": "Mia",
     "characterMax": "Max"
+  },
+  "rotate": {
+    "title": "Turn your phone",
+    "text": "The rest of the game is played in landscape. Rotate your phone sideways to continue."
   },
   "hud": {
     "logo": "POSLEDNJA ŠANSA ZA BEKSTVO",
@@ -302,11 +308,12 @@ export default {
     "mission": "We’ll have to explore the districts, gather evidence of how the scam works, and make it back to school before the offer expires!",
     "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga — završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
     "bagText": "Tvoji alati i dokazi koje prikupiš. Otvori ih da bi koristio/la predmete u zagonetkama i pregledao/la dokaze koje ćeš pokazati {prijatelju}.",
+    "hintsText": "Zaglavio si se na zadatku? U Savetima su pomoći za oblast u kojoj si, jedna po jedna – otvori samo onoliko koliko ti treba. Dugme zasvetli ako neko vreme ne napreduješ.",
     "finalLine": "Ready? The timer starts as soon as you open the map."
   },
   "return": {
     "playerLine": "That went well! I think we've collected more than enough evidence.",
-    "friendLine": "Let's go back already. Offer ends in {minutes} minutes.",
+    "friendLine": "Let's go back already. Offer ends in less than {minutes} minutes.",
     "friendLineTimeUp": "Let's go back already. The offer has already ended.",
     "goBack": "Head to exit"
   },
@@ -629,7 +636,7 @@ export default {
         "weirdTld": "Odd domain endings like .shop or .free instead of .com",
         "homoglyph": "Letters swapped for look-alikes — “rn” for “m”, or foreign characters",
         "typo": "Misspellings of the brand name (e.g. “dealz”)",
-        "httpsGood": "It starts with https:// — so it must be trustworthy",
+        "httpsGood": "It starts with https:// ",
         "lock": "The browser shows a little padlock icon",
         "looksReal": "The name looks right at a first glance"
       },
@@ -734,7 +741,7 @@ export default {
               "Nema nagrade"
             ],
             "rules": "Vrti da otključaš kupon za popust — do 50% popusta!",
-            "feedback": "Gamification means using game elements, like points, rewards or spinning wheels, in things that aren't really games. Apps and online shops use it to make buying feel fun, so you stay longer and spend more without noticing. That's exactly what these wheels are doing."
+            "feedback": "Small prizes and discounts make you feel lucky. But that little win is bait: you can end up spending more than you save. Feeling lucky also keeps you spinning for the next prize. The wheel was rigged all along: the feeling of luck is the hook."
           },
           "w3": {
             "name": "ZLATNA GROZNICA",
@@ -749,7 +756,7 @@ export default {
               "Nema nagrade"
             ],
             "rules": "Osvoji telefon, laptop ili do 100 € — zavrti točak!",
-            "feedback": "Small prizes and discounts make you feel lucky. But that little win is bait: you can end up spending more than you save. Feeling lucky also keeps you spinning for the next prize. The wheel was rigged all along: the feeling of luck is the hook."
+            "feedback": "This wheel is rigged: it always lands on “No prize.” The big prizes and the “Keep spinning!” message make you think your next try could be the lucky one, keeping you playing even though you get nothing. The aim is to hold your attention. On a website with ads, that can mean more adverts seen. Here, another spin won’t bring you closer to a prize: the wheel is programmed so you can never win."
           }
         },
         "debugSkip": "Прескочи рулете (debug)"

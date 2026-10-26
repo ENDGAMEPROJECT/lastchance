@@ -6,13 +6,22 @@
   justify-content: space-between;
   gap: 16px;
   padding: 10px 26px;
-  background: linear-gradient(180deg, rgba(8, 11, 26, 0.95), rgba(8, 11, 26, 0.6));
+  background: linear-gradient(
+    180deg,
+    rgba(8, 11, 26, 0.95),
+    rgba(8, 11, 26, 0.6)
+  );
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(10px);
   flex-wrap: wrap;
 }
-.hud-left { display: flex; flex-direction: row;
-gap:12px; align-items: center; justify-content: flex-start; }
+.hud-left {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+}
 
 .hud-logo {
   font-family: var(--font-display);
@@ -39,29 +48,108 @@ gap:12px; align-items: center; justify-content: flex-start; }
   background: rgba(22, 242, 255, 0.06);
   box-shadow: var(--glow-cyan);
 }
-.hud-timer-label { font-size: 0.6rem; letter-spacing: 0.25em; color: var(--muted); }
-.hud-timer-val { font-size: 1.5rem; color: var(--cyan); letter-spacing: 0.1em; }
-.hud-timer.low { border-color: rgba(255, 185, 43, 0.6); box-shadow: 0 0 8px rgba(255,185,43,0.5); }
-.hud-timer.low .hud-timer-val { color: var(--amber); }
-.hud-timer.critical { border-color: rgba(255, 59, 92, 0.7); box-shadow: var(--glow-red); }
-.hud-timer.critical .hud-timer-val { color: var(--red); }
+.hud-timer-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  color: var(--muted);
+}
+.hud-timer-val {
+  font-size: 1.5rem;
+  color: var(--cyan);
+  letter-spacing: 0.1em;
+}
+.hud-timer.low {
+  border-color: rgba(255, 185, 43, 0.6);
+  box-shadow: 0 0 8px rgba(255, 185, 43, 0.5);
+}
+.hud-timer.low .hud-timer-val {
+  color: var(--amber);
+}
+.hud-timer.critical {
+  border-color: rgba(255, 59, 92, 0.7);
+  box-shadow: var(--glow-red);
+}
+.hud-timer.critical .hud-timer-val {
+  color: var(--red);
+}
 
-.hud-right { display: flex; gap: 10px; align-items: center; }
-.hud-debug { animation: pulse-glow 1.8s ease-in-out infinite; align-self: center; }
+.hud-right {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.hud-debug {
+  animation: pulse-glow 1.8s ease-in-out infinite;
+  align-self: center;
+}
 /* Compact square icon button for the sound toggle. */
-.hud-mute { padding-left: 9px; padding-right: 9px; font-size: 1rem; line-height: 1; }
-.hud-hints { white-space: nowrap; }
-.hud-fullscreen { display: inline-flex; align-items: center; justify-content: center; padding-left: 9px; padding-right: 9px; }
+.hud-mute {
+  padding-left: 9px;
+  padding-right: 9px;
+  font-size: 1rem;
+  line-height: 1;
+}
+.hud-hints {
+  white-space: nowrap;
+}
+.hud-fullscreen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 9px;
+  padding-right: 9px;
+}
 
-.hint-target { margin-bottom: 16px; padding: 13px; border-color: rgba(22, 242, 255, 0.25); background: rgba(22, 242, 255, 0.04); }
-.hint-target h4 { margin: 4px 0 3px; color: var(--cyan); font-family: var(--font-display); }
-.hint-target p { margin: 0; color: var(--muted); line-height: 1.4; }
-.hints-context { margin: 0 0 16px; }
-.hints-list { display: grid; gap: 10px; }
-.hint-disclosure { border: 1px solid rgba(255, 185, 43, 0.25); background: rgba(255, 185, 43, 0.05); }
-.hint-disclosure.is-open { border-color: rgba(255, 185, 43, 0.55); background: rgba(255, 185, 43, 0.09); }
-.hint-trigger { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px; border: 0; background: transparent; color: var(--text); text-align: left; font: inherit; line-height: 1.4; cursor: pointer; }
-.hint-trigger:hover { background: rgba(255, 185, 43, 0.08); }
+
+.hint-target {
+  margin-bottom: 16px;
+  padding: 13px;
+  border-color: rgba(22, 242, 255, 0.25);
+  background: rgba(22, 242, 255, 0.04);
+}
+.hint-target h4 {
+  margin: 4px 0 10px;
+  color: var(--cyan);
+  font-family: var(--font-retro);
+
+}
+.hint-target p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.4;
+}
+.hints-context {
+  margin: 0 0 16px;
+}
+.hints-list {
+  display: grid;
+  gap: 10px;
+}
+.hint-disclosure {
+  border: 1px solid rgba(255, 185, 43, 0.25);
+  background: rgba(255, 185, 43, 0.05);
+}
+.hint-disclosure.is-open {
+  border-color: rgba(255, 185, 43, 0.55);
+  background: rgba(255, 185, 43, 0.09);
+}
+.hint-trigger {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  font: inherit;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.hint-trigger:hover {
+  background: rgba(255, 185, 43, 0.08);
+}
 .hint-number {
   display: grid;
   place-items: center;
@@ -74,8 +162,17 @@ gap:12px; align-items: center; justify-content: flex-start; }
   font-family: var(--font-mono);
   font-size: 0.78rem;
 }
-.hint-chevron { margin-left: auto; color: var(--amber); font-family: var(--font-mono); font-size: 1.15rem; }
-.hint-answer { padding: 0 42px 14px 48px; color: var(--muted); line-height: 1.45; }
+.hint-chevron {
+  margin-left: auto;
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+}
+.hint-answer {
+  padding: 0 42px 14px 48px;
+  color: var(--muted);
+  line-height: 1.45;
+}
 .bag-count {
   display: inline-block;
   background: var(--purple);
@@ -89,8 +186,20 @@ gap:12px; align-items: center; justify-content: flex-start; }
   animation: hud-bag-glow 1.2s ease-in-out infinite;
 }
 @keyframes hud-bag-glow {
-  0%, 100% { border-color: var(--purple); box-shadow: 0 0 10px rgba(168, 85, 247, 0.4); }
-  50% { border-color: #f5e3ff; color: #fff; background: rgba(168, 85, 247, 0.65); box-shadow: 0 0 18px rgba(228, 186, 255, 0.95), 0 0 38px rgba(168, 85, 247, 0.9), inset 0 0 12px rgba(245, 227, 255, 0.25); }
+  0%,
+  100% {
+    border-color: var(--purple);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+  }
+  50% {
+    border-color: #f5e3ff;
+    color: #fff;
+    background: rgba(168, 85, 247, 0.65);
+    box-shadow:
+      0 0 18px rgba(228, 186, 255, 0.95),
+      0 0 38px rgba(168, 85, 247, 0.9),
+      inset 0 0 12px rgba(245, 227, 255, 0.25);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .hud-bag-reminder {
@@ -103,8 +212,20 @@ gap:12px; align-items: center; justify-content: flex-start; }
   animation: hud-bag-glow 1.2s ease-in-out infinite;
 }
 @keyframes hud-bag-glow {
-  0%, 100% { border-color: var(--purple); box-shadow: 0 0 10px rgba(168, 85, 247, 0.4); }
-  50% { border-color: #f5e3ff; color: #fff; background: rgba(168, 85, 247, 0.65); box-shadow: 0 0 18px rgba(228, 186, 255, 0.95), 0 0 38px rgba(168, 85, 247, 0.9), inset 0 0 12px rgba(245, 227, 255, 0.25); }
+  0%,
+  100% {
+    border-color: var(--purple);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+  }
+  50% {
+    border-color: #f5e3ff;
+    color: #fff;
+    background: rgba(168, 85, 247, 0.65);
+    box-shadow:
+      0 0 18px rgba(228, 186, 255, 0.95),
+      0 0 38px rgba(168, 85, 247, 0.9),
+      inset 0 0 12px rgba(245, 227, 255, 0.25);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .hud-bag-reminder {
@@ -113,12 +234,45 @@ gap:12px; align-items: center; justify-content: flex-start; }
     box-shadow: 0 0 18px rgba(168, 85, 247, 0.6);
   }
 }
+.hud-fullscreen-reminder {
+  animation: hud-fullscreen-glow 1.6s ease-in-out infinite;
+}
+/* Subtle: only the border lights up — no fill, no text colour change. */
+@keyframes hud-fullscreen-glow {
+  0%,
+  100% {
+    border-color: rgba(22, 242, 255, 0.45);
+    box-shadow: 0 0 0 rgba(22, 242, 255, 0);
+  }
+  50% {
+    border-color: rgba(190, 252, 255, 0.95);
+    box-shadow: 0 0 8px rgba(22, 242, 255, 0.55);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hud-fullscreen-reminder {
+    animation: none;
+    border-color: rgba(190, 252, 255, 0.9);
+  }
+}
 .hud-hint-reminder {
   animation: hud-hint-glow 1.2s ease-in-out infinite;
 }
 @keyframes hud-hint-glow {
-  0%, 100% { border-color: var(--amber); box-shadow: 0 0 10px rgba(255, 185, 43, 0.4); }
-  50% { border-color: #fff1cc; color: #fff; background: rgba(255, 185, 43, 0.45); box-shadow: 0 0 18px rgba(255, 225, 150, 0.95), 0 0 38px rgba(255, 185, 43, 0.9), inset 0 0 12px rgba(255, 241, 204, 0.25); }
+  0%,
+  100% {
+    border-color: var(--amber);
+    box-shadow: 0 0 10px rgba(255, 185, 43, 0.4);
+  }
+  50% {
+    border-color: #fff1cc;
+    color: #fff;
+    background: rgba(255, 185, 43, 0.45);
+    box-shadow:
+      0 0 18px rgba(255, 225, 150, 0.95),
+      0 0 38px rgba(255, 185, 43, 0.9),
+      inset 0 0 12px rgba(255, 241, 204, 0.25);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .hud-hint-reminder {
@@ -130,7 +284,12 @@ gap:12px; align-items: center; justify-content: flex-start; }
 
 /* Inventory modal */
 /* Bag tabs: Tools | Evidence (styled like the old section subheadings). */
-.bag-tabs { display: flex; gap: 4px; margin-bottom: 16px; border-bottom: 1px solid var(--line); }
+.bag-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
 .bag-tab {
   display: inline-flex;
   align-items: center;
@@ -147,11 +306,21 @@ gap:12px; align-items: center; justify-content: flex-start; }
   letter-spacing: 0.06em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
-.bag-tab:hover { color: var(--text); }
-.bag-tab-tools.is-active { color: var(--purple-light); border-bottom-color: currentColor; }
-.bag-tab-evidence.is-active { color: var(--green); border-bottom-color: currentColor; }
+.bag-tab:hover {
+  color: var(--text);
+}
+.bag-tab-tools.is-active {
+  color: var(--purple-light);
+  border-bottom-color: currentColor;
+}
+.bag-tab-evidence.is-active {
+  color: var(--green);
+  border-bottom-color: currentColor;
+}
 .bag-tab-count {
   min-width: 20px;
   padding: 1px 6px;
@@ -162,12 +331,27 @@ gap:12px; align-items: center; justify-content: flex-start; }
   line-height: 1.4;
   text-align: center;
 }
-.bag-panels { display: grid; }
-.bag-panels > .bag-section { grid-area: 1 / 1; margin-bottom: 0; }
-.bag-panels > .bag-section.is-hidden { visibility: hidden; }
-.bag-section { margin-bottom: 20px; }
-.bag-section:last-child { margin-bottom: 0; }
-.bag-grid { display: grid; gap: 10px; margin-top: 10px; }
+.bag-panels {
+  display: grid;
+}
+.bag-panels > .bag-section {
+  grid-area: 1 / 1;
+  margin-bottom: 0;
+}
+.bag-panels > .bag-section.is-hidden {
+  visibility: hidden;
+}
+.bag-section {
+  margin-bottom: 20px;
+}
+.bag-section:last-child {
+  margin-bottom: 0;
+}
+.bag-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
 .bag-item {
   display: flex;
   gap: 12px;
@@ -177,22 +361,61 @@ gap:12px; align-items: center; justify-content: flex-start; }
   color: inherit;
   text-align: left;
 }
-.bag-item-report, .bag-item { cursor: pointer; border: 1px solid rgba(168, 85, 247, 0.35); transition: border-color 0.2s, box-shadow 0.2s, color 0.2s; }
-.bag-item-report:hover { border-color: var(--purple); box-shadow: var(--glow-purple); }
-.bag-item-denied { border-color: var(--red) !important; color: var(--red); animation: bag-denied 0.7s ease; box-shadow: var(--glow-red); }
-@keyframes bag-denied { 0%, 100% { transform: translateX(0); } 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
-.bag-icon { 
-  width: 50px;
+.bag-item-report,
+.bag-item {
+  cursor: pointer;
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    color 0.2s;
+}
+.bag-item-report:hover {
+  border-color: var(--purple);
+  box-shadow: var(--glow-purple);
+}
+.bag-item-denied {
+  border-color: var(--red) !important;
+  color: var(--red);
+  animation: bag-denied 0.7s ease;
+  box-shadow: var(--glow-red);
+}
+@keyframes bag-denied {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+.bag-icon {
+  width: 80px;
   padding: 0 0.4rem;
   transform: rotate(-5deg);
-  filter: drop-shadow(0 0 6px rgba(168,85,247,0.6)); }
-.bag-name { 
-  font-family: var(--font-retro); 
-  font-size: 1.1rem; 
-  color: var(--text);
-  font-weight: 600
+  filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.6));
+  margin-right: 16px;
+  @media(min-width: 920px) {
+      width: 50px;
+        margin-right: 4px;
+  }
 }
-.bag-desc { margin-top: 2px; line-height: 1.35; font-size: 0.9rem; }
+.bag-name {
+  font-family: var(--font-retro);
+  font-size: 1.1rem;
+  color: var(--text);
+  font-weight: 600;
+}
+.bag-desc {
+  margin-top: 2px;
+  line-height: 1.35;
+  font-size: 0.9rem;
+}
 .bag-subheading {
   margin: 0 0 6px;
   font-family: var(--font-retro);
@@ -202,42 +425,82 @@ gap:12px; align-items: center; justify-content: flex-start; }
   text-transform: uppercase;
   color: var(--light-purple);
 }
-.evidence-list { 
-  list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; }
-.evidence-list li { display: flex; align-items: start; gap: 10px; font-size: 0.9rem; color: #d4ffe6; }
-.ev-dot { 
+.evidence-list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.evidence-list li {
+  display: flex;
+  align-items: start;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #d4ffe6;
+}
+.ev-dot {
   width: 8px;
-  height: 8px; 
-  border-radius: 50%; 
+  height: 8px;
+  border-radius: 50%;
   margin-top: 0.4rem;
-  background:  #0f8866 !important;
-  box-shadow: var(--glow-green); flex: none; }
+  background: #0f8866 !important;
+  box-shadow: var(--glow-green);
+  flex: none;
+}
 
 @media (max-width: 560px) {
-  .hint-answer { padding-left: 48px; }
+  .hint-answer {
+    padding-left: 48px;
+  }
 }
 
 /* Portal-arrival walkthrough: a steady ring marks the tool being explained.
    Only the clickable Map pulses once the player can start. */
-.hud-tour-btn { cursor: default; animation: hud-tour-in 0.5s ease-out backwards; }
+.hud-tour-btn {
+  cursor: default;
+  animation: hud-tour-in 0.5s ease-out backwards;
+}
 .hud-tour-btn.is-focus,
 .hud-tour-btn.is-ready {
   position: relative;
   z-index: 2;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9), 0 0 12px 2px currentColor;
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.9),
+    0 0 12px 2px currentColor;
 }
 .hud-tour-btn.is-ready {
   cursor: pointer;
   animation: hud-tour-pulse 1.4s ease-in-out infinite;
 }
-@keyframes hud-tour-in { from { opacity: 0; transform: translateY(-6px) scale(0.9); } }
-@keyframes hud-tour-pulse {
-  0%, 100% { box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9), 0 0 12px 2px currentColor; }
-  50% { box-shadow: 0 0 0 3px #fff, 0 0 26px 8px currentColor; }
+@keyframes hud-tour-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.9);
+  }
 }
-.reduced-motion .hud-tour-btn.is-ready { box-shadow: 0 0 0 3px #fff, 0 0 20px 6px currentColor; }
+@keyframes hud-tour-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.9),
+      0 0 12px 2px currentColor;
+  }
+  50% {
+    box-shadow:
+      0 0 0 3px #fff,
+      0 0 26px 8px currentColor;
+  }
+}
+.reduced-motion .hud-tour-btn.is-ready {
+  box-shadow:
+    0 0 0 3px #fff,
+    0 0 20px 6px currentColor;
+}
 @media (prefers-reduced-motion: reduce) {
-  .hud-tour-btn { animation: none; }
+  .hud-tour-btn {
+    animation: none;
+  }
 }
 
 /* ---- Mobile HUD (≤920px, = settings.mobile.breakpoint) ----
@@ -255,7 +518,9 @@ gap:12px; align-items: center; justify-content: flex-start; }
     z-index: 10;
     pointer-events: none;
   }
-  .hud-m-debug { pointer-events: auto; }
+  .hud-m-debug {
+    pointer-events: auto;
+  }
 
   /* Timer: a plain read-out pinned to the top-right corner of the screen, on
      its own — not part of the Hints / Map / Bag column. */
@@ -269,7 +534,10 @@ gap:12px; align-items: center; justify-content: flex-start; }
     background: rgba(8, 11, 26, 0.6);
     pointer-events: none;
   }
-  .hud-m-edges .hud-m-timer .hud-timer-val { font-size: 17px; line-height: 1.1; }
+  .hud-m-edges .hud-m-timer .hud-timer-val {
+    font-size: 17px;
+    line-height: 1.1;
+  }
   .hud-m-debug {
     position: absolute;
     bottom: 12px;
@@ -292,9 +560,23 @@ gap:12px; align-items: center; justify-content: flex-start; }
   /* Portal transitions (the tunnel video at the start and end, and their
      black/white fades) cover the whole game, HUD included; the edge buttons
      live outside the game box, so hide them explicitly while one plays. */
-  body:has(.enter-blackout, .enter-video-host, .enter-whiteout, .return-whiteout) .hud-m-edges { display: none; }
-  .hud-m-left { left: max(12px, env(safe-area-inset-left)); align-items: flex-start; }
-  .hud-m-right { right: max(12px, env(safe-area-inset-right)); align-items: flex-end; }
+  body:has(
+      .enter-blackout,
+      .enter-video-host,
+      .enter-whiteout,
+      .return-whiteout
+    )
+    .hud-m-edges {
+    display: none;
+  }
+  .hud-m-left {
+    left: max(12px, env(safe-area-inset-left));
+    align-items: flex-start;
+  }
+  .hud-m-right {
+    right: max(12px, env(safe-area-inset-right));
+    align-items: flex-end;
+  }
   /* Welcome screen: fullscreen + sound side by side in the top-right corner. */
   .hud-m-edges.is-welcome .hud-m-left {
     top: max(20px, env(safe-area-inset-top));
@@ -317,16 +599,43 @@ gap:12px; align-items: center; justify-content: flex-start; }
     border-radius: 999px;
     font-size: 30px;
     line-height: 1;
-    background: linear-gradient(145deg, rgba(40, 70, 120, 0.95), rgba(10, 16, 40, 0.95));
+    background: linear-gradient(
+      145deg,
+      rgba(40, 70, 120, 0.95),
+      rgba(10, 16, 40, 0.95)
+    );
   }
   /* Tinted gradient fills, one per button colour. The extra .hud-m-col keeps
      them above the global .btn-*:hover backgrounds, which otherwise wipe the
      colour on tap (mobile keeps :hover after a touch). */
-  .hud-m-edges .hud-m-col .hud-m-btn.btn-ghost { border-color: rgba(22, 242, 255, 0.45); }
-  .hud-m-edges .hud-m-col .hud-m-btn.btn-amber { background: linear-gradient(145deg, rgba(255, 185, 43, 0.75), rgba(120, 60, 0, 0.95)); }
-  .hud-m-edges .hud-m-col .hud-m-btn.btn-cyan { background: linear-gradient(145deg, rgba(22, 242, 255, 0.6), rgba(0, 60, 110, 0.95)); }
-  .hud-m-edges .hud-m-col .hud-m-btn.btn-purple { background: linear-gradient(145deg, rgba(190, 110, 255, 0.75), rgba(60, 10, 110, 0.95)); }
-  .hud-m-edges .hud-m-btn svg { width: 32px; height: 32px; }
+  .hud-m-edges .hud-m-col .hud-m-btn.btn-ghost {
+    border-color: rgba(22, 242, 255, 0.45);
+  }
+  .hud-m-edges .hud-m-col .hud-m-btn.btn-amber {
+    background: linear-gradient(
+      145deg,
+      rgba(255, 185, 43, 0.75),
+      rgba(120, 60, 0, 0.95)
+    );
+  }
+  .hud-m-edges .hud-m-col .hud-m-btn.btn-cyan {
+    background: linear-gradient(
+      145deg,
+      rgba(22, 242, 255, 0.6),
+      rgba(0, 60, 110, 0.95)
+    );
+  }
+  .hud-m-edges .hud-m-col .hud-m-btn.btn-purple {
+    background: linear-gradient(
+      145deg,
+      rgba(190, 110, 255, 0.75),
+      rgba(60, 10, 110, 0.95)
+    );
+  }
+  .hud-m-edges .hud-m-btn svg {
+    width: 32px;
+    height: 32px;
+  }
 
   /* First tap: the icon unfolds into an icon + label pill (anchored right). */
   /* All three unfold together and share the widest one's length. */
@@ -337,7 +646,11 @@ gap:12px; align-items: center; justify-content: flex-start; }
     white-space: nowrap;
     animation: hud-m-unfold 0.18s ease-out;
   }
-  @keyframes hud-m-unfold { from { opacity: 0.6; } }
+  @keyframes hud-m-unfold {
+    from {
+      opacity: 0.6;
+    }
+  }
 
   /* Bag count: a round badge pinned on the button's top-right rim. */
   .hud-m-edges .hud-m-btn .bag-count {
@@ -358,7 +671,10 @@ gap:12px; align-items: center; justify-content: flex-start; }
     line-height: 1;
     letter-spacing: 0;
   }
-  .hud-m-alert { max-width: 180px; font-size: 12px; }
+  .hud-m-alert {
+    max-width: 180px;
+    font-size: 12px;
+  }
 
   /* Hints & Bag pop-overs: 75% of the 1280px game width (!important beats the
      inline maxWidth and the 85% mobile modal default), and their text set at
@@ -374,13 +690,27 @@ gap:12px; align-items: center; justify-content: flex-start; }
   .hud-modal .hint-answer,
   .hud-modal .bag-desc,
   .hud-modal .muted,
-  .hud-modal .evidence-list li { font-size: calc(20px * var(--text-boost, 1)); }
+  .hud-modal .evidence-list li {
+    font-size: calc(20px * var(--text-boost, 1));
+  }
   /* Their subtitles grow by the same factor as that text (body 17px → dialogue
      20px, i.e. ×20/17), so the hierarchy is kept. */
-  .hud-modal .eyebrow { font-size: calc(0.72rem * 20 / 17); }
-  .hud-modal .hint-target h4 { font-size: calc(1.0625rem * 20 / 17); }
-  .hud-modal .bag-subheading { font-size: calc(1rem * 20 / 17); }
-  .hud-modal .bag-tab { font-size: calc(1rem * 20 / 17); }
-  .hud-modal .bag-tab-count { font-size: calc(0.7rem * 20 / 17); }
-  .hud-modal .bag-name { font-size: calc(1.1rem * 20 / 17); }
+  .hud-modal .eyebrow {
+    font-size: calc(0.72rem * 20 / 17);
+  }
+  .hud-modal .hint-target h4 {
+    font-size: calc(1.3rem * 20 / 17);
+  }
+  .hud-modal .bag-subheading {
+    font-size: calc(1rem * 20 / 17);
+  }
+  .hud-modal .bag-tab {
+    font-size: calc(1rem * 20 / 17);
+  }
+  .hud-modal .bag-tab-count {
+    font-size: calc(0.7rem * 20 / 17);
+  }
+  .hud-modal .bag-name {
+    font-size: calc(1.1rem * 20 / 17);
+  }
 }

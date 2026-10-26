@@ -52,6 +52,9 @@ export default function Stage({ children, portrait = false }) {
       const { minTextPx, maxTextBoost } = settings.mobile
       const boost = Math.min(maxTextBoost, Math.max(1, minTextPx / (17 * s)))
       document.documentElement.style.setProperty('--text-boost', boost.toFixed(3))
+      // The stage's scale, for sizes that must be real screen px inside it
+      // (e.g. touch targets): calc(44px / var(--stage-scale)).
+      document.documentElement.style.setProperty('--stage-scale', s.toFixed(4))
     }
     compute()
     window.addEventListener('resize', compute)
@@ -64,11 +67,17 @@ export default function Stage({ children, portrait = false }) {
 
   // Where the browser allows it (Android, in fullscreen), also ask for a real
   // orientation lock. Best effort: unsupported or refused is fine.
+  // If the phone is already held the right way, lock *that* exact way: a bare
+  // 'landscape' makes Android pick landscape-primary, which flips a phone held
+  // landscape-secondary by 180°.
   useEffect(() => {
     if (!IS_PHONE) return
     const lock = () => {
       if (!document.fullscreenElement) return
-      window.screen.orientation?.lock?.(portrait ? 'portrait' : 'landscape').catch(() => {})
+      const orientation = window.screen.orientation
+      const want = portrait ? 'portrait' : 'landscape'
+      const current = orientation?.type || ''
+      orientation?.lock?.(current.startsWith(want) ? current : want).catch(() => {})
     }
     lock()
     document.addEventListener('fullscreenchange', lock)

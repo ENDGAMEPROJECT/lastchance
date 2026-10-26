@@ -8,7 +8,7 @@ export default {
     "next": "Next",
     "locked": "Locked",
     "cleared": "✓ Cleared",
-    "enterNode": "▶ Enter",
+    "enterNode": "Enter",
     "back": "Back",
     "close": "Close",
     "howToPlay": "How to play:"
@@ -24,12 +24,18 @@ export default {
     "ageLabel": "Your age",
     "agePlaceholder": "e.g. 14",
     "languageLabel": "Language",
-    "start": "Enter",
+    "start": "⏻ Enter",
     "aliasError": "Enter an alias to continue.",
     "ageError": "Enter a valid age (1–120).",
+    "characterError": "Elige un personaje para continuar.",
+    "languageError": "Elige un idioma para continuar.",
     "characterLabel": "Choose your character",
     "characterMia": "Mia",
     "characterMax": "Max"
+  },
+  "rotate": {
+    "title": "Gira tu móvil",
+    "text": "El resto del juego se juega en horizontal. Gira el móvil de lado para continuar."
   },
   "hud": {
     "logo": "LAST CHANCE TO ESCAPE",
@@ -302,11 +308,12 @@ export default {
     "mission": "We’ll have to explore the districts, gather evidence of how the scam works, and make it back to school before the offer expires!",
     "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
+    "hintsText": "¿Te has atascado en un reto? En Pistas tienes ayudas para el distrito en el que estás, de una en una: abre solo las que necesites. El botón se ilumina si llevas un rato sin avanzar.",
     "finalLine": "Ready? The timer starts as soon as you open the map."
   },
   "return": {
     "playerLine": "That went well! I think we've collected more than enough evidence.",
-    "friendLine": "Let's go back already. Offer ends in {minutes} minutes.",
+    "friendLine": "Let's go back already. Offer ends in less than {minutes} minutes.",
     "friendLineTimeUp": "Let's go back already. The offer has already ended.",
     "goBack": "Head to exit"
   },
@@ -629,7 +636,7 @@ export default {
         "weirdTld": "Odd domain endings like .shop or .free instead of .com",
         "homoglyph": "Letters swapped for look-alikes — “rn” for “m”, or foreign characters",
         "typo": "Misspellings of the brand name (e.g. “dealz”)",
-        "httpsGood": "It starts with https:// — so it must be trustworthy",
+        "httpsGood": "It starts with https:// ",
         "lock": "The browser shows a little padlock icon",
         "looksReal": "The name looks right at a first glance"
       },
@@ -734,7 +741,7 @@ export default {
               "No prize"
             ],
             "rules": "Spin to unlock a discount coupon — up to 50% off!",
-            "feedback": "Gamification means using game elements, like points, rewards or spinning wheels, in things that aren't really games. Apps and online shops use it to make buying feel fun, so you stay longer and spend more without noticing. That's exactly what these wheels are doing."
+            "feedback": "Small prizes and discounts make you feel lucky. But that little win is bait: you can end up spending more than you save. Feeling lucky also keeps you spinning for the next prize. The wheel was rigged all along: the feeling of luck is the hook."
           },
           "w3": {
             "name": "GOLD RUSH",
@@ -749,7 +756,7 @@ export default {
               "No prize"
             ],
             "rules": "Win a phone, a laptop or up to €100 — give it a spin!",
-            "feedback": "Small prizes and discounts make you feel lucky. But that little win is bait: you can end up spending more than you save. Feeling lucky also keeps you spinning for the next prize. The wheel was rigged all along: the feeling of luck is the hook."
+            "feedback": "This wheel is rigged: it always lands on “No prize.” The big prizes and the “Keep spinning!” message make you think your next try could be the lucky one, keeping you playing even though you get nothing. The aim is to hold your attention. On a website with ads, that can mean more adverts seen. Here, another spin won’t bring you closer to a prize: the wheel is programmed so you can never win."
           }
         },
         "debugSkip": "Saltar ruletas (debug)"

@@ -121,7 +121,13 @@ export default function HUD() {
     return () => document.removeEventListener('fullscreenchange', syncFullscreen)
   }, [])
 
+  // First dialogue (pre-test): until the player first taps the fullscreen
+  // button, its border pulses softly. One tap ends it for good, even if they
+  // later leave fullscreen again.
+  const [fullscreenTapped, setFullscreenTapped] = useState(false)
+  const fullscreenReminder = screen === 'pretest' && !fullscreen && !fullscreenTapped
   const toggleFullscreen = async () => {
+    setFullscreenTapped(true)
     setFullscreenError(false)
     try {
       if (document.fullscreenElement) await document.exitFullscreen()
@@ -218,8 +224,8 @@ export default function HUD() {
   const preGame = screen === 'welcome' || screen === 'pretest' || screen === 'enter'
   const showTimer = !preGame && (screen !== 'posttest' || postDecision)
   const showNav = !preGame && screen !== 'posttest' && screen !== 'return'
-  // The portal arrival walks the player through Map and Bag: the buttons appear
-  // there for show until the final line finishes; then Map starts the run.
+  // The portal arrival walks the player through Map, Bag and Hints: the buttons
+  // appear there for show until the final line finishes; then Map starts the run.
   const touring = screen === 'enter' && Boolean(enterTour)
   const mapReady = touring && enterTour === 'ready'
   const mapBlocked = touring && !mapReady
@@ -227,7 +233,7 @@ export default function HUD() {
   // Hints only help where there's a live objective — a puzzle room, or the map
   // pointing at the next district. Elsewhere (setup, conversations, endings)
   // there's nothing to hint, so don't offer the button.
-  const showHints = screen === 'room' || screen === 'map'
+  const showHints = screen === 'room' || screen === 'map' || touring
 
   const mobileHud = (
     <div className="hud-m">
@@ -248,7 +254,7 @@ export default function HUD() {
         {document.fullscreenEnabled && (
           <button
             type="button"
-            className="btn btn-ghost hud-m-btn"
+            className={`btn btn-ghost hud-m-btn ${fullscreenReminder ? 'hud-fullscreen-reminder' : ''}`}
             onMouseDown={(event) => event.preventDefault()}
             onClick={toggleFullscreen}
             aria-label={fullscreen ? t('hud.exitFullscreen') : t('hud.enterFullscreen')}
@@ -281,9 +287,12 @@ export default function HUD() {
           <button
             type="button"
             data-nav="hints"
-            className={`btn btn-amber hud-hints hud-m-btn hud-m-nav ${expanded ? 'is-expanded' : ''} ${hintReminder && !hintsOpen ? 'hud-hint-reminder' : ''}`}
+            data-tour="hints"
+            className={`btn btn-amber hud-hints hud-m-btn hud-m-nav ${expanded ? 'is-expanded' : ''} ${tourClass('hints')} ${hintReminder && !hintsOpen && !touring ? 'hud-hint-reminder' : ''}`}
             onMouseDown={(event) => event.preventDefault()}
-            onClick={navTap(openHints)}
+            onClick={navTap(touring ? undefined : openHints)}
+            tabIndex={touring ? -1 : undefined}
+            aria-disabled={touring || undefined}
             aria-label={t('hud.hints')}
             aria-expanded={expanded}
           >
@@ -355,7 +364,7 @@ export default function HUD() {
           {document.fullscreenEnabled && (
             <button
               type="button"
-              className="btn btn-ghost btn-sm hud-fullscreen"
+              className={`btn btn-ghost btn-sm hud-fullscreen ${fullscreenReminder ? 'hud-fullscreen-reminder' : ''}`}
               onMouseDown={(event) => event.preventDefault()}
               onClick={toggleFullscreen}
               aria-label={fullscreen ? t('hud.exitFullscreen') : t('hud.enterFullscreen')}
@@ -376,8 +385,11 @@ export default function HUD() {
           {DEBUG && <DebugCharacterButton />}
           {showHints && (
             <button
-              className={`btn btn-amber btn-sm hud-hints ${hintReminder && !hintsOpen ? 'hud-hint-reminder' : ''}`}
-              onClick={() => setHintsOpen(true)}
+              className={`btn btn-amber btn-sm hud-hints ${tourClass('hints')} ${hintReminder && !hintsOpen && !touring ? 'hud-hint-reminder' : ''}`}
+              data-tour="hints"
+              onClick={touring ? undefined : () => setHintsOpen(true)}
+              tabIndex={touring ? -1 : undefined}
+              aria-disabled={touring || undefined}
               aria-label={t('hud.hints')}
               title={t('hud.hints')}
             >

@@ -48,6 +48,19 @@
   background-clip: text;
   color: transparent;
 }
+.grad-light {
+  background: linear-gradient(
+    90deg,
+    var(--cyan-light),
+    var(--magenta-light),
+    var(--purple-light)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.55);
+}
 .grad-red {
   background: linear-gradient(90deg, var(--red), var(--amber));
   -webkit-background-clip: text;

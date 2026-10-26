@@ -196,7 +196,9 @@ export default function AdsCorridor({ node }) {
                     {!isRevealed ?
                       <>
                         <div className="ac-badge">{poster.glossyBadge}</div>
-                        <div className="ac-glossy-title">{poster.glossyTitle}</div>
+                        <div className="ac-glossy-title" id={`glossy-title-${p.id}`}>
+                          {poster.glossyTitle}
+                        </div>
                         <div className="ac-glossy-body">{poster.glossyBody}</div>
                         <div className="ac-glossy-cta">{t('rooms.ads.glossyCta')}</div>
                         <div className="ac-fineprint">{t('rooms.ads.fineprint')}</div>
