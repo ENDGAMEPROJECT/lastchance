@@ -1,5 +1,5 @@
 import { bgUrl, assetUrl } from './assets.js'
-import { getNarrative } from './characters.js'
+import { getNarrative, sceneFiles } from './characters.js'
 
 // Keep only the current screen and its next destination warm. The catalogue is
 // also exported for asset checks; it is never downloaded as one big batch.
@@ -40,11 +40,11 @@ const ROOM_IMAGES = {
 }
 
 const conversationImages = (narrative) => [
-  narrative.friendTalkingImage, narrative.playerTalkingImage, 'phone-with-ad.png',
+  ...sceneFiles(narrative.schoolScene), 'phone-with-ad.png',
 ].map(bgUrl)
 
 const arrivalImages = (narrative) => [
-  'initial-ph-internet.png', narrative.friendInternetImage, narrative.playerInternetImage,
+  'initial-ph-internet.png', ...sceneFiles(narrative.internetScene),
 ].map(bgUrl)
 
 function roomImages(nodeId, narrative, locale) {

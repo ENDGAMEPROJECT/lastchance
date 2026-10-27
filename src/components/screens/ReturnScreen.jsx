@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { useGame, formatTime } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
-import { bgUrl } from '../../game/assets.js'
 import { getPreloadedVideo } from '../../game/preloadAssets.js'
 import DialogNav from './DialogNav.jsx'
+import DialogScene from './DialogScene.jsx'
 import './screens.css'
 import './pretest.css'
 import './enter.css'
@@ -33,7 +33,6 @@ export default function ReturnScreen() {
     minutes: Math.ceil(timeLeft / 60),
     time: formatTime(timeLeft),
   }
-  const backdrops = { player: narrative.playerInternetImage, friend: narrative.friendInternetImage }
   const steps = [
     { who: 'player', text: t('return.playerLine', vars) },
     // No time left → the offer is already over, so no countdown in the line.
@@ -128,9 +127,7 @@ export default function ReturnScreen() {
     <div className="scene pretest-scene enter-scene return-scene">
       <div className="pretest-content fade-in">
         <div className="pretest-art">
-          {Object.entries(backdrops).map(([key, file]) => (
-            <img key={key} className={`pretest-backdrop enter-backdrop ${step.who === key ? 'is-visible' : ''}`} src={bgUrl(file)} alt="" />
-          ))}
+          <DialogScene className="enter-backdrop" scene={narrative.internetScene} speaker={step.who} />
         </div>
 
         {phase === 'talk' && (

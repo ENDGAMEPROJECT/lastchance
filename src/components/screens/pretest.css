@@ -19,6 +19,35 @@
   pointer-events: none;
 }
 .pretest-backdrop.is-visible { opacity: 1; }
+/* Scenery + character cut-outs; cut-outs may run past the scenery's edges. */
+.dialog-scene { overflow: hidden; }
+.dialog-scene img,
+.dialog-char {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+/* The speaker steps forward: a slight zoom (anchored at the chest) while the
+   cut-out crossfades from inactive to active. */
+.dialog-char {
+  transition: transform 0.5s ease;
+}
+.dialog-follow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: transform 0.5s ease;
+}
+.dialog-follow > * { pointer-events: auto; }
+.dialog-char.is-speaking,
+.dialog-follow.is-speaking { transform: scale(var(--speaking-zoom)); }
+.dialog-char .is-active { opacity: 0; transition: opacity 0.5s ease; }
+.dialog-char.is-speaking .is-active { opacity: 1; }
+.reduced-motion .dialog-char,
+.reduced-motion .dialog-follow,
+.reduced-motion .dialog-char .is-active { transition: none; }
 /* Crossfade between speakers' backdrops (same as the portal arrival). */
 .pretest-backdrop { transition: opacity 0.5s ease; }
 .reduced-motion .pretest-backdrop { transition: none; }

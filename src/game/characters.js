@@ -1,14 +1,47 @@
 // Character roles belong to a run, independently of the player's study alias.
 const CHARACTERS = {
-  mia: { name: 'Mia', internetImage: 'player-talking-ph-internet.png', gender: 'F', profileImage: 'algorithm-room/mia-figure-nobg.png' },
-  max: { name: 'Max', internetImage: 'max-talking-ph-internet.png', gender: 'M', profileImage: 'algorithm-room/max-figure-nobg.png' },
+  mia: { name: 'Mia', gender: 'F', profileImage: 'algorithm-room/mia-figure-nobg.png' },
+  max: { name: 'Max', gender: 'M', profileImage: 'algorithm-room/max-figure-nobg.png' },
 }
 
-// First key: chosen avatar; second key: character currently speaking.
-const CONVERSATION_IMAGES = {
-  mia: { max: 'max-talking-mia.png', mia: 'mia-talking-mia.png' },
-  max: { max: 'max-talking-max.png', mia: 'mia-talking-max.png' },
+/* Dialog scenes are layered: a scenery background (1728×998) plus one cut-out
+   per character from public/characters, named
+   `<character>-<active|inactive>-<scenery>[-<player|friend>]`. The speaker shows
+   the active cut-out, the listener the inactive one. Boxes are each cut-out's
+   [left, top, width, height] in scenery pixels, so the composite matches the
+   original flattened art exactly. */
+export const SCENE_SIZE = [1728, 998]
+const SCENERY = {
+  school: {
+    image: 'bg-school.png',
+    // School art differs by role: first key character, second key role.
+    boxes: {
+      mia: { player: [991, 157, 420, 841], friend: [991, 175, 420, 823] },
+      max: { player: [271, 146, 507, 893], friend: [271, 130, 479, 909] },
+    },
+  },
+  internet: {
+    image: 'bg-ph-internet.png',
+    boxes: { mia: [1080, 205, 391, 798], max: [257, 176, 441, 847] },
+  },
 }
+
+function dialogScene(scenery, playerId) {
+  const { image, boxes } = SCENERY[scenery]
+  return {
+    image,
+    characters: ['max', 'mia'].map((id) => {
+      const role = id === playerId ? 'player' : 'friend'
+      const file = (state) => (scenery === 'school'
+        ? `characters/${id}-${state}-school-${role}.png`
+        : `characters/${id}-${state}-internet.png`)
+      return { id, role, box: scenery === 'school' ? boxes[id][role] : boxes[id], active: file('active'), inactive: file('inactive') }
+    }),
+  }
+}
+
+/* Every file a dialog scene can show, for preloading. */
+export const sceneFiles = ({ image, characters }) => [image, ...characters.flatMap(({ active, inactive }) => [active, inactive])]
 
 export function getNarrative(character = 'mia') {
   const playerId = character === 'max' ? 'max' : 'mia'
@@ -21,10 +54,8 @@ export function getNarrative(character = 'mia') {
     friendGender: CHARACTERS[friendId].gender,
     friendProfileImage: CHARACTERS[friendId].profileImage,
     reportImage: `objects/${friendId}-report.png`, // max-report.png / mia-report.png
-    playerTalkingImage: CONVERSATION_IMAGES[playerId][playerId],
-    friendTalkingImage: CONVERSATION_IMAGES[playerId][friendId],
-    playerInternetImage: CHARACTERS[playerId].internetImage,
-    friendInternetImage: CHARACTERS[friendId].internetImage,
+    schoolScene: dialogScene('school', playerId),
+    internetScene: dialogScene('internet', playerId),
     product: 'the "NovaPad X" tablet',
   }
 }

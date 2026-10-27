@@ -24,11 +24,11 @@ export default {
     "ageLabel": "Tvoje godine",
     "agePlaceholder": "npr. 14",
     "languageLabel": "Jezik",
-    "start": "⏻ Uđi",
+    "start": "Enter",
     "aliasError": "Unesi nadimak da bi nastavio/la.",
     "ageError": "Unesi ispravan broj godina (1–120).",
-    "characterError": "Izaberi lika da nastaviš.",
-    "languageError": "Izaberi jezik da nastaviš.",
+    "characterError": "Choose a character",
+    "languageError": "Choose a language",
     "characterLabel": "Choose your character",
     "characterMia": "Mia",
     "characterMax": "Max"
@@ -308,7 +308,7 @@ export default {
     "mission": "We’ll have to explore the districts, gather evidence of how the scam works, and make it back to school before the offer expires!",
     "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga — završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
     "bagText": "Tvoji alati i dokazi koje prikupiš. Otvori ih da bi koristio/la predmete u zagonetkama i pregledao/la dokaze koje ćeš pokazati {prijatelju}.",
-    "hintsText": "Zaglavio si se na zadatku? U Savetima su pomoći za oblast u kojoj si, jedna po jedna – otvori samo onoliko koliko ti treba. Dugme zasvetli ako neko vreme ne napreduješ.",
+    "hintsText": "Stuck on a puzzle? Hints has clues for the district you're in.",
     "finalLine": "Ready? The timer starts as soon as you open the map."
   },
   "return": {

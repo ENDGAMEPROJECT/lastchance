@@ -3,10 +3,11 @@ import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { useStage } from '../Stage.jsx'
 import { GAME_MINUTES } from '../../game/gameData.js'
-import { bgUrl } from '../../game/assets.js'
 import { getPreloadedVideo } from '../../game/preloadAssets.js'
 import { DEBUG } from '../../game/settings.js'
+import { bgUrl } from '../../game/assets.js'
 import DialogNav from './DialogNav.jsx'
+import DialogScene, { sceneBackground } from './DialogScene.jsx'
 import './screens.css'
 import './pretest.css'
 import './enter.css'
@@ -48,11 +49,6 @@ export default function EnterScreen() {
   const { scale, viewRect } = useStage()
   const friend = narrative.friend
   const vars = { friend, product: narrative.product, minutes: GAME_MINUTES }
-  const backdrops = {
-    initial: 'initial-ph-internet.png',
-    friend: narrative.friendInternetImage,
-    player: narrative.playerInternetImage,
-  }
 
   const steps = [
     { who: 'friend', text: t('enter.friendLine', vars) },
@@ -190,6 +186,9 @@ export default function EnterScreen() {
   // The empty arrival scene shows until the dialogue starts (and during the HUD tour).
   const backdrop = intro || step.who === 'tour' ? 'initial' : step.who
   const name = step.who === 'player' ? narrative.player : friend
+  const glitchBackground = backdrop === 'initial'
+    ? { backgroundImage: `url(${bgUrl('initial-ph-internet.png')})` }
+    : sceneBackground(narrative.internetScene, backdrop)
   const captionW = 550
   // How tall the caption is including the Back/Next row hanging under it, so
   // it can be kept clear of the screen's bottom edge (design px).
@@ -233,14 +232,18 @@ export default function EnterScreen() {
     <div className={`scene pretest-scene enter-scene ${paused ? 'is-paused' : ''}`} ref={setRoot}>
       <div className={`pretest-content ${reducedMotion ? 'fade-in' : ''}`}>
         <div className="pretest-art">
-          {Object.entries(backdrops).map(([key, file]) => (
-            <img key={key} className={`pretest-backdrop enter-backdrop ${backdrop === key ? 'is-visible' : ''}`} src={bgUrl(file)} alt="" />
-          ))}
+          <img className={`pretest-backdrop enter-backdrop ${backdrop === 'initial' ? 'is-visible' : ''}`} src={bgUrl('initial-ph-internet.png')} alt="" />
+          <DialogScene
+            className="enter-backdrop"
+            scene={narrative.internetScene}
+            speaker={backdrop === 'initial' ? null : backdrop}
+            visible={backdrop !== 'initial'}
+          />
           {/* Subtle life in the scene: drifting sparks and rare glitch slices. */}
           {!reducedMotion && (
             <div className="enter-fx" aria-hidden="true">
-              <div className="enter-glitch" style={{ backgroundImage: `url(${bgUrl(backdrops[backdrop])})` }} />
-              <div className="enter-glitch enter-glitch-b" style={{ backgroundImage: `url(${bgUrl(backdrops[backdrop])})` }} />
+              <div className="enter-glitch" style={glitchBackground} />
+              <div className="enter-glitch enter-glitch-b" style={glitchBackground} />
               {SPARKS.map((style, i) => <span key={i} className="enter-spark" style={style} />)}
             </div>
           )}

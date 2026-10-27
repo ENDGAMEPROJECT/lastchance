@@ -24,11 +24,11 @@ export default {
     "ageLabel": "Your age",
     "agePlaceholder": "e.g. 14",
     "languageLabel": "Language",
-    "start": "⏻ Enter",
+    "start": "Enter",
     "aliasError": "Enter an alias to continue.",
     "ageError": "Enter a valid age (1–120).",
-    "characterError": "Valitse hahmo jatkaaksesi.",
-    "languageError": "Valitse kieli jatkaaksesi.",
+    "characterError": "Choose a character",
+    "languageError": "Choose a language",
     "characterLabel": "Choose your character",
     "characterMia": "Mia",
     "characterMax": "Max"
@@ -308,7 +308,7 @@ export default {
     "mission": "We’ll have to explore the districts, gather evidence of how the scam works, and make it back to school before the offer expires!",
     "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
-    "hintsText": "Jumissa tehtävässä? Vinkeistä saat apua siihen alueeseen, jossa olet, yksi kerrallaan – avaa vain niin monta kuin tarvitset. Painike syttyy, jos et ole edennyt hetkeen.",
+    "hintsText": "Stuck on a puzzle? Hints has clues for the district you're in.",
     "finalLine": "Ready? The timer starts as soon as you open the map."
   },
   "return": {
