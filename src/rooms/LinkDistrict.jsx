@@ -48,7 +48,7 @@ const ROUNDS = [
   },
 ]
 
-const FLAG_IDS = ['suffix', 'httpNoS', 'weirdTld', 'homoglyph', 'typo', 'httpsGood', 'lock', 'looksReal']
+const FLAG_IDS = ['suffix', 'httpNoS', 'weirdTld', 'homoglyph', 'typo', 'httpsGood', 'lock']
 const CORRECT_FLAGS = ['suffix', 'httpNoS', 'weirdTld', 'homoglyph', 'typo']
 
 /* Hand-drawn line icons for each red-flag option, so the quiz reads at a
@@ -73,8 +73,7 @@ function FlagIcon({ id }) {
     httpsGood: <><rect x="5" y="11" width="14" height="9" rx="2" {...p} /><path d="M8 11V8a4 4 0 0 1 8 0v3" {...p} /><path d="M12 14.5v2.4" {...p} /></>,
     // "there's a padlock" — a shield (reassuring decoy).
     lock: <><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z" {...p} /></>,
-    // "looks right" — a check badge (reassuring decoy).
-    looksReal: <><circle cx="12" cy="12" r="8.5" {...p} /><path d="M8.5 12.3l2.3 2.3 4.7-4.9" {...p} /></>,
+    
   }
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
