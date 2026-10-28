@@ -1,7 +1,8 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { CODES, ITEMS } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
+import { IS_PHONE } from '../game/device.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { playSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
@@ -100,6 +101,36 @@ const TRAY = [
 
 /* Column index → tile kind (matches the `cols` i18n order). */
 const COL_KIND = ['demographic', 'follows', 'insecurity']
+
+/* The door background's own 1372×768 pixel space, cover-fitted ("slice") over
+   the scene exactly like the background image, so a hotspot placed in image px
+   lands on the pictured keypad. Plain HTML + transform — an SVG foreignObject
+   button isn't reliably hit-testable under the stage's scale (Safari). */
+const DOOR_ART = { w: 1372, h: 768 }
+function DoorKeypadMap({ children }) {
+  const ref = useRef(null)
+  const [fit, setFit] = useState(0)
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el) return
+    // client sizes are layout px, unaffected by the stage's scale transform
+    const measure = () => setFit(Math.max(el.clientWidth / DOOR_ART.w, el.clientHeight / DOOR_ART.h))
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+  return (
+    <div className="ar-door-keypad-map" ref={ref}>
+      <div
+        className="ar-door-keypad-art"
+        style={{ transform: `scale(${fit})`, visibility: fit ? undefined : 'hidden' }}
+      >
+        {children}
+      </div>
+    </div>
+  )
+}
 
 export default function AlgorithmRoom({ node }) {
   const { completeRoom, addEvidence, narrative } = useGame()
@@ -234,18 +265,16 @@ export default function AlgorithmRoom({ node }) {
           <div className="ar-door-head">
             <p className="ar-prompt">{t('rooms.algorithm.door.prompt')}</p>
           </div>
-          <svg className="ar-door-keypad-map" viewBox="0 0 1372 768" preserveAspectRatio="xMidYMid slice" focusable="false">
-            <foreignObject x="826" y="317" width="65" height="77">
-              <button
-                type="button"
-                className="ar-door-keypad"
-                style={{ '--keypad-image': `url(${bgUrl('algorithm-door.jpg')})` }}
-                onMouseDown={(event) => event.preventDefault()}
-                onClick={() => { playSound('open_door.mp3'); setPhase('unlock') }}
-                aria-label={t('rooms.algorithm.door.action')}
-              />
-            </foreignObject>
-          </svg>
+          <DoorKeypadMap>
+            <button
+              type="button"
+              className={`ar-door-keypad ${IS_PHONE ? 'pulse' : ''}`}
+              style={{ '--keypad-image': `url(${bgUrl('algorithm-door.jpg')})` }}
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => { playSound('open_door.mp3'); setPhase('unlock') }}
+              aria-label={t('rooms.algorithm.door.action')}
+            />
+          </DoorKeypadMap>
         </div>
       )}
 
