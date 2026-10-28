@@ -1306,8 +1306,14 @@ grid-template-columns: 1fr 1fr 1fr;
 /* ---------- Product art: photo + translatable ad copy as ONE picture ----------
    Coordinates are in the art's own w×h box (see ProductArt), so the text
    keeps its place and size wherever the picture is shown or dragged. */
-.ia-art { display: block; }
-.ia-art-copy { position: relative; pointer-events: none; }
+/* zero specificity so per-use classes (e.g. .ia-imgtile-art's absolute fill) win */
+:where(.ia-art) { position: relative; display: block; }
+.ia-art { overflow: hidden; }
+/* the fixed w×h design box, centred and scaled to fit by ProductArt */
+.ia-art-box { position: absolute; left: 50%; top: 50%; transform-origin: 50% 50%; }
+/* photo fills the box, cropped from the top (like the old xMidYMin slice) */
+.ia-art-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; display: block; }
+.ia-art-copy { position: absolute; inset: 0; pointer-events: none; }
 .ia-art-copy > span { position: absolute; white-space: nowrap; }
 .ia-art-old {
   font-family: 'Open Sans', var(--font-neogrotesk);
@@ -1438,4 +1444,4 @@ grid-template-columns: 1fr 1fr 1fr;
 }
 
 /* a result that is the seller's own ad (ProductArt) clips to the photo's rounded corners */
-svg.ia-match-img { overflow: hidden; height: auto; }
+.ia-art.ia-match-img { height: auto; }

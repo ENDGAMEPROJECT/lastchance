@@ -6,6 +6,7 @@ import { passedPosttest } from '../../game/posttestOutcome.js'
 import DialogNav from './DialogNav.jsx'
 import DialogScene, { FollowCharacter } from './DialogScene.jsx'
 import './pretest.css'
+import { DEBUG } from '../../game/settings.js'
 
 // The speech band sits 30px above the bottom (pretest.css). Lifting it by the
 // answer panel's top edge (its own bottom offset + height) minus that puts it
@@ -69,8 +70,8 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
   // Lines clear briskly while still leaving ~260 wpm to read.
   const readingTime = Math.max(2800, line.length * 18 + 1000, line.trim().split(/\s+/).length * 230 + 600)
   const elapsed = speechProgress.key === speechKey ? speechProgress.elapsed : 0
-  const speechReady = phase === 'options' || elapsed >= readingTime
-  const visibleLetters = reducedMotion || phase === 'options' ? line.length : Math.floor(elapsed / 18)
+  const speechReady = DEBUG || phase === 'options' || elapsed >= readingTime // debug: no reading wait
+  const visibleLetters = reducedMotion || phase === 'options' ? line.length : Math.floor(elapsed / 40)
   const showActions = phase === (p.endingYou ? 'endingYou' : 'endingFriend') && speechReady && actions.length > 0
   const showOptions = phase === 'options' && !needsPhoneView
   // While the player must answer, the bubble slides up to make room below it —

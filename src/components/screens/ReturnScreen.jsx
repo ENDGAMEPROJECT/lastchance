@@ -7,6 +7,7 @@ import DialogScene from './DialogScene.jsx'
 import './screens.css'
 import './pretest.css'
 import './enter.css'
+import { DEBUG } from '../../game/settings.js'
 
 // Same reading pace / fade as the portal arrival (EnterScreen).
 const PORTAL_VIDEO = 'transitions-videos/abduction-scene.mp4'
@@ -54,10 +55,11 @@ export default function ReturnScreen() {
   const isLast = stepIndex === steps.length - 1
   const total = readingTime(step.text)
   const elapsed = clock.step === stepIndex ? clock.ms : 0
-  const dialogDone = isLast && elapsed >= total
-  const stepRead = elapsed >= total
+  // debug: no reading wait — the buttons show at once
+  const dialogDone = isLast && (DEBUG || elapsed >= total)
+  const stepRead = DEBUG || elapsed >= total
   const doneSteps = useRef(new Set())
-  const visibleLetters = reducedMotion ? step.text.length : Math.floor(elapsed / 18)
+  const visibleLetters = reducedMotion ? step.text.length : Math.floor(elapsed / 40)
   const progress = `${Math.min(100, (elapsed / total) * 100)}%`
 
   // Reading clock: pauses while the tab is hidden; Next moves on once it's

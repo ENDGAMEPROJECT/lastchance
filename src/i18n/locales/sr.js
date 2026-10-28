@@ -186,7 +186,7 @@ export default {
         ],
         "why": "Upravo tako — odbrojavanje je veštački stvoren osećaj hitnosti, osmišljen da te navede da reaguješ pre nego što razmisliš.",
         "nudge": "Razmisli šta ti to odbrojavanje zapravo radi.",
-        "positiveFeedback": "You mean, the urgency makes you act before you think... What else?",
+        "positiveFeedback": "You mean, the urgency makes you act before you think... ",
         "negativeFeedback": "I don't know, that doesn't sound right."
       },
       {
@@ -215,7 +215,7 @@ export default {
         ],
         "why": "Tako je — nije u pitanju mikrofon niti neka magija. Tvoja istorija pretrage je analizirana i prodata oglasnim mrežama.",
         "nudge": "Nije mikrofon niti virus — razmisli o tome šta platforma već zna o tebi.",
-        "positiveFeedback": "Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. And apart from that? ",
+        "positiveFeedback": "Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. ",
         "negativeFeedback": "That really doesn't make sense to me."
       },
       {
@@ -633,12 +633,11 @@ export default {
       "flags": {
         "suffix": "Extra words bolted on after the real name (…com-official.shop, -dealz)",
         "httpNoS": "The address uses http:// instead of the encrypted https://",
-        "weirdTld": "Odd domain endings like .shop or .free instead of .com",
+        "weirdTld": "Odd domain endings like .sbs, .xyz or .free instead of .com",
         "homoglyph": "Letters swapped for look-alikes — “rn” for “m”, or foreign characters",
         "typo": "Misspellings of the brand name (e.g. “dealz”)",
         "httpsGood": "It starts with https:// ",
-        "lock": "The browser shows a little padlock icon",
-        "looksReal": "The name looks right at a first glance"
+        "lock": "The browser shows a little padlock icon"
       },
       "lunaAd1": {
         "headline": "Get Luna’s dress and purse",
