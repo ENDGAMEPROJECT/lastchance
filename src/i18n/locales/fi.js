@@ -104,7 +104,7 @@ export default {
       "titleAccent": "DIDN'T BUY IT",
       "tag": "// offer expired with {time} to spare",
       "heading": "You made the case",
-      "body": "With the evidence you gathered across the Physical Internet, you showed {friend} how {product} was engineered to feel irresistible — fake links, rigged wheels, undisclosed sponsorships, algorithmic targeting and pure persuasion. {friend} closed the tab.",
+      "body": "Using the evidence you gathered from across the physical internet, you showed Max that the advert for the ‘NovaPad X’ tablet was likely to be a scam, and you managed to prevent him from losing money and sharing his personal data.",
       "evidenceHeading": "Evidence presented",
       "posttest": "Post-test: talk to {friend} again. What did you learn about spotting scams, disclosure, and why \"too good to be true\" usually is?",
       "again": "↻ Play again"
@@ -370,15 +370,15 @@ export default {
   "items": {
     "emojiCard": {
       "name": "Emoji Decoding Card",
-      "desc": "A key that maps emojis to letters. Use it to read the sponsorship sticky-notes in Influencer Avenue."
+      "desc": "A key that maps emojis to letters. "
     },
     "dataReport": {
       "name": "Data Report on {friend}",
-      "desc": "A dossier of the data brokers hold on {friend}. The highlighted digits open the Algorithm Control Room."
+      "desc": "A dossier of the internet data of {friend}."
     },
     "truthLight": {
       "name": "Truth Flashlight",
-      "desc": "Reveals the fine print hidden behind the glossy posters in the Ads Corridor."
+      "desc": "Shows what flashy ads hide: the small print and the catches behind their big promises."
     }
   },
   "hints": {
@@ -587,8 +587,8 @@ export default {
       "reviewTitle": "Why those doors?",
       "errStillOpen": "Link{plural} blocked: {count}. Block the two fraudulent links to continue.",
       "errBlockedSafe": "Some blocked doors are wrong. Block the two fraudulent links to continue.",
-      "justifyLeadLabel": "Why did you block them?",
-      "justifyLead": "Being able to explain the red flags matters more than a lucky guess. Tick every real warning sign — and nothing that only looks reassuring.",
+      "justifyLeadLabel": "Why have you locked those doors? ",
+      "justifyLead": "Click on the warning signs",
       "justifyErrWrong": "HTTPS, a padlock or a familiar-looking name is not a warning sign by itself, but none proves a site is safe. A familiar name can hide a typo or look-alike letter: check the full domain for those specific differences.",
       "justifyErrMissingOne": "1 warning sign left to select. Look again at the fake URLs.",
       "justifyErrMissing": "{count} warning signs left to select. Look again at the fake URLs.",
@@ -719,7 +719,7 @@ export default {
         "correct": "Correct! This wheel is rigged.",
         "next": "Next wheel →",
         "finish": "Log the evidence ✓",
-        "observe": "Spin at least {count} times. Does it keep landing on the same slice, or do the results change? You can spin again if you are unsure.",
+        "observe": "Spin at least {count} times. Do the results change? ",
         "shop": {
           "badge": "MEGA SPIN · STORE",
           "title": "You won a discount coupon!",
@@ -740,7 +740,7 @@ export default {
               "No prize"
             ],
             "rules": "Spin to unlock a discount coupon — up to 50% off!",
-            "feedback": "Small prizes and discounts make you feel lucky. But that little win is bait: you can end up spending more than you save. Feeling lucky also keeps you spinning for the next prize. The wheel was rigged all along: the feeling of luck is the hook."
+            "feedback": "How do these roulette games get you hooked? First, they give you a small prize, just enough to make you feel lucky. But the trick is that you end up spending far more than you’ve won. You feel like today’s your lucky day, so you carry on playing. That feeling of being lucky is what keeps you hooked."
           },
           "w3": {
             "name": "GOLD RUSH",
@@ -755,7 +755,7 @@ export default {
               "No prize"
             ],
             "rules": "Win a phone, a laptop or up to €100 — give it a spin!",
-            "feedback": "This wheel is rigged: it always lands on “No prize.” The big prizes and the “Keep spinning!” message make you think your next try could be the lucky one, keeping you playing even though you get nothing. The aim is to hold your attention. On a website with ads, that can mean more adverts seen. Here, another spin won’t bring you closer to a prize: the wheel is programmed so you can never win."
+            "feedback": "Gamification means using game elements, like points, rewards, or spinning wheels, in things that aren't really games. Apps and online shops use it to make buying feel fun, so you stay longer and spend more without noticing."
           }
         },
         "debugSkip": "Ohita onnenpyörät (debug)"
@@ -766,7 +766,7 @@ export default {
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
       "solvedTitle": "Influencer Avenue cleared — Data Report obtained 📄",
-      "solvedText": "You exposed the hidden ads and the fake product photo. ",
+      "solvedText": "You labelled the ads and detected the untrustworthy products",
       "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
       "stage1": {
         "badge": "Stage 1 / 2",
@@ -1047,7 +1047,7 @@ export default {
       },
       "explain": {
         "title": "Besides the ad — what about the product?",
-        "body": "You've spotted how these posts are packaged. But is the product itself what they claim? A reverse image search helps you check: instead of typing words, you search with a photo, and it finds everywhere that exact picture appears online.",
+        "body": "Is the product what they claim? A reverse image search helps you check: you search with a photo, and it finds that exact picture or similar ones that appear online, so you can verify whether the image is really what the seller claims.",
         "instructions": "First reverse search the image. Then, look at the results to judge the product's authenticity.",
         "useShop": "Love a piece of clothing you saw in a post? Reverse-search the photo to find where you can actually buy it.",
         "useVerify": "Not sure an influencer's product is genuine? Reverse-search it to see if it's really unique — or the same mass-produced item everyone's selling.",
@@ -1062,7 +1062,7 @@ export default {
       },
       "labelFeedback": {
         "title": "Sponsored posts must be labeled",
-        "intro": "When a creator is paid, partnered with, or gifted a product, they have to disclose it — clearly and up front. A hidden ad dressed up as a genuine recommendation is exactly what you just labeled. Here's how to tell them apart:",
+        "intro": "When a creator or an influencer is paid, partnered with, or gifted a product, they have to disclose it — clearly and up front. Here's how to tell them apart:",
         "paidDesc": "The creator is paid by the brand to post about it.",
         "paidExample": "Tell-tale signs: an affiliate link, or a personal discount code like “LUNA20”.",
         "collabDesc": "A creative partnership, made together with the brand.",
@@ -1075,7 +1075,7 @@ export default {
     "algorithm": {
       "intro": "A humming mainframe crunches data into targeted ads. Get inside, then teach it to profile a person.",
       "solvedTitle": "Algorithm Control Room cracked · Evidence logged 🧠",
-      "solvedText": "You watched the machine turn {friend}'s age, interests and insecurities into a single ad. That is not luck — it is a profile.",
+      "solvedText": "You watched the algorithm turn Max's age, interests and possible insecurities into a single ad. That is not coincidence — it the result of his advertisement profile",
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",
@@ -1139,7 +1139,7 @@ export default {
             "0": "Girl, 13–17",
             "1": "Follows beauty influencers"
           },
-          "feedbackLesson": "How does the algorithm build this profile? It can combine age entered at sign-up with followed accounts, likes and time spent on skincare videos. It uses that activity to infer an interest in skin products and select an ad designed to turn that interest into a purchase."
+          "feedbackLesson": "The algorithm combines user's age, followed accounts, likes, and time spent watching skincare videos to show her targeted ads that encourage purchases."
         },
         "r2": {
           "ad": "Muscle-gain supplement",
@@ -1147,7 +1147,7 @@ export default {
             "1": "Follows fitness influencers",
             "2": "Insecure about being skinny"
           },
-          "feedbackLesson": "The algorithm can use account details, followed fitness pages and interactions with workout content to build an advertising profile. In this equation, the supplement is matched to that profile because its promise of more muscle appeals to his concern about being skinny."
+          "feedbackLesson": "A teen boy follows fitness pages and likes posts about building muscle. Because of this, he gets an ad for a muscle supplement. Ad systems look at what people do online and show ads they are likely to click, even if the product isn’t something they really need"
         },
         "r3": {
           "ad": "Baldness cream",
@@ -1155,7 +1155,7 @@ export default {
             "0": "Man, 25–35",
             "1": "Follows tech channels"
           },
-          "feedbackLesson": "For example, clicks on hair-loss products or repeated views of related content can suggest that concern. An algorithm can use these recorded actions to put someone in an audience for hair-loss ads. The advertiser then offers a supposed solution to the worry."
+          "feedbackLesson": "Clicks on hair-loss products or repeated views of related content can suggest that concern. An algorithm can use these actions to show someone hair-loss ads that offer a supposed solution to their worry."
         },
         "r4": {
           "ad": "Weight-loss pills",
@@ -1163,7 +1163,7 @@ export default {
             "0": "Woman, 30–45",
             "2": "Insecure about her weight"
           },
-          "feedbackLesson": "Following diet pages, liking weight-loss posts and watching related videos can feed an advertising profile. The algorithm uses those traces to select a matching ad. That is the mechanism behind personalised advertising: your activity helps decide which sales pitch you see."
+          "feedbackLesson": "Following diet pages, liking weight-loss posts and watching related videos feeds an advertising profile. The algorithm uses those traces to select a matching ad. "
         }
       },
       "tiles": {
@@ -1247,7 +1247,7 @@ export default {
     "ads": {
       "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
       "solvedTitle": "Corridor cleared — you read the fine print",
-      "solvedText": "The exit hisses open — you logged the hidden €59/month auto-renewal as evidence. Ads shouting “free”, “you won” or “$0 today” usually bury the real cost in tiny print, so always read  what you're agreeing to before you tap.",
+      "solvedText": "You’ve made it to the final round! These ads were designed to make you feel really happy and lucky so you'd fall for the scam. Be wary of any content that triggers a very strong emotional reaction in you.",
       "pickup": "You pick up the Truth Flashlight 🔦",
       "torchCharging": "🔦 Charging…",
       "torchOn": "🔦 Flashlight ON",
