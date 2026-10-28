@@ -104,7 +104,7 @@ export default {
       "titleAccent": "DIDN'T BUY IT",
       "tag": "// offer expired with {time} to spare",
       "heading": "You made the case",
-      "body": "Using the evidence you gathered from across the physical internet, you showed Max that the advert for the ‘NovaPad X’ tablet was likely to be a scam, and you managed to prevent him from losing money and sharing his personal data.",
+      "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam, and you managed to prevent him from losing money and sharing his personal data.",
       "evidenceHeading": "Evidence presented",
       "posttest": "Post-test: talk to {friend} again. What did you learn about spotting scams, disclosure, and why \"too good to be true\" usually is?",
       "again": "↻ Play again"
@@ -1075,7 +1075,7 @@ export default {
     "algorithm": {
       "intro": "A humming mainframe crunches data into targeted ads. Get inside, then teach it to profile a person.",
       "solvedTitle": "Algorithm Control Room cracked · Evidence logged 🧠",
-      "solvedText": "You watched the algorithm turn Max's age, interests and possible insecurities into a single ad. That is not coincidence — it the result of his advertisement profile",
+      "solvedText": "You watched the algorithm turn {friend}'s age, interests and possible insecurities into a single ad. That is not coincidence — it the result of his advertisement profile",
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",

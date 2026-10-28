@@ -104,7 +104,7 @@ export default {
       "titleAccent": "NIJE KUPIO/LA",
       "tag": "// ponuda je istekla, a ostalo je još {time}",
       "heading": "Izneo/la si dokaze",
-      "body": "Using the evidence you gathered from across the physical internet, you showed Max that the advert for the ‘NovaPad X’ tablet was likely to be a scam, and you managed to prevent him from losing money and sharing his personal data.",
+      "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam, and you managed to prevent him from losing money and sharing his personal data.",
       "evidenceHeading": "Predočeni dokazi",
       "posttest": "Post-test: ponovo razgovaraj sa {prijateljem}. Šta si naučio/la o prepoznavanju prevara, obavezi navođenja sponzorstava i tome zašto je ono što deluje „predobro da bi bilo istinito“ obično upravo to?",
       "again": "↻ Igraj ponovo"
@@ -1075,7 +1075,7 @@ export default {
     "algorithm": {
       "intro": "Glavni računar zuji dok obrađuje podatke i pretvara ih u ciljane oglase. Uđi unutra, a zatim ga nauči da napravi profil osobe.",
       "solvedTitle": "Kontrolna soba algoritma probijena · Dokaz zabeležen 🧠",
-      "solvedText": "You watched the algorithm turn Max's age, interests and possible insecurities into a single ad. That is not coincidence — it the result of his advertisement profile",
+      "solvedText": "You watched the algorithm turn {friend}'s age, interests and possible insecurities into a single ad. That is not coincidence — it the result of his advertisement profile",
       "evidence": "Oglas je algoritam odabrao na osnovu godina, interesovanja i nesigurnosti {prijatelja}.",
       "unlock": {
         "badge": "PRISTUP · Kontrolna soba algoritma",
