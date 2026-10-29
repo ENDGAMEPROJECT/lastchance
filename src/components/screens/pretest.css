@@ -32,8 +32,10 @@
 /* The speaker steps forward: a slight zoom (anchored at the chest) while the
    cut-out crossfades from inactive to active. */
 .dialog-char {
-  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, opacity 0.5s ease;
 }
+/* Another pose of the same character is showing. */
+.dialog-char.is-hidden { opacity: 0; }
 .dialog-follow {
   position: absolute;
   inset: 0;
@@ -81,6 +83,8 @@
 }
 .pretest-phone.is-unseen path { stroke-opacity: 1; animation: pretest-phone-glow 1.8s ease-in-out infinite; }
 .pretest-phone { transition: opacity 0.45s ease; }
+/* The friend's emotion pose holds the phone elsewhere: hide the traced glow. */
+.pretest-phone.is-away { opacity: 0; pointer-events: none; }
 /* While answering, the scene is dimmed but the phone stays above it at full
    opacity; once clicked, it pulses more clearly than its quiet resting state
    so it still reads against the darker scene. */
@@ -108,6 +112,59 @@
   0%, 100% { fill: rgba(190, 255, 255, 0.06); filter: drop-shadow(0 0 2px #a3fcff); }
   50% { fill: rgba(220, 255, 255, 0.45); filter: drop-shadow(0 0 6px #a3fcff); }
 }
+
+/* End of the pre-test: the phone is the way forward — a big purple-pink glow
+   behind the handset, the traced outline lit up, and its label beside it. */
+.pretest-phone.is-portal::before {
+  content: '';
+  position: absolute;
+  inset: -90%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 43, 214, 0.55) 0%, rgba(168, 85, 247, 0.35) 38%, transparent 70%);
+  pointer-events: none;
+  animation: pretest-portal-pulse 1.8s ease-in-out infinite;
+}
+.pretest-phone.is-portal path,
+.pretest-phone.is-portal:hover path,
+.pretest-phone.is-portal:focus-visible path {
+  stroke: var(--magenta-light);
+  stroke-opacity: 1;
+  stroke-width: 2;
+  animation: pretest-portal-phone 1.8s ease-in-out infinite;
+}
+.pretest-phone-portal-label {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 28px);
+  transform: translateY(-50%);
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 0 8px var(--magenta), 0 0 22px var(--purple), 0 0 40px rgba(255, 43, 214, 0.6);
+  animation: pretest-portal-label 1.8s ease-in-out infinite;
+}
+/* Mia holds the phone on the right: the label goes to its left. */
+.pretest-phone.phone-mia .pretest-phone-portal-label { left: auto; right: calc(100% + 28px); }
+.pretest-phone.is-portal:hover::before { animation-duration: 0.9s; }
+@keyframes pretest-portal-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.12); }
+}
+@keyframes pretest-portal-phone {
+  0%, 100% { fill: rgba(255, 138, 232, 0.25); filter: drop-shadow(0 0 6px var(--magenta)) drop-shadow(0 0 14px var(--purple)); }
+  50% { fill: rgba(255, 190, 245, 0.55); filter: drop-shadow(0 0 12px var(--magenta)) drop-shadow(0 0 28px var(--purple)); }
+}
+@keyframes pretest-portal-label {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+.reduced-motion .pretest-phone.is-portal::before,
+.reduced-motion .pretest-phone.is-portal path,
+.reduced-motion .pretest-phone-portal-label { animation: none; }
 
 /* Scene darkens while the player chooses an answer. It lives inside
    .pretest-art, below the phone, so the phone's glow stays on top. */

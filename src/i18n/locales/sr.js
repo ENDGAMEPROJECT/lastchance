@@ -259,7 +259,7 @@ export default {
       ],
       "endingFriend": "Slušaj, možeš da analiziraš stranicu koliko god želiš, ali meni sve deluje u redu! Samo si paranoičan/na. Odbrojavanje i dalje traje — imaš još trideset minuta, odnosno dok ne stigne do nule, da dokažeš da je ovo zaista prevara. U suprotnom, kliknuću na kupovinu.",
       "endingYou": "Važi. Hajde da pogledamo šta se dešava iza ekrana.",
-      "begin": "▶ Pogledaj šta se dešava iza ekrana"
+      "begin": "Pogledaj šta se dešava iza ekrana"
     },
     "posttest": {
       "eyebrow": "Konačna odluka",

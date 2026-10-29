@@ -12,7 +12,7 @@ export default function PretestScreen() {
   return (
     <InPersonTest
       script={script}
-      actions={[{ label: script.begin, tone: 'cyan', onClick: enterInternet }]}
+      phoneAction={{ label: script.begin, onClick: enterInternet }}
     />
   )
 }

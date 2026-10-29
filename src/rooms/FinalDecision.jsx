@@ -25,13 +25,14 @@ export default function FinalDecision() {
   const script = t('story.posttest')
   const vars = { friend: narrative.friend, product: narrative.product }
   // Opening exchange before the first question (friend = NPC, player = you).
-  // Memoized: this screen re-renders every clock tick.
+  // `pose`: the speaker's emotion pose (public/characters/*-<pose>.png); no
+  // pose = neutral. Memoized: this screen re-renders every clock tick.
   const intro = useMemo(() => [
     { who: 'friend', text: script.friend.responses[0] },
     { who: 'player', text: script.player.responses[0] },
     { who: 'player', text: script.player.responses[1] },
-    { who: 'friend', text: script.friend.responses[1] },
-    { who: 'player', text: script.player.responses[2] },
+    { who: 'friend', text: script.friend.responses[1], pose: 'ashamed' },
+    { who: 'player', text: script.player.responses[2], pose: 'frustrated' },
     { who: 'friend', text: script.friend.responses[2] },
   ], [script])
   const [phase, setPhase] = useState('test') // 'test' | 'retry'
@@ -90,6 +91,9 @@ export default function FinalDecision() {
         ? t(passed ? 'end.lose.reasons.notEnoughEvidenceConvincing.body' : 'end.lose.reasons.notEnoughEvidenceUnconvincing.body', vars)
         : t(passed ? 'story.posttest.convinced' : 'story.posttest.retryFriend', vars)}
       intro={intro}
+      replyPose="explaining"
+      // Convinced → the player relaxes (neutral); retry / time-up → frustrated.
+      endingPose={(passed) => (!timedOut && passed ? null : 'frustrated')}
       mastery
     />
   )

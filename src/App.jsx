@@ -81,7 +81,8 @@ export default function App() {
     <Stage portrait={IS_PHONE && screen === 'welcome'}>
       <DndProvider>
         <div className="stage">
-          <HUD />
+          {/* The end screens show only the outcome: no HUD bar. */}
+          {screen !== 'win' && screen !== 'lose' && <HUD />}
           <div className="stage-swap" key={transitionKey}>
             {activeNode && (
               <div

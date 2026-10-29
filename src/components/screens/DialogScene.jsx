@@ -12,27 +12,33 @@ const pct = (value, total) => `${(value / total) * 100}%`
 
 /* A dialog backdrop: the scenery plus each character's cut-out. `speaker` is
    the role talking ('player' | 'friend' | null); that character shows its
-   active cut-out and zooms in slightly, the other its inactive one. */
-export default function DialogScene({ scene, speaker, visible = true, className = '' }) {
+   active cut-out and zooms in slightly, the other its inactive one. `poses`
+   ({ player, friend } → pose name or null) swaps a character to an emotion
+   pose; when given, every pose is mounted so changes crossfade. */
+export default function DialogScene({ scene, speaker, poses, visible = true, className = '' }) {
   return (
     <div
       className={`pretest-backdrop dialog-scene ${className} ${visible ? 'is-visible' : ''}`}
       style={{ '--speaking-zoom': SPEAKING_ZOOM }}
     >
       <img src={bgUrl(scene.image)} alt="" />
-      {scene.characters.map(({ id, role, box, active, inactive }) => (
-        <div
-          key={id}
-          className={`dialog-char ${speaker === role ? 'is-speaking' : ''}`}
-          style={{
-            left: pct(box[0], W), top: pct(box[1], H), width: pct(box[2], W), height: pct(box[3], H),
-            transformOrigin: `50% ${ZOOM_ORIGIN_Y * 100}%`,
-          }}
-        >
-          <img src={bgUrl(inactive)} alt="" />
-          <img className="is-active" src={bgUrl(active)} alt="" />
-        </div>
-      ))}
+      {scene.characters.flatMap((character) => {
+        const variants = [[null, character], ...(poses ? Object.entries(character.poses) : [])]
+        const shown = poses?.[character.role] || null
+        return variants.map(([pose, { box, active, inactive }]) => (
+          <div
+            key={`${character.id}:${pose}`}
+            className={`dialog-char ${speaker === character.role ? 'is-speaking' : ''} ${pose === shown ? '' : 'is-hidden'}`}
+            style={{
+              left: pct(box[0], W), top: pct(box[1], H), width: pct(box[2], W), height: pct(box[3], H),
+              transformOrigin: `50% ${ZOOM_ORIGIN_Y * 100}%`,
+            }}
+          >
+            <img src={bgUrl(inactive)} alt="" />
+            <img className="is-active" src={bgUrl(active)} alt="" />
+          </div>
+        ))
+      })}
     </div>
   )
 }

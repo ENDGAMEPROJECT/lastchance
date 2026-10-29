@@ -21,8 +21,14 @@ const FADE_MS = 350
    before the first question instead of `script.opening` (post-test). Its last
    friend line stays up as the prompt over the options — and is the prompt again
    when a retry skips the intro (`skipOpening`). `mastery`: replies to each
-   answer react to it (post-test: positive/negativeFeedback; otherwise why/nudge). */
-export default function InPersonTest({ script: p, intro, mastery = false, actions = [], requirePhoneView = true, assessment = false, questionIndices, skipOpening = false, assessmentEnding, onComplete }) {
+   answer react to it (post-test: positive/negativeFeedback; otherwise why/nudge).
+   Intro lines may carry a `pose` (emotion art for the speaker); `replyPose` is
+   the player's pose once they start answering. Each character keeps the pose
+   of their latest line while listening; `endingPose(passed)` sets the
+   player's pose (null = neutral) during the friend's ending line.
+   `phoneAction` ({ label, onClick }): instead of action buttons, the last line
+   turns the phone into the way forward — a big glow, its label beside it. */
+export default function InPersonTest({ script: p, intro, replyPose, endingPose, phoneAction, mastery = false, actions = [], requirePhoneView = true, assessment = false, questionIndices, skipOpening = false, assessmentEnding, onComplete }) {
   const { reducedMotion, narrative } = useGame()
   const t = useT()
   const friend = narrative.friend
@@ -54,6 +60,13 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
   const [speechProgress, setSpeechProgress] = useState({ key: '', elapsed: 0 })
   const playerSpeaking = ['reply', 'endingYou'].includes(phase) || (phase === 'intro' && intro[introIndex].who === 'player')
   const miaSpeaking = (playerSpeaking ? narrative.player : friend) === 'Mia'
+  const posed = Boolean(replyPose || endingPose) || (hasIntro && intro.some((l) => l.pose))
+  const poses = { player: null, friend: null }
+  if (hasIntro && !skipOpening) {
+    intro.slice(0, phase === 'intro' ? introIndex + 1 : intro.length).forEach((l) => { poses[l.who] = l.pose || null })
+  }
+  if (replyPose && answers.length > 0) poses.player = replyPose
+  if (endingPose && phase === 'endingFriend') poses.player = endingPose(passedPosttest(answers, rounds.length))
   // Post-test (assessment) reacts with positive/negativeFeedback; other mastery
   // passes keep the explanatory why/nudge.
   const masteryReply = () => assessment
@@ -71,7 +84,9 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
   const elapsed = speechProgress.key === speechKey ? speechProgress.elapsed : 0
   const speechReady = phase === 'options' || elapsed >= readingTime
   const visibleLetters = reducedMotion || phase === 'options' ? line.length : Math.floor(elapsed / 18)
-  const showActions = phase === (p.endingYou ? 'endingYou' : 'endingFriend') && speechReady && actions.length > 0
+  const atEnd = phase === (p.endingYou ? 'endingYou' : 'endingFriend') && speechReady
+  const showActions = atEnd && actions.length > 0
+  const phonePortal = atEnd && Boolean(phoneAction)
   const showOptions = phase === 'options' && !needsPhoneView
   // While the player must answer, the bubble slides up to make room below it —
   // by exactly the answer panel's height, which varies with the options' text.
@@ -198,21 +213,22 @@ export default function InPersonTest({ script: p, intro, mastery = false, action
     <div className="scene pretest-scene">
       <div className="pretest-content" inert={phoneOpen ? '' : undefined}>
         <div className="pretest-art">
-          <DialogScene scene={narrative.schoolScene} speaker={playerSpeaking ? 'player' : 'friend'} />
+          <DialogScene scene={narrative.schoolScene} speaker={playerSpeaking ? 'player' : 'friend'} poses={posed ? poses : undefined} />
           {/* Darkens the scene while the player has to answer (below the phone). */}
-          <div className={`pretest-shade ${asking ? 'is-on' : ''}`} aria-hidden="true" />
+          <div className={`pretest-shade ${asking || phonePortal ? 'is-on' : ''}`} aria-hidden="true" />
           {/* The friend holds the phone: it zooms with them while they talk. */}
           <FollowCharacter scene={narrative.schoolScene} role="friend" speaker={playerSpeaking ? 'player' : 'friend'}>
             <button
               ref={phoneRef}
               type="button"
-              className={`pretest-phone ${narrative.character === 'max' ? 'phone-mia' : ''} ${phoneClicked ? '' : 'is-unseen'} ${asking ? 'is-dimmed' : ''}`}
+              className={`pretest-phone ${narrative.character === 'max' ? 'phone-mia' : ''} ${phoneClicked ? '' : 'is-unseen'} ${asking ? 'is-dimmed' : ''} ${poses.friend ? 'is-away' : ''} ${phonePortal ? 'is-portal' : ''}`}
               onMouseDown={(event) => event.preventDefault()}
-              onClick={() => { setPhoneClicked(true); setPhoneOpen(true) }}
-              aria-label={t('story.product.offerLabel')}
-              title={t('story.product.offerLabel')}
-              aria-haspopup="dialog"
+              onClick={phonePortal ? phoneAction.onClick : () => { setPhoneClicked(true); setPhoneOpen(true) }}
+              aria-label={phonePortal ? phoneAction.label : t('story.product.offerLabel')}
+              title={phonePortal ? phoneAction.label : t('story.product.offerLabel')}
+              aria-haspopup={phonePortal ? undefined : 'dialog'}
             >
+              {phonePortal && <span className="pretest-phone-portal-label" aria-hidden="true">{phoneAction.label}</span>}
               <svg className="pretest-phone-light" viewBox={narrative.character === 'max' ? '1008 418 96 108' : '648 496 108 100'} aria-hidden="true">
                 {/* Trace only the exposed handset; the fingers stay unlit. */}
                 <path d={narrative.character === 'max'

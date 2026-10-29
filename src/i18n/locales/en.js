@@ -259,7 +259,7 @@ export default {
       ],
       "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running — you've got until it hits zero, thirty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
       "endingYou": "Deal. Let's look behind the screen.",
-      "begin": "▶ Look behind the screen"
+      "begin": "Look behind the screen"
     },
     "posttest": {
       "eyebrow": "The Final Call",

@@ -61,7 +61,7 @@ function roomImages(nodeId, narrative, locale) {
   return images
 }
 
-const ENDING_IMAGES = [assetUrl('ending/player-won.png')]
+const endingImages = (narrative) => [assetUrl(`ending/${narrative.character}-won.png`)]
 const PORTAL_VIDEO = 'transitions-videos/abduction-scene.mp4'
 
 // Debug jumps, character changes and locale changes use the same resource
@@ -90,20 +90,20 @@ export function getAssetPreloadPlan({ screen, character = 'mia', locale = 'en', 
     case 'return':
       return { current: arrival, next: [...conversation, bgUrl('conversation.png')], video: PORTAL_VIDEO }
     case 'posttest':
-      return { current: [...conversation, bgUrl('conversation.png')], next: ENDING_IMAGES }
+      return { current: [...conversation, bgUrl('conversation.png')], next: endingImages(narrative) }
     case 'win':
-      return { current: ENDING_IMAGES, next: [] }
+      return { current: endingImages(narrative), next: [] }
     default:
       return { current: [], next: [] }
   }
 }
 
 export const GAME_IMAGES = [...new Set([
-  bgUrl('welcome.gif'), bgUrl('conversation.png'), ...MAP_IMAGES, ...ENDING_IMAGES,
+  bgUrl('welcome.gif'), bgUrl('conversation.png'), ...MAP_IMAGES,
   ...['mia', 'max'].flatMap((character) => {
     const narrative = getNarrative(character)
     return [
-      ...conversationImages(narrative), ...arrivalImages(narrative),
+      ...conversationImages(narrative), ...arrivalImages(narrative), ...endingImages(narrative),
       ...Object.keys(ROOM_IMAGES).flatMap((id) =>
         ['en', 'es', 'sr'].flatMap((locale) => roomImages(id, narrative, locale))),
     ]
