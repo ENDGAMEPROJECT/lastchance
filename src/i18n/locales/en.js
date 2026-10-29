@@ -104,7 +104,7 @@ export default {
       "titleAccent": "DIDN'T BUY IT",
       "tag": "// offer expired with {time} to spare",
       "heading": "You made the case",
-      "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam, and you managed to prevent him from losing money and sharing his personal data.",
+      "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam.",
       "evidenceHeading": "Evidence presented",
       "posttest": "Post-test: talk to {friend} again. What did you learn about spotting scams, disclosure, and why \"too good to be true\" usually is?",
       "again": "↻ Play again"
@@ -130,13 +130,28 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Convincing — but not enough proof",
-          "body": "It sounds convincing… but I didn't get to see enough evidence in the Physical Internet. I'm buying it."
+          "Mia": {
+            "body": "You convinced Mia, but you were too late. She didn't get to see all the evidence you could have found in the Physical Internet."
+          },
+          "Max": {
+            "body": "You convinced Max, but you were too late. He didn't get to see all the evidence you could have found in the Physical Internet."
+          }
         },
         "notEnoughEvidenceUnconvincing": {
           "heading": "Not convinced",
           "body": "You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it."
         }
       }
+    },
+    "whatHappened": {
+      "titleLose": "What happened to {friend}:",
+      "titleWin": "What could have happened to {friend}:",
+      "Max": "Max lost the money and never received the product. His card details may be stolen and used for additional purchases.",
+      "Mia": "Mia lost the money and never received the product. Her card details may be stolen and used for additional purchases. "
+    },
+    "whatCould": {
+      "Max": "Max would have lost the money and never received the product. His card details could have been stolen and used for additional purchases.",
+      "Mia": "Mia would have lost the money and never received the product. Her card details could have been stolen and used for additional purchases. "
     }
   },
   "story": {
@@ -259,7 +274,7 @@ export default {
       ],
       "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running — you've got until it hits zero, thirty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
       "endingYou": "Deal. Let's look behind the screen.",
-      "begin": "Look behind the screen"
+      "begin": "▶ Look behind the screen"
     },
     "posttest": {
       "eyebrow": "The Final Call",

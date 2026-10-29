@@ -8,6 +8,11 @@ import DialogScene, { FollowCharacter } from './DialogScene.jsx'
 import './pretest.css'
 import { DEBUG } from '../../game/settings.js'
 
+/* Typewriter speed (ms per letter) and the pause once a line is fully typed.
+   A line's reading time = its typing time + HOLD_MS, so it always finishes. */
+const LETTER_MS = 40
+const HOLD_MS = 1500
+
 // The speech band sits 30px above the bottom (pretest.css). Lifting it by the
 // answer panel's top edge (its own bottom offset + height) minus that puts it
 // right on the panel; ASK_GAP adds clear air between the two.
@@ -81,11 +86,11 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
     : phase === 'endingYou' ? p.endingYou : ''
   const speechKey = `${mastery}:${phase}:${round}:${introIndex}:${line}`
   // Lines clear briskly while still leaving ~260 wpm to read.
-  const readingTime = Math.max(2800, line.length * 18 + 1000, line.trim().split(/\s+/).length * 230 + 600)
+  const readingTime = line.length * LETTER_MS + HOLD_MS // type it out, then hold
   const elapsed = speechProgress.key === speechKey ? speechProgress.elapsed : 0
 
   const speechReady = phase === 'options' || elapsed >= readingTime
-  const visibleLetters = reducedMotion || phase === 'options' ? line.length : Math.floor(elapsed / 40)
+  const visibleLetters = reducedMotion || phase === 'options' ? line.length : Math.floor(elapsed / LETTER_MS)
   const atEnd = phase === (p.endingYou ? 'endingYou' : 'endingFriend') && speechReady
   const showActions = atEnd && actions.length > 0
   const phonePortal = atEnd && Boolean(phoneAction)

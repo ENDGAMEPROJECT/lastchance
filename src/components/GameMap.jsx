@@ -311,7 +311,9 @@ export default function GameMap() {
             <DebugReturnButtons />
             <DebugPosttestButtons />
             <button className="btn btn-sm btn-ghost" onClick={() => gotoScreen('win')}>Win</button>
-            <button className="btn btn-sm btn-ghost" onClick={() => gotoScreen('lose')}>Lose</button>
+            {/* the two ways to lose: out of time before gathering the evidence, or the post-test clock ran out */}
+            <button className="btn btn-sm btn-ghost" onClick={() => gotoScreen('lose', null, 'notEnoughEvidenceConvincing')}>Lost · no evidence</button>
+            <button className="btn btn-sm btn-ghost" onClick={() => gotoScreen('lose', null, 'timeUp')}>Lost · posttest</button>
           </div>
         )}
       </div>

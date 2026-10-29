@@ -27,6 +27,17 @@
 .lose-glyph {
   color: var(--red);
   text-shadow: var(--glow-red);
+  margin-bottom: 2px;
+}
+.container-lose-eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-retro);
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .intro-title {
@@ -214,7 +225,7 @@
 
 /* --- Win / Lose share the .intro layout but stack a single card --- */
 .intro.end {
-  max-width: 720px;
+  max-width: 580px;
 }
 .intro.end .intro-card {
   margin-bottom: 24px;
@@ -580,3 +591,24 @@ h3.win-congrats {
     transform: translateX(var(--x));
   }
 }
+
+/* Lose screen background: the chosen character's lost scene, behind the content
+   (sits on the stage-scroll's isolated -1 layer, like .bg-slot). */
+.lose-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* Consequence card ("What happened to {friend}?") — same red card as the lose
+   reason; tighter gap when it follows another card. */
+.intro.end .intro-card.end-what {
+  border-color: rgba(255, 59, 92, 0.4);
+  box-shadow: var(--glow-red), 0 18px 34px rgba(0, 0, 0, 0.45);
+}
+.intro.end .end-what h3 { color: var(--red); }
+.intro.end .intro-card:has(+ .end-what) { margin-bottom: 10px; }
