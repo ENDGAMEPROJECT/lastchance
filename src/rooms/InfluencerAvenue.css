@@ -26,7 +26,7 @@
   gap: 8px;
   text-align: center;
 }
-.ia-explain-title { font-size: 1.02rem; color: var(--purple); }
+.ia-explain-title { font-family: var(--font-retro);font-size: 1.32rem; color: var(--purple); }
 
 /* Label-feedback cards: what makes each disclosure label, with examples. */
 .ia-lf-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
