@@ -153,33 +153,56 @@ const splitPrice = (v) => {
    cropped): for a square 480 art the tile hides ~43px top & bottom, the grab
    badge covers x>405 above y~100, and the name label covers y~360-420 mid-width. */
 
-/* A product's picture as ONE image. Products with `art` are an SVG: the photo
-   plus the ad copy as real (translated) text, laid out in the art's own
-   w×h box (design px) so the whole thing scales, crops and drags as a single
-   picture. `cover` crops to fill its box (tiles, chips); otherwise it keeps
-   its aspect ratio. */
+/* A product's picture as ONE image. Products with `art` are plain HTML: the
+   photo plus the ad copy as real (translated) text, laid out in a fixed w×h box
+   (design px) that is scaled as a whole with a CSS transform to fit wherever
+   it's shown (tray, chip, viewer, results, drag ghost). No SVG foreignObject —
+   browsers (Safari above all) mis-scale/offset its HTML under the stage's
+   transform. `cover` crops to fill its box (tiles, chips); otherwise it keeps
+   its aspect ratio and fits inside. */
 function ProductArt({ product, copy, cover = false, className = '', alt = '' }) {
   const { art } = product
+  const ref = useRef(null)
+  const [fit, setFit] = useState(0) // box → container scale factor
+
+  // Measure in layout px (clientWidth/Height ignore the stage's scale transform).
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el || !art) return
+    const measure = () => {
+      const sx = el.clientWidth / art.w
+      const sy = el.clientHeight / art.h
+      setFit(cover ? Math.max(sx, sy) : Math.min(sx, sy))
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [art, cover])
+
   if (!art) return <img className={className} src={productImg(product)} alt={alt} draggable={false} />
-  const { w: ART_W, h: ART_H } = art
   return (
-    <svg
+    <div
+      ref={ref}
       className={`ia-art ${className}`}
-      style={{ aspectRatio: `${ART_W} / ${ART_H}` }}
-      viewBox={`0 0 ${ART_W} ${ART_H}`}
-      preserveAspectRatio={cover ? 'xMidYMid slice' : 'xMidYMid meet'}
+      style={cover ? undefined : { aspectRatio: `${art.w} / ${art.h}` }}
       role="img"
       aria-label={alt || undefined}
       aria-hidden={alt ? undefined : true}
     >
-      <image
-        href={productUrl(art.bg)}
-        width={ART_W}
-        height={ART_H}
-        preserveAspectRatio="xMidYMin slice"
-      />
-      <foreignObject width={ART_W} height={ART_H}>
-        <div xmlns="http://www.w3.org/1999/xhtml" className="ia-art-copy" style={{ width: ART_W, height: ART_H }}>
+      <div
+        className="ia-art-box"
+        style={{
+          width: art.w,
+          height: art.h,
+          marginLeft: -art.w / 2,
+          marginTop: -art.h / 2,
+          transform: `scale(${fit})`,
+          visibility: fit ? undefined : 'hidden',
+        }}
+      >
+        <img className="ia-art-bg" src={productUrl(art.bg)} alt="" draggable={false} />
+        <div className="ia-art-copy">
           {art.layers.filter((l) => l.text || hasValue(copy?.art?.[l.key])).map((l) => (
             <span
               key={l.key || l.text}
@@ -190,8 +213,8 @@ function ProductArt({ product, copy, cover = false, className = '', alt = '' }) 
             </span>
           ))}
         </div>
-      </foreignObject>
-    </svg>
+      </div>
+    </div>
   )
 }
 

@@ -122,12 +122,13 @@ export default function EnterScreen() {
   const isLast = stepIndex === steps.length - 1
   const total = readingTime(step.text)
   const elapsed = clock.step === stepIndex ? clock.ms : 0
-  const canStart = isLast && elapsed >= total
-  const stepRead = elapsed >= total
+  // debug: no reading wait — the buttons show at once
+  const canStart = isLast && (DEBUG || elapsed >= total)
+  const stepRead = DEBUG || elapsed >= total
   const doneSteps = useRef(new Set())
   const goNext = () => setStepIndex((i) => Math.min(steps.length - 1, i + 1))
   const goPrev = () => setStepIndex((i) => Math.max(0, i - 1))
-  const visibleLetters = reducedMotion ? step.text.length : Math.floor(elapsed / 18)
+  const visibleLetters = reducedMotion ? step.text.length : Math.floor(elapsed / 40)
   const progress = `${Math.min(100, (elapsed / total) * 100)}%`
 
   // Reading clock: pauses while the tab is hidden; a step read before (the

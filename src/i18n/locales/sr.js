@@ -104,7 +104,7 @@ export default {
       "titleAccent": "NIJE KUPIO/LA",
       "tag": "// ponuda je istekla, a ostalo je još {time}",
       "heading": "Izneo/la si dokaze",
-      "body": "Na osnovu dokaza koje si prikupio/la širom Fizičkog interneta, pokazao/la si {prijatelju} kako je {product} osmišljen tako da deluje neodoljivo — lažni linkovi, namešteni točak, neprijavljene sponzorske saradnje, algoritamsko targetiranje i čisto ubeđivanje. {friend} je zatvorio/la karticu.",
+      "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam, and you managed to prevent him from losing money and sharing his personal data.",
       "evidenceHeading": "Predočeni dokazi",
       "posttest": "Post-test: ponovo razgovaraj sa {prijateljem}. Šta si naučio/la o prepoznavanju prevara, obavezi navođenja sponzorstava i tome zašto je ono što deluje „predobro da bi bilo istinito“ obično upravo to?",
       "again": "↻ Igraj ponovo"
@@ -186,7 +186,7 @@ export default {
         ],
         "why": "Upravo tako — odbrojavanje je veštački stvoren osećaj hitnosti, osmišljen da te navede da reaguješ pre nego što razmisliš.",
         "nudge": "Razmisli šta ti to odbrojavanje zapravo radi.",
-        "positiveFeedback": "You mean, the urgency makes you act before you think... What else?",
+        "positiveFeedback": "You mean, the urgency makes you act before you think... ",
         "negativeFeedback": "I don't know, that doesn't sound right."
       },
       {
@@ -215,7 +215,7 @@ export default {
         ],
         "why": "Tako je — nije u pitanju mikrofon niti neka magija. Tvoja istorija pretrage je analizirana i prodata oglasnim mrežama.",
         "nudge": "Nije mikrofon niti virus — razmisli o tome šta platforma već zna o tebi.",
-        "positiveFeedback": "Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. And apart from that? ",
+        "positiveFeedback": "Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. ",
         "negativeFeedback": "That really doesn't make sense to me."
       },
       {
@@ -370,15 +370,15 @@ export default {
   "items": {
     "emojiCard": {
       "name": "Kartica za dekodiranje emodžija",
-      "desc": "Ključ koji povezuje emodžije sa slovima. Koristi ga da pročitaš poruke sa oznakama sponzorstava u Aveniji influensera."
+      "desc": "A key that maps emojis to letters. "
     },
     "dataReport": {
       "name": "Izveštaj o podacima za {prijatelja}",
-      "desc": "Dosije sa podacima koje posrednici podataka imaju o {prijatelju}. Obeležene cifre otključavaju Kontrolnu sobu algoritma."
+      "desc": "A dossier of the internet data of {friend}."
     },
     "truthLight": {
       "name": "Lampa istine",
-      "desc": "Otkriva sitna slova skrivena iza sjajnih plakata u Koridoru oglasa."
+      "desc": "Shows what flashy ads hide: the small print and the catches behind their big promises."
     }
   },
   "hints": {
@@ -587,8 +587,8 @@ export default {
       "reviewTitle": "Zašto baš ta vrata?",
       "errStillOpen": "Link{plural} blocked: {count}. Block the two fraudulent links to continue.",
       "errBlockedSafe": "Some blocked doors are wrong. Block the two fraudulent links to continue.",
-      "justifyLeadLabel": "Zašto si ih blokirao/la?",
-      "justifyLead": "Važno je da umeš da objasniš znakove upozorenja, a ne samo da pogodiš. Označi svaki stvarni znak upozorenja — i ništa što samo deluje kao da pruža sigurnost.",
+      "justifyLeadLabel": "Why have you locked those doors? ",
+      "justifyLead": "Click on the warning signs",
       "justifyErrWrong": "HTTPS, a padlock or a familiar-looking name is not a warning sign by itself, but none proves a site is safe. A familiar name can hide a typo or look-alike letter: check the full domain for those specific differences.",
       "justifyErrMissingOne": "1 warning sign left to select. Look again at the fake URLs.",
       "justifyErrMissing": "{count} warning signs left to select. Look again at the fake URLs.",
@@ -633,12 +633,11 @@ export default {
       "flags": {
         "suffix": "Extra words bolted on after the real name (…com-official.shop, -dealz)",
         "httpNoS": "The address uses http:// instead of the encrypted https://",
-        "weirdTld": "Odd domain endings like .shop or .free instead of .com",
+        "weirdTld": "Odd domain endings like .sbs, .xyz or .free instead of .com",
         "homoglyph": "Letters swapped for look-alikes — “rn” for “m”, or foreign characters",
         "typo": "Misspellings of the brand name (e.g. “dealz”)",
         "httpsGood": "It starts with https:// ",
-        "lock": "The browser shows a little padlock icon",
-        "looksReal": "The name looks right at a first glance"
+        "lock": "The browser shows a little padlock icon"
       },
       "lunaAd1": {
         "headline": "Get Luna’s dress and purse",
@@ -741,7 +740,7 @@ export default {
               "Nema nagrade"
             ],
             "rules": "Vrti da otključaš kupon za popust — do 50% popusta!",
-            "feedback": "Small prizes and discounts make you feel lucky. But that little win is bait: you can end up spending more than you save. Feeling lucky also keeps you spinning for the next prize. The wheel was rigged all along: the feeling of luck is the hook."
+            "feedback": "How do these roulette games get you hooked? First, they give you a small prize, just enough to make you feel lucky. But the trick is that you end up spending far more than you’ve won. You feel like today’s your lucky day, so you carry on playing. That feeling of being lucky is what keeps you hooked."
           },
           "w3": {
             "name": "ZLATNA GROZNICA",
@@ -756,7 +755,7 @@ export default {
               "Nema nagrade"
             ],
             "rules": "Osvoji telefon, laptop ili do 100 € — zavrti točak!",
-            "feedback": "This wheel is rigged: it always lands on “No prize.” The big prizes and the “Keep spinning!” message make you think your next try could be the lucky one, keeping you playing even though you get nothing. The aim is to hold your attention. On a website with ads, that can mean more adverts seen. Here, another spin won’t bring you closer to a prize: the wheel is programmed so you can never win."
+            "feedback": "Gamification means using game elements, like points, rewards, or spinning wheels, in things that aren't really games. Apps and online shops use it to make buying feel fun, so you stay longer and spend more without noticing."
           }
         },
         "debugSkip": "Прескочи рулете (debug)"
@@ -767,7 +766,7 @@ export default {
     "influencer": {
       "intro": "Neonska avenija bilborda i fidova influensera. Pogledaj iza sjaja: označi sponzorisane objave, a zatim proveri šta su proizvodi zapravo.",
       "solvedTitle": "Avenija influensera završena — Dobijen Izveštaj o podacima 📄",
-      "solvedText": "Otkrio/la si skrivene oglase i lažnu fotografiju proizvoda. ",
+      "solvedText": "You labelled the ads and detected the untrustworthy products",
       "evidenceLabel": "Objave su skrivale plaćene promocije, a fotografija proizvoda je generisana pomoću veštačke inteligencije bez ikakvih stvarnih rezultata.",
       "stage1": {
         "badge": "Faza 1 / 2",
@@ -1048,7 +1047,7 @@ export default {
       },
       "explain": {
         "title": "Besides the ad — what about the product?",
-        "body": "You've spotted how these posts are packaged. But is the product itself what they claim? A reverse image search helps you check: instead of typing words, you search with a photo, and it finds everywhere that exact picture appears online.",
+        "body": "Is the product what they claim? A reverse image search helps you check: you search with a photo, and it finds that exact picture or similar ones that appear online, so you can verify whether the image is really what the seller claims.",
         "instructions": "First reverse search the image. Then, look at the results to judge the product's authenticity.",
         "useShop": "Love a piece of clothing you saw in a post? Reverse-search the photo to find where you can actually buy it.",
         "useVerify": "Not sure an influencer's product is genuine? Reverse-search it to see if it's really unique — or the same mass-produced item everyone's selling.",
@@ -1063,7 +1062,7 @@ export default {
       },
       "labelFeedback": {
         "title": "Sponsored posts must be labeled",
-        "intro": "When a creator is paid, partnered with, or gifted a product, they have to disclose it — clearly and up front. A hidden ad dressed up as a genuine recommendation is exactly what you just labeled. Here's how to tell them apart:",
+        "intro": "When a creator or an influencer is paid, partnered with, or gifted a product, they have to disclose it — clearly and up front. Here's how to tell them apart:",
         "paidDesc": "The creator is paid by the brand to post about it.",
         "paidExample": "Tell-tale signs: an affiliate link, or a personal discount code like “LUNA20”.",
         "collabDesc": "A creative partnership, made together with the brand.",
@@ -1076,7 +1075,7 @@ export default {
     "algorithm": {
       "intro": "Glavni računar zuji dok obrađuje podatke i pretvara ih u ciljane oglase. Uđi unutra, a zatim ga nauči da napravi profil osobe.",
       "solvedTitle": "Kontrolna soba algoritma probijena · Dokaz zabeležen 🧠",
-      "solvedText": "Gledao/la si kako mašina pretvara godine, interesovanja i nesigurnosti {prijatelja} u jedan oglas. To nije sreća — to je profil.",
+      "solvedText": "You watched the algorithm turn {friend}'s age, interests and possible insecurities into a single ad. That is not coincidence — it the result of his advertisement profile",
       "evidence": "Oglas je algoritam odabrao na osnovu godina, interesovanja i nesigurnosti {prijatelja}.",
       "unlock": {
         "badge": "PRISTUP · Kontrolna soba algoritma",
@@ -1140,7 +1139,7 @@ export default {
             "0": "Devojka, 13–17",
             "1": "Prati influenserke iz oblasti lepote"
           },
-          "feedbackLesson": "How does the algorithm build this profile? It can combine age entered at sign-up with followed accounts, likes and time spent on skincare videos. It uses that activity to infer an interest in skin products and select an ad designed to turn that interest into a purchase."
+          "feedbackLesson": "The algorithm combines user's age, followed accounts, likes, and time spent watching skincare videos to show her targeted ads that encourage purchases."
         },
         "r2": {
           "ad": "Suplement za povećanje mišićne mase",
@@ -1148,7 +1147,7 @@ export default {
             "1": "Prati influensere iz oblasti fitnesa",
             "2": "Nesigurna zbog mršavosti"
           },
-          "feedbackLesson": "Algoritam može da koristi podatke o nalogu, stranice o fitnesu koje korisnik prati i interakcije sa sadržajem o vežbanju kako bi napravio profil za oglašavanje. U ovoj jednačini, suplement odgovara tom profilu jer njegovo obećanje o većoj mišićnoj masi privlači njegovu zabrinutost zbog mršavosti."
+          "feedbackLesson": "A teen boy follows fitness pages and likes posts about building muscle. Because of this, he gets an ad for a muscle supplement. Ad systems look at what people do online and show ads they are likely to click, even if the product isn’t something they really need"
         },
         "r3": {
           "ad": "Krema protiv ćelavosti",
@@ -1156,7 +1155,7 @@ export default {
             "0": "Muškarac, 25–35",
             "1": "Prati tehnološke kanale"
           },
-          "feedbackLesson": "Na primer, klikovi na proizvode protiv opadanja kose ili ponovljeno gledanje povezanog sadržaja mogu ukazivati na tu zabrinutost. Algoritam može da koristi te zabeležene aktivnosti kako bi nekoga svrstao u publiku za oglase protiv opadanja kose. Oglašivač zatim nudi navodno rešenje za tu brigu."
+          "feedbackLesson": "Clicks on hair-loss products or repeated views of related content can suggest that concern. An algorithm can use these actions to show someone hair-loss ads that offer a supposed solution to their worry."
         },
         "r4": {
           "ad": "Tablete za mršavljenje",
@@ -1164,7 +1163,7 @@ export default {
             "0": "Žena, 30–45",
             "2": "Nesigurna zbog svoje težine"
           },
-          "feedbackLesson": "Praćenje stranica o ishrani, lajkovanje objava o mršavljenju i gledanje povezanih video-snimaka mogu doprineti izgradnji profila za oglašavanje. Algoritam koristi te tragove da izabere odgovarajući oglas. To je mehanizam iza personalizovanog oglašavanja: tvoje aktivnosti pomažu da se odluči koju prodajnu poruku ćeš videti."
+          "feedbackLesson": "Following diet pages, liking weight-loss posts and watching related videos feeds an advertising profile. The algorithm uses those traces to select a matching ad. "
         }
       },
       "tiles": {
@@ -1248,7 +1247,7 @@ export default {
     "ads": {
       "intro": "Neonski servisni tunel oblijepljen sa četiri svetleća reklamna postera. Deluju velikodušno. Nisu.",
       "solvedTitle": "Koridor očišćen — pročitali ste sitna slova",
-      "solvedText": "Izlaz se šišteći otvara — zabeležili ste skrivenu automatsku obnovu pretplate od 59 € mesečno kao dokaz. Oglasi koji viču „besplatno“, „osvojili ste“ ili „0 $ danas“ obično kriju stvarnu cenu u sitnim slovima, zato uvek pročitajte na šta pristajete pre nego što kliknete.",
+      "solvedText": "You’ve made it to the final round! These ads were designed to make you feel really happy and lucky so you'd fall for the scam. Be wary of any content that triggers a very strong emotional reaction in you.",
       "pickup": "Uzimate baterijsku lampu Istine 🔦",
       "torchCharging": "🔦 Punjenje…",
       "torchOn": "🔦 Lampa UKLJUČENA",

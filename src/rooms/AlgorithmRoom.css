@@ -48,11 +48,24 @@
   pointer-events: none;
   overflow: visible;
 }
+/* the background image's pixel box, centred; DoorKeypadMap scales it to cover */
+.ar-door-keypad-art {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1372px;
+  height: 768px;
+  margin: -384px 0 0 -686px;
+  transform-origin: 50% 50%;
+}
+/* hotspot over the pictured keypad, in image px */
 .ar-door-keypad {
-  position: relative;
+  position: absolute;
+  left: 826px;
+  top: 317px;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 65px;
+  height: 77px;
   padding: 0;
   border: none;
   background: transparent;
@@ -81,8 +94,18 @@
 .ar-door-keypad:focus-visible::before {
   opacity: 0.85;
 }
+/* Phones can't hover: pulse the panel's glow so players spot it. On touch
+   screens, narrow (phone-width) windows, and the game's own phone mode. */
+.ar-door-keypad.pulse::before { animation: ar-keypad-pulse 1.8s ease-in-out infinite; }
+@media (hover: none), (max-width: 920px) {
+  .ar-door-keypad::before { animation: ar-keypad-pulse 1.8s ease-in-out infinite; }
+}
+@keyframes ar-keypad-pulse {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.75; }
+}
 @media (prefers-reduced-motion: reduce) {
-  .ar-door-keypad::before { transition: none; }
+  .ar-door-keypad::before { transition: none; animation: none; }
 }
 
 /* =========================================================
