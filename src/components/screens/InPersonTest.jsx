@@ -85,7 +85,7 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
   const elapsed = speechProgress.key === speechKey ? speechProgress.elapsed : 0
 
   const speechReady = phase === 'options' || elapsed >= readingTime
-  const visibleLetters = reducedMotion || phase === 'options' ? line.length : Math.floor(elapsed / 18)
+  const visibleLetters = reducedMotion || phase === 'options' ? line.length : Math.floor(elapsed / 40)
   const atEnd = phase === (p.endingYou ? 'endingYou' : 'endingFriend') && speechReady
   const showActions = atEnd && actions.length > 0
   const phonePortal = atEnd && Boolean(phoneAction)
