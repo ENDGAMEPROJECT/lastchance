@@ -3,13 +3,15 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "The Physical Internet — an educational cyberpunk escape room about ads, scams & fraudulent websites",
+  "description": "The Physical Internet \u2014 an educational cyberpunk escape room about ads, scams & fraudulent websites",
   "scripts": {
     "dev": "vite",
     "dev:debug": "vite --mode debug",
     "build": "vite build",
     "preview": "vite preview",
     "check:i18n": "node scripts/i18n-check.mjs && node scripts/i18n-dynamic-check.mjs",
+    "check:xapi": "node scripts/xapi-check.mjs",
+    "check:all": "npm run check:i18n && npm run check:xapi && npm run build",
     "i18n:import": "node scripts/i18n-import.mjs"
   },
   "dependencies": {

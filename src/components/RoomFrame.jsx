@@ -3,6 +3,7 @@ import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
 import { useReadingGate } from '../game/readingGate.js'
+import { track, OBJ } from '../game/xapi.js'
 import './RoomFrame.css'
 
 const NODE_ICON = {
@@ -100,7 +101,11 @@ export default function RoomFrame({
               className={`btn btn-${accent} btn-lg briefing-begin`}
               onClick={() => {
                 setStarted(true)
-                startRoom()
+                // The briefing has been read and the player steps in. One place
+                // covers all six districts; `completed` is fired centrally in
+                // GameContext, which also times the room from here.
+                startRoom(node?.id)
+                if (node?.id) track('started', OBJ.room(node.id), { node: node.id })
               }}
             >
               {t('common.begin')}

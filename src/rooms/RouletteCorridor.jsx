@@ -6,6 +6,7 @@ import { useReadingGate } from '../game/readingGate.js'
 import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
+import { track, OBJ } from '../game/xapi.js'
 import { ROULETTE_WHEELS as WHEELS, ROULETTE_SEGMENTS, rouletteResult, correctRouletteVerdict } from '../game/rouletteData.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import RoulettePrizeIcon from './RoulettePrizeIcon.jsx'
@@ -74,6 +75,8 @@ export default function RouletteCorridor({ node }) {
     }
   }, [])
 
+  // The sheet numbers wheels by play order; their ids are w1 / w3.
+  const wheelNo = (id) => WHEELS.findIndex((w) => w.id === id) + 1
   const wheel = WHEELS.find((w) => w.id === active)
   const verdict = answers[active]
   const results = history[active] || []
@@ -96,7 +99,16 @@ export default function RouletteCorridor({ node }) {
       delete timers.current[w.id]
       setSpinning((s) => ({ ...s, [w.id]: false }))
       setHistory((h) => ({ ...h, [w.id]: [...(h[w.id] || []), result] }))
-      if (w.couponBait) setShopOpen(true)
+      // Reported after the wheel stops, so the statement carries the outcome.
+      track('played', OBJ.roulette(wheelNo(w.id)), {
+        node: node.id,
+        response: t(`rooms.roulette.investigation.wheels.${w.id}.segments`)[result],
+      })
+      if (w.couponBait) {
+        setShopOpen(true)
+        track('experienced', OBJ.rouletteCoupon(wheelNo(w.id)), { node: node.id })
+      }
+      if (w.retryBait) track('experienced', OBJ.rouletteRetryBait(wheelNo(w.id)), { node: node.id })
       if (!Object.keys(timers.current).length) stopSound('roulette_spin.mp3')
       if (result !== 7) playSound('roulette_win.mp3')
     }, 4200)
@@ -105,6 +117,13 @@ export default function RouletteCorridor({ node }) {
   function chooseVerdict(value) {
     if (results.length < MIN_SPINS || spinning[active] || verified[active] || solved) return
     setShopOpen(false)
+    // Both verdicts are a selection; which one, and whether it was right,
+    // live in the result rather than in the verb.
+    track('selected', OBJ.roulette(wheelNo(active)), {
+      node: node.id,
+      response: value,
+      success: correctRouletteVerdict(wheel, value),
+    })
     setAnswers((a) => ({ ...a, [active]: value }))
     if (correctRouletteVerdict(wheel, value)) {
       setVerified((v) => ({ ...v, [active]: true }))
@@ -200,8 +219,14 @@ export default function RouletteCorridor({ node }) {
                 <h3 className="accent-green">{t('rooms.roulette.investigation.correct')}</h3>
                 <p>{wheelText(active, 'feedback')}</p>
                 {feedbackRead && (checkedCount === WHEELS.length
-                  ? <button className="btn btn-green" disabled={solved} onMouseDown={preventFocusScroll} onClick={finish}>{t('rooms.roulette.investigation.finish')}</button>
-                  : <button className="btn btn-cyan" onMouseDown={preventFocusScroll} onClick={() => setActive(WHEELS.find((w) => !verified[w.id]).id)}>{t('rooms.roulette.investigation.next')}</button>)}
+                  ? <button className="btn btn-green" disabled={solved} onMouseDown={preventFocusScroll} onClick={() => {
+                    track('viewed', OBJ.rouletteFeedback(wheelNo(active)), { node: node.id })
+                    finish()
+                  }}>{t('rooms.roulette.investigation.finish')}</button>
+                  : <button className="btn btn-cyan" onMouseDown={preventFocusScroll} onClick={() => {
+                    track('viewed', OBJ.rouletteFeedback(wheelNo(active)), { node: node.id })
+                    setActive(WHEELS.find((w) => !verified[w.id]).id)
+                  }}>{t('rooms.roulette.investigation.next')}</button>)}
               </>
             ) : (
               <>

@@ -442,6 +442,23 @@
   text-align: center;
   word-break: break-all;
   line-height: 1.2;
+  /* The address and an invisible copy of the puzzle's LONGEST address share one
+     grid cell, so every sign is the same height whatever URL it shows.
+     `align-items: center` is what makes a short address sit in the MIDDLE of
+     that reserved space: grid items default to stretching, which would leave a
+     one-line URL pinned to the top with a gap under it. Only the block axis is
+     centred — `justify-items` stays stretch so each line still fills the cell
+     width and `word-break: break-all` wraps as before. */
+  display: grid;
+  align-items: center;
+  min-width: 0;
+}
+.ld-url > .ld-url-line {
+  grid-area: 1 / 1;
+}
+.ld-url-sizer {
+  visibility: hidden;
+  pointer-events: none;
 }
 .ld-sign.insecure .ld-url {
   color: #ffcf8a;
@@ -519,6 +536,41 @@
   align-items: center;
   gap: 5px;
   text-align: center;
+}
+
+/* ---------- Mobile: keep every door exactly the same height ----------
+   A door is a fixed 250px wide (the stage is a fixed design canvas), so what
+   changes on mobile is the text: global `.btn-sm` is a third larger here and
+   `--text-boost` scales rem on top of that, which pushes the longer labels
+   onto a second line while the shorter ones stay on one. The door's height
+   then changed the moment it was blocked or peeked into — "Block this link"
+   (2 lines) vs "Unblock" (1), "Open to peek inside" vs "Close door" — and
+   because the three doors sit in a row, the whole row jolted.
+
+   So reserve two line boxes in both labels and centre whatever is in them:
+   the height is then identical for every door in every state. Two is enough
+   for the longest copy in all four locales at full text boost (Serbian's
+   "Blokiraj ovaj link" / "Otvori da zaviriš unutra"). Deliberately NOT applied
+   above the breakpoint, where every label fits on one line and a second would
+   only add dead space. */
+@media (max-width: 920px) {
+  .ld-door-foot .btn {
+    line-height: 1.25;
+    /* box-sizing is border-box, so this has to cover the button's own
+       vertical padding (8px top + 8px bottom at this breakpoint). */
+    min-height: calc(2 * 1.25em + 16px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .ld-peek {
+    line-height: 1.25;
+    min-height: calc(2 * 1.25em);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 /* ---------- Round review: all three explanations together, after passing ---------- */
@@ -1213,6 +1265,13 @@
   padding: 8px 14px;
 }
 .ld-block-progress {
+  /* The live message and an invisible copy of the LONGEST possible message
+     share one grid cell, so the box is always sized for the worst case and
+     never changes height as the tally updates or an error replaces it.
+     Centred in the block axis so a short message sits in the middle of the
+     reserved space rather than stretching against its top edge. */
+  display: grid;
+  align-items: center;
   flex: 1;
   min-width: 0;
   margin-right: auto;
@@ -1226,6 +1285,13 @@
   font-weight: 700;
   line-height: 1.4;
 }
+.ld-block-progress > .ld-bp-line {
+  grid-area: 1 / 1;
+}
+.ld-bp-sizer {
+  visibility: hidden;
+  pointer-events: none;
+}
 .ld-block-progress.is-error {
   color: #ffb8c4;
   border: 2px solid var(--red);
@@ -1235,7 +1301,14 @@
   animation: shake 0.4s ease;
 }
 @media (prefers-reduced-motion: reduce) {
-  .ld-block-progress.is-error { animation: none; }
+  .ld-block-progress > .ld-bp-line {
+  grid-area: 1 / 1;
+}
+.ld-bp-sizer {
+  visibility: hidden;
+  pointer-events: none;
+}
+.ld-block-progress.is-error { animation: none; }
 }
 .ld-block-error {
   display: block;

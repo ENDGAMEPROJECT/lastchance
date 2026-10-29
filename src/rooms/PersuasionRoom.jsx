@@ -4,6 +4,7 @@ import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
 import { playSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
+import { track, OBJ } from '../game/xapi.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { useStage } from '../components/Stage.jsx'
 import './PersuasionRoom.css'
@@ -268,6 +269,7 @@ export default function PersuasionRoom({ node }) {
   function onFrameDown(e, id) {
     if (e.button != null && e.button > 0) return
     e.preventDefault()
+    track('selected', OBJ.frame(id, techniqueLabel(id)), { node: node.id })
     const p = toLocal(e.clientX, e.clientY)
     dragRef.current = { id, offX: p.x - pos[id].x, offY: p.y - pos[id].y }
     setDragId(id)
@@ -316,11 +318,20 @@ export default function PersuasionRoom({ node }) {
       const d = dragRef.current
       const target = posterUnder(e.clientX, e.clientY)
       if (d && target) {
-        // Just place it — no right/wrong feedback; the terminal is the check.
+        // Just place it — no right/wrong feedback in the UI; the terminal is
+        // the check. The statement still records whether the match was right.
+        track('dropped', OBJ.frame(d.id, techniqueLabel(d.id)), {
+          node: node.id, response: target, success: target === d.id, completion: true,
+        })
         setPlacement((cur) => ({ ...cur, [d.id]: target }))
         snapToPoster(d.id, target)
       } else if (d) {
         // Dropped off the wall → it's no longer on any poster.
+        if (placementRef.current[d.id]) {
+          track('unselected', OBJ.frame(d.id, techniqueLabel(d.id)), {
+            node: node.id, response: placementRef.current[d.id],
+          })
+        }
         setPlacement((cur) => { const n = { ...cur }; delete n[d.id]; return n })
       }
       setDragId(null)
@@ -340,7 +351,15 @@ export default function PersuasionRoom({ node }) {
 
   function submitPassword(e) {
     e.preventDefault()
-    if (entry.trim().toUpperCase() === password.toUpperCase()) {
+    const right = entry.trim().toUpperCase() === password.toUpperCase()
+    track('submitted', OBJ.password(), {
+      node: node.id,
+      response: entry.trim().toUpperCase(),
+      success: right,
+      completion: right,
+      ...(right ? { scaled: 1 } : {}),
+    })
+    if (right) {
       addEvidence({ id: 'ev-persuasion', label: t('rooms.persuasion.evidence') })
       // Close the computer close-up, play the ending animation over the whole
       // scene for 5.1s, then settle on the end frame and reveal the cleared bar.
@@ -401,7 +420,7 @@ export default function PersuasionRoom({ node }) {
           type="button"
           className={`pl-computer-hotspot ${allMatched && !computerOpen && !dragId ? 'ready' : ''}`}
           onMouseDown={(e) => e.preventDefault()}
-          onClick={() => setComputerOpen(true)}
+          onClick={() => { track('opened', OBJ.computer(), { node: node.id }); setComputerOpen(true) }}
           aria-label={t('rooms.persuasion.openComputer')}
         >
           <svg className="pl-computer-outline" viewBox="0 0 300 340" aria-hidden="true">
@@ -470,7 +489,7 @@ export default function PersuasionRoom({ node }) {
             <button
               type="button"
               className="pl-screen-close"
-              onClick={() => setComputerOpen(false)}
+              onClick={() => { track('closed', OBJ.computer(), { node: node.id }); setComputerOpen(false) }}
               aria-label={t('rooms.persuasion.closeComputer')}
             >
               ✕

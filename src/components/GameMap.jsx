@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
+import { track, OBJ } from '../game/xapi.js'
 import { DEBUG } from '../game/settings.js'
 import { bgUrl } from '../game/assets.js'
 import DebugPosttestButtons from './DebugPosttestButtons.jsx'
@@ -261,6 +262,9 @@ export default function GameMap() {
   const boardRef = useRef(null)
   const shift = useCentred(boardRef, [t])
 
+  // Arriving on the map (from the portal, or back out of any district).
+  useEffect(() => { track('opened', OBJ.map(), { node: 'map' }) }, [])
+
   const doneCount = NODES.filter((n) => progress[n.id] === 'done').length
   const pct = Math.round((doneCount / NODES.length) * 100)
   const allDone = doneCount === NODES.length
@@ -278,7 +282,12 @@ export default function GameMap() {
       kind: n.kind,
       accent: n.accent,
       status: progress[n.id],
-      onOpen: () => (progress[n.id] === 'done' ? reviewNode(n.id) : openNode(n.id)),
+      onOpen: () => {
+        // A cleared district is revisited, not replayed.
+        const done = progress[n.id] === 'done'
+        track(done ? 'viewed' : 'launched', OBJ.room(n.id), { node: 'map', response: n.id })
+        return done ? reviewNode(n.id) : openNode(n.id)
+      },
     })),
     {
       id: 'final-decision',
@@ -287,7 +296,10 @@ export default function GameMap() {
       accent: 'magenta',
       status: (allDone && returnTalked) || DEBUG ? 'available' : 'locked',
       calling: allDone && returnTalked,
-      onOpen: () => gotoScreen(returnTalked && !reducedMotion ? 'return' : 'posttest'),
+      onOpen: () => {
+        track('launched', OBJ.finalPortal(), { node: 'map' })
+        return gotoScreen(returnTalked && !reducedMotion ? 'return' : 'posttest')
+      },
     },
   ]
 

@@ -13,8 +13,17 @@ import { NarrativeContext } from './NarrativeContext.jsx'
 import { NODES, GAME_MINUTES, ITEMS } from './gameData.js'
 import { DEBUG, DEBUG_SCREEN, DEBUG_POSTTEST_SCENARIO, DEBUG_CHARACTER } from './settings.js'
 import { playSound, preloadSound } from './sound.js'
+import { track, OBJ, once, resetOnce, markRoomStart, roomDuration } from './xapi.js'
 
 const GameContext = createContext(null)
+
+/* Which district hands over each tool, so a `collected` statement is filed
+   under the room that awarded it (matching the xAPI sheet). */
+const REWARD_NODE = {
+  emojiCard: 'link-district',
+  dataReport: 'influencer-avenue',
+  truthLight: 'algorithm-room',
+}
 
 const START_SECONDS = GAME_MINUTES * 60
 
@@ -288,9 +297,63 @@ export function GameProvider({ children }) {
     preloadSound('wrong.mp3') // used by every puzzle's incorrect-answer feedback
   }, [])
 
+  /* ---- xAPI: statements that belong to run state rather than to one room.
+     Fired centrally here for the same reason as the inventory chime above —
+     one place covers every path that can trigger them. Rooms only report
+     their own puzzle interactions. ---- */
+
+  // A new tool in the bag → `collected`, filed under the room that gave it.
+  const trackedItems = useRef(new Set(state.inventory.map((i) => i.id)))
+  useEffect(() => {
+    state.inventory.forEach((item) => {
+      if (trackedItems.current.has(item.id)) return
+      trackedItems.current.add(item.id)
+      track('collected', OBJ.reward(item.id), { node: REWARD_NODE[item.id] })
+    })
+  }, [state.inventory])
+
+  // A district turning 'done' → `completed`, with how long it took.
+  const trackedDone = useRef(new Set(NODES.filter((n) => state.progress[n.id] === 'done').map((n) => n.id)))
+  useEffect(() => {
+    NODES.forEach((node) => {
+      if (state.progress[node.id] !== 'done' || trackedDone.current.has(node.id)) return
+      trackedDone.current.add(node.id)
+      track('completed', OBJ.room(node.id), {
+        node: node.id, success: true, completion: true, ...roomDuration(node.id),
+      })
+    })
+  }, [state.progress])
+
+  // The countdown reaching zero before the puzzles were finished.
+  useEffect(() => {
+    if (state.timedOut) once('timerExpired', () => track('terminated', OBJ.timer(), { node: 'posttest', response: 0 }))
+  }, [state.timedOut])
+
+  // The run's outcome. `once` guards against a re-render re-sending it.
+  useEffect(() => {
+    if (state.screen !== 'win' && state.screen !== 'lose') return
+    const won = state.screen === 'win'
+    once('outcome', () => {
+      track(won ? 'passed' : 'failed', OBJ.game(), {
+        node: 'posttest',
+        response: won ? `${state.timeLeft};${state.evidence.length}` : (state.loseReason || 'timeUp'),
+        success: won,
+        ...(won ? { scaled: 1 } : {}),
+        completion: true,
+      })
+      track('completed', OBJ.game(), {
+        node: 'posttest', response: state.timeLeft, success: won, completion: true,
+      })
+    })
+  }, [state.screen, state.timeLeft, state.evidence.length, state.loseReason])
+
   const submitWelcome = useCallback((player) => dispatch({ type: 'SUBMIT_WELCOME', player }), [])
   const enterInternet = useCallback(() => dispatch({ type: 'ENTER_INTERNET' }), [])
-  const startGame = useCallback(() => dispatch({ type: 'START_GAME' }), [])
+  const startGame = useCallback(() => {
+    // Committing to the run: the 30-minute countdown starts here.
+    track('started', OBJ.timer(), { node: 'intro', response: START_SECONDS })
+    dispatch({ type: 'START_GAME' })
+  }, [])
   const finishGame = useCallback((outcome, reason) => dispatch({ type: 'FINISH', outcome, reason }), [])
   const startPosttestDecision = useCallback(() => dispatch({ type: 'START_POSTTEST_DECISION' }), [])
   const gotoScreen = useCallback((screen, scenario) => dispatch({ type: 'GOTO_SCREEN', screen, scenario }), [])
@@ -303,14 +366,21 @@ export function GameProvider({ children }) {
   const gatherAllEvidence = useCallback((evidence) => dispatch({ type: 'DEBUG_GATHER_EVIDENCE', evidence }), [])
   const openNode = useCallback((id) => dispatch({ type: 'OPEN_NODE', id }), [])
   const reviewNode = useCallback((id) => dispatch({ type: 'REVIEW_NODE', id }), [])
-  const startRoom = useCallback(() => dispatch({ type: 'START_ROOM' }), [])
+  const startRoom = useCallback((nodeId) => {
+    if (nodeId) markRoomStart(nodeId)
+    dispatch({ type: 'START_ROOM' })
+  }, [])
   const setLinkRound = useCallback((round) => dispatch({ type: 'SET_LINK_ROUND', round }), [])
   const goMap = useCallback(() => dispatch({ type: 'GO_MAP' }), [])
   const completeRoom = useCallback((id) => dispatch({ type: 'COMPLETE_NODE', id }), [])
   const addItem = useCallback((item) => dispatch({ type: 'ADD_ITEM', item }), [])
   const addEvidence = useCallback((evidence) => dispatch({ type: 'ADD_EVIDENCE', evidence }), [])
   const addTime = useCallback((seconds) => dispatch({ type: 'ADD_TIME', seconds }), [])
-  const reset = useCallback(() => dispatch({ type: 'RESET' }), [])
+  const reset = useCallback(() => {
+    track('started', OBJ.game(), { node: 'intro', response: 'restart' })
+    resetOnce() // a new run re-arms the one-shot statements (outcome, timer)
+    dispatch({ type: 'RESET' })
+  }, [])
   const toggleMotion = useCallback(() => dispatch({ type: 'TOGGLE_MOTION' }), [])
   const winNow = useCallback(() => dispatch({ type: 'WIN' }), [])
 

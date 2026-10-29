@@ -3,6 +3,8 @@ import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { bgUrl } from '../../game/assets.js'
 import { passedPosttest } from '../../game/posttestOutcome.js'
+import { track, OBJ, EXT } from '../../game/xapi.js'
+import { testItem, optionSlug } from '../../game/testItems.js'
 import DialogNav from './DialogNav.jsx'
 import DialogScene, { FollowCharacter } from './DialogScene.jsx'
 import './pretest.css'
@@ -47,6 +49,9 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
   const chooseTimer = useRef(0)
   const [prompt, setPrompt] = useState(hasIntro ? introPrompt : p.opening)
   const completed = useRef(false)
+  // Option keys picked this pass, in question order — the aggregate
+  // statement's result.response (the per-question rows carry the detail).
+  const chosenKeys = useRef([])
   const [phoneOpen, setPhoneOpen] = useState(false)
   const [phoneViewed, setPhoneViewed] = useState(false)
   // Highlight strength only: strong pulse until the phone is clicked, then a
@@ -123,6 +128,21 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
     const commit = () => {
       setChoosing(null)
       setAnswer(option)
+      // One statement per question. `questionIndices` means a post-test retry
+      // is only re-asking some questions, so map back to the real position in
+      // the bank — otherwise a retry would report as the first item again.
+      const qIndex = questionIndices ? questionIndices[round] : round
+      const item = testItem(qIndex)
+      const answer = optionSlug(qIndex, option.k)
+      chosenKeys.current[qIndex] = answer
+      track('answered', assessment ? OBJ.posttestQ(item) : OBJ.pretestQ(item), {
+        node: assessment ? 'posttest' : 'pretest',
+        // The reasoning the player picked, not its on-screen letter (letters
+        // move if options are reordered). The letter is kept as an extension.
+        response: answer,
+        success: option.correct === true,
+        resultExt: { [EXT.optionKey]: option.k },
+      })
       setAnswers((previous) => {
         const next = [...previous]
         next[round] = option.correct === true
@@ -226,7 +246,26 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
               type="button"
               className={`pretest-phone ${narrative.character === 'max' ? 'phone-mia' : ''} ${phoneClicked ? '' : 'is-unseen'} ${asking ? 'is-dimmed' : ''} ${poses.friend ? 'is-away' : ''} ${phonePortal ? 'is-portal' : ''}`}
               onMouseDown={(event) => event.preventDefault()}
-              onClick={phonePortal ? phoneAction.onClick : () => { setPhoneClicked(true); setPhoneOpen(true) }}
+              onClick={phonePortal ? () => {
+                if (!assessment && !completed.current) {
+                  completed.current = true
+                  const picked = chosenKeys.current.filter(Boolean)
+                  const right = answers.filter((ok) => ok === true).length
+                  track('answered', OBJ.pretest(), {
+                    node: 'pretest',
+                    // Readable per-item outcome: which answer, and was it right.
+                    response: picked.map((a, i) => `${testItem(i).slug}=${a}:${answers[i] ? 1 : 0}`).join(';'),
+                    success: right === rounds.length,
+                    scaled: rounds.length ? right / rounds.length : 0,
+                    completion: true,
+                  })
+                }
+                phoneAction.onClick()
+              } : () => {
+                setPhoneClicked(true)
+                setPhoneOpen(true)
+                track('opened', OBJ.phone(), { node: assessment ? 'posttest' : 'pretest' })
+              }}
               aria-label={phonePortal ? phoneAction.label : t('story.product.offerLabel')}
               title={phonePortal ? phoneAction.label : t('story.product.offerLabel')}
               aria-haspopup={phonePortal ? undefined : 'dialog'}
