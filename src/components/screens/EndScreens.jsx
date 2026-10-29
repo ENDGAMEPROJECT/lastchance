@@ -37,8 +37,8 @@ export function WinScreen() {
     <div className="stage-scroll win-scene">
       <WinSky />
       {/* <img className="offer-phone-only" src={assetUrl("bg/offer-phone-only.png")}></img> */}
-      {/* Max and Mia, bottom-left (public/ending/player-won.png). */}
-      <img className="win-players" src={assetUrl('ending/player-won.png')} alt="" />
+      {/* The chosen character, bottom-right (public/ending/mia-won.png / max-won.png). */}
+      <img className="win-players" src={assetUrl(`ending/${narrative.character}-won.png`)} alt="" />
       <div className="win-title-container">
          <div className="eyebrow" style={{ color: 'var(--green)', fontSize: "16px", fontWeight: "bold" }}>
            <span>{t('end.win.eyebrow')} </span>
