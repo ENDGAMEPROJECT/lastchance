@@ -104,7 +104,7 @@ export default {
       "titleAccent": "NIJE KUPIO/LA",
       "tag": "// ponuda je istekla, a ostalo je još {time}",
       "heading": "Izneo/la si dokaze",
-      "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam, and you managed to prevent him from losing money and sharing his personal data.",
+      "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam.",
       "evidenceHeading": "Predočeni dokazi",
       "posttest": "Post-test: ponovo razgovaraj sa {prijateljem}. Šta si naučio/la o prepoznavanju prevara, obavezi navođenja sponzorstava i tome zašto je ono što deluje „predobro da bi bilo istinito“ obično upravo to?",
       "again": "↻ Igraj ponovo"
@@ -130,13 +130,28 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Ubedljivo — ali bez dovoljno dokaza",
-          "body": "It sounds convincing… but I didn't get to see enough evidence in the Physical Internet. I'm buying it."
+          "Mia": {
+            "body": "You convinced Mia, but you were too late. She didn't get to see all the evidence you could have found in the Physical Internet."
+          },
+          "Max": {
+            "body": "You convinced Max, but you were too late. He didn't get to see all the evidence you could have found in the Physical Internet."
+          }
         },
         "notEnoughEvidenceUnconvincing": {
           "heading": "Nisi ubedio/la",
           "body": "You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it."
         }
       }
+    },
+    "whatHappened": {
+      "titleLose": "What happened to {friend}:",
+      "titleWin": "What could have happened to {friend}:",
+      "Max": "Max lost the money and never received the product. His card details may be stolen and used for additional purchases.",
+      "Mia": "Mia lost the money and never received the product. Her card details may be stolen and used for additional purchases. "
+    },
+    "whatCould": {
+      "Max": "Max would have lost the money and never received the product. His card details could have been stolen and used for additional purchases.",
+      "Mia": "Mia would have lost the money and never received the product. Her card details could have been stolen and used for additional purchases. "
     }
   },
   "story": {
@@ -259,7 +274,7 @@ export default {
       ],
       "endingFriend": "Slušaj, možeš da analiziraš stranicu koliko god želiš, ali meni sve deluje u redu! Samo si paranoičan/na. Odbrojavanje i dalje traje — imaš još trideset minuta, odnosno dok ne stigne do nule, da dokažeš da je ovo zaista prevara. U suprotnom, kliknuću na kupovinu.",
       "endingYou": "Važi. Hajde da pogledamo šta se dešava iza ekrana.",
-      "begin": "Pogledaj šta se dešava iza ekrana"
+      "begin": "▶ Pogledaj šta se dešava iza ekrana"
     },
     "posttest": {
       "eyebrow": "Konačna odluka",

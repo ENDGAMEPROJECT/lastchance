@@ -13,6 +13,11 @@ import './screens.css'
 import './pretest.css'
 import './enter.css'
 
+/* Typewriter speed (ms per letter) and the pause once a line is fully typed.
+   A line's reading time = its typing time + HOLD_MS, so it always finishes. */
+const LETTER_MS = 40
+const HOLD_MS = 1500
+
 // Intro timeline (motion only): the tunnel video plays with the portal rings
 // over it; in its last FLASH_MS the core swells to a whiteout; the white fades
 // to black (WHITE_MS), then the black slowly fades to the scene (BLACK_MS).
@@ -22,7 +27,7 @@ const FLASH_MS = 1900
 const WHITE_MS = 1800
 const LOAD_WAIT_MS = 6000 // if the video hasn't started by then, skip it and go to the fade
 const BLACK_MS = 6000
-const readingTime = (text) => Math.max(3500, text.length * 18 + 1500, text.trim().split(/\s+/).length * 280 + 800)
+const readingTime = (text) => text.length * LETTER_MS + HOLD_MS // type it out, then hold
 
 // Fixed spark layout (percent of the art), so it is stable across renders.
 const SPARKS = Array.from({ length: 14 }, (_, i) => {
@@ -129,7 +134,7 @@ export default function EnterScreen() {
   const doneSteps = useRef(new Set())
   const goNext = () => setStepIndex((i) => Math.min(steps.length - 1, i + 1))
   const goPrev = () => setStepIndex((i) => Math.max(0, i - 1))
-  const visibleLetters = reducedMotion ? step.text.length : Math.floor(elapsed / 40)
+  const visibleLetters = reducedMotion ? step.text.length : Math.floor(elapsed / LETTER_MS)
   const progress = `${Math.min(100, (elapsed / total) * 100)}%`
 
   // Reading clock: pauses while the tab is hidden; a step read before (the

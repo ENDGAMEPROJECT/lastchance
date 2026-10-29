@@ -9,6 +9,11 @@ import './pretest.css'
 import './enter.css'
 import { DEBUG } from '../../game/settings.js'
 
+/* Typewriter speed (ms per letter) and the pause once a line is fully typed.
+   A line's reading time = its typing time + HOLD_MS, so it always finishes. */
+const LETTER_MS = 40
+const HOLD_MS = 1500
+
 // Same reading pace / fade as the portal arrival (EnterScreen).
 const PORTAL_VIDEO = 'transitions-videos/abduction-scene.mp4'
 const TUNNEL_MS = 9042 // video length; replaced by the real duration once metadata loads
@@ -19,7 +24,7 @@ const WHITE_HOLD_MS = 2000 // the core's whiteout holds on white before the post
 // fades to the scene (same curve and length as EnterScreen's BLACK_MS).
 const HOLD_BLACK_MS = 1500
 const BLACK_MS = 1000
-const readingTime = (text) => Math.max(4500, text.length * 18 + 1500, text.trim().split(/\s+/).length * 280 + 800)
+const readingTime = (text) => text.length * LETTER_MS + HOLD_MS // type it out, then hold
 
 /* Back in the Physical Internet after the last district: a short player/friend
    exchange, then "Go back to the real world" → the map. Its Final Decision
@@ -59,7 +64,7 @@ export default function ReturnScreen() {
   const dialogDone = isLast && (DEBUG || elapsed >= total)
   const stepRead = DEBUG || elapsed >= total
   const doneSteps = useRef(new Set())
-  const visibleLetters = reducedMotion ? step.text.length : Math.floor(elapsed / 40)
+  const visibleLetters = reducedMotion ? step.text.length : Math.floor(elapsed / LETTER_MS)
   const progress = `${Math.min(100, (elapsed / total) * 100)}%`
 
   // Reading clock: pauses while the tab is hidden; Next moves on once it's

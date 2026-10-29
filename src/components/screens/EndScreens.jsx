@@ -28,6 +28,22 @@ function WinSky() {
   )
 }
 
+/* Key segment for copy written about the friend (the character the player did
+   NOT pick): playing Mia → friend Max → "Max", and vice versa. */
+const friendKey = (narrative) => (narrative.friendId === 'mia' ? 'Mia' : 'Max')
+
+/* "What happened / would have happened to {friend}" — the consequence card on
+   every ending, in the lose screen's red card style. */
+function WhatHappenedCard({ titleKey, textKey, narrative, vars }) {
+  const t = useT()
+  return (
+    <div className="intro-card panel clip end-what">
+      <h3>{t(titleKey, vars)}</h3>
+      <p>{t(`${textKey}.${friendKey(narrative)}`, vars)}</p>
+    </div>
+  )
+}
+
 export function WinScreen() {
   const { timeLeft, evidence, reset, narrative } = useGame()
   const t = useT()
@@ -64,6 +80,8 @@ export function WinScreen() {
           )}
         </div>
 
+        <WhatHappenedCard titleKey="end.whatHappened.titleWin" textKey="end.whatCould" narrative={narrative} vars={vars} />
+
         <button className="btn-light btn-lg" onClick={reset}>{t('end.win.again')}</button>
       </div>
     </div>
@@ -81,14 +99,20 @@ export function LoseScreen() {
   const reasonKey = `end.lose.reasons.${loseReason}`
   const reasonHeading = t(`${reasonKey}.heading`)
   const heading = reasonHeading === `${reasonKey}.heading` ? t('end.lose.heading') : reasonHeading
-  const reasonBody = t(`${reasonKey}.body`, vars)
+  // A reason may carry per-friend copy (…<reason>.Mia.body / .Max.body, for the
+  // pronouns); otherwise its plain body; otherwise the generic lose copy.
+  const friendBodyKey = `${reasonKey}.${friendKey(narrative)}.body`
+  const friendBody = t(friendBodyKey, vars)
+  const reasonBody = friendBody !== friendBodyKey ? friendBody : t(`${reasonKey}.body`, vars)
   const body = reasonBody === `${reasonKey}.body` ? t('end.lose.body', vars) : reasonBody
 
   return (
     <div className="stage-scroll">
+      {/* The chosen character's lost scene (public/ending/mia-lost.png / max-lost.png). */}
+      <div className="lose-bg" style={{ backgroundImage: `url("${assetUrl(`ending/${narrative.character}-lost.png`)}")` }} aria-hidden="true" />
       <div className="intro end fade-in">
-        <div className="intro-glyph lose-glyph">⏱</div>
-        <div className="eyebrow" style={{ color: 'var(--red)' }}>{t('end.lose.eyebrow')}</div>
+       
+        <div className="eyebrow container-lose-eyebrow" style={{ color: 'var(--red)' }}>  <span className="intro-glyph lose-glyph">⏱</span>{t('end.lose.eyebrow')}</div>
         <h1 className="intro-title">{t('end.lose.titleLead', vars)} <span className="grad-red">{t('end.lose.titleAccent')}</span></h1>
         <p className="intro-tag mono">{t('end.lose.tag')}</p>
 
@@ -96,6 +120,8 @@ export function LoseScreen() {
           <h3 style={{ color: 'var(--red)' }}>{heading}</h3>
           <p>{body}</p>
         </div>
+
+        <WhatHappenedCard titleKey="end.whatHappened.titleLose" textKey="end.whatHappened" narrative={narrative} vars={vars} />
 
         <button className="btn btn-cyan btn-lg" onClick={reset}>{t('end.lose.again')}</button>
       </div>

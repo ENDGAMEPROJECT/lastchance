@@ -195,6 +195,10 @@ export function reducer(state, action) {
           linkRound: null,
         }
       }
+      // Debug lose jumps name the cause, so the lose screen shows that copy.
+      if (action.screen === 'lose' && action.reason) {
+        return { ...state, screen: 'lose', running: false, loseReason: action.reason, activeNodeId: null, reviewNodeId: null }
+      }
       return { ...state, screen: action.screen, activeNodeId: null, reviewNodeId: null }
 
     case 'COMPLETE_NODE': {
@@ -356,7 +360,7 @@ export function GameProvider({ children }) {
   }, [])
   const finishGame = useCallback((outcome, reason) => dispatch({ type: 'FINISH', outcome, reason }), [])
   const startPosttestDecision = useCallback(() => dispatch({ type: 'START_POSTTEST_DECISION' }), [])
-  const gotoScreen = useCallback((screen, scenario) => dispatch({ type: 'GOTO_SCREEN', screen, scenario }), [])
+  const gotoScreen = useCallback((screen, scenario, reason) => dispatch({ type: 'GOTO_SCREEN', screen, scenario, reason }), [])
   // The return portal's exit: into the post-test, fading in from white.
   const enterPosttestFromWhite = useCallback(() => dispatch({ type: 'GOTO_SCREEN', screen: 'posttest', fromWhite: true }), [])
   const finishReturnTalk = useCallback(() => dispatch({ type: 'FINISH_RETURN_TALK' }), [])

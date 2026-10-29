@@ -61,7 +61,7 @@ function roomImages(nodeId, narrative, locale) {
   return images
 }
 
-const endingImages = (narrative) => [assetUrl(`ending/${narrative.character}-won.png`)]
+const endingImages = (narrative) => ['won', 'lost'].map((end) => assetUrl(`ending/${narrative.character}-${end}.png`))
 const PORTAL_VIDEO = 'transitions-videos/abduction-scene.mp4'
 
 // Debug jumps, character changes and locale changes use the same resource
@@ -92,6 +92,7 @@ export function getAssetPreloadPlan({ screen, character = 'mia', locale = 'en', 
     case 'posttest':
       return { current: [...conversation, bgUrl('conversation.png')], next: endingImages(narrative) }
     case 'win':
+    case 'lose':
       return { current: endingImages(narrative), next: [] }
     default:
       return { current: [], next: [] }
