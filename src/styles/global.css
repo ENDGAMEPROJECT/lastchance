@@ -15,7 +15,7 @@
 
   /* Neon accents */
   --cyan: #16f2ff;
-    --cyan-light: #9bfaff;
+  --cyan-light: #9bfaff;
   --cyan-dim: #0aa9c4;
   --magenta-light: #ff8ae8 ; 
   --magenta: #ff2bd6;
@@ -160,7 +160,10 @@ body {
 .scene-scroll { overflow-y: auto; overflow-x: hidden; }
 
 /* ---------- Typography ---------- */
-h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0 0 0.4em; }
+h1, h2 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0 0 0.4em; }
+h3 {
+  font-family: var(--font-retro); letter-spacing: 0.02em; margin: 0 0 0.4em;
+}
 .mono { font-family: var(--font-mono); }
 .eyebrow {
   font-family: var(--font-mono);

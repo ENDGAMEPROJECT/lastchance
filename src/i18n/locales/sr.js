@@ -102,12 +102,13 @@ export default {
       "eyebrow": "Misija završena",
       "titleLead": "{friend}",
       "titleAccent": "NIJE KUPIO/LA",
-      "tag": "// ponuda je istekla, a ostalo je još {time}",
+      "tag": "Ponuda je istekla, a ostalo je još {time}",
       "heading": "Izneo/la si dokaze",
       "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam.",
       "evidenceHeading": "Predočeni dokazi",
       "posttest": "Post-test: ponovo razgovaraj sa {prijateljem}. Šta si naučio/la o prepoznavanju prevara, obavezi navođenja sponzorstava i tome zašto je ono što deluje „predobro da bi bilo istinito“ obično upravo to?",
-      "again": "↻ Igraj ponovo"
+      "again": "↻ Igraj ponovo",
+      "evidenceButton": "See your evidence"
     },
     "lose": {
       "eyebrow": "Vreme je isteklo",
@@ -119,6 +120,13 @@ export default {
       "lessonLabel": "Pouka:",
       "lesson": "Veštački stvoren osećaj hitnosti („ostala su samo 3 komada!“, „ponuda ističe za 5:00“) osmišljen je tako da te spreči da razmisliš. Uspori — prava ponuda će biti tu i sutra.",
       "again": "↻ Pokušaj ponovo",
+      "missingEvidence": {
+        "button": "See missing evidence",
+        "title": "Evidence report",
+        "collected": "Evidence collected",
+        "missing": "Evidence still missing",
+        "none": "No collected evidence"
+      },
       "reasons": {
         "timeUp": {
           "heading": "Ponuda je bila brža",

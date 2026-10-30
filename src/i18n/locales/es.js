@@ -102,23 +102,31 @@ export default {
       "eyebrow": "Mission Complete",
       "titleLead": "{friend}",
       "titleAccent": "DIDN'T BUY IT",
-      "tag": "// offer expired with {time} to spare",
+      "tag": "Offer expired with {time} to spare",
       "heading": "You made the case",
       "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam.",
       "evidenceHeading": "Evidence presented",
       "posttest": "Post-test: talk to {friend} again. What did you learn about spotting scams, disclosure, and why \"too good to be true\" usually is?",
-      "again": "↻ Play again"
+      "again": "↻ Play again",
+      "evidenceButton": "See your evidence"
     },
     "lose": {
       "eyebrow": "Time Expired",
       "titleLead": "{friend}",
       "titleAccent": "HIT \"BUY NOW\"",
-      "tag": "// the countdown reached zero",
+      "tag": "The countdown reached zero",
       "heading": "The offer got them first",
       "body": "Before you could finish gathering proof, the fake \"today only\" countdown did its job and {friend} bought {product}. That urgency was the whole trick.",
       "lessonLabel": "Lesson:",
       "lesson": "artificial urgency (\"only 3 left!\", \"offer ends in 5:00\") is designed to stop you from thinking. Slow down — a real deal will still be there tomorrow.",
       "again": "↻ Try again",
+      "missingEvidence": {
+        "button": "See missing evidence",
+        "title": "Evidence report",
+        "collected": "Evidence collected",
+        "missing": "Evidence still missing",
+        "none": "No collected evidence"
+      },
       "reasons": {
         "timeUp": {
           "heading": "The offer got them first",

@@ -1,7 +1,10 @@
+import { useState } from 'react'
 import { useGame, formatTime } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { NARRATIVE } from '../../game/gameData.js'
 import { assetUrl } from '../../game/assets.js'
+import { getAllEvidence } from '../../game/evidence.js'
+import Modal from '../Modal.jsx'
 import './screens.css'
 
 /* Clouds drifting across the win sky: [top px, scale, seconds to cross, start offset 0–1, opacity]. */
@@ -34,56 +37,76 @@ const friendKey = (narrative) => (narrative.friendId === 'mia' ? 'Mia' : 'Max')
 
 /* "What happened / would have happened to {friend}" — the consequence card on
    every ending, in the lose screen's red card style. */
-function WhatHappenedCard({ titleKey, textKey, narrative, vars }) {
+function WhatHappenedCard({ titleKey, textKey, narrative, vars, light = false }) {
   const t = useT()
   return (
-    <div className="intro-card panel clip end-what">
+    <div className={light ? 'intro-card panel-light clip end-what end-what-light' : 'intro-card what-happened-card panel clip end-what'}>
       <h3>{t(titleKey, vars)}</h3>
       <p>{t(`${textKey}.${friendKey(narrative)}`, vars)}</p>
     </div>
   )
 }
 
-export function WinScreen() {
-  const { timeLeft, evidence, reset, narrative } = useGame()
+/* Lose-screen popover: the evidence the player gathered vs. what was still
+   out there, as two lists. */
+function EvidenceReport({ open, onClose }) {
+  const { evidence, narrative } = useGame()
   const t = useT()
+  const collectedIds = new Set(evidence.map((e) => e.id))
+  const missing = getAllEvidence(t, narrative).filter((e) => !collectedIds.has(e.id))
+  return (
+    <Modal open={open} onClose={onClose} title={t('end.lose.missingEvidence.title')} accent="magenta" width={620} className="evidence-report">
+      <h4 className="evidence-report-heading is-collected">{t('end.lose.missingEvidence.collected')}</h4>
+      {evidence.length === 0 ? (
+        <p className="muted">{t('end.lose.missingEvidence.none')}</p>
+      ) : (
+        <ul className="evidence-report-list is-collected">
+          {evidence.map((e) => <li key={e.id}>{e.label}</li>)}
+        </ul>
+      )}
+      {missing.length > 0 && (
+        <>
+          <h4 className="evidence-report-heading is-missing">{t('end.lose.missingEvidence.missing')}</h4>
+          <ul className="evidence-report-list is-missing">
+            {missing.map((e) => <li key={e.id}>{e.label}</li>)}
+          </ul>
+        </>
+      )}
+    </Modal>
+  )
+}
+
+export function WinScreen() {
+  const { timeLeft, reset, narrative } = useGame()
+  const t = useT()
+  const [reportOpen, setReportOpen] = useState(false)
   const vars = { friend: narrative.friend, product: narrative.product, time: formatTime(timeLeft) }
 
   return (
     <div className="stage-scroll win-scene">
       <WinSky />
-      {/* <img className="offer-phone-only" src={assetUrl("bg/offer-phone-only.png")}></img> */}
       {/* The chosen character, bottom-right (public/ending/mia-won.png / max-won.png). */}
       <img className="win-players" src={assetUrl(`ending/${narrative.character}-won.png`)} alt="" />
-      <div className="win-title-container">
-         <div className="eyebrow" style={{ color: 'var(--green)', fontSize: "16px", fontWeight: "bold" }}>
-           <span>{t('end.win.eyebrow')} </span>
-            <span className="intro-glyph win-glyph">✓</span>
+      <div className="intro end fade-in">
+        <div className="eyebrow" style={{ color: 'var(--green)', fontSize: "16px", fontWeight: "bold" }}>
+          <span>{t('end.win.eyebrow')} </span>
+          <span className="intro-glyph win-glyph">✓</span>
         </div>
         <h1 className="intro-title">{t('end.win.titleLead', vars)} <span className="grad">{t('end.win.titleAccent')}</span></h1>
-        <p className="intro-tag mono">{t('end.win.tag', vars)}</p>
-          {/* <h3 className="win-congrats">{t('end.win.heading')}</h3> */}
-          <p className="win-description">{t('end.win.body', vars)}</p>
-      </div>
-      <div className="intro end fade-in">
-       
+        <h3 style={{ fontSize: "1.17em", fontFamily: "var(--font-retro)", color: "#2gc3c52", textAlign: "center" }}>{t('end.win.tag', vars)}</h3>
+        <p style={{ fontSize: "1.2rem", fontFamily: "var(--font-retro)", marginBottom: 16, textAlign: "center" }}
+        className="win-description">{t('end.win.body', vars)}</p>
 
-        <div className="intro-card panel-light clip panel-glow-cyan">
-        
-          {evidence.length > 0 && (
-            <>
-              <div className="" style={{ color: '#16624c', marginTop: 2, fontWeight: "bold", fontFamily: "var(--font-display)", fontSize: "1.2rem" }}>{t('end.win.evidenceHeading')}</div>
-              <ul className="evidence-list">
-                {evidence.map((e) => (<li key={e.id}><span className="ev-dot" />{e.label}</li>))}
-              </ul>
-            </>
-          )}
+        <WhatHappenedCard titleKey="end.whatHappened.titleWin" textKey="end.whatCould" narrative={narrative} vars={vars} light />
+
+        <div className="end-actions">
+          <button className="btn-light btn-lg" onClick={reset}>{t('end.win.again')}</button>
+          <button className="btn-light btn-lg" onMouseDown={(e) => e.preventDefault()} onClick={() => setReportOpen(true)}>
+            {t('end.win.evidenceButton')}
+          </button>
         </div>
-
-        <WhatHappenedCard titleKey="end.whatHappened.titleWin" textKey="end.whatCould" narrative={narrative} vars={vars} />
-
-        <button className="btn-light btn-lg" onClick={reset}>{t('end.win.again')}</button>
       </div>
+      <EvidenceReport open={reportOpen} onClose={() => setReportOpen(false)} />
     </div>
   )
 }
@@ -91,6 +114,7 @@ export function WinScreen() {
 export function LoseScreen() {
   const { reset, loseReason, narrative } = useGame()
   const t = useT()
+  const [reportOpen, setReportOpen] = useState(false)
   const vars = { friend: narrative.friend, product: narrative.product }
 
   // Per-outcome heading/body, falling back to the generic time-up copy. The
@@ -107,24 +131,30 @@ export function LoseScreen() {
   const body = reasonBody === `${reasonKey}.body` ? t('end.lose.body', vars) : reasonBody
 
   return (
-    <div className="stage-scroll">
+    <div className="stage-scroll lose-scene">
       {/* The chosen character's lost scene (public/ending/mia-lost.png / max-lost.png). */}
       <div className="lose-bg" style={{ backgroundImage: `url("${assetUrl(`ending/${narrative.character}-lost.png`)}")` }} aria-hidden="true" />
       <div className="intro end fade-in">
        
         <div className="eyebrow container-lose-eyebrow" style={{ color: 'var(--red)' }}>  <span className="intro-glyph lose-glyph">⏱</span>{t('end.lose.eyebrow')}</div>
         <h1 className="intro-title">{t('end.lose.titleLead', vars)} <span className="grad-red">{t('end.lose.titleAccent')}</span></h1>
-        <p className="intro-tag mono">{t('end.lose.tag')}</p>
+        {/* <p className="intro-tag mono">{t('end.lose.tag')}</p> */}
 
-        <div className="intro-card panel clip" style={{ borderColor: 'rgba(255,59,92,0.4)', boxShadow: 'var(--glow-red)' }}>
+        <div className="" style={{ fontSize: "1.2rem", fontFamily: "var(--font-retro)", marginBottom: 16, textAlign: "center" }}>
           <h3 style={{ color: 'var(--red)' }}>{heading}</h3>
           <p>{body}</p>
         </div>
 
         <WhatHappenedCard titleKey="end.whatHappened.titleLose" textKey="end.whatHappened" narrative={narrative} vars={vars} />
 
-        <button className="btn btn-cyan btn-lg" onClick={reset}>{t('end.lose.again')}</button>
+        <div className="end-actions">
+          <button className="btn btn-cyan btn-lg" onClick={reset}>{t('end.lose.again')}</button>
+          <button className="btn btn-magenta btn-lg" onMouseDown={(e) => e.preventDefault()} onClick={() => setReportOpen(true)}>
+            {t('end.lose.missingEvidence.button')}
+          </button>
+        </div>
       </div>
+      <EvidenceReport open={reportOpen} onClose={() => setReportOpen(false)} />
     </div>
   )
 }

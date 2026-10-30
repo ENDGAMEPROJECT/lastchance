@@ -103,6 +103,13 @@
     var(--glow-cyan),
     0 18px 34px rgba(0, 0, 0, 0.45);
 }
+.what-happened-card {
+  background: #ff3b5c32 !important;
+  p {
+    font-size: 1rem !important;
+  color: #ed7177 !important;
+  }
+}
 .intro-card h3 {
   margin-bottom: 8px;
   font-size: 1.05rem;
@@ -234,7 +241,7 @@
     0 18px 34px rgba(0, 0, 0, 0.45);
 }
 .intro.end .intro-card p {
-  font-size: 0.92rem;
+  font-size: 1.1rem;
 }
 .evidence-list {
   margin-top: 8px;
@@ -500,7 +507,7 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  height: 350px;
+  height: 260px;
   width: auto;
   z-index: 0;
   pointer-events: none;
@@ -516,8 +523,7 @@
   position: relative;
   z-index: 1;
   max-width: 600px;
-  margin: 0;
-} /* room for the pair on the left */
+}
 
 /* Keep the copy readable over the bright sky. */
 .win-scene .eyebrow,
@@ -529,6 +535,10 @@
 }
 .win-scene .intro-tag {
   color: #081938;
+}
+
+.lose-scene .intro-title {
+  font-size: 3rem;
 }
 /* The title mixes plain and gradient (transparent-filled) text: a text-shadow
    would show through the gradient letters, and a filter on the clipped span
@@ -603,6 +613,19 @@ h3.win-congrats {
   background-repeat: no-repeat;
   pointer-events: none;
 }
+/* Red version of the app-shell floor grid, drawn over the lost scene. */
+.lose-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 59, 92, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 59, 92, 0.22) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 40%, transparent 85%);
+  animation: grid-drift 22s linear infinite;
+}
+.reduced-motion .lose-bg::after { animation: none; }
 
 /* Consequence card ("What happened to {friend}?") — same red card as the lose
    reason; tighter gap when it follows another card. */
@@ -612,3 +635,55 @@ h3.win-congrats {
 }
 .intro.end .end-what h3 { color: var(--red); }
 .intro.end .intro-card:has(+ .end-what) { margin-bottom: 10px; }
+
+/* Lose screen: "Try again" + "See missing evidence" side by side. */
+.end-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 72px;
+}
+
+/* Evidence report popover — darker, blurrier backdrop than the default modal. */
+.modal-backdrop:has(.evidence-report) {
+  background: rgba(2, 3, 10, 0.82);
+  backdrop-filter: blur(8px);
+}
+.evidence-report-heading {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.evidence-report-heading.is-collected { color: var(--green); }
+.evidence-report-heading.is-missing { color: var(--red); margin-top: 20px; }
+.evidence-report-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.evidence-report-list li {
+  position: relative;
+  padding-left: 20px;
+  line-height: 1.4;
+}
+.evidence-report-list li::before {
+  position: absolute;
+  left: 0;
+  font-weight: 700;
+}
+.evidence-report-list.is-collected li::before { content: '✓'; color: var(--green); }
+.evidence-report-list.is-missing li { color: var(--muted); }
+.evidence-report-list.is-missing li::before { content: '✕'; color: var(--red); }
+
+/* Win screen's "What could have happened" card: light frosted panel
+   (.panel-light) instead of the red neon lose card. */
+.intro.end .intro-card.end-what.end-what-light {
+  border-color: rgba(214, 230, 248, 0.888);
+  box-shadow: 0 10px 30px rgba(30, 70, 120, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+.intro.end .end-what-light h3 { color: #0f8866; }
+.intro.end .end-what-light p { font-size: 1rem; }
