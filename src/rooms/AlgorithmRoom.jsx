@@ -6,6 +6,7 @@ import { IS_PHONE } from '../game/device.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { playSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
+import { track, OBJ } from '../game/xapi.js'
 import { useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
@@ -31,6 +32,15 @@ import './AlgorithmRoom.css'
 /* Columns, in order: 0 = Demographic, 1 = Follows / likes, 2 = Insecurity.
    Each row combines a person's demographic + what they follow + an
    insecurity, which the algorithm turns into an insecurity-exploiting ad. */
+/* `xapiName` names the equation for analytics in stable English (its own copy
+   is localised). The blank slot's column is the factor being guessed. */
+const EQUATION_NAMES = {
+  r1: 'Equation 1: Miracle skincare cream',
+  r2: 'Equation 2: Muscle-gain supplement',
+  r3: 'Equation 3: Baldness cream',
+  r4: 'Equation 4: Weight-loss pills',
+}
+
 const ROWS = [
   {
     id: 'r1',
@@ -194,7 +204,11 @@ export default function AlgorithmRoom({ node }) {
   useEffect(() => () => window.clearTimeout(clearTimer.current), [])
 
   function checkCode(entry) {
-    if (entry === CODES.algorithmRoom) {
+    const right = entry === CODES.algorithmRoom
+    track('submitted', OBJ.roomCode(), {
+      node: node.id, response: entry, success: right, completion: right,
+    })
+    if (right) {
       setStatus('ok')
       playSound('twinkle.mp3')
       window.setTimeout(() => setPhase('choice'), 850)
@@ -222,7 +236,11 @@ export default function AlgorithmRoom({ node }) {
   // reflection unlocks; wrong → a red flash + a nudge (tile stays in the tray).
   function handleDrop(row, tileId) {
     if (placements[row.id]) return
-    if (tileId === blankSlot(row).tileId) {
+    const right = tileId === blankSlot(row).tileId
+    track('dropped', OBJ.equation(row.id, EQUATION_NAMES[row.id]), {
+      node: node.id, response: tileId, success: right, completion: right,
+    })
+    if (right) {
       setWrongFlash(false)
       setPlacements((p) => ({ ...p, [row.id]: tileId }))
     } else {
@@ -233,6 +251,7 @@ export default function AlgorithmRoom({ node }) {
   }
   // Fires exactly once, when the player logs the evidence after a clean run.
   function finish() {
+    track('viewed', OBJ.algoProfile(narrative.friend), { node: node.id })
     addEvidence({
       id: 'ev-algo',
       label: t('rooms.algorithm.evidence', { friend: narrative.friend }),
@@ -271,7 +290,7 @@ export default function AlgorithmRoom({ node }) {
               className={`ar-door-keypad ${IS_PHONE ? 'pulse' : ''}`}
               style={{ '--keypad-image': `url(${bgUrl('algorithm-door.jpg')})` }}
               onMouseDown={(event) => event.preventDefault()}
-              onClick={() => { playSound('open_door.mp3'); setPhase('unlock') }}
+              onClick={() => { playSound('open_door.mp3'); track('opened', OBJ.doorKeypad(), { node: node.id }); setPhase('unlock') }}
               aria-label={t('rooms.algorithm.door.action')}
             />
           </DoorKeypadMap>
@@ -346,7 +365,7 @@ export default function AlgorithmRoom({ node }) {
           <div className="ar-options">
             <button
               className={`ar-option ${choice === 'A' ? 'picked' : ''}`}
-              onClick={() => setChoice('A')}
+              onClick={() => { track('selected', OBJ.privacyChoice(), { node: node.id, response: 'A', success: false }); setChoice('A') }}
             >
               <div className="ar-opt-tag">{t('rooms.algorithm.choice.optionATag')}</div>
               <div className="ar-opt-icon">🎯</div>
@@ -359,7 +378,7 @@ export default function AlgorithmRoom({ node }) {
 
             <button
               className={`ar-option ${choice === 'B' ? 'picked' : ''}`}
-              onClick={() => setChoice('B')}
+              onClick={() => { track('selected', OBJ.privacyChoice(), { node: node.id, response: 'B', success: true }); setChoice('B') }}
             >
               <div className="ar-opt-tag">{t('rooms.algorithm.choice.optionBTag')}</div>
               <div className="ar-opt-icon">🛡️</div>
@@ -494,7 +513,10 @@ export default function AlgorithmRoom({ node }) {
                     {lessonRead && <button
                       className="btn btn-cyan"
                       onMouseDown={(event) => event.preventDefault()}
-                      onClick={() => setStep((current) => current + 1)}
+                      onClick={() => {
+                        track('viewed', OBJ.equationLesson(row.id, EQUATION_NAMES[row.id]), { node: node.id })
+                        setStep((current) => current + 1)
+                      }}
                     >
                       {step < ROWS.length - 1
                         ? t('rooms.algorithm.equations.nextBtn')

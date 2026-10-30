@@ -4,6 +4,7 @@ import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
 import { playSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
+import { track, OBJ } from '../game/xapi.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { useStage } from '../components/Stage.jsx'
 import './AdsCorridor.css'
@@ -24,10 +25,12 @@ import './AdsCorridor.css'
    letter left-to-right spells the exit code. */
 const POSTERS = [
   // Display order 2 · 1 · 4 · 3. `textIndex` points at this poster's i18n text.
-  { id: 'prize', textIndex: 1, tint: 'gold', image: '2-get-gift.png' },
-  { id: 'trial', textIndex: 0, tint: 'blue', image: '1-get-offer.png' },
-  { id: 'virus', textIndex: 3, tint: 'purple', image: '4-get-protection.png' },
-  { id: 'rich', textIndex: 2, tint: 'green', image: '3-get-rich.png' },
+  // `xapiName` is a stable English label for analytics: the poster's own copy
+  // is localised, so it cannot name the activity.
+  { id: 'prize', textIndex: 1, tint: 'gold', image: '2-get-gift.png', xapiName: 'Poster: Congratulations you won' },
+  { id: 'trial', textIndex: 0, tint: 'blue', image: '1-get-offer.png', xapiName: 'Poster: Free 30-day trial' },
+  { id: 'virus', textIndex: 3, tint: 'purple', image: '4-get-protection.png', xapiName: 'Poster: Virus detected' },
+  { id: 'rich', textIndex: 2, tint: 'green', image: '3-get-rich.png', xapiName: 'Poster: Get rich quick' },
 ]
 
 /* Wrap the first occurrence (case-insensitive) of `letter` in `text` with a red
@@ -76,6 +79,22 @@ export default function AdsCorridor({ node }) {
   const posterTexts = t('rooms.ads.posters')
   const ANSWER = POSTERS.map((p) => posterTexts[p.textIndex]?.letter || '').join('')
 
+  // Each poster's truth, the first time it is read under the beam, carrying the
+  // code letter it hides. Driven off `seen` so sweeping back and forth over the
+  // same poster does not re-report it.
+  const reportedPosters = useRef({})
+  useEffect(() => {
+    Object.keys(seen).forEach((id) => {
+      if (reportedPosters.current[id]) return
+      reportedPosters.current[id] = true
+      const poster = POSTERS.find((p) => p.id === id)
+      track('viewed', OBJ.poster(id, poster?.xapiName || id), {
+        node: node.id,
+        response: posterTexts[poster?.textIndex]?.letter || '',
+      })
+    })
+  }, [seen])
+
   // Equipping the Truth Flashlight from the Bag switches the beam on.
   useEffect(() => {
     const onUseItem = (event) => {
@@ -116,7 +135,15 @@ export default function AdsCorridor({ node }) {
   function submit(e) {
     e.preventDefault()
     if (solved) return
-    if (code.trim().toUpperCase() === ANSWER.toUpperCase()) {
+    const right = code.trim().toUpperCase() === ANSWER.toUpperCase()
+    track('submitted', OBJ.exitCode(), {
+      node: node.id,
+      response: code.trim().toUpperCase(),
+      success: right,
+      completion: right,
+      ...(right ? { scaled: 1 } : {}),
+    })
+    if (right) {
       addEvidence({
         id: 'ev-ads',
         label: t('rooms.ads.evidence'),

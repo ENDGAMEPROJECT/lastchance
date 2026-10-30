@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useGame, formatTime } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
@@ -6,6 +6,7 @@ import { bgUrl } from '../game/assets.js'
 import { DEBUG, settings } from '../game/settings.js'
 import { isMuted, setMuted } from '../game/sound.js'
 import { getHintContext, getHintPlan } from '../game/hints.js'
+import { track, OBJ, EXT } from '../game/xapi.js'
 import { useStage } from './Stage.jsx'
 import { ROOM_PROGRESS_EVENT } from '../game/roomProgress.js'
 import Modal from './Modal.jsx'
@@ -159,18 +160,78 @@ export default function HUD() {
   }, [hintsOpen, hintContext, linkRound])
 
   const toggleHint = (index) => {
-    setRevealedHints((current) => current.includes(index)
+    // Only the reveal is reported; re-collapsing a hint is not a new event.
+    // Read state directly rather than from the updater — StrictMode runs
+    // updaters twice in dev, which would double-report.
+    if (!revealedHints.includes(index)) {
+      // Keyed on the node, like every other statement's parent, so hint use
+      // joins to the rest of a district's activity.
+      track('asked', OBJ.hint(xapiNode, index + 1), { node: xapiNode, response: index + 1 })
+    }
+    setRevealedHints((current) => (current.includes(index)
       ? current.filter((item) => item !== index)
-      : [...current, index])
+      : [...current, index]))
   }
+
+  /* ---- xAPI: HUD panels and settings.
+     Driven off state rather than the buttons, because every panel has a
+     desktop bar control, a mobile round button AND closePanels() — one effect
+     per panel covers all three without triple-reporting. ---- */
+  const xapiNode = screen === 'room' ? activeNodeId
+    : screen === 'welcome' || screen === 'enter' ? 'intro'
+      : screen === 'return' || screen === 'review' ? 'map'
+        : screen
+  const hudInit = useRef({ bag: true, hints: true, tab: true, mute: true, full: true })
+
+  useEffect(() => {
+    if (hudInit.current.bag) { hudInit.current.bag = false; return }
+    track(bagOpen ? 'opened' : 'closed', OBJ.bag(), { node: xapiNode })
+  }, [bagOpen])
+
+  useEffect(() => {
+    if (hudInit.current.hints) { hudInit.current.hints = false; return }
+    track(hintsOpen ? 'opened' : 'closed', OBJ.hints(), { node: xapiNode })
+  }, [hintsOpen])
+
+  // No statement for the report modal opening: useItem() already reports
+  // `used` for the very same click, so tracking both double-counts one gesture.
+
+  useEffect(() => {
+    if (hudInit.current.tab) { hudInit.current.tab = false; return }
+    track('selected', OBJ.bagTab(), { node: xapiNode, response: bagTab })
+  }, [bagTab])
+
+  useEffect(() => {
+    if (hudInit.current.mute) { hudInit.current.mute = false; return }
+    track('updated', OBJ.sound(), { node: xapiNode, response: muted ? 'off' : 'on' })
+  }, [muted])
+
+  useEffect(() => {
+    if (hudInit.current.full) { hudInit.current.full = false; return }
+    track('updated', OBJ.fullscreen(), { node: xapiNode, response: fullscreen ? 'on' : 'off' })
+  }, [fullscreen])
+
+  // The game deciding the player looks stuck and lighting up Bag or Hints.
+  useEffect(() => {
+    if (bagReminder) track('experienced', OBJ.nudge(), { node: xapiNode, response: 'bag' })
+  }, [bagReminder])
+  useEffect(() => {
+    if (hintReminder) track('experienced', OBJ.nudge(), { node: xapiNode, response: 'hints' })
+  }, [hintReminder])
 
   const itemRoom = { emojiCard: 'influencer-avenue', dataReport: 'algorithm-room', truthLight: 'ads-corridor' }
   const useItem = (item) => {
     if (itemRoom[item.id] !== activeNodeId) {
+      // Reaching for the right tool in the wrong room: logged as an
+      // unsuccessful use, which is more informative than silence.
+      track('used', OBJ.reward(item.id), {
+        node: activeNodeId, response: `${item.id};${activeNodeId}`, success: false,
+      })
       setDeniedItem(item.id)
       window.setTimeout(() => setDeniedItem(null), 700)
       return
     }
+    track('used', OBJ.reward(item.id), { node: activeNodeId, success: true })
     setBagOpen(false)
     if (item.id === 'dataReport') setReportOpen(true)
     else window.dispatchEvent(new CustomEvent('lastchance:use-item', { detail: { id: item.id } }))

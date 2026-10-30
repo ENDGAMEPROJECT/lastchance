@@ -7,6 +7,7 @@ import { useReadingGate } from '../game/readingGate.js'
 import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
+import { track, OBJ } from '../game/xapi.js'
 import { useI18n, useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
@@ -64,6 +65,14 @@ const POSTS = [
   //   correctLabel: 'NOTHING',
   // },
 ]
+
+/* Stable English names for analytics: the product copy is localised, so it
+   cannot name the activity. Keys are PRODUCTS ids. */
+const PRODUCT_NAMES = {
+  mug: 'Product: Mug',
+  novapad: 'Product: NovaPad X',
+  speaker: 'Product: Speaker',
+}
 
 /* ---- Stage 2 content: the three products for reverse image search ---- */
 const PRODUCTS = [
@@ -623,12 +632,18 @@ export default function InfluencerAvenue({ node }) {
   const publicationTrigger = useRef(null)
   const [commentLikes, setCommentLikes] = useState({})
   function toggleCommentLike(postId, index) {
+    // Only the like is reported, not un-liking.
+    if (!commentLikes[postId]?.[index]) {
+      track('liked', OBJ.postComment(postId, index + 1), { node: node.id, response: index + 1 })
+    }
     setCommentLikes((previous) => ({
       ...previous,
       [postId]: { ...previous[postId], [index]: !previous[postId]?.[index] },
     }))
   }
   function closePublication() {
+    const open = POSTS[publicationIndex]
+    if (open) track('closed', OBJ.post(open.id), { node: node.id, response: open.id })
     setPublicationIndex(null)
     publicationTrigger.current?.focus({ preventScroll: true })
   }
@@ -648,6 +663,9 @@ export default function InfluencerAvenue({ node }) {
   function enterLetter(letter) {
     if (!canEdit || selectedAnswer.length >= selectedPost.correctLabel.length) return
     const next = selectedAnswer + letter
+    track('selected', OBJ.influencers(), {
+      node: node.id, response: `${letter};${next}`,
+    })
     if (next.length === selectedPost.correctLabel.length) {
       playSound(next === selectedPost.correctLabel ? 'twinkle.mp3' : 'wrong.mp3')
     }
@@ -656,6 +674,9 @@ export default function InfluencerAvenue({ node }) {
 
   function eraseLetter() {
     if (!canEdit) return
+    track('unselected', OBJ.influencers(), {
+      node: node.id, response: `${selectedAnswer.slice(-1)};${selectedAnswer.slice(0, -1)}`,
+    })
     setAnswers((prev) => ({ ...prev, [selectedPostId]: selectedAnswer.slice(0, -1) }))
   }
 
@@ -663,6 +684,13 @@ export default function InfluencerAvenue({ node }) {
     if (stage !== 'label' || !POSTS.every((post) => answers[post.id] === post.correctLabel)) return
     // Keep all three completed words visible briefly, then recap what each
     // label means (disclosure) before moving on to the reverse-search stage.
+    track('submitted', OBJ.labels(), {
+      node: node.id,
+      response: POSTS.map((post) => answers[post.id]).join(';'),
+      success: true,
+      scaled: 1,
+      completion: true,
+    })
     const timer = window.setTimeout(() => {
       setDecoderOpen(false)
       setStage('labelFeedback')
@@ -700,6 +728,10 @@ export default function InfluencerAvenue({ node }) {
 
   // Press the held stamp onto a product's slot.
   function stampVerdict(id, value) {
+    const product = PRODUCTS.find((p) => p.id === id)
+    track('dropped', OBJ.product(id, PRODUCT_NAMES[id] || id), {
+      node: node.id, response: value, success: value === product?.verdict, completion: true,
+    })
     pick(id, value)
     setStampFx((n) => n + 1)
     playSound('stamp.mp3') // the rubber-stamp ka-chunk
@@ -707,11 +739,15 @@ export default function InfluencerAvenue({ node }) {
   // Grab a stamp-maker (toggle it in/out of your hand); remember where it started.
   function grabStamp(value, e) {
     if (e) posRef.current = { x: e.clientX, y: e.clientY }
+    if (heldStamp !== value) track('selected', OBJ.stamp(value), { node: node.id, response: value })
     setHeldStamp((cur) => (cur === value ? null : value))
   }
   // Peel a product's stamp off again (it becomes unclassified).
   function removeStamp(id) {
     setVerifyErr('')
+    if (picks[id]) {
+      track('unselected', OBJ.product(id, PRODUCT_NAMES[id] || id), { node: node.id, response: picks[id] })
+    }
     setPicks((p) => { const next = { ...p }; delete next[id]; return next })
   }
   // Click the product's slot while holding a stamp → press it.
@@ -722,7 +758,10 @@ export default function InfluencerAvenue({ node }) {
 
   useEffect(() => {
     const onUseItem = (event) => {
-      if (event.detail?.id === 'emojiCard' && hasItem('emojiCard') && stage === 'label') setDecoderOpen(true)
+      if (event.detail?.id === 'emojiCard' && hasItem('emojiCard') && stage === 'label') {
+        track('opened', OBJ.decoder(), { node: node.id })
+        setDecoderOpen(true)
+      }
     }
     window.addEventListener('lastchance:use-item', onUseItem)
     return () => window.removeEventListener('lastchance:use-item', onUseItem)
@@ -736,6 +775,7 @@ export default function InfluencerAvenue({ node }) {
     setVerifyErr('')
     if (searched[id]) { setShownId(id); return }
     setActiveId(id)
+    track('searched', OBJ.product(id, PRODUCT_NAMES[id] || id), { node: node.id })
     playSound('search.mp3') // "searching the web…" whir
     clearTimeout(searchTimer.current)
     searchTimer.current = window.setTimeout(() => {
@@ -768,6 +808,13 @@ export default function InfluencerAvenue({ node }) {
       return
     }
     const allCorrect = PRODUCTS.every((p) => picks[p.id] === p.verdict)
+    track('submitted', OBJ.verification(), {
+      node: node.id,
+      response: PRODUCTS.map((p) => picks[p.id]).join(';'),
+      success: allCorrect,
+      completion: allCorrect,
+      ...(allCorrect ? { scaled: 1 } : {}),
+    })
     if (!allCorrect) {
       playSound('wrong.mp3')
       setVerifyErr(t('rooms.influencer.stage2.errWrong'))
@@ -829,7 +876,7 @@ export default function InfluencerAvenue({ node }) {
                 <article
                   key={p.id}
                   className={`ia-post ${correct ? 'solved' : ''} ${selected ? 'selected' : ''}`}
-                  onClick={() => setSelectedPostId(p.id)}
+                  onClick={() => { track('selected', OBJ.post(p.id), { node: node.id, response: p.id }); setSelectedPostId(p.id) }}
                 >
                   {/* Social card header */}
                   <div className="ia-card-top">
@@ -862,6 +909,7 @@ export default function InfluencerAvenue({ node }) {
                     onOpen={(event) => {
                       event.stopPropagation()
                       publicationTrigger.current = event.currentTarget
+                      track('opened', OBJ.post(p.id), { node: node.id, response: p.id })
                       setPublicationIndex(idx)
                     }} />
 
@@ -885,7 +933,7 @@ export default function InfluencerAvenue({ node }) {
                     aria-pressed={selected}
                     aria-label={t('rooms.influencer.stage1.selectPost', { name: copy.username })}
                     onMouseDown={(event) => event.preventDefault()}
-                    onClick={() => setSelectedPostId(p.id)}
+                    onClick={() => { track('selected', OBJ.post(p.id), { node: node.id, response: p.id }); setSelectedPostId(p.id) }}
                   >
                     <span className="ia-answer-letters" aria-hidden="true">
                       {Array.from({ length: p.correctLabel.length }, (_, index) => (
@@ -996,7 +1044,10 @@ export default function InfluencerAvenue({ node }) {
               </div>
             </div>
 
-            {labelFeedbackRead && <button className="btn btn-purple btn-lg" onClick={() => setStage('explain')}>
+            {labelFeedbackRead && <button className="btn btn-purple btn-lg" onClick={() => {
+              track('viewed', OBJ.labelsRecap(), { node: node.id })
+              setStage('explain')
+            }}>
               {t('rooms.influencer.labelFeedback.continue')}
             </button>}
           </div>
@@ -1030,7 +1081,10 @@ export default function InfluencerAvenue({ node }) {
               <b className="lead-label">{t('rooms.influencer.explain.takeawayLabel')}</b> {t('rooms.influencer.explain.takeaway')}
             </div> */}
 
-            {explainRead && <button className="btn btn-purple btn-lg" onClick={() => setStage('verify')}>
+            {explainRead && <button className="btn btn-purple btn-lg" onClick={() => {
+              track('viewed', OBJ.searchExplainer(), { node: node.id })
+              setStage('verify')
+            }}>
               {t('rooms.influencer.explain.continue')}
             </button>}
           </div>

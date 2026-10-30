@@ -4,6 +4,7 @@ import { useI18n, useT, AVAILABLE_LOCALES, localeName } from '../../i18n/index.j
 import { bgUrl } from '../../game/assets.js'
 import { preloadGameAssets } from '../../game/preloadAssets.js'
 import { IS_PHONE } from '../../game/device.js'
+import { initActor, track, OBJ } from '../../game/xapi.js'
 import RotatePrompt from './RotatePrompt.jsx'
 import './welcome.css'
 
@@ -42,6 +43,21 @@ export default function WelcomeScreen() {
     if (!character) return setErr(t('welcome.characterError'))
     if (!languageChosen) return setErr(t('welcome.languageError'))
     const entry = { alias: a, age: n, character }
+
+    // The run's xAPI identity. Age and language become actor extensions, so
+    // every later statement carries them in its context (see game/xapi.js).
+    // `actor:` passes it explicitly — module state isn't visible to these two
+    // calls yet on the very first render after initActor.
+    const actor = initActor({ alias: a, age: n, character, lang: locale })
+    track('submitted', OBJ.playerProfile(), {
+      node: 'intro',
+      response: `${a};${n};${character};${locale}`,
+      success: true,
+      completion: true,
+      actor,
+    })
+    track('started', OBJ.game(), { node: 'intro', actor })
+
     if (IS_PHONE) setPending(entry)
     else submitWelcome(entry)
   }
@@ -88,12 +104,12 @@ export default function WelcomeScreen() {
           <legend>{t('welcome.characterLabel')}</legend>
           <div className="character-picker">
             <label className={`character-option is-mia ${character === 'mia' ? 'on' : ''}`}>
-              <input type="radio" name="character" value="mia" checked={character === 'mia'} onChange={() => { setErr(''); setCharacter('mia') }} />
+              <input type="radio" name="character" value="mia" checked={character === 'mia'} onChange={() => { setErr(''); setCharacter('mia'); track('selected', OBJ.character(), { node: 'intro', response: 'mia' }) }} />
               <img className="character-figure" src={bgUrl('algorithm-room/mia-figure-nobg.png')} alt="" draggable={false} />
               <span className="character-name">{t('welcome.characterMia')}</span>
             </label>
             <label className={`character-option is-max ${character === 'max' ? 'on' : ''}`}>
-              <input type="radio" name="character" value="max" checked={character === 'max'} onChange={() => { setErr(''); setCharacter('max') }} />
+              <input type="radio" name="character" value="max" checked={character === 'max'} onChange={() => { setErr(''); setCharacter('max'); track('selected', OBJ.character(), { node: 'intro', response: 'max' }) }} />
               <img className="character-figure" src={bgUrl('algorithm-room/max-figure-nobg.png')} alt="" draggable={false} />
               <span className="character-name">{t('welcome.characterMax')}</span>
             </label>
@@ -109,7 +125,7 @@ export default function WelcomeScreen() {
                 key={code}
                 className={`lang-chip ${languageChosen && locale === code ? 'on' : ''}`}
                 aria-pressed={languageChosen && locale === code}
-                onClick={() => { setErr(''); setLocale(code); setLanguageChosen(true) }}
+                onClick={() => { setErr(''); setLocale(code); setLanguageChosen(true); track('selected', OBJ.language(), { node: 'intro', response: code }) }}
               >
                 {localeName(code)} <span className="lang-flag" aria-hidden="true">{FLAGS[code]}</span>
               </button>

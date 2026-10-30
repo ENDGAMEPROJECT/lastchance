@@ -5,6 +5,7 @@ import dictionaries from '../src/i18n/dictionaries.js'
 const { en } = dictionaries
 import { NODES, ITEMS } from '../src/game/gameData.js'
 import { ROULETTE_WHEELS, ROULETTE_SEGMENTS } from '../src/game/rouletteData.js'
+import { TEST_ITEMS } from '../src/game/testItems.js'
 
 const problems = []
 const ok = (cond, msg) => { if (!cond) problems.push(msg) }
@@ -39,8 +40,11 @@ const idsIn = (file) => {
 // --- Room-by-room dynamic namespaces ---
 const R = en.rooms
 
-// link: flags.<id> (8) + rounds[] (3, each with a/b/c notes)
-for (const id of ['suffix', 'httpNoS', 'weirdTld', 'homoglyph', 'typo', 'httpsGood', 'lock', 'looksReal'])
+// link: flags.<id> (7) + rounds[] (3, each with a/b/c notes)
+// Keep this list in sync with FLAG_IDS in rooms/LinkDistrict.jsx — only ids the
+// quiz actually renders. ('looksReal' was a decoy that has since been dropped
+// from FLAG_IDS and from the imported sheet, so it is no longer required.)
+for (const id of ['suffix', 'httpNoS', 'weirdTld', 'homoglyph', 'typo', 'httpsGood', 'lock'])
   ok(has(R.link.flags, id), `rooms.link.flags.${id} missing`)
 ok(Array.isArray(R.link.rounds) && R.link.rounds.length === 3, 'rooms.link.rounds should have 3 entries')
 for (const [i, r] of (R.link.rounds || []).entries())
@@ -77,6 +81,29 @@ ok(R.influencer.classify && Object.keys(R.influencer.classify).length >= 3, 'roo
 
 // ads: posters[]
 ok(Array.isArray(R.ads.posters) && R.ads.posters.length >= 2, 'rooms.ads.posters should have >=2')
+
+// --- xAPI test-item slugs must track story.rounds (game/testItems.js) ---
+// These name the pre/post-test questions and answers in the LRS, in English.
+// If a question or option is added, reordered or removed in the sheet without
+// updating testItems.js, statements would be filed under the wrong item.
+ok(TEST_ITEMS.length === en.story.rounds.length,
+  `testItems.js has ${TEST_ITEMS.length} items but story.rounds has ${en.story.rounds.length}`)
+for (const [i, round] of en.story.rounds.entries()) {
+  const item = TEST_ITEMS[i]
+  if (!item) continue
+  ok(item.slug && item.name, `testItems[${i}] needs a slug and a name`)
+  for (const option of round.options)
+    ok(has(item.options, option.k),
+      `testItems[${i}] (${item.slug}) has no slug for option ${option.k}`)
+  const correct = round.options.filter((o) => o.correct === true)
+  ok(correct.length === 1, `story.rounds[${i}] should have exactly one correct option, has ${correct.length}`)
+}
+const slugs = TEST_ITEMS.map((t) => t.slug)
+ok(new Set(slugs).size === slugs.length, 'testItems.js slugs must be unique')
+for (const [i, item] of TEST_ITEMS.entries()) {
+  const vals = Object.values(item.options || {})
+  ok(new Set(vals).size === vals.length, `testItems[${i}] (${item.slug}) has duplicate option slugs`)
+}
 
 if (problems.length) {
   console.log(`❌ ${problems.length} dynamic-key problems:`)

@@ -7,6 +7,7 @@ import { bgUrl } from '../game/assets.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { playSound, preloadSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
+import { track, OBJ, EXT } from '../game/xapi.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import './LinkDistrict.css'
 
@@ -21,32 +22,61 @@ import './LinkDistrict.css'
    to look up the explanation note in i18n. The phishing round's third
    URL is written with an explicit Unicode escape for the Cyrillic
    и (U+0438) — an obvious-enough look-alike that a careful eye can spot. */
+/* `xapi` identifies a door for analytics by the RED FLAG it demonstrates, not
+   by its domain or its on-screen slot: positions are reshuffled every round,
+   and a localised build needs locally plausible brands (a Cyrillic look-alike
+   is meaningless in a Serbian build), so either of those would fork the
+   activity id per language. `flags` are the FLAG_IDS below, so a door joins to
+   the red-flag quiz. See the project's xAPI sheet. */
 const ROUNDS = [
   {
     // Common suffixes — the real domain is hidden after a familiar name.
     doors: [
-      { id: 'a', url: 'https://www.lunawear.com', safe: true, preview: 'luna-2' },
-      { id: 'b', url: 'https://www.lunawear.com-official.shop/', safe: false, preview: 'luna-3' },
-      { id: 'c', url: 'https://www.lunawear-dealz.com', safe: false, preview: 'luna-1' },
+      { id: 'a', url: 'https://www.lunawear.com', safe: true, preview: 'luna-2',
+        xapi: { slug: 'legit', name: 'Door: genuine store', flags: '' } },
+      { id: 'b', url: 'https://www.lunawear.com-official.shop/', safe: false, preview: 'luna-3',
+        xapi: { slug: 'brand-as-subdomain', name: 'Door: brand is only a subdomain of an unrelated domain', flags: 'suffix' } },
+      { id: 'c', url: 'https://www.lunawear-dealz.com', safe: false, preview: 'luna-1',
+        xapi: { slug: 'added-word-typo', name: 'Door: misspelled extra word tacked onto the brand', flags: 'suffix;typo' } },
     ],
   },
   {
     // HTTP vs HTTPS — the insecure ones use http:// (and an odd TLD).
     doors: [
-      { id: 'a', url: 'https://theshoefactory.com', safe: true, preview: 'shoes-2' },
-      { id: 'b', url: 'http://shoefactory.com', safe: false, preview: 'shoes-1' },
-      { id: 'c', url: 'http://shoefactory.free', safe: false, preview: 'shoes-3' },
+      { id: 'a', url: 'https://theshoefactory.com', safe: true, preview: 'shoes-2',
+        xapi: { slug: 'legit', name: 'Door: genuine store over an encrypted connection', flags: '' } },
+      { id: 'b', url: 'http://shoefactory.com', safe: false, preview: 'shoes-1',
+        xapi: { slug: 'http-not-encrypted', name: 'Door: unencrypted http connection', flags: 'httpNoS' } },
+      { id: 'c', url: 'http://shoefactory.free', safe: false, preview: 'shoes-3',
+        xapi: { slug: 'http-odd-tld', name: 'Door: unencrypted http plus an odd domain ending', flags: 'httpNoS;weirdTld' } },
     ],
   },
   {
     // Phishing — look-alike characters (rn→m, and a Cyrillic и).
     doors: [
-      { id: 'a', url: 'https://magnumshop.com', safe: true, preview: 'lights-1' },
-      { id: 'b', url: 'https://rnagnumshop.com', safe: false, preview: 'lights-2' },
-      { id: 'c', url: 'https://magиumshop.com', safe: false, preview: 'lights-3' },
+      { id: 'a', url: 'https://magnumshop.com', safe: true, preview: 'lights-1',
+        xapi: { slug: 'legit', name: 'Door: genuine store', flags: '' } },
+      { id: 'b', url: 'https://rnagnumshop.com', safe: false, preview: 'lights-2',
+        xapi: { slug: 'homoglyph-same-script', name: 'Door: look-alike letters from the same alphabet', flags: 'homoglyph' } },
+      { id: 'c', url: 'https://magиumshop.com', safe: false, preview: 'lights-3',
+        xapi: { slug: 'homoglyph-cross-script', name: 'Door: look-alike letter borrowed from another alphabet', flags: 'homoglyph' } },
     ],
   },
 ]
+
+/* On-screen slot, by display index — recorded as context, since it is shuffled. */
+const DOOR_POSITIONS = ['left', 'middle', 'right']
+
+/* The longest address anywhere in the puzzle. Each door's sign renders this
+   invisibly behind its own URL as a sizing floor, so every sign is exactly the
+   same height — in every round, at every text boost. Without it a long URL
+   wrapped onto a second line while a short one stayed on one, which made the
+   signs different heights and pushed the three doors out of alignment (and
+   shifted them again on advancing to the next crossroads). The addresses are
+   fixed data, not i18n, so this is exact rather than a guessed line count. */
+const LONGEST_URL = ROUNDS
+  .flatMap((round) => round.doors)
+  .reduce((longest, door) => (door.url.length > longest.length ? door.url : longest), '')
 
 const FLAG_IDS = ['suffix', 'httpNoS', 'weirdTld', 'homoglyph', 'typo', 'httpsGood', 'lock']
 const CORRECT_FLAGS = ['suffix', 'httpNoS', 'weirdTld', 'homoglyph', 'typo']
@@ -113,7 +143,10 @@ function Door({ d, cfg, isBlocked, isOpen, interactive, onPeek, onBlock, t }) {
     <div className={`ld-door ${isBlocked ? 'blocked' : ''} ${isOpen ? 'open' : ''} ${cfg.ambiguous ? 'ambiguous' : d.safe ? 'safe' : 'fake'}`}>
       <div className="ld-sign" title={t('rooms.link.linkTip')}>
         <span className="ld-linkicon">🔗</span>
-        <span className="ld-url">{d.url}</span>
+        <span className="ld-url">
+          <span className="ld-url-line">{d.url}</span>
+          <span className="ld-url-line ld-url-sizer" aria-hidden="true">{LONGEST_URL}</span>
+        </span>
       </div>
 
       <div
@@ -475,22 +508,62 @@ export default function LinkDistrict({ node }) {
   // The round review's button appears only once its notes have been read.
   const reviewReady = useReadingGate(displayDoors.map((d) => roundText.notes[d.id]), reviewing)
 
+  /* Report a door action. The object is the door's red flag; the shuffled slot
+     it appeared in and its flag ids ride along as context extensions. */
+  const trackDoor = useCallback((verb, url, extra = {}) => {
+    const index = displayDoors.findIndex((d) => d.url === url)
+    const door = displayDoors[index]
+    if (!door) return
+    track(verb, OBJ.door(round + 1, door.xapi.slug, door.xapi.name), {
+      node: node.id,
+      ext: {
+        [EXT.doorPosition]: DOOR_POSITIONS[index],
+        ...(door.xapi.flags ? { [EXT.redFlags]: door.xapi.flags } : {}),
+      },
+      ...extra,
+    })
+  }, [displayDoors, round, node.id])
+
+  // Mirrors of the toggle state, so the handlers below can read the current
+  // value without the setter's updater form. Statements must NOT be sent from
+  // inside an updater: StrictMode invokes those twice in dev, double-reporting.
+  const openedRef = useRef(opened)
+  openedRef.current = opened
+  const blockedRef = useRef(blocked)
+  blockedRef.current = blocked
+
   const togglePeek = useCallback((url) => {
+    trackDoor(openedRef.current[url] ? 'closed' : 'opened', url)
     setOpened((o) => ({ ...o, [url]: !o[url] }))
-  }, [])
+  }, [trackDoor])
 
   const toggleBlock = useCallback((url) => {
     setError('')
-    setBlocked((b) => ({ ...b, [url]: !b[url] }))
+    const blocking = !blockedRef.current[url]
+    // Blocking a fake is correct; blocking the real store is not.
+    const door = displayDoors.find((d) => d.url === url)
+    trackDoor(blocking ? 'selected' : 'unselected', url, blocking
+      ? { response: 'block', success: !door?.safe }
+      : { response: 'unblock' })
+    setBlocked((b) => ({ ...b, [url]: blocking }))
     setOpened((o) => ({ ...o, [url]: false })) // blocking shuts the door
-  }, [])
+  }, [trackDoor, displayDoors])
 
   function confirmRound() {
     const remaining = fakes.filter((d) => !blocked[d.url]).length
     const safeOk = data.doors.filter((d) => d.safe).every((d) => !blocked[d.url])
+    // What was blocked, named by red flag so the answer is readable per locale.
+    const submitted = () => track('submitted', OBJ.crossroad(round + 1), {
+      node: node.id,
+      response: data.doors.filter((d) => blocked[d.url]).map((d) => d.xapi.slug).join(';'),
+      success: !remaining && safeOk,
+      completion: !remaining && safeOk,
+      ...(!remaining && safeOk ? { scaled: 1 } : {}),
+    })
     if (remaining || !safeOk) setErrorAttempt((attempt) => attempt + 1)
-    if (!safeOk && blockedCount >= fakes.length) { playSound('wrong.mp3'); return setError('wrongDoors') }
-    if (remaining) { playSound('wrong.mp3'); return setError('incomplete') }
+    if (!safeOk && blockedCount >= fakes.length) { playSound('wrong.mp3'); submitted(); return setError('wrongDoors') }
+    if (remaining) { playSound('wrong.mp3'); submitted(); return setError('incomplete') }
+    submitted()
     // Round passed — explain all three doors together before moving on.
     setReviewing(true)
   }
@@ -499,6 +572,7 @@ export default function LinkDistrict({ node }) {
   // phase after the last one).
   function proceedAfterReview() {
     if (!reviewReady) return
+    track('viewed', OBJ.crossroadReview(round + 1), { node: node.id })
     setReviewing(false)
     if (round < ROUNDS.length - 1) {
       // Snapshot the doors we're leaving so they stay put during the slide.
@@ -514,6 +588,7 @@ export default function LinkDistrict({ node }) {
 
   function toggleFlag(id) {
     setJustifyErr('')
+    track(flags[id] ? 'unselected' : 'selected', OBJ.linkFlag(id), { node: node.id, response: id })
     setFlags((f) => ({ ...f, [id]: !f[id] }))
   }
 
@@ -536,6 +611,14 @@ export default function LinkDistrict({ node }) {
     const chosen = Object.keys(flags).filter((k) => flags[k])
     const missing = CORRECT_FLAGS.filter((id) => !chosen.includes(id))
     const wrong = chosen.filter((id) => !CORRECT_FLAGS.includes(id))
+    const ok = !missing.length && !wrong.length
+    track('submitted', OBJ.linksQuiz(), {
+      node: node.id,
+      response: chosen.join(';'),
+      success: ok,
+      completion: ok,
+      ...(ok ? { scaled: 1 } : {}),
+    })
     if (missing.length || wrong.length) {
       playSound('wrong.mp3')
       return setJustifyErr(wrong.length ? t('rooms.link.justifyErrWrong') : t(missing.length === 1 ? 'rooms.link.justifyErrMissingOne' : 'rooms.link.justifyErrMissing', { count: missing.length }))
@@ -544,6 +627,13 @@ export default function LinkDistrict({ node }) {
   }
 
   const blockedCount = data.doors.filter((d) => blocked[d.url]).length
+  // Every message `.ld-block-progress` can hold; the longest one sizes the box
+  // so its height never changes (see the sizer span below).
+  const progressSizer = useMemo(() => [
+    t('rooms.link.errBlockedSafe'),
+    ...[0, 1, data.doors.length].map((count) => t('rooms.link.errStillOpen', { count, plural: count === 1 ? '' : 's' })),
+  ].reduce((longest, msg) => (msg.length > longest.length ? msg : longest), ''),
+  [t, data.doors.length])
 
   return (
     <RoomFrame
@@ -611,9 +701,19 @@ export default function LinkDistrict({ node }) {
 
           <div className="ld-actions">
             <div key={errorAttempt} role="status" className={`ld-block-progress mono ${error ? 'is-error' : ''}`}>
-              {error === 'wrongDoors'
-                ? t('rooms.link.errBlockedSafe')
-                : t('rooms.link.errStillOpen', { count: blockedCount, plural: blockedCount === 1 ? '' : 's' })}
+              <span className="ld-bp-line">
+                {error === 'wrongDoors'
+                  ? t('rooms.link.errBlockedSafe')
+                  : t('rooms.link.errStillOpen', { count: blockedCount, plural: blockedCount === 1 ? '' : 's' })}
+              </span>
+              {/* Sizing floor: the longest message this box can ever show,
+                  rendered invisibly in the same grid cell so the box is always
+                  as tall as the worst case. Without it the box (and the button
+                  beside it) jumped as the tally changed or an error replaced
+                  it. Measuring the real string beats reserving a guessed
+                  number of lines — it holds at any width, text boost or
+                  locale. */}
+              <span className="ld-bp-line ld-bp-sizer" aria-hidden="true">{progressSizer}</span>
             </div>
             <button className="btn btn-cyan" onClick={confirmRound} disabled={advancing}>
               {round < ROUNDS.length - 1 ? t('rooms.link.nextRouter') : t('rooms.link.finalRouter')}

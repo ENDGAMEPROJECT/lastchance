@@ -1,5 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { useGame } from '../../game/GameContext.jsx'
+import { track, OBJ } from '../../game/xapi.js'
 import { useT } from '../../i18n/index.jsx'
 import { useStage } from '../Stage.jsx'
 import { GAME_MINUTES } from '../../game/gameData.js'
@@ -160,6 +161,16 @@ export default function EnterScreen() {
   // Reveal the tools during their explanations; enable Map after the final line.
   const tour = canStart ? 'ready' : stepIndex < 3 ? null : step.who === 'tour' ? step.target : 'done'
   useEffect(() => { setEnterTour(tour) }, [tour, setEnterTour])
+
+  // Stepping out of the portal into the Physical Internet.
+  useEffect(() => { track('launched', OBJ.portal(), { node: 'intro' }) }, [])
+
+  // Each HUD tool explained during the walkthrough (map → bag → hints).
+  useEffect(() => {
+    if (tour === 'map' || tour === 'bag' || tour === 'hints') {
+      track('viewed', OBJ.hudTour(tour), { node: 'intro', response: tour })
+    }
+  }, [tour])
 
   // Place the explanation next to the highlighted HUD button, never over it.
   // The button lives in the HUD (outside this screen), so track its box (in

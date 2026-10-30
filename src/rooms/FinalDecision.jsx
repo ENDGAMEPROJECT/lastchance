@@ -3,6 +3,8 @@ import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
 import { mergePosttestAnswers, passedPosttest, pendingPosttestQuestions, posttestOutcome } from '../game/posttestOutcome.js'
+import { track, OBJ } from '../game/xapi.js'
+import { testItem } from '../game/testItems.js'
 import InPersonTest from '../components/screens/InPersonTest.jsx'
 import '../components/screens/conversation-screen.css'
 
@@ -47,9 +49,31 @@ export default function FinalDecision() {
     const nextAnswers = mergePosttestAnswers(answers, questionIndices, attempt)
     setAnswers(nextAnswers)
     const passed = passedPosttest(nextAnswers, totalQuestions)
+    const right = nextAnswers.filter((ok) => ok === true).length
+
+    // The whole assessment, after merging this pass into earlier ones.
+    track('answered', OBJ.posttest(), {
+      node: 'posttest',
+      // Per-item outcome by name, so a pre/post comparison needs no key.
+      response: nextAnswers.map((ok, i) => `${testItem(i).slug}:${ok ? 1 : 0}`).join(';'),
+      success: passed,
+      scaled: totalQuestions ? right / totalQuestions : 0,
+      completion: true,
+    })
+
     const result = posttestOutcome({ timedOut, timeLeft, passed })
-    if (result.outcome === 'retry') setPhase('retry')
-    else finishGame(result.outcome, result.reason)
+    // A retry is still an open assessment, so pass/fail waits for the last pass.
+    if (result.outcome === 'retry') {
+      setPhase('retry')
+    } else {
+      track(passed ? 'passed' : 'failed', OBJ.posttestAssessment(), {
+        node: 'posttest',
+        success: passed,
+        scaled: totalQuestions ? right / totalQuestions : 0,
+        completion: true,
+      })
+      finishGame(result.outcome, result.reason)
+    }
   }
 
   if (phase === 'retry') {
@@ -64,7 +88,11 @@ export default function FinalDecision() {
                 className="btn btn-lg btn-green"
                 onMouseDown={(event) => event.preventDefault()}
                 onClick={() => {
-                  setQuestionIndices(pendingPosttestQuestions(answers, totalQuestions))
+                  const retrying = pendingPosttestQuestions(answers, totalQuestions)
+                  track('attempted', OBJ.posttestAssessment(), {
+                    node: 'posttest', response: run + 1,
+                  })
+                  setQuestionIndices(retrying)
                   setRun((n) => n + 1)
                   setPhase('test')
                 }}
