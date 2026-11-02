@@ -13,16 +13,28 @@
    Configuration lives in .env (gitignored; see .env.example):
      VITE_XAPI_ENDPOINT  base LRS URL, e.g. https://host/data/xAPI
      VITE_XAPI_AUTH      base64 of "key:secret"
+   Vite inlines these at build time, so a deployed build needs them in the
+   environment too: they are repo Actions secrets of the same names, passed
+   to the build step in .github/workflows/deploy.yml.
    With either missing, tracking is silently disabled and the game plays
-   normally — no statement ever blocks or breaks gameplay.
+   normally — no statement ever blocks or breaks gameplay. Nothing is logged
+   unless debug mode is on, so to diagnose a deployed build append ?debug.
 
    The statement catalogue this implements is the project's xAPI sheet
    ("ER3 - xAPI"): one `track()` call per row, parameterised.
    ============================================================ */
 
+import { DEBUG } from './settings.js'
+
 const ENDPOINT = import.meta.env.VITE_XAPI_ENDPOINT
 const AUTH = import.meta.env.VITE_XAPI_AUTH
 const IS_DEV = !!import.meta.env.DEV
+
+/* Whether to narrate tracking to the console. On in `vite dev`, and in any
+   build where debug mode is on (`?debug` / ?screen=, VITE_DEBUG) — a deployed
+   build otherwise swallows xAPI problems completely, since a failed statement
+   must never disturb gameplay. See settings.js for how DEBUG is set. */
+const LOG = IS_DEV || DEBUG
 
 /* Accept either a bare base64 blob or a full "Basic xxx" header. */
 const AUTH_HEADER = AUTH
@@ -31,8 +43,8 @@ const AUTH_HEADER = AUTH
 
 const CONFIGURED = !!(ENDPOINT && AUTH_HEADER)
 
-if (!CONFIGURED && IS_DEV) {
-  console.warn('[xAPI] Not configured — set VITE_XAPI_ENDPOINT and VITE_XAPI_AUTH in .env. Tracking disabled.')
+if (!CONFIGURED && LOG) {
+  console.warn('[xAPI] Not configured — set VITE_XAPI_ENDPOINT and VITE_XAPI_AUTH (locally in .env; for a deployed build, as repo Actions secrets read by .github/workflows/deploy.yml). Tracking disabled.')
 }
 
 /* ---- Base IRIs (shared with ECHO) ---- */
@@ -332,7 +344,7 @@ export function track(verbKey, object, opts = {}) {
 
   if (!CONFIGURED) return null
   if (!verb) {
-    if (IS_DEV) console.warn('[xAPI] Unknown verb:', verbKey)
+    if (LOG) console.warn('[xAPI] Unknown verb:', verbKey)
     return null
   }
   if (!who) {
@@ -375,7 +387,7 @@ export function track(verbKey, object, opts = {}) {
   // `character` is bookkeeping for this module, not an xAPI extension.
   delete statement.context.extensions.character
 
-  if (IS_DEV) console.log('[xAPI]', verbKey, object?.id, result)
+  if (LOG) console.log('[xAPI]', verbKey, object?.id, result)
 
   return fetch(`${ENDPOINT}/statements`, {
     method: 'POST',
@@ -392,7 +404,7 @@ export function track(verbKey, object, opts = {}) {
       return r.json()
     })
     .catch((error) => {
-      if (IS_DEV) console.error('[xAPI] Failed:', verbKey, error.message)
+      if (LOG) console.error('[xAPI] Failed:', verbKey, error.message)
       return null
     })
 }
