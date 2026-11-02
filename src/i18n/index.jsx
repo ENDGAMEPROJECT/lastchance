@@ -66,9 +66,10 @@ export function useT() {
   const { locale } = useI18n()
   const narrative = useNarrative()
   const translations = useMemo(() => {
-    const vars = characterVars(narrative)
     const templates = LOCALES[locale] || LOCALES[DEFAULT_LOCALE]
     const fallback = LOCALES[DEFAULT_LOCALE]
+    // templates first: characterVars reads the declined name forms out of it.
+    const vars = characterVars(narrative, templates)
     return { vars, templates, fallback, bound: mapText(templates, (text) => interpolate(text, vars)), boundFallback: mapText(fallback, (text) => interpolate(text, vars)) }
   }, [locale, narrative])
 
