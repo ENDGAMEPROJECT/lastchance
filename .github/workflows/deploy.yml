@@ -33,6 +33,14 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          # xAPI LRS config. Vite reads VITE_-prefixed vars from the
+          # environment as well as from .env (which is gitignored, so it
+          # never reaches the runner). Set these in the repo's
+          # Settings > Secrets and variables > Actions. If they are
+          # missing the build still succeeds and tracking stays disabled.
+          VITE_XAPI_ENDPOINT: ${{ secrets.VITE_XAPI_ENDPOINT }}
+          VITE_XAPI_AUTH: ${{ secrets.VITE_XAPI_AUTH }}
 
       - name: Publish to gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
