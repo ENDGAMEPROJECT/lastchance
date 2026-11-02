@@ -286,3 +286,58 @@
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
+/* ---------- Funder / project credits (bottom-right of the landing scene) ----------
+   Positioned against `.scene`, which is the relatively-positioned 1280x720
+   stage surface (see Stage.jsx), so this sits in the corner at every screen
+   size. z-index clears `.bg-slot`, which sits at 0 inside the scene. */
+.landing-credits {
+  position: absolute;
+  right: 30px;
+  bottom: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.landing-credits img {
+  display: block;
+  /* Both files are white/negative artwork on transparent, sized to a common
+     height: the EU logo is ~4.5:1 and the ENDGAME logo ~4.2:1, so the row
+     comes to ~290px of the 1280px stage and clears the centred card. */
+  height: 32px;
+  width: auto;
+  user-select: none;
+}
+
+.credits-endgame {
+  display: block;
+  line-height: 0;
+  border-radius: 4px;
+  opacity: 0.88;
+  transition: opacity 140ms ease, filter 140ms ease;
+}
+.credits-endgame:hover,
+.credits-endgame:focus-visible {
+  opacity: 1;
+  filter: drop-shadow(0 0 6px rgba(22, 242, 255, 0.55));
+}
+
+/* The funder logo is an attribution, not a control: keep it legible but let
+   the ENDGAME link read as the interactive one. */
+.credits-eu {
+  opacity: 0.9;
+}
+
+/* Phone portrait composes at 720x1280 (Stage.jsx), so the row has less width
+   to play with — shrink it rather than let it crowd the card. */
+@media (max-width: 920px) {
+  .landing-credits {
+    right: 20px;
+    gap: 10px;
+  }
+  .landing-credits img {
+    height: 26px;
+  }
+}
