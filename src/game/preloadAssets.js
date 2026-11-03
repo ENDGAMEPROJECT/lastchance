@@ -18,7 +18,7 @@ const ROOM_IMAGES = {
   'roulette-corridor': [bgUrl('roulette.png')],
   'influencer-avenue': [
     bgUrl('influencer.png'), bgUrl('objects/emoji-decoding-card.png'),
-    ...['cupcakes', 'cupcakes1', 'cupcakes2', 'cupcakes3', 'mug', 'novapad', 'novapad1', 'novapad2']
+    ...['cupcakes', 'cupcakes1', 'cupcakes2', 'cupcakes3', 'mug', 'novapad', 'novapad1', 'novapad2', 'jacket']
       .map((name) => assetUrl(`products/${name}.png`)),
   ],
   'algorithm-room': [
@@ -53,7 +53,8 @@ function roomImages(nodeId, narrative, locale) {
     // Matches InfluencerAvenue's language fallback (Finnish uses English art).
     const language = ['es', 'sr'].includes(locale) ? locale : 'en'
     return [...images, bgUrl(narrative.reportImage), ...['paid', 'collab', 'gifted'].map((label) =>
-      bgUrl(`influencers/${label}_${language}.${language === 'en' && label !== 'collab' ? 'jpg' : 'png'}`))]
+      bgUrl(`influencers/${label}_${language}.${language === 'en' && label !== 'collab' ? 'jpg' : 'png'}`)),
+      ...['paid', 'collab', 'gifted'].map((label) => bgUrl(`influencers/feedback/${label}.png`))]
   }
   if (nodeId === 'algorithm-room') {
     return [...images, bgUrl(narrative.reportImage), bgUrl(narrative.friendProfileImage)]

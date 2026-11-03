@@ -5,6 +5,7 @@ import { ITEMS, EMOJI_KEY, encodeWord } from '../game/gameData.js'
 import { bgUrl, assetUrl } from '../game/assets.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { DEBUG } from '../game/settings.js'
+import { useMobileView } from '../game/device.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
@@ -604,13 +605,22 @@ export default function InfluencerAvenue({ node }) {
   // continue buttons appear once the text has had time to be read.
   const labelFeedbackRead = useReadingGate(['intro', 'paidDesc', 'paidExample', 'collabDesc', 'collabExample', 'giftedDesc', 'giftedExample']
     .map((key) => t(`rooms.influencer.labelFeedback.${key}`)), stage === 'labelFeedback', 15000)
-  const explainRead = useReadingGate([t('rooms.influencer.explain.body'), t('rooms.influencer.explain.instructions')], stage === 'explain')
+  // Mobile splits the explainer in two steps — 1: title + body, 2: how to play
+  // + demo — each with its own reading gate. Desktop shows both at once.
+  const mobile = useMobileView()
+  const [explainStep, setExplainStep] = useState(1)
+  const [explainStep1Read, setExplainStep1Read] = useState(false)
+  const explainText = !mobile
+    ? [t('rooms.influencer.explain.body'), t('rooms.influencer.explain.instructions')]
+    : explainStep === 1 ? t('rooms.influencer.explain.body') : t('rooms.influencer.explain.instructions')
+  const explainRead = useReadingGate(explainText, stage === 'explain')
+  const demoVisible = stage === 'explain' && (!mobile || explainStep === 2)
   const [demoRun, setDemoRun] = useState(0) // bumped to replay the demo
 
   // Play the explainer's demo while it's open, on a loop: drag the shoes into
   // the bar, search, show the matches, press the verified stamp, hold 2s, repeat.
   useEffect(() => {
-    if (stage !== 'explain') { setDemoPhase('drag'); return }
+    if (!demoVisible) { setDemoPhase('drag'); return }
     const timers = [
       [1300, () => { setDemoPhase('search'); playSound('search.mp3') }],
       [3200, () => { stopSound('search.mp3'); playSound('twinkle.mp3'); setDemoPhase('results') }],
@@ -619,7 +629,7 @@ export default function InfluencerAvenue({ node }) {
       [11500, () => { setDemoPhase('drag'); setDemoRun((n) => n + 1) }],
     ].map(([ms, fn]) => window.setTimeout(fn, ms))
     return () => { timers.forEach(window.clearTimeout); stopSound('search.mp3') }
-  }, [stage, demoRun])
+  }, [demoVisible, demoRun])
 
   useEffect(() => { preloadSound('search.mp3'); preloadSound('stamp.mp3') }, [])
 
@@ -706,6 +716,7 @@ export default function InfluencerAvenue({ node }) {
   const [verifyErr, setVerifyErr] = useState('')
   const [stampFx, setStampFx] = useState(0) // bumped on each stamp so the imprint animation replays
   const [heldStamp, setHeldStamp] = useState(null) // the stamp-maker currently "in hand"
+  const [trayIndex, setTrayIndex] = useState(0) // mobile: the one image shown in the tray carousel
   // Progress: each correctly decoded label, each stage, each reverse search.
   useRoomProgress(`${stage}|${POSTS.filter((p) => answers[p.id] === p.correctLabel).length}|${Object.keys(searched).length}`)
   const heldRef = useRef(null)
@@ -1028,16 +1039,19 @@ export default function InfluencerAvenue({ node }) {
 
             <div className="ia-lf-cards">
               <div className="ia-lf-card paid">
+                <img className="ia-lf-img" src={bgUrl('influencers/feedback/paid.png')} alt="" />
                 <span className="ia-lf-tag">{t('rooms.influencer.labels.paid')}</span>
                 <div className="ia-lf-desc">{t('rooms.influencer.labelFeedback.paidDesc')}</div>
                 <div className="ia-lf-ex t-xs">{t('rooms.influencer.labelFeedback.paidExample')}</div>
               </div>
               <div className="ia-lf-card collab">
+                <img className="ia-lf-img" src={bgUrl('influencers/feedback/collab.png')} alt="" />
                 <span className="ia-lf-tag">{t('rooms.influencer.labels.collab')}</span>
                 <div className="ia-lf-desc">{t('rooms.influencer.labelFeedback.collabDesc')}</div>
                 <div className="ia-lf-ex t-xs">{t('rooms.influencer.labelFeedback.collabExample')}</div>
               </div>
               <div className="ia-lf-card gifted">
+                <img className="ia-lf-img" src={bgUrl('influencers/feedback/gifted.png')} alt="" />
                 <span className="ia-lf-tag">{t('rooms.influencer.labels.gifted')}</span>
                 <div className="ia-lf-desc">{t('rooms.influencer.labelFeedback.giftedDesc')}</div>
                 <div className="ia-lf-ex t-xs">{t('rooms.influencer.labelFeedback.giftedExample')}</div>
@@ -1057,9 +1071,15 @@ export default function InfluencerAvenue({ node }) {
       {/* ===================== TRANSITION: what is reverse image search ===================== */}
       {stage === 'explain' && (
         <div className="ia-stage ia-explain fade-in">
-          <div className="ia-explain-card panel clip">
+          <div className="ia-explain-card ia-search-intro panel clip">
+            {(!mobile || explainStep === 1) && <>
             <h3 className="ia-explain-title">{t('rooms.influencer.explain.title')}</h3>
-            <p className="ia-explain-body">{t('rooms.influencer.explain.body')}</p>
+            {/* Mobile step 1: an example product photo to the left of the explanation. */}
+            <div className="ia-explain-intro">
+              {mobile && <img className="ia-explain-img" src={productUrl('jacket.png')} alt="" />}
+              <p className="ia-explain-body">{t('rooms.influencer.explain.body')}</p>
+            </div>
+            </>}
 
             {/* Two everyday uses: find where to buy something you like, and verify a claim. */}
             {/* <div className="ia-explain-uses">
@@ -1074,19 +1094,33 @@ export default function InfluencerAvenue({ node }) {
             </div> */}
 
             {/* Scripted demo of the next challenge, in the same UI. */}
+            {demoVisible && <>
                 <p className="ia-explain-instructions"><b className="lead-label">{t('common.howToPlay')}</b> {t('rooms.influencer.explain.instructions')}</p>
             <ReverseSearchDemo phase={demoPhase} />
+            </>}
 {/* 
             <div className="learn ia-explain-learn">
               <b className="lead-label">{t('rooms.influencer.explain.takeawayLabel')}</b> {t('rooms.influencer.explain.takeaway')}
             </div> */}
 
-            {explainRead && <button className="btn btn-purple btn-lg" onClick={() => {
-              track('viewed', OBJ.searchExplainer(), { node: node.id })
-              setStage('verify')
+            {/* Step 1 was already read if the player came back from step 2. */}
+            {(explainRead || explainStep1Read) && mobile && explainStep === 1 && <button className="btn btn-purple btn-lg" onClick={() => {
+              setExplainStep1Read(true)
+              setExplainStep(2)
             }}>
-              {t('rooms.influencer.explain.continue')}
+              {t('common.next')}
             </button>}
+            {(mobile ? explainStep === 2 : explainRead) && <div className="ia-explain-actions">
+              {mobile && <button className="btn btn-ghost btn-lg" onClick={() => setExplainStep(1)}>
+                {t('common.back')}
+              </button>}
+              {explainRead && <button className="btn btn-purple btn-lg" onClick={() => {
+                track('viewed', OBJ.searchExplainer(), { node: node.id })
+                setStage('verify')
+              }}>
+                {t('rooms.influencer.explain.continue')}
+              </button>}
+            </div>}
           </div>
         </div>
       )}
@@ -1114,10 +1148,12 @@ export default function InfluencerAvenue({ node }) {
                       kind="image"
                       data={{ id: p.id }}
                       disabled={!!activeId}
-                      className={`ia-imgtile-drag ${isShown ? 'shown' : ''}`}
+                      className={`ia-imgtile-drag ${isShown ? 'shown' : ''} ${idx === trayIndex ? 'is-current' : ''}`}
                     >
-                      <div className="ia-imgtile">
-                        <ProductArt product={p} copy={copy} cover className="ia-imgtile-art" />
+                      {/* is-carousel (mobile): the tile hugs the whole image — a class on
+                          the tile itself so the drag ghost, a copy of it, matches. */}
+                      <div className={`ia-imgtile ${mobile ? 'is-carousel' : ''}`}>
+                        <ProductArt product={p} copy={copy} cover={!mobile} className="ia-imgtile-art" />
                         <span className="ia-imgtile-emoji">{p.emoji}</span>
                         <span className="ia-imgtile-name">{copy.name}</span>
                         {!done && <span className="ia-imgtile-badge grab" aria-hidden>⤓</span>}
@@ -1132,6 +1168,25 @@ export default function InfluencerAvenue({ node }) {
                   )
                 })}
               </div>
+              {/* Mobile: the tiles are too small stacked, so the tray shows one
+                  image at full size and these arrows flip between them. */}
+              {mobile && (
+                <div className="ia-imgtray-nav">
+                  <button type="button" className="ia-imgtray-arrow"
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => setTrayIndex((i) => (i + PRODUCTS.length - 1) % PRODUCTS.length)}
+                    aria-label={t('common.back')} title={t('common.back')}>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+                  </button>
+                  <span className="ia-imgtray-count mono">{trayIndex + 1} / {PRODUCTS.length}</span>
+                  <button type="button" className="ia-imgtray-arrow"
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => setTrayIndex((i) => (i + 1) % PRODUCTS.length)}
+                    aria-label={t('common.next')} title={t('common.next')}>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* The reverse-search engine — the search and its results happen HERE. */}

@@ -26,7 +26,36 @@
   gap: 8px;
   text-align: center;
 }
-.ia-explain-title { font-family: var(--font-retro);font-size: 1.32rem; color: var(--purple); }
+/* Mobile (≤920px, = settings.mobile.breakpoint): the card fills the whole
+   scene — full width, and at least its full height (content centred); if the
+   content is taller, the scene scrolls as before. */
+@media (max-width: 920px) {
+  .ia-explain-card {
+    max-width: none;
+    flex: 1 0 auto;
+    margin: 0;
+    padding: 16px 28px;
+    justify-content: center;
+    gap: 12px;
+  }
+  /* The reverse-search intro (two short steps) doesn't need the whole scene:
+     sized to its content and centred, with roomier padding. */
+  .ia-explain-card.ia-search-intro {
+    flex: none;
+    max-width: 900px;
+    margin: auto 0;
+    padding: 34px;
+  }
+}
+.ia-explain-intro { display: flex; align-items: center; gap: 20px; }
+@media (max-width: 920px) { .ia-explain-intro .ia-explain-body { flex: 1; text-align: left; } }
+.ia-explain-img { display: block; flex: none; width: 26%; height: auto; max-height: 200px; object-fit: contain; }
+.ia-explain-actions { display: flex; justify-content: center; gap: 12px; }
+.ia-explain-title { font-family: var(--font-retro);font-size: 1.4rem; color: var(--purple); 
+@media (max-width: 920px) {
+    font-size: 1.5rem;
+  }
+}
 
 /* Label-feedback cards: what makes each disclosure label, with examples. */
 .ia-lf-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
@@ -34,20 +63,35 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 10px 12px;
+  padding:  0 12px 10px 12px;
   border-radius: 10px;
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.03);
   text-align: left;
 }
-.ia-lf-tag {
+/* Illustration on top of each label column (decorative; the tag names it). */
+.ia-lf-img {
+  display: block;
+  width: 40%;
+  flex: none;
   align-self: flex-start;
-  font-family: var(--font-display);
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  margin-bottom: 4px;
+}
+.ia-lf-tag {
+    align-self: flex-start;
+  font-family: var(--font-retro);
   font-weight: 800;
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   padding: 2px 9px;
   border-radius: 999px;
+  @media (max-width: 920px) {
+    font-size: 0.9rem;
+    padding: 3px 12px;
+
+  }
 }
 .ia-lf-card.paid { border-color: rgba(255, 59, 92, 0.4); }
 .ia-lf-card.paid .ia-lf-tag { color: var(--red); background: rgba(255, 59, 92, 0.14); }
@@ -55,12 +99,40 @@
 .ia-lf-card.collab .ia-lf-tag { color: var(--cyan); background: rgba(22, 242, 255, 0.14); }
 .ia-lf-card.gifted { border-color: rgba(43, 255, 136, 0.4); }
 .ia-lf-card.gifted .ia-lf-tag { color: var(--green); background: rgba(43, 255, 136, 0.14); }
-.ia-lf-desc { font-size: 0.82rem; color: var(--text); line-height: 1.3; }
+.ia-lf-desc { font-size: 0.82rem; color: var(--text); line-height: 1.3; text-align: left;
+  text-wrap: pretty;
+@media (max-width: 920px) {
+    font-size: 1rem;
+    margin-bottom: 6px !important
+  }
+}
 .ia-lf-ex { color: var(--muted); line-height: 1.3; }
-.ia-explain-body { margin: 0; color: var(--text); font-size: 0.92rem; line-height: 1.4; max-width: 560px; }
+.ia-lf-ex.t-xs { 
+  @media (max-width: 920px) 
+  { font-size: 1rem; } 
+}
+.ia-explain-body { margin: 0; color: var(--text); font-size: 0.92rem; line-height: 1.4; 
+  max-width: 660px; 
+  @media (max-width: 920px) {
+    max-width: 920px
+  }
+}
 
-.ia-explain-body { font-size: 0.84rem; }
-.ia-explain-instructions { font-size: 0.84rem; color: var(--muted); line-height: 1.4; max-width: 560px; margin: 0 auto; }
+.ia-explain-body { 
+  font-size: 1rem;
+  @media (max-width: 920px) {
+    font-size: 1.2rem;
+    margin-bottom: 12px !important ;
+  }
+}
+.ia-explain-instructions {
+   font-size: 0.94rem; color: var(--muted); line-height: 1.4; max-width: 560px; margin: 0 auto; 
+  @media (max-width: 920px) {
+    font-size: 1.1rem;
+    margin-bottom: 12px !important ;
+    color: white;
+  }
+  }
 .ia-explain-uses {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -698,6 +770,43 @@ button.ia-view-publication {
 .ia-imgtray-label { text-align: left; line-height: 1.3; }
 .ia-imgtray-items { display: flex; flex-direction: column; gap: 10px; min-height: 0; overflow-y: auto; }
 .ia-imgtile-drag { cursor: grab; }
+/* Mobile (≤920px, = settings.mobile.breakpoint): the tray is a carousel — one
+   image filling the left column, arrows below to flip to the next one. */
+.ia-imgtray-nav { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex: none; }
+.ia-imgtray-count { color: #fff; font-size: 1.5rem; font-weight: 700; letter-spacing: 0.05em; }
+.ia-imgtray-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 60px;
+  padding: 0;
+  border: 2px solid #e9d5ff;
+  border-radius: var(--radius-sm);
+  background: #9333ea;
+  color: #fff;
+  box-shadow: var(--glow-purple);
+  cursor: pointer;
+}
+.ia-imgtray-arrow svg { width: 38px; height: 38px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ia-imgtray-arrow:active { background: #7e22ce; }
+@media (max-width: 920px) {
+  .ia-verify { max-width: none; grid-template-columns: 360px 1fr; }
+  /* Image + arrows centred as a group in the column. */
+  .ia-imgtray { justify-content: center; }
+  .ia-imgtray-items { flex: none; overflow: hidden; }
+  .ia-imgtray-nav { margin-top: 6px; }
+  .ia-imgtile-drag:not(.is-current) { display: none; }
+  /* The tile hugs the whole image: the art sits in the flow at its own aspect
+     ratio (ProductArt gets cover={false} on mobile) instead of filling a fixed
+     box, and the name/emoji float over its bottom edge. */
+  .ia-imgtile.is-carousel { height: auto; padding: 0; }
+  .ia-imgtile.is-carousel .ia-imgtile-art { position: relative; inset: auto; height: auto; object-fit: contain; }
+  .ia-imgtile.is-carousel .ia-imgtile-name { position: absolute; bottom: 8px; }
+  .ia-imgtile.is-carousel .ia-imgtile-emoji { position: absolute; bottom: 34px; }
+  /* The dragged copy is half size, still centred under the finger. */
+  .dnd-ghost .ia-imgtile.is-carousel { transform: scale(0.5); transition: none; }
+}
 .ia-imgtile-drag.dnd-dragging { cursor: grabbing; }
 .ia-imgtile-drag.dnd-disabled { cursor: default; opacity: 0.6; }
 .ia-imgtile {
@@ -1016,6 +1125,23 @@ button.ia-view-publication {
 .ia-engine-ph { flex: 1; min-width: 0; color: var(--muted); font-size: 0.86rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: left; }
 .ia-engine-icon { flex: none; font-size: 1.1rem; color: var(--purple); animation: ia-bob 1.8s ease-in-out infinite; }
 .reduced-motion .ia-engine-icon { animation: none; }
+/* Mobile (≤920px, = settings.mobile.breakpoint): the drop bar is ~30% bigger
+   (text and icons too) and lights up clearly when an image is over it. */
+@media (max-width: 920px) {
+  .ia-engine-drop { height: 55px; gap: 13px; padding: 0 21px 0 18px; }
+  .ia-engine-lens { font-size: calc(0.9rem * 1.3); }
+  .ia-engine-chip { width: 42px; height: 39px; }
+  .ia-engine-ph { font-size: calc(0.86rem * 1.3); }
+  .ia-engine-icon { font-size: calc(1.1rem * 1.3); }
+  .ia-engine-drop.is-over {
+    border: 2px solid #e9d5ff;
+    background: #6d28d9;
+    box-shadow: 0 0 0 3px rgba(216, 180, 254, 0.6), 0 0 26px rgba(192, 132, 252, 0.9);
+  }
+  .ia-engine-drop.is-over .ia-engine-ph { color: #fff; }
+  .ia-engine-drop.is-over .ia-engine-lens { opacity: 1; }
+  .ia-engine-drop.is-over .ia-engine-icon { color: #fff; }
+}
 
 .ia-engine-panel {
   flex: 1;
@@ -1198,6 +1324,17 @@ grid-template-columns: 1fr 1fr 1fr;
   padding-bottom: 6px;
 }
 .ia-demo-tile .ia-imgtile-name { font-size: 0.74rem; }
+/* Mobile (≤920px, = settings.mobile.breakpoint): the image's name sits under
+   the image instead of over it. */
+@media (max-width: 920px) {
+  .ia-demo-tile .ia-imgtile-name {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+}
 /* while "dragging", the original tile dims like .dnd-draggable.dnd-dragging */
 .ia-demo-tile.is-dragging { opacity: 0.25; animation: ia-demo-dim 0.1s 0.1s both; }
 @keyframes ia-demo-dim { from { opacity: 1; } to { opacity: 0.25; } }
