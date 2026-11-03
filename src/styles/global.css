@@ -361,6 +361,10 @@ h3 {
   font-size: 1.05rem;
   line-height: 1.35;
   color: var(--text);
+  @media (max-width: 920px) {
+    font-size: 1.3rem;
+    margin-bottom: 12px !important ;
+  }
 }
 
 /* Callout for educational learning objectives */

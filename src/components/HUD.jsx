@@ -14,6 +14,7 @@ import DataReport from './DataReport.jsx'
 import DebugPosttestButtons from './DebugPosttestButtons.jsx'
 import DebugPortalButton from './DebugPortalButton.jsx'
 import DebugCharacterButton from './DebugCharacterButton.jsx'
+import DebugLanguageButton from './DebugLanguageButton.jsx'
 import './HUD.css'
 
 const MOBILE_QUERY = `(max-width: ${settings.mobile.breakpoint}px)`
@@ -27,6 +28,12 @@ export default function HUD() {
   const t = useT()
   const [bagOpen, setBagOpen] = useState(false)
   const [bagTab, setBagTab] = useState('tools') // 'tools' | 'evidence'
+  // Debug (phone): the red corner dot hides/shows every debug control. The
+  // class lives on <body> so in-room and map debug buttons follow it too.
+  const [debugHidden, setDebugHidden] = useState(false)
+  useEffect(() => {
+    document.body.classList.toggle('debug-hidden', debugHidden)
+  }, [debugHidden])
   useEffect(() => { if (bagOpen) setBagTab('tools') }, [bagOpen]) // always open on Tools
   const [bagReminder, setBagReminder] = useState(false)
   const neededItem = { 'influencer-avenue': 'emojiCard', 'algorithm-room': 'dataReport', 'ads-corridor': 'truthLight' }[activeNodeId]
@@ -303,7 +310,15 @@ export default function HUD() {
           {['posttest', 'win', 'lose'].includes(screen) && <DebugPosttestButtons />}
           {['welcome', 'pretest'].includes(screen) && <DebugPortalButton />}
           <DebugCharacterButton />
+          <DebugLanguageButton />
         </div>
+      )}
+      {DEBUG && createPortal(
+        <button type="button" className="hud-m-debug-toggle"
+          title={debugHidden ? 'Debug: show debug buttons' : 'Debug: hide debug buttons'}
+          aria-pressed={!debugHidden}
+          onMouseDown={(event) => event.preventDefault()} onClick={() => setDebugHidden((h) => !h)} />,
+        document.body,
       )}
 
       {/* The side columns are pinned to the screen edges, not the scaled game
@@ -444,6 +459,7 @@ export default function HUD() {
           {DEBUG && ['welcome', 'pretest'].includes(screen) && <DebugPortalButton />}
           {DEBUG && <span className="chip bad hud-debug">🐞 DEBUG</span>}
           {DEBUG && <DebugCharacterButton />}
+          {DEBUG && <DebugLanguageButton />}
           {showHints && (
             <button
               className={`btn btn-amber btn-sm hud-hints ${tourClass('hints')} ${hintReminder && !hintsOpen && !touring ? 'hud-hint-reminder' : ''}`}
