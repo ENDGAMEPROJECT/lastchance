@@ -11,6 +11,7 @@ import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import { useI18n, useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
+import GateButton from '../components/GateButton.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
 import './InfluencerAvenue.css'
 
@@ -603,7 +604,7 @@ export default function InfluencerAvenue({ node }) {
   const [demoPhase, setDemoPhase] = useState('drag') // explainer's scripted reverse-search demo
   // The label recap and the reverse-search explainer can't be skipped: their
   // continue buttons appear once the text has had time to be read.
-  const labelFeedbackRead = useReadingGate(['intro', 'paidDesc', 'paidExample', 'collabDesc', 'collabExample', 'giftedDesc', 'giftedExample']
+  const labelFeedback = useReadingGate(['intro', 'paidDesc', 'paidExample', 'collabDesc', 'collabExample', 'giftedDesc', 'giftedExample']
     .map((key) => t(`rooms.influencer.labelFeedback.${key}`)), stage === 'labelFeedback', 15000)
   // Mobile splits the explainer in two steps — 1: title + body, 2: how to play
   // + demo — each with its own reading gate. Desktop shows both at once.
@@ -613,7 +614,10 @@ export default function InfluencerAvenue({ node }) {
   const explainText = !mobile
     ? [t('rooms.influencer.explain.body'), t('rooms.influencer.explain.instructions')]
     : explainStep === 1 ? t('rooms.influencer.explain.body') : t('rooms.influencer.explain.instructions')
-  const explainRead = useReadingGate(explainText, stage === 'explain')
+  const explain = useReadingGate(explainText, stage === 'explain')
+  // Coming back from step 2 on mobile, step 1 has already been read — so its
+  // Next is clickable immediately rather than re-running the wait.
+  const explainStep1 = explainStep1Read ? { ...explain, ready: true } : explain
   const demoVisible = stage === 'explain' && (!mobile || explainStep === 2)
   const [demoRun, setDemoRun] = useState(0) // bumped to replay the demo
 
@@ -1058,12 +1062,12 @@ export default function InfluencerAvenue({ node }) {
               </div>
             </div>
 
-            {labelFeedbackRead && <button className="btn btn-purple btn-lg" onClick={() => {
+            <GateButton gate={labelFeedback} className="btn-purple btn-lg" onClick={() => {
               track('viewed', OBJ.labelsRecap(), { node: node.id })
               setStage('explain')
             }}>
               {t('rooms.influencer.labelFeedback.continue')}
-            </button>}
+            </GateButton>
           </div>
         </div>
       )}
@@ -1103,23 +1107,24 @@ export default function InfluencerAvenue({ node }) {
               <b className="lead-label">{t('rooms.influencer.explain.takeawayLabel')}</b> {t('rooms.influencer.explain.takeaway')}
             </div> */}
 
-            {/* Step 1 was already read if the player came back from step 2. */}
-            {(explainRead || explainStep1Read) && mobile && explainStep === 1 && <button className="btn btn-purple btn-lg" onClick={() => {
+            {mobile && explainStep === 1 && <GateButton gate={explainStep1} className="btn-purple btn-lg" onClick={() => {
               setExplainStep1Read(true)
               setExplainStep(2)
             }}>
               {t('common.next')}
-            </button>}
-            {(mobile ? explainStep === 2 : explainRead) && <div className="ia-explain-actions">
+            </GateButton>}
+            {/* Desktop shows the actions from the start (the Continue inside is
+                gated); mobile only once step 2 is on screen. */}
+            {(!mobile || explainStep === 2) && <div className="ia-explain-actions">
               {mobile && <button className="btn btn-ghost btn-lg" onClick={() => setExplainStep(1)}>
                 {t('common.back')}
               </button>}
-              {explainRead && <button className="btn btn-purple btn-lg" onClick={() => {
+              <GateButton gate={explain} className="btn-purple btn-lg" onClick={() => {
                 track('viewed', OBJ.searchExplainer(), { node: node.id })
                 setStage('verify')
               }}>
                 {t('rooms.influencer.explain.continue')}
-              </button>}
+              </GateButton>
             </div>}
           </div>
         </div>

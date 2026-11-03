@@ -264,6 +264,47 @@ h3 {
 .btn:active:not(:disabled) { transform: translateY(0); }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+/* ---- Gated buttons (game/readingGate.js + components/GateButton.jsx) ----
+   A gated button is on screen from the start but disabled, its background
+   filling left to right over the reading time, so the wait is visible instead
+   of the button materialising once it's over. These rules must stay AFTER
+   `.btn:disabled` above: same specificity, so source order is what lets them
+   override its dimming. */
+.gate-btn { position: relative; overflow: hidden; }
+.gate-btn > .gate-btn-label { position: relative; z-index: 1; }
+.gate-btn.is-waiting:disabled {
+  /* Kept legible rather than dimmed — the fill is what reads as "not yet". */
+  opacity: 1;
+  cursor: progress;
+  color: var(--muted);
+  border-color: var(--line);
+  box-shadow: none;
+}
+.gate-btn.is-waiting:disabled::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: currentColor;
+  opacity: 0.22;
+  animation: gate-fill var(--gate-ms, 3000ms) linear forwards;
+}
+@keyframes gate-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+/* Reduced motion (OS setting or the in-game toggle): drop the sweep entirely
+   and fall back to an ordinary disabled button. A static full bar would be
+   worse than none — it would read as ready. */
+@media (prefers-reduced-motion: reduce) {
+  .gate-btn.is-waiting:disabled { opacity: 0.4; cursor: not-allowed; }
+  .gate-btn.is-waiting:disabled::before { display: none; }
+}
+body.reduced-motion .gate-btn.is-waiting:disabled { opacity: 0.4; cursor: not-allowed; }
+body.reduced-motion .gate-btn.is-waiting:disabled::before { display: none; }
+
 .btn-light:hover:not(:disabled) { transform: translateY(-2px); }
 .btn-light:active:not(:disabled) { transform: translateY(0); }
 .btn-light:disabled { opacity: 0.4; cursor: not-allowed; }

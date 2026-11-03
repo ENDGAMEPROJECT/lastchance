@@ -9,6 +9,7 @@ import { playSound, preloadSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ, EXT } from '../game/xapi.js'
 import RoomFrame from '../components/RoomFrame.jsx'
+import GateButton from '../components/GateButton.jsx'
 import './LinkDistrict.css'
 
 /* PUZZLE 1 — Fraudulent Links (scene version).
@@ -505,8 +506,9 @@ export default function LinkDistrict({ node }) {
     [round],
   )
   const fakes = useMemo(() => data.doors.filter((d) => !d.safe), [data])
-  // The round review's button appears only once its notes have been read.
-  const reviewReady = useReadingGate(displayDoors.map((d) => roundText.notes[d.id]), reviewing)
+  // The round review's button unlocks only once its notes have been read; it
+  // stays on screen and fills while the player reads.
+  const review = useReadingGate(displayDoors.map((d) => roundText.notes[d.id]), reviewing)
 
   /* Report a door action. The object is the door's red flag; the shuffled slot
      it appeared in and its flag ids ride along as context extensions. */
@@ -571,7 +573,7 @@ export default function LinkDistrict({ node }) {
   // Leave the round review and advance to the next crossroads (or the justify
   // phase after the last one).
   function proceedAfterReview() {
-    if (!reviewReady) return
+    if (!review.ready) return
     track('viewed', OBJ.crossroadReview(round + 1), { node: node.id })
     setReviewing(false)
     if (round < ROUNDS.length - 1) {
@@ -738,9 +740,9 @@ export default function LinkDistrict({ node }) {
                     </li>
                   ))}
                 </ul>
-                {reviewReady && <button className="btn btn-cyan" onClick={proceedAfterReview}>
+                <GateButton gate={review} className="btn-cyan" onClick={proceedAfterReview}>
                   {round < ROUNDS.length - 1 ? t('rooms.link.nextRouter') : t('rooms.link.finalRouter')}
-                </button>}
+                </GateButton>
               </div>
             </div>
           )}
