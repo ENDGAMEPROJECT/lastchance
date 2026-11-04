@@ -107,8 +107,7 @@ export default {
       "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam.",
       "evidenceHeading": "Evidence presented",
       "posttest": "Post-test: talk to {friend} again. What did you learn about spotting scams, disclosure, and why \"too good to be true\" usually is?",
-      "again": "↻ Play again",
-      "evidenceButton": "See your evidence"
+      "again": "↻ Play again"
     },
     "lose": {
       "eyebrow": "Time Expired",
@@ -120,13 +119,6 @@ export default {
       "lessonLabel": "Lesson:",
       "lesson": "artificial urgency (\"only 3 left!\", \"offer ends in 5:00\") is designed to stop you from thinking. Slow down — a real deal will still be there tomorrow.",
       "again": "↻ Try again",
-      "missingEvidence": {
-        "button": "See missing evidence",
-        "title": "Evidence report",
-        "collected": "Evidence collected",
-        "missing": "Evidence still missing",
-        "none": "No collected evidence"
-      },
       "reasons": {
         "timeUp": {
           "heading": "The offer got them first",
@@ -955,7 +947,7 @@ export default {
             {
               "site": "aliluxe-deals.shop",
               "title": "Ceramic Coffee Mug — bulk 500 pieces",
-              "price": "€417,84*"
+              "price": "€0,84*"
             },
             {
               "site": "dropmart.store",
@@ -984,7 +976,7 @@ export default {
             }
           ],
           "result": "Over 1,240 listings show the exact same product. ",
-          "hint": "It's also sold in large quantities at a much lower price."
+          "hint": "The product is massproduced and sold as handmade."
         },
         {
           "name": "NovaPad X promo shot",
@@ -1057,7 +1049,7 @@ export default {
         }
       ],
       "classify": {
-        "mass": "Mass-produced",
+        "mass": "Misleading Content",
         "ai": "AI-generated",
         "verified": "Verified"
       },
