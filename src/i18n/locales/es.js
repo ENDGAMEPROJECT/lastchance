@@ -641,7 +641,7 @@ export default {
       "realStore": "↧ tienda real",
       "blocked": "BLOQUEADO",
       "hint": "Recuerda: bloquea las falsas y deja abierta la única puerta real.",
-      "nextRouter": "Advance to the next crossroads →",
+      "nextRouter": "Avanzar al siguiente cruce→",
       "finalRouter": "Avanzar al siguiente cruce→",
       "reviewTitle": "¿Por qué esas puertas?",
       "errStillOpenOld": "Todavía hay al menos un enlace fraudulento abierto. Bloquea todas las falsas antes de continuar.",
@@ -777,7 +777,7 @@ export default {
           "fair": "No trucada"
         },
         "retry": "No del todo. Mira los resultados e inténtalo otra vez.",
-        "correct": "Correct! This wheel is rigged.",
+        "correct": "Correcto! Esta rueda está trucada",
         "next": "Siguiente ruleta →",
         "finish": "Registrar la prueba ✓",
         "observe": "Gira al menos {count} veces. ¿Cambian los resultados?",
@@ -974,7 +974,7 @@ export default {
         "resultTitle": "Resultado de la búsqueda",
         "errRunAll": "Haz la búsqueda inversa de todos los productos antes de clasificarlos.",
         "errClassifyAll": "Clasifica primero los tres productos.",
-        "classifiedCount": "Productos clasificados: {count} / {total}",
+        "classifyCount": "Productos clasificados: {count} / {total}",
         "errWrong": "Una o más clasificaciones son incorrectas. Vuelve a leer lo que devolvió cada búsqueda.",
         "learnLabel": "Herramienta real, hábito real:",
         "learn": "una búsqueda inversa de imágenes comprueba si la foto de un producto «artesanal», «único» o «real» está en realidad robada, fabricada en masa en decenas de tiendas de dropshipping o generada por IA. Que no aparezca ningún resultado también puede significar que la imagen es falsa.",
@@ -1167,9 +1167,9 @@ export default {
         "feedbackTitle": "Ecuación resuelta: ¿por qué este anuncio?",
         "badge": "Motor de segmentación · resuelve todas las ecuaciones",
         "prompt": "Rellena el hueco que falta para completar el anuncio de cada persona.",
-        "adFlag": "ANUNCIO ACTIVADO",
         "adTitle": "Anuncio",
-        "slotPlaceholder": "＋ suelta la ficha",
+        "adFlag": "ANUNCIO ACTIVADO",
+        "slotPlaceholder": "suelta la ficha",
         "stepBadge": "Ecuación {n} / {total}",
         "profileBadge": "Perfil completo",
         "dragHint": "Arrastra el factor que falta a la ecuación: el que encaja con esta persona concreta.",
@@ -1303,7 +1303,7 @@ export default {
       },
       "door": {
         "badge": "Sala de control · Sellada",
-        "prompt": "The Algorithm Control Room is locked. Find the six highlighted digits, then use the keypad to enter the code.",
+        "prompt": "La sala de control del algoritmo está cerrada. Encuentra los seis dígitos y utiliza el teclado para introducir el código.",
         "action": "Usar el teclado →"
       }
     },

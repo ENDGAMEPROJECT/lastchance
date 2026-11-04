@@ -25,17 +25,6 @@
   border-bottom: 1px solid var(--line);
 }
 .modal-head h3 { margin: 0; font-size: 1.35rem; }
-.modal-x {
-  background: transparent;
-  border: 1px solid var(--line);
-  color: var(--muted);
-  border-radius: 6px;
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-.modal-x:hover { color: var(--text); border-color: var(--cyan); }
 .modal-body { padding: 20px; overflow-y: auto; }
 .report-modal .modal-body { padding: 10px; overflow: hidden; }
 

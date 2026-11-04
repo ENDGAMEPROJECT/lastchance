@@ -523,6 +523,9 @@
   position: relative;
   z-index: 1;
   max-width: 600px;
+  @media (max-width: 920px) {
+    max-width: 820px;
+  }
 }
 
 /* Keep the copy readable over the bright sky. */
@@ -588,8 +591,12 @@
   max-width: 720px;
 }
 p.win-description {
+  font-family: var(--font-neogrotesk) !important;
   color: #16233d !important;
   max-width:720px;
+  @media (max-width: 920px) {
+    max-width: 820px;
+  }
 }
 h3.win-congrats {
   color: #0f8866 !important;
@@ -643,6 +650,9 @@ h3.win-congrats {
   flex-wrap: wrap;
   gap: 16px;
   margin-top: 72px;
+  @media (max-width: 920px) {
+    margin-top: 0px;
+  }
 }
 
 /* Evidence report popover — darker, blurrier backdrop than the default modal. */
@@ -684,6 +694,19 @@ h3.win-congrats {
 .intro.end .intro-card.end-what.end-what-light {
   border-color: rgba(214, 230, 248, 0.888);
   box-shadow: 0 10px 30px rgba(30, 70, 120, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  @media (max-width: 920px) {
+    max-width: 700px;
+    align-self: start;
+
+  }
 }
-.intro.end .end-what-light h3 { color: #0f8866; }
-.intro.end .end-what-light p { font-size: 1rem; }
+.intro.end .end-what-light h3 { color: #0f8866;
+@media (max-width: 920px) {
+    font-size: 1.15rem;
+  }
+}
+.intro.end .end-what-light p { font-size: 1rem; color: #1a3437 !important;
+  @media (max-width: 920px) {
+    font-size: 1.15rem;
+  }
+}

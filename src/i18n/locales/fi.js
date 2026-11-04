@@ -641,7 +641,7 @@ export default {
       "realStore": "↧ oikea kauppa",
       "blocked": "ESTETTY",
       "hint": "Muista: estä väärennökset ja jätä se yksi oikea ovi auki.",
-      "nextRouter": "Advance to the next crossroads →",
+      "nextRouter": "Siirry seuraavaan risteykseen→",
       "finalRouter": "Siirry seuraavaan risteykseen→",
       "reviewTitle": "Miksi juuri nuo ovet?",
       "errStillOpenOld": "Ainakin yksi petollinen linkki on yhä auki. Estä kaikki väärennökset ennen jatkamista.",
@@ -777,7 +777,7 @@ export default {
           "fair": "Ei manipuloitu"
         },
         "retry": "Ei aivan. Katso tuloksia ja yritä uudelleen.",
-        "correct": "Correct! This wheel is rigged.",
+        "correct": "Oikein! Tämä pyörä on peukaloitu.",
         "next": "Seuraava pyörä →",
         "finish": "Kirjaa todiste ✓",
         "observe": "Pyöräytä vähintään {count} kertaa. Muuttuvatko tulokset?",
@@ -974,7 +974,7 @@ export default {
         "resultTitle": "Hakutulos",
         "errRunAll": "Tee käänteinen kuvahaku jokaisesta tuotteesta ennen luokittelua.",
         "errClassifyAll": "Luokittele ensin kaikki kolme tuotetta.",
-        "classifiedCount": "Luokitellut tuotteet: {count} / {total}",
+        "classifyCount": "Luokitellut tuotteet: {count} / {total}",
         "errWrong": "Yksi tai useampi luokittelu on väärin. Lue uudelleen, mitä kukin haku palautti.",
         "learnLabel": "Oikea työkalu, oikea tapa:",
         "learn": "käänteinen kuvahaku kertoo, onko ”käsintehdyn”, ”ainutlaatuisen” tai ”aidon” tuotteen kuva oikeasti varastettu, massatuotettu kymmenissä dropshipping-kaupoissa tai tekoälyn luoma. Jos osumia ei löydy lainkaan, kuva voi olla väärennös.",
@@ -1167,9 +1167,9 @@ export default {
         "feedbackTitle": "Yhtälö ratkaistu: miksi juuri tämä mainos?",
         "badge": "Kohdennusmoottori · ratkaise jokainen yhtälö",
         "prompt": "Täytä puuttuva kohta saadaksesi kunkin henkilön mainoksen valmiiksi.",
-        "adFlag": "MAINOS AKTIVOITU",
         "adTitle": "Mainos",
-        "slotPlaceholder": "＋ pudota palanen",
+        "adFlag": "MAINOS AKTIVOITU",
+        "slotPlaceholder": "pudota palanen",
         "stepBadge": "Yhtälö {n} / {total}",
         "profileBadge": "Profiili valmis",
         "dragHint": "Vedä puuttuva tekijä yhtälöön — se, joka sopii juuri tähän henkilöön.",
@@ -1303,7 +1303,7 @@ export default {
       },
       "door": {
         "badge": "Valvomo · Sinetöity",
-        "prompt": "The Algorithm Control Room is locked. Find the six highlighted digits, then use the keypad to enter the code.",
+        "prompt": "Algoritmien valvomo on lukittu. Etsi kuusi numeroa ja syötä koodi näppäimistöllä.",
         "action": "Käytä näppäimistöä →"
       }
     },

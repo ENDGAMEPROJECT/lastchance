@@ -6,7 +6,9 @@ import { playSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import RoomFrame from '../components/RoomFrame.jsx'
+import CloseButton from '../components/CloseButton.jsx'
 import { useStage } from '../components/Stage.jsx'
+import { useMobileView } from '../game/device.js'
 import './PersuasionRoom.css'
 
 /* PUZZLE 4 — Persuasion Lab (free drag-and-drop scene).
@@ -82,6 +84,16 @@ function initPositions() {
   })
   return o
 }
+/* Mobile (≤920px): the posters fill the left 70% of the scene, so the pile
+   starts in the right 30% column instead (above the computer button). */
+function mobilePositions(sceneWidth) {
+  const o = {}
+  const x0 = Math.round(sceneWidth * 0.7) + 24
+  FRAME_ORDER.forEach((id, i) => {
+    o[id] = { x: x0 + i * 15, y: 8 + i * 24 }
+  })
+  return o
+}
 
 /* Frames shrink as they move toward the right of the wall, matching the
    receding perspective plane (so a frame reads the same apparent size as the
@@ -97,6 +109,9 @@ export default function PersuasionRoom({ node }) {
   const { completeRoom, addEvidence } = useGame()
   const t = useT()
   const { scale, toView, viewRect } = useStage()
+  const mobile = useMobileView()
+  const mobileRef = useRef(mobile)
+  mobileRef.current = mobile
 
   const posterText = t('rooms.persuasion.posters')
   const posterIndex = POSTERS.reduce((m, p, i) => ((m[p.id] = i), m), {})
@@ -204,6 +219,9 @@ export default function PersuasionRoom({ node }) {
     if (wallObs.current) { wallObs.current.disconnect(); wallObs.current = null }
     wallElRef.current = el
     if (el) {
+      // Mobile: move the starting pile into the right 30% column. The wall's
+      // parent is the scene (sceneRef may not be attached yet at this point).
+      if (mobileRef.current && el.parentElement) setPos(mobilePositions(el.parentElement.offsetWidth))
       const ro = new ResizeObserver(() => measureRings())
       ro.observe(el)
       wallObs.current = ro
@@ -388,6 +406,9 @@ export default function PersuasionRoom({ node }) {
       solvedText={t('rooms.persuasion.solvedText')}
       onContinue={() => completeRoom(node.id)}
     >
+      {/* Mobile: the instructions sit at the top, like every other game. */}
+      {/* Hidden while the computer close-up is open, so the screen gets the room. */}
+      {mobile && !ending && !computerOpen && <p className="game-prompt pl-hint-top">{hint}</p>}
       <div className={`pl-scene2 ${sceneReady ? 'fade-in' : 'pl-loading'}`} ref={sceneRef}>
         {/* Hide the puzzle during the end animation so the background clip
             plays cleanly; the cleared bar appears once it settles. */}
@@ -430,7 +451,7 @@ export default function PersuasionRoom({ node }) {
         </button>
 
         {/* floating status hint */}
-        <p className="game-prompt pl-hint">{hint}</p>
+        {!mobile && <p className="game-prompt pl-hint">{hint}</p>}
 
         {/* ---- CENTRE: free-floating draggable frames ----
             Every frame is always present and carries its own red circle from the
@@ -486,14 +507,12 @@ export default function PersuasionRoom({ node }) {
         {/* ---- COMPUTER SCREEN: opens when you click the computer ---- */}
         {computerOpen && (
           <div className="pl-screen" style={{ backgroundImage: `url(${bgUrl('computer.png')})` }}>
-            <button
-              type="button"
+            <CloseButton
               className="pl-screen-close"
               onClick={() => { track('closed', OBJ.computer(), { node: node.id }); setComputerOpen(false) }}
               aria-label={t('rooms.persuasion.closeComputer')}
-            >
-              ✕
-            </button>
+              title={t('rooms.persuasion.closeComputer')}
+            />
             <form
               className={`pl-terminal ${allPlaced ? 'on' : 'locked'} ${pwError ? 'shake' : ''}`}
               onSubmit={submitPassword}
@@ -522,10 +541,12 @@ export default function PersuasionRoom({ node }) {
                         onChange={(e) => setEntry(e.target.value)}
                         placeholder={t('rooms.persuasion.termPlaceholder')}
                         maxLength={12}
-                        autoFocus
+                        // Phone: no autofocus — the on-screen keyboard would pop
+                        // up at once and hide the computer screen.
+                        autoFocus={!mobile}
                         aria-label={t('rooms.persuasion.termInputLabel')}
                       />
-                      <button className="btn btn-magenta" type="submit">{t('rooms.persuasion.unlock')}</button>
+                      <button className="btn btn-magenta " type="submit">{t('rooms.persuasion.unlock')}</button>
                     </div>
                   </>
                 ) : (

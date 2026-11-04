@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import CloseButton from './CloseButton.jsx'
 import './Modal.css'
 
 /* Reusable neon modal. Pass accent: 'cyan' | 'magenta' | 'purple' | 'green'. */
@@ -23,9 +24,7 @@ export default function Modal({ open, onClose, title, accent = 'cyan', children,
       >
         <div className="modal-head">
           {title && <h3 className={`accent-${accent}`}>{title}</h3>}
-          <button className="modal-x" onClick={onClose} aria-label="Close">
-            ✕
-          </button>
+          <CloseButton onClick={onClose} />
         </div>
         <div className="modal-body">{children}</div>
       </div>

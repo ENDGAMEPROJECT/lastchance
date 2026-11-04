@@ -777,7 +777,7 @@ export default {
           "fair": "Nije namešten"
         },
         "retry": "Ne baš. Pogledaj rezultate i pokušaj ponovo.",
-        "correct": "Correct! This wheel is rigged.",
+        "correct": "Tačno! Ovaj točak je namešten.",
         "next": "Sledeći točak →",
         "finish": "Zabeleži dokaz ✓",
         "observe": "Zavrti najmanje {count} puta. Da li se stalno zaustavlja na istom polju ili se rezultati menjaju? Možeš ponovo da zavrtiš ako nisi siguran/na.",
@@ -974,7 +974,7 @@ export default {
         "resultTitle": "Rezultat pretrage",
         "errRunAll": "Uradi obrnutu pretragu za svaki proizvod pre klasifikacije.",
         "errClassifyAll": "Prvo klasifikuj sva tri proizvoda.",
-        "classifiedCount": "Klasifikovani proizvodi: {count} / {total}",
+        "classifyCount": "Klasifikovani proizvodi: {count} / {total}",
         "errWrong": "Jedna ili više klasifikacija nisu tačne. Ponovo pročitaj šta je svaka pretraga vratila.",
         "learnLabel": "Pravi alat, prava navika:",
         "learn": "obrnuta pretraga slike proverava da li je fotografija „ručno rađenog“, „jedinstvenog“ ili „pravog“ proizvoda zapravo ukradena, masovno proizvedena u desetinama dropshipping prodavnica ili generisana veštačkom inteligencijom. Ako nema nijednog rezultata, slika može biti lažna.",
@@ -1167,9 +1167,9 @@ export default {
         "feedbackTitle": "Jednačina rešena: zašto ovaj oglas?",
         "badge": "Mehanizam za targetiranje · reši svaku jednačinu",
         "prompt": "Popuni polje koje nedostaje da dovršiš oglas za svaku osobu.",
-        "adFlag": "OGLAS AKTIVIRAN",
         "adTitle": "Oglas",
-        "slotPlaceholder": "＋ prevuci pločicu",
+        "adFlag": "OGLAS AKTIVIRAN",
+        "slotPlaceholder": "prevuci pločicu",
         "stepBadge": "Jednačina {n} / {total}",
         "profileBadge": "Profil završen",
         "dragHint": "Prevuci faktor koji nedostaje u jednačinu — onaj koji odgovara baš ovoj osobi.",
@@ -1303,7 +1303,7 @@ export default {
       },
       "door": {
         "badge": "Kontrolna soba · Zapečaćena",
-        "prompt": "The Algorithm Control Room is locked. Find the six highlighted digits, then use the keypad to enter the code.",
+        "prompt": "Контролна соба алгоритма је закључана. Пронађи шест цифара, а затим помоћу тастатуре унеси шифру.",
         "action": "Koristi tastaturu →"
       }
     },

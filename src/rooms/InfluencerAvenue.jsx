@@ -12,6 +12,7 @@ import { track, OBJ } from '../game/xapi.js'
 import { useI18n, useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import GateButton from '../components/GateButton.jsx'
+import CloseButton from '../components/CloseButton.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
 import './InfluencerAvenue.css'
 
@@ -591,10 +592,7 @@ function PublicationOverlay({ post, copy, locale, liked, onToggle, onClose }) {
               </h2>
               <span>{copy.followers.trim()} {t('rooms.influencer.stage1.followersSuffix')}</span>
             </div>
-            <button type="button" className="ia-publication-close" autoFocus
-              onClick={onClose} aria-label={t('common.close')}>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
-            </button>
+            <CloseButton className="ia-publication-close" autoFocus onClick={onClose} />
           </header>
           <div className="ia-publication-thread" tabIndex={0} aria-label={t('rooms.influencer.stage1.commentsTitle')}>
             <p className="ia-publication-caption"><strong>{username}</strong>{' '}{copy.caption}</p>
@@ -998,16 +996,11 @@ export default function InfluencerAvenue({ node }) {
                       ? postCopy[POSTS.indexOf(selectedPost)]?.username
                       : t('rooms.influencer.decoder.noSelection')}
                   </span>
-                  <button
-                    type="button"
+                  <CloseButton
                     className="ia-decoder-close"
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => setDecoderOpen(false)}
-                    aria-label={t('common.close')}
-                    title={t('common.close')}
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
+                  />
                 </div>
                 <div className="ia-key-grid">
                   {Object.entries(EMOJI_KEY).map(([emoji, letter]) => (

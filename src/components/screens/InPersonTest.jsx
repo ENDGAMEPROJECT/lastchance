@@ -6,6 +6,7 @@ import { passedPosttest } from '../../game/posttestOutcome.js'
 import { track, OBJ, EXT } from '../../game/xapi.js'
 import { testItem, optionSlug } from '../../game/testItems.js'
 import DialogNav from './DialogNav.jsx'
+import CloseButton from '../CloseButton.jsx'
 import DialogScene, { FollowCharacter } from './DialogScene.jsx'
 import './pretest.css'
 import { DEBUG } from '../../game/settings.js'
@@ -353,17 +354,12 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
           }}
         >
           <img src={bgUrl('phone-with-ad.png')} alt={t('story.product.offerLabel')} onLoad={() => setPhoneViewed(true)} />
-          <button
+          <CloseButton
             ref={closeRef}
-            type="button"
             className="pretest-phone-close"
             onMouseDown={(event) => event.preventDefault()}
             onClick={closePhone}
-            aria-label={t('common.close')}
-            title={t('common.close')}
-          >
-            <span aria-hidden="true">×</span>
-          </button>
+          />
         </div>
       )}
     </div>

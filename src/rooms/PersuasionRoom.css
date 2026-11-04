@@ -130,16 +130,21 @@
   top: 3px;
   left: 50%;
   transform: translateX(-50%);
+  /* Hugs short titles; a longer one (other languages) wraps onto more lines
+     instead of being cut with an ellipsis. */
+  width: max-content;
   max-width: 90%;
   font-size: 0.8rem;
   letter-spacing: 0.03em;
+  line-height: 1.15;
+  text-align: center;
   color: #fff;
   background: rgba(18, 3, 14, 0.85);
   padding: 2px 7px 3px;
   border-radius: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: break-word; /* a single word longer than the frame still fits */
+  hyphens: auto;
   pointer-events: none;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
@@ -313,7 +318,7 @@
     background: transparent;
     color: rgb(208, 213, 238);
     padding: 0.5rem 0 0.5rem 0.5rem;
-    margin: 1rem -0.6rem 0 0 ; 
+    /* margin: 1rem -0.6rem 0 0 ;  */
       width: 70%;
        align-self: flex-end;
        /* letter-spacing: 0.1rem; */
@@ -627,10 +632,17 @@
   flex-wrap: wrap;
 }
 
-.pl-term-input {
+/* Input and button stacked in a column: the ">" caret + input on top, the
+   button full-width underneath. Doubled class so it beats global `.row`
+   (display: flex), which is bundled after this file. */
+.pl-term-input.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
   gap: 10px;
   button {
-    flex: none; white-space: nowrap;
+    grid-column: 1 / -1;
+    white-space: nowrap;
   }
 }
 .pl-term-caret {
@@ -766,22 +778,11 @@
     transform: scale(1);
   }
 }
+/* Look + size: shared .close-btn (CloseButton). Only its spot here. */
 .pl-screen-close {
   position: absolute;
   top: 14px;
   right: 16px;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 1px solid var(--magenta);
-  background: rgba(8, 12, 26, 0.86);
-  color: #fff;
-  font-size: 1.05rem;
-  cursor: pointer;
-  box-shadow: var(--glow-magenta);
-}
-.pl-screen-close:hover {
-  background: rgba(255, 43, 214, 0.16);
 }
 /* Nudge onto the monitor with top/left (NOT transform) so the wrong-password
    `shake` animation — which drives transform — doesn't override it and jump. */
@@ -791,6 +792,9 @@
   left: 35px;
   width: 100%;
   max-width: 460px;
+  @media (max-width: 920px) {
+      max-width: 660px;
+  }
 }
 /* The "access denied" banner floats below the terminal so it never grows the
    box (which would push the whole screen down when a wrong password is tried). */
@@ -953,3 +957,79 @@
 
 /* Laid out (so fonts load and rings can be measured) but not shown yet. */
 .pl-scene2.pl-loading { visibility: hidden; }
+
+/* ============================================================
+   Mobile (≤920px, = settings.mobile.breakpoint) layout:
+   instructions on top · poster wall over the left 70% · the frame pile in the
+   right 30% (start positions: mobilePositions() in the JSX) · a 70% bigger
+   "use the computer" button in the bottom-right corner.
+   ============================================================ */
+.pl-hint-top { text-align: center; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8); }
+@media (max-width: 920px) {
+  .pl-scene2 {
+    /* Poster size. Frames MUST be the same size as the posters (their ring is
+       placed with the poster's own measurements), so both read these. Tuned
+       so the tilted wall's projected right edge lands at ~70% of the width. */
+    --pl-pw: 300px;
+    --pl-ph: 250px;
+  }
+  .pl-posters {
+    width: auto;
+    grid-template-columns: repeat(3, var(--pl-pw));
+    grid-auto-rows: var(--pl-ph);
+    margin: 8px 0 0 24px;
+  }
+  .pl-freeframe {
+    width: var(--pl-pw);
+    height: var(--pl-ph);
+  }
+  /* Frame title 30% bigger than desktop (0.8rem). */
+  .pl-freeframe .pl-frame-label { font-size: calc(0.8rem * 1.3); }
+
+  /* The computer becomes a plain button in the bottom-right corner (no
+     longer an invisible hotspot over the pictured monitor). */
+  .pl-computer-hotspot {
+    top: auto;
+    right: 16px;
+    bottom: 16px;
+    width: auto;
+    height: auto;
+    padding: 0;
+    border-radius: 999px;
+  }
+  .pl-computer-outline { display: none; }
+  /* 70% bigger than the desktop tag (0.66rem / 4px 11px). */
+  .pl-hotspot-tag {
+    font-size: calc(0.66rem * 1.7);
+    padding: 7px 19px;
+    border-width: 2px;
+    opacity: 1;
+  }
+  .pl-computer-hotspot.ready .pl-hotspot-tag {
+    animation: pl-tag-pulse 1.4s ease-in-out infinite;
+  }
+
+  /* Computer close-up: the computer.png image is 40% bigger, the terminal
+     (input + button) keeps its size. The image is redrawn on a ::before
+     (inheriting the inline background-image) and scaled about the centre;
+     the terminal's nudge onto the monitor scales with it (-80/35 × 1.4). */
+  .pl-screen { overflow: hidden; }
+  .pl-screen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: inherit;
+    transform: scale(1.4);
+    pointer-events: none;
+  }
+  .pl-screen .pl-terminal { top: -112px; left: 49px; }
+}
+@keyframes pl-tag-pulse {
+  0%, 100% { box-shadow: var(--glow-cyan); }
+  50% { box-shadow: 0 0 22px var(--cyan), 0 0 40px rgba(22, 242, 255, 0.5); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pl-computer-hotspot.ready .pl-hotspot-tag { animation: none; }
+}
+

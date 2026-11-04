@@ -231,6 +231,85 @@ h3 {
 .panel-glow-green { box-shadow: var(--glow-green); border-color: rgba(43,255,136,0.4); }
 .panel-glow-amber { box-shadow: 0 0 8px rgba(255,185,43,0.5), 0 0 22px rgba(255,185,43,0.3); border-color: rgba(255,185,43,0.4); }
 
+/* ---------- Close button (components/CloseButton.jsx) ----------
+   One look for every ✕ in the game: a dark digital chip with a purple neon
+   edge, a faint cyan inner glow and a white spark of light in its corner.
+   Turns cyan on hover. Components only POSITION it; size comes from --size
+   (40px, 50% bigger on mobile). `.close-btn--light` is for light surfaces.
+   The base rules use :where() (zero specificity) on purpose: room CSS is
+   bundled BEFORE this file (main.jsx imports App first), so a plain
+   `.close-btn` here would override a room's `position: absolute; top; right`
+   and drop the button into the middle of its container. */
+:where(.close-btn) {
+  --size: 40px;
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+  border: 1px solid rgba(168, 85, 247, 0.75);
+  border-radius: calc(var(--size) * 0.25);
+  background: linear-gradient(145deg, rgba(44, 22, 88, 0.94), rgba(8, 12, 34, 0.96));
+  color: #eef4ff;
+  box-shadow:
+    0 0 10px rgba(168, 85, 247, 0.45),
+    inset 0 0 10px rgba(22, 242, 255, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: border-color 0.18s, box-shadow 0.18s, background 0.18s, color 0.18s, transform 0.1s;
+}
+.close-btn svg {
+  width: 55%;
+  height: 55%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.65));
+}
+/* the spark of white light */
+.close-btn::after {
+  content: '';
+  position: absolute;
+  top: 12%;
+  right: 12%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 2px rgba(155, 250, 255, 0.8);
+  opacity: 0.9;
+  pointer-events: none;
+}
+.close-btn:hover {
+  color: #fff;
+  border-color: var(--cyan);
+  background: linear-gradient(145deg, rgba(58, 30, 112, 0.96), rgba(10, 22, 52, 0.96));
+  box-shadow: var(--glow-cyan), inset 0 0 12px rgba(22, 242, 255, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.close-btn:active { transform: scale(0.94); }
+.close-btn:focus-visible { outline: 2px solid var(--cyan-light); outline-offset: 2px; }
+/* Light surfaces: same shape and spark, inverted — white chip, purple ✕. */
+.close-btn--light {
+  border-color: rgba(109, 40, 217, 0.45);
+  background: linear-gradient(145deg, #ffffff, #eeeaff);
+  color: var(--purple-dim);
+  box-shadow: 0 2px 8px rgba(60, 30, 120, 0.18), 0 0 10px rgba(168, 85, 247, 0.25);
+}
+.close-btn--light svg { filter: none; }
+.close-btn--light::after { background: var(--cyan-light); box-shadow: 0 0 6px 2px rgba(10, 169, 196, 0.6); }
+.close-btn--light:hover { color: var(--purple); border-color: var(--purple); background: #fff; box-shadow: var(--glow-purple); }
+/* Mobile (≤920px, = settings.mobile.breakpoint): 40px × 1.5 × 1.3 ≈ 78px. */
+@media (max-width: 920px) {
+  :where(.close-btn) { --size: 78px; }
+  .close-btn::after { width: 8px; height: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .close-btn { transition: none; }
+}
+
 /* ---------- Buttons ---------- */
 .btn {
   font-family: var(--font-ui);
@@ -247,7 +326,7 @@ h3 {
   transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
 }
 .btn-light {
-  font-family: var(--font-display);
+  font-family: var(--font-retro);
   font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.08em;

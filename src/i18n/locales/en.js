@@ -107,7 +107,8 @@ export default {
       "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam.",
       "evidenceHeading": "Evidence presented",
       "posttest": "Post-test: talk to {friend} again. What did you learn about spotting scams, disclosure, and why \"too good to be true\" usually is?",
-      "again": "↻ Play again"
+      "again": "↻ Play again",
+      "evidenceButton": "See your evidence"
     },
     "lose": {
       "eyebrow": "Time Expired",
@@ -973,7 +974,7 @@ export default {
         "resultTitle": "Search result",
         "errRunAll": "Run the reverse image search on every product before classifying it.",
         "errClassifyAll": "Classify all three products first.",
-        "classifiedCount": "Products classified: {count} / {total}",
+        "classifyCount": "Classified Products: {count} / {total}",
         "errWrong": "One or more classifications are wrong. Re-read what each search returned.",
         "learnLabel": "Real tool, real habit:",
         "learn": "a reverse image search checks whether a “handmade”, “unique” or “real” product photo is actually stolen, mass-produced across dozens of dropshipping stores, or AI-generated. No results at all can mean the image is fake.",
@@ -1166,9 +1167,9 @@ export default {
         "feedbackTitle": "Equation solved: why this ad?",
         "badge": "Targeting engine · solve every equation",
         "prompt": "Fill the missing slot to complete each person's ad.",
-        "adFlag": "AD ACTIVATED",
         "adTitle": "Ad",
-        "slotPlaceholder": "＋ drop tile",
+        "adFlag": "AD ACTIVATED",
+        "slotPlaceholder": "drop tile",
         "stepBadge": "Equation {n} / {total}",
         "profileBadge": "Profile complete",
         "dragHint": "Drag the missing factor into the equation — the one that fits this exact person.",
