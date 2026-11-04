@@ -1,0 +1,5 @@
+"key","en","es","fi","sr"
+"debug.posttestInTimeDescription","Restart the post-test with all puzzles completed and 5 minutes left","Reiniciar el post-test con todos los retos completados y 5 minutos restantes","Aloita lopputesti uudelleen: kaikki pulmat ratkaistu ja 5 minuuttia jäljellä","Ponovo pokreni završni test sa svim rešenim zagonetkama i preostalih 5 minuta"
+"debug.posttestInTime","Test · 5:00","Test · 5:00","Testi · 5:00","Test · 5:00"
+"debug.posttestTimeoutDescription","Restart the post-test after time ran out with puzzles unfinished","Reiniciar el post-test con el tiempo agotado y retos sin terminar","Aloita lopputesti uudelleen: aika loppui ennen kaikkien pulmien ratkaisemista","Ponovo pokreni završni test nakon isteka vremena, sa nerešenim zagonetkama"
+"debug.posttestTimeout","Test · 0:00","Test · 0:00","Testi · 0:00","Test · 0:00"

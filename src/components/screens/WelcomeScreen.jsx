@@ -6,6 +6,7 @@ import { preloadGameAssets } from '../../game/preloadAssets.js'
 import { IS_PHONE } from '../../game/device.js'
 import { initActor, track, OBJ } from '../../game/xapi.js'
 import RotatePrompt from './RotatePrompt.jsx'
+import LandingCredits from './LandingCredits.jsx'
 import './welcome.css'
 
 // Flag per language (drawn by the self-hosted emoji font, see game/emojiFont.js).
@@ -140,6 +141,7 @@ export default function WelcomeScreen() {
           {t('welcome.start')}
         </button>
       </form>
+      <LandingCredits />
       {pending && <RotatePrompt onContinue={continueToGame} />}
     </div>
   )

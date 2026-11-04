@@ -1,35 +1,35 @@
 /* AUTO-GENERATED from the translation Google Sheet by `npm run i18n:import`. Do not edit by hand. */
 export default {
   "common": {
-    "continue": "Continue →",
-    "begin": "▶ Step inside",
-    "submit": "Submit",
-    "enter": "Enter",
-    "next": "Next",
-    "locked": "Locked",
-    "cleared": "✓ Cleared",
-    "enterNode": "Enter",
-    "back": "Back",
-    "close": "Close",
-    "howToPlay": "How to play:"
+    "continue": "Continuar →",
+    "begin": "▶ Comenzar",
+    "submit": "Enviar",
+    "enter": "Comenzar",
+    "next": "Siguente",
+    "locked": "Bloqueado",
+    "cleared": "✓ Sala Desbloqueada",
+    "enterNode": "Entrar",
+    "back": "Atrás",
+    "close": "Cerrar",
+    "howToPlay": "Cómo jugar:"
   },
   "welcome": {
-    "eyebrow": "Player Setup",
-    "titleLead": "LAST CHANCE",
-    "titleAccent": "TO ESCAPE",
-    "tagline": "// an escape room about ads, scams & fraudulent websites",
-    "subtitle": "Set up your player, then jack into the Physical Internet.",
-    "aliasLabel": "Choose an alias",
-    "aliasPlaceholder": "e.g. Ne0nRunner",
-    "ageLabel": "Your age",
-    "agePlaceholder": "e.g. 14",
-    "languageLabel": "Language",
-    "start": "Enter",
-    "aliasError": "Enter an alias to continue.",
-    "ageError": "Enter a valid age (1–120).",
-    "characterError": "Choose a character",
-    "languageError": "Choose a language",
-    "characterLabel": "Choose your character",
+    "eyebrow": "Configuración del Jugador",
+    "titleLead": "ÚLTIMA OPORTUNIDAD",
+    "titleAccent": "PARA ESCAPAR",
+    "tagline": "// una sala de escape sobre anuncios, estafas y sitios web fraudulentos",
+    "subtitle": "Configura tu reproductor y luego conéctate a Internet físico.",
+    "aliasLabel": "Elige un alias",
+    "aliasPlaceholder": "p. ej. Ne0nRunner",
+    "ageLabel": "Tu edad",
+    "agePlaceholder": "p. ej. 14",
+    "languageLabel": "Idioma",
+    "start": "Entrar",
+    "aliasError": "Introduce un alias para continuar.",
+    "ageError": "Introduce una edad válida (1–120).",
+    "characterError": "Elige un personaje",
+    "languageError": "Elige un idioma",
+    "characterLabel": "Elige tu personaje",
     "characterMia": "Mia",
     "characterMax": "Max"
   },
@@ -38,1172 +38,1218 @@ export default {
     "text": "El resto del juego se juega en horizontal. Gira el móvil de lado para continuar."
   },
   "hud": {
-    "logo": "LAST CHANCE TO ESCAPE",
-    "expires": "offer expires in",
-    "tminus": "T-MINUS",
-    "map": "🗺 Map",
-    "bag": "🎒 Bag",
-    "muteSound": "Mute sound",
-    "unmuteSound": "Unmute sound",
-    "inventoryTitle": "Inventory & Evidence",
-    "tools": "Tools & Rewards",
-    "noTools": "Nothing collected yet. Solve puzzles to earn tools.",
-    "evidenceHeading": "Evidence on the deal",
-    "noEvidence": "Collect proof in each district to convince {friend} at the end.",
+    "logo": "ÚLTIMA OPORTUNIDAD DE ESCAPAR",
+    "expires": "la oferta termina en",
+    "tminus": "T-menos",
+    "map": "🗺 Mapa",
+    "bag": "🎒 Mochila",
+    "muteSound": "Sin sonido",
+    "unmuteSound": "Con sonido",
+    "inventoryTitle": "Inventario & evidencia",
+    "tools": "Herramientas & recompensas",
+    "noTools": "Aún no has conseguido nada. Resuelve puzles para ganar herramientas.",
+    "evidenceHeading": "Pruebas sobre la oferta",
+    "noEvidence": "Reúne pruebas en cada distrito para convencer a {friend} al final.",
     "hints": "💡 Pistas",
-    "enterFullscreen": "Enter fullscreen",
-    "exitFullscreen": "Exit fullscreen",
-    "fullscreenError": "Fullscreen could not be activated. Please try again."
+    "enterFullscreen": "Entrar en pantalla completa",
+    "exitFullscreen": "Salir de pantalla completa",
+    "fullscreenError": "No se pudo activar la pantalla completa. Inténtalo de nuevo."
   },
   "intro": {
-    "eyebrow": "Educational Escape Room",
-    "titleLead": "THE",
-    "titleAccent": "PHYSICAL INTERNET",
-    "tagline": "// ads · scams · fraudulent websites — decoded",
-    "situationTitle": "The situation",
-    "hook": "Your friend {friend} just found a viral deal on {product} — 90% off, \"today only\". It looks incredible… which is exactly why you think it is a scam.",
-    "context": "To show {friend} how scams and advertising really work, you both jack into a physical version of the Internet — a neon city where shops, social platforms and ads become districts you can walk through.",
-    "clock": "⏱ {minutes}:00 on the clock",
-    "mission": "You have {minutes} minutes — the time before the offer expires — to travel through the Physical Internet, gather evidence about how ads and scams work, and convince {friend} not to buy. If the timer hits zero, {friend} buys it.",
+    "eyebrow": "Sala de escape educativa",
+    "titleLead": "/",
+    "titleAccent": "INTERNET FÍSICO",
+    "tagline": "// Anuncios · Estafas · Sitios web fraudulentos — descifrado",
+    "situationTitle": "La situación",
+    "hook": "Tu amigo {friend} acaba de encontrar una oferta viral en {product}: ¡90% de descuento, solo por hoy! Parece increíble… y por eso mismo crees que es una estafa.",
+    "context": "Para mostrarle a {friend} cómo funcionan realmente las estafas y la publicidad, ambos entran en una versión física de Internet: una ciudad de neón donde las tiendas, las plataformas sociales y los anuncios se convierten en distritos por los que se puede pasear.",
+    "clock": "⏱ {minutes}:00 en el reloj",
+    "mission": "Tienes {minutes} minutos —el tiempo que queda antes de que expire la oferta— para navegar por Internet, recopilar información sobre cómo funcionan los anuncios y las estafas, y convencer a {friend} de que no compre. Si el temporizador llega a cero, {friend} lo compra.",
     "steps": [
       {
-        "title": "1 · Explore",
-        "text": "Four districts, two corridors. Each teaches one trick advertisers use."
+        "title": "1 · Explorar",
+        "text": "Cuatro distritos, dos corredores. Cada uno enseña un truco que utilizan los anunciantes."
       },
       {
-        "title": "2 · Gather",
-        "text": "Earn tools and evidence. Track them in your Bag and on the Map."
+        "title": "2 · Reunir",
+        "text": "Obtén herramientas y pruebas. Localízalas en tu mochila y en el mapa."
       },
       {
-        "title": "3 · Convince",
-        "text": "Reach the Final Decision and use your evidence before time runs out."
+        "title": "3 · Convencer",
+        "text": "Toma la decisión final y utiliza tus pruebas antes de que se acabe el tiempo."
       }
     ],
-    "start": "▶ Step inside — start the clock",
-    "pretest": "Pre-test: first, tell {friend} what you already think about this deal. Then enter the Internet."
+    "start": "▶ Entra — pon en marcha el reloj",
+    "pretest": "Prueba previa: primero, cuéntale a {friend} qué opinas sobre esta oferta. Luego, entra en Internet."
   },
   "map": {
-    "eyebrow": "Physical Internet · District Map",
-    "titleLead": "Choose your next",
-    "titleAccent": "district",
-    "subtitle": "Travel the network, gather evidence, and reach the Final Decision before the offer expires.",
-    "start": "▶ START · Pre-test with {friend}",
-    "lockedTip": "Locked — finish the previous district"
+    "eyebrow": "Internet físico · Mapa del distrito",
+    "titleLead": "Elige tu próximo",
+    "titleAccent": "distrito",
+    "subtitle": "Recorre la red, reúne pruebas y llega a la decisión final antes de que expire la oferta.",
+    "start": "▶ INICIO · Prueba previa con {friend}",
+    "lockedTip": "Bloqueado: finaliza el distrito anterior."
   },
   "roomframe": {
-    "clearedDefaultTitle": "District cleared",
-    "clearedDefaultText": "Nice work. The next node is unlocked on the map.",
-    "collect": "collect",
-    "collected": "collected",
-    "addedToBag": "added to bag"
+    "clearedDefaultTitle": "Distrito despejado",
+    "clearedDefaultText": "Buen trabajo. El siguiente nodo está desbloqueado en el mapa.",
+    "collect": "recoger",
+    "collected": "recogido",
+    "addedToBag": "añadido a la mochila"
   },
   "end": {
     "win": {
-      "eyebrow": "Mission Complete",
+      "eyebrow": "Misión cumplida",
       "titleLead": "{friend}",
-      "titleAccent": "DIDN'T BUY IT",
-      "tag": "Offer expired with {time} to spare",
-      "heading": "You made the case",
-      "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam.",
-      "evidenceHeading": "Evidence presented",
-      "posttest": "Post-test: talk to {friend} again. What did you learn about spotting scams, disclosure, and why \"too good to be true\" usually is?",
-      "again": "↻ Play again"
+      "titleAccent": "NO COMPRADO",
+      "tag": "La oferta ha expirado con {time} de margen.",
+      "heading": "Has presentado tu caso",
+      "body": "Utilizando las pruebas que recabaste en internet, le demostraste a {friend} que el anuncio de la tableta ‘NovaPad X’ probablemente era una estafa.",
+      "evidenceHeading": "Evidencia presentada",
+      "posttest": "Después de la prueba: vuelve a hablar con {friend}.¿Qué has aprendido sobre cómo detectar estafas, la importancia de la transparencia y por qué lo que parece demasiado bueno para ser verdad suele serlo?",
+      "again": "↻ Jugar de nuevo",
+      "evidenceButton": "Ver tus pruebas"
     },
     "lose": {
-      "eyebrow": "Time Expired",
+      "eyebrow": "Tiempo expirado",
       "titleLead": "{friend}",
-      "titleAccent": "HIT \"BUY NOW\"",
-      "tag": "The countdown reached zero",
-      "heading": "The offer got them first",
-      "body": "Before you could finish gathering proof, the fake \"today only\" countdown did its job and {friend} bought {product}. That urgency was the whole trick.",
-      "lessonLabel": "Lesson:",
-      "lesson": "artificial urgency (\"only 3 left!\", \"offer ends in 5:00\") is designed to stop you from thinking. Slow down — a real deal will still be there tomorrow.",
-      "again": "↻ Try again",
+      "titleAccent": "PULSA \"COMPRAR AHORA\"",
+      "tag": "La cuenta atrás llegó a cero.",
+      "heading": "La oferta ha llegado antes",
+      "body": "Antes de que pudieras reunir todas las pruebas, la falsa cuenta regresiva de \"solo hoy\" surtió efecto y {friend} compró {product}. Esa urgencia era la clave del truco.",
+      "lessonLabel": "Lección:",
+      "lesson": "La urgencia artificial (\"¡Solo quedan 3!\", \"La oferta termina en 5:00\") está diseñada para impedir que pienses. Tómate tu tiempo: mañana habrá una buena oferta.",
+      "again": "↻ Inténtalo de nuevo",
       "reasons": {
         "timeUp": {
-          "heading": "The offer got them first",
-          "body": "Before you could finish convincing {friend}, the fake \"today only\" countdown hit zero — and {friend} bought {product}. That urgency was the whole trick."
+          "heading": "La oferta llegó antes",
+          "body": "Antes de que terminaras de convencer a {friend}, la falsa cuenta atrás de \"solo hoy\" llegó a cero, y {friend} compró {product}. Esa urgencia era todo el truco."
         },
         "choseBuy": {
-          "heading": "Out of arguments",
-          "body": "You ran out of ways to convince {friend}. Still unconvinced, {friend} decided to go for it and bought {product}."
+          "heading": "Sin argumentos",
+          "body": "Te quedaste sin formas de convencer a {friend}. Sin estar convencido, {friend} decidió lanzarse y compró {product}."
         },
         "notEnoughEvidenceConvincing": {
-          "heading": "Convincing — but not enough proof",
+          "heading": "Convincente, pero sin pruebas suficientes",
           "Mia": {
-            "body": "You convinced Mia, but you were too late. She didn't get to see all the evidence you could have found in the Physical Internet."
+            "body": "Convenciste a Mia, pero llegaste tarde. No llegó a ver todas las pruebas que podrías haber encontrado en el Internet Físico."
           },
           "Max": {
-            "body": "You convinced Max, but you were too late. He didn't get to see all the evidence you could have found in the Physical Internet."
+            "body": "Convenciste a Max, pero llegaste tarde. No llegó a ver todas las pruebas que podrías haber encontrado en el Internet Físico."
           }
         },
         "notEnoughEvidenceUnconvincing": {
-          "heading": "Not convinced",
-          "body": "You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it."
+          "heading": "Sin convencer",
+          "body": "No me convenciste, y tampoco vi pruebas suficientes en el Internet Físico. La compro."
         }
+      },
+      "missingEvidence": {
+        "button": "Ver pruebas que faltan",
+        "title": "Informe de pruebas",
+        "collected": "Pruebas recogidas",
+        "missing": "Pruebas que aún faltan",
+        "none": "Ninguna prueba recogida"
       }
     },
     "whatHappened": {
-      "titleLose": "What happened to {friend}:",
-      "titleWin": "What could have happened to {friend}:",
-      "Max": "Max lost the money and never received the product. His card details may be stolen and used for additional purchases.",
-      "Mia": "Mia lost the money and never received the product. Her card details may be stolen and used for additional purchases. "
+      "titleLose": "¿Qué le pasó a {friend}?",
+      "titleWin": "¿Qué le pudo haber pasado a {friend}?",
+      "Max": "Max perdió el dinero y nunca recibió el producto. Es posible que le roben los datos de su tarjeta y los utilicen para realizar compras adicionales.",
+      "Mia": "Mia perdió el dinero y nunca recibió el producto. Es posible que le roben los datos de su tarjeta y los utilicen para realizar compras adicionales."
     },
     "whatCould": {
-      "Max": "Max would have lost the money and never received the product. His card details could have been stolen and used for additional purchases.",
-      "Mia": "Mia would have lost the money and never received the product. Her card details could have been stolen and used for additional purchases. "
+      "Max": "Max habría perdido el dinero y nunca habría recibido el producto. Sus datos bancarios podrían haber sido robados y utilizados para compras adicionales.",
+      "Mia": "Mia habría perdido el dinero y nunca habría recibido el producto. Los datos de su tarjeta podrían haber sido robados y utilizados para realizar compras adicionales."
     }
   },
   "story": {
     "product": {
       "handle": "luna.deals",
-      "sponsored": "Sponsored",
+      "sponsored": "Patrocinado",
       "url": "tech-bargalns.com",
       "name": "NovaPad X",
-      "saleBadge": "⚡ FLASH SALE",
-      "wasPrice": "$600",
-      "nowPrice": "$49",
+      "saleBadge": "⚡ OFERTA RELÁMPAGO",
+      "wasPrice": "€600",
+      "nowPrice": "€49",
       "offerLabel": "Oferta de 30 minutos",
-      "endsIn": "Ends in\n",
+      "endsIn": "Termina en",
       "offerUrgency": "¡Date prisa antes de que se acabe!",
-      "buy": "BUY NOW",
-      "caption": "OMG they dropped the NovaPad X to $49?! 😱🔥 Grab it before it’s gone! #deal #ad",
-      "likes": "12.4k likes"
+      "buy": "COMPRA AHORA",
+      "caption": "¡¡¡Dios mío, ¿¡han bajado el precio de la NovaPad X a €49?! 😱🔥 ¡Aprovecha antes de que se agote! #oferta #anuncio",
+      "likes": "12.4k Me gusta"
     },
-    "roundLabel": "Round {n} · {title}",
-    "respondPrompt": "Respond to {friend}",
-    "you": "You",
-    "diagnosticNote": "No wrong answers here — just tell me what you think.",
+    "roundLabel": "Ronda {n} · {title}",
+    "respondPrompt": "Responde a {friend}",
+    "you": "Tú",
+    "diagnosticNote": "Aquí no hay respuestas incorrectas; simplemente dime qué piensas.",
     "rounds": [
       {
-        "title": "The Timer",
+        "title": "El temporizador",
         "options": [
           {
             "k": "A",
-            "text": "A company can't profit selling a $600 NovaPad X for $49. They'd go bankrupt, so it's fake.",
+            "text": "Una empresa no puede obtener ganancias vendiendo una NovaPad X de 600€ por 49€. Quebrarían, así que es un engaño.",
             "correct": false
           },
           {
             "k": "B",
-            "text": "That 30-minute countdown is just a high-pressure tactic to make you panic and buy without thinking.",
+            "text": "Esa cuenta regresiva de 30 minutos no es más que una táctica de alta presión para que entres en pánico y compres sin pensar.",
             "correct": true
           },
           {
             "k": "C",
-            "text": "Look at the comments first. If people in the thread say it's a scam, don't buy it.",
+            "text": "Primero lee los comentarios. Si alguien dice que es una estafa, no lo compres.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "For $49, it's probably just a cheap, broken knockoff anyway.",
+            "text": "Por 49 euros, probablemente sea solo una imitación barata y defectuosa.",
             "correct": false
           }
         ],
-        "why": "Exactly — the ticking clock is manufactured urgency, built to make you act before you think.",
-        "nudge": "Think about what that ticking clock is really doing to you.",
-        "positiveFeedback": "You mean, the urgency makes you act before you think... ",
-        "negativeFeedback": "I don't know, that doesn't sound right."
+        "why": "Exactamente: el tictac del reloj es una urgencia artificial, diseñada para que actúes antes de pensar.",
+        "nudge": "Piensa en lo que realmente te está haciendo ese tictac del reloj.",
+        "positiveFeedback": "¿Te refieres a que la urgencia te hace actuar antes de pensar...?",
+        "negativeFeedback": "No lo sé, eso no suena bien."
       },
       {
-        "title": "The Source & Feed",
+        "title": "Fuente y feed",
         "options": [
           {
             "k": "A",
-            "text": "Your phone is listening to us. We talked about tablets yesterday and the app used the mic.",
+            "text": "Tu teléfono nos está escuchando. Ayer hablamos de tabletas y la aplicación usó el micrófono.",
             "correct": false
           },
           {
             "k": "B",
-            "text": "Does her profile have a verified checkmark? If not, it's a fake clone account impersonating her.",
+            "text": "¿Su perfil tiene la marca de verificación? Si no, se trata de una cuenta falsa que se hace pasar por ella.",
             "correct": false
           },
           {
             "k": "C",
-            "text": "Your phone must have a virus or spyware forcing these specific ads onto your screen.",
+            "text": "Es probable que tu teléfono tenga un virus o software espía que esté forzando la aparición de estos anuncios específicos en tu pantalla.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "The platform's algorithm is tracking you. It fed your search history straight to predatory ad networks.",
+            "text": "El algoritmo de la plataforma te está rastreando. Envió tu historial de búsqueda directamente a redes publicitarias abusivas.",
             "correct": true
           }
         ],
-        "why": "Right — it's not the mic or magic. Your search history was profiled and sold to ad networks.",
-        "nudge": "It's not the mic or a virus — think about what the platform already knows about you.",
-        "positiveFeedback": "Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. ",
-        "negativeFeedback": "That really doesn't make sense to me."
+        "why": "Exacto: no es el micrófono ni magia. Tu historial de búsqueda fue perfilado y vendido a redes publicitarias.",
+        "nudge": "No es el micrófono ni un virus: piensa en lo que la plataforma ya sabe de ti.",
+        "positiveFeedback": "Vale, no es el micrófono ni magia... Analizaron mi historial de búsqueda y lo vendieron a redes publicitarias.",
+        "negativeFeedback": "La verdad es que eso no tiene ningún sentido para mí."
       },
       {
-        "title": "The Destination",
+        "title": "El destino",
         "options": [
           {
             "k": "A",
-            "text": "Look at the address bar. The URL says \nhttps://www.lunawear.com-official.shop/ — don't you find this long URL and the word \"official\" a little suspicious?",
+            "text": "Mira la barra de direcciones. La URL dice https://www.lunawear.com-official.shop/ — ¿no te parece un poco sospechosa esa URL tan larga y la palabra \"official\"?",
             "correct": true
           },
           {
             "k": "B",
-            "text": "Check the lock icon. No https:// means your connection isn't encrypted, so it's a scam.",
+            "text": "Mira el icono del candado. Si no hay https://, tu conexión no está cifrada, así que es una estafa.",
             "correct": false
           },
           {
             "k": "C",
-            "text": "Don't type your card in. As long as you use Apple Pay or PayPal, you're 100% safe.",
+            "text": "No metas la tarjeta. Mientras uses Apple Pay o PayPal, estás 100 % seguro.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "Scroll to the bottom. No 'Copyright 2026' text is how you know it's fake.",
+            "text": "Baja hasta abajo del todo. Si no pone 'Copyright 2026', así sabes que es falsa.",
             "correct": false
           }
         ],
-        "why": "Yes — read the URL letter by letter. 'bargalns' with an 'l' is a look-alike domain, not the real store.",
-        "nudge": "The real tell is in the address bar itself — read it character by character.",
-        "positiveFeedback": "Oh, now I remember! A suspicious URL can be a sign that a website is fake and just pretending to be the real store.",
-        "negativeFeedback": "Yeah, right, and I'm supposed to believe that?"
+        "why": "Sí: lee la URL letra a letra. 'bargalns' con una 'l' es un dominio imitador, no la tienda real.",
+        "nudge": "La pista de verdad está en la propia barra de direcciones: léela carácter a carácter.",
+        "positiveFeedback": "¡Ah, ahora me acuerdo! Una URL sospechosa puede ser señal de que una web es falsa y solo finge ser la tienda real.",
+        "negativeFeedback": "Ya, claro, ¿y se supone que me lo tengo que creer?"
       }
     ],
     "pretest": {
-      "eyebrow": "The Deal",
+      "eyebrow": "La oferta",
       "debugTag": "Pre-test",
-      "title": "A message from {friend}",
-      "opening": "Look at this! An influencer I follow just posted a flash sale — the $600 NovaPad X for only $49! There are just 30 minutes left on the countdown. I'm entering my card info right now.",
+      "title": "Un mensaje de {friend}",
+      "opening": "¡Mira esto! Una influencer que sigo acaba de publicar una oferta flash: ¡la NovaPad X de 600 € por solo 49 €! Quedan solo 30 minutos en la cuenta atrás. Estoy metiendo los datos de mi tarjeta ahora mismo.",
       "responses": [
-        "Whatever the reason for the setup, I don't want to miss out before the clock hits zero! Plus, she's a massive influencer — she wouldn't post something random. But the weird part is how this ad even knew I wanted a tablet. It popped up right at the top of my feed.",
-        "Look, there are a million theories about how algorithms and accounts handle ads, but I'm looking at the actual store page right now. It has the official brand logo, great reviews, and a secure checkout."
+        "Sea cual sea el motivo del montaje, ¡no quiero perdérmelo antes de que el reloj llegue a cero! Además, es una influencer enorme, no publicaría algo al azar. Pero lo raro es cómo este anuncio sabía que quería una tablet. Apareció justo arriba del todo en mi feed.",
+        "Mira, hay mil teorías sobre cómo los algoritmos y las cuentas manejan los anuncios, pero ahora mismo estoy viendo la página real de la tienda. Tiene el logo oficial de la marca, reseñas estupendas y un pago seguro."
       ],
-      "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running — you've got until it hits zero, thirty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
-      "endingYou": "Deal. Let's look behind the screen.",
-      "begin": "▶ Look behind the screen"
+      "endingFriend": "Mira, puedes diseccionar la página todo lo que quieras, ¡pero a mí todo me parece correcto! Estás siendo paranoico. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, treinta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
+      "endingYou": "Trato hecho. Vamos a mirar detrás de la pantalla.",
+      "begin": "▶ Mirar detrás de la pantalla"
     },
     "posttest": {
-      "eyebrow": "The Final Call",
+      "eyebrow": "La decisión final",
       "debugTag": "Post-test",
-      "title": "{friend} is having second thoughts",
+      "title": "{friend} se lo está replanteando",
       "opening": "Has vuelto. Sigo mirando la página de pago. Antes de comprar, cuéntame qué has aprendido sobre esta oferta.",
       "friend": {
         "responses": [
-          "What just happened? Do you think any of what we saw was... real?",
-          "Yeah, about that... No offense {player}, but I really want this tablet. What if it's not a scam? I think I'm willing to take the risk!!",
-          "Just tell me the strongest reasons why you think it's a scam."
+          "¿Qué acaba de pasar? ¿Crees que algo de lo que hemos visto era... real?",
+          "Ya, sobre eso... Sin ofender, {player}, pero quiero esta tablet de verdad. ¿Y si no es una estafa? ¡¡Creo que estoy dispuesto a arriesgarme!!",
+          "Dime simplemente las razones más fuertes por las que crees que es una estafa."
         ]
       },
       "player": {
         "responses": [
-          "Of course it was real, we saw all the reasons why the deal was a scam, remember? So that you wouldn't fall for it.",
-          "Come one, we’re going to be late to class.",
-          "{friend}! Please tell me you’re kidding..."
+          "Claro que era real, vimos todas las razones por las que la oferta era una estafa, ¿recuerdas? Para que no picaras.",
+          "Venga, que vamos a llegar tarde a clase.",
+          "¡{friend}! Dime que es broma..."
         ]
       },
       "responses": [
-        "I hear you, but the pressure feels so real with that clock ticking right in front of me. And it's not just the timer — I keep thinking it came from one of my favourite creators. But there's still the mystery of how it ended up on my radar.",
-        "Man, the way everything's handled behind the scenes on these apps is wild. But at the end of the day, I'm still staring at this checkout page trying to decide if it's safe to type my details in."
+        "Te escucho, pero la presión se siente muy real con ese reloj corriendo delante de mí. Y no es solo el temporizador: no dejo de pensar que venía de una de mis creadoras favoritas. Pero sigue el misterio de cómo acabó llegándome.",
+        "Tío, es una locura cómo se gestiona todo entre bambalinas en estas apps. Pero al final del día sigo mirando esta página de pago intentando decidir si es seguro meter mis datos."
       ],
       "convinced": "Me has convencido. Ahora entiendo las señales de alerta y cómo esta oferta intentaba influir en mí. No voy a comprar la tablet.",
-      "endingFriend": "Ugh, you've given me a lot to process, but I need to choose right now — the timer's about to hit zero. Based on everything we looked at, give it to me straight: do I close this tab and protect my data, or take the risk and buy it?",
-      "choiceClose": "Close the tab. It’s a scam.",
-      "choiceBuy": "Hit buy. Let’s risk it.",
+      "endingFriend": "Uf, me has dado mucho que procesar, pero tengo que decidir ahora mismo: el temporizador está a punto de llegar a cero. Con todo lo que hemos visto, dímelo claro: ¿cierro esta pestaña y protejo mis datos, o me arriesgo y la compro?",
+      "choiceClose": "Cierra la pestaña. Es una estafa.",
+      "choiceBuy": "Dale a comprar. Arriesguémonos.",
       "retryFriend": "No me has dado suficientes razones para no comprarla... Todavía puedes intentarlo de nuevo: explícame los puntos sobre los que aún no me has convencido.",
-      "retryAgain": "Try again to convince {friend}",
-      "retryGiveUp": "Let {friend} buy the tablet"
+      "retryAgain": "Intenta convencer a {friend} otra vez",
+      "retryGiveUp": "Dejar que {friend} compre la tablet"
     },
     "mastery": {
-      "banner": "One more time — I am still not convinced. Give me the strongest reason for each."
+      "banner": "Una vez más: sigo sin estar convencido. Dame la razón más fuerte de cada una."
     }
   },
   "enter": {
-    "eyebrow": "We are inside",
-    "titleLead": "Welcome to the",
-    "titleAccent": "PHYSICAL INTERNET",
-    "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
-    "playerLine": "Yes, we have a deal. Let's uncover why this offer is a scam, and how it was built.",
-    "toolsTitle": "First, the gear",
-    "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
-    "clock": "⏱ {minutes}:00 starts the moment we start walking",
-    "mission": "We’ll have to explore the districts, gather evidence of how the scam works, and make it back to school before the offer expires!",
-    "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
-    "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
-    "hintsText": "Stuck on a puzzle? Hints has clues for the district you're in.",
-    "finalLine": "Ready? The timer starts as soon as you open the map."
+    "eyebrow": "Estamos dentro",
+    "titleLead": "Bienvenido al",
+    "titleAccent": "INTERNET FÍSICO",
+    "friendLine": "Muy bien: tienes {minutes} minutos para convencerme de que esta oferta es una estafa. Si ese reloj llega a cero, compro {product}.",
+    "playerLine": "Sí, trato hecho. Vamos a descubrir por qué esta oferta es una estafa y cómo está montada.",
+    "toolsTitle": "Primero, el equipo",
+    "toolsIntro": "Dos cosas te acompañan a todas partes aquí dentro. Las encontrarás en la barra superior de la pantalla.",
+    "clock": "⏱ {minutes}:00 empieza en cuanto echemos a andar",
+    "mission": "¡Tendremos que explorar los distritos, reunir pruebas de cómo funciona la estafa y volver al instituto antes de que caduque la oferta!",
+    "mapText": "Tu ruta por el Internet Físico. Viaja de distrito en distrito: completa uno para desbloquear el siguiente, hasta la decisión final.",
+    "bagText": "Tus herramientas y las pruebas que recojas. Ábrela para usar objetos en los retos y repasar las pruebas que le enseñarás a {friend}.",
+    "hintsText": "¿Atascado en un reto? Pistas tiene claves del distrito en el que estás.",
+    "finalLine": "¿Listo? El temporizador arranca en cuanto abras el mapa."
   },
   "return": {
-    "playerLine": "That went well! I think we've collected more than enough evidence.",
-    "friendLine": "Let's go back already. Offer ends in less than {minutes} minutes.",
-    "friendLineTimeUp": "Let's go back already. The offer has already ended.",
-    "goBack": "Head to exit"
+    "playerLine": "¡Ha ido bien! Creo que hemos reunido pruebas más que de sobra.",
+    "friendLine": "Volvamos ya. La oferta acaba en menos de {minutes} minutos.",
+    "friendLineTimeUp": "Volvamos ya. La oferta ya ha terminado.",
+    "goBack": "Ir a la salida"
   },
   "nodes": {
     "start": {
-      "title": "Start",
-      "subtitle": "Pre-test · The message from {friend}",
-      "blurb": "Where it began — {friend} sent you the deal and asked what you think.",
+      "title": "Inicio",
+      "subtitle": "Pre-test · El mensaje de {friend}",
+      "blurb": "Donde empezó todo: {friend} te envió la oferta y te preguntó qué opinas.",
       "kind": "gate"
     },
     "link-district": {
-      "title": "Link District",
-      "subtitle": "Puzzle 1 · Fraudulent Links",
-      "blurb": "A router-block of doors. Only one URL is the real store — block the fakes.",
+      "title": "Distrito de los Enlaces",
+      "subtitle": "Reto 1 · Enlaces fraudulentos",
+      "blurb": "Un bloque de puertas tipo router. Solo una URL es la tienda real: bloquea las falsas.",
       "kind": "puzzle"
     },
     "roulette-corridor": {
-      "title": "Roulette Corridor",
-      "subtitle": "Corridor · Gamified Bait",
-      "blurb": "Two wheels with tempting offers. Investigate how each tries to influence you.",
+      "title": "Pasillo de la Ruleta",
+      "subtitle": "Pasillo · Cebo gamificado",
+      "blurb": "Dos ruletas con ofertas tentadoras. Investiga cómo intenta influirte cada una.",
       "kind": "corridor"
     },
     "influencer-avenue": {
-      "title": "Influencer Avenue",
-      "subtitle": "Puzzle 2 · Labels & Fakes",
-      "blurb": "Decode the sponsorship labels, then check which products are actually real.",
+      "title": "Avenida de los Influencers",
+      "subtitle": "Reto 2 · Etiquetas y falsificaciones",
+      "blurb": "Descifra las etiquetas de patrocinio y comprueba qué productos son realmente auténticos.",
       "kind": "puzzle"
     },
     "algorithm-room": {
-      "title": "Algorithm Control Room",
-      "subtitle": "Puzzle 3 · Personalization",
-      "blurb": "Feed the targeting equations to see how the algorithm profiles a person.",
+      "title": "Sala de Control del Algoritmo",
+      "subtitle": "Reto 3 · Personalización",
+      "blurb": "Alimenta las ecuaciones de segmentación para ver cómo el algoritmo perfila a una persona.",
       "kind": "puzzle"
     },
     "ads-corridor": {
-      "title": "Ads Corridor",
-      "subtitle": "Corridor · The Truth Behind",
-      "blurb": "Shine the Truth Light on the posters to read what the ad really says.",
+      "title": "Pasillo de los Anuncios",
+      "subtitle": "Pasillo · La verdad detrás",
+      "blurb": "Enfoca la Linterna de la Verdad sobre los carteles para leer lo que dice realmente el anuncio.",
       "kind": "corridor"
     },
     "persuasion-room": {
-      "title": "Persuasion Lab",
-      "subtitle": "Puzzle 4 · Persuasion Techniques",
-      "blurb": "Frame each ad with the trick it uses. Reveal the letters, form the password.",
+      "title": "Laboratorio de Persuasión",
+      "subtitle": "Reto 4 · Técnicas de persuasión",
+      "blurb": "Enmarca cada anuncio con el truco que utiliza. Revela las letras y forma la contraseña.",
       "kind": "puzzle"
     },
     "final-decision": {
-      "title": "Exit",
-      "subtitle": "Convince {friend}",
-      "blurb": "Present your evidence before the offer countdown runs out.",
+      "title": "Salida",
+      "subtitle": "Convence a {friend}",
+      "blurb": "Presenta tus pruebas antes de que acabe la cuenta atrás de la oferta.",
       "kind": "final"
     }
   },
   "items": {
     "emojiCard": {
-      "name": "Emoji Decoding Card",
-      "desc": "A key that maps emojis to letters. "
+      "name": "Tarjeta descodificadora de emojis",
+      "desc": "Una clave que asigna emojis a letras."
     },
     "dataReport": {
-      "name": "Data Report on {friend}",
-      "desc": "A dossier of the internet data of {friend}."
+      "name": "Informe de datos sobre {friend}",
+      "desc": "Un dosier con los datos de internet de {friend}."
     },
     "truthLight": {
-      "name": "Truth Flashlight",
-      "desc": "Shows what flashy ads hide: the small print and the catches behind their big promises."
+      "name": "Linterna de la Verdad",
+      "desc": "Muestra lo que esconden los anuncios llamativos: la letra pequeña y las trampas tras sus grandes promesas."
+    }
+  },
+  "names": {
+    "mia": {
+      "nominative": "Mia",
+      "genitive": "Mia",
+      "partitive": "Mia",
+      "allative": "Mia",
+      "adessive": "Mia",
+      "ablative": "Mia",
+      "illative": "Mia",
+      "inessive": "Mia",
+      "elative": "Mia",
+      "translative": "Mia",
+      "accusative": "Mia",
+      "dative": "Mia",
+      "instrumental": "Mia",
+      "locative": "Mia",
+      "vocative": "Mia"
+    },
+    "max": {
+      "nominative": "Max",
+      "genitive": "Max",
+      "partitive": "Max",
+      "allative": "Max",
+      "adessive": "Max",
+      "ablative": "Max",
+      "illative": "Max",
+      "inessive": "Max",
+      "elative": "Max",
+      "translative": "Max",
+      "accusative": "Max",
+      "dative": "Max",
+      "instrumental": "Max",
+      "locative": "Max",
+      "vocative": "Max"
     }
   },
   "hints": {
-    "title": "Mission hints",
-    "defaultPrompt": "I do not know how to use this clue yet.",
-    "briefLabel": "Mission status",
-    "progressLabel": "Mission progress",
+    "title": "Pistas",
+    "defaultPrompt": "Todavía no sé cómo usar esta pista.",
+    "briefLabel": "Estado de la misión",
+    "progressLabel": "Progreso de la misión",
     "brief": {
-      "welcome": "Prepare your run",
-      "pretest": "Read the deal before you enter the network",
-      "map": "Choose the next district in the evidence trail",
-      "room": "Solve the district and log what you discover",
-      "posttest": "Use your evidence to protect {friend}",
-      "win": "Run complete: review what protected you",
-      "lose": "Time expired: review the warning signs"
+      "welcome": "Prepara tu carrera",
+      "pretest": "Lee la oferta antes de entrar en la red.",
+      "map": "Elija el siguiente distrito en la pista de evidencia.",
+      "room": "Resuelve el enigma del distrito y registra tus hallazgos.",
+      "posttest": "Usa tus pruebas para proteger a {friend}.",
+      "win": "Ejecución completada: revisa qué te protegió",
+      "lose": "Tiempo agotado: revisa las señales de advertencia."
     },
     "stats": {
-      "time": "Time left",
-      "districts": "Districts",
-      "tools": "Tools",
-      "evidence": "Evidence"
+      "time": "Tiempo restante",
+      "districts": "Distritos",
+      "tools": "Herramientas",
+      "evidence": "Evidencia"
     },
-    "targetLabel": "Current objective",
-    "noTarget": "Return to the map to choose an available district.",
+    "targetLabel": "Objetivo actual",
+    "noTarget": "Regresa al mapa para elegir un distrito disponible.",
     "mapObjective": {
-      "title": "Open {district}",
-      "text": "This is the next available room in the investigation. Enter it from the map when you are ready to begin the challenge."
+      "title": "Abierto {district}",
+      "text": "Esta es la siguiente sala disponible en la investigación. Accede a ella desde el mapa cuando estés listo para comenzar el desafío."
     },
     "objectives": {
       "pretest": {
-        "title": "Complete the pre-test conversation",
-        "text": "Read the message from {friend}, choose the response that best explains your first impression, and use the final button to enter the Physical Internet."
+        "title": "Completa la conversación previa a la prueba.",
+        "text": "Lee el mensaje de {friend}, elige la respuesta que mejor explique tu primera impresión y usa el último botón para entrar en Internet físico."
       },
       "posttest": {
-        "title": "Make the final call",
-        "text": "Use the evidence you collected to explain the warning signs and decide whether {friend} should close the tab."
+        "title": "Toma la decisión final",
+        "text": "Utiliza la información que has recopilado para explicar las señales de advertencia y decidir si {friend} debería cerrar la pestaña."
       }
     },
     "pretest": {
-      "context": "Build your first impression before the investigation begins.",
+      "context": "Crea tu primera impresión antes de que comience la investigación.",
       "prompts": [
-        "I do not know how to recognise pressure in this offer.",
-        "I do not know what makes the influencer or page trustworthy.",
-        "I do not know which doubts I should carry into the investigation."
+        "No sé cómo reconocer la presión en esta oferta.",
+        "No sé qué hace que un influencer o una página sean dignos de confianza.",
+        "No sé qué dudas debería llevar conmigo a la investigación."
       ],
       "items": [
-        "Notice the countdown, the huge discount, and the promise of a limited-time deal. ",
-        "Ask yourself whether the influencer, comments, and polished page are enough to prove the offer is safe.",
-        "Keep your first concerns in mind. The districts ahead will give you evidence to test them."
+        "Fíjate en la cuenta atrás, el enorme descuento y la promesa de una oferta por tiempo limitado.",
+        "Pregúntate si la presencia del influencer, los comentarios y la página bien cuidada son suficientes para demostrar que la oferta es segura.",
+        "Ten presentes tus principales preocupaciones. Los distritos que te esperan te darán pruebas para ponerlas a prueba."
       ]
     },
     "map": {
-      "context": "Choose an unlocked district and follow the evidence trail.",
+      "context": "Elige un distrito desbloqueado y sigue el rastro de las pruebas.",
       "prompts": [
-        "I do not know which station I can enter next. ",
-        "I do not know how the district chain works. ",
-        "I do not know when my tools will become useful."
+        "No sé a qué estación puedo entrar ahora.",
+        "No sé cómo funciona la cadena de distritos.",
+        "No sé cuándo mis herramientas me serán útiles."
       ],
       "items": [
-        "A bright station is ready to explore; a dim station is still locked. ",
-        "The districts are designed as a chain, so finishing one unlocks the next. ",
-        "Check your Bag after each solved district: new tools help with later puzzles."
+        "Una estación iluminada está lista para ser explorada; una estación oscura aún permanece cerrada.",
+        "Los distritos están diseñados como una cadena, por lo que al completar uno se desbloquea el siguiente.",
+        "Revisa tu mochila después de resolver cada distrito: las nuevas herramientas te ayudarán con los puzles posteriores."
       ]
     },
     "posttest": {
-      "context": "Use what you discovered to help your friend make the final call.",
+      "context": "Utiliza lo que has descubierto para ayudar a tu amigo a tomar la decisión final.",
       "prompts": [
-        "I do not know how to separate real evidence from persuasive decoration. ",
-        "I do not know which warning signs matter most. ",
-        "I do not know how to explain the risk before choosing."
+        "No sé cómo separar las pruebas reales de la mera retórica persuasiva.",
+        "No sé cuáles son las señales de advertencia más importantes.",
+        "No sé cómo explicar el riesgo antes de elegir."
       ],
       "items": [
-        "Separate manufactured urgency from a genuinely good offer.",
-        "Remember that a familiar creator or a polished page is not proof of safety. ",
-        "Use the evidence in your Bag to explain the risk before choosing."
+        "Distinga la urgencia artificial de una oferta realmente buena.",
+        "Recuerda que un creador conocido o una página con un diseño cuidado no son prueba de seguridad.",
+        "Utiliza la información que tienes en tu bolso para explicar el riesgo antes de elegir."
       ]
     },
     "room": {
       "link": {
-        "context": "Inspect every URL. Small spelling changes can hide a fake destination.",
+        "context": "Inspecciona cada URL. Pequeños cambios ortográficos pueden ocultar una dirección falsa.",
         "prompts": [
-          "I do not know how to spot the extra words in these domains. ",
-          "I do not know how to check whether the connection and domain ending are suspicious.",
-          "I do not know how to identify disguised or look-alike characters."
+          "No sé cómo detectar las palabras adicionales en estos dominios.",
+          "No sé cómo comprobar si la conexión y la terminación del dominio son sospechosas.",
+          "No sé cómo identificar a personajes disfrazados o parecidos a otras personas."
         ],
         "items": [
-          "Compare the domains letter by letter.",
-          "Watch for look-alike characters and unusual endings. ",
-          "The safest link is the one that matches the real store exactly."
+          "Compara los dominios letra por letra.",
+          "Presta atención a caracteres parecidos y finales inusuales.",
+          "El enlace más seguro es el que coincide exactamente con la tienda real."
         ],
         "rounds": [
-          "Common suffixes: keep the genuine domain open and block the two addresses that add words after the real name. ",
-          "HTTP vs HTTPS: keep the genuine store open and block both doors using http://. ",
-          "Phishing attempts: read every character and block disguised look-alike addresses."
+          "Sufijos comunes: mantén abierto el dominio original y bloquea las dos direcciones que añaden palabras después del nombre real.",
+          "HTTP vs HTTPS: mantén abierta la tienda original y bloquea ambas puertas usando http://.",
+          "Intentos de phishing: lee cada carácter y bloquea las direcciones que se parecen a las originales."
         ]
       },
       "influencer": {
-        "context": "Separate genuine recommendations from paid or fabricated signals.",
+        "context": "Distingue las recomendaciones genuinas de las señales pagadas o falsificadas.",
         "prompts": [
-          "I do not know how to decode the disclosure on each post. ",
-          "I do not know what to do after I label the posts.",
-          "I do not know how to classify the three product images."
+          "No sé cómo descifrar la información que aparece en cada publicación.",
+          "No sé qué hacer después de etiquetar las publicaciones.",
+          "No sé cómo clasificar las tres imágenes de los productos."
         ],
         "items": [
-          "Use the Emoji Decoding Card to identify",
-          "Run the reverse image search on all three products.",
-          "The mug is mass-produced, the NovaPad image is AI-generated, and the cupcakes are genuine."
+          "Utiliza la tarjeta de decodificación de emojis para identificar",
+          "Realiza una búsqueda inversa de imágenes en los tres productos.",
+          "La taza es de producción masiva, la imagen de NovaPad es generada por IA y los cupcakes son auténticos."
         ]
       },
       "algorithm": {
-        "context": "Follow the data trail behind the personalized feed.",
+        "context": "Sigue el rastro de datos que hay detrás del feed personalizado.",
         "prompts": [
-          "I do not know which code opens the targeting engine.",
-          "I do not know how to choose the missing factor in an equation.",
-          "I do not know how the completed profile explains the NovaPad ad."
+          "No sé qué código abre el motor de selección de objetivos.",
+          "No sé cómo elegir el factor que falta en una ecuación.",
+          "No sé cómo el perfil completo explica el anuncio de NovaPad."
         ],
         "items": [
-          "Use the six highlighted digits on the report. Search on the bag. ",
-          "Match the missing factor to the person and the ad.",
-          "The engine combines age, interests, searches and insecurities."
+          "Utiliza los seis dígitos resaltados en el informe. Busca en la bolsa.",
+          "Relaciona el factor que falta con la persona y el anuncio.",
+          "El motor de búsqueda combina edad, intereses, búsquedas e inseguridades."
         ]
       },
       "ads": {
-        "context": "Slow down the visual pressure and inspect what the ad is doing.",
+        "context": "Disminuye la presión visual y examina qué está haciendo el anuncio.",
         "prompts": [
-          "I do not know how to make the Truth Flashlight work.",
-          "I do not know what to look for under each poster. ",
-          "I do not know how to assemble the exit code."
+          "No sé cómo hacer funcionar la linterna Truth Flashlight.",
+          "No sé qué buscar debajo de cada cartel.",
+          "No sé cómo generar el código de salida."
         ],
         "items": [
-          "Charge and sweep the flashlight across the wall. ",
-          "Read the fine print, not the large promise. ",
-          "Reveal all four hidden letters in poster order. They spell SAVE, which is the code for the exit."
+          "Carga la linterna y muévela a lo largo de la pared.",
+          "Lee la letra pequeña, no la gran promesa.",
+          "Descubre las cuatro letras ocultas en el orden en que aparecen en el póster. Forman la palabra SAVE, que es el código para salir."
         ]
       },
       "persuasion": {
-        "context": "Use the terminal to expose the final persuasion techniques.",
+        "context": "Utilice la terminal para exponer las técnicas de persuasión finales.",
         "prompts": [
-          "I do not know how to match a technique to a poster.",
-          "I do not know what the glowing letters are for.",
-          "I do not know what password to enter in the computer."
+          "No sé cómo relacionar una técnica con un póster.",
+          "No sé para qué sirven las letras brillantes.",
+          "No sé qué contraseña debo introducir en el ordenador."
         ],
         "items": [
-          "Drag and drop each poster to its persuasion technique.",
-          "Each correct frame reveals one letter. ",
-          "After all six matches, open the computer and enter FOOLED."
+          "Arrastra y suelta cada póster en la técnica de persuasión correspondiente.",
+          "Cada recuadro correcto revela una letra.",
+          "Después de los seis partidos, abre el ordenador e introduce FOOLED."
         ]
       },
       "rouletteInvestigation": {
-        "context": "Spin several times and compare the results before deciding.",
+        "context": "Gira varias veces y compara los resultados antes de decidir.",
         "prompts": [
-          "What should I check?",
-          "Does winning or losing prove cheating?",
-          "How do I finish the corridor?"
+          "¿Qué debo revisar?",
+          "¿Ganar o perder demuestra que se ha hecho trampa?",
+          "¿Cómo termino el pasillo?"
         ],
         "items": [
-          "Spin the current wheel at least twice. Does it keep landing on the same slice? Compare the results shown beside it.",
-          "You can keep spinning before deciding. A repeated result is a clue to investigate, but can also happen by chance.",
-          "Choose Rigged or Not rigged. Read each explanation, then finish both wheels."
+          "Gira la ruleta al menos dos veces. ¿Cae siempre en la misma sección? Compara los resultados que aparecen al lado.",
+          "Puedes seguir girando antes de decidir. Un resultado repetido es una pista para investigar, pero también puede ocurrir por casualidad.",
+          "Elige \"Con o sin equipo\". Lee cada explicación y luego completa ambas ruedas."
         ]
       }
     },
     "end": {
       "win": {
-        "context": "You made it. Review the evidence that changed the decision.",
+        "context": "Lo lograste. Revisa las pruebas que cambiaron la decisión.",
         "items": [
-          "Name the red flags that mattered most.",
-          "Keep checking URLs, disclosures, targeting and urgency",
-          "A pause before buying is a powerful safety tool."
+          "Menciona las señales de alerta que más te importaron.",
+          "Sigue revisando las URL, las divulgaciones, la segmentación y la urgencia.",
+          "Hacer una pausa antes de comprar es una poderosa herramienta de seguridad."
         ]
       },
       "lose": {
-        "context": "The timer ran out, but the lesson is still available.",
+        "context": "El temporizador se agotó, pero la lección aún está disponible.",
         "items": [
-          "Urgency interrupts careful thinking.",
-          "A countdown does not make an offer trustworthy. ",
-          "Pause and verify through an independent source."
+          "La urgencia interrumpe el pensamiento cuidadoso.",
+          "Una cuenta regresiva no convierte una oferta en confiable.",
+          "Haz una pausa y verifica la información a través de una fuente independiente."
         ]
       }
     }
   },
   "rooms": {
     "link": {
-      "intro": "A router with three doors. Each is a link claiming to be a store. Shut the fraudulent ones.",
-      "solvedTitle": "Link District cleared · Emoji Decoding Card obtained 🔑",
-      "solvedText": "You blocked every fake and learned what makes a URL suspicious. The card unlocks the labels in Influencer Avenue.",
-      "routerBadge": "Crossroads {current} / {total}",
-      "peek": "🔍 Open to peek inside",
-      "closeDoor": "✕ Close door",
-      "doorHelp": "Open a door to peek at the site inside · read the address · use “Block” to shut the fraudulent ones",
-      "tapToBlock": "Tap a door to block the link · tap again to unblock",
-      "addressHint": "The padlock & “https” mean the connection is private — NOT that the site is trustworthy.",
-      "linkTip": "A link — you can only check its real security once you open it",
-      "barNotSecure": "Not secure",
-      "barLookalike": "⚠ Look-alike letters",
-      "secureConn": "Encrypted connection (https)",
-      "insecureConn": "Not secure — unencrypted http connection",
-      "blockThis": "🔒 Block this link",
-      "unblock": "↺ Unblock",
-      "inspect": "Inspect the address & preview.",
-      "realStore": "↧ real store",
-      "blocked": "BLOCKED",
-      "hint": "Remember: block the fakes, keep the one real door open.",
+      "intro": "Un router con tres puertas. Cada una es un enlace que dice ser una tienda. Cierra las fraudulentas.",
+      "solvedTitle": "Distrito de los Enlaces superado · Tarjeta descodificadora de emojis obtenida 🔑",
+      "solvedText": "Bloqueaste todas las falsas y aprendiste qué hace sospechosa a una URL. La tarjeta desbloquea las etiquetas de la Avenida de los Influencers.",
+      "routerBadge": "Cruce {current} / {total}",
+      "peek": "🔍 Mirar dentro de la puerta",
+      "closeDoor": "✕ Cerrar pierta",
+      "doorHelp": "Abre una puerta para ver el sitio por dentro · lee la dirección · usa “Bloquear” para cerrar las fraudulentas",
+      "tapToBlock": "Toca una puerta para bloquear el enlace · toca otra vez para desbloquear",
+      "addressHint": "El candado y “https” significan que la conexión es privada, NO que el sitio sea de fiar.",
+      "linkTip": "Un enlace: solo puedes comprobar su seguridad real cuando lo abres",
+      "barNotSecure": "No es seguro",
+      "barLookalike": "⚠ Letras parecidas",
+      "secureConn": "Conexión cifrada (https)",
+      "insecureConn": "No es seguro: conexión http sin cifrar",
+      "blockThis": "🔒 Bloquear este enlace",
+      "unblock": "↺ Desbloquear",
+      "inspect": "Inspecciona la dirección y la vista previa.",
+      "realStore": "↧ tienda real",
+      "blocked": "BLOQUEADO",
+      "hint": "Recuerda: bloquea las falsas y deja abierta la única puerta real.",
       "nextRouter": "Advance to the next crossroads →",
-      "finalRouter": "Advance →",
-      "reviewTitle": "Why those doors?",
-      "errStillOpen": "Link{plural} blocked: {count}. Block the two fraudulent links to continue.",
-      "errBlockedSafe": "Some blocked doors are wrong. Block the two fraudulent links to continue.",
-      "justifyLeadLabel": "Why have you locked those doors? ",
-      "justifyLead": "Click on the warning signs",
-      "justifyErrWrong": "HTTPS, a padlock or a familiar-looking name is not a warning sign by itself, but none proves a site is safe. A familiar name can hide a typo or look-alike letter: check the full domain for those specific differences.",
-      "justifyErrMissingOne": "1 warning sign left to select. Look again at the fake URLs.",
-      "justifyErrMissing": "{count} warning signs left to select. Look again at the fake URLs.",
-      "submitReasoning": "Submit reasoning",
+      "finalRouter": "Avanzar al siguiente cruce→",
+      "reviewTitle": "¿Por qué esas puertas?",
+      "errStillOpenOld": "Todavía hay al menos un enlace fraudulento abierto. Bloquea todas las falsas antes de continuar.",
+      "errBlockedSafeOld": "Algunas puertas bloqueadas no son correctas. Bloquea los dos enlaces fraudulentos para continuar.",
+      "justifyLeadLabel": "¿Por qué has cerrado esas puertas?",
+      "justifyLead": "Haz clic en las señales de alerta",
+      "justifyErrWrong": "HTTPS, un candado o un nombre que parece familiar no son por sí solos señales de alerta, pero ninguno demuestra que un sitio sea seguro. Un nombre familiar puede esconder una errata o una letra parecida: comprueba el dominio completo buscando esas diferencias concretas.",
+      "justifyErrMissingOne": "Queda 1 señal de alerta por seleccionar. Vuelve a mirar las URL falsas.",
+      "justifyErrMissing": "Quedan {count} señales de alerta por seleccionar. Vuelve a mirar las URL falsas.",
+      "errBlockedSafe": "Algunas puertas bloqueadas no son correctas. Bloquea los dos enlaces fraudulentos para continuar.",
+      "errStillOpen": "Enlace{plural} bloqueados: {count}. Bloquea los dos enlaces fraudulentos para continuar.",
+      "submitReasoning": "Enviar razonamiento",
       "preview": {
-        "newArrivals": "NEW ARRIVALS",
-        "storeCaption": "Effortless style, every day.",
-        "megaSale": "⚠ MEGA SALE — TODAY ONLY! ⚠",
-        "shopNow": "SHOP NOW!",
+        "newArrivals": "NOVEDADES",
+        "storeCaption": "Estilo sin esfuerzo, cada día.",
+        "megaSale": "⚠ MEGAOFERTA — ¡SOLO HOY! ⚠",
+        "shopNow": "¡COMPRA YA!",
         "shopBar": "DISCOUNT SHOPZ ▤",
-        "limited": "⚠ LIMITED TIME!!! ⚠"
+        "limited": "⚠ ¡¡¡TIEMPO LIMITADO!!! ⚠"
       },
       "rounds": [
         {
-          "category": "Common suffixes",
-          "prompt": "One is the real store. The others hide their true domain behind a familiar-looking name — read the whole address.",
+          "category": "Sufijos habituales",
+          "prompt": "Una es la tienda real. Las otras esconden su dominio verdadero tras un nombre que parece familiar: lee la dirección entera.",
           "notes": {
-            "a": "The genuine domain: lunawear.com",
-            "b": "The real site is “com-official.shop” — “lunawear” is only a subdomain glued on to fool you.",
-            "c": "“-dealz” is an added, misspelled word tacked onto the brand."
+            "a": "El dominio auténtico: lunawear.com",
+            "b": "El sitio real es “com-official.shop”: “lunawear” es solo un subdominio pegado delante para engañarte.",
+            "c": "“-dealz” es una palabra añadida y mal escrita pegada a la marca."
           }
         },
         {
-          "category": "HTTP vs HTTPS",
-          "prompt": "Look at the very start of each address. Which connection is actually secure?",
+          "category": "HTTP frente a HTTPS",
+          "prompt": "Fíjate en el principio de cada dirección. ¿Qué conexión es realmente segura?",
           "notes": {
-            "a": "https:// — an encrypted connection, and the real store.",
-            "b": "http:// with no “s” — the connection is NOT encrypted.",
-            "c": "http:// AND an odd “.free” ending — steer well clear."
+            "a": "https:// — una conexión cifrada, y la tienda real.",
+            "b": "http:// sin la “s”: la conexión NO está cifrada.",
+            "c": "http:// Y una terminación rara “.free”: aléjate."
           }
         },
         {
-          "category": "Phishing attempts",
-          "prompt": "These look almost identical to the real store. Inspect them character by character.",
+          "category": "Intentos de phishing",
+          "prompt": "Parecen casi idénticas a la tienda real. Inspecciónalas carácter a carácter.",
           "notes": {
-            "a": "The genuine magnumshop.com.",
-            "b": "The “rn” is disguised as an “m” — read it slowly: r-n-agnumshop.",
-            "c": "One letter is a foreign look-alike — the Cyrillic “и” swapped in for an “n”."
+            "a": "La auténtica magnumshop.com.",
+            "b": "La “rn” está disfrazada de “m”: léelo despacio, r-n-agnumshop.",
+            "c": "Una letra es una imitación extranjera: la “и” cirílica puesta en lugar de una “n”."
           }
         }
       ],
       "flags": {
-        "suffix": "Extra words bolted on after the real name (…com-official.shop, -dealz)",
-        "httpNoS": "The address uses http:// instead of the encrypted https://",
-        "weirdTld": "Odd domain endings like .sbs, .xyz or .free instead of .com",
-        "homoglyph": "Letters swapped for look-alikes — “rn” for “m”, or foreign characters",
-        "typo": "Misspellings of the brand name (e.g. “dealz”)",
-        "httpsGood": "It starts with https:// ",
-        "lock": "The browser shows a little padlock icon"
+        "suffix": "Palabras extra pegadas después del nombre real (…com-official.shop, -dealz)",
+        "httpNoS": "La dirección usa http:// en lugar del https:// cifrado",
+        "weirdTld": "Terminaciones de dominio raras como .sbs, .xyz o .free en vez de .com",
+        "homoglyph": "Letras cambiadas por otras parecidas: “rn” por “m”, o caracteres extranjeros",
+        "typo": "Errores de escritura en el nombre de la marca (p. ej. “dealz”)",
+        "httpsGood": "Empieza por https://",
+        "lock": "El navegador muestra un pequeño icono de candado"
       },
       "lunaAd1": {
-        "headline": "Get Luna’s dress and purse",
-        "headlineSecond": "70% OFF",
-        "text": "Steal her style",
+        "headline": "Consigue el vestido y el bolso de Luna",
+        "headlineSecond": "70% DE DESCUENTO",
+        "text": "Copia su estilo",
         "brand": "LUNA WEARS"
       },
       "lunaAd2": {
-        "headline": "New autumn collection",
-        "cta": "Explore new collection",
-        "text": "From 10th december until 31st march",
+        "headline": "Nueva colección de otoño",
+        "cta": "Explorar la nueva colección",
+        "text": "Del 10 de diciembre al 31 de marzo",
         "brand": "LUNA WEARS"
       },
       "lunaAd3": {
         "headline": "Tablet Nova",
-        "headlineSecond": "Flash Sale!!",
-        "oldPrice": "600$",
-        "discount": "49$",
-        "text": "Hurry up! Offer ends in limited time.",
-        "cta": "BUY NOW!!",
-        "timePressure": "Only 30 mins left!!"
+        "headlineSecond": "¡¡Oferta flash!!",
+        "oldPrice": "€600",
+        "discount": "€49",
+        "text": "¡Date prisa! La oferta acaba en poco tiempo.",
+        "cta": "¡¡COMPRA YA!!",
+        "timePressure": "¡¡Solo quedan 30 min!!"
       },
       "shoesAd1": {
-        "headline": "BRAND NEW SNEAKERS",
-        "headlineSecond": "SPECIAL PRICES",
-        "cta": "Shop now!",
+        "headline": "ZAPATILLAS RECIÉN LLEGADAS",
+        "headlineSecond": "PRECIOS ESPECIALES",
+        "cta": "¡Compra ya!",
         "brand": "THE SHOE FACTORY"
       },
       "shoesAd2": {
-        "headline": "Break the rules.",
-        "headlineSecond": "Be yourself.",
-        "text": "Special prices 1st week",
-        "cta": "Don't miss out, get yours now",
+        "headline": "Rompe las reglas.",
+        "headlineSecond": "Sé tú mismo.",
+        "text": "Precios especiales la 1ª semana",
+        "cta": "No te lo pierdas, consigue las tuyas ya",
         "brand": "THE SHOE FACTORY"
       },
       "shoesAd3": {
-        "headline": "Here comes the fall collection... To fall in love with",
-        "headlineSecond": "NEW MEMBERS GET 20% DISCOUNT.",
+        "headline": "Llega la colección de otoño... para enamorarse",
+        "headlineSecond": "LOS NUEVOS MIEMBROS OBTIENEN UN 20% DE DESCUENTO.",
         "brand": "THE SHOE FACTORY"
       },
       "lightsAd1": {
-        "headline": "Discounts from:",
+        "headline": "Descuentos desde:",
         "discount1": "40%",
         "discount2": "60%",
         "discount3": "80%",
-        "headlineSecond": "Total Settlement",
+        "headlineSecond": "Liquidación total",
         "brand": "magnumshop.com"
       },
       "lightsAd2": {
-        "headline": "New astronomical lightning collection",
-        "headlineSecond": "Build your own universe",
+        "headline": "Nueva colección de iluminación astronómica",
+        "headlineSecond": "Construye tu propio universo",
         "brand": "magnumshop.com"
       },
       "lightsAd3": {
-        "headline": "NEON LIGHTS FOR 0.99c!!!",
-        "cta": "Get them now",
+        "headline": "¡¡¡LUCES DE NEÓN POR 0,99 c!!!",
+        "cta": "Consíguelas ya",
         "brand": "Magnum Shop",
-        "text": "Offer valid from 19 to 29 september"
+        "text": "Oferta válida del 19 al 29 de septiembre"
       },
       "debugSkip": "Saltar puertas y test final (debug)"
     },
     "roulette": {
-      "spin": "🎰 Spin",
-      "spinning": "Spinning…",
+      "spin": "🎰 Girar",
+      "spinning": "Girando…",
       "investigation": {
-        "intro": "Spin each wheel twice. Is it rigged or not rigged?",
-        "wheelProgress": "Wheel {n} / {total}",
-        "solvedTitle": "Corridor cleared — claims checked",
-        "spinAgain": "Spin again",
-        "solvedText": "You spotted both rigged wheels. Take your evidence to the next district.",
-        "evidence": "Game-like rewards and the feeling of being lucky can make you keep playing and spend more.",
-        "result": "Result: {result}",
-        "historyLabel": "Spins: {n} · Latest results:",
+        "intro": "Gira cada ruleta dos veces. ¿Está trucada o no?",
+        "wheelProgress": "Ruleta {n} / {total}",
+        "solvedTitle": "Pasillo superado — afirmaciones comprobadas",
+        "spinAgain": "Girar otra vez",
+        "solvedText": "Detectaste las dos ruletas trucadas. Lleva tus pruebas al siguiente distrito.",
+        "evidence": "Las recompensas tipo juego y la sensación de tener suerte pueden hacer que sigas jugando y gastes más.",
+        "result": "Resultado: {result}",
+        "historyLabel": "Giros: {n} · Últimos resultados:",
         "verdicts": {
-          "rigged": "Rigged",
-          "fair": "Not rigged"
+          "rigged": "Trucada",
+          "fair": "No trucada"
         },
-        "retry": "Not quite. Look at the results and try again.",
+        "retry": "No del todo. Mira los resultados e inténtalo otra vez.",
         "correct": "Correct! This wheel is rigged.",
-        "next": "Next wheel →",
-        "finish": "Log the evidence ✓",
-        "observe": "Spin at least {count} times. Do the results change? ",
+        "next": "Siguiente ruleta →",
+        "finish": "Registrar la prueba ✓",
+        "observe": "Gira al menos {count} veces. ¿Cambian los resultados?",
         "shop": {
-          "badge": "MEGA SPIN · STORE",
-          "title": "You won a discount coupon!",
-          "coupon": "50% OFF"
+          "badge": "MEGA GIRO · TIENDA",
+          "title": "¡Has ganado un cupón de descuento!",
+          "coupon": "50% DE DESCUENTO"
         },
-        "retryBait": "“No prize this time! Keep spinning — your next try could be the big win!”",
+        "retryBait": "«¡Esta vez no hay premio! Sigue girando: ¡tu próximo intento podría ser el premio gordo!»",
         "wheels": {
           "w1": {
-            "name": "MEGA SPIN",
+            "name": "MEGA GIRO",
             "segments": [
-              "5% OFF",
-              "10% OFF",
-              "15% OFF",
-              "50% OFF",
-              "20% OFF",
-              "25% OFF",
-              "30% OFF",
-              "No prize"
+              "5% DTO.",
+              "10% DTO.",
+              "15% DTO.",
+              "50% DTO.",
+              "20% DTO.",
+              "25% DTO.",
+              "30% DTO.",
+              "Sin premio"
             ],
-            "rules": "Spin to unlock a discount coupon — up to 50% off!",
-            "feedback": "How do these roulette games get you hooked? First, they give you a small prize, just enough to make you feel lucky. But the trick is that you end up spending far more than you’ve won. You feel like today’s your lucky day, so you carry on playing. That feeling of being lucky is what keeps you hooked."
+            "rules": "¡Gira para desbloquear un cupón de descuento, hasta un 50%!",
+            "feedback": "¿Cómo te enganchan estos juegos de ruleta? Primero te dan un premio pequeño, lo justo para que te sientas con suerte. Pero el truco es que acabas gastando mucho más de lo que has ganado. Sientes que hoy es tu día de suerte, así que sigues jugando. Esa sensación de suerte es lo que te mantiene enganchado."
           },
           "w3": {
-            "name": "GOLD RUSH",
+            "name": "FIEBRE DEL ORO",
             "segments": [
-              "Phone",
+              "Móvil",
               "Tablet",
               "€100",
-              "Console",
-              "Headset",
-              "Laptop",
+              "Consola",
+              "Auriculares",
+              "Portátil",
               "€50",
-              "No prize"
+              "Sin premio"
             ],
-            "rules": "Win a phone, a laptop or up to €100 — give it a spin!",
-            "feedback": "Gamification means using game elements, like points, rewards, or spinning wheels, in things that aren't really games. Apps and online shops use it to make buying feel fun, so you stay longer and spend more without noticing."
+            "rules": "Gana un móvil, un portátil o hasta 100 €: ¡dale una vuelta!",
+            "feedback": "La gamificación consiste en usar elementos de juego, como puntos, recompensas o ruletas, en cosas que no son juegos. Las apps y las tiendas online la usan para que comprar resulte divertido, así te quedas más tiempo y gastas más sin darte cuenta."
           }
         },
         "debugSkip": "Saltar ruletas (debug)"
       },
-      "solvedTitle": "Roulette Corridor cleared",
-      "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked."
+      "solvedTitle": "Pasillo de la Ruleta superado",
+      "solvedText": "Comparaste giros repetidos, explicaste tus sospechas y descubriste cómo funcionaba cada ruleta."
     },
     "influencer": {
-      "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
-      "solvedTitle": "Influencer Avenue cleared — Data Report obtained 📄",
-      "solvedText": "You labelled the ads and detected the untrustworthy products",
-      "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
+      "intro": "Una avenida de neón con vallas publicitarias y feeds de influencers. Mira más allá del brillo: etiqueta los patrocinios y luego comprueba qué son realmente los productos.",
+      "solvedTitle": "Avenida de los Influencers superada — Informe de datos obtenido 📄",
+      "solvedText": "Etiquetaste los anuncios y detectaste los productos poco fiables",
+      "evidenceLabel": "Las publicaciones escondían promociones pagadas, y la foto del producto estaba generada por IA, sin ningún resultado real.",
       "stage1": {
-        "badge": "Stage 1 / 2",
-        "tag": "Content labelling",
-        "prompt": "Choose the right label for each post",
-        "openDecoder": "🔑 Open Decoder Card",
-        "verified": "Verified",
-        "viewPublication": "View Publication",
-        "followersSuffix": "followers",
-        "cluesTitle": "Disclosure clues",
-        "decodeMe": "decode me →",
-        "trayTitle": "Drag a label onto each post",
-        "dropPlaceholder": "drop label",
+        "badge": "Fase 1 / 2",
+        "tag": "Etiquetado de contenido",
+        "prompt": "Elige la etiqueta correcta para cada publicación",
+        "openDecoder": "🔑 Abrir tarjeta descodificadora",
+        "verified": "Verificado",
+        "viewPublication": "Ver publicación",
+        "followersSuffix": "seguidores",
+        "cluesTitle": "Pistas de divulgación",
+        "decodeMe": "descodifícame →",
+        "trayTitle": "Arrastra una etiqueta a cada publicación",
+        "dropPlaceholder": "suelta la etiqueta",
         "correct": "✓ {label}",
-        "wrong": "✗ wrong label",
-        "learnLabel": "Why it matters:",
-        "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
-        "hint": "Tap or drag a label chip, then drop it on the matching post.",
+        "wrong": "✗ etiqueta incorrecta",
+        "learnLabel": "Por qué importa:",
+        "learn": "el contenido patrocinado debe estar claramente etiquetado. Un #publicidad, un producto regalado, un enlace de afiliado o un código de descuento son todos señales de publicidad, incluso cuando se disfrazan de recomendación personal.",
+        "hint": "Toca o arrastra una etiqueta y suéltala sobre la publicación que corresponda.",
         "commentsTitle": "Comentarios",
         "commentCount": "{count} comentarios",
         "likeComment": "Dar me gusta al comentario de {name}",
-        "selectPost": "Select Post",
+        "selectPost": "Seleccionar publicación",
         "answerProgress": "{count} / {total}"
       },
       "labels": {
-        "paid": "PAID",
-        "collab": "COLLAB",
-        "gifted": "GIFTED",
-        "nothing": "NOTHING"
+        "paid": "PAGADO",
+        "collab": "COLABORACIÓN",
+        "gifted": "REGALADO",
+        "nothing": "NADA"
       },
       "posts": [
         {
-          "caption": "Morning training feels so much better with GlowFuel. I’ve been using it before my workouts and I’m honestly obsessed. Use my code MIRA20 for 20% off your first order. Link in bio.",
-          "product": "Pre-workout drink",
+          "caption": "El entrenamiento de la mañana sienta mucho mejor con GlowFuel. Lo tomo antes de entrenar y la verdad es que estoy obsesionada. Usa mi código MIRA20 para un 20% de descuento en tu primer pedido. Link en la bio.",
+          "product": "Bebida pre-entreno",
           "username": "MiraMoves",
           "followers": "482K",
           "comments": [
             {
               "username": "fitpaula",
-              "text": "Omg I need to try this before my next workout!"
+              "text": "¡Dios, necesito probar esto antes de mi próximo entreno!"
             },
             {
               "username": "runneralex",
-              "text": "Does the code work in all Europe?"
+              "text": "¿El código funciona en toda Europa?"
             },
             {
               "username": "glowfuel_official",
-              "text": "So happy you’re loving it 💜"
+              "text": "¡Qué alegría que te encante! 💜"
             },
             {
               "username": "martahealthy",
-              "text": "This looks like an ad but I actually want it hahaha"
+              "text": "Esto parece un anuncio pero lo quiero igual jajaja"
             },
             {
               "username": "gymtom",
-              "text": "Just ordered with your code!"
+              "text": "¡Acabo de pedirlo con tu código!"
             }
           ],
           "clues": [
-            "Discount code “LUNA20” in the caption",
-            "Affiliate link in bio",
-            "Long-term paid brand ambassador"
+            "Código de descuento “LUNA20” en el pie de foto",
+            "Enlace de afiliado en la bio",
+            "Embajadora de marca pagada a largo plazo"
           ]
         },
         {
-          "caption": "NovaSound sent me their new AirBeat headphones to test this week. I’ll use them during tonight’s stream and share my honest thoughts after a few days. Thanks for the PR package!",
-          "product": "Wireless headphones",
+          "caption": "NovaSound me ha enviado sus nuevos auriculares AirBeat para probarlos esta semana. Los usaré en el directo de esta noche y os contaré mi opinión sincera dentro de unos días. ¡Gracias por el paquete de prensa!",
+          "product": "Auriculares inalámbricos",
           "username": "TechWithLeo",
           "followers": "219K",
           "comments": [
             {
               "username": "streamfan88",
-              "text": "Can you test the mic quality?"
+              "text": "¿Puedes probar la calidad del micro?"
             },
             {
               "username": "novasoundaudio",
-              "text": "Can’t wait to hear your thoughts!"
+              "text": "¡Me muero por saber tu opinión!"
             },
             {
               "username": "lucagames",
-              "text": "Gifted or sponsored?"
+              "text": "¿Regalados o patrocinados?"
             },
             {
               "username": "TechWithLeo",
-              "text": "Gifted. I’ll still be honest in the review."
+              "text": "Regalados. Aun así seré sincero en la reseña."
             },
             {
               "username": "setupqueen",
-              "text": "Please compare them with your old headset!"
+              "text": "¡Compáralos con tus auriculares antiguos, porfa!"
             }
           ],
           "clues": [
-            "Tagged the brand as a creative partner",
-            "Co-designed the flavour together",
-            "“#ad” — worked jointly on the launch"
+            "Etiquetó a la marca como socio creativo",
+            "Diseñaron juntos el sabor",
+            "“#publicidad” — trabajaron juntos en el lanzamiento"
           ]
         },
         {
-          "caption": "So incredibly proud to share this collaboration with @The_Local_Stitch. We’ve been developing this limited-run handmade garment for months. Every piece is unique and supports local artisans. Use code LOCAL_CLARA for 15% off and first access to the drop. Link in bio.",
-          "product": "Handmade patchwork quilted jacket",
+          "caption": "Estoy increíblemente orgullosa de compartir esta colaboración con @The_Local_Stitch. Llevamos meses desarrollando esta prenda artesanal de edición limitada. Cada pieza es única y apoya a artesanos locales. Usa el código LOCAL_CLARA para un 15% de descuento y acceso anticipado. Link en la bio.",
+          "product": "Chaqueta acolchada de patchwork artesanal",
           "username": "ClaraSees",
-          "followers": "312K ",
+          "followers": "312K",
           "comments": [
             {
               "username": "artisan_wear",
-              "text": "This looks incredible, can’t wait to see the details!"
+              "text": "¡Tiene una pinta increíble, me muero por ver los detalles!"
             },
             {
               "username": "needle_ninja",
-              "text": "Is there a waitlist? I need to get one."
+              "text": "¿Hay lista de espera? Necesito una."
             },
             {
               "username": "glowfuel_official",
-              "text": "Obsessed with this texture! So unique 💜"
+              "text": "¡Obsesionada con esta textura! Qué original 💜"
             },
             {
               "username": "martahealthy",
-              "text": "Looks like an ad but I love supporting local. Ordering!"
+              "text": "Parece un anuncio, pero me encanta apoyar lo local. ¡La pido!"
             },
             {
               "username": "gymtom",
-              "text": "Wait, I just ordered the other thing, can I combine? Lol."
+              "text": "Espera, acabo de pedir lo otro, ¿puedo combinarlo? Jaja."
             }
           ],
           "clues": [
-            "Received the product for free",
-            "No payment, no discount code",
-            "“gifted” disclosure in the corner"
+            "Recibió el producto gratis",
+            "Sin pago, sin código de descuento",
+            "Aviso de “regalado” en la esquina"
           ]
         }
       ],
       "stage2": {
-        "stage1Cleared": "Stage 1 cleared ✓",
-        "badge": "Stage 2 / 2",
-        "tag": "Product legitimacy",
-        "prompt": "Reverse-image-search each photo, then classify what it really is with the stamps below.",
-        "runSearch": "🔍 Run reverse image search",
+        "stage1Cleared": "Fase 1 superada ✓",
+        "badge": "Fase 2 / 2",
+        "tag": "Legitimidad del producto",
+        "prompt": "Haz una búsqueda inversa de cada foto y luego clasifica lo que realmente es con los sellos de abajo.",
+        "runSearch": "🔍 Ejecutar búsqueda inversa",
         "engineBar": "reverse-image-search.io",
-        "engineDrop": "Drag a product image here to reverse-search it",
-        "trayLabel": "Your saved product images ",
-        "classifyPrompt": "So this product is…",
-        "searching": "Searching the web",
-        "matchesTitle": "Web matches found",
-        "resultTitle": "Search result",
-        "errRunAll": "Run the reverse image search on every product before classifying it.",
-        "errClassifyAll": "Classify all three products first.",
-        "errWrong": "One or more classifications are wrong. Re-read what each search returned.",
-        "learnLabel": "Real tool, real habit:",
-        "learn": "a reverse image search checks whether a “handmade”, “unique” or “real” product photo is actually stolen, mass-produced across dozens of dropshipping stores, or AI-generated. No results at all can mean the image is fake.",
-        "hint": "Search first, then classify all three.",
-        "confirm": "Confirm classifications →",
-        "stampHere": "Stamp here",
-        "removeStamp": "Remove stamp"
+        "engineDrop": "Arrastra aquí una imagen de producto para buscarla al revés",
+        "trayLabel": "Tus imágenes de producto guardadas",
+        "classifyPrompt": "Entonces este producto es…",
+        "searching": "Buscando en la web",
+        "matchesTitle": "Coincidencias encontradas",
+        "resultTitle": "Resultado de la búsqueda",
+        "errRunAll": "Haz la búsqueda inversa de todos los productos antes de clasificarlos.",
+        "errClassifyAll": "Clasifica primero los tres productos.",
+        "errWrong": "Una o más clasificaciones son incorrectas. Vuelve a leer lo que devolvió cada búsqueda.",
+        "learnLabel": "Herramienta real, hábito real:",
+        "learn": "una búsqueda inversa de imágenes comprueba si la foto de un producto «artesanal», «único» o «real» está en realidad robada, fabricada en masa en decenas de tiendas de dropshipping o generada por IA. Que no aparezca ningún resultado también puede significar que la imagen es falsa.",
+        "hint": "Busca primero y luego clasifica los tres.",
+        "confirm": "Confirmar clasificaciones →",
+        "stampHere": "Sella aquí",
+        "removeStamp": "Quitar el sello"
       },
       "products": [
         {
-          "name": "Handmade ceramic mug",
+          "name": "Taza de cerámica artesanal",
           "art": {
             "price": "18,99 €",
-            "label": "Handmade artisan"
+            "label": "Artesanal"
           },
           "matches": [
             {
               "site": "aliluxe-deals.shop",
-              "title": "Ceramic Coffee Mug — bulk 500 pieces",
+              "title": "Taza de café de cerámica — lote de 500 unidades",
               "price": "€0,84*"
             },
             {
               "site": "dropmart.store",
-              "title": "“Handmade” Mug · wholesale lot",
+              "title": "Taza «artesanal» · lote al por mayor",
               "price": "€1.65*"
             },
             {
               "site": "quickship-goods.net",
-              "title": "Rustic Ceramic Cup — Wholesale Price",
+              "title": "Taza de cerámica rústica — precio mayorista",
               "price": "-"
             },
             {
               "site": "artisanhome.com",
-              "title": "Artisan mug, made with love ♥︎ Support artisans!",
+              "title": "Taza artesanal, hecha con amor ♥︎ ¡Apoya a los artesanos!",
               "price": "-"
             },
             {
               "site": "homestylewholesale.net",
-              "title": "Ceramic Mug Model CM-204 — $0.95/unit",
+              "title": "Taza de cerámica modelo CM-204 — 0,95 €/unidad",
               "price": "€0.95*"
             },
             {
               "site": "mega-bazaar.shop",
-              "title": "Cheap ceramic mugs — €1.90 / unit",
+              "title": "Tazas de cerámica baratas — 1,90 € / unidad",
               "price": "€1,90*"
             }
           ],
-          "result": "Over 1,240 listings show the exact same product. ",
-          "hint": "The product is massproduced and sold as handmade."
+          "result": "Más de 1.240 anuncios muestran exactamente el mismo producto.",
+          "hint": "El producto está fabricado en masa y se vende como artesanal."
         },
         {
-          "name": "NovaPad X promo shot",
+          "name": "Foto promocional de la NovaPad X",
           "art": {
             "price": "49€",
-            "urgency": "Be quick! Offer ends in limited time!",
+            "urgency": "¡Date prisa! ¡La oferta acaba en poco tiempo!",
             "oldPrice": "600€",
-            "fake": "FAKE!!!"
+            "fake": "¡¡¡FALSO!!!"
           },
           "matches": [
             {
               "site": "fullfact.org",
-              "title": "NovaPad X: Is This Viral Tablet Deal Too Good to Be True?"
+              "title": "NovaPad X: ¿Es esta oferta viral demasiado buena para ser verdad?"
             },
             {
               "site": "promptgallery.art",
-              "title": "Sci-fi tablet — AI artwork"
+              "title": "Tablet de ciencia ficción — obra generada por IA"
             },
             {
               "site": "lunawear.com-official.shop/",
-              "title": "Limited Time Offer - NovaPad Sponsored By LunaWears For Only $49"
+              "title": "Oferta por tiempo limitado - NovaPad patrocinada por LunaWears por solo 49 €"
             },
             {
               "site": "fakedetector-ads-news.org",
-              "title": "IT'S FAKE! - Be careful with the NovaPad X supposedly sponsored by LunaWears"
+              "title": "¡ES FALSO! - Cuidado con la NovaPad X supuestamente patrocinada por LunaWears"
             },
             {
               "site": "mediamarket.shop",
-              "title": "Sumsang Tablet - Last generation tablets for €619,99 ",
+              "title": "Tablet Sumsang - Tablets de última generación por 619,99 €",
               "price": "€619,99*"
             },
             {
               "site": "reconditioning-tech.com",
-              "title": "Tablets, Laptops and Phones / Sumsang 8",
+              "title": "Tablets, portátiles y móviles / Sumsang 8",
               "price": "€610,15*"
             }
           ],
-          "result": "Image traced to AI generators. Disinformation agencies uploaded this image.",
+          "result": "Imagen rastreada hasta generadores de IA. Agencias de desinformación subieron esta imagen.",
           "hint": "3 retail listings with great difference in prices."
         },
         {
-          "name": "Bluetooth Speaker B766",
+          "name": "Altavoz Bluetooth B766",
           "art": {
             "price": "89,95€"
           },
           "matches": [
             {
               "site": "technmore.com",
-              "title": "Bluetooth Speaker B766 - Tech & More",
+              "title": "Altavoz Bluetooth B766 - Tech & More",
               "price": "€89,95*"
             },
             {
               "site": "soundgear.net",
-              "title": "Best Speakers Better Prices",
+              "title": "Los mejores altavoces a mejores precios",
               "price": "€85,99*"
             },
             {
               "site": "everydayelectronics.com",
-              "title": "Indoor/Outdoor Speakers / B766 - 89,95€ + shipping",
+              "title": "Altavoces interior/exterior / B766 - 89,95 € + envío",
               "price": "-"
             },
             {
               "site": "soundhub.com",
-              "title": "Speaker B766, Bluetooth, 12hr battery",
+              "title": "Altavoz B766, Bluetooth, 12 h de batería",
               "price": "€95,45*"
             }
           ],
-          "result": "At least 4 stores have this product",
-          "hint": "Prices are similar, product images belong to official stores"
+          "result": "Al menos 4 tiendas tienen este producto",
+          "hint": "Los precios son similares y las imágenes del producto pertenecen a tiendas oficiales"
         }
       ],
       "classify": {
-        "mass": "Misleading Content",
-        "ai": "AI-generated",
-        "verified": "Verified"
+        "mass": "Contenido engañoso",
+        "ai": "Generado por IA",
+        "verified": "Verificado"
       },
       "decoder": {
-        "title": "🔑 Emoji Decoding Card",
-        "noCard": "You would normally have earned this card back in Link District — here it is anyway.",
-        "help": "Match each emoji on a sticky-note to its letter to read the hidden label.",
-        "noSelection": "No post selected",
-        "erase": "Delete last letter"
+        "title": "🔑 Tarjeta descodificadora de emojis",
+        "noCard": "Normalmente habrías conseguido esta tarjeta en el Distrito de los Enlaces; aquí la tienes de todos modos.",
+        "help": "Haz coincidir cada emoji de una nota adhesiva con su letra para leer la etiqueta oculta.",
+        "noSelection": "Ninguna publicación seleccionada",
+        "erase": "Borrar la última letra"
       },
       "explain": {
-        "title": "Besides the ad — what about the product?",
-        "body": "Is the product what they claim? A reverse image search helps you check: you search with a photo, and it finds that exact picture or similar ones that appear online, so you can verify whether the image is really what the seller claims.",
-        "instructions": "First reverse search the image. Then, look at the results to judge the product's authenticity.",
-        "useShop": "Love a piece of clothing you saw in a post? Reverse-search the photo to find where you can actually buy it.",
-        "useVerify": "Not sure an influencer's product is genuine? Reverse-search it to see if it's really unique — or the same mass-produced item everyone's selling.",
-        "searchLabel": "reverse image search",
-        "searching": "Searching the web…",
-        "dragHint": "↓ Drag the seller's photo into a reverse image search",
-        "queryCaption": "Seller says: “one-of-a-kind handmade jacket” · $180",
-        "resultsLabel": "Same photo found on:",
-        "takeawayLabel": "The catch:",
-        "takeaway": "That “unique handmade” jacket is the same mass-produced item selling for $9–14 on dozens of dropshipping shops. The photo gave it away.",
-        "continue": "Now try it yourself →"
+        "title": "Más allá del anuncio: ¿y el producto?",
+        "body": "¿Es el producto lo que dicen? Una búsqueda inversa de imágenes te ayuda a comprobarlo: buscas con una foto y encuentra esa misma imagen u otras parecidas que aparecen en internet, para que verifiques si la imagen es de verdad lo que el vendedor afirma.",
+        "instructions": "Primero haz la búsqueda inversa de la imagen. Después, mira los resultados para juzgar la autenticidad del producto.",
+        "useShop": "¿Te encanta una prenda que viste en una publicación? Haz una búsqueda inversa de la foto para encontrar dónde comprarla de verdad.",
+        "useVerify": "¿No estás seguro de que el producto de un influencer sea auténtico? Búscalo al revés para ver si es realmente único o el mismo artículo fabricado en masa que vende todo el mundo.",
+        "searchLabel": "búsqueda inversa de imágenes",
+        "searching": "Buscando en la web…",
+        "dragHint": "↓ Arrastra la foto del vendedor a una búsqueda inversa de imágenes",
+        "queryCaption": "El vendedor dice: «chaqueta artesanal única» · 180 €",
+        "resultsLabel": "La misma foto encontrada en:",
+        "takeawayLabel": "La trampa:",
+        "takeaway": "Esa chaqueta «artesanal única» es el mismo artículo fabricado en masa que se vende por 9–14 € en decenas de tiendas de dropshipping. La foto la delató.",
+        "continue": "Ahora inténtalo tú →"
       },
       "labelFeedback": {
-        "title": "Sponsored posts must be labeled",
-        "intro": "When a creator or an influencer is paid, partnered with, or gifted a product, they have to disclose it — clearly and up front. Here's how to tell them apart:",
-        "paidDesc": "The creator is paid by the brand to post about it.",
-        "paidExample": "Tell-tale signs: an affiliate link, or a personal discount code like “LUNA20”.",
-        "collabDesc": "A creative partnership, made together with the brand.",
-        "collabExample": "Tell-tale signs: a “paid partnership” tag, or #ad on a co-created post.",
-        "giftedDesc": "The creator was sent the product for free.",
-        "giftedExample": "Tell-tale signs: “gifted”, or “thanks @brand for sending this” — a free item, no payment.",
-        "continue": "Got it →"
+        "title": "Las publicaciones patrocinadas deben etiquetarse",
+        "intro": "Cuando a un creador o influencer le pagan, se asocia con una marca o le regalan un producto, tiene que declararlo de forma clara y por delante. Así puedes distinguirlos:",
+        "paidDesc": "La marca paga al creador por publicar sobre ella.",
+        "paidExample": "Señales delatoras: un enlace de afiliado o un código de descuento personal como «LUNA20».",
+        "collabDesc": "Una colaboración creativa, hecha junto con la marca.",
+        "collabExample": "Señales delatoras: una etiqueta de «colaboración pagada» o #publicidad en una publicación co-creada.",
+        "giftedDesc": "Al creador le enviaron el producto gratis.",
+        "giftedExample": "Señales delatoras: «regalado», o «gracias @marca por enviarme esto»: un artículo gratis, sin pago.",
+        "continue": "Entendido →"
       }
     },
     "algorithm": {
-      "intro": "A humming mainframe crunches data into targeted ads. Get inside, then teach it to profile a person.",
-      "solvedTitle": "Algorithm Control Room cracked · Evidence logged 🧠",
-      "solvedText": "You watched the algorithm turn {friend}'s age, interests and possible insecurities into a single ad. That is not coincidence — it the result of his advertisement profile",
-      "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
+      "intro": "Un mainframe zumbante tritura datos para convertirlos en anuncios dirigidos. Entra y enséñale a perfilar a una persona.",
+      "solvedTitle": "Sala de Control del Algoritmo descifrada · Prueba registrada 🧠",
+      "solvedText": "Viste cómo el algoritmo convertía la edad, los intereses y las posibles inseguridades de {friend} en un único anuncio. Eso no es casualidad: es el resultado de su perfil publicitario.",
+      "evidence": "El anuncio fue elegido a dedo por un algoritmo usando la edad, los intereses y las inseguridades de {friend}.",
       "unlock": {
-        "badge": "ACCESS · Algorithm Control Room",
-        "prompt": "Enter the six-digit code.",
-        "error": "Access denied — that code is wrong.",
-        "submit": "Unlock →"
+        "badge": "ACCESO · Sala de Control del Algoritmo",
+        "prompt": "Introduce el código de seis dígitos.",
+        "error": "Acceso denegado: ese código no es correcto.",
+        "submit": "Desbloquear →"
       },
       "choice": {
-        "badge": "System question · privacy trade-off",
-        "prompt": "Which future do you want?",
-        "optionATag": "Option A",
-        "optionABefore": "See",
-        "optionABold": "fewer, personalised",
-        "optionAAfter": "ads — but your personal data is collected.",
-        "optionBTag": "Option B",
-        "optionBBefore": "See",
-        "optionBBold": "many more",
-        "optionBAfter": "ads and ad-breaks — but far less of your data is collected.",
-        "wrongTitle": "Wrong answer.",
-        "wrongText": "You just traded your privacy for convenience. “Personalised” is the algorithm — fewer ads means it is collecting and profiling more of your data to pick them.",
-        "goodTitle": "Good answer.",
-        "goodText": "More ads is annoying, but you kept your data and partly slipped the personalisation algorithm. Convenience is the bait it uses to make profiling feel like a favour.",
-        "afterNote": "Either way, the machine still tries to profile everyone. Let’s see how.",
-        "continue": "Enter the targeting engine →"
+        "badge": "Pregunta del sistema · privacidad a cambio de comodidad",
+        "prompt": "¿Qué futuro quieres?",
+        "optionATag": "Opción A",
+        "optionABefore": "Ver",
+        "optionABold": "menos anuncios, personalizados",
+        "optionAAfter": "— pero se recogen tus datos personales.",
+        "optionBTag": "Opción B",
+        "optionBBefore": "Ver",
+        "optionBBold": "muchos más",
+        "optionBAfter": "anuncios y cortes publicitarios — pero se recogen muchos menos datos tuyos.",
+        "wrongTitle": "Respuesta incorrecta.",
+        "wrongText": "Acabas de cambiar tu privacidad por comodidad. «Personalizado» es el algoritmo: menos anuncios significa que recoge y perfila más datos tuyos para elegirlos.",
+        "goodTitle": "Buena respuesta.",
+        "goodText": "Más anuncios molesta, pero conservaste tus datos y esquivaste en parte el algoritmo de personalización. La comodidad es el cebo que usa para que el perfilado parezca un favor.",
+        "afterNote": "En cualquier caso, la máquina sigue intentando perfilar a todo el mundo. Veamos cómo.",
+        "continue": "Entrar en el motor de segmentación →"
       },
       "equations": {
-        "feedbackTitle": "Equation solved: why this ad?",
-        "badge": "Targeting engine · solve every equation",
-        "prompt": "Fill the missing slot to complete each person's ad.",
-        "adFlag": "AD ACTIVATED",
-        "slotPlaceholder": "＋ drop tile",
-        "stepBadge": "Equation {n} / {total}",
-        "profileBadge": "Profile complete",
-        "dragHint": "Drag the missing factor into the equation — the one that fits this exact person.",
-        "wrongHint": "That factor doesn’t fit this person. Look at what the ad is really selling.",
-        "navTerminal": "Ad Terminal",
-        "terminalTitle": "AD-OUTPUT TERMINAL",
-        "profileTitle": "▚ PROFILE RECONSTRUCTED ▚",
-        "profileP1": "The engine cross-referenced",
-        "profileB1": "{friend}’s age",
-        "profileP2": "(a teenager),",
-        "profileB2": "interests",
-        "profileP3": "(gaming, new tech and searches for the NovaPad X) and",
-        "profileB3": "insecurities",
-        "profileP4": " (fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
-        "logEvidence": "Log this evidence ✓",
-        "finalLessonTitle": "What you learned",
-        "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you.",
-        "nextBtn": "Next equation →",
-        "lastBtn": "See {friend}’s profile →"
+        "feedbackTitle": "Ecuación resuelta: ¿por qué este anuncio?",
+        "badge": "Motor de segmentación · resuelve todas las ecuaciones",
+        "prompt": "Rellena el hueco que falta para completar el anuncio de cada persona.",
+        "adFlag": "ANUNCIO ACTIVADO",
+        "slotPlaceholder": "＋ suelta la ficha",
+        "stepBadge": "Ecuación {n} / {total}",
+        "profileBadge": "Perfil completo",
+        "dragHint": "Arrastra el factor que falta a la ecuación: el que encaja con esta persona concreta.",
+        "wrongHint": "Ese factor no encaja con esta persona. Fíjate en lo que el anuncio vende en realidad.",
+        "navTerminal": "Terminal de anuncios",
+        "terminalTitle": "TERMINAL DE SALIDA DE ANUNCIOS",
+        "profileTitle": "▚ PERFIL RECONSTRUIDO ▚",
+        "profileP1": "El motor cruzó",
+        "profileB1": "la edad de {friend}",
+        "profileP2": "(adolescente),",
+        "profileB2": "intereses",
+        "profileP3": "(videojuegos, tecnología nueva y búsquedas de la NovaPad X) e",
+        "profileB3": "inseguridades",
+        "profileP4": "(encajar, miedo a perderse la oferta). De ahí salió un anuncio perfectamente dirigido: justo la oferta del «90% de descuento» en la NovaPad X. Que {friend} lo viera nunca fue casualidad.",
+        "logEvidence": "Registrar esta prueba ✓",
+        "finalLessonTitle": "Lo que has aprendido",
+        "finalLesson": "Los anuncios personalizados combinan tu actividad, tus intereses y tus inseguridades para dirigirse a ti.",
+        "nextBtn": "Siguiente ecuación →",
+        "lastBtn": "Ver el perfil de {friend} →"
       },
       "cols": [
-        "Demographic",
-        "Follows / likes",
-        "Insecurities"
+        "Demografía",
+        "Sigue / le gusta",
+        "Inseguridades"
       ],
       "rows": {
         "r1": {
-          "ad": "Miracle skincare cream",
+          "ad": "Crema milagrosa para la piel",
           "slots": {
-            "0": "Girl, 13–17",
-            "1": "Follows beauty influencers"
+            "0": "Chica, 13–17",
+            "1": "Sigue a influencers de belleza"
           },
-          "feedbackLesson": "The algorithm combines user's age, followed accounts, likes, and time spent watching skincare videos to show her targeted ads that encourage purchases."
+          "feedbackLesson": "El algoritmo combina la edad de la usuaria, las cuentas que sigue, sus «me gusta» y el tiempo que pasa viendo vídeos de cuidado de la piel para mostrarle anuncios dirigidos que fomentan la compra."
         },
         "r2": {
-          "ad": "Muscle-gain supplement",
+          "ad": "Suplemento para ganar músculo",
           "slots": {
-            "1": "Follows fitness influencers",
-            "2": "Insecure about being skinny"
+            "1": "Sigue a influencers de fitness",
+            "2": "Inseguro por estar delgado"
           },
-          "feedbackLesson": "A teen boy follows fitness pages and likes posts about building muscle. Because of this, he gets an ad for a muscle supplement. Ad systems look at what people do online and show ads they are likely to click, even if the product isn’t something they really need"
+          "feedbackLesson": "Un chico adolescente sigue páginas de fitness y da «me gusta» a publicaciones sobre ganar músculo. Por eso recibe un anuncio de un suplemento muscular. Los sistemas publicitarios miran lo que hace la gente en internet y muestran anuncios en los que es probable que hagan clic, aunque el producto no sea algo que realmente necesiten."
         },
         "r3": {
-          "ad": "Baldness cream",
+          "ad": "Crema contra la calvicie",
           "slots": {
-            "0": "Man, 25–35",
-            "1": "Follows tech channels"
+            "0": "Hombre, 25–35",
+            "1": "Sigue canales de tecnología"
           },
-          "feedbackLesson": "Clicks on hair-loss products or repeated views of related content can suggest that concern. An algorithm can use these actions to show someone hair-loss ads that offer a supposed solution to their worry."
+          "feedbackLesson": "Los clics en productos contra la caída del cabello o ver repetidamente contenido relacionado pueden sugerir esa preocupación. Un algoritmo puede usar esas acciones para mostrarle a alguien anuncios de caída del cabello que ofrecen una supuesta solución a su inquietud."
         },
         "r4": {
-          "ad": "Weight-loss pills",
+          "ad": "Pastillas adelgazantes",
           "slots": {
-            "0": "Woman, 30–45",
-            "2": "Insecure about her weight"
+            "0": "Mujer, 30–45",
+            "2": "Insegura por su peso"
           },
-          "feedbackLesson": "Following diet pages, liking weight-loss posts and watching related videos feeds an advertising profile. The algorithm uses those traces to select a matching ad. "
+          "feedbackLesson": "Seguir páginas de dietas, dar «me gusta» a publicaciones sobre adelgazar y ver vídeos relacionados alimenta un perfil publicitario. El algoritmo usa esos rastros para seleccionar un anuncio que encaje."
         }
       },
       "tiles": {
-        "t-skin": "Insecure about her skin",
-        "t-boy": "Boy, 15–25",
-        "t-bald": "Worried about going bald",
-        "t-diet": "Follows diet & lifestyle pages",
-        "t-retiree": "Retired, 65+",
-        "t-tween": "Kid, 8–12",
-        "t-gran": "Woman, 60+",
-        "t-dad": "Dad, in his 40s",
-        "t-pets": "Follows pet accounts",
-        "t-gamer": "Follows gaming channels",
-        "t-cook": "Follows cooking pages",
-        "t-travel": "Follows travel bloggers",
-        "t-money": "Anxious about money",
-        "t-lonely": "Afraid of being left out",
-        "t-height": "Self-conscious about height",
-        "t-teeth": "Worried about their teeth"
+        "t-skin": "Insegura por su piel",
+        "t-boy": "Chico, 15–25",
+        "t-bald": "Preocupado por quedarse calvo",
+        "t-diet": "Sigue páginas de dietas y estilo de vida",
+        "t-retiree": "Jubilado, 65+",
+        "t-tween": "Niño, 8–12",
+        "t-gran": "Mujer, 60+",
+        "t-dad": "Padre, cuarentón",
+        "t-pets": "Sigue cuentas de mascotas",
+        "t-gamer": "Sigue canales de videojuegos",
+        "t-cook": "Sigue páginas de cocina",
+        "t-travel": "Sigue a blogueros de viajes",
+        "t-money": "Angustiado por el dinero",
+        "t-lonely": "Miedo a quedarse fuera",
+        "t-height": "Acomplejado por su altura",
+        "t-teeth": "Preocupado por sus dientes"
       },
       "report": {
-        "modalTitle": "Data Report · Profile: {friend}",
+        "modalTitle": "Informe de datos · Perfil: {friend}",
         "kicker": "SALA DE CONTROL DEL ALGORITMO",
-        "title": "Targeted Ad Profile Log: {friend}",
-        "subject": "Online activity · Subject: {friend}",
+        "title": "Registro de perfil publicitario: {friend}",
+        "subject": "Actividad en línea · Sujeto: {friend}",
         "instruction": "Revisa la actividad para descubrir cómo aprendió el algoritmo.",
         "columns": {
           "time": "HORA",
@@ -1254,146 +1300,146 @@ export default {
         ]
       },
       "door": {
-        "badge": "Control Room · Sealed",
+        "badge": "Sala de control · Sellada",
         "prompt": "The Algorithm Control Room is locked. Find the six highlighted digits, then use the keypad to enter the code.",
-        "action": "Use the keypad →"
+        "action": "Usar el teclado →"
       }
     },
     "ads": {
-      "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
-      "solvedTitle": "Corridor cleared — you read the fine print",
-      "solvedText": "You’ve made it to the final round! These ads were designed to make you feel really happy and lucky so you'd fall for the scam. Be wary of any content that triggers a very strong emotional reaction in you.",
-      "pickup": "You pick up the Truth Flashlight 🔦",
-      "torchCharging": "🔦 Charging…",
-      "torchOn": "🔦 Flashlight ON",
-      "torchOff": "🔦 Truth Flashlight",
-      "hintCharging": "The cheap torch flickers awake — bait ads love to waste a moment of your time…",
-      "hintOn": "Sweep the beam across the dark wall — each poster lights up and reveals the truth.",
-      "hintOff": "Switch it on, then sweep the beam over the posters to reveal what they really say.",
-      "glossyCta": "TAP TO CLAIM →",
-      "fineprint": "* terms & conditions apply",
-      "truthTag": "THE TRUTH",
-      "codeFragment": "hidden letter:",
-      "shineRevealed": "✓ Revealed",
-      "shineReady": "🔦 Shine light here",
-      "shineOff": "Turn on the light first",
-      "codeAssembled": "ACCESS CODE assembled:",
+      "intro": "Un túnel de servicio de neón empapelado con cuatro carteles publicitarios luminosos. Parecen generosos. No lo son.",
+      "solvedTitle": "Pasillo superado — leíste la letra pequeña",
+      "solvedText": "¡Has llegado a la ronda final! Estos anuncios estaban diseñados para que te sintieras muy feliz y afortunado y picaras en la estafa. Desconfía de cualquier contenido que te provoque una reacción emocional muy fuerte.",
+      "pickup": "Recoges la Linterna de la Verdad 🔦",
+      "torchCharging": "🔦 Cargando…",
+      "torchOn": "🔦 Linterna ENCENDIDA",
+      "torchOff": "🔦 Linterna de la Verdad",
+      "hintCharging": "La linterna barata parpadea al despertar: a los anuncios cebo les encanta hacerte perder un momento…",
+      "hintOn": "Barre el haz por la pared oscura: cada cartel se ilumina y revela la verdad.",
+      "hintOff": "Enciéndela y luego barre el haz sobre los carteles para revelar lo que dicen de verdad.",
+      "glossyCta": "TOCA PARA RECLAMAR →",
+      "fineprint": "* se aplican términos y condiciones",
+      "truthTag": "LA VERDAD",
+      "codeFragment": "letra oculta:",
+      "shineRevealed": "✓ Revelado",
+      "shineReady": "🔦 Ilumina aquí",
+      "shineOff": "Enciende primero la linterna",
+      "codeAssembled": "CÓDIGO DE ACCESO formado:",
       "codeLetters": "S-A-V-E",
-      "exitLabel": "Enter the 4-letter code to open the exit",
+      "exitLabel": "Introduce el código de 4 letras para abrir la salida",
       "exitPlaceholder": "????",
-      "exitButton": "Open exit →",
-      "errCode": "That is not the code. Illuminate all four posters and read the letters hiding in the fine print.",
-      "learnLabel": "Read the fine print.",
-      "learn": "Ads shouting “free”, “you won” or “$0 today” usually hide the real cost in tiny print below — always read what you are actually agreeing to before you tap.",
-      "evidence": "Behind the “free trial” ad was a hidden €59/month auto-renewing subscription.",
+      "exitButton": "Abrir salida →",
+      "errCode": "Ese no es el código. Ilumina los cuatro carteles y lee las letras escondidas en la letra pequeña.",
+      "learnLabel": "Lee la letra pequeña.",
+      "learn": "Los anuncios que gritan «gratis», «has ganado» o «0 € hoy» suelen esconder el coste real en letra diminuta más abajo: lee siempre a qué estás accediendo antes de tocar.",
+      "evidence": "Detrás del anuncio de «prueba gratuita» había una suscripción oculta de 59 €/mes con renovación automática.",
       "posters": [
         {
-          "glossyTitle": "FREE 30-DAY TRIAL!",
-          "glossyBody": "Try NovaCloud Premium — $0 today!",
-          "glossyBadge": "$0",
-          "truth": "After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.",
-          "truthTitle": "😩 Automatic renovation",
+          "glossyTitle": "¡PRUEBA GRATIS 30 DÍAS!",
+          "glossyBody": "Prueba NovaCloud Premium: ¡0 € hoy!",
+          "glossyBadge": "€0",
+          "truth": "Al cabo de un mes se renueva automáticamente a 59 €/mes. Cancelar exige llamar a un teléfono abierto 2 horas por semana.",
+          "truthTitle": "😩 Renovación automática",
           "letter": "A"
         },
         {
-          "glossyTitle": "🎉 CONGRATULATIONS!",
-          "glossyBody": "You've WON a €1,000 gift card! Tap to claim.",
+          "glossyTitle": "🎉 ¡ENHORABUENA!",
+          "glossyBody": "¡Has GANADO una tarjeta regalo de 1.000 €! Toca para reclamarla.",
           "glossyBadge": "€1,000",
-          "truth": "This 'prize' harvests your personal data and card details.",
-          "truthTitle": "👎🏼 You did NOT win anything",
+          "truth": "Este «premio» recopila tus datos personales y los de tu tarjeta.",
+          "truthTitle": "👎🏼 NO has ganado nada",
           "letter": "S"
         },
         {
-          "glossyTitle": "📈 GET RICH QUICK!",
-          "glossyBody": "Turn €100 into €10,000 in one week — guaranteed!",
+          "glossyTitle": "📈 ¡HAZTE RICO RÁPIDO!",
+          "glossyBody": "Convierte 100 € en 10.000 € en una semana: ¡garantizado!",
           "glossyBadge": "×100",
-          "truth": "Every euro you “invest” is gone, and the sky-high “returns” on screen are fake.",
+          "truth": "Cada euro que «inviertes» desaparece, y las rentabilidades altísimas que ves en pantalla son falsas.",
           "truthTitle": "A pure scam",
           "letter": "E"
         },
         {
-          "glossyTitle": "🛡️ VIRUS DETECTED!",
-          "glossyBody": "Your device may be at risk — download SecureNow FREE!",
-          "glossyBadge": "FREE",
-          "truth": "The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad.",
-          "truthTitle": "🚨 You didn´t have a virus... now you do",
+          "glossyTitle": "🛡️ ¡VIRUS DETECTADO!",
+          "glossyBody": "Tu dispositivo puede estar en riesgo: ¡descarga SecureNow GRATIS!",
+          "glossyBadge": "GRATIS",
+          "truth": "La advertencia es falsa y el «antivirus» ES el malware. Las alertas reales nunca llegan desde un anuncio.",
+          "truthTitle": "🚨 No tenías un virus... ahora sí",
           "letter": "V"
         }
       ]
     },
     "persuasion": {
-      "intro": "A gallery of glossy ads. Each one leans on a single persuasion trick — name it by framing the poster.",
-      "solvedTitle": "Persuasion Lab cleared — password FOOLED",
-      "solvedText": "Once you can name the trick — FOMO, urgency, a borrowed celebrity — it stops working on you. That is the whole defence.",
+      "intro": "Una galería de anuncios llamativos. Cada uno se apoya en un único truco de persuasión: nómbralo enmarcando el cartel.",
+      "solvedTitle": "Laboratorio de Persuasión superado — contraseña FOOLED",
+      "solvedText": "En cuanto sabes nombrar el truco —FOMO, urgencia, una celebridad prestada— deja de funcionar contigo. Esa es toda la defensa.",
       "learn": {
-        "lead": "Spot the trick.",
-        "body": "Ads persuade with named techniques: FOMO (fear of missing out), social proof (\"everyone's buying it\"), exaggeration, influencer endorsement, emotional appeal and urgency. Real campaigns often stack several of these at once to slip past your judgement."
+        "lead": "Detecta el truco.",
+        "body": "Los anuncios persuaden con técnicas que tienen nombre: FOMO (miedo a perderse algo), prueba social («todo el mundo lo compra»), exageración, recomendación de influencers, apelación emocional y urgencia. Las campañas reales suelen apilar varias a la vez para colarse por delante de tu juicio."
       },
-      "trayLabel": "TECHNIQUE FRAMES",
+      "trayLabel": "MARCOS DE TÉCNICAS",
       "hints": {
-        "start": "Drag and drop each technique frame onto the matching poster.",
-        "allDone": "All six framed — the letters spell a password. Click the computer to type it in.",
+        "start": "Arrastra y suelta cada marco de técnica sobre el cartel que le corresponde.",
+        "allDone": "Los seis enmarcados: las letras forman una contraseña. Haz clic en el ordenador para escribirla.",
         "correct": "Correct — a letter surfaced. Keep framing the rest.",
-        "wrong": "That technique does not match this ad. Frame returned — try another.",
-        "wrongSpecific": "Not quite. Look again: {clue}"
+        "wrong": "Esa técnica no encaja con este anuncio. Marco devuelto: prueba con otro.",
+        "wrongSpecific": "No del todo. Míralo otra vez: {clue}"
       },
-      "dragHint": "Drag onto its poster",
-      "count": "Framed {matched} / {total}",
+      "dragHint": "Arrástralo a su cartel",
+      "count": "Enmarcados {matched} / {total}",
       "posters": [
         {
-          "headline": "ONLY 3 LEFT IN STOCK!",
-          "sub": "Don't miss out!",
+          "headline": "¡SOLO QUEDAN 3 EN STOCK!",
+          "sub": "¡No te quedes sin él!",
           "letter": "F"
         },
         {
-          "headline": "Over 2 MILLION people already bought this!",
-          "sub": "Join the crowd.",
+          "headline": "¡Más de 2 MILLONES de personas ya lo han comprado!",
+          "sub": "Únete a la multitud.",
           "letter": "O"
         },
         {
-          "headline": "Lose 10kg in just 3 DAYS — guaranteed miracle!",
-          "sub": "You'll be surprised.",
+          "headline": "Pierde 10 kg en solo 3 DÍAS: ¡milagro garantizado!",
+          "sub": "Te sorprenderá.",
           "letter": "O"
         },
         {
-          "headline": "As seen on @StarCeleb's page — she LOVES it!",
-          "sub": "#ad",
+          "headline": "Visto en la página de @StarCeleb: ¡le ENCANTA!",
+          "sub": "#publicidad",
           "letter": "L"
         },
         {
-          "headline": "Don't let your family down.",
-          "sub": "They deserve better.",
+          "headline": "No falles a tu familia.",
+          "sub": "Se merecen algo mejor.",
           "letter": "E"
         },
         {
-          "headline": "OFFER ENDS IN 04:59 — buy NOW before it's gone!",
-          "sub": "Tick, tock…",
+          "headline": "LA OFERTA ACABA EN 04:59: ¡compra YA antes de que vuele!",
+          "sub": "Tic, tac…",
           "letter": "D"
         }
       ],
       "techniques": {
         "fomo": "FOMO",
-        "social": "Social Proof",
-        "exagg": "Exaggeration",
-        "influencer": "Influencer Endorsement",
-        "emotional": "Emotional Appeal",
-        "urgency": "Urgency"
+        "social": "Prueba social",
+        "exagg": "Exageración",
+        "influencer": "Recomendación de influencer",
+        "emotional": "Apelación emocional",
+        "urgency": "Urgencia"
       },
       "passwordLearn": {
-        "lead": "Named and disarmed.",
-        "body": "Six posters, six tricks. The letters they hid, read left to right, are the exit password — proof you saw through every one."
+        "lead": "Nombrado y desarmado.",
+        "body": "Seis carteles, seis trucos. Las letras que escondían, leídas de izquierda a derecha, son la contraseña de salida: la prueba de que los viste venir todos."
       },
-      "openComputer": "Use the computer →",
-      "closeComputer": "Close the screen",
-      "termBar": "PERSUASION-LAB · EXIT TERMINAL",
-      "termPrompt": "> Enter the password formed by the revealed letters:",
-      "termLocked": "Frame all six posters to reveal the password letters.",
-      "termPlaceholder": "type the password",
-      "termInputLabel": "Exit password",
-      "unlock": "Unlock →",
-      "pwError": "Access denied. Read the glowing letters in poster order and try again.",
-      "hiddenLetter": "hidden letter {letter}",
-      "evidence": "Every poster used a named persuasion trick — FOMO, social proof, urgency and more."
+      "openComputer": "Usar el ordenador →",
+      "closeComputer": "Cerrar la pantalla",
+      "termBar": "LAB-PERSUASIÓN · TERMINAL DE SALIDA",
+      "termPrompt": "> Introduce la contraseña formada por las letras reveladas:",
+      "termLocked": "Enmarca los seis carteles para revelar las letras de la contraseña.",
+      "termPlaceholder": "escribe la contraseña",
+      "termInputLabel": "Contraseña de salida",
+      "unlock": "Desbloquear →",
+      "pwError": "Acceso denegado. Lee las letras brillantes en el orden de los carteles e inténtalo otra vez.",
+      "hiddenLetter": "letra oculta {letter}",
+      "evidence": "Cada cartel usaba un truco de persuasión con nombre propio: FOMO, prueba social, urgencia y más."
     }
   },
   "debug": {

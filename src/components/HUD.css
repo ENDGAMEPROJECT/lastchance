@@ -592,6 +592,35 @@
     font-size: 17px;
     line-height: 1.1;
   }
+  /* Debug: tiny red dot in the bottom-right screen corner that hides/shows
+     all debug controls (HUD bar, map jump bar, in-room skip buttons). */
+  .hud-m-debug-toggle {
+    position: fixed;
+    right: max(6px, env(safe-area-inset-right));
+    bottom: max(6px, env(safe-area-inset-bottom));
+    z-index: 60;
+    width: 14px;
+    height: 14px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    background: var(--red);
+    cursor: pointer;
+  }
+  .hud-m-debug-toggle[aria-pressed='false'] {
+    opacity: 0.45;
+  }
+  body.debug-hidden
+    :is(
+      .hud-m-debug,
+      .map-debug,
+      .rc-debug-skip,
+      .ld-debug-skip,
+      .ia-debug-skip,
+      .enter-debug-pause
+    ) {
+    display: none;
+  }
   .hud-m-debug {
     position: absolute;
     bottom: 12px;

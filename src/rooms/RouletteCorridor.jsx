@@ -9,6 +9,7 @@ import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import { ROULETTE_WHEELS as WHEELS, ROULETTE_SEGMENTS, rouletteResult, correctRouletteVerdict } from '../game/rouletteData.js'
 import RoomFrame from '../components/RoomFrame.jsx'
+import GateButton from '../components/GateButton.jsx'
 import RoulettePrizeIcon from './RoulettePrizeIcon.jsx'
 import './RouletteCorridor.css'
 
@@ -82,8 +83,9 @@ export default function RouletteCorridor({ node }) {
   const results = history[active] || []
   const checkedCount = Object.values(verified).filter(Boolean).length
   const wheelText = (id, key) => t(`rooms.roulette.investigation.wheels.${id}.${key}`)
-  // A verified wheel's feedback must be read before Next / Finish appears.
-  const feedbackRead = useReadingGate(wheelText(active, 'feedback'), !!verified[active])
+  // A verified wheel's feedback must be read before Next / Finish unlocks;
+  // the button is visible throughout, filling as the wait runs down.
+  const feedback = useReadingGate(wheelText(active, 'feedback'), !!verified[active])
 
   function spinWheel(w) {
     if (timers.current[w.id] || solved || verified[w.id]) return
@@ -218,15 +220,15 @@ export default function RouletteCorridor({ node }) {
               <>
                 <h3 className="accent-green">{t('rooms.roulette.investigation.correct')}</h3>
                 <p>{wheelText(active, 'feedback')}</p>
-                {feedbackRead && (checkedCount === WHEELS.length
-                  ? <button className="btn btn-green" disabled={solved} onMouseDown={preventFocusScroll} onClick={() => {
+                {checkedCount === WHEELS.length
+                  ? <GateButton gate={feedback} className="btn-green" disabled={solved} onMouseDown={preventFocusScroll} onClick={() => {
                     track('viewed', OBJ.rouletteFeedback(wheelNo(active)), { node: node.id })
                     finish()
-                  }}>{t('rooms.roulette.investigation.finish')}</button>
-                  : <button className="btn btn-cyan" onMouseDown={preventFocusScroll} onClick={() => {
+                  }}>{t('rooms.roulette.investigation.finish')}</GateButton>
+                  : <GateButton gate={feedback} className="btn-cyan" onMouseDown={preventFocusScroll} onClick={() => {
                     track('viewed', OBJ.rouletteFeedback(wheelNo(active)), { node: node.id })
                     setActive(WHEELS.find((w) => !verified[w.id]).id)
-                  }}>{t('rooms.roulette.investigation.next')}</button>)}
+                  }}>{t('rooms.roulette.investigation.next')}</GateButton>}
               </>
             ) : (
               <>

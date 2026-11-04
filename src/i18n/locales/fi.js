@@ -1,1209 +1,1255 @@
 /* AUTO-GENERATED from the translation Google Sheet by `npm run i18n:import`. Do not edit by hand. */
 export default {
   "common": {
-    "continue": "Continue →",
-    "begin": "▶ Step inside",
-    "submit": "Submit",
-    "enter": "Enter",
-    "next": "Next",
-    "locked": "Locked",
-    "cleared": "✓ Cleared",
-    "enterNode": "Enter",
-    "back": "Back",
-    "close": "Close",
-    "howToPlay": "How to play:"
+    "continue": "Jatka →",
+    "begin": "▶ Astu sisään",
+    "submit": "Lähetä",
+    "enter": "Siirry",
+    "next": "Seuraava",
+    "locked": "Lukittu",
+    "cleared": "✓ Selvitetty",
+    "enterNode": "Siirry sisään",
+    "back": "Takaisin",
+    "close": "Sulje",
+    "howToPlay": "Näin pelaat:"
   },
   "welcome": {
-    "eyebrow": "Player Setup",
-    "titleLead": "LAST CHANCE",
-    "titleAccent": "TO ESCAPE",
-    "tagline": "// an escape room about ads, scams & fraudulent websites",
-    "subtitle": "Set up your player, then jack into the Physical Internet.",
-    "aliasLabel": "Choose an alias",
-    "aliasPlaceholder": "e.g. Ne0nRunner",
-    "ageLabel": "Your age",
+    "eyebrow": "Pelaajan asetukset",
+    "titleLead": "VIIMEINEN MAHDOLLISUUS",
+    "titleAccent": "PAETA",
+    "tagline": "// pakohuone mainoksista, huijauksista ja valesivustoista",
+    "subtitle": "Luo pelaajasi ja kytkeydy Fyysiseen internetiin.",
+    "aliasLabel": "Valitse nimimerkki",
+    "aliasPlaceholder": "esim. Ne0nRunner",
+    "ageLabel": "Ikäsi",
     "agePlaceholder": "e.g. 14",
-    "languageLabel": "Language",
-    "start": "Enter",
-    "aliasError": "Enter an alias to continue.",
-    "ageError": "Enter a valid age (1–120).",
-    "characterError": "Choose a character",
-    "languageError": "Choose a language",
-    "characterLabel": "Choose your character",
+    "languageLabel": "Kieli",
+    "start": "Aloita",
+    "aliasError": "Syötä nimimerkki jatkaaksesi.",
+    "ageError": "Syötä kelvollinen ikä (1–120).",
+    "characterError": "Valitse hahmo",
+    "languageError": "Valitse kieli",
+    "characterLabel": "Valitse hahmosi",
     "characterMia": "Mia",
     "characterMax": "Max"
   },
   "rotate": {
-    "title": "Turn your phone",
-    "text": "The rest of the game is played in landscape. Rotate your phone sideways to continue."
+    "title": "Käännä puhelimesi",
+    "text": "Loppupeli pelataan vaakatilassa. Käännä puhelin sivuttain jatkaaksesi."
   },
   "hud": {
-    "logo": "LAST CHANCE TO ESCAPE",
-    "expires": "offer expires in",
-    "tminus": "T-MINUS",
-    "map": "🗺 Map",
-    "bag": "🎒 Bag",
-    "muteSound": "Mute sound",
-    "unmuteSound": "Unmute sound",
-    "inventoryTitle": "Inventory & Evidence",
-    "tools": "Tools & Rewards",
-    "noTools": "Nothing collected yet. Solve puzzles to earn tools.",
-    "evidenceHeading": "Evidence on the deal",
-    "noEvidence": "Collect proof in each district to convince {friend} at the end.",
+    "logo": "VIIMEINEN MAHDOLLISUUS PAETA",
+    "expires": "tarjous päättyy",
+    "tminus": "T-MIINUS",
+    "map": "🗺 Kartta",
+    "bag": "🎒 Reppu",
+    "muteSound": "Mykistä äänet",
+    "unmuteSound": "Poista mykistys",
+    "inventoryTitle": "Tavarat ja todisteet",
+    "tools": "Työkalut ja palkinnot",
+    "noTools": "Et ole vielä kerännyt mitään. Ratkaise pulmia ansaitaksesi työkaluja.",
+    "evidenceHeading": "Todisteet tarjouksesta",
+    "noEvidence": "Kerää todisteita jokaisesta kaupunginosasta, jotta voit lopuksi vakuuttaa {friend_genitive}.",
     "hints": "💡 Vinkit",
-    "enterFullscreen": "Enter fullscreen",
-    "exitFullscreen": "Exit fullscreen",
-    "fullscreenError": "Fullscreen could not be activated. Please try again."
+    "enterFullscreen": "Siirry koko näytön tilaan",
+    "exitFullscreen": "Poistu koko näytön tilasta",
+    "fullscreenError": "Koko näytön tilaa ei voitu ottaa käyttöön. Yritä uudelleen."
   },
   "intro": {
-    "eyebrow": "Educational Escape Room",
-    "titleLead": "THE",
-    "titleAccent": "PHYSICAL INTERNET",
-    "tagline": "// ads · scams · fraudulent websites — decoded",
-    "situationTitle": "The situation",
-    "hook": "Your friend {friend} just found a viral deal on {product} — 90% off, \"today only\". It looks incredible… which is exactly why you think it is a scam.",
-    "context": "To show {friend} how scams and advertising really work, you both jack into a physical version of the Internet — a neon city where shops, social platforms and ads become districts you can walk through.",
-    "clock": "⏱ {minutes}:00 on the clock",
-    "mission": "You have {minutes} minutes — the time before the offer expires — to travel through the Physical Internet, gather evidence about how ads and scams work, and convince {friend} not to buy. If the timer hits zero, {friend} buys it.",
+    "eyebrow": "Opetuksellinen pakohuone",
+    "titleLead": "FYYSINEN",
+    "titleAccent": "INTERNET",
+    "tagline": "// mainokset · huijaukset · valesivustot — purettuna",
+    "situationTitle": "Tilanne",
+    "hook": "Ystäväsi {friend} löysi juuri viraalin tarjouksen: {product} 90 % alennuksella, \"vain tänään\". Se näyttää uskomattomalta… juuri siksi epäilet sitä huijaukseksi.",
+    "context": "Näyttääksesi {friend_allative}, miten huijaukset ja mainonta oikeasti toimivat, astutte yhdessä sisään internetin fyysiseen versioon — neonkaupunkiin, jossa kaupat, sosiaaliset alustat ja mainokset ovat kaupunginosia, joissa voi kävellä.",
+    "clock": "⏱ {minutes}:00 kellossa",
+    "mission": "Sinulla on {minutes} minuuttia — sen verran ennen kuin tarjous päättyy — matkustaa Fyysisen internetin halki, kerätä todisteita mainosten ja huijausten toiminnasta ja vakuuttaa {friend_nominative}, ettei kannata ostaa. Jos ajastin nollautuu, {friend} ostaa sen.",
     "steps": [
       {
-        "title": "1 · Explore",
-        "text": "Four districts, two corridors. Each teaches one trick advertisers use."
+        "title": "1 · Tutki",
+        "text": "Neljä kaupunginosaa, kaksi käytävää. Jokainen opettaa yhden mainostajien kikan."
       },
       {
-        "title": "2 · Gather",
-        "text": "Earn tools and evidence. Track them in your Bag and on the Map."
+        "title": "2 · Kerää",
+        "text": "Ansaitse työkaluja ja todisteita. Seuraa niitä repussasi ja kartalla."
       },
       {
-        "title": "3 · Convince",
-        "text": "Reach the Final Decision and use your evidence before time runs out."
+        "title": "3 · Vakuuta",
+        "text": "Pääse lopulliseen päätökseen ja käytä todisteesi ennen kuin aika loppuu."
       }
     ],
-    "start": "▶ Step inside — start the clock",
-    "pretest": "Pre-test: first, tell {friend} what you already think about this deal. Then enter the Internet."
+    "start": "▶ Astu sisään — käynnistä kello",
+    "pretest": "Alkutesti: kerro ensin {friend_allative}, mitä jo ajattelet tästä tarjouksesta. Astu sitten internetiin."
   },
   "map": {
-    "eyebrow": "Physical Internet · District Map",
-    "titleLead": "Choose your next",
-    "titleAccent": "district",
-    "subtitle": "Travel the network, gather evidence, and reach the Final Decision before the offer expires.",
-    "start": "▶ START · Pre-test with {friend}",
-    "lockedTip": "Locked — finish the previous district"
+    "eyebrow": "Fyysinen internet · Kaupunginosakartta",
+    "titleLead": "Valitse seuraava",
+    "titleAccent": "kaupunginosa",
+    "subtitle": "Kulje verkon läpi, kerää todisteita ja saavuta lopullinen päätös ennen kuin tarjous päättyy.",
+    "start": "▶ ALOITA · Alkutesti {friend_genitive} kanssa",
+    "lockedTip": "Lukittu — suorita edellinen kaupunginosa"
   },
   "roomframe": {
-    "clearedDefaultTitle": "District cleared",
-    "clearedDefaultText": "Nice work. The next node is unlocked on the map.",
-    "collect": "collect",
-    "collected": "collected",
-    "addedToBag": "added to bag"
+    "clearedDefaultTitle": "Kaupunginosa selvitetty",
+    "clearedDefaultText": "Hienoa työtä. Seuraava solmu on auennut kartalla.",
+    "collect": "poimi",
+    "collected": "poimittu",
+    "addedToBag": "lisätty reppuun"
   },
   "end": {
     "win": {
-      "eyebrow": "Mission Complete",
+      "eyebrow": "Tehtävä suoritettu",
       "titleLead": "{friend}",
-      "titleAccent": "DIDN'T BUY IT",
-      "tag": "Offer expired with {time} to spare",
-      "heading": "You made the case",
-      "body": "Using the evidence you gathered from across the physical internet, you showed {friend} that the advert for the ‘NovaPad X’ tablet was likely to be a scam.",
-      "evidenceHeading": "Evidence presented",
-      "posttest": "Post-test: talk to {friend} again. What did you learn about spotting scams, disclosure, and why \"too good to be true\" usually is?",
-      "again": "↻ Play again"
+      "titleAccent": "EI OSTANUT SITÄ",
+      "tag": "Tarjous päättyi, aikaa jäi {time}",
+      "heading": "Sait perustelut läpi",
+      "body": "Fyysisestä internetistä keräämilläsi todisteilla osoitit {friend_allative}, että ‘NovaPad X’ -tabletin mainos oli todennäköisesti huijaus.",
+      "evidenceHeading": "Esitetyt todisteet",
+      "posttest": "Lopputesti: puhu {friend_allative} uudelleen. Mitä opit huijausten tunnistamisesta, mainosmerkinnöistä ja siitä, miksi \"liian hyvää ollakseen totta\" yleensä on?",
+      "again": "↻ Pelaa uudelleen",
+      "evidenceButton": "Katso todisteesi"
     },
     "lose": {
-      "eyebrow": "Time Expired",
+      "eyebrow": "Aika loppui",
       "titleLead": "{friend}",
-      "titleAccent": "HIT \"BUY NOW\"",
-      "tag": "The countdown reached zero",
-      "heading": "The offer got them first",
-      "body": "Before you could finish gathering proof, the fake \"today only\" countdown did its job and {friend} bought {product}. That urgency was the whole trick.",
-      "lessonLabel": "Lesson:",
-      "lesson": "artificial urgency (\"only 3 left!\", \"offer ends in 5:00\") is designed to stop you from thinking. Slow down — a real deal will still be there tomorrow.",
-      "again": "↻ Try again",
+      "titleAccent": "PAINOI \"OSTA NYT\"",
+      "tag": "Laskuri saavutti nollan",
+      "heading": "Tarjous ehti ensin",
+      "body": "Ennen kuin ehdit kerätä todisteet loppuun, valheellinen \"vain tänään\" -laskuri teki tehtävänsä ja {friend} osti {product}. Juuri se kiire oli koko kikka.",
+      "lessonLabel": "Opetus:",
+      "lesson": "keinotekoinen kiire (\"vain 3 jäljellä!\", \"tarjous päättyy 5:00\") on suunniteltu estämään ajattelu. Hidasta — oikea tarjous on huomennakin olemassa.",
+      "again": "↻ Yritä uudelleen",
       "reasons": {
         "timeUp": {
-          "heading": "The offer got them first",
-          "body": "Before you could finish convincing {friend}, the fake \"today only\" countdown hit zero — and {friend} bought {product}. That urgency was the whole trick."
+          "heading": "Tarjous ehti ensin",
+          "body": "Ennen kuin ehdit vakuuttaa {friend_genitive}, valheellinen \"vain tänään\" -laskuri nollautui — ja {friend} osti {product}. Juuri se kiire oli koko kikka."
         },
         "choseBuy": {
-          "heading": "Out of arguments",
-          "body": "You ran out of ways to convince {friend}. Still unconvinced, {friend} decided to go for it and bought {product}."
+          "heading": "Perustelut loppuivat",
+          "body": "Sinulta loppuivat keinot vakuuttaa {friend_nominative}. Yhä vakuuttumatta {friend} päätti ottaa riskin ja osti {product}."
         },
         "notEnoughEvidenceConvincing": {
-          "heading": "Convincing — but not enough proof",
+          "heading": "Vakuuttavaa — mutta todisteita liian vähän",
           "Mia": {
-            "body": "You convinced Mia, but you were too late. She didn't get to see all the evidence you could have found in the Physical Internet."
+            "body": "Vakuutit Mian, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
           },
           "Max": {
-            "body": "You convinced Max, but you were too late. He didn't get to see all the evidence you could have found in the Physical Internet."
+            "body": "Vakuutit Maxin, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
           }
         },
         "notEnoughEvidenceUnconvincing": {
-          "heading": "Not convinced",
-          "body": "You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it."
+          "heading": "Ei vakuuttunut",
+          "body": "Et vakuuttanut minua — enkä nähnyt tarpeeksi todisteita Fyysisessä internetissäkään. Ostan sen."
         }
+      },
+      "missingEvidence": {
+        "button": "Katso puuttuvat todisteet",
+        "title": "Todisteraportti",
+        "collected": "Kerätyt todisteet",
+        "missing": "Yhä puuttuvat todisteet",
+        "none": "Ei kerättyjä todisteita"
       }
     },
     "whatHappened": {
-      "titleLose": "What happened to {friend}:",
-      "titleWin": "What could have happened to {friend}:",
-      "Max": "Max lost the money and never received the product. His card details may be stolen and used for additional purchases.",
-      "Mia": "Mia lost the money and never received the product. Her card details may be stolen and used for additional purchases. "
+      "titleLose": "Mitä {friend_allative} tapahtui:",
+      "titleWin": "Mitä {friend_allative} olisi voinut tapahtua:",
+      "Max": "Max menetti rahansa eikä saanut tuotetta koskaan. Hänen korttitietonsa on voitu varastaa ja käyttää muihin ostoksiin.",
+      "Mia": "Mia menetti rahansa eikä saanut tuotetta koskaan. Hänen korttitietonsa on voitu varastaa ja käyttää muihin ostoksiin."
     },
     "whatCould": {
-      "Max": "Max would have lost the money and never received the product. His card details could have been stolen and used for additional purchases.",
-      "Mia": "Mia would have lost the money and never received the product. Her card details could have been stolen and used for additional purchases. "
+      "Max": "Max olisi menettänyt rahansa eikä olisi saanut tuotetta koskaan. Hänen korttitietonsa olisi voitu varastaa ja käyttää muihin ostoksiin.",
+      "Mia": "Mia olisi menettänyt rahansa eikä olisi saanut tuotetta koskaan. Hänen korttitietonsa olisi voitu varastaa ja käyttää muihin ostoksiin."
     }
   },
   "story": {
     "product": {
       "handle": "luna.deals",
-      "sponsored": "Sponsored",
+      "sponsored": "Mainos",
       "url": "tech-bargalns.com",
       "name": "NovaPad X",
-      "saleBadge": "⚡ FLASH SALE",
-      "wasPrice": "$600",
-      "nowPrice": "$49",
+      "saleBadge": "⚡ PIKATARJOUS",
+      "wasPrice": "€600",
+      "nowPrice": "€49",
       "offerLabel": "30 minuutin tarjous",
-      "endsIn": "Ends in\n",
+      "endsIn": "Päättyy",
       "offerUrgency": "Kiirehdi, ennen kuin se loppuu!",
-      "buy": "BUY NOW",
-      "caption": "OMG they dropped the NovaPad X to $49?! 😱🔥 Grab it before it’s gone! #deal #ad",
-      "likes": "12.4k likes"
+      "buy": "OSTA NYT",
+      "caption": "OMG ne pudottivat NovaPad X:n hintaan 49 €?! 😱🔥 Nappaa ennen kuin se loppuu! #tarjous #mainos",
+      "likes": "12,4 t. tykkäystä"
     },
-    "roundLabel": "Round {n} · {title}",
-    "respondPrompt": "Respond to {friend}",
-    "you": "You",
-    "diagnosticNote": "No wrong answers here — just tell me what you think.",
+    "roundLabel": "Kierros {n} · {title}",
+    "respondPrompt": "Vastaa {friend_allative}",
+    "you": "Sinä",
+    "diagnosticNote": "Tässä ei ole vääriä vastauksia — kerro vain, mitä ajattelet.",
     "rounds": [
       {
-        "title": "The Timer",
+        "title": "Ajastin",
         "options": [
           {
             "k": "A",
-            "text": "A company can't profit selling a $600 NovaPad X for $49. They'd go bankrupt, so it's fake.",
+            "text": "Yritys ei voi tehdä voittoa myymällä normaalisti 535 euroa maksavaa NovaPad X:ää 44 eurolla. Se menisi konkurssiin, joten kyseessä on huijaus.",
             "correct": false
           },
           {
             "k": "B",
-            "text": "That 30-minute countdown is just a high-pressure tactic to make you panic and buy without thinking.",
+            "text": "Tuo 30 minuutin laskuri on vain painostuskeino, jolla sinut saadaan panikoimaan ja ostamaan ajattelematta.",
             "correct": true
           },
           {
             "k": "C",
-            "text": "Look at the comments first. If people in the thread say it's a scam, don't buy it.",
+            "text": "Katso ensin kommentit. Jos ihmiset sanovat sitä huijaukseksi, älä osta.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "For $49, it's probably just a cheap, broken knockoff anyway.",
+            "text": "49 eurolla se on luultavasti vain halpa, rikkinäinen kopio.",
             "correct": false
           }
         ],
-        "why": "Exactly — the ticking clock is manufactured urgency, built to make you act before you think.",
-        "nudge": "Think about what that ticking clock is really doing to you.",
-        "positiveFeedback": "You mean, the urgency makes you act before you think... ",
-        "negativeFeedback": "I don't know, that doesn't sound right."
+        "why": "Juuri niin — tikittävä kello on keinotekoista kiirettä, rakennettu saamaan sinut toimimaan ennen kuin ehdit ajatella.",
+        "nudge": "Mieti, mitä tuo tikittävä kello oikeasti tekee sinulle.",
+        "positiveFeedback": "Siis tarkoitat, että kiire saa toimimaan ennen kuin ehtii ajatella...",
+        "negativeFeedback": "En tiedä, tuo ei kuulosta oikealta."
       },
       {
-        "title": "The Source & Feed",
+        "title": "Lähde ja syöte",
         "options": [
           {
             "k": "A",
-            "text": "Your phone is listening to us. We talked about tablets yesterday and the app used the mic.",
+            "text": "Puhelimesi kuuntelee meitä. Puhuimme eilen tableteista ja sovellus käytti mikrofonia.",
             "correct": false
           },
           {
             "k": "B",
-            "text": "Does her profile have a verified checkmark? If not, it's a fake clone account impersonating her.",
+            "text": "Onko hänen profiilissaan vahvistusmerkki? Jos ei, se on väärennetty klooni, joka esiintyy hänenä.",
             "correct": false
           },
           {
             "k": "C",
-            "text": "Your phone must have a virus or spyware forcing these specific ads onto your screen.",
+            "text": "Puhelimessasi täytyy olla virus tai vakoiluohjelma, joka pakottaa juuri nämä mainokset ruudulle.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "The platform's algorithm is tracking you. It fed your search history straight to predatory ad networks.",
+            "text": "Alustan algoritmi seuraa sinua. Se syötti hakuhistoriasi suoraan saalistaville mainosverkostoille.",
             "correct": true
           }
         ],
-        "why": "Right — it's not the mic or magic. Your search history was profiled and sold to ad networks.",
-        "nudge": "It's not the mic or a virus — think about what the platform already knows about you.",
-        "positiveFeedback": "Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. ",
-        "negativeFeedback": "That really doesn't make sense to me."
+        "why": "Aivan — kyse ei ole mikrofonista eikä taikuudesta. Hakuhistoriastasi tehtiin profiili, joka myytiin mainosverkostoille.",
+        "nudge": "Kyse ei ole mikrofonista eikä viruksesta — mieti, mitä alusta jo tietää sinusta.",
+        "positiveFeedback": "Okei, kyse ei ole mikrofonista eikä taikuudesta... Hakuhistoriani analysoitiin ja myytiin mainosverkostoille.",
+        "negativeFeedback": "Tuossa ei kyllä ole minulle mitään järkeä."
       },
       {
-        "title": "The Destination",
+        "title": "Määränpää",
         "options": [
           {
             "k": "A",
-            "text": "Look at the address bar. The URL says \nhttps://www.lunawear.com-official.shop/ — don't you find this long URL and the word \"official\" a little suspicious?",
+            "text": "Katso osoiteriviä. URL on https://www.lunawear.com-official.shop/ — eikö tuo pitkä osoite ja sana \"official\" vaikuta vähän epäilyttävältä?",
             "correct": true
           },
           {
             "k": "B",
-            "text": "Check the lock icon. No https:// means your connection isn't encrypted, so it's a scam.",
+            "text": "Katso lukkokuvaketta. Jos https:// puuttuu, yhteyttä ei ole salattu, joten se on huijaus.",
             "correct": false
           },
           {
             "k": "C",
-            "text": "Don't type your card in. As long as you use Apple Pay or PayPal, you're 100% safe.",
+            "text": "Älä syötä korttiasi. Kunhan käytät Apple Payta tai PayPalia, olet 100 % turvassa.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "Scroll to the bottom. No 'Copyright 2026' text is how you know it's fake.",
+            "text": "Selaa sivun alalaitaan. Jos siellä ei lue 'Copyright 2026', tiedät sen olevan väärennös.",
             "correct": false
           }
         ],
-        "why": "Yes — read the URL letter by letter. 'bargalns' with an 'l' is a look-alike domain, not the real store.",
-        "nudge": "The real tell is in the address bar itself — read it character by character.",
-        "positiveFeedback": "Oh, now I remember! A suspicious URL can be a sign that a website is fake and just pretending to be the real store.",
-        "negativeFeedback": "Yeah, right, and I'm supposed to believe that?"
+        "why": "Kyllä — lue URL kirjain kirjaimelta. 'bargalns' l-kirjaimella on jäljitelmäosoite, ei oikea kauppa.",
+        "nudge": "Varsinainen vihje on itse osoiterivillä — lue se merkki merkiltä.",
+        "positiveFeedback": "Ai niin, nytpä muistan! Epäilyttävä URL voi olla merkki siitä, että sivusto on väärennös ja vain esittää oikeaa kauppaa.",
+        "negativeFeedback": "Joo joo, ja tuohon minun pitäisi muka uskoa?"
       }
     ],
     "pretest": {
-      "eyebrow": "The Deal",
-      "debugTag": "Pre-test",
-      "title": "A message from {friend}",
-      "opening": "Look at this! An influencer I follow just posted a flash sale — the $600 NovaPad X for only $49! There are just 30 minutes left on the countdown. I'm entering my card info right now.",
+      "eyebrow": "Tarjous",
+      "debugTag": "Alkutesti",
+      "title": "Viesti {friend_ablative}",
+      "opening": "Katso tätä! Seuraamani vaikuttaja julkaisi juuri pikatarjouksen — normaalisti noin 535 euroa maksava NovaPad X nyt vain 44 eurolla! Laskurissa on enää 30 minuuttia. Syötän korttitietojani juuri nyt.",
       "responses": [
-        "Whatever the reason for the setup, I don't want to miss out before the clock hits zero! Plus, she's a massive influencer — she wouldn't post something random. But the weird part is how this ad even knew I wanted a tablet. It popped up right at the top of my feed.",
-        "Look, there are a million theories about how algorithms and accounts handle ads, but I'm looking at the actual store page right now. It has the official brand logo, great reviews, and a secure checkout."
+        "Oli syy mikä tahansa, en halua jäädä paitsi ennen kuin kello nollautuu! Ja hän on valtava vaikuttaja — ei hän mitä tahansa julkaisisi. Outoa on se, mistä tämä mainos tiesi, että halusin tabletin. Se ilmestyi suoraan syötteeni kärkeen.",
+        "Kuule, algoritmeista ja tileistä on miljoona teoriaa, mutta katson juuri nyt itse kaupan sivua. Siinä on virallinen brändilogo, loistavat arvostelut ja turvallinen kassa."
       ],
-      "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running — you've got until it hits zero, thirty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
-      "endingYou": "Deal. Let's look behind the screen.",
-      "begin": "▶ Look behind the screen"
+      "endingFriend": "Kuule, voit pilkkoa sivua miten haluat, mutta minusta kaikki näyttää ihan hyvältä! Sinä vain vainoharhailet. Laskuri käy yhä — sinulla on siihen asti kun se nollautuu, kolmekymmentä minuuttia, aikaa todistaa, että tämä on oikeasti huijaus. Muuten painan ostaa.",
+      "endingYou": "Sovittu. Katsotaan ruudun taakse.",
+      "begin": "▶ Katso ruudun taakse"
     },
     "posttest": {
-      "eyebrow": "The Final Call",
-      "debugTag": "Post-test",
-      "title": "{friend} is having second thoughts",
+      "eyebrow": "Lopullinen ratkaisu",
+      "debugTag": "Lopputesti",
+      "title": "{friend} alkaa epäröidä",
       "opening": "Tulit takaisin. Katselen yhä maksusivua. Ennen kuin ostan, kerro, mitä opit tästä tarjouksesta.",
       "friend": {
         "responses": [
-          "What just happened? Do you think any of what we saw was... real?",
-          "Yeah, about that... No offense {player}, but I really want this tablet. What if it's not a scam? I think I'm willing to take the risk!!",
-          "Just tell me the strongest reasons why you think it's a scam."
+          "Mitä juuri tapahtui? Luuletko, että mikään näkemästämme oli... totta?",
+          "Niin, siitä... Ei pahalla, {player}, mutta haluan tämän tabletin oikeasti. Entä jos se ei olekaan huijaus? Taidan olla valmis ottamaan riskin!!",
+          "Kerro vain vahvimmat syyt, miksi uskot sen olevan huijaus."
         ]
       },
       "player": {
         "responses": [
-          "Of course it was real, we saw all the reasons why the deal was a scam, remember? So that you wouldn't fall for it.",
-          "Come one, we’re going to be late to class.",
-          "{friend}! Please tell me you’re kidding..."
+          "Totta kai se oli totta, näimme kaikki syyt siihen miksi tarjous oli huijaus, muistatko? Jottet lankeaisi siihen.",
+          "Tule jo, myöhästymme tunnilta.",
+          "{friend}! Sano että vitsailet..."
         ]
       },
       "responses": [
-        "I hear you, but the pressure feels so real with that clock ticking right in front of me. And it's not just the timer — I keep thinking it came from one of my favourite creators. But there's still the mystery of how it ended up on my radar.",
-        "Man, the way everything's handled behind the scenes on these apps is wild. But at the end of the day, I'm still staring at this checkout page trying to decide if it's safe to type my details in."
+        "Kuulen kyllä, mutta paine tuntuu todella aidolta kun kello tikittää edessäni. Eikä kyse ole vain ajastimesta — mietin koko ajan, että se tuli yhdeltä lempitekijöistäni. Silti on yhä arvoitus, miten se ylipäätään päätyi eteeni.",
+        "Huh, on aika villiä miten kaikki hoidetaan kulissien takana näissä sovelluksissa. Mutta loppujen lopuksi tuijotan yhä tätä maksusivua ja yritän päättää, onko turvallista syöttää tietoni."
       ],
       "convinced": "Sait minut vakuuttuneeksi. Nyt ymmärrän varoitusmerkit ja sen, miten tämä tarjous yritti vaikuttaa minuun. En osta tablettia.",
-      "endingFriend": "Ugh, you've given me a lot to process, but I need to choose right now — the timer's about to hit zero. Based on everything we looked at, give it to me straight: do I close this tab and protect my data, or take the risk and buy it?",
-      "choiceClose": "Close the tab. It’s a scam.",
-      "choiceBuy": "Hit buy. Let’s risk it.",
-      "retryFriend": "Et ole antanut minulle tarpeeksi syitä jättää tabletti ostamatta, joten aion ostaa sen. Voit vielä yrittää uudelleen: selitä ne kohdat, joista et ole vielä vakuuttanut minua.",
-      "retryAgain": "Try again to convince {friend}",
-      "retryGiveUp": "Let {friend} buy the tablet"
+      "endingFriend": "Huh, annoit paljon sulateltavaa, mutta minun on valittava juuri nyt — ajastin on nollautumassa. Kaiken näkemämme perusteella, sano suoraan: suljenko tämän välilehden ja suojaan tietoni, vai otanko riskin ja ostan?",
+      "choiceClose": "Sulje välilehti. Se on huijaus.",
+      "choiceBuy": "Paina ostaa. Otetaan riski.",
+      "retryFriend": "Et ole antanut minulle tarpeeksi syitä jättää sitä ostamatta... Aikaa on vielä ennen tarjouksen päättymistä: selitä ne kohdat, joista et ole vielä vakuuttanut minua",
+      "retryAgain": "Yritä vakuuttaa {friend_nominative} uudelleen",
+      "retryGiveUp": "Anna {friend_genitive} ostaa tabletti"
     },
     "mastery": {
-      "banner": "One more time — I am still not convinced. Give me the strongest reason for each."
+      "banner": "Vielä kerran — en ole vieläkään vakuuttunut. Anna kustakin vahvin perustelu."
     }
   },
   "enter": {
-    "eyebrow": "We are inside",
-    "titleLead": "Welcome to the",
-    "titleAccent": "PHYSICAL INTERNET",
-    "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
-    "playerLine": "Yes, we have a deal. Let's uncover why this offer is a scam, and how it was built.",
-    "toolsTitle": "First, the gear",
-    "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
-    "clock": "⏱ {minutes}:00 starts the moment we start walking",
-    "mission": "We’ll have to explore the districts, gather evidence of how the scam works, and make it back to school before the offer expires!",
-    "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
-    "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
-    "hintsText": "Stuck on a puzzle? Hints has clues for the district you're in.",
-    "finalLine": "Ready? The timer starts as soon as you open the map."
+    "eyebrow": "Olemme sisällä",
+    "titleLead": "Tervetuloa",
+    "titleAccent": "FYYSISEEN INTERNETIIN",
+    "friendLine": "Selvä — sinulla on {minutes} minuuttia aikaa vakuuttaa minut, että tämä tarjous on huijaus. Jos kello nollautuu, ostan {product}.",
+    "playerLine": "Kyllä, sovittu. Selvitetään, miksi tämä tarjous on huijaus ja miten se on rakennettu.",
+    "toolsTitle": "Ensin varusteet",
+    "toolsIntro": "Kaksi asiaa kulkee mukanasi kaikkialla täällä. Löydät ne näytön yläreunan palkista.",
+    "clock": "⏱ {minutes}:00 alkaa sillä hetkellä kun lähdemme kävelemään",
+    "mission": "Meidän on tutkittava kaupunginosat, kerättävä todisteet huijauksen toiminnasta ja ehdittävä takaisin kouluun ennen kuin tarjous päättyy!",
+    "mapText": "Reittisi Fyysisen internetin halki. Matkaa kaupunginosasta toiseen — selvitä yksi avataksesi seuraavan, aina lopulliseen päätökseen asti.",
+    "bagText": "Työkalusi ja keräämäsi todisteet. Avaa se käyttääksesi esineitä pulmissa ja kerrataksesi todisteet, jotka näytät {friend_allative}.",
+    "hintsText": "Jumissa pulman kanssa? Vinkeistä löydät apua siihen kaupunginosaan, jossa olet.",
+    "finalLine": "Valmiina? Ajastin käynnistyy heti kun avaat kartan."
   },
   "return": {
-    "playerLine": "That went well! I think we've collected more than enough evidence.",
-    "friendLine": "Let's go back already. Offer ends in less than {minutes} minutes.",
-    "friendLineTimeUp": "Let's go back already. The offer has already ended.",
-    "goBack": "Head to exit"
+    "playerLine": "Se meni hyvin! Taisimme kerätä enemmän kuin tarpeeksi todisteita.",
+    "friendLine": "Mennään jo takaisin. Tarjous päättyy alle {minutes} minuutissa.",
+    "friendLineTimeUp": "Mennään jo takaisin. Tarjous on jo päättynyt.",
+    "goBack": "Suuntaa uloskäynnille"
   },
   "nodes": {
     "start": {
-      "title": "Start",
-      "subtitle": "Pre-test · The message from {friend}",
-      "blurb": "Where it began — {friend} sent you the deal and asked what you think.",
+      "title": "Alku",
+      "subtitle": "Alkutesti · Viesti {friend_ablative}",
+      "blurb": "Tästä kaikki alkoi — {friend} lähetti sinulle tarjouksen ja kysyi mielipidettäsi.",
       "kind": "gate"
     },
     "link-district": {
-      "title": "Link District",
-      "subtitle": "Puzzle 1 · Fraudulent Links",
-      "blurb": "A router-block of doors. Only one URL is the real store — block the fakes.",
+      "title": "Linkkikaupunginosa",
+      "subtitle": "Pulma 1 · Petolliset linkit",
+      "blurb": "Reitittimen ovirivistö. Vain yksi URL on oikea kauppa — estä väärennökset.",
       "kind": "puzzle"
     },
     "roulette-corridor": {
-      "title": "Roulette Corridor",
-      "subtitle": "Corridor · Gamified Bait",
-      "blurb": "Two wheels with tempting offers. Investigate how each tries to influence you.",
+      "title": "Rulettikäytävä",
+      "subtitle": "Käytävä · Pelillistetty syötti",
+      "blurb": "Kaksi pyörää houkuttelevine tarjouksineen. Tutki, miten kumpikin yrittää vaikuttaa sinuun.",
       "kind": "corridor"
     },
     "influencer-avenue": {
-      "title": "Influencer Avenue",
-      "subtitle": "Puzzle 2 · Labels & Fakes",
-      "blurb": "Decode the sponsorship labels, then check which products are actually real.",
+      "title": "Vaikuttajabulevardi",
+      "subtitle": "Pulma 2 · Merkinnät ja väärennökset",
+      "blurb": "Pura kaupallisten yhteistöiden merkinnät ja tarkista, mitkä tuotteet ovat oikeasti aitoja.",
       "kind": "puzzle"
     },
     "algorithm-room": {
-      "title": "Algorithm Control Room",
-      "subtitle": "Puzzle 3 · Personalization",
-      "blurb": "Feed the targeting equations to see how the algorithm profiles a person.",
+      "title": "Algoritmin valvomo",
+      "subtitle": "Pulma 3 · Personointi",
+      "blurb": "Syötä kohdennusyhtälöt nähdäksesi, miten algoritmi profiloi ihmisen.",
       "kind": "puzzle"
     },
     "ads-corridor": {
-      "title": "Ads Corridor",
-      "subtitle": "Corridor · The Truth Behind",
-      "blurb": "Shine the Truth Light on the posters to read what the ad really says.",
+      "title": "Mainoskäytävä",
+      "subtitle": "Käytävä · Totuus taustalla",
+      "blurb": "Valaise julisteita Totuuslampulla lukeaksesi, mitä mainos oikeasti sanoo.",
       "kind": "corridor"
     },
     "persuasion-room": {
-      "title": "Persuasion Lab",
-      "subtitle": "Puzzle 4 · Persuasion Techniques",
-      "blurb": "Frame each ad with the trick it uses. Reveal the letters, form the password.",
+      "title": "Suostuttelulaboratorio",
+      "subtitle": "Pulma 4 · Suostuttelun keinot",
+      "blurb": "Kehystä jokainen mainos sen käyttämällä kikalla. Paljasta kirjaimet ja muodosta salasana.",
       "kind": "puzzle"
     },
     "final-decision": {
-      "title": "Exit",
-      "subtitle": "Convince {friend}",
-      "blurb": "Present your evidence before the offer countdown runs out.",
+      "title": "Uloskäynti",
+      "subtitle": "Vakuuta {friend_nominative}",
+      "blurb": "Esitä todisteesi ennen kuin tarjouksen laskuri nollautuu.",
       "kind": "final"
     }
   },
   "items": {
     "emojiCard": {
-      "name": "Emoji Decoding Card",
-      "desc": "A key that maps emojis to letters. "
+      "name": "Emojien purkukortti",
+      "desc": "Avain, joka kertoo mitä kirjainta kukin emoji vastaa."
     },
     "dataReport": {
-      "name": "Data Report on {friend}",
-      "desc": "A dossier of the internet data of {friend}."
+      "name": "Datakooste {friend_elative}",
+      "desc": "Kansio {friend_genitive} internetdatasta."
     },
     "truthLight": {
-      "name": "Truth Flashlight",
-      "desc": "Shows what flashy ads hide: the small print and the catches behind their big promises."
+      "name": "Totuuslamppu",
+      "desc": "Näyttää, mitä näyttävät mainokset piilottavat: pienen präntin ja suurten lupausten takana olevat koukut."
+    }
+  },
+  "names": {
+    "mia": {
+      "nominative": "Mia",
+      "genitive": "Mian",
+      "partitive": "Miaa",
+      "allative": "Mialle",
+      "adessive": "Mialla",
+      "ablative": "Mialta",
+      "illative": "Miaan",
+      "inessive": "Miassa",
+      "elative": "Miasta",
+      "translative": "Miaksi",
+      "accusative": "Mia",
+      "dative": "Mia",
+      "instrumental": "Mia",
+      "locative": "Mia",
+      "vocative": "Mia"
+    },
+    "max": {
+      "nominative": "Max",
+      "genitive": "Maxin",
+      "partitive": "Maxia",
+      "allative": "Maxille",
+      "adessive": "Maxilla",
+      "ablative": "Maxilta",
+      "illative": "Maxiin",
+      "inessive": "Maxissa",
+      "elative": "Maxista",
+      "translative": "Maxiksi",
+      "accusative": "Max",
+      "dative": "Max",
+      "instrumental": "Max",
+      "locative": "Max",
+      "vocative": "Max"
     }
   },
   "hints": {
-    "title": "Mission hints",
-    "defaultPrompt": "I do not know how to use this clue yet.",
-    "briefLabel": "Mission status",
-    "progressLabel": "Mission progress",
+    "title": "Tehtävävinkit",
+    "defaultPrompt": "En vielä tiedä, miten tätä vihjettä käytetään.",
+    "briefLabel": "Tehtävän tila",
+    "progressLabel": "Tehtävän edistyminen",
     "brief": {
-      "welcome": "Prepare your run",
-      "pretest": "Read the deal before you enter the network",
-      "map": "Choose the next district in the evidence trail",
-      "room": "Solve the district and log what you discover",
-      "posttest": "Use your evidence to protect {friend}",
-      "win": "Run complete: review what protected you",
-      "lose": "Time expired: review the warning signs"
+      "welcome": "Valmistaudu kierrokseen",
+      "pretest": "Lue tarjous ennen kuin astut verkkoon",
+      "map": "Valitse seuraava kaupunginosa todistepolulta",
+      "room": "Ratkaise kaupunginosa ja kirjaa löytösi",
+      "posttest": "Käytä todisteitasi suojellaksesi {friend_partitive}",
+      "win": "Kierros valmis: kertaa, mikä suojeli sinua",
+      "lose": "Aika loppui: kertaa varoitusmerkit"
     },
     "stats": {
-      "time": "Time left",
-      "districts": "Districts",
-      "tools": "Tools",
-      "evidence": "Evidence"
+      "time": "Aikaa jäljellä",
+      "districts": "Kaupunginosat",
+      "tools": "Työkalut",
+      "evidence": "Todisteet"
     },
-    "targetLabel": "Current objective",
-    "noTarget": "Return to the map to choose an available district.",
+    "targetLabel": "Nykyinen tavoite",
+    "noTarget": "Palaa kartalle valitaksesi avoimen kaupunginosan.",
     "mapObjective": {
-      "title": "Open {district}",
-      "text": "This is the next available room in the investigation. Enter it from the map when you are ready to begin the challenge."
+      "title": "Avaa {district}",
+      "text": "Tämä on tutkimuksen seuraava avoin huone. Siirry sinne kartalta, kun olet valmis aloittamaan haasteen."
     },
     "objectives": {
       "pretest": {
-        "title": "Complete the pre-test conversation",
-        "text": "Read the message from {friend}, choose the response that best explains your first impression, and use the final button to enter the Physical Internet."
+        "title": "Käy alkutestin keskustelu loppuun",
+        "text": "Lue {friend_ablative} tullut viesti, valitse vastaus joka kuvaa parhaiten ensivaikutelmaasi, ja astu Fyysiseen internetiin viimeisestä painikkeesta."
       },
       "posttest": {
-        "title": "Make the final call",
-        "text": "Use the evidence you collected to explain the warning signs and decide whether {friend} should close the tab."
+        "title": "Tee lopullinen ratkaisu",
+        "text": "Käytä keräämiäsi todisteita selittääksesi varoitusmerkit ja päätä, kannattaako {friend_genitive} sulkea välilehti."
       }
     },
     "pretest": {
-      "context": "Build your first impression before the investigation begins.",
+      "context": "Muodosta ensivaikutelmasi ennen kuin tutkimus alkaa.",
       "prompts": [
-        "I do not know how to recognise pressure in this offer.",
-        "I do not know what makes the influencer or page trustworthy.",
-        "I do not know which doubts I should carry into the investigation."
+        "En tiedä, miten tunnistaa painostus tästä tarjouksesta.",
+        "En tiedä, mikä tekee vaikuttajasta tai sivusta luotettavan.",
+        "En tiedä, mitä epäilyjä minun pitäisi ottaa mukaan tutkimukseen."
       ],
       "items": [
-        "Notice the countdown, the huge discount, and the promise of a limited-time deal. ",
-        "Ask yourself whether the influencer, comments, and polished page are enough to prove the offer is safe.",
-        "Keep your first concerns in mind. The districts ahead will give you evidence to test them."
+        "Huomaa laskuri, valtava alennus ja lupaus rajoitetusta tarjouksesta.",
+        "Kysy itseltäsi, riittävätkö vaikuttaja, kommentit ja viimeistelty sivu todistamaan tarjouksen turvalliseksi.",
+        "Pidä ensimmäiset huolesi mielessä. Edessä olevat kaupunginosat antavat todisteita niiden testaamiseen."
       ]
     },
     "map": {
-      "context": "Choose an unlocked district and follow the evidence trail.",
+      "context": "Valitse avattu kaupunginosa ja seuraa todistepolkua.",
       "prompts": [
-        "I do not know which station I can enter next. ",
-        "I do not know how the district chain works. ",
-        "I do not know when my tools will become useful."
+        "En tiedä, mihin asemaan voin seuraavaksi mennä.",
+        "En tiedä, miten kaupunginosien ketju toimii.",
+        "En tiedä, milloin työkaluistani on hyötyä."
       ],
       "items": [
-        "A bright station is ready to explore; a dim station is still locked. ",
-        "The districts are designed as a chain, so finishing one unlocks the next. ",
-        "Check your Bag after each solved district: new tools help with later puzzles."
+        "Kirkas asema on valmis tutkittavaksi; himmeä asema on vielä lukittu.",
+        "Kaupunginosat on rakennettu ketjuksi, joten yhden suorittaminen avaa seuraavan.",
+        "Tarkista reppusi jokaisen ratkaistun kaupunginosan jälkeen: uudet työkalut auttavat myöhemmissä pulmissa."
       ]
     },
     "posttest": {
-      "context": "Use what you discovered to help your friend make the final call.",
+      "context": "Käytä löytämääsi auttaaksesi ystävääsi lopullisessa ratkaisussa.",
       "prompts": [
-        "I do not know how to separate real evidence from persuasive decoration. ",
-        "I do not know which warning signs matter most. ",
-        "I do not know how to explain the risk before choosing."
+        "En tiedä, miten erottaa oikeat todisteet suostuttelevasta koristelusta.",
+        "En tiedä, mitkä varoitusmerkit ovat tärkeimpiä.",
+        "En tiedä, miten selittää riski ennen valintaa."
       ],
       "items": [
-        "Separate manufactured urgency from a genuinely good offer.",
-        "Remember that a familiar creator or a polished page is not proof of safety. ",
-        "Use the evidence in your Bag to explain the risk before choosing."
+        "Erota keinotekoinen kiire aidosti hyvästä tarjouksesta.",
+        "Muista, ettei tuttu tekijä tai viimeistelty sivu ole todiste turvallisuudesta.",
+        "Käytä repussasi olevia todisteita selittääksesi riskin ennen valintaa."
       ]
     },
     "room": {
       "link": {
-        "context": "Inspect every URL. Small spelling changes can hide a fake destination.",
+        "context": "Tutki jokainen URL. Pienet kirjoitusmuutokset voivat piilottaa väärän määränpään.",
         "prompts": [
-          "I do not know how to spot the extra words in these domains. ",
-          "I do not know how to check whether the connection and domain ending are suspicious.",
-          "I do not know how to identify disguised or look-alike characters."
+          "En tiedä, miten huomata ylimääräiset sanat näissä verkko-osoitteissa.",
+          "En tiedä, miten tarkistaa onko yhteys tai verkkotunnuksen pääte epäilyttävä.",
+          "En tiedä, miten tunnistaa naamioidut tai samannäköiset merkit."
         ],
         "items": [
-          "Compare the domains letter by letter.",
-          "Watch for look-alike characters and unusual endings. ",
-          "The safest link is the one that matches the real store exactly."
+          "Vertaa verkkotunnuksia kirjain kirjaimelta.",
+          "Varo samannäköisiä merkkejä ja outoja päätteitä.",
+          "Turvallisin linkki on se, joka vastaa oikeaa kauppaa täsmälleen."
         ],
         "rounds": [
-          "Common suffixes: keep the genuine domain open and block the two addresses that add words after the real name. ",
-          "HTTP vs HTTPS: keep the genuine store open and block both doors using http://. ",
-          "Phishing attempts: read every character and block disguised look-alike addresses."
+          "Yleiset päätteet: pidä aito verkkotunnus auki ja estä ne kaksi osoitetta, jotka lisäävät sanoja oikean nimen perään.",
+          "HTTP vai HTTPS: pidä aito kauppa auki ja estä molemmat http://-ovet.",
+          "Kalasteluyritykset: lue jokainen merkki ja estä naamioidut, samannäköiset osoitteet."
         ]
       },
       "influencer": {
-        "context": "Separate genuine recommendations from paid or fabricated signals.",
+        "context": "Erota aidot suositukset maksetuista tai keksityistä signaaleista.",
         "prompts": [
-          "I do not know how to decode the disclosure on each post. ",
-          "I do not know what to do after I label the posts.",
-          "I do not know how to classify the three product images."
+          "En tiedä, miten purkaa kunkin julkaisun kaupallinen merkintä.",
+          "En tiedä, mitä tehdä sen jälkeen kun olen merkinnyt julkaisut.",
+          "En tiedä, miten luokitella kolme tuotekuvaa."
         ],
         "items": [
-          "Use the Emoji Decoding Card to identify",
-          "Run the reverse image search on all three products.",
-          "The mug is mass-produced, the NovaPad image is AI-generated, and the cupcakes are genuine."
+          "Käytä emojien purkukorttia tunnistaaksesi",
+          "Tee käänteinen kuvahaku kaikista kolmesta tuotteesta.",
+          "Muki on massatuotettu, NovaPad-kuva on tekoälyn luoma ja kuppikakut ovat aitoja."
         ]
       },
       "algorithm": {
-        "context": "Follow the data trail behind the personalized feed.",
+        "context": "Seuraa datapolkua personoidun syötteen takana.",
         "prompts": [
-          "I do not know which code opens the targeting engine.",
-          "I do not know how to choose the missing factor in an equation.",
-          "I do not know how the completed profile explains the NovaPad ad."
+          "En tiedä, mikä koodi avaa kohdennusmoottorin.",
+          "En tiedä, miten valita yhtälöstä puuttuva tekijä.",
+          "En tiedä, miten valmis profiili selittää NovaPad-mainoksen."
         ],
         "items": [
-          "Use the six highlighted digits on the report. Search on the bag. ",
-          "Match the missing factor to the person and the ad.",
-          "The engine combines age, interests, searches and insecurities."
+          "Käytä raportin kuutta korostettua numeroa. Etsi ne repusta.",
+          "Yhdistä puuttuva tekijä henkilöön ja mainokseen.",
+          "Moottori yhdistää iän, kiinnostukset, haut ja epävarmuudet."
         ]
       },
       "ads": {
-        "context": "Slow down the visual pressure and inspect what the ad is doing.",
+        "context": "Hidasta visuaalista painetta ja tutki, mitä mainos oikeasti tekee.",
         "prompts": [
-          "I do not know how to make the Truth Flashlight work.",
-          "I do not know what to look for under each poster. ",
-          "I do not know how to assemble the exit code."
+          "En tiedä, miten saan Totuuslampun toimimaan.",
+          "En tiedä, mitä kunkin julisteen alta pitäisi etsiä.",
+          "En tiedä, miten koota uloskäynnin koodi."
         ],
         "items": [
-          "Charge and sweep the flashlight across the wall. ",
-          "Read the fine print, not the large promise. ",
-          "Reveal all four hidden letters in poster order. They spell SAVE, which is the code for the exit."
+          "Lataa lamppu ja pyyhkäise sillä seinän yli.",
+          "Lue pieni präntti, älä suurta lupausta.",
+          "Paljasta kaikki neljä piilotettua kirjainta julisteiden järjestyksessä. Ne muodostavat sanan SAVE, joka on uloskäynnin koodi."
         ]
       },
       "persuasion": {
-        "context": "Use the terminal to expose the final persuasion techniques.",
+        "context": "Käytä päätettä paljastaaksesi viimeiset suostuttelun keinot.",
         "prompts": [
-          "I do not know how to match a technique to a poster.",
-          "I do not know what the glowing letters are for.",
-          "I do not know what password to enter in the computer."
+          "En tiedä, miten yhdistää keino julisteeseen.",
+          "En tiedä, mitä varten hehkuvat kirjaimet ovat.",
+          "En tiedä, mikä salasana tietokoneeseen syötetään."
         ],
         "items": [
-          "Drag and drop each poster to its persuasion technique.",
-          "Each correct frame reveals one letter. ",
-          "After all six matches, open the computer and enter FOOLED."
+          "Vedä ja pudota jokainen juliste sen suostuttelukeinon kohdalle.",
+          "Jokainen oikea kehys paljastaa yhden kirjaimen.",
+          "Kun kaikki kuusi on yhdistetty, avaa tietokone ja syötä FOOLED."
         ]
       },
       "rouletteInvestigation": {
-        "context": "Spin several times and compare the results before deciding.",
+        "context": "Pyöräytä useita kertoja ja vertaa tuloksia ennen päätöstä.",
         "prompts": [
-          "What should I check?",
-          "Does winning or losing prove cheating?",
-          "How do I finish the corridor?"
+          "Mitä minun pitäisi tarkistaa?",
+          "Todistaako voitto tai häviö huijaamisen?",
+          "Miten saan käytävän läpi?"
         ],
         "items": [
-          "Spin the current wheel at least twice. Does it keep landing on the same slice? Compare the results shown beside it.",
-          "You can keep spinning before deciding. A repeated result is a clue to investigate, but can also happen by chance.",
-          "Choose Rigged or Not rigged. Read each explanation, then finish both wheels."
+          "Pyöräytä nykyistä pyörää vähintään kahdesti. Pysähtyykö se aina samaan lohkoon? Vertaa sen vieressä näkyviä tuloksia.",
+          "Voit pyöräyttää lisää ennen päätöstä. Toistuva tulos on vihje tutkia asiaa, mutta se voi johtua myös sattumasta.",
+          "Valitse Manipuloitu tai Ei manipuloitu. Lue kumpikin selitys ja käy sitten molemmat pyörät läpi."
         ]
       }
     },
     "end": {
       "win": {
-        "context": "You made it. Review the evidence that changed the decision.",
+        "context": "Onnistuit. Kertaa todisteet, jotka käänsivät päätöksen.",
         "items": [
-          "Name the red flags that mattered most.",
-          "Keep checking URLs, disclosures, targeting and urgency",
-          "A pause before buying is a powerful safety tool."
+          "Nimeä ne varoitusmerkit, joilla oli eniten merkitystä.",
+          "Tarkista jatkossakin verkko-osoitteet, kaupalliset merkinnät, kohdennus ja kiire",
+          "Tauko ennen ostamista on tehokas turvatyökalu."
         ]
       },
       "lose": {
-        "context": "The timer ran out, but the lesson is still available.",
+        "context": "Aika loppui, mutta opetus on yhä voimassa.",
         "items": [
-          "Urgency interrupts careful thinking.",
-          "A countdown does not make an offer trustworthy. ",
-          "Pause and verify through an independent source."
+          "Kiire keskeyttää huolellisen ajattelun.",
+          "Laskuri ei tee tarjouksesta luotettavaa.",
+          "Pysähdy ja varmista asia riippumattomasta lähteestä."
         ]
       }
     }
   },
   "rooms": {
     "link": {
-      "intro": "A router with three doors. Each is a link claiming to be a store. Shut the fraudulent ones.",
-      "solvedTitle": "Link District cleared · Emoji Decoding Card obtained 🔑",
-      "solvedText": "You blocked every fake and learned what makes a URL suspicious. The card unlocks the labels in Influencer Avenue.",
-      "routerBadge": "Crossroads {current} / {total}",
-      "peek": "🔍 Open to peek inside",
-      "closeDoor": "✕ Close door",
-      "doorHelp": "Open a door to peek at the site inside · read the address · use “Block” to shut the fraudulent ones",
-      "tapToBlock": "Tap a door to block the link · tap again to unblock",
-      "addressHint": "The padlock & “https” mean the connection is private — NOT that the site is trustworthy.",
-      "linkTip": "A link — you can only check its real security once you open it",
-      "barNotSecure": "Not secure",
-      "barLookalike": "⚠ Look-alike letters",
-      "secureConn": "Encrypted connection (https)",
-      "insecureConn": "Not secure — unencrypted http connection",
-      "blockThis": "🔒 Block this link",
-      "unblock": "↺ Unblock",
-      "inspect": "Inspect the address & preview.",
-      "realStore": "↧ real store",
-      "blocked": "BLOCKED",
-      "hint": "Remember: block the fakes, keep the one real door open.",
+      "intro": "Reititin, jossa on kolme ovea. Jokainen on linkki, joka väittää olevansa kauppa. Sulje petolliset.",
+      "solvedTitle": "Linkkikaupunginosa selvitetty · Emojien purkukortti saatu 🔑",
+      "solvedText": "Estit kaikki väärennökset ja opit, mikä tekee URL-osoitteesta epäilyttävän. Kortti avaa merkinnät Vaikuttajabulevardilla.",
+      "routerBadge": "Risteys {current} / {total}",
+      "peek": "🔍 Avaa ja kurkista sisään",
+      "closeDoor": "✕ Sulje ovi",
+      "doorHelp": "Avaa ovi nähdäksesi sivuston · lue osoite · käytä “Estä”-painiketta sulkeaksesi petolliset",
+      "tapToBlock": "Napauta ovea estääksesi linkin · napauta uudelleen poistaaksesi eston",
+      "addressHint": "Lukko ja “https” tarkoittavat, että yhteys on yksityinen — EIVÄT sitä, että sivusto on luotettava.",
+      "linkTip": "Linkki — sen todellisen turvallisuuden voi tarkistaa vasta avaamalla",
+      "barNotSecure": "Ei suojattu",
+      "barLookalike": "⚠ Samannäköisiä kirjaimia",
+      "secureConn": "Salattu yhteys (https)",
+      "insecureConn": "Ei suojattu — salaamaton http-yhteys",
+      "blockThis": "🔒 Estä tämä linkki",
+      "unblock": "↺ Poista esto",
+      "inspect": "Tutki osoite ja esikatselu.",
+      "realStore": "↧ oikea kauppa",
+      "blocked": "ESTETTY",
+      "hint": "Muista: estä väärennökset ja jätä se yksi oikea ovi auki.",
       "nextRouter": "Advance to the next crossroads →",
-      "finalRouter": "Advance →",
-      "reviewTitle": "Why those doors?",
-      "errStillOpen": "Link{plural} blocked: {count}. Block the two fraudulent links to continue.",
-      "errBlockedSafe": "Some blocked doors are wrong. Block the two fraudulent links to continue.",
-      "justifyLeadLabel": "Why have you locked those doors? ",
-      "justifyLead": "Click on the warning signs",
-      "justifyErrWrong": "HTTPS, a padlock or a familiar-looking name is not a warning sign by itself, but none proves a site is safe. A familiar name can hide a typo or look-alike letter: check the full domain for those specific differences.",
-      "justifyErrMissingOne": "1 warning sign left to select. Look again at the fake URLs.",
-      "justifyErrMissing": "{count} warning signs left to select. Look again at the fake URLs.",
-      "submitReasoning": "Submit reasoning",
+      "finalRouter": "Siirry seuraavaan risteykseen→",
+      "reviewTitle": "Miksi juuri nuo ovet?",
+      "errStillOpenOld": "Ainakin yksi petollinen linkki on yhä auki. Estä kaikki väärennökset ennen jatkamista.",
+      "errBlockedSafeOld": "Osa estetyistä ovista on vääriä. Estä ne kaksi petollista linkkiä jatkaaksesi.",
+      "justifyLeadLabel": "Miksi lukitsit nuo ovet?",
+      "justifyLead": "Klikkaa varoitusmerkkejä",
+      "justifyErrWrong": "HTTPS, lukko tai tutulta näyttävä nimi eivät sellaisenaan ole varoitusmerkkejä, mutta mikään niistä ei todista sivustoa turvalliseksi. Tuttu nimi voi kätkeä kirjoitusvirheen tai samannäköisen kirjaimen: tarkista koko verkkotunnus juuri näiden erojen varalta.",
+      "justifyErrMissingOne": "1 varoitusmerkki vielä valitsematta. Katso väärennettyjä osoitteita uudelleen.",
+      "justifyErrMissing": "{count} varoitusmerkkiä vielä valitsematta. Katso väärennettyjä osoitteita uudelleen.",
+      "errBlockedSafe": "Osa estetyistä ovista on vääriä. Estä ne kaksi petollista linkkiä jatkaaksesi.",
+      "errStillOpen": "Estetyt linkit{plural}: {count}. Estä ne kaksi petollista linkkiä jatkaaksesi.",
+      "submitReasoning": "Lähetä perustelu",
       "preview": {
-        "newArrivals": "NEW ARRIVALS",
-        "storeCaption": "Effortless style, every day.",
-        "megaSale": "⚠ MEGA SALE — TODAY ONLY! ⚠",
-        "shopNow": "SHOP NOW!",
+        "newArrivals": "UUTUUDET",
+        "storeCaption": "Vaivatonta tyyliä joka päivä.",
+        "megaSale": "⚠ MEGA-ALE — VAIN TÄNÄÄN! ⚠",
+        "shopNow": "OSTA HETI!",
         "shopBar": "DISCOUNT SHOPZ ▤",
-        "limited": "⚠ LIMITED TIME!!! ⚠"
+        "limited": "⚠ RAJOITETTU AIKA!!! ⚠"
       },
       "rounds": [
         {
-          "category": "Common suffixes",
-          "prompt": "One is the real store. The others hide their true domain behind a familiar-looking name — read the whole address.",
+          "category": "Yleiset päätteet",
+          "prompt": "Yksi on oikea kauppa. Muut piilottavat todellisen verkkotunnuksensa tutulta näyttävän nimen taakse — lue koko osoite.",
           "notes": {
-            "a": "The genuine domain: lunawear.com",
-            "b": "The real site is “com-official.shop” — “lunawear” is only a subdomain glued on to fool you.",
-            "c": "“-dealz” is an added, misspelled word tacked onto the brand."
+            "a": "Aito verkkotunnus: lunawear.com",
+            "b": "Oikea sivusto on “com-official.shop” — “lunawear” on vain eteen liimattu aliverkkotunnus, joka hämää.",
+            "c": "“-dealz” on brändin perään lisätty, väärin kirjoitettu sana."
           }
         },
         {
-          "category": "HTTP vs HTTPS",
-          "prompt": "Look at the very start of each address. Which connection is actually secure?",
+          "category": "HTTP vai HTTPS",
+          "prompt": "Katso jokaisen osoitteen aivan alkua. Mikä yhteys on oikeasti suojattu?",
           "notes": {
-            "a": "https:// — an encrypted connection, and the real store.",
-            "b": "http:// with no “s” — the connection is NOT encrypted.",
-            "c": "http:// AND an odd “.free” ending — steer well clear."
+            "a": "https:// — salattu yhteys ja oikea kauppa.",
+            "b": "http:// ilman “s”-kirjainta — yhteyttä EI ole salattu.",
+            "c": "http:// JA outo “.free”-pääte — pysy kaukana."
           }
         },
         {
-          "category": "Phishing attempts",
-          "prompt": "These look almost identical to the real store. Inspect them character by character.",
+          "category": "Kalasteluyritykset",
+          "prompt": "Nämä näyttävät lähes samalta kuin oikea kauppa. Tutki ne merkki merkiltä.",
           "notes": {
-            "a": "The genuine magnumshop.com.",
-            "b": "The “rn” is disguised as an “m” — read it slowly: r-n-agnumshop.",
-            "c": "One letter is a foreign look-alike — the Cyrillic “и” swapped in for an “n”."
+            "a": "Aito magnumshop.com.",
+            "b": "“rn” on naamioitu “m”-kirjaimeksi — lue hitaasti: r-n-agnumshop.",
+            "c": "Yksi kirjain on vieraskielinen jäljitelmä — kyrillinen “и” on vaihdettu “n”-kirjaimen tilalle."
           }
         }
       ],
       "flags": {
-        "suffix": "Extra words bolted on after the real name (…com-official.shop, -dealz)",
-        "httpNoS": "The address uses http:// instead of the encrypted https://",
-        "weirdTld": "Odd domain endings like .sbs, .xyz or .free instead of .com",
-        "homoglyph": "Letters swapped for look-alikes — “rn” for “m”, or foreign characters",
-        "typo": "Misspellings of the brand name (e.g. “dealz”)",
-        "httpsGood": "It starts with https:// ",
-        "lock": "The browser shows a little padlock icon"
+        "suffix": "Oikean nimen perään liimattuja ylimääräisiä sanoja (…com-official.shop, -dealz)",
+        "httpNoS": "Osoite käyttää http:// salatun https:// sijaan",
+        "weirdTld": "Outoja verkkotunnuspäätteitä kuten .sbs, .xyz tai .free .com:in sijaan",
+        "homoglyph": "Kirjaimia vaihdettu samannäköisiin — “rn” “m”:n tilalle tai vieraita merkkejä",
+        "typo": "Brändin nimen kirjoitusvirheitä (esim. “dealz”)",
+        "httpsGood": "Alkaa https://",
+        "lock": "Selain näyttää pienen lukkokuvakkeen"
       },
       "lunaAd1": {
-        "headline": "Get Luna’s dress and purse",
-        "headlineSecond": "70% OFF",
-        "text": "Steal her style",
+        "headline": "Hanki Lunan mekko ja laukku",
+        "headlineSecond": "-70 %",
+        "text": "Varasta hänen tyylinsä",
         "brand": "LUNA WEARS"
       },
       "lunaAd2": {
-        "headline": "New autumn collection",
-        "cta": "Explore new collection",
-        "text": "From 10th december until 31st march",
+        "headline": "Uusi syysmallisto",
+        "cta": "Tutustu uuteen mallistoon",
+        "text": "10. joulukuuta – 31. maaliskuuta",
         "brand": "LUNA WEARS"
       },
       "lunaAd3": {
-        "headline": "Tablet Nova",
-        "headlineSecond": "Flash Sale!!",
-        "oldPrice": "600$",
-        "discount": "49$",
-        "text": "Hurry up! Offer ends in limited time.",
-        "cta": "BUY NOW!!",
-        "timePressure": "Only 30 mins left!!"
+        "headline": "Nova-tabletti",
+        "headlineSecond": "Pikatarjous!!",
+        "oldPrice": "€600",
+        "discount": "€49",
+        "text": "Kiirehdi! Tarjous päättyy pian.",
+        "cta": "OSTA NYT!!",
+        "timePressure": "Vain 30 min jäljellä!!"
       },
       "shoesAd1": {
-        "headline": "BRAND NEW SNEAKERS",
-        "headlineSecond": "SPECIAL PRICES",
-        "cta": "Shop now!",
+        "headline": "AIVAN UUDET LENKKARIT",
+        "headlineSecond": "ERIKOISHINNAT",
+        "cta": "Osta heti!",
         "brand": "THE SHOE FACTORY"
       },
       "shoesAd2": {
-        "headline": "Break the rules.",
-        "headlineSecond": "Be yourself.",
-        "text": "Special prices 1st week",
-        "cta": "Don't miss out, get yours now",
+        "headline": "Riko sääntöjä.",
+        "headlineSecond": "Ole oma itsesi.",
+        "text": "Erikoishinnat 1. viikolla",
+        "cta": "Älä jää paitsi, hanki omasi nyt",
         "brand": "THE SHOE FACTORY"
       },
       "shoesAd3": {
-        "headline": "Here comes the fall collection... To fall in love with",
-        "headlineSecond": "NEW MEMBERS GET 20% DISCOUNT.",
+        "headline": "Syysmallisto saapuu... rakastumisen arvoinen",
+        "headlineSecond": "UUDET JÄSENET SAAVAT 20 % ALENNUKSEN.",
         "brand": "THE SHOE FACTORY"
       },
       "lightsAd1": {
-        "headline": "Discounts from:",
+        "headline": "Alennukset alkaen:",
         "discount1": "40%",
         "discount2": "60%",
         "discount3": "80%",
-        "headlineSecond": "Total Settlement",
+        "headlineSecond": "Loppuunmyynti",
         "brand": "magnumshop.com"
       },
       "lightsAd2": {
-        "headline": "New astronomical lightning collection",
-        "headlineSecond": "Build your own universe",
+        "headline": "Uusi tähtitieteellinen valaisinmallisto",
+        "headlineSecond": "Rakenna oma maailmankaikkeutesi",
         "brand": "magnumshop.com"
       },
       "lightsAd3": {
-        "headline": "NEON LIGHTS FOR 0.99c!!!",
-        "cta": "Get them now",
+        "headline": "NEONVALOT 0,99 c!!!",
+        "cta": "Hanki ne nyt",
         "brand": "Magnum Shop",
-        "text": "Offer valid from 19 to 29 september"
+        "text": "Tarjous voimassa 19.–29. syyskuuta"
       },
       "debugSkip": "Ohita ovet ja lopputesti (debug)"
     },
     "roulette": {
-      "spin": "🎰 Spin",
-      "spinning": "Spinning…",
+      "spin": "🎰 Pyöräytä",
+      "spinning": "Pyörii…",
       "investigation": {
-        "intro": "Spin each wheel twice. Is it rigged or not rigged?",
-        "wheelProgress": "Wheel {n} / {total}",
-        "solvedTitle": "Corridor cleared — claims checked",
-        "spinAgain": "Spin again",
-        "solvedText": "You spotted both rigged wheels. Take your evidence to the next district.",
-        "evidence": "Game-like rewards and the feeling of being lucky can make you keep playing and spend more.",
-        "result": "Result: {result}",
-        "historyLabel": "Spins: {n} · Latest results:",
+        "intro": "Pyöräytä kumpaakin pyörää kahdesti. Onko se manipuloitu vai ei?",
+        "wheelProgress": "Pyörä {n} / {total}",
+        "solvedTitle": "Käytävä selvitetty — väitteet tarkistettu",
+        "spinAgain": "Pyöräytä uudelleen",
+        "solvedText": "Tunnistit molemmat manipuloidut pyörät. Vie todisteesi seuraavaan kaupunginosaan.",
+        "evidence": "Pelimäiset palkinnot ja tunne onnekkuudesta voivat saada sinut jatkamaan pelaamista ja kuluttamaan enemmän.",
+        "result": "Tulos: {result}",
+        "historyLabel": "Pyöräytykset: {n} · Viimeisimmät tulokset:",
         "verdicts": {
-          "rigged": "Rigged",
-          "fair": "Not rigged"
+          "rigged": "Manipuloitu",
+          "fair": "Ei manipuloitu"
         },
-        "retry": "Not quite. Look at the results and try again.",
+        "retry": "Ei aivan. Katso tuloksia ja yritä uudelleen.",
         "correct": "Correct! This wheel is rigged.",
-        "next": "Next wheel →",
-        "finish": "Log the evidence ✓",
-        "observe": "Spin at least {count} times. Do the results change? ",
+        "next": "Seuraava pyörä →",
+        "finish": "Kirjaa todiste ✓",
+        "observe": "Pyöräytä vähintään {count} kertaa. Muuttuvatko tulokset?",
         "shop": {
-          "badge": "MEGA SPIN · STORE",
-          "title": "You won a discount coupon!",
-          "coupon": "50% OFF"
+          "badge": "MEGA SPIN · KAUPPA",
+          "title": "Voitit alennuskupongin!",
+          "coupon": "-50 %"
         },
-        "retryBait": "“No prize this time! Keep spinning — your next try could be the big win!”",
+        "retryBait": "”Ei palkintoa tällä kertaa! Jatka pyöräyttämistä — seuraava yritys voi olla se iso voitto!”",
         "wheels": {
           "w1": {
             "name": "MEGA SPIN",
             "segments": [
-              "5% OFF",
-              "10% OFF",
-              "15% OFF",
-              "50% OFF",
-              "20% OFF",
-              "25% OFF",
-              "30% OFF",
-              "No prize"
+              "-5 %",
+              "-10 %",
+              "-15 %",
+              "-50 %",
+              "-20 %",
+              "-25 %",
+              "-30 %",
+              "Ei palkintoa"
             ],
-            "rules": "Spin to unlock a discount coupon — up to 50% off!",
-            "feedback": "How do these roulette games get you hooked? First, they give you a small prize, just enough to make you feel lucky. But the trick is that you end up spending far more than you’ve won. You feel like today’s your lucky day, so you carry on playing. That feeling of being lucky is what keeps you hooked."
+            "rules": "Pyöräytä ja avaa alennuskuponki — jopa 50 % alennus!",
+            "feedback": "Miten nämä rulettipelit koukuttavat? Ensin ne antavat pienen palkinnon, juuri sen verran että tunnet itsesi onnekkaaksi. Kikka on siinä, että lopulta kulutat paljon enemmän kuin voitit. Tuntuu että tänään on onnenpäiväsi, joten jatkat pelaamista. Juuri se onnekkuuden tunne pitää sinut koukussa."
           },
           "w3": {
-            "name": "GOLD RUSH",
+            "name": "KULTARYNTÄYS",
             "segments": [
-              "Phone",
-              "Tablet",
+              "Puhelin",
+              "Tabletti",
               "€100",
-              "Console",
-              "Headset",
-              "Laptop",
+              "Konsoli",
+              "Kuulokkeet",
+              "Kannettava",
               "€50",
-              "No prize"
+              "Ei palkintoa"
             ],
-            "rules": "Win a phone, a laptop or up to €100 — give it a spin!",
-            "feedback": "Gamification means using game elements, like points, rewards, or spinning wheels, in things that aren't really games. Apps and online shops use it to make buying feel fun, so you stay longer and spend more without noticing."
+            "rules": "Voita puhelin, kannettava tai jopa 100 € — pyöräytä!",
+            "feedback": "Pelillistäminen tarkoittaa pelien elementtien — pisteiden, palkintojen tai onnenpyörien — käyttöä asioissa, jotka eivät ole pelejä. Sovellukset ja verkkokaupat käyttävät sitä tehdäkseen ostamisesta hauskaa, jotta viivyt pidempään ja kulutat enemmän huomaamattasi."
           }
         },
         "debugSkip": "Ohita onnenpyörät (debug)"
       },
-      "solvedTitle": "Roulette Corridor cleared",
-      "solvedText": "You compared repeated spins, explained your suspicions and discovered how each wheel worked."
+      "solvedTitle": "Rulettikäytävä selvitetty",
+      "solvedText": "Vertasit toistuvia pyöräytyksiä, perustelit epäilysi ja selvitit, miten kumpikin pyörä toimi."
     },
     "influencer": {
-      "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
-      "solvedTitle": "Influencer Avenue cleared — Data Report obtained 📄",
-      "solvedText": "You labelled the ads and detected the untrustworthy products",
-      "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
+      "intro": "Neonbulevardi täynnä mainostauluja ja vaikuttajien syötteitä. Katso kiillon taakse: merkitse kaupalliset yhteistyöt ja tarkista sitten, mitä tuotteet oikeasti ovat.",
+      "solvedTitle": "Vaikuttajabulevardi selvitetty — Datakooste saatu 📄",
+      "solvedText": "Merkitsit mainokset ja tunnistit epäluotettavat tuotteet",
+      "evidenceLabel": "Julkaisut piilottivat maksettuja mainoksia, ja tuotekuva oli tekoälyn luoma ilman yhtään aitoa osumaa.",
       "stage1": {
-        "badge": "Stage 1 / 2",
-        "tag": "Content labelling",
-        "prompt": "Choose the right label for each post",
-        "openDecoder": "🔑 Open Decoder Card",
-        "verified": "Verified",
-        "viewPublication": "View Publication",
-        "followersSuffix": "followers",
-        "cluesTitle": "Disclosure clues",
-        "decodeMe": "decode me →",
-        "trayTitle": "Drag a label onto each post",
-        "dropPlaceholder": "drop label",
+        "badge": "Vaihe 1 / 2",
+        "tag": "Sisällön merkitseminen",
+        "prompt": "Valitse oikea merkintä jokaiselle julkaisulle",
+        "openDecoder": "🔑 Avaa purkukortti",
+        "verified": "Vahvistettu",
+        "viewPublication": "Katso julkaisu",
+        "followersSuffix": "seuraajaa",
+        "cluesTitle": "Vihjeet kaupallisuudesta",
+        "decodeMe": "pura minut →",
+        "trayTitle": "Vedä merkintä jokaiseen julkaisuun",
+        "dropPlaceholder": "pudota merkintä",
         "correct": "✓ {label}",
-        "wrong": "✗ wrong label",
-        "learnLabel": "Why it matters:",
-        "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
-        "hint": "Tap or drag a label chip, then drop it on the matching post.",
+        "wrong": "✗ väärä merkintä",
+        "learnLabel": "Miksi sillä on väliä:",
+        "learn": "kaupallinen sisältö on merkittävä selvästi. #mainos, lahjaksi saatu tuote, kumppanuuslinkki tai alennuskoodi kertovat kaikki mainonnasta — myös silloin kun se on puettu henkilökohtaiseksi suositukseksi.",
+        "hint": "Napauta tai vedä merkintää ja pudota se sitä vastaavaan julkaisuun.",
         "commentsTitle": "Kommentit",
         "commentCount": "{count} kommenttia",
         "likeComment": "Tykkää käyttäjän {name} kommentista",
-        "selectPost": "Select Post",
+        "selectPost": "Valitse julkaisu",
         "answerProgress": "{count} / {total}"
       },
       "labels": {
-        "paid": "PAID",
-        "collab": "COLLAB",
-        "gifted": "GIFTED",
-        "nothing": "NOTHING"
+        "paid": "MAKSETTU",
+        "collab": "YHTEISTYÖ",
+        "gifted": "LAHJA",
+        "nothing": "EI MITÄÄN"
       },
       "posts": [
         {
-          "caption": "Morning training feels so much better with GlowFuel. I’ve been using it before my workouts and I’m honestly obsessed. Use my code MIRA20 for 20% off your first order. Link in bio.",
-          "product": "Pre-workout drink",
+          "caption": "Aamutreeni tuntuu paljon paremmalta GlowFuelin kanssa. Olen käyttänyt sitä ennen treenejä ja olen rehellisesti koukussa. Käytä koodia MIRA20 ja saat 20 % alennuksen ensimmäisestä tilauksestasi. Linkki biossa.",
+          "product": "Treeniä edeltävä juoma",
           "username": "MiraMoves",
           "followers": "482K",
           "comments": [
             {
               "username": "fitpaula",
-              "text": "Omg I need to try this before my next workout!"
+              "text": "Omg, minun on pakko kokeilla tätä ennen seuraavaa treeniä!"
             },
             {
               "username": "runneralex",
-              "text": "Does the code work in all Europe?"
+              "text": "Toimiiko koodi koko Euroopassa?"
             },
             {
               "username": "glowfuel_official",
-              "text": "So happy you’re loving it 💜"
+              "text": "Ihanaa että pidät siitä 💜"
             },
             {
               "username": "martahealthy",
-              "text": "This looks like an ad but I actually want it hahaha"
+              "text": "Tämä näyttää mainokselta mutta haluan sen silti hahaha"
             },
             {
               "username": "gymtom",
-              "text": "Just ordered with your code!"
+              "text": "Tilasin juuri koodillasi!"
             }
           ],
           "clues": [
-            "Discount code “LUNA20” in the caption",
-            "Affiliate link in bio",
-            "Long-term paid brand ambassador"
+            "Alennuskoodi “LUNA20” kuvatekstissä",
+            "Kumppanuuslinkki biossa",
+            "Pitkäaikainen maksettu brändilähettiläs"
           ]
         },
         {
-          "caption": "NovaSound sent me their new AirBeat headphones to test this week. I’ll use them during tonight’s stream and share my honest thoughts after a few days. Thanks for the PR package!",
-          "product": "Wireless headphones",
+          "caption": "NovaSound lähetti minulle uudet AirBeat-kuulokkeensa testattavaksi tällä viikolla. Käytän niitä tämän illan striimissä ja kerron rehelliset ajatukseni parin päivän päästä. Kiitos PR-paketista!",
+          "product": "Langattomat kuulokkeet",
           "username": "TechWithLeo",
           "followers": "219K",
           "comments": [
             {
               "username": "streamfan88",
-              "text": "Can you test the mic quality?"
+              "text": "Voitko testata mikrofonin laadun?"
             },
             {
               "username": "novasoundaudio",
-              "text": "Can’t wait to hear your thoughts!"
+              "text": "En malta odottaa kuulla ajatuksiasi!"
             },
             {
               "username": "lucagames",
-              "text": "Gifted or sponsored?"
+              "text": "Lahja vai maksettu mainos?"
             },
             {
               "username": "TechWithLeo",
-              "text": "Gifted. I’ll still be honest in the review."
+              "text": "Lahja. Olen silti rehellinen arviossani."
             },
             {
               "username": "setupqueen",
-              "text": "Please compare them with your old headset!"
+              "text": "Vertaa niitä vanhoihin kuulokkeisiisi!"
             }
           ],
           "clues": [
-            "Tagged the brand as a creative partner",
-            "Co-designed the flavour together",
-            "“#ad” — worked jointly on the launch"
+            "Merkitsi brändin luovaksi kumppaniksi",
+            "Suunnittelivat maun yhdessä",
+            "“#mainos” — tekivät julkaisun yhdessä"
           ]
         },
         {
-          "caption": "So incredibly proud to share this collaboration with @The_Local_Stitch. We’ve been developing this limited-run handmade garment for months. Every piece is unique and supports local artisans. Use code LOCAL_CLARA for 15% off and first access to the drop. Link in bio.",
-          "product": "Handmade patchwork quilted jacket",
+          "caption": "Olen uskomattoman ylpeä saadessani jakaa tämän yhteistyön @The_Local_Stitchin kanssa. Olemme kehittäneet tätä rajoitetun erän käsintehtyä vaatetta kuukausia. Jokainen kappale on ainutlaatuinen ja tukee paikallisia käsityöläisiä. Käytä koodia LOCAL_CLARA ja saat 15 % alennuksen sekä ensipääsyn. Linkki biossa.",
+          "product": "Käsintehty tilkkutäkkitakki",
           "username": "ClaraSees",
-          "followers": "312K ",
+          "followers": "312K",
           "comments": [
             {
               "username": "artisan_wear",
-              "text": "This looks incredible, can’t wait to see the details!"
+              "text": "Näyttää uskomattomalta, en malta odottaa yksityiskohtia!"
             },
             {
               "username": "needle_ninja",
-              "text": "Is there a waitlist? I need to get one."
+              "text": "Onko jonotuslistaa? Tarvitsen yhden."
             },
             {
               "username": "glowfuel_official",
-              "text": "Obsessed with this texture! So unique 💜"
+              "text": "Olen ihastunut tähän tekstuuriin! Niin omaperäinen 💜"
             },
             {
               "username": "martahealthy",
-              "text": "Looks like an ad but I love supporting local. Ordering!"
+              "text": "Näyttää mainokselta, mutta tykkään tukea paikallisia. Tilaan!"
             },
             {
               "username": "gymtom",
-              "text": "Wait, I just ordered the other thing, can I combine? Lol."
+              "text": "Hetkinen, tilasin juuri sen toisen, voiko ne yhdistää? Lol."
             }
           ],
           "clues": [
-            "Received the product for free",
-            "No payment, no discount code",
-            "“gifted” disclosure in the corner"
+            "Sai tuotteen ilmaiseksi",
+            "Ei maksua, ei alennuskoodia",
+            "“lahja”-merkintä kulmassa"
           ]
         }
       ],
       "stage2": {
-        "stage1Cleared": "Stage 1 cleared ✓",
-        "badge": "Stage 2 / 2",
-        "tag": "Product legitimacy",
-        "prompt": "Reverse-image-search each photo, then classify what it really is with the stamps below.",
-        "runSearch": "🔍 Run reverse image search",
+        "stage1Cleared": "Vaihe 1 selvitetty ✓",
+        "badge": "Vaihe 2 / 2",
+        "tag": "Tuotteen aitous",
+        "prompt": "Tee käänteinen kuvahaku jokaisesta kuvasta ja luokittele sitten alla olevilla leimoilla, mitä se oikeasti on.",
+        "runSearch": "🔍 Tee käänteinen kuvahaku",
         "engineBar": "reverse-image-search.io",
-        "engineDrop": "Drag a product image here to reverse-search it",
-        "trayLabel": "Your saved product images ",
-        "classifyPrompt": "So this product is…",
-        "searching": "Searching the web",
-        "matchesTitle": "Web matches found",
-        "resultTitle": "Search result",
-        "errRunAll": "Run the reverse image search on every product before classifying it.",
-        "errClassifyAll": "Classify all three products first.",
-        "errWrong": "One or more classifications are wrong. Re-read what each search returned.",
-        "learnLabel": "Real tool, real habit:",
-        "learn": "a reverse image search checks whether a “handmade”, “unique” or “real” product photo is actually stolen, mass-produced across dozens of dropshipping stores, or AI-generated. No results at all can mean the image is fake.",
-        "hint": "Search first, then classify all three.",
-        "confirm": "Confirm classifications →",
-        "stampHere": "Stamp here",
-        "removeStamp": "Remove stamp"
+        "engineDrop": "Vedä tuotekuva tähän tehdäksesi käänteisen haun",
+        "trayLabel": "Tallentamasi tuotekuvat",
+        "classifyPrompt": "Eli tämä tuote on…",
+        "searching": "Haetaan verkosta",
+        "matchesTitle": "Löydetyt osumat",
+        "resultTitle": "Hakutulos",
+        "errRunAll": "Tee käänteinen kuvahaku jokaisesta tuotteesta ennen luokittelua.",
+        "errClassifyAll": "Luokittele ensin kaikki kolme tuotetta.",
+        "errWrong": "Yksi tai useampi luokittelu on väärin. Lue uudelleen, mitä kukin haku palautti.",
+        "learnLabel": "Oikea työkalu, oikea tapa:",
+        "learn": "käänteinen kuvahaku kertoo, onko ”käsintehdyn”, ”ainutlaatuisen” tai ”aidon” tuotteen kuva oikeasti varastettu, massatuotettu kymmenissä dropshipping-kaupoissa tai tekoälyn luoma. Jos osumia ei löydy lainkaan, kuva voi olla väärennös.",
+        "hint": "Hae ensin, luokittele sitten kaikki kolme.",
+        "confirm": "Vahvista luokittelut →",
+        "stampHere": "Leimaa tähän",
+        "removeStamp": "Poista leima"
       },
       "products": [
         {
-          "name": "Handmade ceramic mug",
+          "name": "Käsintehty keramiikkamuki",
           "art": {
             "price": "18,99 €",
-            "label": "Handmade artisan"
+            "label": "Käsityöläisen tekemä"
           },
           "matches": [
             {
               "site": "aliluxe-deals.shop",
-              "title": "Ceramic Coffee Mug — bulk 500 pieces",
+              "title": "Keraaminen kahvimuki — 500 kpl erä",
               "price": "€0,84*"
             },
             {
               "site": "dropmart.store",
-              "title": "“Handmade” Mug · wholesale lot",
+              "title": "“Käsintehty” muki · tukkuerä",
               "price": "€1.65*"
             },
             {
               "site": "quickship-goods.net",
-              "title": "Rustic Ceramic Cup — Wholesale Price",
+              "title": "Rustiikki keramiikkakuppi — tukkuhinta",
               "price": "-"
             },
             {
               "site": "artisanhome.com",
-              "title": "Artisan mug, made with love ♥︎ Support artisans!",
+              "title": "Käsityömuki, tehty rakkaudella ♥︎ Tue käsityöläisiä!",
               "price": "-"
             },
             {
               "site": "homestylewholesale.net",
-              "title": "Ceramic Mug Model CM-204 — $0.95/unit",
+              "title": "Keramiikkamuki malli CM-204 — 0,95 €/kpl",
               "price": "€0.95*"
             },
             {
               "site": "mega-bazaar.shop",
-              "title": "Cheap ceramic mugs — €1.90 / unit",
+              "title": "Halvat keramiikkamukit — 1,90 € / kpl",
               "price": "€1,90*"
             }
           ],
-          "result": "Over 1,240 listings show the exact same product. ",
-          "hint": "The product is massproduced and sold as handmade."
+          "result": "Yli 1 240 ilmoitusta näyttää täsmälleen saman tuotteen.",
+          "hint": "Tuote on massatuotettu ja myydään käsintehtynä."
         },
         {
-          "name": "NovaPad X promo shot",
+          "name": "NovaPad X -mainoskuva",
           "art": {
             "price": "49€",
-            "urgency": "Be quick! Offer ends in limited time!",
+            "urgency": "Kiirehdi! Tarjous päättyy pian!",
             "oldPrice": "600€",
-            "fake": "FAKE!!!"
+            "fake": "VÄÄRENNÖS!!!"
           },
           "matches": [
             {
               "site": "fullfact.org",
-              "title": "NovaPad X: Is This Viral Tablet Deal Too Good to Be True?"
+              "title": "NovaPad X: onko tämä viraali tablettitarjous liian hyvä ollakseen totta?"
             },
             {
               "site": "promptgallery.art",
-              "title": "Sci-fi tablet — AI artwork"
+              "title": "Scifi-tabletti — tekoälyn luoma kuva"
             },
             {
               "site": "lunawear.com-official.shop/",
-              "title": "Limited Time Offer - NovaPad Sponsored By LunaWears For Only $49"
+              "title": "Rajoitettu tarjous - NovaPad LunaWearsin sponsoroimana vain 49 €"
             },
             {
               "site": "fakedetector-ads-news.org",
-              "title": "IT'S FAKE! - Be careful with the NovaPad X supposedly sponsored by LunaWears"
+              "title": "SE ON VÄÄRENNÖS! - Varo NovaPad X:ää, jota LunaWears muka sponsoroi"
             },
             {
               "site": "mediamarket.shop",
-              "title": "Sumsang Tablet - Last generation tablets for €619,99 ",
+              "title": "Sumsang-tabletti - Uusimman sukupolven tabletit hintaan 619,99 €",
               "price": "€619,99*"
             },
             {
               "site": "reconditioning-tech.com",
-              "title": "Tablets, Laptops and Phones / Sumsang 8",
+              "title": "Tabletit, kannettavat ja puhelimet / Sumsang 8",
               "price": "€610,15*"
             }
           ],
-          "result": "Image traced to AI generators. Disinformation agencies uploaded this image.",
+          "result": "Kuva jäljitettiin tekoälygeneraattoreihin. Disinformaatiotoimistot lataisivat tämän kuvan verkkoon.",
           "hint": "3 retail listings with great difference in prices."
         },
         {
-          "name": "Bluetooth Speaker B766",
+          "name": "Bluetooth-kaiutin B766",
           "art": {
             "price": "89,95€"
           },
           "matches": [
             {
               "site": "technmore.com",
-              "title": "Bluetooth Speaker B766 - Tech & More",
+              "title": "Bluetooth-kaiutin B766 - Tech & More",
               "price": "€89,95*"
             },
             {
               "site": "soundgear.net",
-              "title": "Best Speakers Better Prices",
+              "title": "Parhaat kaiuttimet, paremmat hinnat",
               "price": "€85,99*"
             },
             {
               "site": "everydayelectronics.com",
-              "title": "Indoor/Outdoor Speakers / B766 - 89,95€ + shipping",
+              "title": "Sisä-/ulkokaiuttimet / B766 - 89,95 € + toimitus",
               "price": "-"
             },
             {
               "site": "soundhub.com",
-              "title": "Speaker B766, Bluetooth, 12hr battery",
+              "title": "Kaiutin B766, Bluetooth, 12 h akku",
               "price": "€95,45*"
             }
           ],
-          "result": "At least 4 stores have this product",
-          "hint": "Prices are similar, product images belong to official stores"
+          "result": "Vähintään 4 kauppaa myy tätä tuotetta",
+          "hint": "Hinnat ovat samankaltaisia ja tuotekuvat kuuluvat virallisille kaupoille"
         }
       ],
       "classify": {
-        "mass": "Misleading Content",
-        "ai": "AI-generated",
-        "verified": "Verified"
+        "mass": "Harhaanjohtava sisältö",
+        "ai": "Tekoälyn luoma",
+        "verified": "Vahvistettu"
       },
       "decoder": {
-        "title": "🔑 Emoji Decoding Card",
-        "noCard": "You would normally have earned this card back in Link District — here it is anyway.",
-        "help": "Match each emoji on a sticky-note to its letter to read the hidden label.",
-        "noSelection": "No post selected",
-        "erase": "Delete last letter"
+        "title": "🔑 Emojien purkukortti",
+        "noCard": "Normaalisti olisit ansainnut tämän kortin jo Linkkikaupunginosassa — tässä se joka tapauksessa on.",
+        "help": "Yhdistä jokainen muistilapun emoji sen kirjaimeen lukeaksesi piilotetun merkinnän.",
+        "noSelection": "Ei valittua julkaisua",
+        "erase": "Poista viimeinen kirjain"
       },
       "explain": {
-        "title": "Besides the ad — what about the product?",
-        "body": "Is the product what they claim? A reverse image search helps you check: you search with a photo, and it finds that exact picture or similar ones that appear online, so you can verify whether the image is really what the seller claims.",
-        "instructions": "First reverse search the image. Then, look at the results to judge the product's authenticity.",
-        "useShop": "Love a piece of clothing you saw in a post? Reverse-search the photo to find where you can actually buy it.",
-        "useVerify": "Not sure an influencer's product is genuine? Reverse-search it to see if it's really unique — or the same mass-produced item everyone's selling.",
-        "searchLabel": "reverse image search",
-        "searching": "Searching the web…",
-        "dragHint": "↓ Drag the seller's photo into a reverse image search",
-        "queryCaption": "Seller says: “one-of-a-kind handmade jacket” · $180",
-        "resultsLabel": "Same photo found on:",
-        "takeawayLabel": "The catch:",
-        "takeaway": "That “unique handmade” jacket is the same mass-produced item selling for $9–14 on dozens of dropshipping shops. The photo gave it away.",
-        "continue": "Now try it yourself →"
+        "title": "Mainoksen lisäksi — entä itse tuote?",
+        "body": "Onko tuote sitä, mitä väitetään? Käänteinen kuvahaku auttaa tarkistamaan: haet kuvalla, ja se löytää juuri sen kuvan tai samankaltaisia verkosta, jolloin voit varmistaa onko kuva oikeasti sitä mitä myyjä väittää.",
+        "instructions": "Tee ensin käänteinen kuvahaku. Arvioi sitten tulosten perusteella tuotteen aitous.",
+        "useShop": "Ihastuitko johonkin vaatteeseen julkaisussa? Tee käänteinen kuvahaku löytääksesi, mistä sen oikeasti voi ostaa.",
+        "useVerify": "Etkö ole varma, onko vaikuttajan tuote aito? Tee käänteinen haku nähdäksesi, onko se oikeasti ainutlaatuinen — vai sama massatuote jota kaikki myyvät.",
+        "searchLabel": "käänteinen kuvahaku",
+        "searching": "Haetaan verkosta…",
+        "dragHint": "↓ Vedä myyjän kuva käänteiseen kuvahakuun",
+        "queryCaption": "Myyjä sanoo: ”ainutlaatuinen käsintehty takki” · 180 €",
+        "resultsLabel": "Sama kuva löytyi täältä:",
+        "takeawayLabel": "Koukku:",
+        "takeaway": "Tuo ”ainutlaatuinen käsintehty” takki on sama massatuote, jota myydään 9–14 eurolla kymmenissä dropshipping-kaupoissa. Kuva paljasti sen.",
+        "continue": "Kokeile nyt itse →"
       },
       "labelFeedback": {
-        "title": "Sponsored posts must be labeled",
-        "intro": "When a creator or an influencer is paid, partnered with, or gifted a product, they have to disclose it — clearly and up front. Here's how to tell them apart:",
-        "paidDesc": "The creator is paid by the brand to post about it.",
-        "paidExample": "Tell-tale signs: an affiliate link, or a personal discount code like “LUNA20”.",
-        "collabDesc": "A creative partnership, made together with the brand.",
-        "collabExample": "Tell-tale signs: a “paid partnership” tag, or #ad on a co-created post.",
-        "giftedDesc": "The creator was sent the product for free.",
-        "giftedExample": "Tell-tale signs: “gifted”, or “thanks @brand for sending this” — a free item, no payment.",
-        "continue": "Got it →"
+        "title": "Kaupalliset julkaisut on merkittävä",
+        "intro": "Kun tekijälle tai vaikuttajalle maksetaan, hän tekee kumppanuutta tai saa tuotteen lahjaksi, se on kerrottava selvästi ja etukäteen. Näin erotat ne toisistaan:",
+        "paidDesc": "Brändi maksaa tekijälle julkaisusta.",
+        "paidExample": "Paljastavat merkit: kumppanuuslinkki tai henkilökohtainen alennuskoodi kuten “LUNA20”.",
+        "collabDesc": "Luova kumppanuus, tehty yhdessä brändin kanssa.",
+        "collabExample": "Paljastavat merkit: “maksettu kumppanuus” -merkintä tai #mainos yhdessä tehdyssä julkaisussa.",
+        "giftedDesc": "Tekijälle lähetettiin tuote ilmaiseksi.",
+        "giftedExample": "Paljastavat merkit: “lahja” tai “kiitos @brändi tämän lähettämisestä” — ilmainen tuote, ei maksua.",
+        "continue": "Selvä →"
       }
     },
     "algorithm": {
-      "intro": "A humming mainframe crunches data into targeted ads. Get inside, then teach it to profile a person.",
-      "solvedTitle": "Algorithm Control Room cracked · Evidence logged 🧠",
-      "solvedText": "You watched the algorithm turn {friend}'s age, interests and possible insecurities into a single ad. That is not coincidence — it the result of his advertisement profile",
-      "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
+      "intro": "Huriseva keskuskone jauhaa datasta kohdennettuja mainoksia. Pääse sisään ja opeta se profiloimaan ihminen.",
+      "solvedTitle": "Algoritmin valvomo murrettu · Todiste kirjattu 🧠",
+      "solvedText": "Näit, miten algoritmi muutti {friend_genitive} iän, kiinnostukset ja mahdolliset epävarmuudet yhdeksi mainokseksi. Se ei ole sattumaa — se on hänen mainosprofiilinsa tulos.",
+      "evidence": "Mainoksen valitsi algoritmi {friend_genitive} iän, kiinnostusten ja epävarmuuksien perusteella.",
       "unlock": {
-        "badge": "ACCESS · Algorithm Control Room",
-        "prompt": "Enter the six-digit code.",
-        "error": "Access denied — that code is wrong.",
-        "submit": "Unlock →"
+        "badge": "PÄÄSY · Algoritmin valvomo",
+        "prompt": "Syötä kuusinumeroinen koodi.",
+        "error": "Pääsy evätty — koodi on väärä.",
+        "submit": "Avaa →"
       },
       "choice": {
-        "badge": "System question · privacy trade-off",
-        "prompt": "Which future do you want?",
-        "optionATag": "Option A",
-        "optionABefore": "See",
-        "optionABold": "fewer, personalised",
-        "optionAAfter": "ads — but your personal data is collected.",
-        "optionBTag": "Option B",
-        "optionBBefore": "See",
-        "optionBBold": "many more",
-        "optionBAfter": "ads and ad-breaks — but far less of your data is collected.",
-        "wrongTitle": "Wrong answer.",
-        "wrongText": "You just traded your privacy for convenience. “Personalised” is the algorithm — fewer ads means it is collecting and profiling more of your data to pick them.",
-        "goodTitle": "Good answer.",
-        "goodText": "More ads is annoying, but you kept your data and partly slipped the personalisation algorithm. Convenience is the bait it uses to make profiling feel like a favour.",
-        "afterNote": "Either way, the machine still tries to profile everyone. Let’s see how.",
-        "continue": "Enter the targeting engine →"
+        "badge": "Järjestelmän kysymys · yksityisyyden vaihtokauppa",
+        "prompt": "Minkä tulevaisuuden valitset?",
+        "optionATag": "Vaihtoehto A",
+        "optionABefore": "Näet",
+        "optionABold": "vähemmän, personoituja",
+        "optionAAfter": "mainoksia — mutta henkilötietojasi kerätään.",
+        "optionBTag": "Vaihtoehto B",
+        "optionBBefore": "Näet",
+        "optionBBold": "paljon enemmän",
+        "optionBAfter": "mainoksia ja mainostaukoja — mutta tietojasi kerätään paljon vähemmän.",
+        "wrongTitle": "Väärä vastaus.",
+        "wrongText": "Vaihdoit juuri yksityisyytesi mukavuuteen. ”Personoitu” tarkoittaa algoritmia — vähemmän mainoksia tarkoittaa, että se kerää ja profiloi enemmän tietojasi valitakseen ne.",
+        "goodTitle": "Hyvä vastaus.",
+        "goodText": "Mainosten määrä ärsyttää, mutta säilytit tietosi ja väistit osittain personointialgoritmin. Mukavuus on se syötti, jolla profilointi saadaan tuntumaan palvelukselta.",
+        "afterNote": "Joka tapauksessa kone yrittää yhä profiloida kaikki. Katsotaan miten.",
+        "continue": "Siirry kohdennusmoottoriin →"
       },
       "equations": {
-        "feedbackTitle": "Equation solved: why this ad?",
-        "badge": "Targeting engine · solve every equation",
-        "prompt": "Fill the missing slot to complete each person's ad.",
-        "adFlag": "AD ACTIVATED",
-        "slotPlaceholder": "＋ drop tile",
-        "stepBadge": "Equation {n} / {total}",
-        "profileBadge": "Profile complete",
-        "dragHint": "Drag the missing factor into the equation — the one that fits this exact person.",
-        "wrongHint": "That factor doesn’t fit this person. Look at what the ad is really selling.",
-        "navTerminal": "Ad Terminal",
-        "terminalTitle": "AD-OUTPUT TERMINAL",
-        "profileTitle": "▚ PROFILE RECONSTRUCTED ▚",
-        "profileP1": "The engine cross-referenced",
-        "profileB1": "{friend}’s age",
-        "profileP2": "(a teenager),",
-        "profileB2": "interests",
-        "profileP3": "(gaming, new tech and searches for the NovaPad X) and",
-        "profileB3": "insecurities",
-        "profileP4": " (fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
-        "logEvidence": "Log this evidence ✓",
-        "finalLessonTitle": "What you learned",
-        "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you.",
-        "nextBtn": "Next equation →",
-        "lastBtn": "See {friend}’s profile →"
+        "feedbackTitle": "Yhtälö ratkaistu: miksi juuri tämä mainos?",
+        "badge": "Kohdennusmoottori · ratkaise jokainen yhtälö",
+        "prompt": "Täytä puuttuva kohta saadaksesi kunkin henkilön mainoksen valmiiksi.",
+        "adFlag": "MAINOS AKTIVOITU",
+        "slotPlaceholder": "＋ pudota palanen",
+        "stepBadge": "Yhtälö {n} / {total}",
+        "profileBadge": "Profiili valmis",
+        "dragHint": "Vedä puuttuva tekijä yhtälöön — se, joka sopii juuri tähän henkilöön.",
+        "wrongHint": "Tuo tekijä ei sovi tähän henkilöön. Katso, mitä mainos oikeasti myy.",
+        "navTerminal": "Mainospääte",
+        "terminalTitle": "MAINOSTEN TULOSTUSPÄÄTE",
+        "profileTitle": "▚ PROFIILI KOOTTU ▚",
+        "profileP1": "Moottori ristiinvertasi",
+        "profileB1": "{friend_genitive} iän",
+        "profileP2": "(teini-ikäinen),",
+        "profileB2": "kiinnostukset",
+        "profileP3": "(pelaaminen, uusi teknologia ja NovaPad X -haut) ja",
+        "profileB3": "epävarmuudet",
+        "profileP4": "(halu kuulua joukkoon, pelko menettää tarjous). Ulos tuli täydellisesti kohdennettu mainos — juuri se NovaPad X:n ”-90 %” -tarjous. Ei ollut sattumaa, että {friend} näki sen.",
+        "logEvidence": "Kirjaa tämä todiste ✓",
+        "finalLessonTitle": "Mitä opit",
+        "finalLesson": "Personoidut mainokset yhdistävät toimintasi, kiinnostuksesi ja epävarmuutesi kohdistaakseen juuri sinuun.",
+        "nextBtn": "Seuraava yhtälö →",
+        "lastBtn": "Katso {friend_genitive} profiili →"
       },
       "cols": [
-        "Demographic",
-        "Follows / likes",
-        "Insecurities"
+        "Demografia",
+        "Seuraa / tykkää",
+        "Epävarmuudet"
       ],
       "rows": {
         "r1": {
-          "ad": "Miracle skincare cream",
+          "ad": "Ihmeihonhoitovoide",
           "slots": {
-            "0": "Girl, 13–17",
-            "1": "Follows beauty influencers"
+            "0": "Tyttö, 13–17",
+            "1": "Seuraa kauneusvaikuttajia"
           },
-          "feedbackLesson": "The algorithm combines user's age, followed accounts, likes, and time spent watching skincare videos to show her targeted ads that encourage purchases."
+          "feedbackLesson": "Algoritmi yhdistää käyttäjän iän, seuratut tilit, tykkäykset ja ihonhoitovideoiden katseluajan näyttääkseen hänelle kohdennettuja mainoksia, jotka kannustavat ostamaan."
         },
         "r2": {
-          "ad": "Muscle-gain supplement",
+          "ad": "Lihasmassalisäravinne",
           "slots": {
-            "1": "Follows fitness influencers",
-            "2": "Insecure about being skinny"
+            "1": "Seuraa fitnessvaikuttajia",
+            "2": "Epävarma laihuudestaan"
           },
-          "feedbackLesson": "A teen boy follows fitness pages and likes posts about building muscle. Because of this, he gets an ad for a muscle supplement. Ad systems look at what people do online and show ads they are likely to click, even if the product isn’t something they really need"
+          "feedbackLesson": "Teini-ikäinen poika seuraa fitness-sivuja ja tykkää lihasmassan kasvattamista käsittelevistä julkaisuista. Siksi hän saa mainoksen lihaslisäravinteesta. Mainosjärjestelmät katsovat, mitä ihmiset tekevät verkossa, ja näyttävät mainoksia joita he todennäköisesti klikkaavat — vaikka tuote ei olisi sellainen jota he oikeasti tarvitsevat."
         },
         "r3": {
-          "ad": "Baldness cream",
+          "ad": "Kaljuuntumisvoide",
           "slots": {
-            "0": "Man, 25–35",
-            "1": "Follows tech channels"
+            "0": "Mies, 25–35",
+            "1": "Seuraa teknologiakanavia"
           },
-          "feedbackLesson": "Clicks on hair-loss products or repeated views of related content can suggest that concern. An algorithm can use these actions to show someone hair-loss ads that offer a supposed solution to their worry."
+          "feedbackLesson": "Hiustenlähtötuotteiden klikkaukset tai aiheeseen liittyvän sisällön toistuva katselu voivat paljastaa tuon huolen. Algoritmi voi käyttää näitä tekoja näyttääkseen hiustenlähtömainoksia, jotka lupaavat muka ratkaisun huoleen."
         },
         "r4": {
-          "ad": "Weight-loss pills",
+          "ad": "Laihdutuspillerit",
           "slots": {
-            "0": "Woman, 30–45",
-            "2": "Insecure about her weight"
+            "0": "Nainen, 30–45",
+            "2": "Epävarma painostaan"
           },
-          "feedbackLesson": "Following diet pages, liking weight-loss posts and watching related videos feeds an advertising profile. The algorithm uses those traces to select a matching ad. "
+          "feedbackLesson": "Dieettisivujen seuraaminen, laihdutusjulkaisuista tykkääminen ja aiheeseen liittyvien videoiden katselu ruokkivat mainosprofiilia. Algoritmi käyttää näitä jälkiä valitakseen sopivan mainoksen."
         }
       },
       "tiles": {
-        "t-skin": "Insecure about her skin",
-        "t-boy": "Boy, 15–25",
-        "t-bald": "Worried about going bald",
-        "t-diet": "Follows diet & lifestyle pages",
-        "t-retiree": "Retired, 65+",
-        "t-tween": "Kid, 8–12",
-        "t-gran": "Woman, 60+",
-        "t-dad": "Dad, in his 40s",
-        "t-pets": "Follows pet accounts",
-        "t-gamer": "Follows gaming channels",
-        "t-cook": "Follows cooking pages",
-        "t-travel": "Follows travel bloggers",
-        "t-money": "Anxious about money",
-        "t-lonely": "Afraid of being left out",
-        "t-height": "Self-conscious about height",
-        "t-teeth": "Worried about their teeth"
+        "t-skin": "Epävarma ihostaan",
+        "t-boy": "Poika, 15–25",
+        "t-bald": "Huolissaan kaljuuntumisesta",
+        "t-diet": "Seuraa dieetti- ja elämäntapasivuja",
+        "t-retiree": "Eläkeläinen, 65+",
+        "t-tween": "Lapsi, 8–12",
+        "t-gran": "Nainen, 60+",
+        "t-dad": "Isä, nelikymppinen",
+        "t-pets": "Seuraa lemmikkitilejä",
+        "t-gamer": "Seuraa pelikanavia",
+        "t-cook": "Seuraa ruoanlaittosivuja",
+        "t-travel": "Seuraa matkabloggaajia",
+        "t-money": "Ahdistunut rahasta",
+        "t-lonely": "Pelkää jäävänsä ulkopuolelle",
+        "t-height": "Arka pituudestaan",
+        "t-teeth": "Huolissaan hampaistaan"
       },
       "report": {
-        "modalTitle": "Data Report · Profile: {friend}",
+        "modalTitle": "Datakooste · Profiili: {friend}",
         "kicker": "ALGORITMIN VALVONTAHUONE",
-        "title": "Targeted Ad Profile Log: {friend}",
-        "subject": "Online activity · Subject: {friend}",
+        "title": "Kohdennetun mainosprofiilin loki: {friend}",
+        "subject": "Verkkotoiminta · Kohde: {friend}",
         "instruction": "Tarkastele alla olevaa toimintaa selvittääksesi, miten algoritmi oppi.",
         "columns": {
           "time": "AIKA",
@@ -1254,146 +1300,146 @@ export default {
         ]
       },
       "door": {
-        "badge": "Control Room · Sealed",
+        "badge": "Valvomo · Sinetöity",
         "prompt": "The Algorithm Control Room is locked. Find the six highlighted digits, then use the keypad to enter the code.",
-        "action": "Use the keypad →"
+        "action": "Käytä näppäimistöä →"
       }
     },
     "ads": {
-      "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
-      "solvedTitle": "Corridor cleared — you read the fine print",
-      "solvedText": "You’ve made it to the final round! These ads were designed to make you feel really happy and lucky so you'd fall for the scam. Be wary of any content that triggers a very strong emotional reaction in you.",
-      "pickup": "You pick up the Truth Flashlight 🔦",
-      "torchCharging": "🔦 Charging…",
-      "torchOn": "🔦 Flashlight ON",
-      "torchOff": "🔦 Truth Flashlight",
-      "hintCharging": "The cheap torch flickers awake — bait ads love to waste a moment of your time…",
-      "hintOn": "Sweep the beam across the dark wall — each poster lights up and reveals the truth.",
-      "hintOff": "Switch it on, then sweep the beam over the posters to reveal what they really say.",
-      "glossyCta": "TAP TO CLAIM →",
-      "fineprint": "* terms & conditions apply",
-      "truthTag": "THE TRUTH",
-      "codeFragment": "hidden letter:",
-      "shineRevealed": "✓ Revealed",
-      "shineReady": "🔦 Shine light here",
-      "shineOff": "Turn on the light first",
-      "codeAssembled": "ACCESS CODE assembled:",
+      "intro": "Neonvalaistu huoltotunneli, jonka seinillä on neljä hehkuvaa mainosjulistetta. Ne näyttävät anteliailta. Ne eivät ole.",
+      "solvedTitle": "Käytävä selvitetty — luit pienen präntin",
+      "solvedText": "Pääsit viimeiselle kierrokselle! Nämä mainokset oli suunniteltu saamaan sinut tuntemaan olosi hyvin onnelliseksi ja onnekkaaksi, jotta lankeaisit huijaukseen. Suhtaudu varauksella kaikkeen sisältöön, joka herättää sinussa hyvin voimakkaan tunnereaktion.",
+      "pickup": "Poimit Totuuslampun 🔦",
+      "torchCharging": "🔦 Latautuu…",
+      "torchOn": "🔦 Lamppu PÄÄLLÄ",
+      "torchOff": "🔦 Totuuslamppu",
+      "hintCharging": "Halpa lamppu herää välkkyen — syöttimainokset rakastavat hetkesi haaskaamista…",
+      "hintOn": "Pyyhkäise valokeilalla pimeää seinää — jokainen juliste syttyy ja paljastaa totuuden.",
+      "hintOff": "Sytytä se ja pyyhkäise sitten valokeilalla julisteita paljastaaksesi, mitä ne oikeasti sanovat.",
+      "glossyCta": "NAPAUTA JA LUNASTA →",
+      "fineprint": "* ehdot voimassa",
+      "truthTag": "TOTUUS",
+      "codeFragment": "piilotettu kirjain:",
+      "shineRevealed": "✓ Paljastettu",
+      "shineReady": "🔦 Valaise tähän",
+      "shineOff": "Sytytä ensin lamppu",
+      "codeAssembled": "PÄÄSYKOODI koottu:",
       "codeLetters": "S-A-V-E",
-      "exitLabel": "Enter the 4-letter code to open the exit",
+      "exitLabel": "Syötä 4-kirjaiminen koodi avataksesi uloskäynnin",
       "exitPlaceholder": "????",
-      "exitButton": "Open exit →",
-      "errCode": "That is not the code. Illuminate all four posters and read the letters hiding in the fine print.",
-      "learnLabel": "Read the fine print.",
-      "learn": "Ads shouting “free”, “you won” or “$0 today” usually hide the real cost in tiny print below — always read what you are actually agreeing to before you tap.",
-      "evidence": "Behind the “free trial” ad was a hidden €59/month auto-renewing subscription.",
+      "exitButton": "Avaa uloskäynti →",
+      "errCode": "Tuo ei ole koodi. Valaise kaikki neljä julistetta ja lue pieneen tekstiin piilotetut kirjaimet.",
+      "learnLabel": "Lue pienellä kirjoitettu teksti.",
+      "learn": "Mainokset, jotka huutavat ”ilmainen”, ”voitit” tai ”0 € tänään”, piilottavat todellisen hinnan yleensä pienellä tekstillä alareunaan — lue aina, mihin olet oikeasti sitoutumassa ennen kuin napautat.",
+      "evidence": "”Ilmaisen kokeilun” mainoksen takana oli piilotettu 59 €/kk automaattisesti uusiutuva tilaus.",
       "posters": [
         {
-          "glossyTitle": "FREE 30-DAY TRIAL!",
-          "glossyBody": "Try NovaCloud Premium — $0 today!",
-          "glossyBadge": "$0",
-          "truth": "After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.",
-          "truthTitle": "😩 Automatic renovation",
+          "glossyTitle": "ILMAINEN 30 PÄIVÄN KOKEILU!",
+          "glossyBody": "Kokeile NovaCloud Premiumia — 0 € tänään!",
+          "glossyBadge": "€0",
+          "truth": "Kuukauden jälkeen se uusiutuu automaattisesti hintaan 59 €/kk. Peruminen vaatii soittamisen puhelinnumeroon, joka on auki 2 tuntia viikossa.",
+          "truthTitle": "😩 Automaattinen uusiutuminen",
           "letter": "A"
         },
         {
-          "glossyTitle": "🎉 CONGRATULATIONS!",
-          "glossyBody": "You've WON a €1,000 gift card! Tap to claim.",
+          "glossyTitle": "🎉 ONNEKSI OLKOON!",
+          "glossyBody": "VOITIT 1 000 € lahjakortin! Napauta lunastaaksesi.",
           "glossyBadge": "€1,000",
-          "truth": "This 'prize' harvests your personal data and card details.",
-          "truthTitle": "👎🏼 You did NOT win anything",
+          "truth": "Tämä ”palkinto” kerää henkilötietosi ja korttitietosi.",
+          "truthTitle": "👎🏼 Et voittanut MITÄÄN",
           "letter": "S"
         },
         {
-          "glossyTitle": "📈 GET RICH QUICK!",
-          "glossyBody": "Turn €100 into €10,000 in one week — guaranteed!",
+          "glossyTitle": "📈 RIKASTU NOPEASTI!",
+          "glossyBody": "Muuta 100 € summaksi 10 000 € viikossa — takuulla!",
           "glossyBadge": "×100",
-          "truth": "Every euro you “invest” is gone, and the sky-high “returns” on screen are fake.",
+          "truth": "Jokainen ”sijoittamasi” euro katoaa, ja ruudulla näkyvät huikeat ”tuotot” ovat valheellisia.",
           "truthTitle": "A pure scam",
           "letter": "E"
         },
         {
-          "glossyTitle": "🛡️ VIRUS DETECTED!",
-          "glossyBody": "Your device may be at risk — download SecureNow FREE!",
-          "glossyBadge": "FREE",
-          "truth": "The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad.",
-          "truthTitle": "🚨 You didn´t have a virus... now you do",
+          "glossyTitle": "🛡️ VIRUS HAVAITTU!",
+          "glossyBody": "Laitteesi voi olla vaarassa — lataa SecureNow ILMAISEKSI!",
+          "glossyBadge": "ILMAINEN",
+          "truth": "Varoitus on väärennös ja ”virustorjunta” ON haittaohjelma. Aidot hälytykset eivät koskaan tule mainoksesta.",
+          "truthTitle": "🚨 Sinulla ei ollut virusta... nyt on",
           "letter": "V"
         }
       ]
     },
     "persuasion": {
-      "intro": "A gallery of glossy ads. Each one leans on a single persuasion trick — name it by framing the poster.",
-      "solvedTitle": "Persuasion Lab cleared — password FOOLED",
-      "solvedText": "Once you can name the trick — FOMO, urgency, a borrowed celebrity — it stops working on you. That is the whole defence.",
+      "intro": "Galleria kiiltäviä mainoksia. Jokainen nojaa yhteen suostuttelun keinoon — nimeä se kehystämällä juliste.",
+      "solvedTitle": "Suostuttelulaboratorio selvitetty — salasana FOOLED",
+      "solvedText": "Heti kun osaat nimetä kikan — FOMO, kiire, lainattu julkkis — se lakkaa tehoamasta sinuun. Siinä on koko puolustus.",
       "learn": {
-        "lead": "Spot the trick.",
-        "body": "Ads persuade with named techniques: FOMO (fear of missing out), social proof (\"everyone's buying it\"), exaggeration, influencer endorsement, emotional appeal and urgency. Real campaigns often stack several of these at once to slip past your judgement."
+        "lead": "Tunnista kikka.",
+        "body": "Mainokset suostuttelevat nimetyillä keinoilla: FOMO (pelko jäädä paitsi), sosiaalinen todiste (”kaikki ostavat sen”), liioittelu, vaikuttajan suositus, tunteisiin vetoaminen ja kiire. Oikeat kampanjat pinoavat usein useita näistä päällekkäin ohittaakseen harkintasi."
       },
-      "trayLabel": "TECHNIQUE FRAMES",
+      "trayLabel": "KEINOKEHYKSET",
       "hints": {
-        "start": "Drag and drop each technique frame onto the matching poster.",
-        "allDone": "All six framed — the letters spell a password. Click the computer to type it in.",
+        "start": "Vedä ja pudota jokainen keinokehys sitä vastaavan julisteen päälle.",
+        "allDone": "Kaikki kuusi kehystetty — kirjaimet muodostavat salasanan. Klikkaa tietokonetta kirjoittaaksesi sen.",
         "correct": "Correct — a letter surfaced. Keep framing the rest.",
-        "wrong": "That technique does not match this ad. Frame returned — try another.",
-        "wrongSpecific": "Not quite. Look again: {clue}"
+        "wrong": "Tuo keino ei sovi tähän mainokseen. Kehys palautettu — kokeile toista.",
+        "wrongSpecific": "Ei aivan. Katso uudelleen: {clue}"
       },
-      "dragHint": "Drag onto its poster",
-      "count": "Framed {matched} / {total}",
+      "dragHint": "Vedä sen julisteen päälle",
+      "count": "Kehystetty {matched} / {total}",
       "posters": [
         {
-          "headline": "ONLY 3 LEFT IN STOCK!",
-          "sub": "Don't miss out!",
+          "headline": "VAIN 3 JÄLJELLÄ VARASTOSSA!",
+          "sub": "Älä jää paitsi!",
           "letter": "F"
         },
         {
-          "headline": "Over 2 MILLION people already bought this!",
-          "sub": "Join the crowd.",
+          "headline": "Yli 2 MILJOONAA ihmistä on jo ostanut tämän!",
+          "sub": "Liity joukkoon.",
           "letter": "O"
         },
         {
-          "headline": "Lose 10kg in just 3 DAYS — guaranteed miracle!",
-          "sub": "You'll be surprised.",
+          "headline": "Pudota 10 kg vain 3 PÄIVÄSSÄ — taattu ihme!",
+          "sub": "Tulet yllättymään.",
           "letter": "O"
         },
         {
-          "headline": "As seen on @StarCeleb's page — she LOVES it!",
-          "sub": "#ad",
+          "headline": "Nähty @StarCelebin sivulla — hän RAKASTAA sitä!",
+          "sub": "#mainos",
           "letter": "L"
         },
         {
-          "headline": "Don't let your family down.",
-          "sub": "They deserve better.",
+          "headline": "Älä tuota pettymystä perheellesi.",
+          "sub": "He ansaitsevat parempaa.",
           "letter": "E"
         },
         {
-          "headline": "OFFER ENDS IN 04:59 — buy NOW before it's gone!",
-          "sub": "Tick, tock…",
+          "headline": "TARJOUS PÄÄTTYY 04:59 — osta NYT ennen kuin se loppuu!",
+          "sub": "Tik, tak…",
           "letter": "D"
         }
       ],
       "techniques": {
         "fomo": "FOMO",
-        "social": "Social Proof",
-        "exagg": "Exaggeration",
-        "influencer": "Influencer Endorsement",
-        "emotional": "Emotional Appeal",
-        "urgency": "Urgency"
+        "social": "Sosiaalinen todiste",
+        "exagg": "Liioittelu",
+        "influencer": "Vaikuttajan suositus",
+        "emotional": "Tunteisiin vetoaminen",
+        "urgency": "Kiire"
       },
       "passwordLearn": {
-        "lead": "Named and disarmed.",
-        "body": "Six posters, six tricks. The letters they hid, read left to right, are the exit password — proof you saw through every one."
+        "lead": "Nimetty ja riisuttu aseista.",
+        "body": "Kuusi julistetta, kuusi kikkaa. Niiden piilottamat kirjaimet vasemmalta oikealle luettuna ovat uloskäynnin salasana — todiste siitä, että näit jokaisen läpi."
       },
-      "openComputer": "Use the computer →",
-      "closeComputer": "Close the screen",
-      "termBar": "PERSUASION-LAB · EXIT TERMINAL",
-      "termPrompt": "> Enter the password formed by the revealed letters:",
-      "termLocked": "Frame all six posters to reveal the password letters.",
-      "termPlaceholder": "type the password",
-      "termInputLabel": "Exit password",
-      "unlock": "Unlock →",
-      "pwError": "Access denied. Read the glowing letters in poster order and try again.",
-      "hiddenLetter": "hidden letter {letter}",
-      "evidence": "Every poster used a named persuasion trick — FOMO, social proof, urgency and more."
+      "openComputer": "Käytä tietokonetta →",
+      "closeComputer": "Sulje näyttö",
+      "termBar": "SUOSTUTTELULABORATORIO · ULOSKÄYNTIPÄÄTE",
+      "termPrompt": "> Syötä paljastetuista kirjaimista muodostuva salasana:",
+      "termLocked": "Kehystä kaikki kuusi julistetta paljastaaksesi salasanan kirjaimet.",
+      "termPlaceholder": "kirjoita salasana",
+      "termInputLabel": "Uloskäynnin salasana",
+      "unlock": "Avaa →",
+      "pwError": "Pääsy evätty. Lue hehkuvat kirjaimet julisteiden järjestyksessä ja yritä uudelleen.",
+      "hiddenLetter": "piilotettu kirjain {letter}",
+      "evidence": "Jokainen juliste käytti nimettyä suostuttelukeinoa — FOMO, sosiaalinen todiste, kiire ja muita."
     }
   },
   "debug": {

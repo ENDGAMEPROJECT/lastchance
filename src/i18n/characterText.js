@@ -15,18 +15,33 @@ export function mapText(value, transform, path = '') {
   return value
 }
 
-export function characterVars(narrative) {
-  const mia = narrative.friendId === 'mia'
-  return {
+export function characterVars(narrative, dict) {
+  const vars = {
     friend: narrative.friend,
     player: narrative.player,
     product: narrative.product,
-    // Some sheet translations use Serbian variable names and declined forms.
-    Prijatelj: narrative.friend,
-    prijatelj: narrative.friend,
-    prijatelja: mia ? 'Miju' : 'Maksa',
-    prijatelju: mia ? 'Miji' : 'Maksu',
-    prijateljem: mia ? 'Mijom' : 'Maksom',
-    proizvod: narrative.product,
   }
+
+  /* Languages that inflect the name itself — Finnish cases, Serbian cases —
+     need more than {friend}, which only works as a subject: "Mia ostaa", but
+     "Mian tabletti", "Mijina ponuda". The declined forms are content, not
+     logic, so they live in the translation Sheet under names.<character>.<form>
+     and each becomes {friend_<form>}: a names.mia.genitive row makes
+     {friend_genitive} substitute "Mian" in Finnish and "Mije" in Serbian.
+
+     Variable names stay English in every language — only the values differ.
+     A translator writes {friend_genitive}, never a translated variable name,
+     because interpolate() substitutes by exact name and an unknown one is
+     left in the text for the player to see.
+
+     Form names must be ASCII: interpolate() matches \w, which is ASCII-only,
+     so {friend_yksikön} would never substitute. */
+  const forms = dict?.names?.[narrative.friendId]
+  if (forms && typeof forms === 'object') {
+    for (const [form, value] of Object.entries(forms)) {
+      if (typeof value === 'string') vars[`friend_${form}`] = value
+    }
+  }
+
+  return vars
 }

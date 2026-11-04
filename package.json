@@ -12,7 +12,8 @@
     "check:i18n": "node scripts/i18n-check.mjs && node scripts/i18n-dynamic-check.mjs",
     "check:xapi": "node scripts/xapi-check.mjs",
     "check:all": "npm run check:i18n && npm run check:xapi && npm run build",
-    "i18n:import": "node scripts/i18n-import.mjs"
+    "i18n:import": "node scripts/i18n-import.mjs",
+    "i18n:export": "node scripts/i18n-export.mjs"
   },
   "dependencies": {
     "react": "^18.3.1",

@@ -9,6 +9,7 @@ import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import { useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
+import GateButton from '../components/GateButton.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
 import MaxReport from './MaxReport.jsx'
 import './AlgorithmRoom.css'
@@ -166,11 +167,11 @@ export default function AlgorithmRoom({ node }) {
   const blankSlot = (row) => row.slots.find((s) => s.blank)
 
   // Feedback can't be skipped: each equation's lesson and the final profile
-  // only show their button once they've had time to be read.
+  // keep their button disabled and filling until they've had time to be read.
   const currentRow = ROWS[step]
-  const lessonRead = useReadingGate(currentRow ? t(`rooms.algorithm.rows.${currentRow.id}.feedbackLesson`) : '',
+  const lesson = useReadingGate(currentRow ? t(`rooms.algorithm.rows.${currentRow.id}.feedbackLesson`) : '',
     phase === 'equations' && !!currentRow && placements[currentRow.id] === blankSlot(currentRow).tileId, 5000)
-  const profileRead = useReadingGate(
+  const profile = useReadingGate(
     ['P1', 'B1', 'P2', 'B2', 'P3', 'B3', 'P4'].map((part) => t(`rooms.algorithm.equations.profile${part}`, { friend: narrative.friend })),
     phase === 'equations' && !currentRow)
 
@@ -510,8 +511,9 @@ export default function AlgorithmRoom({ node }) {
                   >
                     <h3 id="ar-feedback-title">{t('rooms.algorithm.equations.feedbackTitle')}</h3>
                     <p id="ar-feedback-lesson" className="ar-feedback-lesson t-md">{t(`rooms.algorithm.rows.${row.id}.feedbackLesson`)}</p>
-                    {lessonRead && <button
-                      className="btn btn-cyan"
+                    <GateButton
+                      gate={lesson}
+                      className="btn-cyan"
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => {
                         track('viewed', OBJ.equationLesson(row.id, EQUATION_NAMES[row.id]), { node: node.id })
@@ -521,7 +523,7 @@ export default function AlgorithmRoom({ node }) {
                       {step < ROWS.length - 1
                         ? t('rooms.algorithm.equations.nextBtn')
                         : t('rooms.algorithm.equations.lastBtn', { friend: narrative.friend })}
-                    </button>}
+                    </GateButton>
                   </section>
                 )}
               </div>
@@ -545,10 +547,10 @@ export default function AlgorithmRoom({ node }) {
                     {t('rooms.algorithm.equations.profileP4', { friend: narrative.friend })}
                   </p>
                 </div>
-                {!solved && profileRead && (
-                  <button className="btn btn-green btn-lg" onClick={finish}>
+                {!solved && (
+                  <GateButton gate={profile} className="btn-green btn-lg" onClick={finish}>
                     {t('rooms.algorithm.equations.logEvidence')}
-                  </button>
+                  </GateButton>
                 )}
               </div>
             </div>

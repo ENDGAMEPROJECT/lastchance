@@ -141,17 +141,24 @@ export default {
           "heading": "Not convinced",
           "body": "You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it."
         }
+      },
+      "missingEvidence": {
+        "button": "See missing evidence",
+        "title": "Evidence report",
+        "collected": "Evidence collected",
+        "missing": "Evidence still missing",
+        "none": "No collected evidence"
       }
     },
     "whatHappened": {
       "titleLose": "What happened to {friend}:",
       "titleWin": "What could have happened to {friend}:",
       "Max": "Max lost the money and never received the product. His card details may be stolen and used for additional purchases.",
-      "Mia": "Mia lost the money and never received the product. Her card details may be stolen and used for additional purchases. "
+      "Mia": "Mia lost the money and never received the product. Her card details may be stolen and used for additional purchases."
     },
     "whatCould": {
       "Max": "Max would have lost the money and never received the product. His card details could have been stolen and used for additional purchases.",
-      "Mia": "Mia would have lost the money and never received the product. Her card details could have been stolen and used for additional purchases. "
+      "Mia": "Mia would have lost the money and never received the product. Her card details could have been stolen and used for additional purchases."
     }
   },
   "story": {
@@ -161,13 +168,13 @@ export default {
       "url": "tech-bargalns.com",
       "name": "NovaPad X",
       "saleBadge": "⚡ FLASH SALE",
-      "wasPrice": "$600",
-      "nowPrice": "$49",
+      "wasPrice": "€600",
+      "nowPrice": "€49",
       "offerLabel": "30-minute deal",
-      "endsIn": "Ends in\n",
+      "endsIn": "Ends in",
       "offerUrgency": "Hurry before it's gone!",
       "buy": "BUY NOW",
-      "caption": "OMG they dropped the NovaPad X to $49?! 😱🔥 Grab it before it’s gone! #deal #ad",
+      "caption": "OMG they dropped the NovaPad X to €49?! 😱🔥 Grab it before it’s gone! #deal #ad",
       "likes": "12.4k likes"
     },
     "roundLabel": "Round {n} · {title}",
@@ -180,7 +187,7 @@ export default {
         "options": [
           {
             "k": "A",
-            "text": "A company can't profit selling a $600 NovaPad X for $49. They'd go bankrupt, so it's fake.",
+            "text": "A company can't profit selling a €600 NovaPad X for €49. They'd go bankrupt, so it's fake.",
             "correct": false
           },
           {
@@ -195,7 +202,7 @@ export default {
           },
           {
             "k": "D",
-            "text": "For $49, it's probably just a cheap, broken knockoff anyway.",
+            "text": "For €49, it's probably just a cheap, broken knockoff anyway.",
             "correct": false
           }
         ],
@@ -238,7 +245,7 @@ export default {
         "options": [
           {
             "k": "A",
-            "text": "Look at the address bar. The URL says \nhttps://www.lunawear.com-official.shop/ — don't you find this long URL and the word \"official\" a little suspicious?",
+            "text": "Look at the address bar. The URL says https://www.lunawear.com-official.shop/ — don't you find this long URL and the word \"official\" a little suspicious?",
             "correct": true
           },
           {
@@ -267,7 +274,7 @@ export default {
       "eyebrow": "The Deal",
       "debugTag": "Pre-test",
       "title": "A message from {friend}",
-      "opening": "Look at this! An influencer I follow just posted a flash sale — the $600 NovaPad X for only $49! There are just 30 minutes left on the countdown. I'm entering my card info right now.",
+      "opening": "Look at this! An influencer I follow just posted a flash sale — the €600 NovaPad X for only €49! There are just 30 minutes left on the countdown. I'm entering my card info right now.",
       "responses": [
         "Whatever the reason for the setup, I don't want to miss out before the clock hits zero! Plus, she's a massive influencer — she wouldn't post something random. But the weird part is how this ad even knew I wanted a tablet. It popped up right at the top of my feed.",
         "Look, there are a million theories about how algorithms and accounts handle ads, but I'm looking at the actual store page right now. It has the official brand logo, great reviews, and a secure checkout."
@@ -396,6 +403,42 @@ export default {
       "desc": "Shows what flashy ads hide: the small print and the catches behind their big promises."
     }
   },
+  "names": {
+    "mia": {
+      "nominative": "Mia",
+      "genitive": "Mia",
+      "partitive": "Mia",
+      "allative": "Mia",
+      "adessive": "Mia",
+      "ablative": "Mia",
+      "illative": "Mia",
+      "inessive": "Mia",
+      "elative": "Mia",
+      "translative": "Mia",
+      "accusative": "Mia",
+      "dative": "Mia",
+      "instrumental": "Mia",
+      "locative": "Mia",
+      "vocative": "Mia"
+    },
+    "max": {
+      "nominative": "Max",
+      "genitive": "Max",
+      "partitive": "Max",
+      "allative": "Max",
+      "adessive": "Max",
+      "ablative": "Max",
+      "illative": "Max",
+      "inessive": "Max",
+      "elative": "Max",
+      "translative": "Max",
+      "accusative": "Max",
+      "dative": "Max",
+      "instrumental": "Max",
+      "locative": "Max",
+      "vocative": "Max"
+    }
+  },
   "hints": {
     "title": "Mission hints",
     "defaultPrompt": "I do not know how to use this clue yet.",
@@ -440,7 +483,7 @@ export default {
         "I do not know which doubts I should carry into the investigation."
       ],
       "items": [
-        "Notice the countdown, the huge discount, and the promise of a limited-time deal. ",
+        "Notice the countdown, the huge discount, and the promise of a limited-time deal.",
         "Ask yourself whether the influencer, comments, and polished page are enough to prove the offer is safe.",
         "Keep your first concerns in mind. The districts ahead will give you evidence to test them."
       ]
@@ -448,26 +491,26 @@ export default {
     "map": {
       "context": "Choose an unlocked district and follow the evidence trail.",
       "prompts": [
-        "I do not know which station I can enter next. ",
-        "I do not know how the district chain works. ",
+        "I do not know which station I can enter next.",
+        "I do not know how the district chain works.",
         "I do not know when my tools will become useful."
       ],
       "items": [
-        "A bright station is ready to explore; a dim station is still locked. ",
-        "The districts are designed as a chain, so finishing one unlocks the next. ",
+        "A bright station is ready to explore; a dim station is still locked.",
+        "The districts are designed as a chain, so finishing one unlocks the next.",
         "Check your Bag after each solved district: new tools help with later puzzles."
       ]
     },
     "posttest": {
       "context": "Use what you discovered to help your friend make the final call.",
       "prompts": [
-        "I do not know how to separate real evidence from persuasive decoration. ",
-        "I do not know which warning signs matter most. ",
+        "I do not know how to separate real evidence from persuasive decoration.",
+        "I do not know which warning signs matter most.",
         "I do not know how to explain the risk before choosing."
       ],
       "items": [
         "Separate manufactured urgency from a genuinely good offer.",
-        "Remember that a familiar creator or a polished page is not proof of safety. ",
+        "Remember that a familiar creator or a polished page is not proof of safety.",
         "Use the evidence in your Bag to explain the risk before choosing."
       ]
     },
@@ -475,25 +518,25 @@ export default {
       "link": {
         "context": "Inspect every URL. Small spelling changes can hide a fake destination.",
         "prompts": [
-          "I do not know how to spot the extra words in these domains. ",
+          "I do not know how to spot the extra words in these domains.",
           "I do not know how to check whether the connection and domain ending are suspicious.",
           "I do not know how to identify disguised or look-alike characters."
         ],
         "items": [
           "Compare the domains letter by letter.",
-          "Watch for look-alike characters and unusual endings. ",
+          "Watch for look-alike characters and unusual endings.",
           "The safest link is the one that matches the real store exactly."
         ],
         "rounds": [
-          "Common suffixes: keep the genuine domain open and block the two addresses that add words after the real name. ",
-          "HTTP vs HTTPS: keep the genuine store open and block both doors using http://. ",
+          "Common suffixes: keep the genuine domain open and block the two addresses that add words after the real name.",
+          "HTTP vs HTTPS: keep the genuine store open and block both doors using http://.",
           "Phishing attempts: read every character and block disguised look-alike addresses."
         ]
       },
       "influencer": {
         "context": "Separate genuine recommendations from paid or fabricated signals.",
         "prompts": [
-          "I do not know how to decode the disclosure on each post. ",
+          "I do not know how to decode the disclosure on each post.",
           "I do not know what to do after I label the posts.",
           "I do not know how to classify the three product images."
         ],
@@ -511,7 +554,7 @@ export default {
           "I do not know how the completed profile explains the NovaPad ad."
         ],
         "items": [
-          "Use the six highlighted digits on the report. Search on the bag. ",
+          "Use the six highlighted digits on the report. Search on the bag.",
           "Match the missing factor to the person and the ad.",
           "The engine combines age, interests, searches and insecurities."
         ]
@@ -520,12 +563,12 @@ export default {
         "context": "Slow down the visual pressure and inspect what the ad is doing.",
         "prompts": [
           "I do not know how to make the Truth Flashlight work.",
-          "I do not know what to look for under each poster. ",
+          "I do not know what to look for under each poster.",
           "I do not know how to assemble the exit code."
         ],
         "items": [
-          "Charge and sweep the flashlight across the wall. ",
-          "Read the fine print, not the large promise. ",
+          "Charge and sweep the flashlight across the wall.",
+          "Read the fine print, not the large promise.",
           "Reveal all four hidden letters in poster order. They spell SAVE, which is the code for the exit."
         ]
       },
@@ -538,7 +581,7 @@ export default {
         ],
         "items": [
           "Drag and drop each poster to its persuasion technique.",
-          "Each correct frame reveals one letter. ",
+          "Each correct frame reveals one letter.",
           "After all six matches, open the computer and enter FOOLED."
         ]
       },
@@ -569,7 +612,7 @@ export default {
         "context": "The timer ran out, but the lesson is still available.",
         "items": [
           "Urgency interrupts careful thinking.",
-          "A countdown does not make an offer trustworthy. ",
+          "A countdown does not make an offer trustworthy.",
           "Pause and verify through an independent source."
         ]
       }
@@ -597,16 +640,18 @@ export default {
       "realStore": "↧ real store",
       "blocked": "BLOCKED",
       "hint": "Remember: block the fakes, keep the one real door open.",
-      "nextRouter": "Advance to the next crossroads →",
-      "finalRouter": "Advance →",
+      "nextRouter": "Advance to the next crossroads→",
+      "finalRouter": "Advance to the next crossroads→",
       "reviewTitle": "Why those doors?",
-      "errStillOpen": "Link{plural} blocked: {count}. Block the two fraudulent links to continue.",
-      "errBlockedSafe": "Some blocked doors are wrong. Block the two fraudulent links to continue.",
-      "justifyLeadLabel": "Why have you locked those doors? ",
+      "errStillOpenOld": "At least one fraudulent link is still open. Block every fake before continuing.",
+      "errBlockedSafeOld": "You blocked the real store! That is the one safe door — leave it open.",
+      "justifyLeadLabel": "Why have you locked those doors?",
       "justifyLead": "Click on the warning signs",
       "justifyErrWrong": "HTTPS, a padlock or a familiar-looking name is not a warning sign by itself, but none proves a site is safe. A familiar name can hide a typo or look-alike letter: check the full domain for those specific differences.",
       "justifyErrMissingOne": "1 warning sign left to select. Look again at the fake URLs.",
       "justifyErrMissing": "{count} warning signs left to select. Look again at the fake URLs.",
+      "errBlockedSafe": "Some blocked doors are wrong. Block the two fraudulent links to continue.",
+      "errStillOpen": "Link{plural} blocked: {count}. Block the two fraudulent links to continue.",
       "submitReasoning": "Submit reasoning",
       "preview": {
         "newArrivals": "NEW ARRIVALS",
@@ -651,7 +696,7 @@ export default {
         "weirdTld": "Odd domain endings like .sbs, .xyz or .free instead of .com",
         "homoglyph": "Letters swapped for look-alikes — “rn” for “m”, or foreign characters",
         "typo": "Misspellings of the brand name (e.g. “dealz”)",
-        "httpsGood": "It starts with https:// ",
+        "httpsGood": "It starts with https://",
         "lock": "The browser shows a little padlock icon"
       },
       "lunaAd1": {
@@ -669,8 +714,8 @@ export default {
       "lunaAd3": {
         "headline": "Tablet Nova",
         "headlineSecond": "Flash Sale!!",
-        "oldPrice": "600$",
-        "discount": "49$",
+        "oldPrice": "€600",
+        "discount": "€49",
         "text": "Hurry up! Offer ends in limited time.",
         "cta": "BUY NOW!!",
         "timePressure": "Only 30 mins left!!"
@@ -734,7 +779,7 @@ export default {
         "correct": "Correct! This wheel is rigged.",
         "next": "Next wheel →",
         "finish": "Log the evidence ✓",
-        "observe": "Spin at least {count} times. Do the results change? ",
+        "observe": "Spin at least {count} times. Do the results change?",
         "shop": {
           "badge": "MEGA SPIN · STORE",
           "title": "You won a discount coupon!",
@@ -883,7 +928,7 @@ export default {
           "caption": "So incredibly proud to share this collaboration with @The_Local_Stitch. We’ve been developing this limited-run handmade garment for months. Every piece is unique and supports local artisans. Use code LOCAL_CLARA for 15% off and first access to the drop. Link in bio.",
           "product": "Handmade patchwork quilted jacket",
           "username": "ClaraSees",
-          "followers": "312K ",
+          "followers": "312K",
           "comments": [
             {
               "username": "artisan_wear",
@@ -921,7 +966,7 @@ export default {
         "runSearch": "🔍 Run reverse image search",
         "engineBar": "reverse-image-search.io",
         "engineDrop": "Drag a product image here to reverse-search it",
-        "trayLabel": "Your saved product images ",
+        "trayLabel": "Your saved product images",
         "classifyPrompt": "So this product is…",
         "searching": "Searching the web",
         "matchesTitle": "Web matches found",
@@ -966,7 +1011,7 @@ export default {
             },
             {
               "site": "homestylewholesale.net",
-              "title": "Ceramic Mug Model CM-204 — $0.95/unit",
+              "title": "Ceramic Mug Model CM-204 — €0.95/unit",
               "price": "€0.95*"
             },
             {
@@ -975,7 +1020,7 @@ export default {
               "price": "€1,90*"
             }
           ],
-          "result": "Over 1,240 listings show the exact same product. ",
+          "result": "Over 1,240 listings show the exact same product.",
           "hint": "The product is massproduced and sold as handmade."
         },
         {
@@ -997,7 +1042,7 @@ export default {
             },
             {
               "site": "lunawear.com-official.shop/",
-              "title": "Limited Time Offer - NovaPad Sponsored By LunaWears For Only $49"
+              "title": "Limited Time Offer - NovaPad Sponsored By LunaWears For Only €49"
             },
             {
               "site": "fakedetector-ads-news.org",
@@ -1005,7 +1050,7 @@ export default {
             },
             {
               "site": "mediamarket.shop",
-              "title": "Sumsang Tablet - Last generation tablets for €619,99 ",
+              "title": "Sumsang Tablet - Last generation tablets for €619,99",
               "price": "€619,99*"
             },
             {
@@ -1069,10 +1114,10 @@ export default {
         "searchLabel": "reverse image search",
         "searching": "Searching the web…",
         "dragHint": "↓ Drag the seller's photo into a reverse image search",
-        "queryCaption": "Seller says: “one-of-a-kind handmade jacket” · $180",
+        "queryCaption": "Seller says: “one-of-a-kind handmade jacket” · €180",
         "resultsLabel": "Same photo found on:",
         "takeawayLabel": "The catch:",
-        "takeaway": "That “unique handmade” jacket is the same mass-produced item selling for $9–14 on dozens of dropshipping shops. The photo gave it away.",
+        "takeaway": "That “unique handmade” jacket is the same mass-produced item selling for €9–14 on dozens of dropshipping shops. The photo gave it away.",
         "continue": "Now try it yourself →"
       },
       "labelFeedback": {
@@ -1129,13 +1174,13 @@ export default {
         "navTerminal": "Ad Terminal",
         "terminalTitle": "AD-OUTPUT TERMINAL",
         "profileTitle": "▚ PROFILE RECONSTRUCTED ▚",
-        "profileP1": "The engine cross-referenced ",
+        "profileP1": "The engine cross-referenced",
         "profileB1": "{friend}’s age",
         "profileP2": "(a teenager),",
         "profileB2": "interests",
         "profileP3": "(gaming, new tech and searches for the NovaPad X) and",
         "profileB3": "insecurities",
-        "profileP4": " (fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
+        "profileP4": "(fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
         "logEvidence": "Log this evidence ✓",
         "finalLessonTitle": "What you learned",
         "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you.",
@@ -1178,7 +1223,7 @@ export default {
             "0": "Woman, 30–45",
             "2": "Insecure about her weight"
           },
-          "feedbackLesson": "Following diet pages, liking weight-loss posts and watching related videos feeds an advertising profile. The algorithm uses those traces to select a matching ad. "
+          "feedbackLesson": "Following diet pages, liking weight-loss posts and watching related videos feeds an advertising profile. The algorithm uses those traces to select a matching ad."
         }
       },
       "tiles": {
@@ -1284,13 +1329,13 @@ export default {
       "exitButton": "Open exit →",
       "errCode": "That is not the code. Illuminate all four posters and read the letters hiding in the fine print.",
       "learnLabel": "Read the fine print.",
-      "learn": "Ads shouting “free”, “you won” or “$0 today” usually hide the real cost in tiny print below — always read what you are actually agreeing to before you tap.",
+      "learn": "Ads shouting “free”, “you won” or “€0 today” usually hide the real cost in tiny print below — always read what you are actually agreeing to before you tap.",
       "evidence": "Behind the “free trial” ad was a hidden €59/month auto-renewing subscription.",
       "posters": [
         {
           "glossyTitle": "FREE 30-DAY TRIAL!",
-          "glossyBody": "Try NovaCloud Premium — $0 today!",
-          "glossyBadge": "$0",
+          "glossyBody": "Try NovaCloud Premium — €0 today!",
+          "glossyBadge": "€0",
           "truth": "After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.",
           "truthTitle": "😩 Automatic renovation",
           "letter": "A"
