@@ -7,11 +7,12 @@
    solved. Progress model per node: 'locked' | 'available' | 'done'.
    ============================================================ */
 
-import { createContext, useContext, useReducer, useEffect, useCallback, useRef, useMemo } from 'react'
+import { createContext, useContext, useReducer, useEffect, useCallback, useRef, useMemo, useState } from 'react'
 import { getNarrative } from './characters.js'
 import { NarrativeContext } from './NarrativeContext.jsx'
 import { NODES, GAME_MINUTES, ITEMS } from './gameData.js'
 import { DEBUG, DEBUG_SCREEN, DEBUG_POSTTEST_SCENARIO, DEBUG_CHARACTER } from './settings.js'
+import { saveRun, loadRun, clearRun } from './session.js'
 import { playSound, preloadSound } from './sound.js'
 import { track, OBJ, once, resetOnce, markRoomStart, roomDuration } from './xapi.js'
 
@@ -267,6 +268,11 @@ export function reducer(state, action) {
     case 'TOGGLE_MOTION':
       return { ...state, reducedMotion: !state.reducedMotion }
 
+    case 'RESTORE':
+      // A saved run, replacing the fresh state wholesale. The clock picks up
+      // from the saved timeLeft: it does not advance while the page is away.
+      return action.state
+
     case 'RESET':
       return { ...initialState, posttestSession: state.posttestSession + 1, reducedMotion: state.reducedMotion }
 
@@ -277,9 +283,40 @@ export function reducer(state, action) {
 
 export function GameProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState)
+  /* A run found in storage at mount. Held, not applied: the player chooses
+     (see SessionDialog). Read once — re-reading after a resume would find
+     the run we just restored. */
+  const [pendingRun, setPendingRun] = useState(loadRun)
   const narrative = useMemo(() => getNarrative(state.player.character), [state.player.character])
   const runningRef = useRef(state.running)
   runningRef.current = state.running
+
+  /* Persist every state change, so a refresh at any moment is recoverable.
+     Held back while a saved run is still on offer: the fresh state would
+     otherwise overwrite the very run the player is being asked about.
+     (saveRun ignores the welcome screen, so merely loading the page never
+     creates a run.) */
+  useEffect(() => {
+    if (!pendingRun) saveRun(state)
+  }, [state, pendingRun])
+
+  /* Continue the saved run. The actor is already back from sessionStorage
+     (see xapi.js), so the statement carries the same identity as the rest
+     of the run rather than opening a new one. */
+  const resumeRun = useCallback(() => {
+    if (!pendingRun) return
+    dispatch({ type: 'RESTORE', state: pendingRun })
+    track('resumed', OBJ.game(), { node: 'intro' })
+    setPendingRun(null)
+  }, [pendingRun])
+
+  /* Start over: the saved run is abandoned, so report it as exited before
+     dropping it — otherwise it would look like a run that simply stopped. */
+  const discardRun = useCallback(() => {
+    if (pendingRun) track('exited', OBJ.game(), { node: 'intro' })
+    clearRun()
+    setPendingRun(null)
+  }, [pendingRun])
 
   // One global 1s clock; only counts while running.
   useEffect(() => {
@@ -383,6 +420,9 @@ export function GameProvider({ children }) {
   const reset = useCallback(() => {
     track('started', OBJ.game(), { node: 'intro', response: 'restart' })
     resetOnce() // a new run re-arms the one-shot statements (outcome, timer)
+    // Drop the saved run too, or a refresh after "play again" would offer to
+    // resume the game that was just finished. Also re-arms the survey ask.
+    clearRun()
     dispatch({ type: 'RESET' })
   }, [])
   const toggleMotion = useCallback(() => dispatch({ type: 'TOGGLE_MOTION' }), [])
@@ -425,6 +465,9 @@ export function GameProvider({ children }) {
     reset,
     toggleMotion,
     winNow,
+    pendingRun,
+    resumeRun,
+    discardRun,
   }
 
   return (

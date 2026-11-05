@@ -90,6 +90,10 @@ export const VERBS = {
   passed:      { id: 'http://adlnet.gov/expapi/verbs/passed', display: { en: 'passed' } },
   failed:      { id: 'http://adlnet.gov/expapi/verbs/failed', display: { en: 'failed' } },
   terminated:  { id: 'http://adlnet.gov/expapi/verbs/terminated', display: { en: 'terminated' } },
+  // A run interrupted by a refresh and then picked up again, and the
+  // abandoned run behind it when the player chooses to start over instead.
+  resumed:     { id: 'http://adlnet.gov/expapi/verbs/resumed', display: { en: 'resumed' } },
+  exited:      { id: 'http://adlnet.gov/expapi/verbs/exited', display: { en: 'exited' } },
 }
 
 /* ---- Activity types ---- */

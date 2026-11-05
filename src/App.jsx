@@ -6,6 +6,7 @@ import Stage from './components/Stage.jsx'
 import { IS_PHONE } from './game/device.js'
 import { DndProvider } from './components/dnd/Dnd.jsx'
 import HUD from './components/HUD.jsx'
+import SessionDialog from './components/SessionDialog.jsx'
 import GameMap from './components/GameMap.jsx'
 import RoomReview from './components/RoomReview.jsx'
 import WelcomeScreen from './components/screens/WelcomeScreen.jsx'
@@ -83,6 +84,9 @@ export default function App() {
         <div className="stage">
           {/* The end screens show only the outcome: no HUD bar. */}
           {screen !== 'win' && screen !== 'lose' && <HUD />}
+          {/* Over everything: a saved run is waiting on a resume-or-restart
+              choice, and nothing else should be interactive until it is made. */}
+          <SessionDialog />
           <div className="stage-swap" key={transitionKey}>
             {activeNode && (
               <div

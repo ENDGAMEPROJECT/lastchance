@@ -1,0 +1,61 @@
+/* Resume-or-restart dialog, shown over the welcome screen after a refresh.
+   Positioned absolute, not fixed: it belongs to the 1280x720 stage (see
+   Stage.jsx) and must scale and letterbox with it like every other screen,
+   where a fixed overlay would sit in screen space and ignore the scale. */
+.session-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 3, 10, 0.74);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 1200; /* above the HUD and the transition veil */
+  animation: fade-in 0.2s ease;
+}
+
+.session-dialog {
+  width: 100%;
+  max-width: 460px;
+  text-align: center;
+  padding: 24px 28px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.session-dialog h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.session-message {
+  margin: 0;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+/* What is actually at stake, so the choice is not a guess. */
+.session-progress {
+  margin: 2px 0 6px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+}
+
+.session-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Phone portrait composes at 720x1280, so the row has less width: let the
+   buttons stack rather than crowd. */
+@media (max-width: 920px) {
+  .session-dialog { max-width: 100%; padding: 20px; }
+  .session-actions { flex-direction: column; align-items: stretch; }
+}
