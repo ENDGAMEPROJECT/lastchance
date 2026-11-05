@@ -63,6 +63,9 @@ export const EXT = {
   doorPosition: `${ENDGAME}/ext/doorPosition`,
   redFlags: `${ENDGAME}/ext/redFlags`,
   durationMs: `${ENDGAME}/ext/durationMs`,
+  // Survey answers as an object, so the LRS keeps them queryable per item
+  // instead of only as the flat result.response string.
+  surveyAnswers: `${ENDGAME}/ext/surveyAnswers`,
 }
 
 /* ---- Verbs. Keys are what call sites pass to track(). ---- */
@@ -94,6 +97,8 @@ export const VERBS = {
   // abandoned run behind it when the player chooses to start over instead.
   resumed:     { id: 'http://adlnet.gov/expapi/verbs/resumed', display: { en: 'resumed' } },
   exited:      { id: 'http://adlnet.gov/expapi/verbs/exited', display: { en: 'exited' } },
+  // The end-of-run feedback survey.
+  evaluated:   { id: 'http://www.tincanapi.co.uk/verbs/evaluated', display: { en: 'evaluated' } },
 }
 
 /* ---- Activity types ---- */
@@ -177,6 +182,10 @@ export const OBJ = {
   pretestQ: (item) => a(`objects/pre-test/${item.slug}`, `Pre-test: ${item.name}`, 'question'),
   posttestQ: (item) => a(`objects/post-test/${item.slug}`, `Post-test: ${item.name}`, 'question'),
   phone: () => a('objects/phone', "Friend's phone", 'interaction'),
+
+  // End-of-run feedback survey. One statement carries every answer, so the
+  // object is the survey as a whole rather than one activity per question.
+  survey: () => a('objects/survey', 'Feedback survey', 'assessment'),
 
   // Map / shell
   map: () => a('objects/map', 'Map', 'interaction'),
