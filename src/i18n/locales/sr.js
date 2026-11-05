@@ -404,6 +404,66 @@ export default {
       "desc": "Pokazuje šta upadljivi oglasi kriju: sitna slova i zamke iza velikih obećanja."
     }
   },
+  "session": {
+    "title": "Dobrodošao/la nazad",
+    "message": "Imaš započetu igru. Da nastaviš odakle si stao/la ili da počneš iz početka?",
+    "progress": "Završeni okruzi: {done}/{total} · preostalo {time}",
+    "resume": "Nastavi igru",
+    "restart": "Počni iz početka"
+  },
+  "survey": {
+    "bannerTitle": "Hvala što si igrao/la!",
+    "bannerSubtitle": "Dajte nam svoje povratne informacije",
+    "bannerButton": "Popunite anketu",
+    "requiredHint": "Molimo vas da odgovorite na sva pitanja",
+    "previous": "Prethodno",
+    "next": "Sledeći",
+    "submit": "Pošalji",
+    "title": "Podelite svoje povratne informacije",
+    "opinionTitle": "Kakvo je vaše opšte mišljenje o escape room-u?",
+    "opinionRange": "1 = Veoma loše, 2 = Loše, 3 = Neutralno, 4 = Dobro, 5 = Veoma dobro",
+    "rateTitle": "Ocenite sledeće tvrdnje na skali od 1–7",
+    "rateRange": "1 = Uopšte se ne slažem, 2 = Ne slažem se, 3 = Delimično se ne slažem, 4 = Neutralno, 5 = Delimično se slažem, 6 = Slažem se, 7 = U potpunosti se slažem",
+    "learningTitle": "Koliko si naučio/naučila?",
+    "learningItems": [
+      "Escape room je proširio moje znanje o tome kako veštačka inteligencija funkcioniše",
+      "Escape room je proširio moje znanje o tome kako se veštačka inteligencija koristi na društvenim mrežama",
+      "Escape room je proširio moje znanje o tome koje su odgovarajuće upotrebe veštačke inteligencije"
+    ],
+    "guessTitle": "Kako vam se dopao način igre?",
+    "guessItems": [
+      "Kontrole u escape room-u su mi jednostavne",
+      "Interfejs escape room-a mi je lak za navigaciju",
+      "Od samog početka me je privukla priča escape room-a",
+      "Uživam u priči koju escape room pruža",
+      "Osećam se odvojeno od spoljašnjeg sveta dok igram escape room",
+      "Ne zanima me da proveravam događaje koji se dešavaju u stvarnom svetu tokom escape room-a",
+      "Mislim da je escape room zabavan",
+      "Dosadno mi je dok igram escape room",
+      "Osećam da mi escape room omogućava da budem maštovit/a",
+      "Osećam se kreativno dok igram escape room",
+      "Veoma sam fokusiran/a na sopstveni nastup dok igram escape room",
+      "Želim da budem što bolji/a tokom escape room-a",
+      "Uživam u grafici escape room-a",
+      "Mislim da je escape room vizuelno privlačan",
+      "Uživam u zvučnim efektima u igri",
+      "Smatram da zvuk u igri (npr. zvučni efekti, muzika) poboljšava moje iskustvo igranja"
+    ],
+    "comments": "Imate li dodatnih komentara ili predloga?"
+  },
+  "sessionDialog": {
+    "title": "Dobrodošli nazad",
+    "message": "Imate prethodnu sesiju. Da li želite da nastavite tamo gde ste stali?",
+    "resume": "Nastavi",
+    "startOver": "Počni ispočetka"
+  },
+  "escapeRoomEnd": {
+    "title": "Escape room je završen",
+    "description": "Šta bi želeo/la da uradiš sledeće?",
+    "restart": "Vrati se na početak",
+    "continueExploring": "Nastavi da istražuješ ECHO",
+    "visitResources": "Poseti ENDGAME resurse"
+  },
   "names": {
     "mia": {
       "nominative": "Mia",
@@ -777,7 +837,7 @@ export default {
           "fair": "Nije namešten"
         },
         "retry": "Ne baš. Pogledaj rezultate i pokušaj ponovo.",
-        "correct": "Correct! This wheel is rigged.",
+        "correct": "Tačno! Ovaj točak je namešten.",
         "next": "Sledeći točak →",
         "finish": "Zabeleži dokaz ✓",
         "observe": "Zavrti najmanje {count} puta. Da li se stalno zaustavlja na istom polju ili se rezultati menjaju? Možeš ponovo da zavrtiš ako nisi siguran/na.",
@@ -974,6 +1034,7 @@ export default {
         "resultTitle": "Rezultat pretrage",
         "errRunAll": "Uradi obrnutu pretragu za svaki proizvod pre klasifikacije.",
         "errClassifyAll": "Prvo klasifikuj sva tri proizvoda.",
+        "classifyCount": "Klasifikovani proizvodi: {count} / {total}",
         "errWrong": "Jedna ili više klasifikacija nisu tačne. Ponovo pročitaj šta je svaka pretraga vratila.",
         "learnLabel": "Pravi alat, prava navika:",
         "learn": "obrnuta pretraga slike proverava da li je fotografija „ručno rađenog“, „jedinstvenog“ ili „pravog“ proizvoda zapravo ukradena, masovno proizvedena u desetinama dropshipping prodavnica ili generisana veštačkom inteligencijom. Ako nema nijednog rezultata, slika može biti lažna.",
@@ -1166,8 +1227,9 @@ export default {
         "feedbackTitle": "Jednačina rešena: zašto ovaj oglas?",
         "badge": "Mehanizam za targetiranje · reši svaku jednačinu",
         "prompt": "Popuni polje koje nedostaje da dovršiš oglas za svaku osobu.",
+        "adTitle": "Oglas",
         "adFlag": "OGLAS AKTIVIRAN",
-        "slotPlaceholder": "＋ prevuci pločicu",
+        "slotPlaceholder": "prevuci pločicu",
         "stepBadge": "Jednačina {n} / {total}",
         "profileBadge": "Profil završen",
         "dragHint": "Prevuci faktor koji nedostaje u jednačinu — onaj koji odgovara baš ovoj osobi.",
@@ -1301,7 +1363,7 @@ export default {
       },
       "door": {
         "badge": "Kontrolna soba · Zapečaćena",
-        "prompt": "The Algorithm Control Room is locked. Find the six highlighted digits, then use the keypad to enter the code.",
+        "prompt": "Контролна соба алгоритма је закључана. Пронађи шест цифара, а затим помоћу тастатуре унеси шифру.",
         "action": "Koristi tastaturu →"
       }
     },

@@ -404,6 +404,66 @@ export default {
       "desc": "Muestra lo que esconden los anuncios llamativos: la letra pequeña y las trampas tras sus grandes promesas."
     }
   },
+  "session": {
+    "title": "Bienvenido de nuevo",
+    "message": "Tienes una partida en curso. ¿Continúas donde lo dejaste o empiezas desde el principio?",
+    "progress": "Distritos completados: {done}/{total} · quedan {time}",
+    "resume": "Continuar partida",
+    "restart": "Empezar de nuevo"
+  },
+  "survey": {
+    "bannerTitle": "¡Gracias por jugar!",
+    "bannerSubtitle": "Danos tu opinión",
+    "bannerButton": "Responder encuesta",
+    "requiredHint": "Por favor, responda a todas las preguntas.",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "submit": "Entregar",
+    "title": "Comparte tu opinión",
+    "opinionTitle": "¿Cuál es tu opinión general sobre la escape room?",
+    "opinionRange": "1 = Muy mala, 2 = Mala, 3 = Neutral, 4 = Buena, 5 = Muy buena",
+    "rateTitle": "Califica las siguientes afirmaciones en una escala del 1 al 7.",
+    "rateRange": "1 = Totalmente en desacuerdo, 2 = En desacuerdo, 3 = Ligeramente en desacuerdo, 4 = Neutral, 5 = Ligeramente de acuerdo, 6 = De acuerdo, 7 = Totalmente de acuerdo.",
+    "learningTitle": "¿Cuánto has aprendido?",
+    "learningItems": [
+      "La escape room aumentó mi conocimiento sobre cómo funciona la IA.",
+      "La escape room aumentó mi conocimiento sobre cómo se utiliza la IA en las redes sociales.",
+      "La escape room aumentó mi conocimiento sobre cuáles son los usos apropiados de la IA."
+    ],
+    "guessTitle": "¿Qué te pareció la jugabilidad?",
+    "guessItems": [
+      "Los controles de la escape room me parecen sencillos.",
+      "La interfaz de la escape room me resulta fácil de usar.",
+      "La historia de la escape room me cautivó desde el principio.",
+      "Disfruto de la historia que ofrece la escape room.",
+      "Me siento desconectad@ del mundo exterior mientras juego al escape room.",
+      "No me intereso por lo que está sucediando a mi alrededor durante la partida de escape room.",
+      "Creo que la escape room es divertida.",
+      "Me aburro mientras juego al escape room.",
+      "Siento que la escape room me permite ser imaginativ@.",
+      "Me siento creativ@ mientras juego al escape room.",
+      "Estoy muy concentrad@ en mi propio desempeño mientras juego al escape room.",
+      "Quiero hacerlo lo mejor posible en la escape room.",
+      "Me gustan los gráficos de la escape room.",
+      "Creo que la escape room es visualmente atractiva.",
+      "Me gustan los efectos de sonido de la escape room..",
+      "Siento que el audio de la escape room (por ejemplo, los efectos de sonido, la música) mejora mi experiencia de juego."
+    ],
+    "comments": "¿Algún comentario o sugerencia adicional?"
+  },
+  "sessionDialog": {
+    "title": "Bienvenido de nuevo",
+    "message": "Tienes una sesión anterior. ¿Te gustaría continuar donde la dejaste?",
+    "resume": "Reanudar",
+    "startOver": "Volver a empezar"
+  },
+  "escapeRoomEnd": {
+    "title": "Escape room finalizado",
+    "description": "¿Qué te gustaría hacer ahora?",
+    "restart": "Volver al inicio",
+    "continueExploring": "Continuar explorando ECHO",
+    "visitResources": "Ir a los recursos de ENDGAME"
+  },
   "names": {
     "mia": {
       "nominative": "Mia",
@@ -641,7 +701,7 @@ export default {
       "realStore": "↧ tienda real",
       "blocked": "BLOQUEADO",
       "hint": "Recuerda: bloquea las falsas y deja abierta la única puerta real.",
-      "nextRouter": "Advance to the next crossroads →",
+      "nextRouter": "Avanzar al siguiente cruce→",
       "finalRouter": "Avanzar al siguiente cruce→",
       "reviewTitle": "¿Por qué esas puertas?",
       "errStillOpenOld": "Todavía hay al menos un enlace fraudulento abierto. Bloquea todas las falsas antes de continuar.",
@@ -777,7 +837,7 @@ export default {
           "fair": "No trucada"
         },
         "retry": "No del todo. Mira los resultados e inténtalo otra vez.",
-        "correct": "Correct! This wheel is rigged.",
+        "correct": "Correcto! Esta rueda está trucada",
         "next": "Siguiente ruleta →",
         "finish": "Registrar la prueba ✓",
         "observe": "Gira al menos {count} veces. ¿Cambian los resultados?",
@@ -974,6 +1034,7 @@ export default {
         "resultTitle": "Resultado de la búsqueda",
         "errRunAll": "Haz la búsqueda inversa de todos los productos antes de clasificarlos.",
         "errClassifyAll": "Clasifica primero los tres productos.",
+        "classifyCount": "Productos clasificados: {count} / {total}",
         "errWrong": "Una o más clasificaciones son incorrectas. Vuelve a leer lo que devolvió cada búsqueda.",
         "learnLabel": "Herramienta real, hábito real:",
         "learn": "una búsqueda inversa de imágenes comprueba si la foto de un producto «artesanal», «único» o «real» está en realidad robada, fabricada en masa en decenas de tiendas de dropshipping o generada por IA. Que no aparezca ningún resultado también puede significar que la imagen es falsa.",
@@ -1166,8 +1227,9 @@ export default {
         "feedbackTitle": "Ecuación resuelta: ¿por qué este anuncio?",
         "badge": "Motor de segmentación · resuelve todas las ecuaciones",
         "prompt": "Rellena el hueco que falta para completar el anuncio de cada persona.",
+        "adTitle": "Anuncio",
         "adFlag": "ANUNCIO ACTIVADO",
-        "slotPlaceholder": "＋ suelta la ficha",
+        "slotPlaceholder": "suelta la ficha",
         "stepBadge": "Ecuación {n} / {total}",
         "profileBadge": "Perfil completo",
         "dragHint": "Arrastra el factor que falta a la ecuación: el que encaja con esta persona concreta.",
@@ -1301,7 +1363,7 @@ export default {
       },
       "door": {
         "badge": "Sala de control · Sellada",
-        "prompt": "The Algorithm Control Room is locked. Find the six highlighted digits, then use the keypad to enter the code.",
+        "prompt": "La sala de control del algoritmo está cerrada. Encuentra los seis dígitos y utiliza el teclado para introducir el código.",
         "action": "Usar el teclado →"
       }
     },
