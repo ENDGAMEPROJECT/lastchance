@@ -18,8 +18,18 @@ const ROOM_IMAGES = {
   'roulette-corridor': [bgUrl('roulette.png')],
   'influencer-avenue': [
     bgUrl('influencer.png'), bgUrl('objects/emoji-decoding-card.png'),
+    assetUrl('icons/price-tag.svg'),
     ...['cupcakes', 'cupcakes1', 'cupcakes2', 'cupcakes3', 'mug', 'novapad', 'novapad1', 'novapad2', 'jacket']
       .map((name) => assetUrl(`products/${name}.png`)),
+    /* The reverse-image-search results and the scripted explainer demo
+       reveal a dozen listing photos at once (RESULT_THUMBS and DEMO_MATCHES
+       in InfluencerAvenue). Loading those on reveal is the one place in the
+       room where the stutter is unmissable, so they come in with the room. */
+    ...['mug1', 'mug2', 'mug3', 'mug4', 'novapad4', 'logo-booble',
+      'speaker', 'speaker2', 'speaker3', 'speaker4', 'speaker5',
+      'shoes', 'shoes1', 'shoes2', 'shoes3', 'shoes4', 'shoes5']
+      .map((name) => assetUrl(`products/${name}.png`)),
+    assetUrl('products/novapad-bg.jpg'),
   ],
   'algorithm-room': [
     'algorithm-door.jpg', 'algorithm-keypad.jpg', 'algorithm.png',
@@ -50,10 +60,19 @@ const arrivalImages = (narrative) => [
 function roomImages(nodeId, narrative, locale) {
   const images = ROOM_IMAGES[nodeId] || []
   if (nodeId === 'influencer-avenue') {
-    // Matches InfluencerAvenue's language fallback (Finnish uses English art).
+    /* Mirrors influencerImageUrl in InfluencerAvenue: Finnish uses the
+       English art, and only paid/gifted are .jpg in English. Spelling the
+       filenames out rather than rebuilding the rule — the rule was wrong
+       here for 'nothing', which is .png in English like collab. */
     const language = ['es', 'sr'].includes(locale) ? locale : 'en'
-    return [...images, bgUrl(narrative.reportImage), ...['paid', 'collab', 'gifted'].map((label) =>
-      bgUrl(`influencers/${label}_${language}.${language === 'en' && label !== 'collab' ? 'jpg' : 'png'}`)),
+    const LABEL_ART = {
+      paid: { en: 'paid_en.jpg', es: 'paid_es.png', sr: 'paid_sr.png' },
+      collab: { en: 'collab_en.png', es: 'collab_es.png', sr: 'collab_sr.png' },
+      gifted: { en: 'gifted_en.jpg', es: 'gifted_es.png', sr: 'gifted_sr.png' },
+      nothing: { en: 'nothing_en.png', es: 'nothing_es.png', sr: 'nothing_sr.png' },
+    }
+    return [...images, bgUrl(narrative.reportImage),
+      ...Object.values(LABEL_ART).map((byLang) => bgUrl(`influencers/${byLang[language]}`)),
       ...['paid', 'collab', 'gifted'].map((label) => bgUrl(`influencers/feedback/${label}.png`))]
   }
   if (nodeId === 'algorithm-room') {
@@ -63,6 +82,16 @@ function roomImages(nodeId, narrative, locale) {
 }
 
 const endingImages = (narrative) => ['won', 'lost'].map((end) => assetUrl(`ending/${narrative.character}-${end}.png`))
+
+/* Funder and project credits in the corner of the welcome screen
+   (LandingCredits). The EU logo is per language, and the language can be
+   switched on that very screen, so all four come in rather than only the
+   current one — they are small, and swapping language should not make the
+   logo blink. */
+const CREDIT_IMAGES = [
+  assetUrl('logos/endgame.png'),
+  ...['en', 'es', 'fi', 'sr'].map((locale) => assetUrl(`logos/eu-cofunded-${locale}.png`)),
+]
 const PORTAL_VIDEO = 'transitions-videos/abduction-scene.mp4'
 
 // Debug jumps, character changes and locale changes use the same resource
@@ -74,7 +103,7 @@ export function getAssetPreloadPlan({ screen, character = 'mia', locale = 'en', 
   const nextRoom = roomImages(nextNodeId, narrative, locale)
   switch (screen) {
     case 'welcome':
-      return { current: [bgUrl('welcome.gif'), bgUrl('algorithm-room/mia-figure-nobg.png'), bgUrl('algorithm-room/max-figure-nobg.png')], next: conversation }
+      return { current: [bgUrl('welcome.gif'), bgUrl('algorithm-room/mia-figure-nobg.png'), bgUrl('algorithm-room/max-figure-nobg.png'), ...CREDIT_IMAGES], next: conversation }
     case 'pretest':
       return { current: conversation, next: [...arrival, ...MAP_IMAGES], video: PORTAL_VIDEO }
     case 'enter':
@@ -101,7 +130,7 @@ export function getAssetPreloadPlan({ screen, character = 'mia', locale = 'en', 
 }
 
 export const GAME_IMAGES = [...new Set([
-  bgUrl('welcome.gif'), bgUrl('conversation.png'), ...MAP_IMAGES,
+  bgUrl('welcome.gif'), bgUrl('conversation.png'), ...MAP_IMAGES, ...CREDIT_IMAGES,
   ...['mia', 'max'].flatMap((character) => {
     const narrative = getNarrative(character)
     return [

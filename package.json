@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "check:i18n": "node scripts/i18n-check.mjs && node scripts/i18n-dynamic-check.mjs",
     "check:xapi": "node scripts/xapi-check.mjs",
-    "check:all": "npm run check:i18n && npm run check:xapi && npm run build",
+    "check:assets": "node scripts/asset-check.mjs",
+    "check:all": "npm run check:i18n && npm run check:xapi && npm run check:assets && npm run build",
     "i18n:import": "node scripts/i18n-import.mjs",
     "i18n:export": "node scripts/i18n-export.mjs"
   },
