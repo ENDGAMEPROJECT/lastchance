@@ -112,6 +112,7 @@ const TRAY = [
 
 /* Column index → tile kind (matches the `cols` i18n order). */
 const COL_KIND = ['demographic', 'follows', 'insecurity']
+const PROFILE_DELAY_MS = 9000 // final screen: report alone, then the profile popover
 
 /* The door background's own 1372×768 pixel space, cover-fitted ("slice") over
    the scene exactly like the background image, so a hotspot placed in image px
@@ -169,11 +170,21 @@ export default function AlgorithmRoom({ node }) {
   // Feedback can't be skipped: each equation's lesson and the final profile
   // keep their button disabled and filling until they've had time to be read.
   const currentRow = ROWS[step]
+  // Final screen: the title + Max's report show alone first; the profile text
+  // pops over the report after PROFILE_DELAY_MS (the report's own boot-up
+  // animation takes ~3.3s, so this lets it play out before covering it).
+  const atFinal = phase === 'equations' && !currentRow
+  const [profileOpen, setProfileOpen] = useState(false)
+  useEffect(() => {
+    if (!atFinal) return setProfileOpen(false)
+    const timer = window.setTimeout(() => setProfileOpen(true), PROFILE_DELAY_MS)
+    return () => window.clearTimeout(timer)
+  }, [atFinal])
   const lesson = useReadingGate(currentRow ? t(`rooms.algorithm.rows.${currentRow.id}.feedbackLesson`) : '',
     phase === 'equations' && !!currentRow && placements[currentRow.id] === blankSlot(currentRow).tileId, 5000)
   const profile = useReadingGate(
     ['P1', 'B1', 'P2', 'B2', 'P3', 'B3', 'P4'].map((part) => t(`rooms.algorithm.equations.profile${part}`, { friend: narrative.friend })),
-    phase === 'equations' && !currentRow)
+    atFinal && profileOpen) // the reading wait starts when the popover appears
 
   /* Per-equation options: the correct tile + up to four SAME-CATEGORY
      distractors, arranged deterministically so the answer isn't always in the
@@ -470,6 +481,8 @@ export default function AlgorithmRoom({ node }) {
                     justifyContent: "center",
                     gap: "0.4rem"
                   }}>
+                    {/* Title over the result, styled like the column tags over the slots. */}
+                    <span className="ar-col-tag t-xs dim" style={{ alignSelf: "center" }}>{t('rooms.algorithm.equations.adTitle')}</span>
                     <div className={`ar-ad ${stepSolved ? 'active' : ''}`}
                       style={{
                         backgroundImage: `url("${import.meta.env.BASE_URL}algorithm-room/${row.id}.png")`,
@@ -510,7 +523,7 @@ export default function AlgorithmRoom({ node }) {
                     aria-live="polite"
                   >
                     <h3 id="ar-feedback-title">{t('rooms.algorithm.equations.feedbackTitle')}</h3>
-                    <p id="ar-feedback-lesson" className="ar-feedback-lesson t-md">{t(`rooms.algorithm.rows.${row.id}.feedbackLesson`)}</p>
+                    <p id="ar-feedback-lesson" className="ar-feedback-lesson">{t(`rooms.algorithm.rows.${row.id}.feedbackLesson`)}</p>
                     <GateButton
                       gate={lesson}
                       className="btn-cyan"
@@ -534,25 +547,33 @@ export default function AlgorithmRoom({ node }) {
               <div className="ar-term-screen panel clip panel-glow-cyan">
                 <div className="ar-dw-title">{t('rooms.algorithm.equations.terminalTitle')}</div>
                 <MaxReport />
-
-                <div className="ar-profile">
-                  <div className="ar-profile-title">{t('rooms.algorithm.equations.profileTitle')}</div>
-                  <p className="t-sm">
-                    {t('rooms.algorithm.equations.profileP1')} {" "}
-                    <b>{t('rooms.algorithm.equations.profileB1', { friend: narrative.friend })}  {" "}</b> 
-                    {t('rooms.algorithm.equations.profileP2')}  {" "}
-                    <b>{t('rooms.algorithm.equations.profileB2')}  {" "}</b>
-                    {t('rooms.algorithm.equations.profileP3')}  {" "}
-                    <b>{t('rooms.algorithm.equations.profileB3')}</b>
-                    {t('rooms.algorithm.equations.profileP4', { friend: narrative.friend })}
-                  </p>
-                </div>
-                {!solved && (
-                  <GateButton gate={profile} className="btn-green btn-lg" onClick={finish}>
-                    {t('rooms.algorithm.equations.logEvidence')}
-                  </GateButton>
-                )}
               </div>
+
+              {/* After PROFILE_DELAY_MS the reconstructed profile pops over the
+                  report (same overlay + neon panel as the other rooms' popovers). */}
+              {profileOpen && (
+                <div className="ar-profile-overlay fade-in">
+                  <div className="ar-profile-pop panel clip panel-glow-cyan">
+                    <div className="ar-profile">
+                      <div className="ar-profile-title">{t('rooms.algorithm.equations.profileTitle')}</div>
+                      <p className="ar-profile-text t-sm">
+                        {t('rooms.algorithm.equations.profileP1')} {" "}
+                        <b>{t('rooms.algorithm.equations.profileB1', { friend: narrative.friend })}  {" "}</b>
+                        {t('rooms.algorithm.equations.profileP2')}  {" "}
+                        <b>{t('rooms.algorithm.equations.profileB2')}  {" "}</b>
+                        {t('rooms.algorithm.equations.profileP3')}  {" "}
+                        <b>{t('rooms.algorithm.equations.profileB3')}</b> {" "}
+                        {t('rooms.algorithm.equations.profileP4', { friend: narrative.friend })}
+                      </p>
+                    </div>
+                    {!solved && (
+                      <GateButton gate={profile} className="btn-green btn-lg" onClick={finish}>
+                        {t('rooms.algorithm.equations.logEvidence')}
+                      </GateButton>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </div>

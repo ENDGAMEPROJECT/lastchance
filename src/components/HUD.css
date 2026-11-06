@@ -282,6 +282,60 @@
   }
 }
 
+/* Desktop reminder arrows: two chevrons under the lit-up button, pointing up
+   at it and bobbing in a staggered wave. Only rendered by the desktop bar. */
+.hud-hint-reminder,
+.hud-bag-reminder {
+  position: relative;
+}
+.hud-reminder-arrow {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+  animation: hud-reminder-bob 1.2s ease-in-out infinite;
+}
+.hud-hint-reminder .hud-reminder-arrow { --arrow: #ffd36b; --arrow-glow: rgba(255, 185, 43, 0.75); }
+.hud-bag-reminder .hud-reminder-arrow { --arrow: #e4baff; --arrow-glow: rgba(168, 85, 247, 0.75); }
+.hud-reminder-chevron {
+  width: 24px;
+  height: 24px;
+  border-top: 5px solid var(--arrow);
+  border-left: 5px solid var(--arrow);
+  transform: rotate(45deg);
+  filter: drop-shadow(0 0 6px var(--arrow-glow));
+  animation: hud-reminder-fade 1.2s ease-in-out infinite;
+}
+.hud-reminder-chevron + .hud-reminder-chevron {
+  margin-top: -10px;
+  animation-delay: 0.2s;
+}
+@keyframes hud-reminder-bob {
+  0%, 100% { transform: translate(-50%, 10px); }
+  50% { transform: translate(-50%, 0); }
+}
+@keyframes hud-reminder-fade {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+.reduced-motion .hud-reminder-arrow,
+.reduced-motion .hud-reminder-chevron {
+  animation: none;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hud-reminder-arrow,
+  .hud-reminder-chevron {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 /* Inventory modal */
 /* Bag tabs: Tools | Evidence (styled like the old section subheadings). */
 .bag-tabs {

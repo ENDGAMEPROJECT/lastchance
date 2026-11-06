@@ -214,7 +214,14 @@
     bottom: 70px; /* clear of the HUD debug row (As Mia) below */
     z-index: 5;
     margin: 0 auto;
+    pointer-events: none; /* the gaps in the full-width row let taps reach the stations */
   }
+  .map-debug > * { pointer-events: auto; }
+  /* The header's fade makes it a stacking context, which traps the row's
+     z-index inside it; the scaled board (later in the DOM) then paints over
+     the row and swallows its taps. Lift the whole header — z-index works on a
+     flex item without `position`, so the row still anchors to the map. */
+  .map-head { z-index: 6; }
   /* The header's fade-in animates transform, which would make the header the
      row's anchor; an opacity-only fade lets it anchor to the whole map. */
   .map-head.fade-in { animation-name: map-head-in; }

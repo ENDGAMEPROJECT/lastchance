@@ -23,6 +23,17 @@ const MOBILE_QUERY = `(max-width: ${settings.mobile.breakpoint}px)`
 const unfoldTap = (target) => Boolean(target.closest('.hud-m-nav:not(.is-expanded)')) && !document.querySelector('.modal-backdrop')
 
 /* Persistent top bar: countdown, mission recap, inventory & map access. */
+/* Desktop-only pointer under a lit-up Bag/Hints button: two chevrons bobbing
+   up towards it. Colour follows the button's reminder class (see HUD.css). */
+function ReminderArrow() {
+  return (
+    <span className="hud-reminder-arrow" aria-hidden="true">
+      <span className="hud-reminder-chevron" />
+      <span className="hud-reminder-chevron" />
+    </span>
+  )
+}
+
 export default function HUD() {
   const { screen, activeNodeId, roomStarted, linkRound, timeLeft, inventory, evidence, progress, goMap, startGame, postDecision, enterTour, narrative } = useGame()
   const t = useT()
@@ -471,6 +482,7 @@ export default function HUD() {
               title={t('hud.hints')}
             >
               {t('hud.hints')}
+              {hintReminder && !hintsOpen && !touring && <ReminderArrow />}
             </button>
           )}
           <button
@@ -493,6 +505,7 @@ export default function HUD() {
             <button className={`btn btn-purple btn-sm ${tourClass('bag')} ${bagReminder && !bagOpen ? 'hud-bag-reminder' : ''}`} data-tour="bag"
               onClick={touring ? undefined : () => setBagOpen(true)} tabIndex={touring ? -1 : undefined} aria-disabled={touring || undefined}>
               {t('hud.bag')} {inventory.length > 0 && <b className="bag-count">{inventory.length}</b>}
+              {bagReminder && !bagOpen && <ReminderArrow />}
             </button>
           )}
         </div>

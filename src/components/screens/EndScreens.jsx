@@ -178,14 +178,14 @@ export function WinScreen() {
         </div>
         <h1 className="intro-title">{t('end.win.titleLead', vars)} <span className="grad">{t('end.win.titleAccent')}</span></h1>
         <h3 style={{ fontSize: "1.17em", fontFamily: "var(--font-retro)", color: "#2gc3c52", textAlign: "center" }}>{t('end.win.tag', vars)}</h3>
-        <p style={{ fontSize: "1.2rem", fontFamily: "var(--font-retro)", marginBottom: 16, textAlign: "center" }}
+        <p style={{ fontSize: "1.15rem", fontFamily: "var(--font-retro)", marginBottom: 16, textAlign: "center" }}
         className="win-description">{t('end.win.body', vars)}</p>
 
         <WhatHappenedCard titleKey="end.whatHappened.titleWin" textKey="end.whatCould" narrative={narrative} vars={vars} light />
 
         <div className="end-actions">
-          <button className="btn-light btn-lg" onClick={reset}>{t('end.win.again')}</button>
-          <button className="btn-light btn-lg" onMouseDown={(e) => e.preventDefault()} onClick={() => setReportOpen(true)}>
+          <button className="btn-light btn" onClick={reset}>{t('end.win.again')}</button>
+          <button className="btn-light btn" onMouseDown={(e) => e.preventDefault()} onClick={() => setReportOpen(true)}>
             {t('end.win.evidenceButton')}
           </button>
         </div>

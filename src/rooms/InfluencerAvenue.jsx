@@ -12,6 +12,7 @@ import { track, OBJ } from '../game/xapi.js'
 import { useI18n, useT } from '../i18n/index.jsx'
 import RoomFrame from '../components/RoomFrame.jsx'
 import GateButton from '../components/GateButton.jsx'
+import CloseButton from '../components/CloseButton.jsx'
 import { Draggable, DropZone } from '../components/dnd/Dnd.jsx'
 import './InfluencerAvenue.css'
 
@@ -244,11 +245,9 @@ function StampIcon({ value, className = 'ia-stamp-icon' }) {
     strokeLinejoin: 'round',
     'aria-hidden': true,
   }
-  if (value === 'mass') return ( // classic sawtooth factory with one tall chimney
-    <svg {...common} strokeWidth={1.6}>
-      <path d="M1.5 22h21" />
-      <path d="M2.5 22V11.5l4.7-3.5v3.5l4.7-3.5v3.5l4.7-3.5v3.5H19V3h3v19" />
-      <path d="M4.6 15h2.4v2.4H4.6zM9.3 15h2.4v2.4H9.3zM14 15h2.4v2.4H14z" />
+  if (value === 'mass') return ( // "wrong" cross
+    <svg {...common} strokeWidth={2.6}>
+      <path d="M5 5l14 14M19 5L5 19" />
     </svg>
   )
   if (value === 'ai') return ( // two sparkles, one big and one small
@@ -294,7 +293,8 @@ const DEMO_MATCHES = [
   { img: 'shoes5.png', ratio: 1.13, site: 'shoefinder.net', desc: 'Same model sold by the official brand store' },
   { img: 'shoes.png', ratio: 0.71, site: 'swingfeet.shop', desc: 'Lindy hop dance shoes · handmade' },
 ]
-const DEMO_STAMPS = { mass: 'Mass-produced', ai: 'AI-generated', verified: 'verified' }
+// Same stamps, in the same order, as the real rack (labels via rooms.influencer.classify.*).
+const DEMO_STAMPS = ['mass', 'ai', 'verified']
 
 /* Masonry: drop each match into the currently shortest of `n` columns. */
 function masonry(items, n) {
@@ -312,6 +312,29 @@ function ReverseSearchDemo({ phase }) {
   const t = useT()
   const at = (p) => DEMO_PHASES.indexOf(phase) >= DEMO_PHASES.indexOf(p)
   const resultsRef = useRef(null)
+  const demoRef = useRef(null)
+  const [fly, setFly] = useState(null)
+
+  // The flying stamp goes from the rack's Verified stamp to the image centre.
+  // Measured rather than hard-coded: the layout differs on mobile and the
+  // labels' length differs per locale. Rects are in screen px (stage scale +
+  // the rack's zoom), so divide by the demo's on-screen scale.
+  useLayoutEffect(() => {
+    if (phase !== 'hold') return setFly(null)
+    const root = demoRef.current
+    const from = root?.querySelector('.ia-demo-rack .ia-stamp-verified .ia-stampmaker-face')
+    const to = root?.querySelector('.ia-demo-frame')
+    if (!from || !to) return
+    const box = root.getBoundingClientRect()
+    const scale = box.width / root.offsetWidth || 1
+    const centre = (el) => {
+      const r = el.getBoundingClientRect()
+      return { x: (r.left + r.width / 2 - box.left) / scale, y: (r.top + r.height / 2 - box.top) / scale }
+    }
+    const a = centre(from), b = centre(to)
+    // the fly-stamp's face sits ~10px below its box centre (handle above it)
+    setFly({ '--fx0': `${a.x}px`, '--fy0': `${a.y - 10}px`, '--fx1': `${b.x}px`, '--fy1': `${b.y}px` })
+  }, [phase])
 
   // Once the matches are in, slowly scroll down through them (like the player
   // would), then glide back up to the top.
@@ -336,10 +359,10 @@ function ReverseSearchDemo({ phase }) {
   }, [phase])
 
   return (
-    <div className="ia-demo" aria-hidden>
+    <div className="ia-demo" aria-hidden ref={demoRef}>
       {/* saved image the player drags */}
       <div className="ia-demo-tray">
-        <div className="ia-demo-traylabel">Saved image</div>
+        <div className="ia-demo-traylabel">{t('rooms.influencer.stage2.trayLabel')}</div>
         <div className={`ia-demo-tile ${phase === 'drag' ? 'is-dragging' : ''}`} style={{ backgroundImage: `url("${productUrl('shoes.png')}")` }}>
           <span className="ia-imgtile-name">Lindy hop shoes</span>
         </div>
@@ -363,7 +386,7 @@ function ReverseSearchDemo({ phase }) {
           <div className={`ia-demo-bar ${phase === 'drag' ? 'is-over' : ''}`}>
             <span className="ia-engine-lens">🔍</span>
             {at('search') && <span className="ia-engine-chip fade-in" style={{ backgroundImage: `url("${productUrl('shoes.png')}")` }} />}
-            <span className="ia-engine-ph">Drag an image here to search</span>
+            <span className="ia-engine-ph">{t('rooms.influencer.stage2.engineDrop')}</span>
           </div>
         </div>
 
@@ -378,7 +401,7 @@ function ReverseSearchDemo({ phase }) {
                 {at('stamp') && (
                   <span className="ia-stamp-mark ia-stamp-verified ia-demo-mark">
                     <StampIcon value="verified" />
-                    {DEMO_STAMPS.verified}
+                    {t('rooms.influencer.classify.verified')}
                   </span>
                 )}
               </div>
@@ -390,7 +413,7 @@ function ReverseSearchDemo({ phase }) {
               <div className="ia-demo-results">
                 <div className="ia-searching-head t-xs">
                   <span className="ia-globe">🌐</span>
-                  Searching the web
+                  {t('rooms.influencer.stage2.searching')}
                   <span className="ia-dots"><i /><i /><i /></span>
                 </div>
                 <div className="ia-demo-skels">
@@ -424,13 +447,13 @@ function ReverseSearchDemo({ phase }) {
               <div className="ia-demo-classify">
                 <div className="t-xs upper dim">{t('rooms.influencer.stage2.classifyPrompt')}</div>
                 <div className="ia-demo-rack">
-                  {Object.entries(DEMO_STAMPS).map(([value, label]) => (
+                  {DEMO_STAMPS.map((value) => (
                     <div
                       key={value}
                       className={`ia-stampmaker ia-stamp-${value} ${value === 'verified' && phase === 'hold' ? 'held' : ''} ${value === 'verified' && at('stamp') ? 'inked' : ''}`}
                     >
                       <span className="ia-stampmaker-face" />
-                      <span className="ia-stamp-label">{label}</span>
+                      <span className="ia-stamp-label">{t(`rooms.influencer.classify.${value}`)}</span>
                       <StampIcon value={value} className="ia-stampmaker-icon" />
                     </div>
                   ))}
@@ -442,8 +465,8 @@ function ReverseSearchDemo({ phase }) {
       </div>
 
       {/* the Verified stamp travelling from the rack to the image */}
-      {phase === 'hold' && (
-        <div className="ia-demo-flystamp ia-stamp-verified"><span className="ia-stampmaker-face" /></div>
+      {phase === 'hold' && fly && (
+        <div className="ia-demo-flystamp ia-stamp-verified" style={fly}><span className="ia-stampmaker-face" /></div>
       )}
     </div>
   )
@@ -569,10 +592,7 @@ function PublicationOverlay({ post, copy, locale, liked, onToggle, onClose }) {
               </h2>
               <span>{copy.followers.trim()} {t('rooms.influencer.stage1.followersSuffix')}</span>
             </div>
-            <button type="button" className="ia-publication-close" autoFocus
-              onClick={onClose} aria-label={t('common.close')}>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
-            </button>
+            <CloseButton className="ia-publication-close" autoFocus onClick={onClose} />
           </header>
           <div className="ia-publication-thread" tabIndex={0} aria-label={t('rooms.influencer.stage1.commentsTitle')}>
             <p className="ia-publication-caption"><strong>{username}</strong>{' '}{copy.caption}</p>
@@ -976,16 +996,11 @@ export default function InfluencerAvenue({ node }) {
                       ? postCopy[POSTS.indexOf(selectedPost)]?.username
                       : t('rooms.influencer.decoder.noSelection')}
                   </span>
-                  <button
-                    type="button"
+                  <CloseButton
                     className="ia-decoder-close"
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => setDecoderOpen(false)}
-                    aria-label={t('common.close')}
-                    title={t('common.close')}
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
+                  />
                 </div>
                 <div className="ia-key-grid">
                   {Object.entries(EMOJI_KEY).map(([emoji, letter]) => (
@@ -1190,6 +1205,16 @@ export default function InfluencerAvenue({ node }) {
                     aria-label={t('common.next')} title={t('common.next')}>
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
                   </button>
+                </div>
+              )}
+              {/* Mobile: running tally of stamped products, styled like the
+                  Link District's block-progress box. */}
+              {mobile && (
+                <div role="status" className={`ia-imgtray-progress mono ${PRODUCTS.every((p) => picks[p.id]) ? 'is-complete' : ''}`}>
+                  {t('rooms.influencer.stage2.classifiedCount', {
+                    count: PRODUCTS.filter((p) => picks[p.id]).length,
+                    total: PRODUCTS.length,
+                  })}
                 </div>
               )}
             </div>
