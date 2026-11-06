@@ -1211,7 +1211,7 @@ export default function InfluencerAvenue({ node }) {
                   Link District's block-progress box. */}
               {mobile && (
                 <div role="status" className={`ia-imgtray-progress mono ${PRODUCTS.every((p) => picks[p.id]) ? 'is-complete' : ''}`}>
-                  {t('rooms.influencer.stage2.classifiedCount', {
+                  {t('rooms.influencer.stage2.classifyCount', {
                     count: PRODUCTS.filter((p) => picks[p.id]).length,
                     total: PRODUCTS.length,
                   })}
