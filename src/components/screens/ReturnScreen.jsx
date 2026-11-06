@@ -7,12 +7,12 @@ import DialogScene from './DialogScene.jsx'
 import './screens.css'
 import './pretest.css'
 import './enter.css'
-import { DEBUG } from '../../game/settings.js'
+import { DEBUG, settings } from '../../game/settings.js'
 
-/* Typewriter speed (ms per letter) and the pause once a line is fully typed.
-   A line's reading time = its typing time + HOLD_MS, so it always finishes. */
-const LETTER_MS = 40
-const HOLD_MS = 1500
+/* Typewriter pacing lives in settings.typewriter so the narrated screens
+   stay in step with each other; a line's reading time is its typing time
+   plus HOLD_MS, so it always finishes. */
+const { letterMs: LETTER_MS, holdMs: HOLD_MS } = settings.typewriter
 
 // Same reading pace / fade as the portal arrival (EnterScreen).
 const PORTAL_VIDEO = 'transitions-videos/abduction-scene.mp4'

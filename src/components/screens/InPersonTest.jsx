@@ -8,12 +8,12 @@ import { testItem, optionSlug } from '../../game/testItems.js'
 import DialogNav from './DialogNav.jsx'
 import DialogScene, { FollowCharacter } from './DialogScene.jsx'
 import './pretest.css'
-import { DEBUG } from '../../game/settings.js'
+import { DEBUG, settings } from '../../game/settings.js'
 
-/* Typewriter speed (ms per letter) and the pause once a line is fully typed.
-   A line's reading time = its typing time + HOLD_MS, so it always finishes. */
-const LETTER_MS = 40
-const HOLD_MS = 1500
+/* Typewriter pacing lives in settings.typewriter so the narrated screens
+   stay in step with each other; a line's reading time is its typing time
+   plus HOLD_MS, so it always finishes. */
+const { letterMs: LETTER_MS, holdMs: HOLD_MS } = settings.typewriter
 
 // The speech band sits 30px above the bottom (pretest.css). Lifting it by the
 // answer panel's top edge (its own bottom offset + height) minus that puts it
