@@ -59,3 +59,23 @@
   .session-dialog { max-width: 100%; padding: 20px; }
   .session-actions { flex-direction: column; align-items: stretch; }
 }
+
+/* The finer detail under the headline progress: where the run stands and
+   what it is carrying. Dimmer than the main line — it is reassurance, not
+   the decision. Items are separated by a bullet drawn in CSS so no
+   separator character has to live in a translated string. */
+.session-detail {
+  margin: -4px 0 8px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 10px;
+}
+.session-detail > span + span::before {
+  content: '·';
+  margin-right: 10px;
+  opacity: 0.6;
+}
+.session-where { color: var(--cyan); }

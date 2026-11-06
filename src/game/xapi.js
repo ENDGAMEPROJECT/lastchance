@@ -117,6 +117,7 @@ const T = {
   interaction: 'http://adlnet.gov/expapi/activities/interaction',
   question:    'http://adlnet.gov/expapi/activities/question',
   assessment:  'http://adlnet.gov/expapi/activities/assessment',
+  survey:      'http://adlnet.gov/expapi/activities/survey',
   document:    'http://id.tincanapi.com/activitytype/document',
 }
 export const TYPES = T
@@ -185,7 +186,7 @@ export const OBJ = {
 
   // End-of-run feedback survey. One statement carries every answer, so the
   // object is the survey as a whole rather than one activity per question.
-  survey: () => a('objects/survey', 'Feedback survey', 'assessment'),
+  survey: () => a('objects/survey', 'Feedback survey', 'survey'),
 
   // Map / shell
   map: () => a('objects/map', 'Map', 'interaction'),
