@@ -6,6 +6,11 @@ import { assetUrl } from '../../game/assets.js'
 import { useMobileView } from '../../game/device.js'
 import { getAllEvidence } from '../../game/evidence.js'
 import Modal from '../Modal.jsx'
+import SurveyModal from '../SurveyModal.jsx'
+import { isSurveyDone, markSurveyDone } from '../../game/session.js'
+
+/* The project site, the same destination ECHO sends players to. */
+const ENDGAME_URL = 'https://endgameproject.github.io/'
 import './screens.css'
 
 /* Clouds drifting across the win sky: [top px, scale, seconds to cross, start offset 0–1, opacity]. */
@@ -77,6 +82,85 @@ function EvidenceReport({ open, onClose }) {
   )
 }
 
+/* The feedback survey, offered on both endings. An invitation rather than a
+   wall: a player who just lost should not be made to fill in a form before
+   they can read why. Asked once per run (see session.js), so a refresh on
+   the end screen does not nag. */
+function SurveyInvite() {
+  const t = useT()
+  const { reset } = useGame()
+  const [open, setOpen] = useState(false)
+  const [done, setDone] = useState(isSurveyDone)
+  const [options, setOptions] = useState(false)
+
+  /* Once the survey is in, the run really is over: offer the ways out, the
+     same two ECHO offers. "Continue exploring ECHO" is deliberately not
+     among them — there is nothing to keep exploring here, and the label
+     names the wrong escape room. Closing returns to this screen, where the
+     evidence report still is. */
+  const endOptions = options && (
+    <div className="sv-backdrop" onClick={() => setOptions(false)}>
+      <div
+        className="sv-modal eo-modal panel clip panel-glow-cyan fade-in"
+        role="dialog" aria-modal="true"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="sv-head">
+          <h3 className="accent-cyan">{t('escapeRoomEnd.title')}</h3>
+          <button className="sv-x" onClick={() => setOptions(false)} aria-label={t('common.close')}>✕</button>
+        </div>
+        <div className="sv-body eo-body">
+          <p className="eo-description">{t('escapeRoomEnd.description')}</p>
+          <div className="eo-actions">
+            <button type="button" className="btn btn-cyan btn-lg" onClick={reset}>
+              {t('escapeRoomEnd.restart')}
+            </button>
+            <a
+              className="btn btn-lg eo-link"
+              href={ENDGAME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t('escapeRoomEnd.visitResources')}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+
+  if (done) {
+    return (
+      <>
+        <p className="sv-thanks">
+          {t('survey.bannerTitle')}{' '}
+          <a href={ENDGAME_URL} target="_blank" rel="noopener noreferrer">{t('escapeRoomEnd.visitResources')}</a>
+        </p>
+        {endOptions}
+      </>
+    )
+  }
+
+  return (
+    <>
+      <div className="sv-banner">
+        <div className="sv-banner-text">
+          <div className="sv-banner-title">{t('survey.bannerTitle')}</div>
+          <div className="sv-banner-sub">{t('survey.bannerSubtitle')}</div>
+        </div>
+        <button className="btn btn-cyan" onClick={() => setOpen(true)}>{t('survey.bannerButton')}</button>
+      </div>
+      {open && (
+        <SurveyModal
+          onClose={() => setOpen(false)}
+          onSubmitted={() => { markSurveyDone(); setDone(true); setOpen(false); setOptions(true) }}
+        />
+      )}
+      {endOptions}
+    </>
+  )
+}
+
 export function WinScreen() {
   const { timeLeft, reset, narrative } = useGame()
   const t = useT()
@@ -109,6 +193,7 @@ export function WinScreen() {
             {t('end.win.evidenceButton')}
           </button>
         </div>
+        <SurveyInvite />
       </div>
       <EvidenceReport open={reportOpen} onClose={() => setReportOpen(false)} />
     </div>
@@ -158,6 +243,7 @@ export function LoseScreen() {
             {t('end.lose.missingEvidence.button')}
           </button>
         </div>
+        <SurveyInvite />
       </div>
       <EvidenceReport open={reportOpen} onClose={() => setReportOpen(false)} />
     </div>

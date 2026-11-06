@@ -451,10 +451,17 @@ export default {
     ],
     "comments": "Onko muita kommentteja tai ehdotuksia?"
   },
+  "sessionDialog": {
+    "title": "Tervetuloa takaisin",
+    "message": "Sinulla on aiempi istunto. Haluatko jatkaa siitä, mihin jäit?",
+    "resume": "Jatka",
+    "startOver": "Aloita alusta"
+  },
   "escapeRoomEnd": {
     "title": "Pakohuone päättynyt",
     "description": "Mitä haluaisit tehdä seuraavaksi?",
     "restart": "Palaa alkuun",
+    "continueExploring": "Jatka ECHOn tutkimista",
     "visitResources": "Siirry ENDGAME-resursseihin"
   },
   "names": {

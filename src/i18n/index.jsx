@@ -15,6 +15,7 @@ import { createContext, useContext, useMemo, useState, useCallback } from 'react
 import LOCALES from './dictionaries.js'
 import { useNarrative } from '../game/NarrativeContext.jsx'
 import { characterVars, mapText, interpolate } from './characterText.js'
+import { loadLocale, saveLocale } from '../game/session.js'
 export const AVAILABLE_LOCALES = Object.keys(LOCALES)
 const DEFAULT_LOCALE = 'en'
 
@@ -35,7 +36,16 @@ function lookup(dict, key) {
 }
 
 export function I18nProvider({ children, initialLocale = DEFAULT_LOCALE }) {
-  const [locale, setLocale] = useState(initialLocale)
+  /* Restored first, so a resumed run comes back in the language it was
+     being played in (see session.js). */
+  const [locale, setLocaleState] = useState(() => {
+    const saved = loadLocale()
+    return saved && LOCALES[saved] ? saved : initialLocale
+  })
+  const setLocale = useCallback((code) => {
+    setLocaleState(code)
+    saveLocale(code)
+  }, [])
 
   const t = useCallback(
     (key, vars) => {

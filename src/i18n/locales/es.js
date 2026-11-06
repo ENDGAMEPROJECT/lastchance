@@ -451,10 +451,17 @@ export default {
     ],
     "comments": "¿Algún comentario o sugerencia adicional?"
   },
+  "sessionDialog": {
+    "title": "Bienvenido de nuevo",
+    "message": "Tienes una sesión anterior. ¿Te gustaría continuar donde la dejaste?",
+    "resume": "Reanudar",
+    "startOver": "Volver a empezar"
+  },
   "escapeRoomEnd": {
     "title": "Escape room finalizado",
     "description": "¿Qué te gustaría hacer ahora?",
     "restart": "Volver al inicio",
+    "continueExploring": "Continuar explorando ECHO",
     "visitResources": "Ir a los recursos de ENDGAME"
   },
   "names": {

@@ -451,10 +451,17 @@ export default {
     ],
     "comments": "Imate li dodatnih komentara ili predloga?"
   },
+  "sessionDialog": {
+    "title": "Dobrodošli nazad",
+    "message": "Imate prethodnu sesiju. Da li želite da nastavite tamo gde ste stali?",
+    "resume": "Nastavi",
+    "startOver": "Počni ispočetka"
+  },
   "escapeRoomEnd": {
     "title": "Escape room je završen",
     "description": "Šta bi želeo/la da uradiš sledeće?",
     "restart": "Vrati se na početak",
+    "continueExploring": "Nastavi da istražuješ ECHO",
     "visitResources": "Poseti ENDGAME resurse"
   },
   "names": {

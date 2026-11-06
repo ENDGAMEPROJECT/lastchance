@@ -5,7 +5,7 @@ import { useT } from '../../i18n/index.jsx'
 import { useStage } from '../Stage.jsx'
 import { GAME_MINUTES } from '../../game/gameData.js'
 import { getPreloadedVideo } from '../../game/preloadAssets.js'
-import { DEBUG } from '../../game/settings.js'
+import { DEBUG, settings } from '../../game/settings.js'
 import { bgUrl } from '../../game/assets.js'
 import DialogNav from './DialogNav.jsx'
 import DialogScene, { sceneBackground } from './DialogScene.jsx'
@@ -13,10 +13,10 @@ import './screens.css'
 import './pretest.css'
 import './enter.css'
 
-/* Typewriter speed (ms per letter) and the pause once a line is fully typed.
-   A line's reading time = its typing time + HOLD_MS, so it always finishes. */
-const LETTER_MS = 40
-const HOLD_MS = 1500
+/* Typewriter pacing lives in settings.typewriter so the narrated screens
+   stay in step with each other; a line's reading time is its typing time
+   plus HOLD_MS, so it always finishes. */
+const { letterMs: LETTER_MS, holdMs: HOLD_MS } = settings.typewriter
 
 // Intro timeline (motion only): the tunnel video plays with the portal rings
 // over it; in its last FLASH_MS the core swells to a whiteout; the white fades

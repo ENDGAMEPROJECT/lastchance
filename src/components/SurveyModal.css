@@ -1,0 +1,166 @@
+/* End-of-run feedback survey. Absolute, not fixed: it belongs to the
+   1280x720 stage (Stage.jsx) and must scale and letterbox with it. */
+.sv-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(2, 3, 10, 0.78);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  z-index: 1300;
+  animation: fade-in 0.2s ease;
+}
+
+.sv-modal {
+  width: 100%;
+  max-width: 700px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* the body scrolls, the head and actions stay put */
+}
+
+.sv-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px 10px;
+  border-bottom: 1px solid var(--line);
+}
+.sv-head h3 { margin: 0; font-size: 1.2rem; }
+.sv-x {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  border-radius: 6px;
+  width: 30px; height: 30px;
+  cursor: pointer;
+}
+.sv-x:hover { color: var(--text); border-color: var(--cyan); }
+
+.sv-progress {
+  height: 3px;
+  background: rgba(120, 160, 255, 0.16);
+}
+.sv-progress span {
+  display: block;
+  height: 100%;
+  background: var(--cyan);
+  box-shadow: var(--glow-cyan);
+  transition: width 240ms ease;
+}
+
+/* The 16-item section is long by design (it mirrors ECHO's instrument), so
+   the body is the only scrolling part and the buttons stay reachable. */
+.sv-body {
+  padding: 14px 18px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.sv-section-title { margin: 0 0 4px; font-size: 1.02rem; line-height: 1.35; }
+.sv-range {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.sv-items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.sv-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(10, 14, 30, 0.5);
+}
+/* Only after a failed Next, so nothing is red before the player has had a go. */
+.sv-item.missing { border-color: rgba(255, 70, 140, 0.55); }
+.sv-item-text { font-size: 0.9rem; line-height: 1.35; flex: 1; }
+
+.sv-scale { display: flex; gap: 5px; flex-shrink: 0; }
+.sv-dot {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+.sv-dot:hover { border-color: var(--cyan); color: var(--text); }
+.sv-dot.on {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  color: #04202a;
+  box-shadow: var(--glow-cyan);
+}
+
+.sv-text { width: 100%; resize: vertical; font-family: inherit; }
+.sv-hint { margin-top: 12px; }
+
+.sv-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 18px 14px;
+  border-top: 1px solid var(--line);
+}
+.sv-step { color: var(--muted); font-size: 0.82rem; }
+.sv-actions .btn:disabled { opacity: 0.4; cursor: default; }
+
+/* ---- the invitation on the end screens ---- */
+.sv-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 14px auto 0;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(10, 14, 30, 0.55);
+}
+.sv-banner-text { text-align: left; line-height: 1.3; }
+.sv-banner-title { font-weight: 700; }
+.sv-banner-sub { color: var(--muted); font-size: 0.86rem; }
+.sv-thanks { margin: 14px 0 0; color: var(--green); }
+
+/* Phone portrait composes at 720x1280: stack the long rows rather than
+   squeeze a 7-point scale next to its question. */
+@media (max-width: 920px) {
+  .sv-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .sv-scale { align-self: stretch; justify-content: space-between; }
+  .sv-banner { flex-direction: column; text-align: center; }
+  .sv-banner-text { text-align: center; }
+}
+
+/* ---- end options, shown once the survey is in ---- */
+.eo-modal { max-width: 480px; }
+.eo-body { text-align: center; }
+.eo-description { margin: 0 0 16px; line-height: 1.45; }
+.eo-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* The resources link is an <a>, so it needs the button's text treatment. */
+.eo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+.sv-thanks a { color: var(--cyan); }
+
+@media (max-width: 920px) {
+  .eo-modal { max-width: 100%; }
+}

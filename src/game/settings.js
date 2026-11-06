@@ -47,6 +47,20 @@ export const settings = {
   /* Minutes on the offer countdown. */
   timerMinutes: 30,
 
+  /* Typewriter pacing for the narrated screens (portal arrival, return, the
+     in-person tests) and the chat bubbles.
+
+     `letterMs` is milliseconds per character. A narrated line stays up for
+     its typing time plus `holdMs`, so the hold — not the typing — is the
+     reading buffer: typing at 25ms/char already outruns comfortable reading
+     (~60ms/char), which is why speeding the type up does not shorten the
+     time there is to read. Lower `letterMs` to make the game feel snappier;
+     lower `holdMs` only if lines are sitting there too long after finishing.
+
+     `chatMs` is the chat bubbles, which have always run faster because the
+     messages are short and the speaker is "typing" at you. */
+  typewriter: { letterMs: 25, holdMs: 1500, chatMs: 12 },
+
   /* Remind players to inspect their tools after BOTH thresholds are met. */
   bagReminder: { clicks: 2, delayMs: 20000 },
 

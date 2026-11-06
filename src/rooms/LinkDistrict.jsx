@@ -441,7 +441,7 @@ function DoorPage({ type, ambiguous, t }) {
     <div className="door-page shop">
       <div className="dp-shopbar">{t('rooms.link.preview.shopBar')}</div>
       <div className="dp-prod">👟</div>
-      <div className="dp-price">$9.99</div>
+      <div className="dp-price">€9.99</div>
       <div className="dp-limited">{t('rooms.link.preview.limited')}</div>
     </div>
   )
