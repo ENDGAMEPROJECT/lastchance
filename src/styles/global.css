@@ -159,6 +159,43 @@ body {
 }
 .scene-scroll { overflow-y: auto; overflow-x: hidden; }
 
+/* ---------- Text selection ----------
+   Chrome is not text: dragging across a button, a map node or a puzzle tile
+   should move or click it, not leave a blue smear of selected label. This is
+   most obvious in the drag-and-drop rooms, where a slightly-off grab selects
+   the caption instead of picking the piece up.
+
+   Prose stays selectable on purpose — dialogue, hints, evidence and the fine
+   print under the ad posters are things a player or a teacher may well want
+   to copy, quote, or run through a translator. So this disables selection on
+   controls and decoration only, rather than globally with opt-outs. */
+button,
+.btn,
+[role="button"],
+[role="radio"],
+[role="tab"],
+label,
+legend,
+summary,
+img,
+svg,
+.eyebrow,
+.chip,
+.mono-badge,
+.hud,
+.mnode,
+.lang-chip,
+.character-option,
+.bg-slot,
+.transition-veil {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Images are also draggable by default, which starts a ghost-drag that
+   fights the game's own drag-and-drop. */
+img { -webkit-user-drag: none; }
+
 /* ---------- Typography ---------- */
 h1, h2 { font-family: var(--font-display); letter-spacing: 0.02em; margin: 0 0 0.4em; }
 h3 {
