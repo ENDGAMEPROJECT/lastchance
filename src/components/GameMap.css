@@ -11,7 +11,11 @@
 
 .map-head { max-width: 900px; margin: 0 auto 4px; text-align: center; }
 .map-head h2 { font-size: 1.7rem; margin-bottom: 2px; }
-.map-head .eyebrow { font-size: 0.66rem; }
+.map-head .eyebrow { font-size: 0.66rem;
+  @media (max-width: 1180px) {
+    display: none
+  }
+ }
 .map-progress { display: flex; align-items: center; gap: 14px; max-width: 420px; margin: 8px auto 0; }
 .map-progress-bar {
   flex: 1;
@@ -204,9 +208,9 @@
 /* Start / Final Decision are story signposts, not puzzles. */
 .mnode.gate:disabled:not(.locked) { cursor: default; }
 
-/* Mobile breakpoint (≤920px, = settings.mobile.breakpoint): the debug jump row
+/* Mobile breakpoint (≤1180px, = settings.mobile.breakpoint): the debug jump row
    floats over the bottom of the map instead of pushing the map down. */
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .map-debug {
     position: absolute;
     left: 0;
@@ -222,6 +226,9 @@
      the row and swallows its taps. Lift the whole header — z-index works on a
      flex item without `position`, so the row still anchors to the map. */
   .map-head { z-index: 6; }
+  /* …but the lifted header overlaps the top row of stations, so it lets taps
+     through; only the debug buttons in it take them (.map-debug > *). */
+  .map-head { pointer-events: none; }
   /* The header's fade-in animates transform, which would make the header the
      row's anchor; an opacity-only fade lets it anchor to the whole map. */
   .map-head.fade-in { animation-name: map-head-in; }
@@ -230,4 +237,33 @@
      the layout and the station maths are untouched; useCentred measures the
      scaled box, so the centring still holds. */
   .map-board { transform: scale(1.1); }
+  /* Stations 25% bigger (152px → 190px). The art, glow, check and label offset
+     are all % of this box, so they follow; the station centres don't move. */
+  .mnode { width: 190px; height: 190px; }
+  /* At this size neighbouring station boxes overlap (Start reaches over Link).
+     A disabled button still swallows taps, so let the ones that can't be
+     opened (Start, locked districts) pass taps to the station behind. */
+  .mnode:disabled { pointer-events: none; }
+  /* Completed tick 70% bigger: 24px → 41px, the ✓ glyph scaled to match. */
+  .mnode-check { width: 41px; height: 41px; font-size: calc(0.82rem * 1.7); }
+  /* Nudge the stations + road down. Via top/bottom, not transform: the inline
+     translateX (useCentred) owns `transform`. Both edges move by the same
+     amount so the box keeps its height and the stations their spacing. */
+  .map-nodes { top: 30px; bottom: -30px; }
+  /* Long station names (some languages) would run into the neighbours: wrap
+     them onto two balanced lines no wider than the podium. max-content keeps
+     short names on one line (an absolute box otherwise shrinks to the space
+     right of left:50%). The label is anchored by `bottom`, so it grows upward.
+     min-width: min-content beats max-width, so a single word too long to break
+     (Finnish) widens the pill instead of spilling out of it. The exact width
+     of a wrapped pill is then fitted to its text in GameMap.jsx (fitLabels). */
+  .mnode-label {
+    width: max-content;
+    max-width: 160px;
+    min-width: min-content;
+    white-space: normal;
+    text-align: center;
+    text-wrap: balance;
+    line-height: 1.15;
+  }
 }

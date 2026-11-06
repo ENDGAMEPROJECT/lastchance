@@ -14,7 +14,7 @@
   box-shadow:
     var(--glow-cyan),
     0 24px 50px rgba(0, 0, 0, 0.55);
-  @media (min-width: 920px) {
+  @media (min-width: 1181px) {
     width: 100%;
     max-width:540px;
     gap: 8px;
@@ -59,7 +59,7 @@
 .welcome-fields .welcome-field.age {
   width:170px;
   flex: none;
-  @media (min-width: 920px) {
+  @media (min-width: 1181px) {
     width: 120px;
   }
 }
@@ -89,7 +89,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 8px;
 
-  @media (min-width: 920px) {
+  @media (min-width: 1181px) {
 
   display: flex;
   flex-wrap: wrap;
@@ -115,7 +115,7 @@
     border-color 0.2s,
     background 0.2s,
     box-shadow 0.2s;
-    @media (min-width: 920px) {
+    @media (min-width: 1181px) {
       font-size: 1rem;
      height:100%;
     }
@@ -189,7 +189,7 @@
   transition:
     border-color 0.2s,
     background 0.2s;
-  @media (min-width: 920px) {
+  @media (min-width: 1181px) {
     height: 150px;
   }
 }
@@ -332,7 +332,7 @@
 
 /* Phone portrait composes at 720x1280 (Stage.jsx), so the row has less width
    to play with — shrink it rather than let it crowd the card. */
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .landing-credits {
     right: 20px;
     gap: 10px;

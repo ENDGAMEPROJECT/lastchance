@@ -83,7 +83,7 @@ export default {
     "pretest": "Pre-test: first, tell {friend} what you already think about this deal. Then enter the Internet."
   },
   "map": {
-    "eyebrow": "Physical Internet · District Map",
+    "eyebrow": "Physical Internet Map",
     "titleLead": "Choose your next",
     "titleAccent": "district",
     "subtitle": "Travel the network, gather evidence, and reach the Final Decision before the offer expires.",
@@ -403,6 +403,59 @@ export default {
       "name": "Truth Flashlight",
       "desc": "Shows what flashy ads hide: the small print and the catches behind their big promises."
     }
+  },
+  "session": {
+    "title": "Welcome back",
+    "message": "You have a run in progress. Pick up where you left off, or start again from the beginning?",
+    "progress": "Districts cleared: {done}/{total} · {time} left",
+    "resume": "Resume run",
+    "restart": "Start over"
+  },
+  "survey": {
+    "bannerTitle": "Thanks for playing!",
+    "bannerSubtitle": "Give us your feedback",
+    "bannerButton": "Take Survey",
+    "requiredHint": "Please answer all questions",
+    "previous": "Previous",
+    "next": "Next",
+    "submit": "Submit",
+    "title": "Share Your Feedback",
+    "opinionTitle": "What is your general opinion about the escape room? ",
+    "opinionRange": "1 = Very poor, 2 = Poor, 3 = Neutral, 4 = Good, 5 = Very good",
+    "rateTitle": "Rate the following statements on a scale of 1-7",
+    "rateRange": "1 = Strongly Disagree, 2 = Disagree, 3 = Somewhat Disagree , 4 = Neutral, 5 = Somewhat Agree, 6 = Agree, 7 = Strongly Agree).",
+    "learningTitle": "How much did you learn?",
+    "learningItems": [
+      "The escape room increased my knowledge of how AI works",
+      "The escape room increased my knowledge of how AI is used in social media",
+      "The escape room increased my knowledge of what the appropriate uses of AI are"
+    ],
+    "guessTitle": "How did you like the gameplay?",
+    "guessItems": [
+      "I find the controls of the escape room to be straightforward.",
+      "I find the escape room's interface to be easy to navigate.",
+      "I am captivated by the escape room’s story from the beginning.",
+      "I enjoy the story provided by the escape room.",
+      "I feel detached from the outside world while playing the escape room.",
+      "I do not care to check events that are happening in the real world during the escape room.",
+      "I think the escape room is fun.",
+      "I feel bored while playing the escape room.",
+      "I feel the escape room allows me to be imaginative.",
+      "I feel creative while playing the escape room.",
+      "I am very focused on my own performance while playing the escape room.",
+      "I want to do as well as possible during the escape room.",
+      "I enjoy the escape room’s graphics.",
+      "I think the escape room is visually appealing.",
+      "I enjoy the sound effects in the game.",
+      "I feel the game's audio (e.g., sound effects, music) enhances my gaming experience."
+    ],
+    "comments": "Any additional comments or suggestions?"
+  },
+  "escapeRoomEnd": {
+    "title": "Escape room finished",
+    "description": "What would you like to do next?",
+    "restart": "Return to the beginning",
+    "visitResources": "Visit ENDGAME resources"
   },
   "names": {
     "mia": {

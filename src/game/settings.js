@@ -34,12 +34,12 @@ export const settings = {
     height: 720,
   },
 
-  /* Mobile (viewport ≤ breakpoint — keep in sync with the 920px media query in
+  /* Mobile (viewport ≤ breakpoint — keep in sync with the 1180px media query in
      styles/global.css). The scaled-down stage makes text tiny on phones, so
      running text is boosted until it renders at least `minTextPx` on screen,
      but never more than `maxTextBoost`× its desktop size (the layout is fixed). */
   mobile: {
-    breakpoint: 920,
+    breakpoint: 1180,
     minTextPx: 13,
     maxTextBoost: 1.5,
   },

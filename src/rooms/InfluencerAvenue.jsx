@@ -382,7 +382,7 @@ function ReverseSearchDemo({ phase }) {
 
       <div className="ia-demo-engine">
         <div className="ia-demo-top">
-          <img className="ia-demo-logo" src={productUrl('logo-booble.png')} alt="" />
+          <img className="ia-demo-logo" src={productUrl('logo-joogle.png')} alt="" />
           <div className={`ia-demo-bar ${phase === 'drag' ? 'is-over' : ''}`}>
             <span className="ia-engine-lens">🔍</span>
             {at('search') && <span className="ia-engine-chip fade-in" style={{ backgroundImage: `url("${productUrl('shoes.png')}")` }} />}
@@ -1231,7 +1231,7 @@ export default function InfluencerAvenue({ node }) {
                   <div className="ia-engine-top">
                     <img
                       className="ia-engine-logo"
-                      src={productUrl('logo-booble.png')}
+                      src={productUrl('logo-joogle.png')}
                       alt={t('rooms.influencer.stage2.engineBar')}
                     />
                     <DropZone

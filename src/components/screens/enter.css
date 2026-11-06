@@ -256,7 +256,7 @@
   margin: 0;
   font-size: 30px;
   line-height: 1.4;
-  @media (min-width: 920px) {
+  @media (min-width: 1181px) {
     font-size: 1.05rem;
   }
 }

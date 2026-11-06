@@ -83,7 +83,7 @@ export default {
     "pretest": "Pre-test: prvo reci {friend_dative} šta već misliš o ovoj ponudi. Zatim uđi na Internet."
   },
   "map": {
-    "eyebrow": "Fizički internet · Mapa okruga",
+    "eyebrow": "Mapa fizičkog interneta",
     "titleLead": "Izaberi sledeći",
     "titleAccent": "okrug",
     "subtitle": "Putuj kroz mrežu, prikupljaj dokaze i stigni do Konačne odluke pre nego što ponuda istekne.",
@@ -403,6 +403,59 @@ export default {
       "name": "Lampa istine",
       "desc": "Pokazuje šta upadljivi oglasi kriju: sitna slova i zamke iza velikih obećanja."
     }
+  },
+  "session": {
+    "title": "Dobrodošao/la nazad",
+    "message": "Imaš započetu igru. Da nastaviš odakle si stao/la ili da počneš iz početka?",
+    "progress": "Završeni okruzi: {done}/{total} · preostalo {time}",
+    "resume": "Nastavi igru",
+    "restart": "Počni iz početka"
+  },
+  "survey": {
+    "bannerTitle": "Hvala što si igrao/la!",
+    "bannerSubtitle": "Dajte nam svoje povratne informacije",
+    "bannerButton": "Popunite anketu",
+    "requiredHint": "Molimo vas da odgovorite na sva pitanja",
+    "previous": "Prethodno",
+    "next": "Sledeći",
+    "submit": "Pošalji",
+    "title": "Podelite svoje povratne informacije",
+    "opinionTitle": "Kakvo je vaše opšte mišljenje o escape room-u?",
+    "opinionRange": "1 = Veoma loše, 2 = Loše, 3 = Neutralno, 4 = Dobro, 5 = Veoma dobro",
+    "rateTitle": "Ocenite sledeće tvrdnje na skali od 1–7",
+    "rateRange": "1 = Uopšte se ne slažem, 2 = Ne slažem se, 3 = Delimično se ne slažem, 4 = Neutralno, 5 = Delimično se slažem, 6 = Slažem se, 7 = U potpunosti se slažem",
+    "learningTitle": "Koliko si naučio/naučila?",
+    "learningItems": [
+      "Escape room je proširio moje znanje o tome kako veštačka inteligencija funkcioniše",
+      "Escape room je proširio moje znanje o tome kako se veštačka inteligencija koristi na društvenim mrežama",
+      "Escape room je proširio moje znanje o tome koje su odgovarajuće upotrebe veštačke inteligencije"
+    ],
+    "guessTitle": "Kako vam se dopao način igre?",
+    "guessItems": [
+      "Kontrole u escape room-u su mi jednostavne",
+      "Interfejs escape room-a mi je lak za navigaciju",
+      "Od samog početka me je privukla priča escape room-a",
+      "Uživam u priči koju escape room pruža",
+      "Osećam se odvojeno od spoljašnjeg sveta dok igram escape room",
+      "Ne zanima me da proveravam događaje koji se dešavaju u stvarnom svetu tokom escape room-a",
+      "Mislim da je escape room zabavan",
+      "Dosadno mi je dok igram escape room",
+      "Osećam da mi escape room omogućava da budem maštovit/a",
+      "Osećam se kreativno dok igram escape room",
+      "Veoma sam fokusiran/a na sopstveni nastup dok igram escape room",
+      "Želim da budem što bolji/a tokom escape room-a",
+      "Uživam u grafici escape room-a",
+      "Mislim da je escape room vizuelno privlačan",
+      "Uživam u zvučnim efektima u igri",
+      "Smatram da zvuk u igri (npr. zvučni efekti, muzika) poboljšava moje iskustvo igranja"
+    ],
+    "comments": "Imate li dodatnih komentara ili predloga?"
+  },
+  "escapeRoomEnd": {
+    "title": "Escape room je završen",
+    "description": "Šta bi želeo/la da uradiš sledeće?",
+    "restart": "Vrati se na početak",
+    "visitResources": "Poseti ENDGAME resurse"
   },
   "names": {
     "mia": {

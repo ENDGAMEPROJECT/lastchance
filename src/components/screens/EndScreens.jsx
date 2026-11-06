@@ -3,6 +3,7 @@ import { useGame, formatTime } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { NARRATIVE } from '../../game/gameData.js'
 import { assetUrl } from '../../game/assets.js'
+import { useMobileView } from '../../game/device.js'
 import { getAllEvidence } from '../../game/evidence.js'
 import Modal from '../Modal.jsx'
 import './screens.css'
@@ -81,6 +82,9 @@ export function WinScreen() {
   const t = useT()
   const [reportOpen, setReportOpen] = useState(false)
   const vars = { friend: narrative.friend, product: narrative.product, time: formatTime(timeLeft) }
+  // Large buttons on desktop (>1180px); regular size on phones (≤1180px,
+  // = settings.mobile.breakpoint). Re-renders when the window crosses it.
+  const btnClass = useMobileView() ? 'btn' : 'btn btn-lg'
 
   return (
     <div className="stage-scroll win-scene">
@@ -88,20 +92,20 @@ export function WinScreen() {
       {/* The chosen character, bottom-right (public/ending/mia-won.png / max-won.png). */}
       <img className="win-players" src={assetUrl(`ending/${narrative.character}-won.png`)} alt="" />
       <div className="intro end fade-in">
-        <div className="eyebrow" style={{ color: 'var(--green)', fontSize: "16px", fontWeight: "bold" }}>
+        <div className="eyebrow" style={{ color: 'var(--green)', fontSize: "20px", fontWeight: "bold" }}>
           <span>{t('end.win.eyebrow')} </span>
           <span className="intro-glyph win-glyph">✓</span>
         </div>
         <h1 className="intro-title">{t('end.win.titleLead', vars)} <span className="grad">{t('end.win.titleAccent')}</span></h1>
-        <h3 style={{ fontSize: "1.17em", fontFamily: "var(--font-retro)", color: "#2gc3c52", textAlign: "center" }}>{t('end.win.tag', vars)}</h3>
+        <h3 className="intro-offer" style={{ fontSize: "1.17em", fontFamily: "var(--font-retro)", color: "#2gc3c52", textAlign: "center" }}>{t('end.win.tag', vars)}</h3>
         <p style={{ fontSize: "1.15rem", fontFamily: "var(--font-retro)", marginBottom: 16, textAlign: "center" }}
         className="win-description">{t('end.win.body', vars)}</p>
 
         <WhatHappenedCard titleKey="end.whatHappened.titleWin" textKey="end.whatCould" narrative={narrative} vars={vars} light />
 
         <div className="end-actions">
-          <button className="btn-light btn" onClick={reset}>{t('end.win.again')}</button>
-          <button className="btn-light btn" onMouseDown={(e) => e.preventDefault()} onClick={() => setReportOpen(true)}>
+          <button className={`btn-magenta win-again ${btnClass}`} onClick={reset}>{t('end.win.again')}</button>
+          <button className={`btn-light ${btnClass}`} onMouseDown={(e) => e.preventDefault()} onClick={() => setReportOpen(true)}>
             {t('end.win.evidenceButton')}
           </button>
         </div>
@@ -116,6 +120,7 @@ export function LoseScreen() {
   const t = useT()
   const [reportOpen, setReportOpen] = useState(false)
   const vars = { friend: narrative.friend, product: narrative.product }
+  const btnClass = useMobileView() ? 'btn' : 'btn btn-lg' // as on the win screen
 
   // Per-outcome heading/body, falling back to the generic time-up copy. The
   // reducer sets loseReason: 'timeUp' | 'choseBuy' |
@@ -134,22 +139,22 @@ export function LoseScreen() {
     <div className="stage-scroll lose-scene">
       {/* The chosen character's lost scene (public/ending/mia-lost.png / max-lost.png). */}
       <div className="lose-bg" style={{ backgroundImage: `url("${assetUrl(`ending/${narrative.character}-lost.png`)}")` }} aria-hidden="true" />
-      <div className="intro end fade-in">
+      <div className="intro end fade-in gap-larger">
        
         <div className="eyebrow container-lose-eyebrow" style={{ color: 'var(--red)' }}>  <span className="intro-glyph lose-glyph">⏱</span>{t('end.lose.eyebrow')}</div>
         <h1 className="intro-title">{t('end.lose.titleLead', vars)} <span className="grad-red">{t('end.lose.titleAccent')}</span></h1>
         {/* <p className="intro-tag mono">{t('end.lose.tag')}</p> */}
 
-        <div className="" style={{ fontSize: "1.2rem", fontFamily: "var(--font-retro)", marginBottom: 16, textAlign: "center" }}>
-          <h3 style={{ color: 'var(--red)' }}>{heading}</h3>
-          <p>{body}</p>
+        <div className="lose-reason">
+          <h3 className="lose-heading">{heading}</h3>
+          <p className="lose-description">{body}</p>
         </div>
 
         <WhatHappenedCard titleKey="end.whatHappened.titleLose" textKey="end.whatHappened" narrative={narrative} vars={vars} />
 
         <div className="end-actions">
-          <button className="btn btn-cyan btn-lg" onClick={reset}>{t('end.lose.again')}</button>
-          <button className="btn btn-magenta btn-lg" onMouseDown={(e) => e.preventDefault()} onClick={() => setReportOpen(true)}>
+          <button className={`btn-cyan ${btnClass}`} onClick={reset}>{t('end.lose.again')}</button>
+          <button className={`btn-magenta ${btnClass}`} onMouseDown={(e) => e.preventDefault()} onClick={() => setReportOpen(true)}>
             {t('end.lose.missingEvidence.button')}
           </button>
         </div>

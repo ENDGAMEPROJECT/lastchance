@@ -83,7 +83,7 @@ export default {
     "pretest": "Alkutesti: kerro ensin {friend_allative}, mitä jo ajattelet tästä tarjouksesta. Astu sitten internetiin."
   },
   "map": {
-    "eyebrow": "Fyysinen internet · Kaupunginosakartta",
+    "eyebrow": "Fyysinen internetkartta",
     "titleLead": "Valitse seuraava",
     "titleAccent": "kaupunginosa",
     "subtitle": "Kulje verkon läpi, kerää todisteita ja saavuta lopullinen päätös ennen kuin tarjous päättyy.",
@@ -403,6 +403,59 @@ export default {
       "name": "Totuuslamppu",
       "desc": "Näyttää, mitä näyttävät mainokset piilottavat: pienen präntin ja suurten lupausten takana olevat koukut."
     }
+  },
+  "session": {
+    "title": "Tervetuloa takaisin",
+    "message": "Sinulla on kesken oleva kierros. Jatketaanko siitä mihin jäit, vai aloitetaanko alusta?",
+    "progress": "Kaupunginosia selvitetty: {done}/{total} · aikaa jäljellä {time}",
+    "resume": "Jatka kierrosta",
+    "restart": "Aloita alusta"
+  },
+  "survey": {
+    "bannerTitle": "Kiitos pelaamisesta!",
+    "bannerSubtitle": "Anna meille palautetta",
+    "bannerButton": "Osallistu kyselyyn",
+    "requiredHint": "Ole hyvä ja vastaa kaikkiin kysymyksiin",
+    "previous": "Edellinen",
+    "next": "Seuraava",
+    "submit": "Lähetä",
+    "title": "Jaa palautteesi",
+    "opinionTitle": "Mikä on yleinen mielipiteesi pakohuonepelistä",
+    "opinionRange": "1 = Erittäin huono, 2 = Huono, 3 = Neutraali, 4 = Hyvä, 5 = Erittäin hyvä",
+    "rateTitle": "Arvioi seuraavat väittämät asteikolla 1-7",
+    "rateRange": "1 = Vahvasti eri mieltä, 2 = Eri mieltä, 3 = Jossain määrin eri mieltä , 4 = Neutraali, 5 = Jossain määrin samaa mieltä, 6 = Samaa mieltä, 7 = Vahvasti samaa mieltä).",
+    "learningTitle": "Kuinka paljon opit?",
+    "learningItems": [
+      "Pakohuonepeli lisäsi tietämystäni tekoälyn toiminnasta",
+      "Pakohuonepeli lisäsi tietämystäni tekoälyn käytöstä sosiaalisessa mediassa",
+      "Pakohuonepeli lisäsi tietämystäni tekoälyn asianmukaisista käyttötavoista"
+    ],
+    "guessTitle": "Mitä pidit pelattavuudesta?",
+    "guessItems": [
+      "Pelin ohjaaminen oli suoraviivaista",
+      "Pakopelin käyttöliittymää oli helppo navigoida.",
+      "Pakopelin tarina vangitsi alusta alkaen.",
+      "Nautin pakopelin tarinasta.",
+      "Koin uppoutuvani ja unohtavani ulkomaailman pelatessani pakopeliä.",
+      "Minua ei kiinnostanut tarkistaa, mitä oikeassa maailmassa tapahtuu samalla kun pelasin pakopeliä.",
+      "Mielestäni pakopeli oli hauska.",
+      "Tunsin itseni pitkästyneeksi pelatessani pakopeliä.",
+      "Koin pakopelin sallivan minun käyttää mielikuvitustani.",
+      "Koin itseni luovaksi pelatessa pakopeliä.",
+      "Olin hyvin keskittynyt omaan suoritukseeni pelatessani pakopeliä.",
+      "Halusin pärjätä mahdollisimman hyvin pelatessani pakopeliä.",
+      "Nautin pakopelin grafiikoista.",
+      "Pidin pakopeliä visuaalisesti miellyttävänä.",
+      "Tykkään pelin äänitehosteista.",
+      "Mielestäni pelin äänet (esim. äänitehosteet, musiikki) parantavat pelikokemustani."
+    ],
+    "comments": "Onko muita kommentteja tai ehdotuksia?"
+  },
+  "escapeRoomEnd": {
+    "title": "Pakohuone päättynyt",
+    "description": "Mitä haluaisit tehdä seuraavaksi?",
+    "restart": "Palaa alkuun",
+    "visitResources": "Siirry ENDGAME-resursseihin"
   },
   "names": {
     "mia": {

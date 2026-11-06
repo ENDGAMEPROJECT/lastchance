@@ -83,7 +83,7 @@ export default {
     "pretest": "Prueba previa: primero, cuéntale a {friend} qué opinas sobre esta oferta. Luego, entra en Internet."
   },
   "map": {
-    "eyebrow": "Internet físico · Mapa del distrito",
+    "eyebrow": "Mapa del Internet físico ",
     "titleLead": "Elige tu próximo",
     "titleAccent": "distrito",
     "subtitle": "Recorre la red, reúne pruebas y llega a la decisión final antes de que expire la oferta.",
@@ -404,6 +404,59 @@ export default {
       "desc": "Muestra lo que esconden los anuncios llamativos: la letra pequeña y las trampas tras sus grandes promesas."
     }
   },
+  "session": {
+    "title": "Bienvenido de nuevo",
+    "message": "Tienes una partida en curso. ¿Continúas donde lo dejaste o empiezas desde el principio?",
+    "progress": "Distritos completados: {done}/{total} · quedan {time}",
+    "resume": "Continuar partida",
+    "restart": "Empezar de nuevo"
+  },
+  "survey": {
+    "bannerTitle": "¡Gracias por jugar!",
+    "bannerSubtitle": "Danos tu opinión",
+    "bannerButton": "Responder encuesta",
+    "requiredHint": "Por favor, responda a todas las preguntas.",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "submit": "Entregar",
+    "title": "Comparte tu opinión",
+    "opinionTitle": "¿Cuál es tu opinión general sobre la escape room?",
+    "opinionRange": "1 = Muy mala, 2 = Mala, 3 = Neutral, 4 = Buena, 5 = Muy buena",
+    "rateTitle": "Califica las siguientes afirmaciones en una escala del 1 al 7.",
+    "rateRange": "1 = Totalmente en desacuerdo, 2 = En desacuerdo, 3 = Ligeramente en desacuerdo, 4 = Neutral, 5 = Ligeramente de acuerdo, 6 = De acuerdo, 7 = Totalmente de acuerdo.",
+    "learningTitle": "¿Cuánto has aprendido?",
+    "learningItems": [
+      "La escape room aumentó mi conocimiento sobre cómo funciona la IA.",
+      "La escape room aumentó mi conocimiento sobre cómo se utiliza la IA en las redes sociales.",
+      "La escape room aumentó mi conocimiento sobre cuáles son los usos apropiados de la IA."
+    ],
+    "guessTitle": "¿Qué te pareció la jugabilidad?",
+    "guessItems": [
+      "Los controles de la escape room me parecen sencillos.",
+      "La interfaz de la escape room me resulta fácil de usar.",
+      "La historia de la escape room me cautivó desde el principio.",
+      "Disfruto de la historia que ofrece la escape room.",
+      "Me siento desconectad@ del mundo exterior mientras juego al escape room.",
+      "No me intereso por lo que está sucediando a mi alrededor durante la partida de escape room.",
+      "Creo que la escape room es divertida.",
+      "Me aburro mientras juego al escape room.",
+      "Siento que la escape room me permite ser imaginativ@.",
+      "Me siento creativ@ mientras juego al escape room.",
+      "Estoy muy concentrad@ en mi propio desempeño mientras juego al escape room.",
+      "Quiero hacerlo lo mejor posible en la escape room.",
+      "Me gustan los gráficos de la escape room.",
+      "Creo que la escape room es visualmente atractiva.",
+      "Me gustan los efectos de sonido de la escape room..",
+      "Siento que el audio de la escape room (por ejemplo, los efectos de sonido, la música) mejora mi experiencia de juego."
+    ],
+    "comments": "¿Algún comentario o sugerencia adicional?"
+  },
+  "escapeRoomEnd": {
+    "title": "Escape room finalizado",
+    "description": "¿Qué te gustaría hacer ahora?",
+    "restart": "Volver al inicio",
+    "visitResources": "Ir a los recursos de ENDGAME"
+  },
   "names": {
     "mia": {
       "nominative": "Mia",
@@ -635,7 +688,7 @@ export default {
       "barLookalike": "⚠ Letras parecidas",
       "secureConn": "Conexión cifrada (https)",
       "insecureConn": "No es seguro: conexión http sin cifrar",
-      "blockThis": "🔒 Bloquear este enlace",
+      "blockThis": "🔒 Bloquear enlace",
       "unblock": "↺ Desbloquear",
       "inspect": "Inspecciona la dirección y la vista previa.",
       "realStore": "↧ tienda real",

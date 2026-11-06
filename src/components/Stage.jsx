@@ -47,7 +47,7 @@ export default function Stage({ children, portrait = false }) {
       const s = Math.min(vw / width, vh / height)
       setScale(s)
       setView({ W, H, rotated })
-      // Mobile text boost (only read by the ≤920px media query in global.css):
+      // Mobile text boost (only read by the ≤1180px media query in global.css):
       // enough to bring the 17px body text up to minTextPx on screen, capped.
       const { minTextPx, maxTextBoost } = settings.mobile
       const boost = Math.min(maxTextBoost, Math.max(1, minTextPx / (17 * s)))

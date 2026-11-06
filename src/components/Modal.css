@@ -34,9 +34,9 @@
 .accent-green { color: var(--green); }
 .accent-amber { color: var(--amber); }
 
-/* Mobile breakpoint (≤920px, = settings.mobile.breakpoint): every modal spans
+/* Mobile breakpoint (≤1180px, = settings.mobile.breakpoint): every modal spans
    85% of the 1280px game width. !important beats the per-modal inline maxWidth. */
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .modal {
     width: calc(1280px * 0.85);
     max-width: calc(1280px * 0.85) !important;

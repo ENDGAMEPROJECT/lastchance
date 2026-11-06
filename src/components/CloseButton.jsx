@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { useT } from '../i18n/index.jsx'
 
 /* The game's one close button (✕): a dark neon chip — purple edge, cyan inner
-   glow, a white spark — styled by `.close-btn` in styles/global.css. Pass
+   glow — styled by `.close-btn` in styles/global.css. Pass
    `light` when it sits on a light surface. Position it with `className`;
    any other props (onClick, ref, autoFocus, onMouseDown…) go to the <button>. */
 const CloseButton = forwardRef(function CloseButton({ className = '', light = false, ...rest }, ref) {

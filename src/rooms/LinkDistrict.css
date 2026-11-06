@@ -553,7 +553,7 @@
    "Blokiraj ovaj link" / "Otvori da zaviriš unutra"). Deliberately NOT applied
    above the breakpoint, where every label fits on one line and a second would
    only add dead space. */
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .ld-door-foot .btn {
     line-height: 1.25;
     /* box-sizing is border-box, so this has to cover the button's own

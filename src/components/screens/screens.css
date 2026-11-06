@@ -507,7 +507,7 @@
   position: absolute;
   right: 0;
   bottom: 0;
-  height: 260px;
+  height: 290px;
   width: auto;
   z-index: 0;
   pointer-events: none;
@@ -523,7 +523,7 @@
   position: relative;
   z-index: 1;
   max-width: 600px;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     max-width: 820px;
   }
 }
@@ -581,6 +581,9 @@
     -webkit-background-clip: text;
     background-clip: text;
 }
+.win-scene .intro-offer {
+  color: #3a406b ;
+}
 .reduced-motion .win-cloud-lane {
   animation: none;
   transform: translateX(var(--x));
@@ -594,7 +597,7 @@ p.win-description {
   font-family: var(--font-neogrotesk) !important;
   color: #16233d !important;
   max-width:720px;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     max-width: 820px;
   }
 }
@@ -634,6 +637,65 @@ h3.win-congrats {
 }
 .reduced-motion .lose-bg::after { animation: none; }
 
+/* Lose reason (heading + body), under the title. */
+.lose-reason {
+  font-size: 1.2rem;
+  font-family: var(--font-retro);
+  margin-bottom: 16px;
+  text-align: center;
+}
+.lose-heading { color: var(--red); }
+/* Body and consequence card: the win screen's sizes and fonts on every screen
+   size (p.win-description and .end-what-light), in the lose colours. */
+.lose-description {
+  font-size: 1.15rem;
+  font-family: var(--font-neogrotesk);
+  max-width: 720px;
+  margin: 0 auto 16px;
+  text-align: center;
+}
+.lose-scene .intro.end .end-what h3 { font-size: 1.25rem; }
+.lose-scene .intro.end .end-what p { font-size: 1.15rem !important; }
+.gap-larger { 
+  @media (max-width: 1180px) {
+    gap: 18px;
+  }
+}
+/* Mobile (≤1180px, = settings.mobile.breakpoint): the lose screen copies the
+   win screen's phone layout and type — sizes, fonts, widths, alignment —
+   keeping its own red/dark colours and glows. */
+@media (max-width: 1180px) {
+  .lose-scene .intro { max-width: 820px; }
+  /* eyebrow as the win one: .eyebrow's mono face at 20px bold, glyph after the text */
+  .container-lose-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 20px !important;
+    font-weight: bold;
+    letter-spacing: 0.35em;
+  }
+  .container-lose-eyebrow .lose-glyph { order: 1; margin-bottom: 0; }
+  /* heading = the win tag line, body = the win description */
+  .lose-reason {
+    font-size: inherit;
+    font-family: inherit;
+    margin-bottom: 0;
+  }
+  .lose-heading {
+    font-size: 1.17em;
+    font-family: var(--font-retro);
+    text-align: center;
+    @media (max-width: 1180px) {
+      display: none
+    }
+  }
+  .lose-description { max-width: 820px; }
+  /* consequence card = the win's light card, in the red style */
+  .lose-scene .intro.end .intro-card.end-what {
+    max-width: 700px;
+    align-self: start;
+  }
+}
+
 /* Consequence card ("What happened to {friend}?") — same red card as the lose
    reason; tighter gap when it follows another card. */
 .intro.end .intro-card.end-what {
@@ -646,12 +708,13 @@ h3.win-congrats {
 /* Lose screen: "Try again" + "See missing evidence" side by side. */
 .end-actions {
   display: flex;
-  justify-content: center;
+
   flex-wrap: wrap;
   gap: 16px;
-  margin-top: 72px;
-  @media (max-width: 920px) {
+  margin-top: 24px;
+  @media (max-width: 1180px) {
     margin-top: 0px;
+    align-self: start
   }
 }
 
@@ -665,6 +728,10 @@ h3.win-congrats {
   font-size: 1rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  @media (max-width: 1180px) {
+    font-size: 1.25rem;
+    margin-bottom: 18px
+  }
 }
 .evidence-report-heading.is-collected { color: var(--green); }
 .evidence-report-heading.is-missing { color: var(--red); margin-top: 20px; }
@@ -677,13 +744,19 @@ h3.win-congrats {
 }
 .evidence-report-list li {
   position: relative;
-  padding-left: 20px;
+  padding-left: 28px;
   line-height: 1.4;
+  @media (max-width: 1180px) {
+    font-size: 1.25rem;
+      padding-left: 34px;
+  }
+  
 }
 .evidence-report-list li::before {
   position: absolute;
   left: 0;
   font-weight: 700;
+
 }
 .evidence-report-list.is-collected li::before { content: '✓'; color: var(--green); }
 .evidence-report-list.is-missing li { color: var(--muted); }
@@ -694,19 +767,40 @@ h3.win-congrats {
 .intro.end .intro-card.end-what.end-what-light {
   border-color: rgba(214, 230, 248, 0.888);
   box-shadow: 0 10px 30px rgba(30, 70, 120, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     max-width: 700px;
     align-self: start;
 
   }
 }
 .intro.end .end-what-light h3 { color: #0f8866;
-@media (max-width: 920px) {
-    font-size: 1.15rem;
+  font-size: 1.25rem;
+
+}
+.intro.end .end-what-light p { font-size: 1.15rem; color: #1a3437 !important;
+
+}
+
+/* Mobile (≤1180px, = settings.mobile.breakpoint): boosted text can make the
+   win/lose copy taller than the screen, so the copy column scrolls. The column
+   (not the scene) scrolls so the sky / lost-scene background and the players
+   image stay put. As a flex item with min-height: 0 it shrinks to the space
+   available; margin: auto still centres it when everything fits. The padding
+   leaves room for the cards' glow, which the scroll box would otherwise clip. */
+@media (max-width: 1180px) {
+  .win-scene .intro,
+  .lose-scene .intro {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding: 12px 20px 20px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(120, 160, 255, 0.35) transparent;
   }
 }
-.intro.end .end-what-light p { font-size: 1rem; color: #1a3437 !important;
-  @media (max-width: 920px) {
-    font-size: 1.15rem;
-  }
-}
+
+/* Win screen "Play again": black on hover — the default magenta tint is almost
+   see-through over the bright sky. (.btn-magenta:hover is in global.css, which
+   is bundled after this file, hence the extra .win-scene for specificity.) */
+.win-scene .win-again:hover:not(:disabled) { background: #000; }

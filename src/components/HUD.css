@@ -454,7 +454,7 @@
   transform: rotate(-5deg);
   filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.6));
   margin-right: 16px;
-  @media(min-width: 920px) {
+  @media(min-width: 1181px) {
       width: 50px;
         margin-right: 4px;
   }
@@ -557,7 +557,7 @@
   }
 }
 
-/* ---- Mobile HUD (≤920px, = settings.mobile.breakpoint) ----
+/* ---- Mobile HUD (≤1180px, = settings.mobile.breakpoint) ----
    The top bar is gone. The side columns (fullscreen + sound on the left;
    the timer above Hints / Map / Bag on the right) are
    portalled to <body> and fixed to the screen edges, so they keep the same
@@ -565,7 +565,7 @@
    short phone, over the game on a squarer one. Sizes there are real screen px
    (no stage scaling). A right-hand button unfolds into a labelled pill on the
    first tap and opens on the second. Only rendered on mobile. */
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .hud-m {
     position: absolute;
     inset: 0;
@@ -584,12 +584,12 @@
     right: max(12px, env(safe-area-inset-right));
     z-index: 50;
     gap: 0;
-    padding: 2px 10px;
+    padding: 3px 15px; /* 50% bigger, with the font below */
     background: rgba(8, 11, 26, 0.6);
     pointer-events: none;
   }
   .hud-m-edges .hud-m-timer .hud-timer-val {
-    font-size: 17px;
+    font-size: 26px; /* 17px × 1.5 */
     line-height: 1.1;
   }
   /* Debug: tiny red dot in the bottom-right screen corner that hides/shows
@@ -657,6 +657,7 @@
     align-items: flex-start;
   }
   .hud-m-right {
+    top: 4.25rem; /* clear of the (50% bigger) timer above it */
     right: max(12px, env(safe-area-inset-right));
     align-items: flex-end;
   }
