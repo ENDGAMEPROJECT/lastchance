@@ -83,7 +83,7 @@ export default {
     "pretest": "Alkutesti: kerro ensin {friend_allative}, mitä jo ajattelet tästä tarjouksesta. Astu sitten internetiin."
   },
   "map": {
-    "eyebrow": "Fyysinen internet · Kaupunginosakartta",
+    "eyebrow": "Fyysinen internetkartta",
     "titleLead": "Valitse seuraava",
     "titleAccent": "kaupunginosa",
     "subtitle": "Kulje verkon läpi, kerää todisteita ja saavuta lopullinen päätös ennen kuin tarjous päättyy.",

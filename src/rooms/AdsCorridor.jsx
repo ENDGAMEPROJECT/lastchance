@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useGame } from '../game/GameContext.jsx'
+import { useMobileView } from '../game/device.js'
+import CloseButton from '../components/CloseButton.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
 import { playSound } from '../game/sound.js'
@@ -51,7 +54,8 @@ function highlightLetter(text, letter) {
 export default function AdsCorridor({ node }) {
   const { completeRoom, addEvidence, hasItem } = useGame()
   const t = useT()
-  const { scale, toView, viewRect } = useStage()
+  const { scale, toView, viewRect, viewportEl } = useStage()
+  const mobile = useMobileView()
 
   // The flashlight stays off until the player equips it from the Bag.
   const [lightOn, setLightOn] = useState(false)
@@ -73,6 +77,17 @@ export default function AdsCorridor({ node }) {
   const [error, setError] = useState('')
   const [solved, setSolved] = useState(false)
   const inputRef = useRef(null)
+  // Phone: typing happens in a full-screen pop-over (see the portal below), so
+  // the input sits in the top half, clear of the on-screen keyboard.
+  const [typing, setTyping] = useState(false)
+  const popInputRef = useRef(null)
+  useEffect(() => { if (!mobile) setTyping(false) }, [mobile])
+  useEffect(() => {
+    if (!typing) return
+    const onKey = (e) => { if (e.key === 'Escape') setTyping(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [typing])
 
   // The exit code is the highlighted letters read across the posters in display
   // order — derived from i18n, so it follows whatever letters each language sets.
@@ -150,14 +165,23 @@ export default function AdsCorridor({ node }) {
       })
       setSolved(true)
       setError('')
+      setTyping(false)
     } else {
       playSound('wrong.mp3')
       setError(t('rooms.ads.errCode'))
-      inputRef.current?.classList.remove('shake')
-      // force reflow so the shake animation can retrigger
-      void inputRef.current?.offsetWidth
-      inputRef.current?.classList.add('shake')
+      for (const el of [inputRef.current, popInputRef.current]) {
+        if (!el) continue
+        el.classList.remove('shake')
+        // force reflow so the shake animation can retrigger
+        void el.offsetWidth
+        el.classList.add('shake')
+      }
     }
+  }
+
+  const onCodeChange = (e) => {
+    setError('')
+    setCode(e.target.value)
   }
 
   return (
@@ -266,10 +290,12 @@ export default function AdsCorridor({ node }) {
                   maxLength={8}
                   placeholder={t('rooms.ads.exitPlaceholder')}
                   autoComplete="off"
-                  onChange={(e) => {
-                    setError('')
-                    setCode(e.target.value)
-                  }}
+                  onChange={onCodeChange}
+                  // Phone: this field only opens the typing pop-over — read-only
+                  // and never focused, so the keyboard doesn't open over the room.
+                  readOnly={mobile}
+                  onMouseDown={mobile ? (e) => e.preventDefault() : undefined}
+                  onClick={mobile && !solved ? () => setTyping(true) : undefined}
                 />
                 <button type="submit" className="btn btn-cyan">{t('rooms.ads.exitButton')}</button>
               </div>
@@ -278,6 +304,38 @@ export default function AdsCorridor({ node }) {
           </div>
         </div>
       </div>
+
+      {/* Phone typing pop-over: portalled out of the scaled stage into the
+          viewport (like the mobile HUD), so it's sized in real screen px and
+          shrinks with the window when the keyboard opens. */}
+      {mobile && typing && createPortal(
+        <div className="ac-type-pop" role="dialog" aria-modal="true" aria-labelledby="ac-type-label">
+          <CloseButton className="ac-type-close" onClick={() => setTyping(false)} />
+          <form className="ac-type-form" onSubmit={submit}>
+            <label id="ac-type-label" className="ac-type-label" htmlFor="ac-type-code">
+              {t('rooms.ads.exitLabel')}
+            </label>
+            <input
+              id="ac-type-code"
+              ref={popInputRef}
+              className="field ac-field ac-type-field"
+              value={code}
+              maxLength={8}
+              placeholder={t('rooms.ads.exitPlaceholder')}
+              autoComplete="off"
+              autoCapitalize="characters"
+              autoCorrect="off"
+              spellCheck={false}
+              enterKeyHint="go"
+              autoFocus
+              onChange={onCodeChange}
+            />
+            <button type="submit" className="btn btn-cyan ac-type-submit">{t('rooms.ads.exitButton')}</button>
+            {error && <div className="banner wrong ac-type-error">{error}</div>}
+          </form>
+        </div>,
+        viewportEl || document.body,
+      )}
     </RoomFrame>
   )
 }

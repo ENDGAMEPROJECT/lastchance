@@ -83,7 +83,7 @@ export default {
     "pretest": "Pre-test: first, tell {friend} what you already think about this deal. Then enter the Internet."
   },
   "map": {
-    "eyebrow": "Physical Internet · District Map",
+    "eyebrow": "Physical Internet Map",
     "titleLead": "Choose your next",
     "titleAccent": "district",
     "subtitle": "Travel the network, gather evidence, and reach the Final Decision before the offer expires.",

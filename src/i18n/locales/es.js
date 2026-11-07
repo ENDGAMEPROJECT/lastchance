@@ -83,7 +83,7 @@ export default {
     "pretest": "Prueba previa: primero, cuéntale a {friend} qué opinas sobre esta oferta. Luego, entra en Internet."
   },
   "map": {
-    "eyebrow": "Internet físico · Mapa del distrito",
+    "eyebrow": "Mapa del Internet físico ",
     "titleLead": "Elige tu próximo",
     "titleAccent": "distrito",
     "subtitle": "Recorre la red, reúne pruebas y llega a la decisión final antes de que expire la oferta.",
@@ -695,7 +695,7 @@ export default {
       "barLookalike": "⚠ Letras parecidas",
       "secureConn": "Conexión cifrada (https)",
       "insecureConn": "No es seguro: conexión http sin cifrar",
-      "blockThis": "🔒 Bloquear este enlace",
+      "blockThis": "🔒 Bloquear enlace",
       "unblock": "↺ Desbloquear",
       "inspect": "Inspecciona la dirección y la vista previa.",
       "realStore": "↧ tienda real",

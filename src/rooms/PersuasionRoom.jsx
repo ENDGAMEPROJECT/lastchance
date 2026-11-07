@@ -84,7 +84,7 @@ function initPositions() {
   })
   return o
 }
-/* Mobile (≤920px): the posters fill the left 70% of the scene, so the pile
+/* Mobile (≤1180px): the posters fill the left 70% of the scene, so the pile
    starts in the right 30% column instead (above the computer button). */
 function mobilePositions(sceneWidth) {
   const o = {}

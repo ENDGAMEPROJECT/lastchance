@@ -38,12 +38,12 @@
   flex-direction: column;
   gap: 8px;
   align-items: center;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     max-width: 740px;
   }
 }
 .ar-prompt {
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     font-size: 1.2rem;
   }
 }
@@ -122,7 +122,7 @@
 .ar-door-keypad.pulse::after {
   animation: ar-keypad-ring 1.4s ease-out infinite;
 }
-@media (hover: none), (max-width: 920px) {
+@media (hover: none), (max-width: 1180px) {
   .ar-door-keypad::before {
     animation: ar-keypad-pulse 1.4s ease-in-out infinite;
   }
@@ -233,9 +233,9 @@
   transform: scale(0.9);
   transform-origin: center;
 }
-/* Mobile (≤920px, = settings.mobile.breakpoint): 25% bigger (0.9 × 1.25) so
+/* Mobile (≤1180px, = settings.mobile.breakpoint): 25% bigger (0.9 × 1.25) so
    the keys are easier to hit with a finger. */
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .ar-terminal {
     transform: scale(1.125);
   }
@@ -840,7 +840,7 @@
   transition:
     border-color 0.2s,
     box-shadow 0.2s;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     max-width: 1100px;
 
     justify-content: flex-end;
@@ -851,7 +851,7 @@
 .ar-equation.solved {
   border-color: var(--green);
   box-shadow: var(--glow-green);
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     align-items: self-start;
   }
 }
@@ -887,7 +887,7 @@
   justify-content: center;
   text-align: center;
   gap: 6px;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     min-width: 190px;
     max-width: 200px;
     min-height: 160px;
@@ -913,7 +913,7 @@
 }
 .ar-equation .ar-ad {
   min-width: 128px;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     min-width: 260px;
     min-height: 160px;
   }
@@ -1007,7 +1007,7 @@
   gap: 14px;
 }
 .ar-profile-text.t-sm {
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     font-size: 26px;
   }
 }
@@ -1017,19 +1017,19 @@
 }
 .ar-profile-pop .ar-profile-title {
   margin-top: 0;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     margin-bottom: 12px;
     font-size: 1.6rem
   }
 }
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .ar-profile-pop {
     max-width: 900px;
   }
 }
 .ar-final .ar-term-screen {
   max-width: 700px;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     max-width: 900px;
   }
 }
@@ -1145,7 +1145,7 @@
   grid-template-columns: 1fr;
   gap: 12px 20px;
   padding: 16px 20px;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     max-width: 1100px;
   }
 }
@@ -1155,7 +1155,7 @@
   margin: 0;
   font-size: 1.2rem;
   font-family: var(--font-retro);
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     font-size: 1.4rem;
   }
 }
@@ -1164,7 +1164,7 @@
   border-left: 3px solid var(--cyan);
   padding-left: 16px;
   margin: 6px 0;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     font-size: 26px;
   }
 }

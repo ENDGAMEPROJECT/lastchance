@@ -91,7 +91,10 @@
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
-.cleared-summary { padding: 24px 36px; text-align: center; }
+.cleared-summary { padding: 24px 36px; text-align: center;
+@media (max-width: 1180px) {
+  gap: 16px
+} }
 .cleared-badge {
   display: inline-flex;
   align-items: center;
@@ -151,9 +154,9 @@
 .cleared-actions { display: flex; justify-content: center; padding: 16px 24px; border-top: 1px solid rgba(43, 255, 136, 0.12); }
 @media (prefers-reduced-motion: reduce) { .room-cleared { animation: none; } }
 
-/* Mobile breakpoint (≤920px, = settings.mobile.breakpoint): the cleared-room
+/* Mobile breakpoint (≤1180px, = settings.mobile.breakpoint): the cleared-room
    pop-over spans 75% of the 1280px game width. */
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .room-cleared { max-width: calc(1280px * 0.75); }
   /* Room-entry instructions: 70% of the game width, text spanning the card. */
   .briefing-card { max-width: calc(1280px * 0.7); }
@@ -217,8 +220,8 @@
 }
 .reduced-motion .reward-art,
 .reduced-motion .reward-art::before { animation: none; }
-/* Mobile breakpoint (≤920px): the stage is scaled down, so the halo spreads
+/* Mobile breakpoint (≤1180px): the stage is scaled down, so the halo spreads
    wider to read at that size. */
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .reward-art { --halo-min: 16px; --halo-max: 30px; }
 }

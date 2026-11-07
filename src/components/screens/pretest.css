@@ -451,7 +451,7 @@
 
 /* Mobile breakpoint (see styles/global.css): the chat lines and answer
    choices are sized in px, so boost them explicitly. */
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   /* Back / Next become round touch targets, 46 real screen px whatever the
      stage's scale; the speech band's side margins widen to hold them. */
   .dlg-nav { --nav-size: calc(46px / var(--stage-scale, 1)); --nav-gap: calc(8px / var(--stage-scale, 1)); }

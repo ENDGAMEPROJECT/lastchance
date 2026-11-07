@@ -35,7 +35,7 @@
   font-family: var(--font-display);
   font-size: 0.9rem;
   letter-spacing: 0.08em;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     display: none
   } /* mobile: slice text 10% smaller */
 }
@@ -67,7 +67,7 @@
 .rc-machine > .btn {
   padding: 8px 22px;
 }
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .rc-machine > .btn {
     padding: 11px 29px;
   }
@@ -87,7 +87,7 @@
   appearance: none;
   cursor: pointer;
 }
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .rc-wheel-wrap {
     width: 425px;
     height: 425px;
@@ -154,7 +154,7 @@
   font-weight: 700;
   text-align: center;
 }
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .rc-seg-text {
   
       max-width: 122px;
@@ -210,14 +210,14 @@
 .rc-case h3 {
   margin: 0 0 12px;
   font-size: 1rem;
-  @media(max-width: 920px) {
+  @media(max-width: 1180px) {
     font-size: 1.22rem;
   }
 }
 .rc-case p {
   margin: 0 0 20px;
   line-height: 1.5;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
     font-size: 28px;
   }
 }
@@ -225,7 +225,7 @@
   border-left: 2px solid var(--cyan);
   padding-left: 14px;
 }
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .rc-observe {
     font-size: calc(20px * 1.08 * var(--text-boost, 1));
   }

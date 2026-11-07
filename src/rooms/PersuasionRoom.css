@@ -792,7 +792,7 @@
   left: 35px;
   width: 100%;
   max-width: 460px;
-  @media (max-width: 920px) {
+  @media (max-width: 1180px) {
       max-width: 660px;
   }
 }
@@ -959,13 +959,13 @@
 .pl-scene2.pl-loading { visibility: hidden; }
 
 /* ============================================================
-   Mobile (≤920px, = settings.mobile.breakpoint) layout:
+   Mobile (≤1180px, = settings.mobile.breakpoint) layout:
    instructions on top · poster wall over the left 70% · the frame pile in the
    right 30% (start positions: mobilePositions() in the JSX) · a 70% bigger
    "use the computer" button in the bottom-right corner.
    ============================================================ */
 .pl-hint-top { text-align: center; text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8); }
-@media (max-width: 920px) {
+@media (max-width: 1180px) {
   .pl-scene2 {
     /* Poster size. Frames MUST be the same size as the posters (their ring is
        placed with the poster's own measurements), so both read these. Tuned

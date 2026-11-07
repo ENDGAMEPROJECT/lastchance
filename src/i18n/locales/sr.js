@@ -83,7 +83,7 @@ export default {
     "pretest": "Pre-test: prvo reci {friend_dative} šta već misliš o ovoj ponudi. Zatim uđi na Internet."
   },
   "map": {
-    "eyebrow": "Fizički internet · Mapa okruga",
+    "eyebrow": "Mapa fizičkog interneta",
     "titleLead": "Izaberi sledeći",
     "titleAccent": "okrug",
     "subtitle": "Putuj kroz mrežu, prikupljaj dokaze i stigni do Konačne odluke pre nego što ponuda istekne.",

@@ -16,7 +16,7 @@ export const IS_PHONE = typeof window !== 'undefined' && (forced || (
 export const isLandscape = () => window.innerWidth > window.innerHeight
 
 /* True while the viewport is at or under the mobile breakpoint — the same
-   ≤920px rule as the CSS `@media (max-width: 920px)` blocks. */
+   ≤1180px rule as the CSS `@media (max-width: 1180px)` blocks. */
 export function useMobileView() {
   const query = `(max-width: ${settings.mobile.breakpoint}px)`
   const [mobile, setMobile] = useState(() => window.matchMedia(query).matches)

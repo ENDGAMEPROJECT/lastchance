@@ -4,6 +4,7 @@ import { useT } from '../i18n/index.jsx'
 import { track, OBJ } from '../game/xapi.js'
 import { DEBUG } from '../game/settings.js'
 import { bgUrl } from '../game/assets.js'
+import { useMobileView } from '../game/device.js'
 import DebugPosttestButtons from './DebugPosttestButtons.jsx'
 import DebugPortalButton from './DebugPortalButton.jsx'
 import DebugEvidenceButton from './DebugEvidenceButton.jsx'
@@ -214,6 +215,48 @@ const ROAD = (() => {
   }
 })()
 
+/* Phone: a wrapped label keeps its max-width even when both lines are shorter,
+   leaving empty pill either side (CSS can't shrink-wrap wrapped text). Measure
+   the text itself — its range spans the widest line, or an unbreakable word
+   spilling past the box — and set the pill's width to exactly that. Rects are
+   in screen px, so the label's own rect/offsetWidth ratio undoes the stage scale.
+   Never more than two lines: if the CSS max-width leaves three, widen the cap
+   step by step until the name fits on two — and check again after fitting,
+   since a pill shrunk to its text can push the last word down. Lines are
+   counted from the label's height in layout px (unaffected by the stage scale
+   or rotation, and by accented letters drawn from a fallback font). */
+const LABEL_MAX_LINES = 2
+function lineCount(label) {
+  const cs = getComputedStyle(label)
+  const lineHeight = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.15
+  const content = label.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom)
+  return Math.round(content / lineHeight)
+}
+function fitLabels(el, viewRect, mobile) {
+  for (const label of el.querySelectorAll('.mnode-label')) {
+    label.style.width = ''
+    label.style.maxWidth = ''
+    if (!mobile) continue
+    if (!label.offsetWidth) continue
+    for (let cap = label.offsetWidth; lineCount(label) > LABEL_MAX_LINES && cap < 1000; ) {
+      cap += 8
+      label.style.maxWidth = `${cap}px`
+    }
+    const range = document.createRange()
+    range.selectNodeContents(label)
+    const box = viewRect(label.getBoundingClientRect())
+    const text = viewRect(range.getBoundingClientRect())
+    const scale = box.width / label.offsetWidth
+    let width = Math.ceil(label.offsetWidth + (text.width - box.width) / scale + 1)
+    label.style.width = `${width}px`
+    while (lineCount(label) > LABEL_MAX_LINES && width < 1000) {
+      width += 2
+      label.style.width = `${width}px`
+      label.style.maxWidth = `${width}px` // the CSS cap would hold it back
+    }
+  }
+}
+
 /* Centre the stations horizontally by what is actually on screen, not by their
    coordinates. The art is symmetric about the board's middle, but the label
    pills are not — a long one ("Algorithm Control Room") reaches further out
@@ -222,19 +265,26 @@ const ROAD = (() => {
    measures the rendered span and nudges the whole cluster to balance it.
    The correction is applied on top of the current shift, so the second pass
    settles at zero and it does not loop. */
-function useCentred(ref, deps) {
+function useCentred(ref, mobile, deps) {
   const [shift, setShift] = useState(0)
   const [tick, setTick] = useState(0)
   const { viewRect } = useStage() // undoes a phone-orientation rotation, if any
 
-  // Late webfont swaps change label widths without re-rendering — re-measure.
+  // Late webfont swaps change label widths without re-rendering — re-measure,
+  // also for a font that only starts loading once the map is up.
   useEffect(() => {
-    document.fonts?.ready.then(() => setTick((n) => n + 1))
+    const fonts = document.fonts
+    if (!fonts) return
+    const remeasure = () => setTick((n) => n + 1)
+    fonts.ready.then(remeasure)
+    fonts.addEventListener?.('loadingdone', remeasure)
+    return () => fonts.removeEventListener?.('loadingdone', remeasure)
   }, [])
 
   useLayoutEffect(() => {
     const el = ref.current
     if (!el) return
+    fitLabels(el, viewRect, mobile) // label widths first — the centring measures them
     const board = viewRect(el.getBoundingClientRect())
     if (!board.width) return
     let min = Infinity
@@ -250,7 +300,7 @@ function useCentred(ref, deps) {
     const scale = board.width / BOARD.w
     const off = ((board.left + board.right) / 2 - (min + max) / 2) / scale
     if (Math.abs(off) > 0.5) setShift((s) => s + off)
-  }, [ref, shift, tick, viewRect, ...deps])
+  }, [ref, shift, tick, viewRect, mobile, ...deps])
 
   return shift
 }
@@ -260,7 +310,8 @@ export default function GameMap() {
   const t = useT()
   const vars = { friend: narrative.friend }
   const boardRef = useRef(null)
-  const shift = useCentred(boardRef, [t])
+  const mobile = useMobileView()
+  const shift = useCentred(boardRef, mobile, [t])
 
   // Arriving on the map (from the portal, or back out of any district).
   useEffect(() => { track('opened', OBJ.map(), { node: 'map' }) }, [])
@@ -355,7 +406,7 @@ export default function GameMap() {
               onMouseDown={(e) => e.preventDefault()} /* don't take focus — it scrolls the stage */
               title={locked ? t('map.lockedTip') : title}
             >
-              <span className="mnode-label" style={{ bottom: labelBottom(s.art) }}>{title}</span>
+              <span className="mnode-label" style={{ bottom: labelBottom(s.art), }}>{title}</span>
               <span className="mnode-glow" />
               <span className="mnode-art">
                 {view ? (
