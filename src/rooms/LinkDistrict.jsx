@@ -494,6 +494,7 @@ export default function LinkDistrict({ node }) {
     preloadSound('close_door.mp3')
     preloadSound('blocked_door.mp3')
     preloadSound('door_rotate.mp3')
+    preloadSound('twinkle.mp3') // the crossroads-passed chime
   }, [])
 
   const data = ROUNDS[round]
@@ -566,7 +567,12 @@ export default function LinkDistrict({ node }) {
     if (!safeOk && blockedCount >= fakes.length) { playSound('wrong.mp3'); submitted(); return setError('wrongDoors') }
     if (remaining) { playSound('wrong.mp3'); submitted(); return setError('incomplete') }
     submitted()
-    // Round passed — explain all three doors together before moving on.
+    /* Round passed. The chime goes here rather than on "advance": this is the
+       moment the player earned, and the advance already has its own whoosh as
+       the doors rotate. twinkle is the project's correct-answer sound (see the
+       Algorithm and Influencer rooms), so the feedback is consistent. */
+    playSound('twinkle.mp3')
+    // Explain all three doors together before moving on.
     setReviewing(true)
   }
 

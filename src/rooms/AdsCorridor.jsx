@@ -5,7 +5,7 @@ import { useMobileView } from '../game/device.js'
 import CloseButton from '../components/CloseButton.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
-import { playSound } from '../game/sound.js'
+import { playSound, preloadSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import RoomFrame from '../components/RoomFrame.jsx'
@@ -110,10 +110,15 @@ export default function AdsCorridor({ node }) {
     })
   }, [seen])
 
+  useEffect(() => { preloadSound('flashlight.mp3') }, [])
+
   // Equipping the Truth Flashlight from the Bag switches the beam on.
   useEffect(() => {
     const onUseItem = (event) => {
-      if (event.detail?.id === 'truthLight' && hasItem('truthLight')) setLightOn(true)
+      if (event.detail?.id === 'truthLight' && hasItem('truthLight')) {
+        setLightOn(true)
+        playSound('flashlight.mp3') // the switch, as the beam comes up
+      }
     }
     window.addEventListener('lastchance:use-item', onUseItem)
     return () => window.removeEventListener('lastchance:use-item', onUseItem)
