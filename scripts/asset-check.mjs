@@ -51,6 +51,10 @@ const referenced = new Set()
 const dynamic = []
 for (const file of files) {
   const src = readFileSync(file, 'utf8')
+  /* productUrl() and friends are thin local wrappers around assetUrl that
+     prepend a folder; without them a renamed file (logo-booble → logo-joogle)
+     slips past the check, preloading one name while the room asks for another. */
+  for (const m of src.matchAll(/\bproductUrl\(\s*'([^'`$]+)'\s*\)/g)) referenced.add(`products/${m[1]}`)
   // bgUrl('x') / assetUrl('x') with a plain string
   for (const m of src.matchAll(/\b(bgUrl|assetUrl)\(\s*'([^'`$]+)'\s*\)/g)) {
     const [, fn, p] = m

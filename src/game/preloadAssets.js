@@ -25,7 +25,7 @@ const ROOM_IMAGES = {
        reveal a dozen listing photos at once (RESULT_THUMBS and DEMO_MATCHES
        in InfluencerAvenue). Loading those on reveal is the one place in the
        room where the stutter is unmissable, so they come in with the room. */
-    ...['mug1', 'mug2', 'mug3', 'mug4', 'novapad4', 'logo-booble',
+    ...['mug1', 'mug2', 'mug3', 'mug4', 'novapad4', 'logo-joogle',
       'speaker', 'speaker2', 'speaker3', 'speaker4', 'speaker5',
       'shoes', 'shoes1', 'shoes2', 'shoes3', 'shoes4', 'shoes5']
       .map((name) => assetUrl(`products/${name}.png`)),
