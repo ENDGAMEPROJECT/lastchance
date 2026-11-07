@@ -4,7 +4,7 @@ import { CODES, ITEMS } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 import { IS_PHONE } from '../game/device.js'
 import { useReadingGate } from '../game/readingGate.js'
-import { playSound } from '../game/sound.js'
+import { playSound, preloadSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import { useT } from '../i18n/index.jsx'
@@ -214,6 +214,12 @@ export default function AlgorithmRoom({ node }) {
   // briefly with its digits visible, then clears itself for the next try.
   const clearTimer = useRef(null)
   useEffect(() => () => window.clearTimeout(clearTimer.current), [])
+  // The keypad's own sounds, warmed with the room so the first press is instant.
+  useEffect(() => {
+    preloadSound('keypad_beep.mp3')
+    preloadSound('keypad_ok.mp3')
+    preloadSound('keypad_nok.mp3')
+  }, [])
 
   function checkCode(entry) {
     const right = entry === CODES.algorithmRoom
@@ -222,10 +228,10 @@ export default function AlgorithmRoom({ node }) {
     })
     if (right) {
       setStatus('ok')
-      playSound('twinkle.mp3')
+      playSound('keypad_ok.mp3')
       window.setTimeout(() => setPhase('choice'), 850)
     } else {
-      playSound('wrong.mp3')
+      playSound('keypad_nok.mp3')
       setStatus('wrong')
       clearTimer.current = window.setTimeout(() => setCode(''), 700)
     }
@@ -233,6 +239,9 @@ export default function AlgorithmRoom({ node }) {
 
   function pressKey(k) {
     if (status === 'ok' || code.length === 6) return // locked while a full code is being judged
+    // The pad was silent to type on. playSound restarts the one cached element,
+    // so fast typing retriggers the beep rather than layering copies of it.
+    playSound('keypad_beep.mp3')
     setStatus('idle') // clear the red light on the next keypress
     if (k === 'C') setCode('')
     else if (k === '⌫') setCode(code.slice(0, -1))
