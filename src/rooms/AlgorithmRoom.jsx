@@ -5,6 +5,7 @@ import { bgUrl } from '../game/assets.js'
 import { IS_PHONE } from '../game/device.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { playSound, preloadSound } from '../game/sound.js'
+import { useRoomState } from '../game/useRoomState.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import { useT } from '../i18n/index.jsx'
@@ -147,19 +148,23 @@ function DoorKeypadMap({ children }) {
 export default function AlgorithmRoom({ node }) {
   const { completeRoom, addEvidence, narrative } = useGame()
   const t = useT()
-  const [phase, setPhase] = useState('door') // 'door' | 'unlock' | 'choice' | 'equations'
-  const [solved, setSolved] = useState(false)
+  /* Progress, not UI: these five survive a refresh, so a player who has
+     already opened the door and started the equations comes back to them
+     rather than to the keypad. The half-typed code and the access light
+     are deliberately transient — a code in flight is not progress. */
+  const [phase, setPhase] = useRoomState('algorithm.phase', 'door') // 'door' | 'unlock' | 'choice' | 'equations'
+  const [solved, setSolved] = useRoomState('algorithm.solved', false)
 
   /* ----- phase 'unlock' state ----- */
   const [code, setCode] = useState('')
   const [status, setStatus] = useState('idle') // 'idle' | 'wrong' | 'ok' — the access light
 
   /* ----- phase 'choice' state ----- */
-  const [choice, setChoice] = useState(null) // 'A' | 'B' | null
+  const [choice, setChoice] = useRoomState('algorithm.choice', null) // 'A' | 'B' | null
 
   /* ----- phase 'equations' state (one equation at a time) ----- */
-  const [step, setStep] = useState(0) // current equation index; ROWS.length = the profile
-  const [placements, setPlacements] = useState({}) // rowId -> tileId placed in its blank slot
+  const [step, setStep] = useRoomState('algorithm.step', 0) // current equation index; ROWS.length = the profile
+  const [placements, setPlacements] = useRoomState('algorithm.placements', {}) // rowId -> tileId placed in its blank slot
   const [wrongFlash, setWrongFlash] = useState(false) // transient wrong-tile feedback
   useRoomProgress(`${phase}|${step}`) // door → keypad → choice → each solved equation
 

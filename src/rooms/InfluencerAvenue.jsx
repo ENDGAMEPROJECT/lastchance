@@ -7,6 +7,7 @@ import { useReadingGate } from '../game/readingGate.js'
 import { DEBUG } from '../game/settings.js'
 import { useMobileView } from '../game/device.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
+import { useRoomState } from '../game/useRoomState.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import { useI18n, useT } from '../i18n/index.jsx'
@@ -623,8 +624,12 @@ export default function InfluencerAvenue({ node }) {
   const { locale } = useI18n()
   const t = useT()
 
-  const [stage, setStage] = useState('label') // 'label' → 'labelFeedback' → 'explain' → 'verify' → solved
-  const [solved, setSolved] = useState(false)
+  /* Progress, not UI: these five survive a refresh so a player who has
+     already decoded the labels comes back to the reverse-image search
+     rather than to the start of the room. Everything else in here is
+     transient (a held stamp, an open panel) and deliberately is not. */
+  const [stage, setStage] = useRoomState('influencer.stage', 'label') // 'label' → 'labelFeedback' → 'explain' → 'verify' → solved
+  const [solved, setSolved] = useRoomState('influencer.solved', false)
   const [demoPhase, setDemoPhase] = useState('drag') // explainer's scripted reverse-search demo
   // The label recap and the reverse-search explainer can't be skipped: their
   // continue buttons appear once the text has had time to be read.
@@ -685,7 +690,7 @@ export default function InfluencerAvenue({ node }) {
     setPublicationIndex(null)
     publicationTrigger.current?.focus({ preventScroll: true })
   }
-  const [answers, setAnswers] = useState({}) // postId -> decoded letters
+  const [answers, setAnswers] = useRoomState('influencer.answers', {}) // postId -> decoded letters
   const [selectedPostId, setSelectedPostId] = useState(null)
   const [decoderOpen, setDecoderOpen] = useState(false)
   const selectedPost = POSTS.find((post) => post.id === selectedPostId)
@@ -753,8 +758,8 @@ export default function InfluencerAvenue({ node }) {
   /* ---- Stage 2 state ---- */
   const [activeId, setActiveId] = useState(null) // product image being uploaded/searched in the engine
   const [shownId, setShownId] = useState(null) // whose results are open under the engine
-  const [searched, setSearched] = useState({}) // productId -> true once results are in
-  const [picks, setPicks] = useState({}) // productId -> chosen verdict value
+  const [searched, setSearched] = useRoomState('influencer.searched', {}) // productId -> true once results are in
+  const [picks, setPicks] = useRoomState('influencer.picks', {}) // productId -> chosen verdict value
   const [verifyErr, setVerifyErr] = useState('')
   const [stampFx, setStampFx] = useState(0) // bumped on each stamp so the imprint animation replays
   const [heldStamp, setHeldStamp] = useState(null) // the stamp-maker currently "in hand"

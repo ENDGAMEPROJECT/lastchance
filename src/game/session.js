@@ -27,6 +27,12 @@ const KEY = 'er3:run'
    refresh on the end screen does not ask again, and "start over" (which
    clears the run) makes the next run's survey a fresh ask. */
 const SURVEY_KEY = 'er3:survey-done'
+/* Per-room puzzle state. Rooms keep their own working state — decoded
+   letters, which products have been searched, which stamps are down — and
+   none of it is in the reducer, so a refresh used to drop the player back
+   at the start of a puzzle they had half solved. Saved under one key per
+   value so a room can adopt this piece by piece. */
+const ROOM_PREFIX = 'er3:room:'
 const VERSION = 1
 
 /* Debug entry points (?debug, ?screen=) build their own state, so persisting
@@ -67,7 +73,28 @@ export function clearRun() {
   try {
     store().removeItem(KEY)
     store().removeItem(SURVEY_KEY)
+    // Starting over must not leave a half-solved puzzle behind.
+    const s = store()
+    for (let i = s.length - 1; i >= 0; i--) {
+      const k = s.key(i)
+      if (k && k.startsWith(ROOM_PREFIX)) s.removeItem(k)
+    }
   } catch { /* ignore */ }
+}
+
+export function loadRoomValue(key, fallback) {
+  if (!enabled) return fallback
+  try {
+    const raw = store().getItem(ROOM_PREFIX + key)
+    return raw === null ? fallback : JSON.parse(raw)
+  } catch {
+    return fallback
+  }
+}
+
+export function saveRoomValue(key, value) {
+  if (!enabled) return
+  try { store().setItem(ROOM_PREFIX + key, JSON.stringify(value)) } catch { /* ignore */ }
 }
 
 export function isSurveyDone() {
