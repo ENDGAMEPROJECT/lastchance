@@ -69,6 +69,10 @@ const POSTS = [
   // },
 ]
 
+/* Statements identify a post by its position, never by its id: the ids are
+   the correct labels, so using them would leak the answer key. */
+const postNo = (id) => POSTS.findIndex((p) => p.id === id) + 1
+
 /* Stable English names for analytics: the product copy is localised, so it
    cannot name the activity. Keys are PRODUCTS ids. */
 const PRODUCT_NAMES = {
@@ -677,7 +681,7 @@ export default function InfluencerAvenue({ node }) {
   }
   function closePublication() {
     const open = POSTS[publicationIndex]
-    if (open) track('closed', OBJ.post(open.id), { node: node.id, response: open.id })
+    if (open) track('closed', OBJ.post(postNo(open.id)), { node: node.id })
     setPublicationIndex(null)
     publicationTrigger.current?.focus({ preventScroll: true })
   }
@@ -697,7 +701,9 @@ export default function InfluencerAvenue({ node }) {
   /* Both the post card and the answer button inside it select the post; they
      share this so the statement is emitted exactly once, from one place. */
   function selectPost(id) {
-    track('selected', OBJ.post(id), { node: node.id, response: id })
+    // No response: the activity already says which post, and anything more
+    // here would look like an answer when the player has only clicked a card.
+    track('selected', OBJ.post(postNo(id)), { node: node.id })
     setSelectedPostId(id)
   }
 
@@ -710,7 +716,7 @@ export default function InfluencerAvenue({ node }) {
        log is a row of identical selections with nothing to tell them apart. */
     track('entered', OBJ.decoder(), {
       node: node.id,
-      response: `${selectedPostId};${letter};${next}`,
+      response: `${postNo(selectedPostId)};${letter};${next}`,
     })
     if (next.length === selectedPost.correctLabel.length) {
       playSound(next === selectedPost.correctLabel ? 'twinkle.mp3' : 'wrong.mp3')
@@ -956,7 +962,7 @@ export default function InfluencerAvenue({ node }) {
                     onOpen={(event) => {
                       event.stopPropagation()
                       publicationTrigger.current = event.currentTarget
-                      track('opened', OBJ.post(p.id), { node: node.id, response: p.id })
+                      track('opened', OBJ.post(postNo(p.id)), { node: node.id })
                       setPublicationIndex(idx)
                     }} />
 
