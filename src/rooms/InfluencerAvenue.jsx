@@ -694,11 +694,23 @@ export default function InfluencerAvenue({ node }) {
     []
   )
 
+  /* Both the post card and the answer button inside it select the post; they
+     share this so the statement is emitted exactly once, from one place. */
+  function selectPost(id) {
+    track('selected', OBJ.post(id), { node: node.id, response: id })
+    setSelectedPostId(id)
+  }
+
   function enterLetter(letter) {
     if (!canEdit || selectedAnswer.length >= selectedPost.correctLabel.length) return
     const next = selectedAnswer + letter
-    track('selected', OBJ.influencers(), {
-      node: node.id, response: `${letter};${next}`,
+    /* The decoder, not the generic "Influencers" activity: this is a letter
+       typed on the emoji keypad. The response says which letter, what the
+       answer now reads, and which post it is being typed for — otherwise the
+       log is a row of identical selections with nothing to tell them apart. */
+    track('entered', OBJ.decoder(), {
+      node: node.id,
+      response: `${selectedPostId};${letter};${next}`,
     })
     if (next.length === selectedPost.correctLabel.length) {
       playSound(next === selectedPost.correctLabel ? 'twinkle.mp3' : 'wrong.mp3')
@@ -911,7 +923,7 @@ export default function InfluencerAvenue({ node }) {
                 <article
                   key={p.id}
                   className={`ia-post ${correct ? 'solved' : ''} ${selected ? 'selected' : ''}`}
-                  onClick={() => { track('selected', OBJ.post(p.id), { node: node.id, response: p.id }); setSelectedPostId(p.id) }}
+                  onClick={() => selectPost(p.id)}
                 >
                   {/* Social card header */}
                   <div className="ia-card-top">
@@ -968,7 +980,9 @@ export default function InfluencerAvenue({ node }) {
                     aria-pressed={selected}
                     aria-label={t('rooms.influencer.stage1.selectPost', { name: copy.username })}
                     onMouseDown={(event) => event.preventDefault()}
-                    onClick={() => { track('selected', OBJ.post(p.id), { node: node.id, response: p.id }); setSelectedPostId(p.id) }}
+                    /* The card behind this button selects the post too, so without
+                       stopPropagation one click bubbles and reports it twice. */
+                    onClick={(event) => { event.stopPropagation(); selectPost(p.id) }}
                   >
                     <span className="ia-answer-letters" aria-hidden="true">
                       {Array.from({ length: p.correctLabel.length }, (_, index) => (

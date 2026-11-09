@@ -219,6 +219,7 @@ export default function AlgorithmRoom({ node }) {
     preloadSound('keypad_beep.mp3')
     preloadSound('keypad_ok.mp3')
     preloadSound('keypad_nok.mp3')
+    preloadSound('twinkle.mp3') // the correct-drop chime
   }, [])
 
   function checkCode(entry) {
@@ -262,6 +263,7 @@ export default function AlgorithmRoom({ node }) {
       node: node.id, response: tileId, success: right, completion: right,
     })
     if (right) {
+      playSound('twinkle.mp3') // the same chime the other rooms use for a correct answer
       setWrongFlash(false)
       setPlacements((p) => ({ ...p, [row.id]: tileId }))
     } else {
@@ -386,7 +388,7 @@ export default function AlgorithmRoom({ node }) {
           <div className="ar-options">
             <button
               className={`ar-option ${choice === 'A' ? 'picked' : ''}`}
-              onClick={() => { track('selected', OBJ.privacyChoice(), { node: node.id, response: 'A', success: false }); setChoice('A') }}
+              onClick={() => { track('answered', OBJ.privacyChoice(), { node: node.id, response: 'A', success: false }); setChoice('A') }}
             >
               <div className="ar-opt-tag">{t('rooms.algorithm.choice.optionATag')}</div>
               <div className="ar-opt-icon">🎯</div>
@@ -399,7 +401,7 @@ export default function AlgorithmRoom({ node }) {
 
             <button
               className={`ar-option ${choice === 'B' ? 'picked' : ''}`}
-              onClick={() => { track('selected', OBJ.privacyChoice(), { node: node.id, response: 'B', success: true }); setChoice('B') }}
+              onClick={() => { track('answered', OBJ.privacyChoice(), { node: node.id, response: 'B', success: true }); setChoice('B') }}
             >
               <div className="ar-opt-tag">{t('rooms.algorithm.choice.optionBTag')}</div>
               <div className="ar-opt-icon">🛡️</div>

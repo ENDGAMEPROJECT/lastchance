@@ -119,9 +119,11 @@ export default function RouletteCorridor({ node }) {
   function chooseVerdict(value) {
     if (results.length < MIN_SPINS || spinning[active] || verified[active] || solved) return
     setShopOpen(false)
-    // Both verdicts are a selection; which one, and whether it was right,
-    // live in the result rather than in the verb.
-    track('selected', OBJ.roulette(wheelNo(active)), {
+    /* This answers the corridor's question — rigged or not rigged — so it is
+       'answered', not 'selected'. The convention across the rooms: 'answered'
+       responds to a posed question and carries success; 'selected' picks one
+       of several offered things; 'submitted' commits a final solution. */
+    track('answered', OBJ.roulette(wheelNo(active)), {
       node: node.id,
       response: value,
       success: correctRouletteVerdict(wheel, value),

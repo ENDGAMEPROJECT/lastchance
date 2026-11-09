@@ -99,6 +99,10 @@ export const VERBS = {
   exited:      { id: 'http://adlnet.gov/expapi/verbs/exited', display: { en: 'exited' } },
   // The end-of-run feedback survey.
   evaluated:   { id: 'http://www.tincanapi.co.uk/verbs/evaluated', display: { en: 'evaluated' } },
+  // Typed input: a letter on the decoder, a digit on a keypad. Distinct from
+  // 'selected' (picking one of several offered things) and from 'answered'
+  // (committing to a solution), so the three read apart in the log.
+  entered:     { id: 'https://w3id.org/xapi/dod-isd/verbs/entered', display: { en: 'entered' } },
 }
 
 /* ---- Activity types ---- */

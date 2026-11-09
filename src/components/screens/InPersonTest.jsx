@@ -164,6 +164,9 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
   useEffect(() => () => window.clearTimeout(chooseTimer.current), [])
 
   function closePhone() {
+    // Opening the phone is reported; closing it was not, so the log showed a
+    // phone that was opened and never put down.
+    track('closed', OBJ.phone(), { node: assessment ? 'posttest' : 'pretest' })
     setPhoneOpen(false)
   }
 
@@ -206,6 +209,14 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
   // Next: move on from the current line (only offered once it has been read).
   function goNext() {
     if (!canNext) return
+    /* Reading through the conversation was invisible: only the answers were
+       reported, so there was no way to see how long a player spent on the
+       setup or whether they stepped back and forth through it. The response
+       names the line being left, which is what makes the trail followable. */
+    track('experienced', assessment ? OBJ.posttest() : OBJ.pretest(), {
+      node: assessment ? 'posttest' : 'pretest',
+      response: `next;${phase}${phase === 'intro' ? `;${introIndex}` : ''}`,
+    })
     if (assessment && onComplete && phase === 'endingFriend') {
       if (!completed.current) {
         completed.current = true
