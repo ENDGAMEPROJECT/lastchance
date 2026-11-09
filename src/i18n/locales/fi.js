@@ -426,9 +426,10 @@ export default {
     "rateRange": "1 = Vahvasti eri mieltä, 2 = Eri mieltä, 3 = Jossain määrin eri mieltä , 4 = Neutraali, 5 = Jossain määrin samaa mieltä, 6 = Samaa mieltä, 7 = Vahvasti samaa mieltä).",
     "learningTitle": "Kuinka paljon opit?",
     "learningItems": [
-      "Pakohuonepeli lisäsi tietämystäni tekoälyn toiminnasta",
-      "Pakohuonepeli lisäsi tietämystäni tekoälyn käytöstä sosiaalisessa mediassa",
-      "Pakohuonepeli lisäsi tietämystäni tekoälyn asianmukaisista käyttötavoista"
+      "Pakohuonepeli lisäsi tietämystäni siitä, miten tunnistan valeverkkokaupat ja petolliset linkit",
+      "Pakohuonepeli lisäsi tietämystäni siitä, miten henkilötietojani käytetään mainosten kohdentamiseen minulle",
+      "Pakohuonepeli lisäsi tietämystäni siitä, miten mainokset käyttävät kiirettä ja painostusta saadakseen minut toimimaan ajattelematta",
+      "Pakohuonepeli lisäsi tietämystäni siitä, miten tunnistan onko verkossa nähty suositus maksettua mainontaa"
     ],
     "guessTitle": "Mitä pidit pelattavuudesta?",
     "guessItems": [
@@ -451,17 +452,10 @@ export default {
     ],
     "comments": "Onko muita kommentteja tai ehdotuksia?"
   },
-  "sessionDialog": {
-    "title": "Tervetuloa takaisin",
-    "message": "Sinulla on aiempi istunto. Haluatko jatkaa siitä, mihin jäit?",
-    "resume": "Jatka",
-    "startOver": "Aloita alusta"
-  },
   "escapeRoomEnd": {
     "title": "Pakohuone päättynyt",
     "description": "Mitä haluaisit tehdä seuraavaksi?",
     "restart": "Palaa alkuun",
-    "continueExploring": "Jatka ECHOn tutkimista",
     "visitResources": "Siirry ENDGAME-resursseihin"
   },
   "names": {
@@ -470,34 +464,22 @@ export default {
       "genitive": "Mian",
       "partitive": "Miaa",
       "allative": "Mialle",
-      "adessive": "Mialla",
       "ablative": "Mialta",
-      "illative": "Miaan",
-      "inessive": "Miassa",
       "elative": "Miasta",
-      "translative": "Miaksi",
       "accusative": "Mia",
       "dative": "Mia",
-      "instrumental": "Mia",
-      "locative": "Mia",
-      "vocative": "Mia"
+      "instrumental": "Mia"
     },
     "max": {
       "nominative": "Max",
       "genitive": "Maxin",
       "partitive": "Maxia",
       "allative": "Maxille",
-      "adessive": "Maxilla",
       "ablative": "Maxilta",
-      "illative": "Maxiin",
-      "inessive": "Maxissa",
       "elative": "Maxista",
-      "translative": "Maxiksi",
       "accusative": "Max",
       "dative": "Max",
-      "instrumental": "Max",
-      "locative": "Max",
-      "vocative": "Max"
+      "instrumental": "Max"
     }
   },
   "hints": {
