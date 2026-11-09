@@ -6,6 +6,7 @@ import { DEBUG, settings } from '../game/settings.js'
 import { bgUrl } from '../game/assets.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { playSound, preloadSound } from '../game/sound.js'
+import { useRoomState } from '../game/useRoomState.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ, EXT } from '../game/xapi.js'
 import RoomFrame from '../components/RoomFrame.jsx'
@@ -451,19 +452,22 @@ export default function LinkDistrict({ node }) {
   const { completeRoom, addEvidence, setLinkRound } = useGame()
   const t = useT()
   const cfg = settings.linkDistrict
-  const [round, setRound] = useState(0)
-  const [blocked, setBlocked] = useState({})
+  /* Progress, not UI: the crossroads reached, the doors blocked so far, the
+     step within it and the red flags ticked. A peeked-open door, an error
+     banner and the slide animation are transient and stay so. */
+  const [round, setRound] = useRoomState('link.round', 0)
+  const [blocked, setBlocked] = useRoomState('link.blocked', {})
   const [opened, setOpened] = useState({}) // which doors are peeked open
   const [error, setError] = useState('')
   const [errorAttempt, setErrorAttempt] = useState(0)
-  const [phase, setPhase] = useState('block') // 'block' | 'justify' | 'done'
+  const [phase, setPhase] = useRoomState('link.phase', 'block') // 'block' | 'justify' | 'done'
 
   useEffect(() => {
     setLinkRound(round)
   }, [round, setLinkRound])
 
-  const [reviewing, setReviewing] = useState(false) // showing the round's explanations
-  const [flags, setFlags] = useState({})
+  const [reviewing, setReviewing] = useRoomState('link.reviewing', false) // showing the round's explanations
+  const [flags, setFlags] = useRoomState('link.flags', {})
   const [justifyErr, setJustifyErr] = useState('')
 
   // Background swaps to a transition clip for 5s when advancing crossroads,

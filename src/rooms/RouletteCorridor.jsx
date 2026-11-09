@@ -5,6 +5,7 @@ import { bgUrl } from '../game/assets.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { DEBUG } from '../game/settings.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
+import { useRoomState } from '../game/useRoomState.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import { ROULETTE_WHEELS as WHEELS, ROULETTE_SEGMENTS, rouletteResult, correctRouletteVerdict } from '../game/rouletteData.js'
@@ -55,12 +56,16 @@ export default function RouletteCorridor({ node }) {
   const t = useT()
   const [angles, setAngles] = useState({})
   const [spinning, setSpinning] = useState({})
-  const [history, setHistory] = useState({})
-  const [active, setActive] = useState('w1')
-  const [answers, setAnswers] = useState({})
-  const [verified, setVerified] = useState({})
+  /* Progress, not UI: the spins already made (the verdict is gated on a
+     minimum number of them, so losing these would make the player spin
+     again), the verdicts given and which wheels are settled. The wheel's
+     rotation and the shop popover are transient. */
+  const [history, setHistory] = useRoomState('roulette.history', {})
+  const [active, setActive] = useRoomState('roulette.active', 'w1')
+  const [answers, setAnswers] = useRoomState('roulette.answers', {})
+  const [verified, setVerified] = useRoomState('roulette.verified', {})
   const [errors, setErrors] = useState({})
-  const [solved, setSolved] = useState(false)
+  const [solved, setSolved] = useRoomState('roulette.solved', false)
   const [shopOpen, setShopOpen] = useState(false)
   useRoomProgress(Object.values(verified).filter(Boolean).length) // each wheel verified
   const timers = useRef({})
