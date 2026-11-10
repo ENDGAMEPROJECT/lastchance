@@ -336,6 +336,9 @@ export function GameProvider({ children }) {
   useEffect(() => {
     preloadSound('inventory.mp3')
     preloadSound('wrong.mp3') // used by every puzzle's incorrect-answer feedback
+    // The tunnel whoosh plays the instant EnterScreen mounts, so warming it
+    // on that screen would already be too late.
+    preloadSound('portal_whoosh.mp3')
   }, [])
 
   /* ---- xAPI: statements that belong to run state rather than to one room.

@@ -426,9 +426,10 @@ export default {
     "rateRange": "1 = Strongly Disagree, 2 = Disagree, 3 = Somewhat Disagree , 4 = Neutral, 5 = Somewhat Agree, 6 = Agree, 7 = Strongly Agree).",
     "learningTitle": "How much did you learn?",
     "learningItems": [
-      "The escape room increased my knowledge of how AI works",
-      "The escape room increased my knowledge of how AI is used in social media",
-      "The escape room increased my knowledge of what the appropriate uses of AI are"
+      "The escape room increased my knowledge of how to recognise fake online shops and fraudulent links",
+      "The escape room increased my knowledge of how my personal data is used to target adverts at me",
+      "The escape room increased my knowledge of how adverts use urgency and pressure to make me act without thinking",
+      "The escape room increased my knowledge of how to tell whether an online recommendation is paid advertising"
     ],
     "guessTitle": "How did you like the gameplay?",
     "guessItems": [
@@ -451,17 +452,10 @@ export default {
     ],
     "comments": "Any additional comments or suggestions?"
   },
-  "sessionDialog": {
-    "title": "Welcome Back",
-    "message": "You have a previous session. Would you like to continue where you left off?",
-    "resume": "Resume",
-    "startOver": "Start Over"
-  },
   "escapeRoomEnd": {
     "title": "Escape room finished",
     "description": "What would you like to do next?",
     "restart": "Return to the beginning",
-    "continueExploring": "Continue exploring ECHO",
     "visitResources": "Visit ENDGAME resources"
   },
   "names": {
@@ -470,34 +464,22 @@ export default {
       "genitive": "Mia",
       "partitive": "Mia",
       "allative": "Mia",
-      "adessive": "Mia",
       "ablative": "Mia",
-      "illative": "Mia",
-      "inessive": "Mia",
       "elative": "Mia",
-      "translative": "Mia",
       "accusative": "Mia",
       "dative": "Mia",
-      "instrumental": "Mia",
-      "locative": "Mia",
-      "vocative": "Mia"
+      "instrumental": "Mia"
     },
     "max": {
       "nominative": "Max",
       "genitive": "Max",
       "partitive": "Max",
       "allative": "Max",
-      "adessive": "Max",
       "ablative": "Max",
-      "illative": "Max",
-      "inessive": "Max",
       "elative": "Max",
-      "translative": "Max",
       "accusative": "Max",
       "dative": "Max",
-      "instrumental": "Max",
-      "locative": "Max",
-      "vocative": "Max"
+      "instrumental": "Max"
     }
   },
   "hints": {

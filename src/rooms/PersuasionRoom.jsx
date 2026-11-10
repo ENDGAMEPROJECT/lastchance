@@ -5,6 +5,7 @@ import { bgUrl } from '../game/assets.js'
 import { playSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
+import { useRoomState } from '../game/useRoomState.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import CloseButton from '../components/CloseButton.jsx'
 import { useStage } from '../components/Stage.jsx'
@@ -121,12 +122,16 @@ export default function PersuasionRoom({ node }) {
   const techniqueLabel = (id) => t(`rooms.persuasion.techniques.${id}`)
   const frames = FRAME_ORDER.map((id) => ({ id, technique: techniqueLabel(id) }))
 
-  const [placement, setPlacement] = useState({}) // frameId -> posterId it's sitting on
+  /* Progress, not UI: which frame is on which poster. The pixel positions
+     (pos / placedOrigin) are deliberately NOT stored — they are measured
+     from the laid-out wall, and a desktop layout's coordinates would be
+     wrong on a phone. They are re-derived from this below instead. */
+  const [placement, setPlacement] = useRoomState('persuasion.placement', {}) // frameId -> posterId it's sitting on
   const [overPoster, setOverPoster] = useState(null)
   const [hint, setHint] = useState(t('rooms.persuasion.hints.start'))
   const [entry, setEntry] = useState('')
   const [pwError, setPwError] = useState(false)
-  const [solved, setSolved] = useState(false)
+  const [solved, setSolved] = useRoomState('persuasion.solved', false)
   const [computerOpen, setComputerOpen] = useState(false) // computer screen overlay
   const [bg, setBg] = useState(bgUrl('persuasion.png'))
   const [ending, setEnding] = useState(false) // playing the end animation
@@ -308,6 +313,21 @@ export default function PersuasionRoom({ node }) {
   // set its rotateY origin onto the wall's centre axis — same axis, same angle,
   // same shared perspective ⇒ the frame overlays the poster 1:1 and its ring
   // sits exactly where the poster's letter is. No projected-rect nudging needed.
+  /* A restored run comes back with placements but no coordinates, so each
+     placed frame would sit in the tray while counting as placed. Re-snap
+     them once the wall has been laid out — deriving the pixels from the
+     current layout rather than trusting stored ones. Runs on sceneReady,
+     which is also when the posters have been measured. */
+  const restored = useRef(false)
+  useEffect(() => {
+    if (restored.current || !sceneReady) return
+    const entries = Object.entries(placement)
+    if (!entries.length) { restored.current = true; return }
+    restored.current = true
+    for (const [frameId, posterId] of entries) snapToPoster(frameId, posterId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sceneReady])
+
   function snapToPoster(frameId, posterId) {
     const posterEl = posterRefs.current[posterId]
     const wallEl = wallElRef.current

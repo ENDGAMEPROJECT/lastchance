@@ -426,9 +426,10 @@ export default {
     "rateRange": "1 = Uopšte se ne slažem, 2 = Ne slažem se, 3 = Delimično se ne slažem, 4 = Neutralno, 5 = Delimično se slažem, 6 = Slažem se, 7 = U potpunosti se slažem",
     "learningTitle": "Koliko si naučio/naučila?",
     "learningItems": [
-      "Escape room je proširio moje znanje o tome kako veštačka inteligencija funkcioniše",
-      "Escape room je proširio moje znanje o tome kako se veštačka inteligencija koristi na društvenim mrežama",
-      "Escape room je proširio moje znanje o tome koje su odgovarajuće upotrebe veštačke inteligencije"
+      "Escape room je proširio moje znanje o tome kako da prepoznam lažne onlajn prodavnice i prevarantske linkove",
+      "Escape room je proširio moje znanje o tome kako se moji lični podaci koriste za ciljanje reklama na mene",
+      "Escape room je proširio moje znanje o tome kako reklame koriste hitnju i pritisak da me nateraju da reagujem bez razmišljanja",
+      "Escape room je proširio moje znanje o tome kako da prepoznam da li je preporuka na internetu plaćena reklama"
     ],
     "guessTitle": "Kako vam se dopao način igre?",
     "guessItems": [
@@ -451,17 +452,10 @@ export default {
     ],
     "comments": "Imate li dodatnih komentara ili predloga?"
   },
-  "sessionDialog": {
-    "title": "Dobrodošli nazad",
-    "message": "Imate prethodnu sesiju. Da li želite da nastavite tamo gde ste stali?",
-    "resume": "Nastavi",
-    "startOver": "Počni ispočetka"
-  },
   "escapeRoomEnd": {
     "title": "Escape room je završen",
     "description": "Šta bi želeo/la da uradiš sledeće?",
     "restart": "Vrati se na početak",
-    "continueExploring": "Nastavi da istražuješ ECHO",
     "visitResources": "Poseti ENDGAME resurse"
   },
   "names": {
@@ -470,34 +464,22 @@ export default {
       "genitive": "Mije",
       "partitive": "Mia",
       "allative": "Mia",
-      "adessive": "Mia",
       "ablative": "Mia",
-      "illative": "Mia",
-      "inessive": "Mia",
       "elative": "Mia",
-      "translative": "Mia",
       "accusative": "Miju",
       "dative": "Miji",
-      "instrumental": "Mijom",
-      "locative": "Miji",
-      "vocative": "Mia"
+      "instrumental": "Mijom"
     },
     "max": {
       "nominative": "Max",
       "genitive": "Maksa",
       "partitive": "Max",
       "allative": "Max",
-      "adessive": "Max",
       "ablative": "Max",
-      "illative": "Max",
-      "inessive": "Max",
       "elative": "Max",
-      "translative": "Max",
       "accusative": "Maksa",
       "dative": "Maksu",
-      "instrumental": "Maksom",
-      "locative": "Maksu",
-      "vocative": "Makse"
+      "instrumental": "Maksom"
     }
   },
   "hints": {

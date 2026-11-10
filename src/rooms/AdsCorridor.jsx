@@ -5,7 +5,8 @@ import { useMobileView } from '../game/device.js'
 import CloseButton from '../components/CloseButton.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
-import { playSound } from '../game/sound.js'
+import { playSound, preloadSound } from '../game/sound.js'
+import { useRoomState } from '../game/useRoomState.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import RoomFrame from '../components/RoomFrame.jsx'
@@ -58,7 +59,11 @@ export default function AdsCorridor({ node }) {
   const mobile = useMobileView()
 
   // The flashlight stays off until the player equips it from the Bag.
-  const [lightOn, setLightOn] = useState(false)
+  /* Progress, not UI: the posters already read, whether the room is done,
+     and the beam — the torch is switched on by equipping it from the Bag,
+     so without this a refresh would send the player back to the Bag for an
+     item they already have. The half-typed exit code stays transient. */
+  const [lightOn, setLightOn] = useRoomState('ads.lightOn', false)
 
   // Refs for the cursor-tracked spotlight overlay.
   const wallRef = useRef(null)
@@ -67,7 +72,7 @@ export default function AdsCorridor({ node }) {
   // Which poster is under the beam right now (transient — reveals hide again).
   const [activePoster, setActivePoster] = useState(null)
   // Posters whose truth has been read under the beam at least once.
-  const [seen, setSeen] = useState({})
+  const [seen, setSeen] = useRoomState('ads.seen', {})
   useEffect(() => {
     if (activePoster) setSeen((s) => (s[activePoster] ? s : { ...s, [activePoster]: true }))
   }, [activePoster])
@@ -75,7 +80,7 @@ export default function AdsCorridor({ node }) {
 
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
-  const [solved, setSolved] = useState(false)
+  const [solved, setSolved] = useRoomState('ads.solved', false)
   const inputRef = useRef(null)
   // Phone: typing happens in a full-screen pop-over (see the portal below), so
   // the input sits in the top half, clear of the on-screen keyboard.
@@ -110,10 +115,15 @@ export default function AdsCorridor({ node }) {
     })
   }, [seen])
 
+  useEffect(() => { preloadSound('flashlight.mp3') }, [])
+
   // Equipping the Truth Flashlight from the Bag switches the beam on.
   useEffect(() => {
     const onUseItem = (event) => {
-      if (event.detail?.id === 'truthLight' && hasItem('truthLight')) setLightOn(true)
+      if (event.detail?.id === 'truthLight' && hasItem('truthLight')) {
+        setLightOn(true)
+        playSound('flashlight.mp3') // the switch, as the beam comes up
+      }
     }
     window.addEventListener('lastchance:use-item', onUseItem)
     return () => window.removeEventListener('lastchance:use-item', onUseItem)

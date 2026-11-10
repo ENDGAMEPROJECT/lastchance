@@ -7,6 +7,7 @@ import { useReadingGate } from '../game/readingGate.js'
 import { DEBUG } from '../game/settings.js'
 import { useMobileView } from '../game/device.js'
 import { playSound, stopSound, preloadSound } from '../game/sound.js'
+import { useRoomState } from '../game/useRoomState.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import { useI18n, useT } from '../i18n/index.jsx'
@@ -68,6 +69,10 @@ const POSTS = [
   //   correctLabel: 'NOTHING',
   // },
 ]
+
+/* Statements identify a post by its position, never by its id: the ids are
+   the correct labels, so using them would leak the answer key. */
+const postNo = (id) => POSTS.findIndex((p) => p.id === id) + 1
 
 /* Stable English names for analytics: the product copy is localised, so it
    cannot name the activity. Keys are PRODUCTS ids. */
@@ -619,8 +624,12 @@ export default function InfluencerAvenue({ node }) {
   const { locale } = useI18n()
   const t = useT()
 
-  const [stage, setStage] = useState('label') // 'label' → 'labelFeedback' → 'explain' → 'verify' → solved
-  const [solved, setSolved] = useState(false)
+  /* Progress, not UI: these five survive a refresh so a player who has
+     already decoded the labels comes back to the reverse-image search
+     rather than to the start of the room. Everything else in here is
+     transient (a held stamp, an open panel) and deliberately is not. */
+  const [stage, setStage] = useRoomState('influencer.stage', 'label') // 'label' → 'labelFeedback' → 'explain' → 'verify' → solved
+  const [solved, setSolved] = useRoomState('influencer.solved', false)
   const [demoPhase, setDemoPhase] = useState('drag') // explainer's scripted reverse-search demo
   // The label recap and the reverse-search explainer can't be skipped: their
   // continue buttons appear once the text has had time to be read.
@@ -677,11 +686,11 @@ export default function InfluencerAvenue({ node }) {
   }
   function closePublication() {
     const open = POSTS[publicationIndex]
-    if (open) track('closed', OBJ.post(open.id), { node: node.id, response: open.id })
+    if (open) track('closed', OBJ.post(postNo(open.id)), { node: node.id })
     setPublicationIndex(null)
     publicationTrigger.current?.focus({ preventScroll: true })
   }
-  const [answers, setAnswers] = useState({}) // postId -> decoded letters
+  const [answers, setAnswers] = useRoomState('influencer.answers', {}) // postId -> decoded letters
   const [selectedPostId, setSelectedPostId] = useState(null)
   const [decoderOpen, setDecoderOpen] = useState(false)
   const selectedPost = POSTS.find((post) => post.id === selectedPostId)
@@ -694,11 +703,25 @@ export default function InfluencerAvenue({ node }) {
     []
   )
 
+  /* Both the post card and the answer button inside it select the post; they
+     share this so the statement is emitted exactly once, from one place. */
+  function selectPost(id) {
+    // No response: the activity already says which post, and anything more
+    // here would look like an answer when the player has only clicked a card.
+    track('selected', OBJ.post(postNo(id)), { node: node.id })
+    setSelectedPostId(id)
+  }
+
   function enterLetter(letter) {
     if (!canEdit || selectedAnswer.length >= selectedPost.correctLabel.length) return
     const next = selectedAnswer + letter
-    track('selected', OBJ.influencers(), {
-      node: node.id, response: `${letter};${next}`,
+    /* The decoder, not the generic "Influencers" activity: this is a letter
+       typed on the emoji keypad. The response says which letter, what the
+       answer now reads, and which post it is being typed for — otherwise the
+       log is a row of identical selections with nothing to tell them apart. */
+    track('entered', OBJ.decoder(), {
+      node: node.id,
+      response: `${postNo(selectedPostId)};${letter};${next}`,
     })
     if (next.length === selectedPost.correctLabel.length) {
       playSound(next === selectedPost.correctLabel ? 'twinkle.mp3' : 'wrong.mp3')
@@ -735,8 +758,8 @@ export default function InfluencerAvenue({ node }) {
   /* ---- Stage 2 state ---- */
   const [activeId, setActiveId] = useState(null) // product image being uploaded/searched in the engine
   const [shownId, setShownId] = useState(null) // whose results are open under the engine
-  const [searched, setSearched] = useState({}) // productId -> true once results are in
-  const [picks, setPicks] = useState({}) // productId -> chosen verdict value
+  const [searched, setSearched] = useRoomState('influencer.searched', {}) // productId -> true once results are in
+  const [picks, setPicks] = useRoomState('influencer.picks', {}) // productId -> chosen verdict value
   const [verifyErr, setVerifyErr] = useState('')
   const [stampFx, setStampFx] = useState(0) // bumped on each stamp so the imprint animation replays
   const [heldStamp, setHeldStamp] = useState(null) // the stamp-maker currently "in hand"
@@ -911,7 +934,7 @@ export default function InfluencerAvenue({ node }) {
                 <article
                   key={p.id}
                   className={`ia-post ${correct ? 'solved' : ''} ${selected ? 'selected' : ''}`}
-                  onClick={() => { track('selected', OBJ.post(p.id), { node: node.id, response: p.id }); setSelectedPostId(p.id) }}
+                  onClick={() => selectPost(p.id)}
                 >
                   {/* Social card header */}
                   <div className="ia-card-top">
@@ -944,7 +967,7 @@ export default function InfluencerAvenue({ node }) {
                     onOpen={(event) => {
                       event.stopPropagation()
                       publicationTrigger.current = event.currentTarget
-                      track('opened', OBJ.post(p.id), { node: node.id, response: p.id })
+                      track('opened', OBJ.post(postNo(p.id)), { node: node.id })
                       setPublicationIndex(idx)
                     }} />
 
@@ -968,7 +991,9 @@ export default function InfluencerAvenue({ node }) {
                     aria-pressed={selected}
                     aria-label={t('rooms.influencer.stage1.selectPost', { name: copy.username })}
                     onMouseDown={(event) => event.preventDefault()}
-                    onClick={() => { track('selected', OBJ.post(p.id), { node: node.id, response: p.id }); setSelectedPostId(p.id) }}
+                    /* The card behind this button selects the post too, so without
+                       stopPropagation one click bubbles and reports it twice. */
+                    onClick={(event) => { event.stopPropagation(); selectPost(p.id) }}
                   >
                     <span className="ia-answer-letters" aria-hidden="true">
                       {Array.from({ length: p.correctLabel.length }, (_, index) => (

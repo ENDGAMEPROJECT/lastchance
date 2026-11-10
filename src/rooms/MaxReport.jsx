@@ -390,7 +390,7 @@ export default function MaxReport({ figure, dim = 0.35 }) {
         {text(26, 538, '+12%', 'mr-t mr-xs mr-green')}
         <path d="M24 598H226" stroke={C.cyan} strokeOpacity=".4"/>
         {bars('act', 26, 598, 198, 52, Array.from({ length: 24 }, (_, i) => 20 + 80 * Math.abs(Math.sin(i / 3.6)) * (0.5 + rnd(i) * 0.5)), .9)}
-        {['0', '6', '12', '18', '24'].map((n, i) => text(26 + i * 48, 612, n, 'mr-t mr-xs'))}
+        {['0', '6', '12', '18', '24'].map((n, i) => <g key={n}>{text(26 + i * 48, 612, n, 'mr-t mr-xs')}</g>)}
         {[[L.app, 35, C.cyan], [L.web, 28, C.violet], [L.game, 22, C.blue], [L.social, 15, C.magenta]].map(([k, v, c], i) => (
           <g key={i}>
             <circle className="mr-blink" cx="244" cy={518 + i * 22} r="5" fill="none" stroke={c} strokeWidth="2.5" style={timing(i * .4, 2.5 + i * .3)}/>
@@ -427,7 +427,7 @@ export default function MaxReport({ figure, dim = 0.35 }) {
         {text(506, 115, '100', 'mr-t mr-xxs')}{text(506, 142, '50', 'mr-t mr-xxs')}
         <g stroke={C.cyan} strokeOpacity=".2">{[112, 138, 164].map((y) => <path key={y} d={`M524 ${y}H642`}/>)}</g>
         {line('mood', 524, 108, 118, 60, [[40, 70, 35, 85, 50, 90, 60], [55, 45, 80, 60, 88, 52, 76], [30, 82, 50, 70, 40, 75, 92]], .7, '#6ff0ff', ref('areaC'))}
-        {days.map((dd, i) => text(524 + i * 19.7, 186, dd, 'mr-t mr-xxs', 'middle'))}
+        {days.map((dd, i) => <g key={i}>{text(524 + i * 19.7, 186, dd, 'mr-t mr-xxs', 'middle')}</g>)}
       </>)}
 
       {panel('behavior', 350, 204, 150, 96, L.behavior, .65, <>
@@ -518,7 +518,7 @@ export default function MaxReport({ figure, dim = 0.35 }) {
       </>)}
 
       {panel('tags', 440, 754, 210, 42, L.tags, 1.55, <>
-        {L.tagRows?.map((tag, i) => text(452 + i * 66, 790, tag, 'mr-t mr-xxs'))}
+        {L.tagRows?.map((tag, i) => <g key={i}>{text(452 + i * 66, 790, tag, 'mr-t mr-xxs')}</g>)}
         {[1, .87, .7].map((v, i) => hbar(`tg${i}`, 548 + i * 34, 766, 28, v * 100, 1.6 + i * .1, ref('flow'), 4))}
       </>, true)}
 
@@ -714,7 +714,7 @@ export default function MaxReport({ figure, dim = 0.35 }) {
         <g stroke={C.cyan} strokeOpacity=".2">{[674, 698, 722].map((y) => <path key={y} d={`M984 ${y}H1240`}/>)}</g>
         {line('wk1', 984, 672, 256, 50, [[30, 60, 45, 80, 55, 90, 50], [45, 50, 70, 60, 85, 65, 75], [35, 70, 55, 65, 50, 80, 60]], 1.6, C.cyan, ref('areaC'))}
         {line('wk2', 984, 672, 256, 50, [[20, 35, 55, 40, 70, 45, 30], [30, 25, 40, 60, 50, 35, 45], [25, 45, 35, 50, 60, 55, 25]], 1.7, C.magenta, ref('areaM'))}
-        {days.map((dd, i) => text(984 + i * 42.7, 738, dd, 'mr-t mr-xxs', 'middle'))}
+        {days.map((dd, i) => <g key={i}>{text(984 + i * 42.7, 738, dd, 'mr-t mr-xxs', 'middle')}</g>)}
         {['7.4 h', '3.1 h', '4.8 h', '2.2 h', '1.6 h'].map((v, i) => (
           <g key={i}>
             <circle cx="1262" cy={683 + i * 13} r="3.5" fill="none" stroke={[C.cyan, C.magenta, C.violet, C.blue, '#9fa8ff'][i]} strokeWidth="2"/>

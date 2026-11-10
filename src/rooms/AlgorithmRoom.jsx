@@ -4,7 +4,8 @@ import { CODES, ITEMS } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
 import { IS_PHONE } from '../game/device.js'
 import { useReadingGate } from '../game/readingGate.js'
-import { playSound } from '../game/sound.js'
+import { playSound, preloadSound } from '../game/sound.js'
+import { useRoomState } from '../game/useRoomState.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import { useT } from '../i18n/index.jsx'
@@ -147,19 +148,23 @@ function DoorKeypadMap({ children }) {
 export default function AlgorithmRoom({ node }) {
   const { completeRoom, addEvidence, narrative } = useGame()
   const t = useT()
-  const [phase, setPhase] = useState('door') // 'door' | 'unlock' | 'choice' | 'equations'
-  const [solved, setSolved] = useState(false)
+  /* Progress, not UI: these five survive a refresh, so a player who has
+     already opened the door and started the equations comes back to them
+     rather than to the keypad. The half-typed code and the access light
+     are deliberately transient — a code in flight is not progress. */
+  const [phase, setPhase] = useRoomState('algorithm.phase', 'door') // 'door' | 'unlock' | 'choice' | 'equations'
+  const [solved, setSolved] = useRoomState('algorithm.solved', false)
 
   /* ----- phase 'unlock' state ----- */
   const [code, setCode] = useState('')
   const [status, setStatus] = useState('idle') // 'idle' | 'wrong' | 'ok' — the access light
 
   /* ----- phase 'choice' state ----- */
-  const [choice, setChoice] = useState(null) // 'A' | 'B' | null
+  const [choice, setChoice] = useRoomState('algorithm.choice', null) // 'A' | 'B' | null
 
   /* ----- phase 'equations' state (one equation at a time) ----- */
-  const [step, setStep] = useState(0) // current equation index; ROWS.length = the profile
-  const [placements, setPlacements] = useState({}) // rowId -> tileId placed in its blank slot
+  const [step, setStep] = useRoomState('algorithm.step', 0) // current equation index; ROWS.length = the profile
+  const [placements, setPlacements] = useRoomState('algorithm.placements', {}) // rowId -> tileId placed in its blank slot
   const [wrongFlash, setWrongFlash] = useState(false) // transient wrong-tile feedback
   useRoomProgress(`${phase}|${step}`) // door → keypad → choice → each solved equation
 
@@ -214,6 +219,13 @@ export default function AlgorithmRoom({ node }) {
   // briefly with its digits visible, then clears itself for the next try.
   const clearTimer = useRef(null)
   useEffect(() => () => window.clearTimeout(clearTimer.current), [])
+  // The keypad's own sounds, warmed with the room so the first press is instant.
+  useEffect(() => {
+    preloadSound('keypad_beep.mp3')
+    preloadSound('keypad_ok.mp3')
+    preloadSound('keypad_nok.mp3')
+    preloadSound('twinkle.mp3') // the correct-drop chime
+  }, [])
 
   function checkCode(entry) {
     const right = entry === CODES.algorithmRoom
@@ -222,10 +234,10 @@ export default function AlgorithmRoom({ node }) {
     })
     if (right) {
       setStatus('ok')
-      playSound('twinkle.mp3')
+      playSound('keypad_ok.mp3')
       window.setTimeout(() => setPhase('choice'), 850)
     } else {
-      playSound('wrong.mp3')
+      playSound('keypad_nok.mp3')
       setStatus('wrong')
       clearTimer.current = window.setTimeout(() => setCode(''), 700)
     }
@@ -233,6 +245,9 @@ export default function AlgorithmRoom({ node }) {
 
   function pressKey(k) {
     if (status === 'ok' || code.length === 6) return // locked while a full code is being judged
+    // The pad was silent to type on. playSound restarts the one cached element,
+    // so fast typing retriggers the beep rather than layering copies of it.
+    playSound('keypad_beep.mp3')
     setStatus('idle') // clear the red light on the next keypress
     if (k === 'C') setCode('')
     else if (k === '⌫') setCode(code.slice(0, -1))
@@ -253,6 +268,7 @@ export default function AlgorithmRoom({ node }) {
       node: node.id, response: tileId, success: right, completion: right,
     })
     if (right) {
+      playSound('twinkle.mp3') // the same chime the other rooms use for a correct answer
       setWrongFlash(false)
       setPlacements((p) => ({ ...p, [row.id]: tileId }))
     } else {
@@ -377,7 +393,7 @@ export default function AlgorithmRoom({ node }) {
           <div className="ar-options">
             <button
               className={`ar-option ${choice === 'A' ? 'picked' : ''}`}
-              onClick={() => { track('selected', OBJ.privacyChoice(), { node: node.id, response: 'A', success: false }); setChoice('A') }}
+              onClick={() => { track('answered', OBJ.privacyChoice(), { node: node.id, response: 'A', success: false }); setChoice('A') }}
             >
               <div className="ar-opt-tag">{t('rooms.algorithm.choice.optionATag')}</div>
               <div className="ar-opt-icon">🎯</div>
@@ -390,7 +406,7 @@ export default function AlgorithmRoom({ node }) {
 
             <button
               className={`ar-option ${choice === 'B' ? 'picked' : ''}`}
-              onClick={() => { track('selected', OBJ.privacyChoice(), { node: node.id, response: 'B', success: true }); setChoice('B') }}
+              onClick={() => { track('answered', OBJ.privacyChoice(), { node: node.id, response: 'B', success: true }); setChoice('B') }}
             >
               <div className="ar-opt-tag">{t('rooms.algorithm.choice.optionBTag')}</div>
               <div className="ar-opt-icon">🛡️</div>

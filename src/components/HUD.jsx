@@ -4,7 +4,7 @@ import { useGame, formatTime } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
 import { DEBUG, settings } from '../game/settings.js'
-import { isMuted, setMuted } from '../game/sound.js'
+import { isMuted, setMuted, playSound, preloadSound } from '../game/sound.js'
 import { getHintContext, getHintPlan } from '../game/hints.js'
 import { track, OBJ, EXT } from '../game/xapi.js'
 import { useStage } from './Stage.jsx'
@@ -200,9 +200,13 @@ export default function HUD() {
       : screen === 'return' || screen === 'review' ? 'map'
         : screen
   const hudInit = useRef({ bag: true, hints: true, tab: true, mute: true, full: true })
+  useEffect(() => { preloadSound('bag_open.mp3') }, [])
 
   useEffect(() => {
     if (hudInit.current.bag) { hudInit.current.bag = false; return }
+    // The zipper on the way in only: it is a one-second sound and the bag is
+    // opened often, so playing it on close as well would wear thin fast.
+    if (bagOpen) playSound('bag_open.mp3')
     track(bagOpen ? 'opened' : 'closed', OBJ.bag(), { node: xapiNode })
   }, [bagOpen])
 

@@ -2,8 +2,9 @@
 
 An interactive, cyberpunk-styled escape room that teaches young people how online
 **advertising, scams and fraudulent websites** actually work. The player has 30 minutes
-to travel a "physical internet" city, gather evidence, and convince their friend **Max**
-not to buy a too-good-to-be-true viral deal before the fake "today only" countdown expires.
+to travel a "physical internet" city, gather evidence, and convince their friend — **Mia**
+or **Max**, whichever they did not pick — not to buy a too-good-to-be-true viral deal before
+the fake "today only" countdown expires.
 
 Built with **React 18 + Vite**. All interactive elements are hand-built with HTML/CSS/SVG
 (no game engine, no external UI libraries — zero runtime UI dependencies). All copy runs
@@ -17,8 +18,17 @@ npm run dev        # dev server at http://localhost:5173
 npm run dev:debug  # dev server with debug mode on (all nodes unlocked, jump buttons)
 npm run build      # production build into ./dist (base path /lastchance/)
 npm run preview    # preview the production build
-npm run check:i18n # verify every referenced i18n key exists (static + dynamic)
+npm run check:i18n   # every referenced i18n key exists (static + dynamic)
+npm run check:xapi   # every track() call names a real verb, object and parent
+npm run check:assets # every catalogued image exists, every used image is catalogued
+npm run check:all    # all three, then a production build
+npm run i18n:import  # pull translations from the Google Sheet into src/i18n/locales
+npm run i18n:export  # mirror the Sheet to docs/translations/*.csv, validating placeholders
 ```
+
+Run `npm run check:all` before pushing: the three checks catch the mistakes a build
+cannot see — a missing translation key, a `track()` call naming a verb that does not
+exist, an image the preloader promises but nobody shipped.
 
 ## The game
 
@@ -74,15 +84,21 @@ src/
   game/
     gameData.js            Node graph, items, codes, emoji key, narrative (structure)
     GameContext.jsx        Run state: screen, progress, inventory, evidence, timer
-    settings.js            Tunables + DEBUG / DEBUG_SCREEN flags
+    settings.js            Tunables (timer, typewriter pacing, reminders) + DEBUG flags
+    session.js             Run persistence: save/restore a run, the survey flag, the locale
+    xapi.js                Learning-analytics statements: verb/object catalogue + track()
     assets.js              bgUrl() — resolves public asset paths against the base URL
     preloadAssets.js       Preloads the current screen and its next destination
     sound.js               playSound()/preloadSound()/stopSound() + global mute (persisted); base-URL aware
   i18n/
     index.jsx              useT()/useI18n() hooks, provider, {var} interpolation, locale registry
+    characterText.js       interpolate() + the character variables, incl. declined names
+    dictionaries.js        Merges the generated locales with the local UI-copy files
     locales/
-      en.js                English dictionary (shell + composes room fragments)
-      en/*.js              Per-room string fragments (link, roulette, ads, persuasion, …)
+      en|es|fi|sr.js       Generated from the translation Sheet — do not edit by hand
+      session.js           Resume-dialog copy, preserved across an import
+      fullscreen.js        Fullscreen/timer button labels, preserved across an import
+      orientation.js       "Turn your phone" copy, preserved across an import
   components/
     Stage.jsx              Fixed 1280×720 stage, scaled to fit (exposes useStage().scale)
     HUD.jsx                Top bar: countdown, Bag, Map, sound on/off toggle
@@ -92,6 +108,9 @@ src/
     Conversation.jsx       Messaging-app chat UI (typewriter, online/typing status) for the tests
     ProductPreview.jsx     Phone flash-sale post: spoofed non-clickable URL + live countdown
     Modal.jsx              Reusable neon modal
+    SessionDialog.jsx      Resume-or-restart choice when a saved run is found
+    SurveyModal.jsx        End-of-run feedback survey (sections driven by the Sheet)
+    screens/LandingCredits.jsx  EU funding + ENDGAME logos on the welcome screen
     dnd/Dnd.jsx            Pointer-based drag-and-drop primitive (scale-aware, tap-to-place)
     screens/               Welcome, Intro, Pretest, Posttest, EndScreens (Win/Lose)
   rooms/                   One component per district/corridor (+ co-located CSS)
@@ -113,7 +132,12 @@ which prefixes Vite's `import.meta.env.BASE_URL` (i.e. `/` in dev, `/lastchance/
    `<RoomFrame node={node} bgImage={bgUrl('influencer.png')} …>`.
 3. For a raw CSS background, use ``style={{ backgroundImage: `url(${bgUrl('map.png')})` }}``.
 4. Add the file name to the appropriate room/screen group in `src/game/preloadAssets.js`.
-   `GAME_IMAGES` collects those groups for asset checks; it is not downloaded in one batch.
+   `GAME_IMAGES` collects those groups; it is never downloaded as one batch.
+   `npm run check:assets` enforces both directions — a catalogue entry naming a file that is
+   not there (which fails silently at runtime, by design, and shows up as a blank frame), and
+   an image the source uses that the catalogue never mentions (which then downloads
+   mid-scene, the exact stutter the preloader exists to prevent). Paths built from data at
+   runtime cannot be read statically, so the check lists them for a human instead.
 5. Tune opacity/blend in `.bg-slot` (global.css) if the image competes with the UI.
 
 **Map station art** lives in `public/bg/map/` — `map-bg.png` (the city backdrop, no path baked in;
@@ -153,18 +177,78 @@ Sound effects live in `public/sounds/` and play through `src/game/sound.js`:
 To add a sound: drop the file in `public/sounds/`, then `playSound('file.mp3')` (and optionally
 `preloadSound('file.mp3')` on mount).
 
+## Resuming a run
+
+A refresh used to cost the whole run. The reducer state is plain JSON, so it is saved to
+`sessionStorage` on every change and offered back on the next load: `SessionDialog` names
+what is at stake — districts cleared, time left, where the run stands, what it is carrying
+— and the player chooses **Resume** or **Start over**. Nothing is restored silently, which
+would strand someone who wanted a fresh start on a stranger's half-finished game.
+
+`sessionStorage` rather than `localStorage` on purpose, matching where the xAPI actor is
+kept: on a shared classroom machine the next student starts their own run instead of
+inheriting the previous one under a stale identity. One marked line in `session.js` switches
+it. The clock does not advance while the page is closed, so a refresh costs no time — and
+gives nobody a reason to refresh for more. Persistence is off in debug mode.
+
+**Known limit:** rooms keep their puzzle state in their own components (blocked doors,
+framed posters, a typed code), none of which is saved. A refresh mid-puzzle returns the
+player to the district with the puzzle restarted. Lifting that state into the reducer would
+make resuming seamless; it would touch all six rooms.
+
+## Feedback survey
+
+Both endings offer a short survey (`SurveyModal`), modelled on the one in the ECHO escape
+room so results from the two rooms line up. Four sections — a 1–5 opinion, two 1–7 blocks,
+and free text — are config rather than markup, so the item count is whatever the Sheet
+holds, in every language: adding a question is a row, not a code change. Ratings are
+required, the comment box is not. It is asked once per run and submitting opens the end
+options: restart, or the ENDGAME project site.
+
+## Learning analytics (xAPI)
+
+`src/game/xapi.js` sends statements to an LRS. Configure it in `.env` (gitignored; see
+`.env.example`) with `VITE_XAPI_ENDPOINT` and `VITE_XAPI_AUTH` — and as Actions secrets for
+the deployed build (see **Deploying**). With either missing, tracking is silently disabled
+and the game plays normally: no statement ever blocks or breaks gameplay.
+
+Because failure is silent by design, **nothing is logged unless debug mode is on** — append
+`?debug` to diagnose a deployed build. Verbs, objects and parent activities live in one
+catalogue, and `npm run check:xapi` verifies every `track()` call names entries that exist,
+which a build cannot see (most calls live in handlers that never run during a render).
+
 ## Editing text / adding a language
 
-All user-facing text lives in `src/i18n/locales/`. Nothing is hard-coded in components.
+**A translation Google Sheet is the single source of truth.** `src/i18n/locales/{en,es,fi,sr}.js`
+are generated from it and carry a "do not edit by hand" banner — an edit there survives until
+the next import and then vanishes. The game ships in English, Spanish, Finnish and Serbian.
 
-- **Edit copy**: change values in `en.js` (shell) or `en/<room>.js` (a room).
-- **Add a language**: copy `en.js` + the `en/` folder to e.g. `fr.js` + `fr/`, translate the
-  values (keep the keys), then register it in `src/i18n/index.jsx` (`LOCALES`). The Welcome
-  screen's picker is populated automatically from `AVAILABLE_LOCALES`; `useI18n().setLocale('fr')`
-  switches at runtime.
-- **Validate**: run `npm run check:i18n` to catch any key referenced in code but missing from a locale.
+- **Edit copy**: change the cell in the Sheet, then `npm run i18n:import`.
+- **Review copy**: `npm run i18n:export` mirrors every tab to `docs/translations/<Tab>.csv`,
+  which is readable, diffable and easy to bulk-edit before pasting back.
+- **Validate**: `npm run check:i18n`, and the export reports any placeholder problem.
 
-Interpolation uses `{name}` placeholders, e.g. `t('intro.hook', { friend: 'Max' })`.
+Interpolation uses `{name}` placeholders, e.g. `t('intro.hook')` with `{friend}`.
+
+**Never translate a variable name.** `interpolate()` substitutes by exact name and leaves
+anything else in the string, so a Serbian `{okrug}` where the call site passes `{district}`
+ships literal braces to the player. The export repairs the cases it can prove and fails
+loudly on the rest.
+
+**Declined names.** `{friend}` only works as a subject. Finnish and Serbian inflect the name
+itself, so a `names.<character>.<form>` row in the Sheet becomes the variable
+`{friend_<form>}` — `names.mia.genitive` makes `{friend_genitive}` render "Mian" in Finnish
+and "Mije" in Serbian. One string then serves both characters, and a translator can add or
+fix a case without a code change.
+
+**UI copy that must survive an import** — the resume dialog, the fullscreen and rotate
+prompts — lives in small local files (`src/i18n/locales/session.js`, `fullscreen.js`,
+`orientation.js`) merged in `dictionaries.js`. A Sheet value of the same key takes priority.
+
+**Adding a language**: add a column to the Sheet, register the code in
+`scripts/i18n-import.mjs` (`LANGS`) and in `src/i18n/index.jsx` (`LOCALE_NAMES`), and drop
+an EU funding logo at `public/logos/eu-cofunded-<code>.png`. The Welcome picker populates
+itself from `AVAILABLE_LOCALES`.
 
 ## Deploying
 
@@ -172,3 +256,30 @@ Interpolation uses `{name}` placeholders, e.g. `t('intro.hook', { friend: 'Max' 
 workflow (`.github/workflows/deploy.yml`) rebuilds and publishes `dist/` to the `gh-pages`
 branch. Because of the base path, always reference assets through `bgUrl()` (above) — bare
 absolute paths work in dev but break on the deployed site.
+
+Vite inlines `VITE_`-prefixed variables at build time, so the deployed build needs the xAPI
+credentials in the workflow's environment: they are repository **Actions secrets** named
+`VITE_XAPI_ENDPOINT` and `VITE_XAPI_AUTH`, read by the build step. Without them the build
+still succeeds and tracking is simply off — silently, which is the trap. After a deploy,
+hard-reload before concluding anything is broken: the hashed bundle is new but a cached
+`index.html` can still point at the old one.
+
+## Funding & credits
+
+<img src="docs/eu-cofunded-readme.png" alt="Co-funded by the European Union" height="60">
+
+Produced within the **ENDGAME** project — *Escaping New Disinformation through Gamified
+cross-border Media literacy Education* — at <https://endgameproject.github.io/>.
+
+Funded by the European Union. Views and opinions expressed are however those of the
+author(s) only and do not necessarily reflect those of the European Union or the European
+Education and Culture Executive Agency (EACEA). Neither the European Union nor EACEA can be
+held responsible for them.
+
+The emblem above sits on a dark panel because the file is the *WHITE* variant — white
+artwork, which would be invisible on a light README background. The welcome screen carries
+the same two logos (`components/screens/LandingCredits.jsx`). The
+EU emblem ships as one officially-issued file per language —
+`public/logos/eu-cofunded-<locale>.png`, the horizontal RGB *WHITE* variants from the
+Commission's co-funded logo packs, white artwork on transparent for a dark background. A
+locale with no file falls back to English, so adding a language is a new file.

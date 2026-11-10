@@ -99,6 +99,10 @@ export const VERBS = {
   exited:      { id: 'http://adlnet.gov/expapi/verbs/exited', display: { en: 'exited' } },
   // The end-of-run feedback survey.
   evaluated:   { id: 'http://www.tincanapi.co.uk/verbs/evaluated', display: { en: 'evaluated' } },
+  // Typed input: a letter on the decoder, a digit on a keypad. Distinct from
+  // 'selected' (picking one of several offered things) and from 'answered'
+  // (committing to a solution), so the three read apart in the log.
+  entered:     { id: 'https://w3id.org/xapi/dod-isd/verbs/entered', display: { en: 'entered' } },
 }
 
 /* ---- Activity types ---- */
@@ -219,7 +223,11 @@ export const OBJ = {
   rouletteRetryBait: (n) => a(`objects/roulette${n}/retry-bait`, 'Retry bait', 'interaction'),
 
   // Puzzle 2 — Influencer Avenue
-  post: (id) => a(`objects/posts/${id}`, `Post: ${id}`, 'note'),
+  /* Numbered, not named. The posts' ids are their own correct labels
+     (paid / gifted / collab / nothing), so an id-based activity would put
+     the puzzle's answer key in every statement — readable by anyone with
+     access to the LRS, and emitted merely for opening a card. */
+  post: (n) => a(`objects/posts/${n}`, `Post ${n}`, 'note'),
   postComment: (id, n) => a(`objects/posts/${id}/comments/${n}`, `Comment ${n} on post ${id}`, 'comment'),
   decoder: () => a('objects/decoder', 'Emoji decoder', 'interaction'),
   influencers: () => a('objects/influencers', 'Influencers', 'choice'),

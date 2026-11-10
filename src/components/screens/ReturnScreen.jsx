@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useGame, formatTime } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { getPreloadedVideo } from '../../game/preloadAssets.js'
+import { playSound, stopSound } from '../../game/sound.js'
 import DialogNav from './DialogNav.jsx'
 import DialogScene from './DialogScene.jsx'
 import './screens.css'
@@ -92,12 +93,20 @@ export default function ReturnScreen() {
   // to white, then into the post-test.
   const [videoHost, setVideoHost] = useState(null)
   const [playing, setPlaying] = useState(false)
+  const whooshed = useRef(false)
   const [tunnelMs, setTunnelMs] = useState(TUNNEL_MS)
   useEffect(() => {
     if (!videoHost) return
     const video = getPreloadedVideo(PORTAL_VIDEO)
     const onMeta = () => { if (video.duration) setTunnelMs(video.duration * 1000) }
-    const onPlaying = () => setPlaying(true)
+    /* The whoosh rides the tunnel back out of the Physical Internet. Fired on
+       'playing' rather than at mount so it stays locked to the picture when the
+       video loads slowly, and guarded because 'playing' also fires after a
+       stall — without the guard a stutter would stack a second whoosh. */
+    const onPlaying = () => {
+      setPlaying(true)
+      if (!whooshed.current) { whooshed.current = true; playSound('portal_whoosh.mp3') }
+    }
     const toWhite = () => setPhase('white')
     video.className = 'enter-video'
     video.addEventListener('loadedmetadata', onMeta)
@@ -109,6 +118,7 @@ export default function ReturnScreen() {
     videoHost.appendChild(video)
     video.play().catch(() => {})
     return () => {
+      stopSound('portal_whoosh.mp3') // leaving mid-tunnel must not leave it ringing
       video.pause()
       video.removeEventListener('loadedmetadata', onMeta)
       video.removeEventListener('playing', onPlaying)

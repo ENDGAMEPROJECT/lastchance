@@ -5,6 +5,7 @@ import { useT } from '../../i18n/index.jsx'
 import { useStage } from '../Stage.jsx'
 import { GAME_MINUTES } from '../../game/gameData.js'
 import { getPreloadedVideo } from '../../game/preloadAssets.js'
+import { playSound, stopSound } from '../../game/sound.js'
 import { DEBUG, settings } from '../../game/settings.js'
 import { bgUrl } from '../../game/assets.js'
 import DialogNav from './DialogNav.jsx'
@@ -73,6 +74,7 @@ export default function EnterScreen() {
   // The tunnel's clock (and the core's final flash) run from when the video
   // actually starts playing, not from mount, so a slow load doesn't desync them.
   const [playing, setPlaying] = useState(false)
+  const whooshed = useRef(false)
   const intro = phase !== 'done'
   // Debug only: freeze the whole arrival (timers, dialogue, CSS animations and
   // the tunnel video) to inspect a moment, e.g. the "Physical Internet" title.
@@ -95,7 +97,14 @@ export default function EnterScreen() {
     if (!videoHost) return
     const video = getPreloadedVideo(TUNNEL_VIDEO)
     const onMeta = () => { if (video.duration) setTunnelMs(video.duration * 1000) }
-    const onPlaying = () => setPlaying(true)
+    /* The whoosh rides the tunnel into the Physical Internet. Fired on
+       'playing' rather than at mount so it stays locked to the picture when the
+       video loads slowly, and guarded because 'playing' also fires after a
+       stall — without the guard a stutter would stack a second whoosh. */
+    const onPlaying = () => {
+      setPlaying(true)
+      if (!whooshed.current) { whooshed.current = true; playSound('portal_whoosh.mp3') }
+    }
     const toFade = () => setPhase('fade')
     video.className = 'enter-video'
     video.addEventListener('loadedmetadata', onMeta)
@@ -107,6 +116,7 @@ export default function EnterScreen() {
     videoHost.appendChild(video)
     video.play().catch(() => {}) // a blocked/slow start falls back to LOAD_WAIT_MS
     return () => {
+      stopSound('portal_whoosh.mp3') // leaving mid-tunnel must not leave it ringing
       video.pause()
       video.removeEventListener('loadedmetadata', onMeta)
       video.removeEventListener('playing', onPlaying)
