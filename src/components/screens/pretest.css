@@ -386,7 +386,13 @@
   z-index: 50;
   background: #090b10;
 }
-.pretest-phone-view img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.pretest-phone-view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Phone image + live ad text (PhoneAd), fitted like object-fit: contain. */
+.pretest-phone-view .phone-ad { height: 100%; }
 /* Look + size: shared .close-btn (CloseButton). Only its spot here. */
 .pretest-phone-close { position: absolute; top: 16px; right: 20px; }
 .reduced-motion .pretest-phone path { animation: none; fill: rgba(190, 255, 255, 0.12); }

@@ -1,12 +1,12 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useGame } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
-import { bgUrl } from '../../game/assets.js'
 import { passedPosttest } from '../../game/posttestOutcome.js'
 import { track, OBJ, EXT } from '../../game/xapi.js'
 import { testItem, optionSlug } from '../../game/testItems.js'
 import DialogNav from './DialogNav.jsx'
 import CloseButton from '../CloseButton.jsx'
+import PhoneAd from '../PhoneAd.jsx'
 import DialogScene, { FollowCharacter } from './DialogScene.jsx'
 import './pretest.css'
 import { DEBUG, settings } from '../../game/settings.js'
@@ -353,7 +353,7 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
             if (event.key === 'Tab') { event.preventDefault(); closeRef.current?.focus({ preventScroll: true }) }
           }}
         >
-          <img src={bgUrl('phone-with-ad.png')} alt={t('story.product.offerLabel')} onLoad={() => setPhoneViewed(true)} />
+          <PhoneAd variant="phone-with-ad" alt={t('story.product.offerLabel')} onLoad={() => setPhoneViewed(true)} />
           <CloseButton
             ref={closeRef}
             className="pretest-phone-close"

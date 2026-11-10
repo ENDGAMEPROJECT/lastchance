@@ -10,6 +10,7 @@ import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ, EXT } from '../game/xapi.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import GateButton from '../components/GateButton.jsx'
+import LunaOfferAd from '../components/LunaOfferAd.jsx'
 import './LinkDistrict.css'
 
 /* PUZZLE 1 — Fraudulent Links (scene version).
@@ -270,38 +271,8 @@ function DoorPage({ type, ambiguous, t }) {
         className="door-page luna-ad"
         style={{ backgroundImage: `url("${bgUrl('link-district/ad-luna-3.png')}"`}}
       >
-        <div className="luna-ad-copy">
-          <div className="luna-ad-3-headline">{t('rooms.link.lunaAd3.headline')}</div>
-          <div className="luna-ad-3-prices">
-            <span className="luna-ad-3-discount">{t('rooms.link.lunaAd3.discount')}</span>
-            <span className="luna-ad-3-oldprice">{t('rooms.link.lunaAd3.oldPrice')}</span>
-          </div>
-         <div style={{ transform: "rotate(-5deg)" }}>
-          <div className="luna-ad-3-second-headline">{t('rooms.link.lunaAd3.headlineSecond')}</div>
-          </div>
-          <p className="luna-ad-3-text">
-            {t('rooms.link.lunaAd3.text')} 😱😱😱
-          </p>
-      
-            <div className="luna-ad-3-button">
-                <p style={{fontSize: "2em", 
-                textTransform: "uppercase", 
-                color: "white",
-                margin: "0",
-                height: "40px",
-              }}
-                >
-                  {t('rooms.link.lunaAd3.cta')}</p>
-              <p
-              style={{margin: "0", 
-                padding: "0 0 8px 0"
-              }}
-              >
-              {t('rooms.link.lunaAd3.timePressure')}</p>
-            </div>
-    
-        </div>
-
+        {/* Same copy is drawn on the phone images (PhoneAd). */}
+        <LunaOfferAd />
       </div>
     )
   }
