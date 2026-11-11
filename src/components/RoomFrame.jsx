@@ -147,7 +147,7 @@ export default function RoomFrame({
                         disabled={collected} onClick={collectReward}
                         onMouseDown={(event) => event.preventDefault()}>
                         {collected && <svg className="reward-collected-tick" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6" /></svg>}
-                        <span>{collected ? <> {rewardName} {t('roomframe.collected')} </> : t('roomframe.collect')}</span>
+                        <span>{collected ? t('roomframe.collected') : t('roomframe.collect')}</span>
                       </GateButton>
                       <p className="reward-confirmation" role="status">
                         {collected ? <>{rewardName} {t('roomframe.addedToBag')} </> : ''}

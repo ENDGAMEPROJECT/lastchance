@@ -94,7 +94,7 @@ export default {
     "clearedDefaultTitle": "Kaupunginosa selvitetty",
     "clearedDefaultText": "Hienoa työtä. Seuraava solmu on auennut kartalla.",
     "collect": "poimi",
-    "collected": "poimittu",
+    "collected": "Esine poimittu",
     "addedToBag": "lisätty reppuun"
   },
   "end": {
@@ -1178,7 +1178,7 @@ export default {
     },
     "algorithm": {
       "intro": "Huriseva keskuskone jauhaa datasta kohdennettuja mainoksia. Pääse sisään ja opeta se profiloimaan ihminen.",
-      "solvedTitle": "Algoritmin valvomo murrettu · Todiste kirjattu 🧠",
+      "solvedTitle": "Algoritmin valvomo murrettu · Todiste kirjattu ",
       "solvedText": "Näit, miten algoritmi muutti {friend_genitive} iän, kiinnostukset ja mahdolliset epävarmuudet yhdeksi mainokseksi. Se ei ole sattumaa — se on hänen mainosprofiilinsa tulos.",
       "evidence": "Mainoksen valitsi algoritmi {friend_genitive} iän, kiinnostusten ja epävarmuuksien perusteella.",
       "unlock": {
@@ -1379,7 +1379,7 @@ export default {
       "posters": [
         {
           "glossyTitle": "ILMAINEN 30 PÄIVÄN KOKEILU!",
-          "glossyBody": "Kokeile NovaCloud Premiumia — 0 € tänään!",
+          "glossyBody": "Kokeile SunCloud Premiumia — 0 € tänään!",
           "glossyBadge": "€0",
           "truth": "Kuukauden jälkeen se uusiutuu automaattisesti hintaan 59 €/kk. Peruminen vaatii soittamisen puhelinnumeroon, joka on auki 2 tuntia viikossa.",
           "truthTitle": "😩 Automaattinen uusiutuminen",

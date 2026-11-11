@@ -94,7 +94,7 @@ export default {
     "clearedDefaultTitle": "Distrito despejado",
     "clearedDefaultText": "Buen trabajo. El siguiente nodo está desbloqueado en el mapa.",
     "collect": "recoger",
-    "collected": "recogido",
+    "collected": "Objeto recogido",
     "addedToBag": "añadido a la mochila"
   },
   "end": {
@@ -278,7 +278,7 @@ export default {
       "opening": "¡Mira esto! Una influencer que sigo acaba de publicar una oferta flash: ¡la NovaPad X de 600 € por solo 49 €! Quedan solo 30 minutos en la cuenta atrás. Estoy metiendo los datos de mi tarjeta ahora mismo.",
       "responses": [
         "Sea cual sea el motivo del montaje, ¡no quiero perdérmelo antes de que el reloj llegue a cero! Además, es una influencer enorme, no publicaría algo al azar. Pero lo raro es cómo este anuncio sabía que quería una tablet. Apareció justo arriba del todo en mi feed.",
-        "Mira, hay mil teorías sobre cómo los algoritmos y las cuentas manejan los anuncios, pero ahora mismo estoy viendo la página real de la tienda. Tiene el logo oficial de la marca, reseñas estupendas y un pago seguro."
+        "A ver, hay mil teorías sobre cómo los algoritmos y las cuentas manejan los anuncios, pero ahora mismo estoy viendo la página real de la tienda. Tiene el logo oficial de la marca, reseñas estupendas y un pago seguro."
       ],
       "endingFriend": "Mira, puedes diseccionar la página todo lo que quieras, ¡pero a mí todo me parece correcto! Estás siendo paranoico. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, treinta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
       "endingYou": "Trato hecho. Vamos a mirar detrás de la pantalla.",
@@ -321,7 +321,7 @@ export default {
   },
   "enter": {
     "eyebrow": "Estamos dentro",
-    "titleLead": "Bienvenido al",
+    "titleLead": "Bienvenidos al",
     "titleAccent": "INTERNET FÍSICO",
     "friendLine": "Muy bien: tienes {minutes} minutos para convencerme de que esta oferta es una estafa. Si ese reloj llega a cero, compro {product}.",
     "playerLine": "Sí, trato hecho. Vamos a descubrir por qué esta oferta es una estafa y cómo está montada.",
@@ -331,7 +331,7 @@ export default {
     "mission": "¡Tendremos que explorar los distritos, reunir pruebas de cómo funciona la estafa y volver al instituto antes de que caduque la oferta!",
     "mapText": "Tu ruta por el Internet Físico. Viaja de distrito en distrito: completa uno para desbloquear el siguiente, hasta la decisión final.",
     "bagText": "Tus herramientas y las pruebas que recojas. Ábrela para usar objetos en los retos y repasar las pruebas que le enseñarás a {friend}.",
-    "hintsText": "¿Atascado en un reto? Pistas tiene claves del distrito en el que estás.",
+    "hintsText": "¿Atascado en un reto? En \"Pistas\" tienes las claves del distrito en el que estás.",
     "finalLine": "¿Listo? El temporizador arranca en cuanto abras el mapa."
   },
   "return": {
@@ -744,7 +744,7 @@ export default {
       },
       "lunaAd1": {
         "headline": "Consigue el vestido y el bolso de Luna",
-        "headlineSecond": "70% DE DESCUENTO",
+        "headlineSecond": "-70%",
         "text": "Copia su estilo",
         "brand": "LUNA WEARS"
       },
@@ -1177,14 +1177,14 @@ export default {
       }
     },
     "algorithm": {
-      "intro": "Un mainframe zumbante tritura datos para convertirlos en anuncios dirigidos. Entra y enséñale a perfilar a una persona.",
-      "solvedTitle": "Sala de Control del Algoritmo descifrada · Prueba registrada 🧠",
-      "solvedText": "Viste cómo el algoritmo convertía la edad, los intereses y las posibles inseguridades de {friend} en un único anuncio. Eso no es casualidad: es el resultado de su perfil publicitario.",
+      "intro": "Un ordenador gigante usa cantidades enormes de datos personales para decidir qué anuncios ve cada persona. Entra en la sala para averiguar cómo crea anuncios personalizados",
+      "solvedTitle": "Sala de Control del Algoritmo descifrada · Prueba registrada ",
+      "solvedText": "Ya  visto cómo el algoritmo convertía la edad, los intereses y las posibles inseguridades de {friend} en un único anuncio. Eso no es casualidad: es el resultado de su perfil publicitario.",
       "evidence": "El anuncio fue elegido a dedo por un algoritmo usando la edad, los intereses y las inseguridades de {friend}.",
       "unlock": {
         "badge": "ACCESO · Sala de Control del Algoritmo",
         "prompt": "Introduce el código de seis dígitos.",
-        "error": "Acceso denegado: ese código no es correcto.",
+        "error": "Acceso denegado: el código no es correcto.",
         "submit": "Desbloquear →"
       },
       "choice": {
@@ -1350,9 +1350,9 @@ export default {
       }
     },
     "ads": {
-      "intro": "Un túnel de servicio de neón empapelado con cuatro carteles publicitarios luminosos. Parecen generosos. No lo son.",
-      "solvedTitle": "Pasillo superado — leíste la letra pequeña",
-      "solvedText": "¡Has llegado a la ronda final! Estos anuncios estaban diseñados para que te sintieras muy feliz y afortunado y picaras en la estafa. Desconfía de cualquier contenido que te provoque una reacción emocional muy fuerte.",
+      "intro": "Un pasillo lleno de anuncios luminosos y ofertas tentadoras. Pero… ¿son tan buenas como parecen?",
+      "solvedTitle": "Pasillo superado — has leído la letra pequeña",
+      "solvedText": "Este tipo de anuncios capta tu atención inmediatamente con cosas gratis, promesas de enriquecerse, peligro inminente... Sospecha de cualquier contenido que te cree una reacción emocional demasiado intensa.",
       "pickup": "Recoges la Linterna de la Verdad 🔦",
       "torchCharging": "🔦 Cargando…",
       "torchOn": "🔦 Linterna ENCENDIDA",
@@ -1360,7 +1360,7 @@ export default {
       "hintCharging": "La linterna barata parpadea al despertar: a los anuncios cebo les encanta hacerte perder un momento…",
       "hintOn": "Barre el haz por la pared oscura: cada cartel se ilumina y revela la verdad.",
       "hintOff": "Enciéndela y luego barre el haz sobre los carteles para revelar lo que dicen de verdad.",
-      "glossyCta": "TOCA PARA RECLAMAR →",
+      "glossyCta": "TOCA PARA OBTENERLO →",
       "fineprint": "* se aplican términos y condiciones",
       "truthTag": "LA VERDAD",
       "codeFragment": "letra oculta:",
@@ -1369,9 +1369,9 @@ export default {
       "shineOff": "Enciende primero la linterna",
       "codeAssembled": "CÓDIGO DE ACCESO formado:",
       "codeLetters": "S-A-V-E",
-      "exitLabel": "Introduce el código de 4 letras para abrir la salida",
+      "exitLabel": "Introduce el código de 4 letras para desbloquear la salida",
       "exitPlaceholder": "????",
-      "exitButton": "Abrir salida →",
+      "exitButton": "Salir →",
       "errCode": "Ese no es el código. Ilumina los cuatro carteles y lee las letras escondidas en la letra pequeña.",
       "learnLabel": "Lee la letra pequeña.",
       "learn": "Los anuncios que gritan «gratis», «has ganado» o «0 € hoy» suelen esconder el coste real en letra diminuta más abajo: lee siempre a qué estás accediendo antes de tocar.",
@@ -1379,7 +1379,7 @@ export default {
       "posters": [
         {
           "glossyTitle": "¡PRUEBA GRATIS 30 DÍAS!",
-          "glossyBody": "Prueba NovaCloud Premium: ¡0 € hoy!",
+          "glossyBody": "Prueba SunCloud Premium: ¡0 € hoy!",
           "glossyBadge": "€0",
           "truth": "Al cabo de un mes se renueva automáticamente a 59 €/mes. Cancelar exige llamar a un teléfono abierto 2 horas por semana.",
           "truthTitle": "😩 Renovación automática",
@@ -1398,7 +1398,7 @@ export default {
           "glossyBody": "Convierte 100 € en 10.000 € en una semana: ¡garantizado!",
           "glossyBadge": "×100",
           "truth": "Cada euro que «inviertes» desaparece, y las rentabilidades altísimas que ves en pantalla son falsas.",
-          "truthTitle": "A pure scam",
+          "truthTitle": "Una absoluta estafa",
           "letter": "E"
         },
         {

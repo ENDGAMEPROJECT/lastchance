@@ -328,13 +328,6 @@ export default function HUD() {
           <DebugLanguageButton />
         </div>
       )}
-      {DEBUG && createPortal(
-        <button type="button" className="hud-m-debug-toggle"
-          title={debugHidden ? 'Debug: show debug buttons' : 'Debug: hide debug buttons'}
-          aria-pressed={!debugHidden}
-          onMouseDown={(event) => event.preventDefault()} onClick={() => setDebugHidden((h) => !h)} />,
-        document.body,
-      )}
 
       {/* The side columns are pinned to the screen edges, not the scaled game
           box, so they're portalled out of the stage (into the viewport, which
@@ -436,6 +429,14 @@ export default function HUD() {
 
   return (
     <>
+      {/* Debug on/off dot (desktop + mobile), pinned to the screen corner. */}
+      {DEBUG && createPortal(
+        <button type="button" className="hud-m-debug-toggle"
+          title={debugHidden ? 'Debug: show debug buttons' : 'Debug: hide debug buttons'}
+          aria-pressed={!debugHidden}
+          onMouseDown={(event) => event.preventDefault()} onClick={() => setDebugHidden((h) => !h)} />,
+        document.body,
+      )}
       {mobile ? mobileHud : <header className="hud">
         <div className="hud-left">
           <span className="hud-logo" aria-label={t('hud.logo')}>◉</span>
@@ -470,11 +471,15 @@ export default function HUD() {
             </button>
           )}
           {fullscreenError && <span role="alert" className="t-xs">{t('hud.fullscreenError')}</span>}
-          {DEBUG && ['posttest', 'win', 'lose'].includes(screen) && <DebugPosttestButtons />}
-          {DEBUG && ['welcome', 'pretest'].includes(screen) && <DebugPortalButton />}
-          {DEBUG && <span className="chip bad hud-debug">🐞 DEBUG</span>}
-          {DEBUG && <DebugCharacterButton />}
-          {DEBUG && <DebugLanguageButton />}
+          {DEBUG && (
+            <span className="hud-debug-group">
+              {['posttest', 'win', 'lose'].includes(screen) && <DebugPosttestButtons />}
+              {['welcome', 'pretest'].includes(screen) && <DebugPortalButton />}
+              <span className="chip bad hud-debug">🐞 DEBUG</span>
+              <DebugCharacterButton />
+              <DebugLanguageButton />
+            </span>
+          )}
           {showHints && (
             <button
               className={`btn btn-amber btn-sm hud-hints ${tourClass('hints')} ${hintReminder && !hintsOpen && !touring ? 'hud-hint-reminder' : ''}`}

@@ -557,6 +557,42 @@
   }
 }
 
+/* Debug (desktop + mobile): tiny red dot in the bottom-right screen corner
+   that hides/shows all debug controls (HUD debug buttons, map jump bar,
+   in-room skip buttons). Portalled to <body>, so sizes are real screen px. */
+.hud-m-debug-toggle {
+  position: fixed;
+  right: max(6px, env(safe-area-inset-right));
+  bottom: max(6px, env(safe-area-inset-bottom));
+  z-index: 60;
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  background: var(--red);
+  cursor: pointer;
+}
+.hud-m-debug-toggle[aria-pressed='false'] {
+  opacity: 0.45;
+}
+/* Wraps the desktop bar's debug buttons without affecting its flex layout. */
+.hud-debug-group {
+  display: contents;
+}
+body.debug-hidden
+  :is(
+    .hud-m-debug,
+    .hud-debug-group,
+    .map-debug,
+    .rc-debug-skip,
+    .ld-debug-skip,
+    .ia-debug-skip,
+    .enter-debug-pause
+  ) {
+  display: none;
+}
+
 /* ---- Mobile HUD (≤1180px, = settings.mobile.breakpoint) ----
    The top bar is gone. The side columns (fullscreen + sound on the left;
    the timer above Hints / Map / Bag on the right) are
@@ -591,35 +627,6 @@
   .hud-m-edges .hud-m-timer .hud-timer-val {
     font-size: 26px; /* 17px × 1.5 */
     line-height: 1.1;
-  }
-  /* Debug: tiny red dot in the bottom-right screen corner that hides/shows
-     all debug controls (HUD bar, map jump bar, in-room skip buttons). */
-  .hud-m-debug-toggle {
-    position: fixed;
-    right: max(6px, env(safe-area-inset-right));
-    bottom: max(6px, env(safe-area-inset-bottom));
-    z-index: 60;
-    width: 14px;
-    height: 14px;
-    padding: 0;
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    border-radius: 50%;
-    background: var(--red);
-    cursor: pointer;
-  }
-  .hud-m-debug-toggle[aria-pressed='false'] {
-    opacity: 0.45;
-  }
-  body.debug-hidden
-    :is(
-      .hud-m-debug,
-      .map-debug,
-      .rc-debug-skip,
-      .ld-debug-skip,
-      .ia-debug-skip,
-      .enter-debug-pause
-    ) {
-    display: none;
   }
   .hud-m-debug {
     position: absolute;

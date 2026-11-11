@@ -94,7 +94,7 @@ export default {
     "clearedDefaultTitle": "Okrug završen",
     "clearedDefaultText": "Odlično. Sledeći čvor je otključan na mapi.",
     "collect": "prikupi",
-    "collected": "prikupljeno",
+    "collected": "Predmet prikupljeno",
     "addedToBag": "dodato u torbu"
   },
   "end": {
@@ -1178,7 +1178,7 @@ export default {
     },
     "algorithm": {
       "intro": "Glavni računar zuji dok obrađuje podatke i pretvara ih u ciljane oglase. Uđi unutra, a zatim ga nauči da napravi profil osobe.",
-      "solvedTitle": "Kontrolna soba algoritma probijena · Dokaz zabeležen 🧠",
+      "solvedTitle": "Kontrolna soba algoritma probijena · Dokaz zabeležen ",
       "solvedText": "Video/la si kako je algoritam pretvorio godine, interesovanja i moguće nesigurnosti {friend_accusative} u jedan jedini oglas. To nije slučajnost — to je rezultat njegovog reklamnog profila.",
       "evidence": "Oglas je algoritam odabrao na osnovu godina, interesovanja i nesigurnosti {friend_accusative}.",
       "unlock": {
@@ -1379,7 +1379,7 @@ export default {
       "posters": [
         {
           "glossyTitle": "BESPLATNA PROBA OD 30 DANA!",
-          "glossyBody": "Isprobajte NovaCloud Premium — 0 € danas!",
+          "glossyBody": "Isprobajte SunCloud Premium — 0 € danas!",
           "glossyBadge": "€0",
           "truth": "Nakon mesec dana, automatski se obnavlja po ceni od 59 € mesečno. Otkazivanje zahteva poziv telefonskoj liniji koja radi 2 sata nedeljno.",
           "truthTitle": "😩 Automatska obnova",

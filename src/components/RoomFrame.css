@@ -149,7 +149,11 @@
 .reward-desc { margin: 0 0 14px; color: #c5bdd4; font-size: 0.8rem; line-height: 1.45; }
 .reward-collect { display: inline-flex; align-items: center; justify-content: center; gap: 12px; max-width: 100%; white-space: normal; }
 .reward-collect:disabled { opacity: 1; cursor: default; background: rgba(43, 255, 136, 0.1); border-color: var(--green); color: var(--green); box-shadow: none; }
-.reward-collected-tick { width: 18px; height: 18px; }
+/* GateButton wraps tick + text in .gate-btn-label, so lay out THAT span:
+   tick and text centred on one line with a clear gap between them. */
+.reward-collect > .gate-btn-label { display: inline-flex; align-items: center; justify-content: center; gap: 10px; }
+.reward-collect > .gate-btn-label > span { line-height: 1.2; }
+.reward-collected-tick { width: 18px; height: 18px; display: block; }
 .reward-confirmation { min-height: 1.4em; margin: 8px 0 0; color: #b6f5cd; font-size: 0.72rem; line-height: 1.4; }
 .cleared-actions { display: flex; justify-content: center; padding: 16px 24px; border-top: 1px solid rgba(43, 255, 136, 0.12); }
 @media (prefers-reduced-motion: reduce) { .room-cleared { animation: none; } }
@@ -171,6 +175,7 @@
   .reward-collect { margin-top: 20px; }
   /* The collected-tick inside the button, bigger for touch. */
   .reward-collected-tick { width: 28px; height: 28px; }
+  .reward-collect > .gate-btn-label { gap: 14px; }
   .cleared-text { max-width: none; }
   /* The tick sits before the title on one centred line; the text wraps below. */
   .cleared-summary {

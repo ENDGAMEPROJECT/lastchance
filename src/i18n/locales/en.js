@@ -94,7 +94,7 @@ export default {
     "clearedDefaultTitle": "District cleared",
     "clearedDefaultText": "Nice work. The next node is unlocked on the map.",
     "collect": "collect",
-    "collected": "collected",
+    "collected": "Item collected",
     "addedToBag": "added to bag"
   },
   "end": {
@@ -1177,8 +1177,8 @@ export default {
       }
     },
     "algorithm": {
-      "intro": "A humming mainframe crunches data into targeted ads. Get inside, then teach it to profile a person.",
-      "solvedTitle": "Algorithm Control Room cracked · Evidence logged 🧠",
+      "intro": "A giant computer uses personal data to decide which ads people see. Step inside and discover how it creates personalized ads from this data.",
+      "solvedTitle": "Algorithm Control Room cracked · Evidence logged ",
       "solvedText": "You watched the algorithm turn {friend}'s age, interests and possible insecurities into a single ad. That is not coincidence — it the result of his advertisement profile",
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
       "unlock": {
@@ -1352,7 +1352,7 @@ export default {
     "ads": {
       "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
       "solvedTitle": "Corridor cleared — you read the fine print",
-      "solvedText": "You’ve made it to the final round! These ads were designed to make you feel really happy and lucky so you'd fall for the scam. Be wary of any content that triggers a very strong emotional reaction in you.",
+      "solvedText": "These ads draw your attention immediatly with free stuff, promises of getting rich, inminent danger...  Be wary of any content that triggers a very strong emotional reaction in you.",
       "pickup": "You pick up the Truth Flashlight 🔦",
       "torchCharging": "🔦 Charging…",
       "torchOn": "🔦 Flashlight ON",
@@ -1379,7 +1379,7 @@ export default {
       "posters": [
         {
           "glossyTitle": "FREE 30-DAY TRIAL!",
-          "glossyBody": "Try NovaCloud Premium — €0 today!",
+          "glossyBody": "Try SunCloud Premium — €0 today!",
           "glossyBadge": "€0",
           "truth": "After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.",
           "truthTitle": "😩 Automatic renovation",
