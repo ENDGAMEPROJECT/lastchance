@@ -37,6 +37,22 @@ const POSTERS = [
   { id: 'rich', textIndex: 2, tint: 'green', image: '3-get-rich.png', xapiName: 'Poster: Get rich quick' },
 ]
 
+/* The beam's swoosh, scaled to how fast the player sweeps it.
+
+   swoosh.mp3 is a one-shot, not a loop: it is silent until ~0.35s, swells to a
+   peak around 0.6s, then tails off. So it is played FROM 0.35s in — otherwise
+   every sweep would lag a third of a second behind the hand — and retriggered
+   per sweep rather than looped, which would pulse audibly through the clip's
+   quiet head and tail.
+
+   Speeds are design pixels per millisecond, so they mean the same thing at any
+   window size (the stage is a fixed canvas that gets scaled). */
+const SWOOSH_FROM = 0.35        // skip the clip's lead-in silence
+const SWOOSH_COOLDOWN_MS = 380  // ~the audible length, so sweeps don't stutter
+const SWOOSH_MIN_SPEED = 0.6    // below this it's a nudge, not a sweep
+const SWOOSH_MAX_SPEED = 3.5    // at or above this, full volume
+const SWOOSH_MIN_VOLUME = 0.18  // a slow sweep is still audible
+
 /* Wrap the first occurrence (case-insensitive) of `letter` in `text` with a red
    highlight — the code letter, hidden in plain sight inside the truth. */
 function highlightLetter(text, letter) {
@@ -68,6 +84,11 @@ export default function AdsCorridor({ node }) {
   // Refs for the cursor-tracked spotlight overlay.
   const wallRef = useRef(null)
   const flashRef = useRef(null)
+  // Last beam position + time, and when the swoosh last fired — all refs, so
+  // tracking the sweep never re-renders (moveBeam deliberately writes straight
+  // to CSS vars for the same reason).
+  const beamPrev = useRef(null)
+  const swooshAt = useRef(0)
 
   // Which poster is under the beam right now (transient — reveals hide again).
   const [activePoster, setActivePoster] = useState(null)
@@ -115,7 +136,7 @@ export default function AdsCorridor({ node }) {
     })
   }, [seen])
 
-  useEffect(() => { preloadSound('flashlight.mp3') }, [])
+  useEffect(() => { preloadSound('flashlight.mp3'); preloadSound('swoosh.mp3') }, [])
 
   // Equipping the Truth Flashlight from the Bag switches the beam on.
   useEffect(() => {
@@ -149,8 +170,30 @@ export default function AdsCorridor({ node }) {
     // so the light hole tracks the cursor no matter how far it overflows.
     const rect = viewRect(el.getBoundingClientRect())
     const p = toView(clientX, clientY) // undo a phone-orientation rotation, if any
-    el.style.setProperty('--Xpos', `${(p.x - rect.left) / scale}px`)
-    el.style.setProperty('--Ypos', `${(p.y - rect.top) / scale}px`)
+    const x = (p.x - rect.left) / scale
+    const y = (p.y - rect.top) / scale
+    el.style.setProperty('--Xpos', `${x}px`)
+    el.style.setProperty('--Ypos', `${y}px`)
+    sweepSwoosh(x, y)
+  }
+
+  /* Sound the beam in proportion to the sweep: louder the faster it moves,
+     silent when the hand is still (no pointer events = nothing fires). */
+  function sweepSwoosh(x, y) {
+    const now = performance.now()
+    const prev = beamPrev.current
+    beamPrev.current = { x, y, t: now }
+    if (!prev) return
+    const dt = now - prev.t
+    // A long gap means the hand stopped and started again: that's a new sweep,
+    // not a fast one, so don't let a stale position fake a huge speed.
+    if (dt <= 0 || dt > 120) return
+    const speed = Math.hypot(x - prev.x, y - prev.y) / dt
+    if (speed < SWOOSH_MIN_SPEED) return
+    if (now - swooshAt.current < SWOOSH_COOLDOWN_MS) return
+    swooshAt.current = now
+    const t = Math.min(1, (speed - SWOOSH_MIN_SPEED) / (SWOOSH_MAX_SPEED - SWOOSH_MIN_SPEED))
+    playSound('swoosh.mp3', SWOOSH_MIN_VOLUME + t * (1 - SWOOSH_MIN_VOLUME), SWOOSH_FROM)
   }
   const onMouseMove = (e) => { if (lightOn) moveBeam(e.clientX, e.clientY) }
   const onTouchMove = (e) => {

@@ -3,6 +3,7 @@ import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
 import { useReadingGate } from '../game/readingGate.js'
+import { playSound, preloadSound } from '../game/sound.js'
 import GateButton from './GateButton.jsx'
 import { track, OBJ } from '../game/xapi.js'
 import './RoomFrame.css'
@@ -57,6 +58,15 @@ export default function RoomFrame({
   // start but stay disabled, filling, until it's been read (see GateButton).
   // Rooms that hand over an item keep the wait short (3s).
   const cleared = useReadingGate(clearedText, started && solved, reward ? 3000 : undefined)
+
+  useEffect(() => { preloadSound('room_cleared.mp3') }, [])
+
+  // The room-cleared stinger. Here rather than in each room's success branch:
+  // one place covers all six, and it cannot double up with a room's own
+  // correct-answer chime, which fires on intermediate steps.
+  useEffect(() => {
+    if (started && solved) playSound('room_cleared.mp3')
+  }, [started, solved])
 
   useEffect(() => {
     if (!started || !solved || !cleared.ready || screen !== 'room') return

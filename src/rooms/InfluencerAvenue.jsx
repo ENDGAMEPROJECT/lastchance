@@ -664,7 +664,7 @@ export default function InfluencerAvenue({ node }) {
     return () => { timers.forEach(window.clearTimeout); stopSound('search.mp3') }
   }, [demoVisible, demoRun])
 
-  useEffect(() => { preloadSound('search.mp3'); preloadSound('stamp.mp3') }, [])
+  useEffect(() => { preloadSound('search.mp3'); preloadSound('stamp.mp3'); preloadSound('key_press.mp3') }, [])
 
   /* i18n content arrays, index-aligned with POSTS / PRODUCTS. */
   const postCopy = t('rooms.influencer.posts')
@@ -723,6 +723,7 @@ export default function InfluencerAvenue({ node }) {
       node: node.id,
       response: `${postNo(selectedPostId)};${letter};${next}`,
     })
+    playSound('key_press.mp3')
     if (next.length === selectedPost.correctLabel.length) {
       playSound(next === selectedPost.correctLabel ? 'twinkle.mp3' : 'wrong.mp3')
     }
@@ -731,6 +732,7 @@ export default function InfluencerAvenue({ node }) {
 
   function eraseLetter() {
     if (!canEdit) return
+    playSound('key_press.mp3') // the erase key is a key press too
     track('unselected', OBJ.influencers(), {
       node: node.id, response: `${selectedAnswer.slice(-1)};${selectedAnswer.slice(0, -1)}`,
     })

@@ -13,7 +13,7 @@ import { NarrativeContext } from './NarrativeContext.jsx'
 import { NODES, GAME_MINUTES, ITEMS } from './gameData.js'
 import { DEBUG, DEBUG_SCREEN, DEBUG_POSTTEST_SCENARIO, DEBUG_CHARACTER } from './settings.js'
 import { saveRun, loadRun, clearRun } from './session.js'
-import { playSound, preloadSound } from './sound.js'
+import { playSound, preloadSound, playLoopFor } from './sound.js'
 import { track, OBJ, once, resetOnce, markRoomStart, roomDuration } from './xapi.js'
 
 const GameContext = createContext(null)
@@ -336,6 +336,7 @@ export function GameProvider({ children }) {
   useEffect(() => {
     preloadSound('inventory.mp3')
     preloadSound('wrong.mp3') // used by every puzzle's incorrect-answer feedback
+    preloadSound('timeout.mp3')
     // The tunnel whoosh plays the instant EnterScreen mounts, so warming it
     // on that screen would already be too late.
     preloadSound('portal_whoosh.mp3')
@@ -368,10 +369,18 @@ export function GameProvider({ children }) {
     })
   }, [state.progress])
 
-  // The countdown reaching zero before the puzzles were finished.
+  // The countdown reaching zero — either before the puzzles were finished
+  // (timedOut) or during the post-test, which ends the run there and then.
+  // Watches timeLeft rather than timedOut so both paths are covered.
   useEffect(() => {
-    if (state.timedOut) once('timerExpired', () => track('terminated', OBJ.timer(), { node: 'posttest', response: 0 }))
-  }, [state.timedOut])
+    if (state.timeLeft > 0) return
+    once('timerExpired', () => {
+      // timeout.mp3 is authored as a ~0.9s seamless loop, so play it as one for
+      // a few passes rather than a single clipped-sounding hit.
+      playLoopFor('timeout.mp3', 3600)
+      if (state.timedOut) track('terminated', OBJ.timer(), { node: 'posttest', response: 0 })
+    })
+  }, [state.timeLeft, state.timedOut])
 
   // The run's outcome. `once` guards against a re-render re-sending it.
   useEffect(() => {
