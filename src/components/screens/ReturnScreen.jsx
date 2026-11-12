@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { useGame, formatTime } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
-import { getPreloadedVideo } from '../../game/preloadAssets.js'
 import { playSound, stopSound } from '../../game/sound.js'
 import DialogNav from './DialogNav.jsx'
+import HoloTunnel from '../HoloTunnel.jsx'
 import DialogScene from './DialogScene.jsx'
 import './screens.css'
 import './pretest.css'
@@ -16,10 +16,8 @@ import { DEBUG, settings } from '../../game/settings.js'
 const { letterMs: LETTER_MS, holdMs: HOLD_MS } = settings.typewriter
 
 // Same reading pace / fade as the portal arrival (EnterScreen).
-const PORTAL_VIDEO = 'transitions-videos/abduction-scene.mp4'
-const TUNNEL_MS = 9042 // video length; replaced by the real duration once metadata loads
+const TUNNEL_MS = settings.portal.tunnelMs // the coded tunnel (HoloTunnel)
 const FLASH_MS = 1900
-const LOAD_WAIT_MS = 6000 // video never started → go on anyway
 const WHITE_HOLD_MS = 2000 // the core's whiteout holds on white before the post-test fades in
 // Arrival, as after the first portal trip: hold on black, then the black slowly
 // fades to the scene (same curve and length as EnterScreen's BLACK_MS).
@@ -89,54 +87,20 @@ export default function ReturnScreen() {
     return () => window.clearInterval(timer)
   }, [phase, stepIndex, total])
 
-  // Tunnel: play the shared, preloaded portal video; its end (or a stall) cuts
-  // to white, then into the post-test.
-  const [videoHost, setVideoHost] = useState(null)
-  const [playing, setPlaying] = useState(false)
-  const whooshed = useRef(false)
-  const [tunnelMs, setTunnelMs] = useState(TUNNEL_MS)
+  // Tunnel: the coded holographic tunnel runs for TUNNEL_MS, then cuts to
+  // white, then into the post-test. The whoosh rides it back out of the
+  // Physical Internet (stopped if the screen goes away mid-tunnel).
   useEffect(() => {
-    if (!videoHost) return
-    const video = getPreloadedVideo(PORTAL_VIDEO)
-    const onMeta = () => { if (video.duration) setTunnelMs(video.duration * 1000) }
-    /* The whoosh rides the tunnel back out of the Physical Internet. Fired on
-       'playing' rather than at mount so it stays locked to the picture when the
-       video loads slowly, and guarded because 'playing' also fires after a
-       stall — without the guard a stutter would stack a second whoosh. */
-    const onPlaying = () => {
-      setPlaying(true)
-      if (!whooshed.current) { whooshed.current = true; playSound('portal_whoosh.mp3') }
-    }
-    const toWhite = () => setPhase('white')
-    video.className = 'enter-video'
-    video.addEventListener('loadedmetadata', onMeta)
-    video.addEventListener('playing', onPlaying)
-    video.addEventListener('ended', toWhite)
-    video.addEventListener('error', toWhite)
-    onMeta()
-    video.currentTime = 0
-    videoHost.appendChild(video)
-    video.play().catch(() => {})
-    return () => {
-      stopSound('portal_whoosh.mp3') // leaving mid-tunnel must not leave it ringing
-      video.pause()
-      video.removeEventListener('loadedmetadata', onMeta)
-      video.removeEventListener('playing', onPlaying)
-      video.removeEventListener('ended', toWhite)
-      video.removeEventListener('error', toWhite)
-      video.remove()
-    }
-  }, [videoHost])
-  useEffect(() => {
-    if (phase === 'tunnel' && !playing) {
-      const timer = window.setTimeout(() => setPhase('white'), LOAD_WAIT_MS)
-      return () => window.clearTimeout(timer)
+    if (phase === 'tunnel') {
+      playSound('portal_whoosh.mp3')
+      const timer = window.setTimeout(() => setPhase('white'), TUNNEL_MS)
+      return () => { window.clearTimeout(timer); stopSound('portal_whoosh.mp3') }
     }
     if (phase === 'white') {
       const timer = window.setTimeout(enterPosttestFromWhite, WHITE_HOLD_MS)
       return () => window.clearTimeout(timer)
     }
-  }, [phase, playing, enterPosttestFromWhite])
+  }, [phase, enterPosttestFromWhite])
 
   const name = step.who === 'player' ? narrative.player : narrative.friend
 
@@ -179,10 +143,10 @@ export default function ReturnScreen() {
           style={{ '--white': `${HOLD_BLACK_MS}ms`, '--black': `${BLACK_MS}ms` }} />
       )}
       {phase === 'tunnel' && <div className="enter-blackout" aria-hidden />}
-      {phase === 'tunnel' && <div className="enter-video-host" ref={setVideoHost} aria-hidden />}
+      {phase === 'tunnel' && <HoloTunnel className="enter-video-host" rampMs={TUNNEL_MS} />}
       {phase === 'tunnel' && (
-        <div className={`portal-warp enter-warp ${playing ? 'is-playing' : ''}`} aria-hidden
-          style={{ '--flash': `${FLASH_MS}ms`, '--flash-delay': `${Math.max(0, tunnelMs - FLASH_MS)}ms` }}>
+        <div className="portal-warp enter-warp is-playing" aria-hidden
+          style={{ '--flash': `${FLASH_MS}ms`, '--flash-delay': `${Math.max(0, TUNNEL_MS - FLASH_MS)}ms` }}>
           <div className="portal-streaks" />
           <span className="portal-ring" />
           <span className="portal-ring" />

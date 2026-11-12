@@ -4,11 +4,11 @@ import { track, OBJ } from '../../game/xapi.js'
 import { useT } from '../../i18n/index.jsx'
 import { useStage } from '../Stage.jsx'
 import { GAME_MINUTES } from '../../game/gameData.js'
-import { getPreloadedVideo } from '../../game/preloadAssets.js'
 import { playSound, stopSound } from '../../game/sound.js'
 import { DEBUG, settings } from '../../game/settings.js'
 import { bgUrl } from '../../game/assets.js'
 import DialogNav from './DialogNav.jsx'
+import HoloTunnel from '../HoloTunnel.jsx'
 import DialogScene, { sceneBackground } from './DialogScene.jsx'
 import './screens.css'
 import './pretest.css'
@@ -19,14 +19,12 @@ import './enter.css'
    plus HOLD_MS, so it always finishes. */
 const { letterMs: LETTER_MS, holdMs: HOLD_MS } = settings.typewriter
 
-// Intro timeline (motion only): the tunnel video plays with the portal rings
-// over it; in its last FLASH_MS the core swells to a whiteout; the white fades
+// Intro timeline (motion only): the coded holographic tunnel (HoloTunnel)
+// runs with the portal rings over it; in its last FLASH_MS the core swells to a whiteout; the white fades
 // to black (WHITE_MS), then the black slowly fades to the scene (BLACK_MS).
-const TUNNEL_VIDEO = 'transitions-videos/abduction-scene.mp4'
-const TUNNEL_MS = 9042 // video length; replaced by the real duration once metadata loads
+const TUNNEL_MS = settings.portal.tunnelMs
 const FLASH_MS = 1900
 const WHITE_MS = 1800
-const LOAD_WAIT_MS = 6000 // if the video hasn't started by then, skip it and go to the fade
 const BLACK_MS = 6000
 const readingTime = (text) => text.length * LETTER_MS + HOLD_MS // type it out, then hold
 
@@ -70,11 +68,6 @@ export default function EnterScreen() {
   // Intro phases: 'tunnel' (video + rings, scene hidden behind solid black) →
   // 'fade' (whiteout → black → scene) → 'done' (dialogue starts).
   const [phase, setPhase] = useState(reducedMotion ? 'done' : 'tunnel')
-  const [tunnelMs, setTunnelMs] = useState(TUNNEL_MS)
-  // The tunnel's clock (and the core's final flash) run from when the video
-  // actually starts playing, not from mount, so a slow load doesn't desync them.
-  const [playing, setPlaying] = useState(false)
-  const whooshed = useRef(false)
   const intro = phase !== 'done'
   // Debug only: freeze the whole arrival (timers, dialogue, CSS animations and
   // the tunnel video) to inspect a moment, e.g. the "Physical Internet" title.
@@ -83,54 +76,19 @@ export default function EnterScreen() {
   pausedRef.current = paused
   useEffect(() => {
     if (phase === 'done' || paused) return
-    // The tunnel normally ends on the video's 'ended' event; these are fallbacks
-    // for a video that never starts or stalls part-way.
-    const delay = phase === 'fade' ? WHITE_MS + BLACK_MS : playing ? tunnelMs + 1500 : LOAD_WAIT_MS
+    const delay = phase === 'fade' ? WHITE_MS + BLACK_MS : TUNNEL_MS
     const timer = window.setTimeout(() => setPhase(phase === 'fade' ? 'done' : 'fade'), delay)
     return () => window.clearTimeout(timer)
-  }, [phase, playing, tunnelMs, paused])
+  }, [phase, paused])
 
-  // Mount the shared, already-buffering <video> (preloaded during the pre-test) into the
-  // tunnel layer and play it from the start; detach it again when the tunnel ends.
-  const [videoHost, setVideoHost] = useState(null)
+  // The whoosh rides the tunnel into the Physical Internet; stopped if the
+  // player leaves mid-tunnel so it can't keep ringing.
+  const tunnel = phase === 'tunnel'
   useEffect(() => {
-    if (!videoHost) return
-    const video = getPreloadedVideo(TUNNEL_VIDEO)
-    const onMeta = () => { if (video.duration) setTunnelMs(video.duration * 1000) }
-    /* The whoosh rides the tunnel into the Physical Internet. Fired on
-       'playing' rather than at mount so it stays locked to the picture when the
-       video loads slowly, and guarded because 'playing' also fires after a
-       stall — without the guard a stutter would stack a second whoosh. */
-    const onPlaying = () => {
-      setPlaying(true)
-      if (!whooshed.current) { whooshed.current = true; playSound('portal_whoosh.mp3') }
-    }
-    const toFade = () => setPhase('fade')
-    video.className = 'enter-video'
-    video.addEventListener('loadedmetadata', onMeta)
-    video.addEventListener('playing', onPlaying)
-    video.addEventListener('ended', toFade)
-    video.addEventListener('error', toFade)
-    onMeta()
-    video.currentTime = 0
-    videoHost.appendChild(video)
-    video.play().catch(() => {}) // a blocked/slow start falls back to LOAD_WAIT_MS
-    return () => {
-      stopSound('portal_whoosh.mp3') // leaving mid-tunnel must not leave it ringing
-      video.pause()
-      video.removeEventListener('loadedmetadata', onMeta)
-      video.removeEventListener('playing', onPlaying)
-      video.removeEventListener('ended', toFade)
-      video.removeEventListener('error', toFade)
-      video.remove()
-    }
-  }, [videoHost])
-  useEffect(() => {
-    const video = videoHost?.querySelector('video')
-    if (!video) return
-    if (paused) video.pause()
-    else video.play().catch(() => {})
-  }, [paused, videoHost])
+    if (!tunnel) return
+    playSound('portal_whoosh.mp3')
+    return () => stopSound('portal_whoosh.mp3')
+  }, [tunnel])
 
   const [stepIndex, setStepIndex] = useState(0)
   const [clock, setClock] = useState({ step: 0, ms: 0 })
@@ -313,10 +271,10 @@ export default function EnterScreen() {
         )}
       </div>
 
-      {phase === 'tunnel' && <div className="enter-video-host" ref={setVideoHost} aria-hidden />}
+      {phase === 'tunnel' && <HoloTunnel className="enter-video-host" rampMs={TUNNEL_MS} paused={paused} />}
       {phase === 'tunnel' && (
-        <div className={`portal-warp enter-warp ${playing ? 'is-playing' : ''}`} aria-hidden
-          style={{ '--flash': `${FLASH_MS}ms`, '--flash-delay': `${Math.max(0, tunnelMs - FLASH_MS)}ms` }}>
+        <div className="portal-warp enter-warp is-playing" aria-hidden
+          style={{ '--flash': `${FLASH_MS}ms`, '--flash-delay': `${Math.max(0, TUNNEL_MS - FLASH_MS)}ms` }}>
           <div className="portal-streaks" />
           <span className="portal-ring" />
           <span className="portal-ring" />

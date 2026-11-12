@@ -61,6 +61,11 @@ export const settings = {
      messages are short and the speaker is "typing" at you. */
   typewriter: { letterMs: 25, holdMs: 1500, chatMs: 12 },
 
+  /* The portal trip (school ⇄ Physical Internet): how long the coded
+     holographic tunnel (HoloTunnel) runs before the core flashes to white.
+     The tunnel loops, so any length works; it speeds up over this time. */
+  portal: { tunnelMs: 9000 },
+
   /* Remind players to inspect their tools after BOTH thresholds are met. */
   bagReminder: { clicks: 2, delayMs: 20000 },
 

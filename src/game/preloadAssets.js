@@ -92,7 +92,6 @@ const CREDIT_IMAGES = [
   assetUrl('logos/endgame.png'),
   ...['en', 'es', 'fi', 'sr'].map((locale) => assetUrl(`logos/eu-cofunded-${locale}.png`)),
 ]
-const PORTAL_VIDEO = 'transitions-videos/abduction-scene.mp4'
 
 // Debug jumps, character changes and locale changes use the same resource
 // selection as a normal playthrough.
@@ -105,9 +104,9 @@ export function getAssetPreloadPlan({ screen, character = 'mia', locale = 'en', 
     case 'welcome':
       return { current: [bgUrl('welcome.gif'), bgUrl('algorithm-room/mia-figure-nobg.png'), bgUrl('algorithm-room/max-figure-nobg.png'), ...CREDIT_IMAGES], next: conversation }
     case 'pretest':
-      return { current: conversation, next: [...arrival, ...MAP_IMAGES], video: PORTAL_VIDEO }
+      return { current: conversation, next: [...arrival, ...MAP_IMAGES] }
     case 'enter':
-      return { current: arrival, next: [...MAP_IMAGES, ...nextRoom], video: PORTAL_VIDEO }
+      return { current: arrival, next: [...MAP_IMAGES, ...nextRoom] }
     case 'map':
       return { current: MAP_IMAGES, next: nextRoom }
     case 'room':
@@ -115,10 +114,9 @@ export function getAssetPreloadPlan({ screen, character = 'mia', locale = 'en', 
       return {
         current: roomImages(nodeId, narrative, locale),
         next: nextNodeId ? nextRoom : arrival,
-        video: nextNodeId ? undefined : PORTAL_VIDEO,
       }
     case 'return':
-      return { current: arrival, next: [...conversation, bgUrl('conversation.png')], video: PORTAL_VIDEO }
+      return { current: arrival, next: [...conversation, bgUrl('conversation.png')] }
     case 'posttest':
       return { current: [...conversation, bgUrl('conversation.png')], next: endingImages(narrative) }
     case 'win':

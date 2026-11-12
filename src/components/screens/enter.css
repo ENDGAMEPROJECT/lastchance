@@ -23,13 +23,8 @@
   z-index: 35;
   pointer-events: none;
 }
-.enter-video {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-/* The tunnel rings play over the video: no backdrop, no auto fade-out; streaks
+/* The host is the coded tunnel (HoloTunnel), which brings its own sizing.
+   The tunnel rings play over it: no backdrop, no auto fade-out; streaks
    loop, and the core only swells to the whiteout at the end of the video. */
 .enter-warp {
   background: transparent;
