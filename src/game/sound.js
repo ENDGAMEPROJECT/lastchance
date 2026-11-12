@@ -45,17 +45,30 @@ export function preloadSound(name) {
 }
 
 /* Play a sound. volume in [0,1]; startAt skips the first N seconds (e.g. to
-   trim a lead-in silence without editing the file). */
-export function playSound(name, volume = 1, startAt = 0) {
+   trim a lead-in silence without editing the file); loop repeats it until
+   stopSound(). `loop` is set on every play, so a file looped once does not stay
+   looping the next time it is fired as a one-shot. */
+export function playSound(name, volume = 1, startAt = 0, loop = false) {
   if (muted) return
   try {
     const a = get(name)
+    a.loop = loop
     a.currentTime = startAt
     a.volume = volume
     a.play().catch(() => {}) // ignore autoplay rejections
   } catch {
     /* ignore */
   }
+}
+
+/* Loop a short seamless clip for a bounded time, then stop — for sounds
+   authored as loops rather than one-shots (the countdown alarm). Returns a
+   cancel function so a caller that unmounts early can silence it. Bounded on
+   purpose: an alarm that never stops is worse than no alarm. */
+export function playLoopFor(name, ms, volume = 1) {
+  playSound(name, volume, 0, true)
+  const timer = window.setTimeout(() => stopSound(name), ms)
+  return () => { window.clearTimeout(timer); stopSound(name) }
 }
 
 /* Stop a sound (e.g. a looping/long clip) and rewind it. */

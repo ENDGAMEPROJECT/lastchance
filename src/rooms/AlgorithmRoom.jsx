@@ -224,7 +224,10 @@ export default function AlgorithmRoom({ node }) {
     preloadSound('keypad_beep.mp3')
     preloadSound('keypad_ok.mp3')
     preloadSound('keypad_nok.mp3')
-    preloadSound('twinkle.mp3') // the correct-drop chime
+    preloadSound('open_door.mp3') // the door swinging open once the code lands
+    // One sound per OUTCOME, nothing on the bare drop: a press sound layered
+    // under the verdict just doubled up, since both came from the same batch.
+    preloadSound('button_correct.mp3')
   }, [])
 
   function checkCode(entry) {
@@ -235,7 +238,13 @@ export default function AlgorithmRoom({ node }) {
     if (right) {
       setStatus('ok')
       playSound('keypad_ok.mp3')
-      window.setTimeout(() => setPhase('choice'), 850)
+      // The code is accepted, then the door actually opens — so the door sound
+      // lands on that transition, not on the earlier tap that only brought the
+      // keypad up (nothing opens at that point).
+      window.setTimeout(() => {
+        playSound('open_door.mp3')
+        setPhase('choice')
+      }, 850)
     } else {
       playSound('keypad_nok.mp3')
       setStatus('wrong')
@@ -268,7 +277,7 @@ export default function AlgorithmRoom({ node }) {
       node: node.id, response: tileId, success: right, completion: right,
     })
     if (right) {
-      playSound('twinkle.mp3') // the same chime the other rooms use for a correct answer
+      playSound('button_correct.mp3') // the console accepting the factor
       setWrongFlash(false)
       setPlacements((p) => ({ ...p, [row.id]: tileId }))
     } else {
@@ -318,7 +327,7 @@ export default function AlgorithmRoom({ node }) {
               className={`ar-door-keypad ${IS_PHONE ? 'pulse' : ''}`}
               style={{ '--keypad-image': `url(${bgUrl('algorithm-door.jpg')})` }}
               onMouseDown={(event) => event.preventDefault()}
-              onClick={() => { playSound('open_door.mp3'); track('opened', OBJ.doorKeypad(), { node: node.id }); setPhase('unlock') }}
+              onClick={() => { track('opened', OBJ.doorKeypad(), { node: node.id }); setPhase('unlock') }}
               aria-label={t('rooms.algorithm.door.action')}
             />
           </DoorKeypadMap>

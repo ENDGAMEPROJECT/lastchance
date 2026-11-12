@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { useGame } from '../game/GameContext.jsx'
 import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
-import { playSound } from '../game/sound.js'
+import { playSound, preloadSound } from '../game/sound.js'
 import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import { useRoomState } from '../game/useRoomState.js'
@@ -258,6 +258,8 @@ export default function PersuasionRoom({ node }) {
   // is coplanar with the tilted wall and its ring lands exactly on the letter.
   const [placedOrigin, setPlacedOrigin] = useState({}) // frameId -> originX (px)
 
+  useEffect(() => { preloadSound('frame_snap.mp3'); preloadSound('twinkle.mp3') }, [])
+
   // Clean up the end-animation timer on unmount.
   useEffect(() => () => clearTimeout(endTimer.current), [])
 
@@ -361,6 +363,7 @@ export default function PersuasionRoom({ node }) {
         track('dropped', OBJ.frame(d.id, techniqueLabel(d.id)), {
           node: node.id, response: target, success: target === d.id, completion: true,
         })
+        playSound('frame_snap.mp3')
         setPlacement((cur) => ({ ...cur, [d.id]: target }))
         snapToPoster(d.id, target)
       } else if (d) {
@@ -398,6 +401,9 @@ export default function PersuasionRoom({ node }) {
       ...(right ? { scaled: 1 } : {}),
     })
     if (right) {
+      // The password lands, then a 5.1s animation plays before the room clears,
+      // so this chime is what tells the player they got it.
+      playSound('twinkle.mp3')
       addEvidence({ id: 'ev-persuasion', label: t('rooms.persuasion.evidence') })
       // Close the computer close-up, play the ending animation over the whole
       // scene for 5.1s, then settle on the end frame and reveal the cleared bar.

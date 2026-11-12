@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useGame, formatTime } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { NARRATIVE } from '../../game/gameData.js'
 import { assetUrl } from '../../game/assets.js'
+import { playSound } from '../../game/sound.js'
 import { useMobileView } from '../../game/device.js'
 import { getAllEvidence } from '../../game/evidence.js'
 import Modal from '../Modal.jsx'
@@ -163,6 +164,7 @@ function SurveyInvite() {
 
 export function WinScreen() {
   const { timeLeft, reset, narrative } = useGame()
+  useEffect(() => { playSound('win.mp3') }, [])
   const t = useT()
   const [reportOpen, setReportOpen] = useState(false)
   const vars = { friend: narrative.friend, product: narrative.product, time: formatTime(timeLeft) }
@@ -202,6 +204,7 @@ export function WinScreen() {
 
 export function LoseScreen() {
   const { reset, loseReason, narrative } = useGame()
+  useEffect(() => { playSound('lose.mp3') }, [])
   const t = useT()
   const [reportOpen, setReportOpen] = useState(false)
   const vars = { friend: narrative.friend, product: narrative.product }

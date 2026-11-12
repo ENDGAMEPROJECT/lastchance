@@ -74,6 +74,7 @@ export default function RouletteCorridor({ node }) {
   useEffect(() => {
     preloadSound('roulette_spin.mp3')
     preloadSound('roulette_win.mp3')
+    preloadSound('twinkle.mp3') // the correct-verdict chime
     const pending = timers.current
     return () => {
       Object.values(pending).forEach(clearTimeout)
@@ -135,6 +136,7 @@ export default function RouletteCorridor({ node }) {
     })
     setAnswers((a) => ({ ...a, [active]: value }))
     if (correctRouletteVerdict(wheel, value)) {
+      playSound('twinkle.mp3') // the project's correct-answer chime
       setVerified((v) => ({ ...v, [active]: true }))
       setErrors((e) => ({ ...e, [active]: false }))
     } else {
