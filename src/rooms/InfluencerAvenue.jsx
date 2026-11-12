@@ -737,8 +737,8 @@ export default function InfluencerAvenue({ node }) {
       response: `${postNo(selectedPostId)};${letter};${next}`,
     })
     playSound('key_press.mp3')
-    if (next.length === selectedPost.correctLabel.length) {
-      playSound(next === selectedPost.correctLabel ? 'twinkle.mp3' : 'wrong.mp3')
+    if (next.length === selectedWord.length) {
+      playSound(next === selectedWord ? 'twinkle.mp3' : 'wrong.mp3')
     }
     setAnswers((prev) => ({ ...prev, [selectedPostId]: next }))
   }
