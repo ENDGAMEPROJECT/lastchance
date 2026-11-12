@@ -929,7 +929,7 @@ export default {
             }
           ],
           "clues": [
-            "Discount code “LUNA20” in the caption",
+            "Discount code “MIRA20” in the caption",
             "Affiliate link in bio",
             "Long-term paid brand ambassador"
           ]

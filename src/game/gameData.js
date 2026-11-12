@@ -114,8 +114,8 @@ export const ITEMS = {
   },
 }
 
-/* Emoji → letter key. Kept small: only the letters needed for the
-   words PAID, COLLAB, GIFTED plus a few decoys. */
+/* Emoji → letter key, full A–Z: the Influencer Avenue sticky-notes spell the
+   label in the player's language (rooms.influencer.labels.*), accents folded. */
 export const EMOJI_KEY = {
   '🤑': 'A', '🎁': 'B', '🤝': 'C', '⭐': 'D', '💰': 'E', '🔥': 'F',
   '🔋': 'G', '💡': 'H', '😎': 'I', '🎮': 'J', '🎯': 'K', '👥': 'L',

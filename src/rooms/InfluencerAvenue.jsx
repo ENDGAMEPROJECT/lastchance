@@ -26,7 +26,7 @@ import './InfluencerAvenue.css'
                 then classify each (mass-produced fake / AI-generated / verified).
    Reward: the Data Report on Max (its digits open the Algorithm Room).
 
-   Structural data (handles, hues, correctLabel answer keys, verdicts) lives
+   Structural data (handles, hues, verdicts) lives
    here; all display text comes from i18n (rooms.influencer.*). The posts and
    products arrays are index-aligned with the i18n `posts` / `products` arrays. */
 
@@ -39,7 +39,6 @@ const POSTS = [
     hue: 'linear-gradient(135deg, #ff8fd4, #b06bff)', // the faux photo block
     likes: '48.2K',
     comments: '1,204',
-    correctLabel: 'PAID',
   },
   {
     id: 'gifted',
@@ -48,7 +47,6 @@ const POSTS = [
      hue: 'linear-gradient(135deg, #ff1100, #ffbf6b)', 
     likes: '31.7K',
     comments: '882',
-    correctLabel: 'GIFTED',
   },
   {
     id: 'collab',
@@ -57,7 +55,6 @@ const POSTS = [
      hue: 'linear-gradient(135deg, #8fe5ff, #6b93ff)', 
     likes: '12.9K',
     comments: '431',
-    correctLabel: 'COLLAB',
   },
   //  {
   //   id: 'nothing',
@@ -73,6 +70,15 @@ const POSTS = [
 /* Statements identify a post by its position, never by its id: the ids are
    the correct labels, so using them would leak the answer key. */
 const postNo = (id) => POSTS.findIndex((p) => p.id === id) + 1
+
+/* The word on each post's emoji sticky-note — and the answer the player
+   types — is the post's label in the current language
+   (rooms.influencer.labels.<id>, e.g. PAID / PAGADO / MAKSETTU / PLAĆENO).
+   The keypad only has A–Z (EMOJI_KEY), so accents are folded away
+   (COLABORACIÓN → COLABORACION, PLAĆENO → PLACENO, YHTEISTYÖ → YHTEISTYO) and
+   anything else (spaces, punctuation) is dropped. */
+const toKeypadWord = (label) =>
+  label.normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().replace(/[^A-Z]/g, '')
 
 /* Stable English names for analytics: the product copy is localised, so it
    cannot name the activity. Keys are PRODUCTS ids. */
@@ -695,12 +701,19 @@ export default function InfluencerAvenue({ node }) {
   const [decoderOpen, setDecoderOpen] = useState(false)
   const selectedPost = POSTS.find((post) => post.id === selectedPostId)
   const selectedAnswer = answers[selectedPostId] || ''
-  const canEdit = decoderOpen && selectedPost && selectedAnswer !== selectedPost.correctLabel
+  /* postId -> the word to decode, in the current language (see toKeypadWord). */
+  const correctWords = useMemo(
+    () => Object.fromEntries(POSTS.map((p) => [p.id, toKeypadWord(t(`rooms.influencer.labels.${p.id}`))])),
+    [t]
+  )
+  const selectedWord = selectedPost ? correctWords[selectedPost.id] : ''
+  const canEdit = decoderOpen && selectedPost && selectedAnswer !== selectedWord
 
-  /* Emoji sticky-notes: generated from the correct label via encodeWord. */
+  /* Emoji sticky-notes: generated from the localised word via encodeWord, so
+     each language shows its own emojis. */
   const notes = useMemo(
-    () => POSTS.map((p) => ({ id: p.id, emojis: encodeWord(p.correctLabel) })),
-    []
+    () => POSTS.map((p) => ({ id: p.id, emojis: encodeWord(correctWords[p.id]) })),
+    [correctWords]
   )
 
   /* Both the post card and the answer button inside it select the post; they
@@ -713,7 +726,7 @@ export default function InfluencerAvenue({ node }) {
   }
 
   function enterLetter(letter) {
-    if (!canEdit || selectedAnswer.length >= selectedPost.correctLabel.length) return
+    if (!canEdit || selectedAnswer.length >= selectedWord.length) return
     const next = selectedAnswer + letter
     /* The decoder, not the generic "Influencers" activity: this is a letter
        typed on the emoji keypad. The response says which letter, what the
@@ -723,8 +736,8 @@ export default function InfluencerAvenue({ node }) {
       node: node.id,
       response: `${postNo(selectedPostId)};${letter};${next}`,
     })
-    if (next.length === selectedPost.correctLabel.length) {
-      playSound(next === selectedPost.correctLabel ? 'twinkle.mp3' : 'wrong.mp3')
+    if (next.length === selectedWord.length) {
+      playSound(next === selectedWord ? 'twinkle.mp3' : 'wrong.mp3')
     }
     setAnswers((prev) => ({ ...prev, [selectedPostId]: next }))
   }
@@ -738,7 +751,7 @@ export default function InfluencerAvenue({ node }) {
   }
 
   useEffect(() => {
-    if (stage !== 'label' || !POSTS.every((post) => answers[post.id] === post.correctLabel)) return
+    if (stage !== 'label' || !POSTS.every((post) => answers[post.id] === correctWords[post.id])) return
     // Keep all three completed words visible briefly, then recap what each
     // label means (disclosure) before moving on to the reverse-search stage.
     track('submitted', OBJ.labels(), {
@@ -753,7 +766,7 @@ export default function InfluencerAvenue({ node }) {
       setStage('labelFeedback')
     }, 900)
     return () => window.clearTimeout(timer)
-  }, [answers, stage])
+  }, [answers, stage, correctWords])
 
   /* ---- Stage 2 state ---- */
   const [activeId, setActiveId] = useState(null) // product image being uploaded/searched in the engine
@@ -765,7 +778,7 @@ export default function InfluencerAvenue({ node }) {
   const [heldStamp, setHeldStamp] = useState(null) // the stamp-maker currently "in hand"
   const [trayIndex, setTrayIndex] = useState(0) // mobile: the one image shown in the tray carousel
   // Progress: each correctly decoded label, each stage, each reverse search.
-  useRoomProgress(`${stage}|${POSTS.filter((p) => answers[p.id] === p.correctLabel).length}|${Object.keys(searched).length}`)
+  useRoomProgress(`${stage}|${POSTS.filter((p) => answers[p.id] === correctWords[p.id]).length}|${Object.keys(searched).length}`)
   const heldRef = useRef(null)
   const posRef = useRef({ x: 0, y: 0 }) // last cursor position (viewport px)
 
@@ -927,8 +940,9 @@ export default function InfluencerAvenue({ node }) {
               const note = notes.find((n) => n.id === p.id)
               const copy = postCopy[idx]
               const label = answers[p.id] || ''
-              const correct = label === p.correctLabel
-              const state = correct ? 'ok' : label.length === p.correctLabel.length ? 'bad' : ''
+              const word = correctWords[p.id]
+              const correct = label === word
+              const state = correct ? 'ok' : label.length === word.length ? 'bad' : ''
               const selected = selectedPostId === p.id
               return (
                 <article
@@ -996,7 +1010,7 @@ export default function InfluencerAvenue({ node }) {
                     onClick={(event) => { event.stopPropagation(); selectPost(p.id) }}
                   >
                     <span className="ia-answer-letters" aria-hidden="true">
-                      {Array.from({ length: p.correctLabel.length }, (_, index) => (
+                      {Array.from({ length: word.length }, (_, index) => (
                         <span key={index} className={`ia-answer-letter ${selected && !correct && index === label.length ? 'current' : ''}`}>
                           {label[index] || '\u00a0'}
                         </span>
@@ -1033,7 +1047,7 @@ export default function InfluencerAvenue({ node }) {
                       key={letter}
                       type="button"
                       className="ia-key-cell"
-                      disabled={!canEdit || selectedAnswer.length >= selectedPost.correctLabel.length}
+                      disabled={!canEdit || selectedAnswer.length >= selectedWord.length}
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => enterLetter(letter)}
                       aria-label={`${letter} ${emoji}`}

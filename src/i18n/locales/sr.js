@@ -897,7 +897,7 @@ export default {
       "labels": {
         "paid": "PLAĆENO",
         "collab": "SARADNJA",
-        "gifted": "POKLONJENO",
+        "gifted": "GIFTED",
         "nothing": "NIŠTA"
       },
       "posts": [
@@ -909,7 +909,7 @@ export default {
           "comments": [
             {
               "username": "fitpaula",
-              "text": "Omg moram ovo da probam pre sledećeg treninga!"
+              "text": "Omg, moram da probam ovo pre sledećeg treninga!"
             },
             {
               "username": "runneralex",
@@ -917,28 +917,28 @@ export default {
             },
             {
               "username": "glowfuel_official",
-              "text": "Tako mi je drago što ti se sviđa 💜"
+              "text": "Baš nam je drago što ti se dopada 💜"
             },
             {
               "username": "martahealthy",
-              "text": "Ovo liči na reklamu ali stvarno ga želim hahaha"
+              "text": "Ovo izgleda kao reklama, ali zapravo želim da probam hahaha"
             },
             {
               "username": "gymtom",
-              "text": "Upravo sam naručio/la sa tvojim kodom!"
+              "text": "Upravo sam naručio uz tvoj kod!"
             }
           ],
           "clues": [
-            "Kod za popust „LUNA20“ u opisu",
+            "Kod za popust „MIRA20“ u opisu",
             "Afilijacijski link u biografiji",
             "Dugoročni plaćeni ambasador brenda"
           ]
         },
         {
-          "caption": "NovaSound mi je poslao svoje nove AirBeat slušalice na testiranje ove nedelje. Koristiću ih na večerašnjem strimu i podeliti iskren utisak za par dana. Hvala na PR paketu!",
+          "caption": "NovaSound mi je poslao njihove nove AirBeat slušalice da ih testiram ove nedelje. Koristiću ih tokom večerašnjeg strima i podeliti svoje iskreno mišljenje nakon nekoliko dana. Hvala na PR paketu!",
           "product": "Bežične slušalice",
           "username": "TechWithLeo",
-          "followers": "219K",
+          "followers": "902K.",
           "comments": [
             {
               "username": "streamfan88",
@@ -968,14 +968,14 @@ export default {
           ]
         },
         {
-          "caption": "Neverovatno sam ponosna što delim ovu saradnju sa @The_Local_Stitch. Mesecima razvijamo ovaj ručno rađen komad u ograničenoj seriji. Svaki primerak je jedinstven i podržava lokalne zanatlije. Iskoristi kod LOCAL_CLARA za 15% popusta i prvi pristup. Link u biografiji.",
-          "product": "Ručno rađena prošivena jakna od pačvorka",
+          "caption": "Influenserka se nalazi u svetlom, dobro osvetljenom studiju za izradu rukotvorina, nasmejana je i nosi detaljno izrađenu ručno rađenu patchwork jaknu. U ruci drži rukom pisanu poruku zanatlije. Tekst na slici: „OGRANIČENA SARADNJA — SAMO 25 KOMADA“. Dugme ili stikер: „Kupi odmah“. Mala oznaka na vrhu: „Plaćena saradnja sa @The_Local_Stitch“. Vidljiv link u biografiji.",
+          "product": "Ručno rađena jakna",
           "username": "ClaraSees",
           "followers": "312K",
           "comments": [
             {
               "username": "artisan_wear",
-              "text": "Izgleda neverovatno, jedva čekam da vidim detalje!"
+              "text": "Ovo izgleda neverovatno, jedva čekam da vidim detalje!"
             },
             {
               "username": "needle_ninja",
@@ -1368,7 +1368,7 @@ export default {
       "shineReady": "🔦 Osvetli ovde",
       "shineOff": "Prvo uključi svetlo",
       "codeAssembled": "PRISTUPNI KOD sastavljen:",
-      "codeLetters": "S-A-V-E",
+      "codeLetters": "T-R-I-K",
       "exitLabel": "Unesi kod od 4 slova da otvoriš izlaz",
       "exitPlaceholder": "????",
       "exitButton": "Otvori izlaz →",
@@ -1383,7 +1383,7 @@ export default {
           "glossyBadge": "€0",
           "truth": "Nakon mesec dana, automatski se obnavlja po ceni od 59 € mesečno. Otkazivanje zahteva poziv telefonskoj liniji koja radi 2 sata nedeljno.",
           "truthTitle": "😩 Automatska obnova",
-          "letter": "A"
+          "letter": "R"
         },
         {
           "glossyTitle": "🎉 ČESTITAMO!",
@@ -1391,15 +1391,15 @@ export default {
           "glossyBadge": "€1,000",
           "truth": "Ova „nagrada“ prikuplja vaše lične podatke i podatke kartice.",
           "truthTitle": "👎🏼 NISTE ništa osvojili",
-          "letter": "S"
+          "letter": "T"
         },
         {
           "glossyTitle": "📈 BRZO SE OBOGATITE!",
-          "glossyBody": "Pretvorite 100 € u 10.000 € za nedelju dana — garantovano!",
+          "glossyBody": "Pretvorite 100 € u 10.000 € za samo kratku nedelju — garantovano!",
           "glossyBadge": "×100",
           "truth": "Svaki evro koji „uložite“ je izgubljen, a ogromni „prinosi“ na ekranu su lažni.",
           "truthTitle": "Čista prevara",
-          "letter": "E"
+          "letter": "K"
         },
         {
           "glossyTitle": "🛡️ VIRUS OTKRIVEN!",
@@ -1407,7 +1407,7 @@ export default {
           "glossyBadge": "BESPLATNO",
           "truth": "Upozorenje je lažno, a „antivirus“ JE zlonamerni softver. Prava upozorenja nikad ne dolaze iz oglasa.",
           "truthTitle": "🚨 Niste imali virus... ali ga sada imate",
-          "letter": "V"
+          "letter": "I"
         }
       ]
     },
@@ -1433,32 +1433,32 @@ export default {
         {
           "headline": "JOŠ SAMO 3 KOMADA NA STANJU!",
           "sub": "Ne propusti priliku!",
-          "letter": "F"
+          "letter": "O"
         },
         {
           "headline": "Više od 2 MILIONA ljudi je ovo već kupilo!",
-          "sub": "Pridruži se masi.",
-          "letter": "O"
+          "sub": "Pridruži se masi i budi deo nje.",
+          "letter": "B"
         },
         {
           "headline": "Izgubi 10 kg za samo 3 DANA — čudesan rezultat zagarantovan!",
           "sub": "Rezultati nisu tipični.",
-          "letter": "O"
+          "letter": "M"
         },
         {
-          "headline": "Pogledajte na stranici @StarCeleb — ona OBOŽAVA ovaj proizvod!",
+          "headline": "@StarCeleb OBOŽAVA ovaj proizvod!",
           "sub": "#oglas",
-          "letter": "L"
+          "letter": "A"
         },
         {
           "headline": "Nemoj izneveriti svoju porodicu.",
           "sub": "Zaslužuju bolje.",
-          "letter": "E"
+          "letter": "N"
         },
         {
           "headline": "PONUDA ISTIČE ZA 04:59 — KUPI ODMAH pre nego što nestane!",
           "sub": "Tik-tak…",
-          "letter": "D"
+          "letter": "A"
         }
       ],
       "techniques": {

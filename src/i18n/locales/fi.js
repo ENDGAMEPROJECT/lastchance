@@ -902,43 +902,43 @@ export default {
       },
       "posts": [
         {
-          "caption": "Aamutreeni tuntuu paljon paremmalta GlowFuelin kanssa. Olen käyttänyt sitä ennen treenejä ja olen rehellisesti koukussa. Käytä koodia MIRA20 ja saat 20 % alennuksen ensimmäisestä tilauksestasi. Linkki biossa.",
-          "product": "Treeniä edeltävä juoma",
+          "caption": "Aamutreeni tuntuu niin paljon paremmalta GloFuelin avulla! Oon käyttänyt sitä ennen treenejä ja rehellisesti sanottuna oon ihan koukussa. Käytä mun koodia MIRA20 niin saat 20% alennuksen ekasta tarjouksesta! Linkki biossa.",
+          "product": "Energiajuoma",
           "username": "MiraMoves",
           "followers": "482K",
           "comments": [
             {
               "username": "fitpaula",
-              "text": "Omg, minun on pakko kokeilla tätä ennen seuraavaa treeniä!"
+              "text": "Omg tarviin tän mun seuraavaan treeniin!!"
             },
             {
               "username": "runneralex",
-              "text": "Toimiiko koodi koko Euroopassa?"
+              "text": "Toimiiko tää alennus Euroopan laajuisesti?"
             },
             {
               "username": "glowfuel_official",
-              "text": "Ihanaa että pidät siitä 💜"
+              "text": "Ihan mahtavaa että tykkäät 💜"
             },
             {
               "username": "martahealthy",
-              "text": "Tämä näyttää mainokselta mutta haluan sen silti hahaha"
+              "text": "Näyttää mainokselta mutta haluun tän hahaha"
             },
             {
               "username": "gymtom",
-              "text": "Tilasin juuri koodillasi!"
+              "text": "Just tilasin sun koodilla!"
             }
           ],
           "clues": [
-            "Alennuskoodi “LUNA20” kuvatekstissä",
+            "Alennuskoodi “MIRA20” kuvatekstissä",
             "Kumppanuuslinkki biossa",
             "Pitkäaikainen maksettu brändilähettiläs"
           ]
         },
         {
-          "caption": "NovaSound lähetti minulle uudet AirBeat-kuulokkeensa testattavaksi tällä viikolla. Käytän niitä tämän illan striimissä ja kerron rehelliset ajatukseni parin päivän päästä. Kiitos PR-paketista!",
+          "caption": "NovaSound lähetti minulle uudet AirBeat-kuulokkeet testattavaksi tällä viikolla. Käytän niitä tämän illan striimissä ja jaan rehelliset ajatukseni parin päivän päästä. Kiitos PR-paketista!",
           "product": "Langattomat kuulokkeet",
-          "username": "TechWithLeo",
-          "followers": "219K",
+          "username": "TekkiLeo",
+          "followers": "519K.",
           "comments": [
             {
               "username": "streamfan88",
@@ -953,7 +953,7 @@ export default {
               "text": "Lahja vai maksettu mainos?"
             },
             {
-              "username": "TechWithLeo",
+              "username": "TekkiLeo",
               "text": "Lahja. Olen silti rehellinen arviossani."
             },
             {
@@ -968,30 +968,30 @@ export default {
           ]
         },
         {
-          "caption": "Olen uskomattoman ylpeä saadessani jakaa tämän yhteistyön @The_Local_Stitchin kanssa. Olemme kehittäneet tätä rajoitetun erän käsintehtyä vaatetta kuukausia. Jokainen kappale on ainutlaatuinen ja tukee paikallisia käsityöläisiä. Käytä koodia LOCAL_CLARA ja saat 15 % alennuksen sekä ensipääsyn. Linkki biossa.",
+          "caption": "Niin uskomattoman ylpeä saadessani jakaa tämän yhteistyön @The_Local_Stitch :in kanssa. Me olemme kehitelleet tätä rajoitetun erän käsintehtyä vaatetta kuukausia. Jokainen näistä on uniikkikappale ja tukee paikallisia käsityöläisiä. Käytä koodia LOCAL_KLARA niin saat 15% alennuksen ja ekan äksessin kun nää droppaa. Linkki biossa.",
           "product": "Käsintehty tilkkutäkkitakki",
-          "username": "ClaraSees",
+          "username": "KlaraKattoo",
           "followers": "312K",
           "comments": [
             {
-              "username": "artisan_wear",
-              "text": "Näyttää uskomattomalta, en malta odottaa yksityiskohtia!"
+              "username": "artisaani_vaatteet",
+              "text": "Tää näyttää ihan uskomattomalta, en malta oottaa että nään detskut!"
             },
             {
               "username": "needle_ninja",
-              "text": "Onko jonotuslistaa? Tarvitsen yhden."
+              "text": "Onks jonotuslistaa? Mun tarvii päästä sinne."
             },
             {
               "username": "glowfuel_official",
-              "text": "Olen ihastunut tähän tekstuuriin! Niin omaperäinen 💜"
+              "text": "Vitsi mitkä tekstuurit. Niin uniikki 💜"
             },
             {
-              "username": "martahealthy",
-              "text": "Näyttää mainokselta, mutta tykkään tukea paikallisia. Tilaan!"
+              "username": "marttaterveys",
+              "text": "Näyttää mainokselta mutta rakastan paikallisten tekijöiden tukemista. Tilaan!"
             },
             {
               "username": "gymtom",
-              "text": "Hetkinen, tilasin juuri sen toisen, voiko ne yhdistää? Lol."
+              "text": "Venaa, just tilasin sen toisen jutun. Voinko yhdistää? Lol"
             }
           ],
           "clues": [
@@ -1368,7 +1368,7 @@ export default {
       "shineReady": "🔦 Valaise tähän",
       "shineOff": "Sytytä ensin lamppu",
       "codeAssembled": "PÄÄSYKOODI koottu:",
-      "codeLetters": "S-A-V-E",
+      "codeLetters": "A-N-S-A",
       "exitLabel": "Syötä 4-kirjaiminen koodi avataksesi uloskäynnin",
       "exitPlaceholder": "????",
       "exitButton": "Avaa uloskäynti →",
@@ -1383,7 +1383,7 @@ export default {
           "glossyBadge": "€0",
           "truth": "Kuukauden jälkeen se uusiutuu automaattisesti hintaan 59 €/kk. Peruminen vaatii soittamisen puhelinnumeroon, joka on auki 2 tuntia viikossa.",
           "truthTitle": "😩 Automaattinen uusiutuminen",
-          "letter": "A"
+          "letter": "N"
         },
         {
           "glossyTitle": "🎉 ONNEKSI OLKOON!",
@@ -1391,15 +1391,15 @@ export default {
           "glossyBadge": "€1,000",
           "truth": "Tämä ”palkinto” kerää henkilötietosi ja korttitietosi.",
           "truthTitle": "👎🏼 Et voittanut MITÄÄN",
-          "letter": "S"
+          "letter": "A"
         },
         {
           "glossyTitle": "📈 RIKASTU NOPEASTI!",
           "glossyBody": "Muuta 100 € summaksi 10 000 € viikossa — takuulla!",
           "glossyBadge": "×100",
           "truth": "Jokainen ”sijoittamasi” euro katoaa, ja ruudulla näkyvät huikeat ”tuotot” ovat valheellisia.",
-          "truthTitle": "A pure scam",
-          "letter": "E"
+          "truthTitle": "Täysi huijaus",
+          "letter": "A"
         },
         {
           "glossyTitle": "🛡️ VIRUS HAVAITTU!",
@@ -1407,7 +1407,7 @@ export default {
           "glossyBadge": "ILMAINEN",
           "truth": "Varoitus on väärennös ja ”virustorjunta” ON haittaohjelma. Aidot hälytykset eivät koskaan tule mainoksesta.",
           "truthTitle": "🚨 Sinulla ei ollut virusta... nyt on",
-          "letter": "V"
+          "letter": "S"
         }
       ]
     },
@@ -1433,32 +1433,32 @@ export default {
         {
           "headline": "VAIN 3 JÄLJELLÄ VARASTOSSA!",
           "sub": "Älä jää paitsi!",
-          "letter": "F"
+          "letter": "A"
         },
         {
           "headline": "Yli 2 MILJOONAA ihmistä on jo ostanut tämän!",
           "sub": "Liity joukkoon.",
-          "letter": "O"
+          "letter": "N"
         },
         {
           "headline": "Pudota 10 kg vain 3 PÄIVÄSSÄ — taattu ihme!",
           "sub": "Tulet yllättymään.",
-          "letter": "O"
+          "letter": "S"
         },
         {
           "headline": "Nähty @StarCelebin sivulla — hän RAKASTAA sitä!",
           "sub": "#mainos",
-          "letter": "L"
+          "letter": "O"
         },
         {
           "headline": "Älä tuota pettymystä perheellesi.",
-          "sub": "He ansaitsevat parempaa.",
-          "letter": "E"
+          "sub": "He ansaitsevat jotain parempaa.",
+          "letter": "J"
         },
         {
           "headline": "TARJOUS PÄÄTTYY 04:59 — osta NYT ennen kuin se loppuu!",
           "sub": "Tik, tak…",
-          "letter": "D"
+          "letter": "A"
         }
       ],
       "techniques": {

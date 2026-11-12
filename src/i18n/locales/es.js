@@ -895,65 +895,65 @@ export default {
         "answerProgress": "{count} / {total}"
       },
       "labels": {
-        "paid": "PAGADO",
-        "collab": "COLABORACIÓN",
-        "gifted": "REGALADO",
+        "paid": "PUBLI",
+        "collab": "COLLAB",
+        "gifted": "REGALO",
         "nothing": "NADA"
       },
       "posts": [
         {
-          "caption": "El entrenamiento de la mañana sienta mucho mejor con GlowFuel. Lo tomo antes de entrenar y la verdad es que estoy obsesionada. Usa mi código MIRA20 para un 20% de descuento en tu primer pedido. Link en la bio.",
-          "product": "Bebida pre-entreno",
-          "username": "MiraMoves",
+          "caption": "Me explotaron la cabeza los nuevos @nachos pimientos de padrón. Eso sí, a ver si inventan algún aparatito para disfrazar el croc croc.  #nachossinruidoya  #spiceandcroc ",
+          "product": "Snack crujiente",
+          "username": "Rmelilla",
           "followers": "482K",
           "comments": [
             {
-              "username": "fitpaula",
-              "text": "¡Dios, necesito probar esto antes de mi próximo entreno!"
+              "username": "nintengoplay",
+              "text": "Me agarró el antojo. A ver si llega pronto a Argentina"
             },
             {
-              "username": "runneralex",
-              "text": "¿El código funciona en toda Europa?"
+              "username": "play_ninja",
+              "text": "¿Son muy picantes?"
             },
             {
-              "username": "glowfuel_official",
-              "text": "¡Qué alegría que te encante! 💜"
+              "username": "Ana_healthy",
+              "text": "¿Y la dieta, qué?"
             },
             {
-              "username": "martahealthy",
-              "text": "Esto parece un anuncio pero lo quiero igual jajaja"
+              "username": "liveandletdiet",
+              "text": "Ahora haces publicidad para comida basura? Gran ejemplo para los más jóvenes"
             },
             {
-              "username": "gymtom",
-              "text": "¡Acabo de pedirlo con tu código!"
+              "username": "Fortnight",
+              "text": "Es Minecrafd 2"
             }
           ],
           "clues": [
-            "Código de descuento “LUNA20” en el pie de foto",
+            "Código de descuento “MIRA20” en el pie de foto",
             "Enlace de afiliado en la bio",
             "Embajadora de marca pagada a largo plazo"
           ]
         },
         {
-          "caption": "NovaSound me ha enviado sus nuevos auriculares AirBeat para probarlos esta semana. Los usaré en el directo de esta noche y os contaré mi opinión sincera dentro de unos días. ¡Gracias por el paquete de prensa!",
+          "caption": "Mirad lo que acaba de llegar a mi casa: los nuevos auriculares AirBeat de @Nova_sound. Los estrenaré hoy durante el streaming y luego os cuento qué me parecieron. Son bonitos, ¿superarán la batalla de hoy?🎮🧟‍♂️",
           "product": "Auriculares inalámbricos",
-          "username": "TechWithLeo",
-          "followers": "219K",
+          "username": "Javicrack",
+          "followers": "1.4M.",
           "comments": [
             {
               "username": "streamfan88",
               "text": "¿Puedes probar la calidad del micro?"
             },
             {
-              "username": "novasoundaudio",
-              "text": "¡Me muero por saber tu opinión!"
+              "username": "needle_ninja",
+              "text": "Me viene de perlas, necesito comprar cascos nuevos"
             },
             {
               "username": "lucagames",
-              "text": "¿Regalados o patrocinados?"
+              "text": "¿Regalo o patrocinados?"
             },
             {
-              "username": "TechWithLeo",
+              "username": "Javicrack",
               "text": "Regalados. Aun así seré sincero en la reseña."
             },
             {
@@ -968,30 +968,30 @@ export default {
           ]
         },
         {
-          "caption": "Estoy increíblemente orgullosa de compartir esta colaboración con @The_Local_Stitch. Llevamos meses desarrollando esta prenda artesanal de edición limitada. Cada pieza es única y apoya a artesanos locales. Usa el código LOCAL_CLARA para un 15% de descuento y acceso anticipado. Link en la bio.",
-          "product": "Chaqueta acolchada de patchwork artesanal",
-          "username": "ClaraSees",
+          "caption": "Estoy enamorada de las nuevas cremas Sunshine: el serum ayuda a fortalecer la barrera cutánea y mejorar la hidratación mientras duermes. Por la mañana no salgo de casa sin el protector solar, va perfe antes de mi base de maquillaje. Súper orgullosa de esta colaboración con @madcure.",
+          "product": "Protección solar",
+          "username": "Loli_loquita",
           "followers": "312K",
           "comments": [
             {
-              "username": "artisan_wear",
-              "text": "¡Tiene una pinta increíble, me muero por ver los detalles!"
+              "username": "Maria_river",
+              "text": "¡Qué buena pinta, las probaré que tengo la piel super apagada!"
             },
             {
               "username": "needle_ninja",
-              "text": "¿Hay lista de espera? Necesito una."
+              "text": "Jo tía, no sabía que eras dermatóloga también, qué guay."
             },
             {
               "username": "glowfuel_official",
-              "text": "¡Obsesionada con esta textura! Qué original 💜"
+              "text": "¡Me encanta tu labial! 💜¿De dónde es?"
             },
             {
               "username": "martahealthy",
-              "text": "Parece un anuncio, pero me encanta apoyar lo local. ¡La pido!"
+              "text": "La voy a hacer yo tb! Qué falta me hace!"
             },
             {
               "username": "gymtom",
-              "text": "Espera, acabo de pedir lo otro, ¿puedo combinarlo? Jaja."
+              "text": "Te veo ready para el verano, preciosa!"
             }
           ],
           "clues": [
@@ -1150,7 +1150,7 @@ export default {
         "erase": "Borrar la última letra"
       },
       "explain": {
-        "title": "Más allá del anuncio: ¿y el producto?",
+        "title": "Más allá del anuncio: ¿qué hay el producto?",
         "body": "¿Es el producto lo que dicen? Una búsqueda inversa de imágenes te ayuda a comprobarlo: buscas con una foto y encuentra esa misma imagen u otras parecidas que aparecen en internet, para que verifiques si la imagen es de verdad lo que el vendedor afirma.",
         "instructions": "Primero haz la búsqueda inversa de la imagen. Después, mira los resultados para juzgar la autenticidad del producto.",
         "useShop": "¿Te encanta una prenda que viste en una publicación? Haz una búsqueda inversa de la foto para encontrar dónde comprarla de verdad.",
@@ -1360,7 +1360,7 @@ export default {
       "hintCharging": "La linterna barata parpadea al despertar: a los anuncios cebo les encanta hacerte perder un momento…",
       "hintOn": "Barre el haz por la pared oscura: cada cartel se ilumina y revela la verdad.",
       "hintOff": "Enciéndela y luego barre el haz sobre los carteles para revelar lo que dicen de verdad.",
-      "glossyCta": "TOCA PARA OBTENERLO →",
+      "glossyCta": "TOCA PARA RECLAMAR →",
       "fineprint": "* se aplican términos y condiciones",
       "truthTag": "LA VERDAD",
       "codeFragment": "letra oculta:",
@@ -1368,7 +1368,7 @@ export default {
       "shineReady": "🔦 Ilumina aquí",
       "shineOff": "Enciende primero la linterna",
       "codeAssembled": "CÓDIGO DE ACCESO formado:",
-      "codeLetters": "S-A-V-E",
+      "codeLetters": "C-E-B-O",
       "exitLabel": "Introduce el código de 4 letras para desbloquear la salida",
       "exitPlaceholder": "????",
       "exitButton": "Salir →",
@@ -1383,7 +1383,7 @@ export default {
           "glossyBadge": "€0",
           "truth": "Al cabo de un mes se renueva automáticamente a 59 €/mes. Cancelar exige llamar a un teléfono abierto 2 horas por semana.",
           "truthTitle": "😩 Renovación automática",
-          "letter": "A"
+          "letter": "E"
         },
         {
           "glossyTitle": "🎉 ¡ENHORABUENA!",
@@ -1391,29 +1391,29 @@ export default {
           "glossyBadge": "€1,000",
           "truth": "Este «premio» recopila tus datos personales y los de tu tarjeta.",
           "truthTitle": "👎🏼 NO has ganado nada",
-          "letter": "S"
+          "letter": "C"
         },
         {
           "glossyTitle": "📈 ¡HAZTE RICO RÁPIDO!",
           "glossyBody": "Convierte 100 € en 10.000 € en una semana: ¡garantizado!",
           "glossyBadge": "×100",
           "truth": "Cada euro que «inviertes» desaparece, y las rentabilidades altísimas que ves en pantalla son falsas.",
-          "truthTitle": "Una absoluta estafa",
-          "letter": "E"
+          "truthTitle": "Una gran estafa",
+          "letter": "O"
         },
         {
           "glossyTitle": "🛡️ ¡VIRUS DETECTADO!",
           "glossyBody": "Tu dispositivo puede estar en riesgo: ¡descarga SecureNow GRATIS!",
           "glossyBadge": "GRATIS",
-          "truth": "La advertencia es falsa y el «antivirus» ES el malware. Las alertas reales nunca llegan desde un anuncio.",
+          "truth": "La advertencia es falsa y el «antivirus» es el malware. Las alertas reales nunca llegan desde un anuncio. Si no estás seguro, no lo abras.",
           "truthTitle": "🚨 No tenías un virus... ahora sí",
-          "letter": "V"
+          "letter": "B"
         }
       ]
     },
     "persuasion": {
       "intro": "Una galería de anuncios llamativos. Cada uno se apoya en un único truco de persuasión: nómbralo enmarcando el cartel.",
-      "solvedTitle": "Laboratorio de Persuasión superado — contraseña FOOLED",
+      "solvedTitle": "Laboratorio de Persuasión superado — contraseña TRAMPA",
       "solvedText": "En cuanto sabes nombrar el truco —FOMO, urgencia, una celebridad prestada— deja de funcionar contigo. Esa es toda la defensa.",
       "learn": {
         "lead": "Detecta el truco.",
@@ -1433,32 +1433,32 @@ export default {
         {
           "headline": "¡SOLO QUEDAN 3 EN STOCK!",
           "sub": "¡No te quedes sin él!",
-          "letter": "F"
+          "letter": "T"
         },
         {
           "headline": "¡Más de 2 MILLONES de personas ya lo han comprado!",
           "sub": "Únete a la multitud.",
-          "letter": "O"
+          "letter": "R"
         },
         {
           "headline": "Pierde 10 kg en solo 3 DÍAS: ¡milagro garantizado!",
           "sub": "Te sorprenderá.",
-          "letter": "O"
+          "letter": "A"
         },
         {
-          "headline": "Visto en la página de @StarCeleb: ¡le ENCANTA!",
+          "headline": "Visto en la página de @Famosa67: ¡le ENCANTA!",
           "sub": "#publicidad",
-          "letter": "L"
+          "letter": "M"
         },
         {
-          "headline": "No falles a tu familia.",
-          "sub": "Se merecen algo mejor.",
-          "letter": "E"
+          "headline": "No falles a tu familia. Por favor. ",
+          "sub": "Ellos lo dieron todo por ti.",
+          "letter": "P"
         },
         {
           "headline": "LA OFERTA ACABA EN 04:59: ¡compra YA antes de que vuele!",
           "sub": "Tic, tac…",
-          "letter": "D"
+          "letter": "A"
         }
       ],
       "techniques": {

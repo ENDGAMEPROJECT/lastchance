@@ -508,8 +508,12 @@ button.ia-view-publication {
 .ia-answer[aria-pressed="true"] { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan), 0 0 12px rgba(22, 242, 255, 0.35); }
 .ia-answer.ok { border-color: var(--green); color: var(--green); }
 .ia-answer.bad { border-color: var(--red); color: var(--red); }
-.ia-answer-letters { display: flex; gap: 6px; }
+/* The word length depends on the language (PAID … COLABORACION), so the
+   slots shrink to fit the card instead of overflowing it. */
+.ia-answer-letters { display: flex; gap: 6px; max-width: 100%; }
 .ia-answer-letter {
+  flex: 0 1 28px;
+  min-width: 0;
   width: 28px;
   height: 29px;
   border-bottom: 2px solid var(--muted);
