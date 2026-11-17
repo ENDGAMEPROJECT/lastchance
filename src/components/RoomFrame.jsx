@@ -36,6 +36,7 @@ export default function RoomFrame({
   intro,
   bgImage,
   dimBackground = false,
+  showBack = true, // the top-left "back to the instructions" arrow
   solved = false,
   solvedText,
   reward = null,
@@ -47,6 +48,9 @@ export default function RoomFrame({
   const accent = node?.accent || 'cyan'
   const vars = { friend: narrative.friend }
   const [started, setStarted] = useState(false)
+  // Back reopens the briefing mid-room. The puzzle stays mounted underneath
+  // (hidden), so its progress is kept when the player steps back in.
+  const [reviewing, setReviewing] = useState(false)
   const collectRef = useRef(null)
   const continueRef = useRef(null)
   const collected = !!reward && hasItem(reward.id)
@@ -104,14 +108,15 @@ export default function RoomFrame({
           just above .bg-slot but behind all interactive content. */}
       {dimBackground && <div className="bg-blackout" aria-hidden />}
 
-      {!started ? (
-        <div className="room-briefing fade-in">
+      {(!started || reviewing) && (
+        <div className={`room-briefing fade-in ${reviewing ? 'is-review' : ''}`}>
           <div className={`briefing-card panel clip panel-glow-${accent}`}>
             <div className={`briefing-icon accent-${accent}`}>{node ? NODE_ICON[node.id] : '▶'}</div>
             <p className="briefing-text muted">{brief}</p>
             <button
               className={`btn btn-${accent} btn-lg briefing-begin`}
               onClick={() => {
+                if (started) { setReviewing(false); return }
                 setStarted(true)
                 // The briefing has been read and the player steps in. One place
                 // covers all six districts; `completed` is fired centrally in
@@ -124,11 +129,22 @@ export default function RoomFrame({
             </button>
           </div>
         </div>
-      ) : (
+      )}
+      {started && (
         <>
-          {/* The task brief is shown once on the entry briefing card; during
-              play the puzzle speaks for itself, so no persistent header. */}
-          <div className="room-body swap-in" inert={solved ? '' : undefined} aria-hidden={solved || undefined}>{children}</div>
+          {/* The task brief is on the entry briefing card; during play the
+              puzzle speaks for itself, and Back brings the brief up again. */}
+          <div className={`room-body swap-in ${reviewing ? 'is-hidden' : ''}`}
+            inert={solved || reviewing ? '' : undefined} aria-hidden={solved || reviewing || undefined}>{children}</div>
+
+          {showBack && !solved && !reviewing && (
+            <button type="button" className="room-brief-back"
+              aria-label={t('common.back')} title={t('common.back')}
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={() => setReviewing(true)}>
+              <svg viewBox="0 0 32 24" aria-hidden="true" focusable="false"><path d="M13 4 5 12l8 8M5 12h23" /></svg>
+            </button>
+          )}
 
           {solved && (
             <div className="room-cleared-overlay" onKeyDown={keepFocusInOverlay}>

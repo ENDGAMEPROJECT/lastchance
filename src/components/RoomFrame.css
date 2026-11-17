@@ -1,6 +1,6 @@
 .room-scene { position: relative; }
 
-.room-scene > :not(.bg-slot):not(.bg-blackout):not(.room-cleared-overlay) {
+.room-scene > :not(.bg-slot):not(.bg-blackout):not(.room-cleared-overlay):not(.room-brief-back):not(.is-review) {
   position: relative;
   z-index: 1;
 }
@@ -51,6 +51,51 @@
 .room-header p { color: #fff; }
 .briefing-card.panel-light .briefing-text { color: #16233d; }
 .briefing-begin { margin-top: 14px; animation: pulse-glow 2.6s ease-in-out infinite; }
+
+/* ---------- Back to the briefing (during play) ----------
+   Reopens the instructions card. The puzzle stays mounted but hidden
+   (visibility, so its layout and measurements are kept) and the card is laid
+   over the scene in its place. Doubled class beats the generic
+   '.room-scene > :not(...)' relative/z-index rule above. */
+.room-scene.room-scene > .room-briefing.is-review { position: absolute; inset: 0; z-index: 5; }
+.room-scene .room-body.is-hidden { visibility: hidden; }
+.room-scene.room-scene > .room-brief-back {
+  position: absolute;
+  top: 12px;
+  left: 30px;
+  z-index: 6;
+  width: 56px;
+  height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(94, 171, 210, 0.4);
+  border-radius: 10px;
+  color: #a8dfff;
+  background: linear-gradient(180deg, rgba(22, 38, 58, 0.94), rgba(8, 15, 28, 0.94));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: color 0.18s, border-color 0.18s, background 0.18s;
+}
+.room-brief-back svg {
+  display: block;
+  width: 28px;
+  height: 21px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.room-brief-back:hover,
+.room-brief-back:active { color: #d7f3ff; border-color: #79c6eb; background: rgba(26, 52, 76, 0.96); }
+.room-brief-back:focus-visible { outline: 2px solid #79c6eb; outline-offset: 3px; }
+@media (max-width: 1180px) {
+  .room-scene.room-scene > .room-brief-back { width: 72px; height: 56px; }
+  .room-brief-back svg { width: 36px; height: 27px; }
+}
 
 .swap-in { animation: scene-in 0.4s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 
