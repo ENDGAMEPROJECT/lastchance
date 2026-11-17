@@ -309,6 +309,7 @@ export default function AlgorithmRoom({ node }) {
   return (
     <RoomFrame
       node={node}
+      showBack={phase !== 'unlock'} // the keypad has its own back arrow there
       bgImage={
         phase === 'door'
           ? bgUrl('algorithm-door.jpg')
