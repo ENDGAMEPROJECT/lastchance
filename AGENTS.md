@@ -59,6 +59,10 @@ after touching any `t('...')` key or locale file.
   `game/assets.js` (prefixes `import.meta.env.BASE_URL`) for **every** image — room `bgImage`
   props, `.bg-slot` backgrounds, gifs. Bare `/bg/...` works in dev but 404s in prod. Add new
   backgrounds to `GAME_IMAGES` in `game/preloadAssets.js` too.
+- **Images are served as WebP.** `bgUrl()`/`assetUrl()` swap each original for its optimised
+  copy listed in `game/webpAssets.js` (generated). After adding or replacing an image, run
+  `npm install sharp --no-save` then `node scripts/optimize-images.mjs`. Without that the new
+  image still works, just at full weight. Keep referencing the original filename in code.
 - **i18n is mandatory.** No hard-coded user-facing strings in components. Add keys to `en.js`
   (shell) or `en/<room>.js` (a room), reference via `t('...')`, then run `check:i18n`.
 - **Fixed stage + scale.** Any drag/hit-test/cursor math must divide screen coords by

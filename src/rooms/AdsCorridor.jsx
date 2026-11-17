@@ -4,7 +4,7 @@ import { useGame } from '../game/GameContext.jsx'
 import { useMobileView } from '../game/device.js'
 import CloseButton from '../components/CloseButton.jsx'
 import { useT } from '../i18n/index.jsx'
-import { bgUrl } from '../game/assets.js'
+import { bgUrl, assetUrl } from '../game/assets.js'
 import { playSound, preloadSound } from '../game/sound.js'
 import { useRoomState } from '../game/useRoomState.js'
 import { useRoomProgress } from '../game/roomProgress.js'
@@ -267,7 +267,7 @@ export default function AdsCorridor({ node }) {
               const letterInTitle = !!poster.letter
                 && poster.truthTitle?.toLowerCase().includes(poster.letter.toLowerCase())
               const adImage = isRevealed ? p.image.replace(/\.png$/, '-truth.png') : p.image
-              const adBackground = `linear-gradient(160deg, rgba(9, 12, 25, 0.16), rgba(9, 12, 25, 0.18)), url(${import.meta.env.BASE_URL}ads-corridor/${adImage})`
+              const adBackground = `linear-gradient(160deg, rgba(9, 12, 25, 0.16), rgba(9, 12, 25, 0.18)), url(${assetUrl(`ads-corridor/${adImage}`)})`
               return (
                 <div
                   key={p.id}
