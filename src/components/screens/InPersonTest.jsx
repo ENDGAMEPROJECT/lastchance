@@ -84,10 +84,16 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
   const masteryReply = () => assessment
     ? (answer.correct ? rounds[round].positiveFeedback : rounds[round].negativeFeedback)
     : (answer.correct ? rounds[round].why : rounds[round].nudge)
+  /* Post-test only: after the friend's feedback, a round may carry a
+     followUpQuestion ("Alright, what else?") — the friend asks it before the
+     next question, so the player's next answer reads as a reply to it. Skipped
+     on the last question of a pass (nothing follows it). */
+  const followUp = assessment && round < rounds.length - 1 ? rounds[round]?.followUpQuestion : undefined
   const line = ['opening', 'options'].includes(phase) ? prompt
     : phase === 'intro' ? intro[introIndex].text
     : phase === 'reply' ? answer.text
     : phase === 'response' ? (mastery ? masteryReply() : p.responses[round])
+    : phase === 'followUp' ? followUp
     : phase === 'endingFriend' ? (assessmentEnding ? assessmentEnding(passedPosttest(answers, rounds.length)) : p.endingFriend)
     : phase === 'endingYou' ? p.endingYou : ''
   const speechKey = `${mastery}:${phase}:${round}:${introIndex}:${line}`
@@ -124,6 +130,7 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
   const canNext = speechReady && !phoneOpen && hasNextLine
   const prevPhase = phase === 'intro' && introIndex > 0 ? 'intro'
     : phase === 'response' ? 'reply'
+    : phase === 'followUp' ? 'response'
     : phase === 'endingFriend' && answer ? (mastery ? 'response' : 'reply')
     : phase === 'endingYou' ? 'endingFriend'
     : null
@@ -239,13 +246,19 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
         setPhase('options')
       }
     } else if (phase === 'response') {
-      setPrompt(line)
-      if (mastery && !assessment && !answer.correct) setPhase('options')
-      else if (round === rounds.length - 1) setPhase('endingFriend')
+      if (mastery && !assessment && !answer.correct) { setPrompt(line); setPhase('options') }
+      else if (round === rounds.length - 1) { setPrompt(line); setPhase('endingFriend') }
+      else if (followUp) setPhase('followUp') // the prompt becomes the follow-up question instead
       else {
+        setPrompt(line)
         setRound((value) => value + 1)
         setPhase('options')
       }
+    } else if (phase === 'followUp') {
+      // The question stays up as the prompt over the next round's options.
+      setPrompt(line)
+      setRound((value) => value + 1)
+      setPhase('options')
     } else if (phase === 'endingFriend' && p.endingYou) setPhase('endingYou')
   }
 

@@ -2,7 +2,7 @@ import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from 
 import { useGame } from '../game/GameContext.jsx'
 import { CODES, ITEMS } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
-import { IS_PHONE } from '../game/device.js'
+import { IS_PHONE, useMobileView } from '../game/device.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { playSound, preloadSound } from '../game/sound.js'
 import { useRoomState } from '../game/useRoomState.js'
@@ -113,7 +113,10 @@ const TRAY = [
 
 /* Column index → tile kind (matches the `cols` i18n order). */
 const COL_KIND = ['demographic', 'follows', 'insecurity']
-const PROFILE_DELAY_MS = 9000 // final screen: report alone, then the profile popover
+/* Final screen (desktop): the profile text appears BESIDE the report once the
+   report's ~3.3s boot-up has played. On mobile there is no timer: a Next
+   button under the report replaces it with the profile panel. */
+const PROFILE_DELAY_MS = 3500
 
 /* The door background's own 1372×768 pixel space, cover-fitted ("slice") over
    the scene exactly like the background image, so a hotspot placed in image px
@@ -175,16 +178,18 @@ export default function AlgorithmRoom({ node }) {
   // Feedback can't be skipped: each equation's lesson and the final profile
   // keep their button disabled and filling until they've had time to be read.
   const currentRow = ROWS[step]
-  // Final screen: the title + Max's report show alone first; the profile text
-  // pops over the report after PROFILE_DELAY_MS (the report's own boot-up
-  // animation takes ~3.3s, so this lets it play out before covering it).
+  // Final screen: Max's report shows first. Desktop: the profile text + button
+  // fade in beside it after PROFILE_DELAY_MS. Mobile (≤ the CSS breakpoint):
+  // the player taps Next under the report, which swaps it for the profile.
+  const mobileView = useMobileView()
   const atFinal = phase === 'equations' && !currentRow
   const [profileOpen, setProfileOpen] = useState(false)
   useEffect(() => {
     if (!atFinal) return setProfileOpen(false)
+    if (mobileView) return // opened by the Next button instead
     const timer = window.setTimeout(() => setProfileOpen(true), PROFILE_DELAY_MS)
     return () => window.clearTimeout(timer)
-  }, [atFinal])
+  }, [atFinal, mobileView])
   const lesson = useReadingGate(currentRow ? t(`rooms.algorithm.rows.${currentRow.id}.feedbackLesson`) : '',
     phase === 'equations' && !!currentRow && placements[currentRow.id] === blankSlot(currentRow).tileId, 5000)
   const profile = useReadingGate(
@@ -568,38 +573,75 @@ export default function AlgorithmRoom({ node }) {
             )
           })() : (
             /* ---------- Final: the reconstructed profile + the lesson ---------- */
-            <div className="ar-final scene-scroll fade-in">
-              <div className="ar-term-screen panel clip panel-glow-cyan">
-                <div className="ar-dw-title">{t('rooms.algorithm.equations.terminalTitle')}</div>
-                <MaxReport />
-              </div>
-
-              {/* After PROFILE_DELAY_MS the reconstructed profile pops over the
-                  report (same overlay + neon panel as the other rooms' popovers). */}
-              {profileOpen && (
-                <div className="ar-profile-overlay fade-in">
-                  <div className="ar-profile-pop panel clip panel-glow-cyan">
-                    <div className="ar-profile">
-                      <div className="ar-profile-title">{t('rooms.algorithm.equations.profileTitle')}</div>
-                      <p className="ar-profile-text t-sm">
-                        {t('rooms.algorithm.equations.profileP1')} {" "}
-                        <b>{t('rooms.algorithm.equations.profileB1', { friend: narrative.friend })}  {" "}</b>
-                        {t('rooms.algorithm.equations.profileP2')}  {" "}
-                        <b>{t('rooms.algorithm.equations.profileB2')}  {" "}</b>
-                        {t('rooms.algorithm.equations.profileP3')}  {" "}
-                        <b>{t('rooms.algorithm.equations.profileB3')}</b> {" "}
-                        {t('rooms.algorithm.equations.profileP4', { friend: narrative.friend })}
-                      </p>
+            (() => {
+              const profileText = (
+                <p className={`ar-profile-text t-sm ${mobileView ? '' : 'ar-final-text'}`}>
+                  {t('rooms.algorithm.equations.profileP1')} {" "}
+                  <b>{t('rooms.algorithm.equations.profileB1', { friend: narrative.friend })}  {" "}</b>
+                  {t('rooms.algorithm.equations.profileP2')}  {" "}
+                  <b>{t('rooms.algorithm.equations.profileB2')}  {" "}</b>
+                  {t('rooms.algorithm.equations.profileP3')}  {" "}
+                  <b>{t('rooms.algorithm.equations.profileB3')}</b> {" "}
+                  {t('rooms.algorithm.equations.profileP4', { friend: narrative.friend })}
+                </p>
+              )
+              const evidenceBtn = !solved && (
+                <GateButton gate={profile} className="btn-green btn-lg" onClick={finish}>
+                  {t('rooms.algorithm.equations.logEvidence')}
+                </GateButton>
+              )
+              const report = (
+                <div className="ar-term-screen panel clip panel-glow-cyan">
+                  <div className="ar-dw-title">{t('rooms.algorithm.equations.terminalTitle')}</div>
+                  <MaxReport />
+                </div>
+              )
+              /* Mobile: one screen at a time, nothing stacked — first the
+                 report with a Next button under it; Next replaces it with the
+                 profile panel (title, text, button). */
+              if (mobileView) return (
+                <div key={profileOpen ? 'profile' : 'report'} className="ar-final ar-final-mobile scene-scroll fade-in">
+                  {!profileOpen ? (
+                    <>
+                      {report}
+                      <button type="button" className="btn btn-cyan btn-lg ar-final-next"
+                        onMouseDown={(event) => event.preventDefault()}
+                        onClick={() => setProfileOpen(true)}>
+                        {t('common.next')}
+                      </button>
+                    </>
+                  ) : (
+                    <div className="ar-profile-pop panel clip panel-glow-cyan">
+                      <div className="ar-profile">
+                        <div className="ar-profile-title">{t('rooms.algorithm.equations.profileTitle')}</div>
+                        {profileText}
+                      </div>
+                      {evidenceBtn}
                     </div>
-                    {!solved && (
-                      <GateButton gate={profile} className="btn-green btn-lg" onClick={finish}>
-                        {t('rooms.algorithm.equations.logEvidence')}
-                      </GateButton>
-                    )}
+                  )}
+                </div>
+              )
+              /* Desktop: ONE neon panel (same look as the terminal's), split down
+                 the middle by a subtle line — the ad-output terminal on the left
+                 (darker), the profile title above its text + button on the right.
+                 The right half keeps its space from the start (no layout jump)
+                 and fades in after PROFILE_DELAY_MS. */
+              return (
+                <div className="ar-final ar-final-desktop scene-scroll fade-in">
+                  <div className="ar-final-box panel clip panel-glow-cyan">
+                    <div className="ar-final-term">
+                      <div className="ar-dw-title">{t('rooms.algorithm.equations.terminalTitle')}</div>
+                      <MaxReport />
+                    </div>
+                    <div className={`ar-final-side ${profileOpen ? 'is-open fade-in' : ''}`} aria-hidden={!profileOpen || undefined}>
+                      <div className="ar-profile-title ar-final-title">{t('rooms.algorithm.equations.profileTitle')}</div>
+                      {profileText}
+                      {profileOpen && evidenceBtn}
+                    </div>
                   </div>
                 </div>
-              )}
-            </div>
+              )
+            })()
           )}
         </div>
       )}

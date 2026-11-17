@@ -131,6 +131,7 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Ubedljivo — ali bez dovoljno dokaza",
+          "body": "Mislim da si u pravu, ali nisam video dovoljno dokaza na „fizičkom internetu“. Kupiću tablet.",
           "Mia": {
             "body": "Ubedio/la si Miu, ali si zakasnio/la. Nije stigla da vidi sve dokaze koje si mogao/la da nađeš u fizičkom internetu."
           },
@@ -210,7 +211,8 @@ export default {
         "why": "Upravo tako — odbrojavanje je veštački stvoren osećaj hitnosti, osmišljen da te navede da reaguješ pre nego što razmisliš.",
         "nudge": "Razmisli šta ti to odbrojavanje zapravo radi.",
         "positiveFeedback": "Misliš, hitnja te tera da reaguješ pre nego što razmisliš...",
-        "negativeFeedback": "Ne znam, to mi ne zvuči tačno."
+        "negativeFeedback": "Ne znam, to mi ne zvuči tačno.",
+        "followUpQuestion": "U redu, šta još?"
       },
       {
         "title": "Izvor i fid",
@@ -239,7 +241,8 @@ export default {
         "why": "Tako je — nije u pitanju mikrofon niti neka magija. Tvoja istorija pretrage je analizirana i prodata oglasnim mrežama.",
         "nudge": "Nije mikrofon niti virus — razmisli o tome šta platforma već zna o tebi.",
         "positiveFeedback": "Ok, nije mikrofon ni magija... Moja istorija pretrage je analizirana i prodata reklamnim mrežama.",
-        "negativeFeedback": "To mi stvarno nema nikakvog smisla."
+        "negativeFeedback": "To mi stvarno nema nikakvog smisla.",
+        "followUpQuestion": "A osim toga?"
       },
       {
         "title": "Odredište",

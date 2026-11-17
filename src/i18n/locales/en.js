@@ -131,6 +131,7 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Convincing — but not enough proof",
+          "body": "I think you are right fot he most part, but I just didn't see enough evidence in the Physical Internet. I'm buying it.",
           "Mia": {
             "body": "You convinced Mia, but you were too late. She didn't get to see all the evidence you could have found in the Physical Internet."
           },
@@ -188,7 +189,7 @@ export default {
         "options": [
           {
             "k": "A",
-            "text": "A company can't profit selling a €600 NovaPad X for €49. They'd go bankrupt, so it's fake.",
+            "text": "A countdown timer in an online shop can be fake",
             "correct": false
           },
           {
@@ -210,7 +211,8 @@ export default {
         "why": "Exactly — the ticking clock is manufactured urgency, built to make you act before you think.",
         "nudge": "Think about what that ticking clock is really doing to you.",
         "positiveFeedback": "You mean, the urgency makes you act before you think... ",
-        "negativeFeedback": "I don't know, that doesn't sound right."
+        "negativeFeedback": "I don't know, that doesn't sound right.",
+        "followUpQuestion": "Alright, what else?"
       },
       {
         "title": "The Source & Feed",
@@ -239,7 +241,8 @@ export default {
         "why": "Right — it's not the mic or magic. Your search history was profiled and sold to ad networks.",
         "nudge": "It's not the mic or a virus — think about what the platform already knows about you.",
         "positiveFeedback": "Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. ",
-        "negativeFeedback": "That really doesn't make sense to me."
+        "negativeFeedback": "That really doesn't make sense to me.",
+        "followUpQuestion": "Ok, and apart from that?"
       },
       {
         "title": "The Destination",

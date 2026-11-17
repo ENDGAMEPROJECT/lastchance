@@ -5,7 +5,7 @@ export default {
     "begin": "▶ Comenzar",
     "submit": "Enviar",
     "enter": "Comenzar",
-    "next": "Siguente",
+    "next": "Siguiente",
     "locked": "Bloqueado",
     "cleared": "✓ Sala Desbloqueada",
     "enterNode": "Entrar",
@@ -131,6 +131,7 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Convincente, pero sin pruebas suficientes",
+          "body": "Creo que tienes razón en general, pero no he visto suficientes pruebas en el «Internet físico». Voy a comprar la tablet.",
           "Mia": {
             "body": "Convenciste a Mia, pero llegaste tarde. No llegó a ver todas las pruebas que podrías haber encontrado en el Internet Físico."
           },
@@ -175,7 +176,7 @@ export default {
       "endsIn": "Termina en",
       "offerUrgency": "¡Date prisa antes de que se acabe!",
       "buy": "COMPRA AHORA",
-      "caption": "¡¡¡Dios mío, ¿¡han bajado el precio de la NovaPad X a €49?! 😱🔥 ¡Aprovecha antes de que se agote! #oferta #anuncio",
+      "caption": "¡¡¡Dios mío, ¿¡han bajado el precio de el NovaPad X a €49?! 😱🔥 ¡Aprovecha antes de que se agote! #oferta #anuncio",
       "likes": "12.4k Me gusta"
     },
     "roundLabel": "Ronda {n} · {title}",
@@ -193,7 +194,7 @@ export default {
           },
           {
             "k": "B",
-            "text": "Esa cuenta regresiva de 30 minutos no es más que una táctica de alta presión para que entres en pánico y compres sin pensar.",
+            "text": "Esa cuenta atrás de 30 minutos no es más que una táctica de alta presión para que entres en pánico y compres sin pensar.",
             "correct": true
           },
           {
@@ -210,7 +211,8 @@ export default {
         "why": "Exactamente: el tictac del reloj es una urgencia artificial, diseñada para que actúes antes de pensar.",
         "nudge": "Piensa en lo que realmente te está haciendo ese tictac del reloj.",
         "positiveFeedback": "¿Te refieres a que la urgencia te hace actuar antes de pensar...?",
-        "negativeFeedback": "No lo sé, eso no suena bien."
+        "negativeFeedback": "No lo sé, eso no suena bien.",
+        "followUpQuestion": "Vale, qué más?"
       },
       {
         "title": "Fuente y feed",
@@ -239,7 +241,8 @@ export default {
         "why": "Exacto: no es el micrófono ni magia. Tu historial de búsqueda fue perfilado y vendido a redes publicitarias.",
         "nudge": "No es el micrófono ni un virus: piensa en lo que la plataforma ya sabe de ti.",
         "positiveFeedback": "Vale, no es el micrófono ni magia... Analizaron mi historial de búsqueda y lo vendieron a redes publicitarias.",
-        "negativeFeedback": "La verdad es que eso no tiene ningún sentido para mí."
+        "negativeFeedback": "La verdad es que eso no tiene ningún sentido para mí.",
+        "followUpQuestion": "Vale, y a parte de eso?"
       },
       {
         "title": "El destino",
@@ -1223,9 +1226,9 @@ export default {
         "profileB1": "la edad de {friend}",
         "profileP2": "(adolescente),",
         "profileB2": "intereses",
-        "profileP3": "(videojuegos, tecnología nueva y búsquedas de la NovaPad X) e",
+        "profileP3": "(videojuegos, tecnología nueva y búsquedas de el NovaPad X) e",
         "profileB3": "inseguridades",
-        "profileP4": "(encajar, miedo a perderse la oferta). De ahí salió un anuncio perfectamente dirigido: justo la oferta del «90% de descuento» en la NovaPad X. Que {friend} lo viera nunca fue casualidad.",
+        "profileP4": "(encajar, miedo a perderse la oferta). De ahí salió un anuncio perfectamente dirigido: justo la oferta del «90% de descuento» en el NovaPad X. Que {friend} lo viera nunca fue casualidad.",
         "logEvidence": "Registrar esta prueba ✓",
         "finalLessonTitle": "Lo que has aprendido",
         "finalLesson": "Los anuncios personalizados combinan tu actividad, tus intereses y tus inseguridades para dirigirse a ti.",

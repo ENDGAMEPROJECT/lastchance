@@ -131,6 +131,7 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Vakuuttavaa — mutta todisteita liian vähän",
+          "body": "Olet varmaan oikeassa, mutta en ole nähnyt tarpeeksi todisteita \"fyysisessä internetissä\". Aion ostaa tabletin.",
           "Mia": {
             "body": "Vakuutit Mian, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
           },
@@ -210,7 +211,8 @@ export default {
         "why": "Juuri niin — tikittävä kello on keinotekoista kiirettä, rakennettu saamaan sinut toimimaan ennen kuin ehdit ajatella.",
         "nudge": "Mieti, mitä tuo tikittävä kello oikeasti tekee sinulle.",
         "positiveFeedback": "Siis tarkoitat, että kiire saa toimimaan ennen kuin ehtii ajatella...",
-        "negativeFeedback": "En tiedä, tuo ei kuulosta oikealta."
+        "negativeFeedback": "En tiedä, tuo ei kuulosta oikealta.",
+        "followUpQuestion": "Selvä, mitä muuta?"
       },
       {
         "title": "Lähde ja syöte",
@@ -239,7 +241,8 @@ export default {
         "why": "Aivan — kyse ei ole mikrofonista eikä taikuudesta. Hakuhistoriastasi tehtiin profiili, joka myytiin mainosverkostoille.",
         "nudge": "Kyse ei ole mikrofonista eikä viruksesta — mieti, mitä alusta jo tietää sinusta.",
         "positiveFeedback": "Okei, kyse ei ole mikrofonista eikä taikuudesta... Hakuhistoriani analysoitiin ja myytiin mainosverkostoille.",
-        "negativeFeedback": "Tuossa ei kyllä ole minulle mitään järkeä."
+        "negativeFeedback": "Tuossa ei kyllä ole minulle mitään järkeä.",
+        "followUpQuestion": "Ja sen lisäksi?"
       },
       {
         "title": "Määränpää",
