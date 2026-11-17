@@ -976,26 +976,15 @@
   align-self: flex-end;
 }
 
-/* Final reconstructed-profile screen */
+/* Final reconstructed-profile screen — MOBILE (and the shared bits): the
+   report with a Next button, then the profile panel (.ar-profile-pop) in its
+   place. */
 .ar-final {
   position: relative;
   flex: 1;
   min-height: 0;
   display: flex;
   justify-content: center;
-}
-/* The reconstructed-profile popover over Max's report (same pattern as the
-   Link District's .ld-review-overlay: absolute inside the scaled stage, never
-   position: fixed). */
-.ar-profile-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 15;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: rgba(2, 3, 10, 0.6);
 }
 .ar-profile-pop {
   width: 100%;
@@ -1032,6 +1021,69 @@
   @media (max-width: 1180px) {
     max-width: 900px;
   }
+}
+/* Mobile: the Next button sits under the report; after Next the profile
+   panel takes the report's place (centred, no overlay). */
+.ar-final.ar-final-mobile {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.ar-final-next {
+  flex: none;
+}
+/* Final screen — DESKTOP (AlgorithmRoom renders .ar-final-desktop only above
+   the mobile breakpoint): ONE panel with the same look as the terminal
+   (.panel.clip.panel-glow-cyan), split 65/35 by a subtle line.
+   Left: the ad-output terminal, on a darker ground. Right: the profile title
+   above its text, then the button. Nothing overlays anything. */
+.ar-final.ar-final-desktop {
+  align-items: center;
+}
+.ar-final-box {
+  width: 100%;
+  max-width: 1180px;
+  display: grid;
+  grid-template-columns: 63fr 37fr; /* terminal 65% · text 35% */
+  overflow: hidden; /* the darker half follows the panel's rounded corners */
+}
+.ar-final-term {
+  min-width: 0;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  background: rgba(2, 4, 14, 0.55); /* darker than the text half */
+  border-right: 1px solid var(--line); /* the subtle divider */
+}
+.ar-final-side {
+  min-width: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  padding: 20px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 14px;
+  /* Holds its place before the text fades in, so the panel doesn't resize. */
+  visibility: hidden;
+}
+.ar-final-side.is-open {
+  visibility: visible;
+}
+.ar-final-title {
+  margin: 0;
+}
+.ar-final-text {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.45;
+}
+.ar-final-text b {
+  color: var(--cyan);
 }
 /* Station 2 — Data Wall */
 .ar-datawall {
