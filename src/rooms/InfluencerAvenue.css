@@ -610,6 +610,9 @@ button.ia-view-publication {
 }
 .ia-key-cell:not(:disabled):hover { border-color: var(--cyan); background: rgba(22, 242, 255, 0.2); }
 .ia-key-cell:not(:disabled):active { background: rgba(22, 242, 255, 0.3); }
+/* Typed on the physical keyboard: same look as hovering + clicking the key. */
+.ia-key-cell.is-pressed { border-color: var(--cyan); background: rgba(22, 242, 255, 0.3); }
+.ia-decoder-erase.is-pressed { border-color: var(--purple); box-shadow: var(--glow-purple); }
 .ia-key-cell:disabled, .ia-decoder-erase:disabled { opacity: 0.6; cursor: default; }
 .ia-key-cell:focus-visible, .ia-decoder-erase:focus-visible, .ia-answer:focus-visible {
   outline: 2px solid var(--cyan);

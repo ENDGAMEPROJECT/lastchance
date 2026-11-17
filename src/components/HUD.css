@@ -101,6 +101,18 @@
 }
 
 
+/* The room's briefing, repeated above the objective so it can be re-read. */
+.hint-instructions {
+  margin-bottom: 12px;
+  padding: 13px;
+  border-color: rgba(255, 185, 43, 0.3);
+  background: rgba(255, 185, 43, 0.05);
+}
+.hint-instructions p {
+  margin: 6px 0 0;
+  color: var(--text);
+  line-height: 1.45;
+}
 .hint-target {
   margin-bottom: 16px;
   padding: 13px;
@@ -167,6 +179,30 @@
   color: var(--amber);
   font-family: var(--font-mono);
   font-size: 1.15rem;
+}
+/* A hint still waiting to unlock: dimmed, with a padlock (and, for the next
+   one in line, the time left) in place of the +/− sign. */
+.hint-disclosure.is-locked {
+  border-style: dashed;
+  background: rgba(255, 255, 255, 0.02);
+}
+.hint-disclosure.is-locked .hint-trigger {
+  cursor: not-allowed;
+  color: var(--muted);
+}
+.hint-disclosure.is-locked .hint-trigger:hover {
+  background: transparent;
+}
+.hint-disclosure.is-locked .hint-number {
+  border-color: var(--muted);
+  color: var(--muted);
+}
+.hint-lock {
+  margin-left: auto;
+  flex: none;
+  color: var(--muted);
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 .hint-answer {
   padding: 0 42px 14px 48px;
@@ -255,36 +291,8 @@
     border-color: rgba(190, 252, 255, 0.9);
   }
 }
-.hud-hint-reminder {
-  animation: hud-hint-glow 1.2s ease-in-out infinite;
-}
-@keyframes hud-hint-glow {
-  0%,
-  100% {
-    border-color: var(--amber);
-    box-shadow: 0 0 10px rgba(255, 185, 43, 0.4);
-  }
-  50% {
-    border-color: #fff1cc;
-    color: #fff;
-    background: rgba(255, 185, 43, 0.45);
-    box-shadow:
-      0 0 18px rgba(255, 225, 150, 0.95),
-      0 0 38px rgba(255, 185, 43, 0.9),
-      inset 0 0 12px rgba(255, 241, 204, 0.25);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hud-hint-reminder {
-    animation: none;
-    border-color: #ffe08a;
-    box-shadow: 0 0 18px rgba(255, 185, 43, 0.6);
-  }
-}
-
 /* Desktop reminder arrows: two chevrons under the lit-up button, pointing up
    at it and bobbing in a staggered wave. Only rendered by the desktop bar. */
-.hud-hint-reminder,
 .hud-bag-reminder {
   position: relative;
 }
@@ -300,7 +308,6 @@
   pointer-events: none;
   animation: hud-reminder-bob 1.2s ease-in-out infinite;
 }
-.hud-hint-reminder .hud-reminder-arrow { --arrow: #ffd36b; --arrow-glow: rgba(255, 185, 43, 0.75); }
 .hud-bag-reminder .hud-reminder-arrow { --arrow: #e4baff; --arrow-glow: rgba(168, 85, 247, 0.75); }
 .hud-reminder-chevron {
   width: 24px;
@@ -776,6 +783,7 @@ body.debug-hidden
     max-width: calc(1280px * 0.75) !important;
   }
   .hud-modal .hint-target p,
+  .hud-modal .hint-instructions p,
   .hud-modal .hints-context,
   .hud-modal .hint-trigger,
   .hud-modal .hint-answer,

@@ -45,7 +45,7 @@ export const settings = {
   },
 
   /* Minutes on the offer countdown. */
-  timerMinutes: 30,
+  timerMinutes: 40,
 
   /* Typewriter pacing for the narrated screens (portal arrival, return, the
      in-person tests) and the chat bubbles.
@@ -67,12 +67,14 @@ export const settings = {
   portal: { tunnelMs: 9000 },
 
   /* Remind players to inspect their tools after BOTH thresholds are met. */
-  bagReminder: { clicks: 2, delayMs: 20000 },
+  bagReminder: { clicks: 2, delayMs: 25000 },
 
-  /* Light up the Hints button once the player has clicked at least `clicks`
-     times in a room AND made no puzzle progress for the wait (rooms with a tool
-     to use wait longer). Progress restarts both counts. */
-  hintReminder: { clicks: 4, idleMs: 30000, idleMsWithItem: 40000 },
+  /* Hints unlock one at a time: the first is open straight away, and each
+     next one only becomes available `unlockDelayMs` after the previous one
+     was read, so a player cannot read every hint at once. Each room step
+     (e.g. a Link District crossroads) starts its own sequence. The Hints
+     button never lights up on its own, so it does not invite giving up. */
+  hints: { unlockDelayMs: 60000 },
 
   /* ---------------- Puzzle 1 · Link District ---------------- */
   linkDistrict: {

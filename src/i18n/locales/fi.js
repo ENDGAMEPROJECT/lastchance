@@ -131,6 +131,7 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Vakuuttavaa — mutta todisteita liian vähän",
+          "body": "Olet varmaan oikeassa, mutta en ole nähnyt tarpeeksi todisteita \"fyysisessä internetissä\". Aion ostaa tabletin.",
           "Mia": {
             "body": "Vakuutit Mian, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
           },
@@ -171,7 +172,7 @@ export default {
       "saleBadge": "⚡ PIKATARJOUS",
       "wasPrice": "€600",
       "nowPrice": "€49",
-      "offerLabel": "30 minuutin tarjous",
+      "offerLabel": "40 minuutin tarjous",
       "endsIn": "Päättyy",
       "offerUrgency": "Kiirehdi, ennen kuin se loppuu!",
       "buy": "OSTA NYT",
@@ -188,76 +189,78 @@ export default {
         "options": [
           {
             "k": "A",
-            "text": "Yritys ei voi tehdä voittoa myymällä normaalisti 535 euroa maksavaa NovaPad X:ää 44 eurolla. Se menisi konkurssiin, joten kyseessä on huijaus.",
-            "correct": false
-          },
-          {
-            "k": "B",
-            "text": "Tuo 30 minuutin laskuri on vain painostuskeino, jolla sinut saadaan panikoimaan ja ostamaan ajattelematta.",
+            "text": "Verkkokaupan ajastin, joka laskee aikaa alaspäin, voi olla huijausta.",
             "correct": true
           },
           {
+            "k": "B",
+            "text": "Tuo 40 minuutin laskuri on vain painostuskeino, jolla sinut saadaan panikoimaan ja ostamaan ajattelematta.",
+            "correct": false
+          },
+          {
             "k": "C",
-            "text": "Katso ensin kommentit. Jos ihmiset sanovat sitä huijaukseksi, älä osta.",
+            "text": "Kauppa, joka mainostaa sosiaalisessa mediassa, on turvallinen kauppa.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "49 eurolla se on luultavasti vain halpa, rikkinäinen kopio.",
+            "text": "Oikeat kaupat pyytävät sinua lähettämään korttisi numeron chatissa.",
             "correct": false
           }
         ],
         "why": "Juuri niin — tikittävä kello on keinotekoista kiirettä, rakennettu saamaan sinut toimimaan ennen kuin ehdit ajatella.",
         "nudge": "Mieti, mitä tuo tikittävä kello oikeasti tekee sinulle.",
         "positiveFeedback": "Siis tarkoitat, että kiire saa toimimaan ennen kuin ehtii ajatella...",
-        "negativeFeedback": "En tiedä, tuo ei kuulosta oikealta."
+        "negativeFeedback": "En tiedä, tuo ei kuulosta oikealta.",
+        "followUpQuestion": "Selvä, mitä muuta?"
       },
       {
         "title": "Lähde ja syöte",
         "options": [
           {
             "k": "A",
-            "text": "Puhelimesi kuuntelee meitä. Puhuimme eilen tableteista ja sovellus käytti mikrofonia.",
+            "text": "Puhut tableteista. Sitten näet tablettimainoksen. Yleisin syy: puhelimesi on nauhoittanut puhettasi.",
             "correct": false
           },
           {
             "k": "B",
-            "text": "Onko hänen profiilissaan vahvistusmerkki? Jos ei, se on väärennetty klooni, joka esiintyy hänenä.",
+            "text": "Kaksi ihmistä näkee aina samat mainokset samalla verkkosivustolla.",
             "correct": false
           },
           {
             "k": "C",
-            "text": "Puhelimessasi täytyy olla virus tai vakoiluohjelma, joka pakottaa juuri nämä mainokset ruudulle.",
+            "text": "Jos mainoksessa esiintyy julkkis, tuote on turvallinen.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "Alustan algoritmi seuraa sinua. Se syötti hakuhistoriasi suoraan saalistaville mainosverkostoille.",
+            "text": "Sovellukset ja verkkosivustot käyttävät hakujasi ja klikkauksiasi valitakseen sinulle näytettävät mainokset.",
             "correct": true
           }
         ],
         "why": "Aivan — kyse ei ole mikrofonista eikä taikuudesta. Hakuhistoriastasi tehtiin profiili, joka myytiin mainosverkostoille.",
         "nudge": "Kyse ei ole mikrofonista eikä viruksesta — mieti, mitä alusta jo tietää sinusta.",
         "positiveFeedback": "Okei, kyse ei ole mikrofonista eikä taikuudesta... Hakuhistoriani analysoitiin ja myytiin mainosverkostoille.",
-        "negativeFeedback": "Tuossa ei kyllä ole minulle mitään järkeä."
+        "negativeFeedback": "Tuossa ei kyllä ole minulle mitään järkeä.",
+        "followUpQuestion": "Ja sen lisäksi?"
       },
       {
         "title": "Määränpää",
         "options": [
           {
             "k": "A",
-            "text": "Katso osoiteriviä. URL on https://www.lunawear.com-official.shop/ — eikö tuo pitkä osoite ja sana \"official\" vaikuta vähän epäilyttävältä?",
-            "correct": true
+            "text": "”Lunawear.com-official.shop” on sama verkkosivusto kuin ”lunawear.com”.",
+            "correct": false
           },
           {
             "k": "B",
-            "text": "Katso lukkokuvaketta. Jos https:// puuttuu, yhteyttä ei ole salattu, joten se on huijaus.",
+            "text": "Kauppa, jolla on paljon viiden tähden arvosteluja, on aina oikea kauppa.",
             "correct": false
           },
           {
             "k": "C",
             "text": "Älä syötä korttiasi. Kunhan käytät Apple Payta tai PayPalia, olet 100 % turvassa.",
-            "correct": false
+            "correct": true
           },
           {
             "k": "D",
@@ -275,12 +278,12 @@ export default {
       "eyebrow": "Tarjous",
       "debugTag": "Alkutesti",
       "title": "Viesti {friend_ablative}",
-      "opening": "Katso tätä! Seuraamani vaikuttaja julkaisi juuri pikatarjouksen — normaalisti noin 535 euroa maksava NovaPad X nyt vain 44 eurolla! Laskurissa on enää 30 minuuttia. Syötän korttitietojani juuri nyt.",
+      "opening": "Katso tätä! Seuraamani vaikuttaja julkaisi juuri pikatarjouksen — €600 maksava NovaPad X nyt vain €49! Laskurissa on enää 40 minuuttia. Syötän korttitietojani juuri nyt.",
       "responses": [
         "Oli syy mikä tahansa, en halua jäädä paitsi ennen kuin kello nollautuu! Ja hän on valtava vaikuttaja — ei hän mitä tahansa julkaisisi. Outoa on se, mistä tämä mainos tiesi, että halusin tabletin. Se ilmestyi suoraan syötteeni kärkeen.",
         "Kuule, algoritmeista ja tileistä on miljoona teoriaa, mutta katson juuri nyt itse kaupan sivua. Siinä on virallinen brändilogo, loistavat arvostelut ja turvallinen kassa."
       ],
-      "endingFriend": "Kuule, voit pilkkoa sivua miten haluat, mutta minusta kaikki näyttää ihan hyvältä! Sinä vain vainoharhailet. Laskuri käy yhä — sinulla on siihen asti kun se nollautuu, kolmekymmentä minuuttia, aikaa todistaa, että tämä on oikeasti huijaus. Muuten painan ostaa.",
+      "endingFriend": "Kuule, voit pilkkoa sivua miten haluat, mutta minusta kaikki näyttää ihan hyvältä! Sinä vain vainoharhailet. Laskuri käy yhä — sinulla on siihen asti kun se nollautuu, neljäkymmentä minuuttia, aikaa todistaa, että tämä on oikeasti huijaus. Muuten painan ostaa.",
       "endingYou": "Sovittu. Katsotaan ruudun taakse.",
       "begin": "▶ Katso ruudun taakse"
     },
@@ -560,85 +563,152 @@ export default {
     "room": {
       "link": {
         "context": "Tutki jokainen URL. Pienet kirjoitusmuutokset voivat piilottaa väärän määränpään.",
-        "prompts": [
-          "En tiedä, miten huomata ylimääräiset sanat näissä verkko-osoitteissa.",
-          "En tiedä, miten tarkistaa onko yhteys tai verkkotunnuksen pääte epäilyttävä.",
-          "En tiedä, miten tunnistaa naamioidut tai samannäköiset merkit."
-        ],
-        "items": [
-          "Vertaa verkkotunnuksia kirjain kirjaimelta.",
-          "Varo samannäköisiä merkkejä ja outoja päätteitä.",
-          "Turvallisin linkki on se, joka vastaa oikeaa kauppaa täsmälleen."
-        ],
-        "rounds": [
-          "Yleiset päätteet: pidä aito verkkotunnus auki ja estä ne kaksi osoitetta, jotka lisäävät sanoja oikean nimen perään.",
-          "HTTP vai HTTPS: pidä aito kauppa auki ja estä molemmat http://-ovet.",
-          "Kalasteluyritykset: lue jokainen merkki ja estä naamioidut, samannäköiset osoitteet."
-        ]
+        "steps": {
+          "round1": {
+            "prompts": [
+              "Mistä aloitan näiden ovien kanssa?",
+              "Miten tunnistan väärennetyt osoitteet?",
+              "Mitkä ovet estän?"
+            ],
+            "items": [
+              "Avaa jokainen ovi kurkistaaksesi sisään ja lue koko osoite, ei vain alkua. Yksi ovi on oikea kauppa ja kaksi on huijauksia: sinun täytyy estää molemmat huijaukset.",
+              "Oikea sivusto on osoitteen viimeinen osa ennen ensimmäistä “/”-merkkiä. Etsi brändin nimeen liimattuja sanoja, kuten “-official.shop” tai “-dealz”: oikea kauppa ei tarvitse niitä.",
+              "Jätä www.lunawear.com auki. Estä lunawear.com-official.shop ja lunawear-dealz.com."
+            ]
+          },
+          "round2": {
+            "prompts": [
+              "Mihin minun pitäisi katsoa tällä kertaa?",
+              "Mikä ero on http:llä ja https:llä?",
+              "Mitkä ovet estän?"
+            ],
+            "items": [
+              "Katso jokaisen osoitteen alkua, ennen kaupan nimeä. Vertaa, miten kolmen oven osoitteet alkavat.",
+              "https:// (jossa on “s”) tarkoittaa, että yhteys on salattu. http:// ilman “s”-kirjainta ei ole turvallinen. Varo myös outoja päätteitä, kuten “.free”.",
+              "Jätä https://theshoefactory.com auki. Estä ne kaksi osoitetta, jotka alkavat http://."
+            ]
+          },
+          "round3": {
+            "prompts": [
+              "Kaikki kolme osoitetta näyttävät samalta. Mitä teen?",
+              "Mitä kirjaimia voi väärentää?",
+              "Mitkä ovet estän?"
+            ],
+            "items": [
+              "Ne ovat tarkoituksella lähes identtisiä. Lue jokainen osoite hitaasti kirjain kerrallaan ja vertaa sitä kaupan oikeaan nimeen.",
+              "Jotkin kirjaimet ovat naamioituja: “r” ja “n” yhdessä näyttävät “m”-kirjaimelta, ja muiden aakkosten kirjaimet voivat näyttää tavallisilta.",
+              "Jätä https://magnumshop.com auki. Estä rnagnumshop.com (“rn” eikä “m”) ja osoite, jossa on “и” eikä “n”."
+            ]
+          },
+          "justify": {
+            "prompts": [
+              "Miten vastaan, miksi estin ne?",
+              "Ovatko https ja lukkokuvake varoitusmerkkejä?",
+              "Mitkä minun pitää valita?"
+            ],
+            "items": [
+              "Muistele kolmea risteystä: mitä väärennetyissä osoitteissa oli, mitä oikeissa ei ollut? Valitse kaikki näkemäsi varoitusmerkit, mutta vain ne. Paina sitten “Lähetä perustelu”.",
+              "Eivät. https:// ja lukkokuvake tarkoittavat vain, että yhteys on salattu. Ne eivät todista, että sivusto on luotettava, mutta eivät ne ole varoitusmerkkejäkään: älä valitse niitä.",
+              "Valitse viisi varoitusmerkkiä: oikean nimen perään lisätyt sanat, http:// eikä https://, oudot päätteet kuten .free, samannäköisiksi vaihdetut kirjaimet ja väärin kirjoitetut brändinimet."
+            ]
+          }
+        }
       },
       "influencer": {
         "context": "Erota aidot suositukset maksetuista tai keksityistä signaaleista.",
-        "prompts": [
-          "En tiedä, miten purkaa kunkin julkaisun kaupallinen merkintä.",
-          "En tiedä, mitä tehdä sen jälkeen kun olen merkinnyt julkaisut.",
-          "En tiedä, miten luokitella kolme tuotekuvaa."
-        ],
-        "items": [
-          "Käytä emojien purkukorttia tunnistaaksesi",
-          "Tee käänteinen kuvahaku kaikista kolmesta tuotteesta.",
-          "Muki on massatuotettu, NovaPad-kuva on tekoälyn luoma ja kuppikakut ovat aitoja."
-        ]
+        "steps": {
+          "labels": {
+            "prompts": [
+              "Miten selvitän kunkin julkaisun merkinnän?",
+              "Miten kuvatekstit auttavat?",
+              "Mikä merkintä kuuluu kuhunkin julkaisuun?"
+            ],
+            "items": [
+              "Valitse julkaisu klikkaamalla sitä, avaa sitten Reppu ja käytä Emojien purkukorttia. Paina kortilla julkaisun muistilapun jokaista emojia vastaavaa kirjainta järjestyksessä.",
+              "Lue jokainen kuvateksti: henkilökohtainen alennuskoodi tarkoittaa MAKSETTU, brändin “lähettämä” tuote tarkoittaa LAHJA, ja yhdessä brändin kanssa tehty tuote tarkoittaa YHTEISTYÖ.",
+              "MiraMoves on MAKSETTU, TechWithLeo on LAHJA ja ClaraSees on YHTEISTYÖ."
+            ]
+          },
+          "search": {
+            "prompts": [
+              "Miten käänteinen kuvahaku toimii?",
+              "Miten tulkitsen hakutuloksia?",
+              "Mikä leima tulee kuhunkin tuotteeseen?"
+            ],
+            "items": [
+              "Vedä jokainen tuotekuva hakukoneeseen ja odota tuloksia. Leimaa sitten kuva sopivalla leimalla: Harhaanjohtava sisältö, Tekoälyn luoma tai Vahvistettu.",
+              "Satoja halpoja tukkukopioita tarkoittaa, ettei tuote ole sitä, mitä väitetään. Tekoälytaidesivustot ja faktantarkistukset tarkoittavat, että kuva on tekoälyn luoma. Muutama virallinen kauppa samanlaisilla hinnoilla tarkoittaa, että tuote on aito.",
+              "Muki: Harhaanjohtava sisältö. NovaPad X: Tekoälyn luoma. Bluetooth-kaiutin: Vahvistettu. Paina sitten “Vahvista luokittelut”."
+            ]
+          }
+        }
       },
       "algorithm": {
         "context": "Seuraa datapolkua personoidun syötteen takana.",
-        "prompts": [
-          "En tiedä, mikä koodi avaa kohdennusmoottorin.",
-          "En tiedä, miten valita yhtälöstä puuttuva tekijä.",
-          "En tiedä, miten valmis profiili selittää NovaPad-mainoksen."
-        ],
-        "items": [
-          "Käytä raportin kuutta korostettua numeroa. Etsi ne repusta.",
-          "Yhdistä puuttuva tekijä henkilöön ja mainokseen.",
-          "Moottori yhdistää iän, kiinnostukset, haut ja epävarmuudet."
-        ]
+        "steps": {
+          "code": {
+            "prompts": [
+              "Mistä löydän oven koodin?",
+              "Mistä numeroista koodi muodostuu?",
+              "Mikä koodi on?"
+            ],
+            "items": [
+              "Koodi on piilotettu yhteen Repussasi olevista työkaluista. Avaa Datakooste ja lue se huolellisesti.",
+              "Käy kooste läpi ylhäältä alas ja kirjoita muistiin jokainen lihavoitu numero. Niitä on kuusi.",
+              "Koodi on 274181."
+            ]
+          },
+          "engine": {
+            "prompts": [
+              "Mitä minun pitää tehdä moottorissa?",
+              "Mistä tiedän, mikä laatta sopii?",
+              "Mitkä laatat ovat oikeat?"
+            ],
+            "items": [
+              "Valitse ensin haluamasi tulevaisuus: kumpi tahansa vastaus päästää sinut eteenpäin. Vedä sitten jokaisessa yhtälössä puuttuva laatta tyhjään kohtaan niin, että profiili selittää mainoksen.",
+              "Kysy itseltäsi, kenelle mainos on suunnattu ja miksi: ikä, mitä hän seuraa ja mikä häntä huolettaa. Oikea laatta on se, joka selittää, miksi juuri tämä henkilö näkee tämän mainoksen.",
+              "Ihonhoitovoide: Epävarma ihostaan. Lihasmassalisäravinne: Poika, 15–25. Kaljuuntumisvoide: Huolissaan kaljuuntumisesta. Laihdutuspillerit: Seuraa dieetti- ja elämäntapasivuja."
+            ]
+          }
+        }
       },
       "ads": {
         "context": "Hidasta visuaalista painetta ja tutki, mitä mainos oikeasti tekee.",
         "prompts": [
-          "En tiedä, miten saan Totuuslampun toimimaan.",
-          "En tiedä, mitä kunkin julisteen alta pitäisi etsiä.",
-          "En tiedä, miten koota uloskäynnin koodi."
+          "Miten käytän Totuuslamppua?",
+          "Mitä minun pitää etsiä julisteista?",
+          "Mikä on uloskäynnin koodi?"
         ],
         "items": [
-          "Lataa lamppu ja pyyhkäise sillä seinän yli.",
-          "Lue pieni präntti, älä suurta lupausta.",
-          "Paljasta kaikki neljä piilotettua kirjainta julisteiden järjestyksessä. Ne muodostavat sanan SAVE, joka on uloskäynnin koodi."
+          "Avaa Reppu ja käytä Totuuslamppua. Odota, että se latautuu, ja liikuta sitten valokeilaa hitaasti tummien julisteiden yli.",
+          "Valossa jokainen juliste näyttää mainoksen takana olevan totuuden. Jokaisessa on yksi punaisella korostettu kirjain: kirjoita se muistiin.",
+          "Lue neljä punaista kirjainta seinältä vasemmalta oikealle: ne muodostavat sanan ANSA. Kirjoita se ja avaa uloskäynti."
         ]
       },
       "persuasion": {
-        "context": "Käytä päätettä paljastaaksesi viimeiset suostuttelun keinot.",
+        "context": "Nimeä jokaisen mainoksen kikka, niin salasana paljastuu.",
         "prompts": [
-          "En tiedä, miten yhdistää keino julisteeseen.",
-          "En tiedä, mitä varten hehkuvat kirjaimet ovat.",
-          "En tiedä, mikä salasana tietokoneeseen syötetään."
+          "Mitä minun pitää tehdä täällä?",
+          "Miten erotan tekniikat toisistaan?",
+          "Mikä on tietokoneen salasana?"
         ],
         "items": [
-          "Vedä ja pudota jokainen juliste sen suostuttelukeinon kohdalle.",
-          "Jokainen oikea kehys paljastaa yhden kirjaimen.",
-          "Kun kaikki kuusi on yhdistetty, avaa tietokone ja syötä FOOLED."
+          "Vedä jokainen tekniikkakehys julisteeseen, joka käyttää kyseistä kikkaa. Jos osut oikeaan, julisteen yksi kirjain ympyröidään.",
+          "Lue jokainen otsikko: vain muutama tuote jäljellä on FOMO, miljoonat ostajat on Sosiaalinen todiste, mahdoton lupaus on Liioittelu, kuuluisa henkilö on Vaikuttajan suositus, syyllisyys perheestä on Tunteisiin vetoaminen ja laskuri on Kiire.",
+          "Lue kuusi ympyröityä kirjainta vasemmalta oikealle: ANSOJA. Klikkaa tietokonetta ja kirjoita se."
         ]
       },
       "rouletteInvestigation": {
         "context": "Pyöräytä useita kertoja ja vertaa tuloksia ennen päätöstä.",
         "prompts": [
-          "Mitä minun pitäisi tarkistaa?",
-          "Todistaako voitto tai häviö huijaamisen?",
-          "Miten saan käytävän läpi?"
+          "Mitä minun pitää tehdä jokaisella pyörällä?",
+          "Mistä tiedän, onko pyörä manipuloitu?",
+          "Mikä on vastaus kummallekin pyörälle?"
         ],
         "items": [
-          "Pyöräytä nykyistä pyörää vähintään kahdesti. Pysähtyykö se aina samaan lohkoon? Vertaa sen vieressä näkyviä tuloksia.",
-          "Voit pyöräyttää lisää ennen päätöstä. Toistuva tulos on vihje tutkia asiaa, mutta se voi johtua myös sattumasta.",
-          "Valitse Manipuloitu tai Ei manipuloitu. Lue kumpikin selitys ja käy sitten molemmat pyörät läpi."
+          "Pyöräytä pyörää vähintään kaksi kertaa ja katso, mihin se pysähtyy. Päätä sitten, onko se Manipuloitu vai Ei manipuloitu.",
+          "Vertaa pyörän vieressä näkyviä tuloksia. Reilu pyörä pysähtyy eri lohkoihin. Manipuloitu pyörä antaa joka kerta saman tuloksen.",
+          "Molemmat pyörät ovat manipuloituja. MEGA SPIN pysähtyy aina kuponkiin, eikä KULTARYNTÄYS anna koskaan palkintoa. Valitse molemmille Manipuloitu ja lue selitykset."
         ]
       }
     },
@@ -761,7 +831,7 @@ export default {
         "discount": "€49",
         "text": "Kiirehdi! Tarjous päättyy pian.",
         "cta": "OSTA NYT!!",
-        "timePressure": "Vain 30 min jäljellä!!"
+        "timePressure": "Vain 40 min jäljellä!!"
       },
       "shoesAd1": {
         "headline": "AIVAN UUDET LENKKARIT",

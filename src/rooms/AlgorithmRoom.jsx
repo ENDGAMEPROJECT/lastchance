@@ -146,7 +146,7 @@ function DoorKeypadMap({ children }) {
 }
 
 export default function AlgorithmRoom({ node }) {
-  const { completeRoom, addEvidence, narrative } = useGame()
+  const { completeRoom, addEvidence, narrative, setHintStep } = useGame()
   const t = useT()
   /* Progress, not UI: these five survive a refresh, so a player who has
      already opened the door and started the equations comes back to them
@@ -154,6 +154,10 @@ export default function AlgorithmRoom({ node }) {
      are deliberately transient — a code in flight is not progress. */
   const [phase, setPhase] = useRoomState('algorithm.phase', 'door') // 'door' | 'unlock' | 'choice' | 'equations'
   const [solved, setSolved] = useRoomState('algorithm.solved', false)
+  // Hints follow the stage: the door code first, then the targeting engine.
+  useEffect(() => {
+    setHintStep(phase === 'door' || phase === 'unlock' ? 'code' : 'engine')
+  }, [phase, setHintStep])
 
   /* ----- phase 'unlock' state ----- */
   const [code, setCode] = useState('')

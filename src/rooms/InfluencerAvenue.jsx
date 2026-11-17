@@ -79,6 +79,7 @@ const postNo = (id) => POSTS.findIndex((p) => p.id === id) + 1
    anything else (spaces, punctuation) is dropped. */
 const toKeypadWord = (label) =>
   label.normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().replace(/[^A-Z]/g, '')
+const KEYPAD_LETTERS = new Set(Object.values(EMOJI_KEY))
 
 /* Stable English names for analytics: the product copy is localised, so it
    cannot name the activity. Keys are PRODUCTS ids. */
@@ -626,7 +627,7 @@ function PublicationOverlay({ post, copy, locale, liked, onToggle, onClose }) {
 }
 
 export default function InfluencerAvenue({ node }) {
-  const { completeRoom, addEvidence, hasItem } = useGame()
+  const { completeRoom, addEvidence, hasItem, setHintStep } = useGame()
   const { locale } = useI18n()
   const t = useT()
 
@@ -636,6 +637,10 @@ export default function InfluencerAvenue({ node }) {
      transient (a held stamp, an open panel) and deliberately is not. */
   const [stage, setStage] = useRoomState('influencer.stage', 'label') // 'label' → 'labelFeedback' → 'explain' → 'verify' → solved
   const [solved, setSolved] = useRoomState('influencer.solved', false)
+  // Hints follow the stage: decoding the labels, then the reverse image search.
+  useEffect(() => {
+    setHintStep(stage === 'label' || stage === 'labelFeedback' ? 'labels' : 'search')
+  }, [stage, setHintStep])
   const [demoPhase, setDemoPhase] = useState('drag') // explainer's scripted reverse-search demo
   // The label recap and the reverse-search explainer can't be skipped: their
   // continue buttons appear once the text has had time to be read.
@@ -751,6 +756,43 @@ export default function InfluencerAvenue({ node }) {
     })
     setAnswers((prev) => ({ ...prev, [selectedPostId]: selectedAnswer.slice(0, -1) }))
   }
+
+  /* Physical keyboard: while the decoder is open, A–Z type a letter and
+     Backspace erases, exactly like clicking the keypad. The pressed key
+     flashes with its click look (is-pressed) so the player sees which emoji
+     it was. A ref keeps the listener on the latest handlers. */
+  const [pressedKey, setPressedKey] = useState(null)
+  const pressTimer = useRef(null)
+  const keyHandler = useRef(null)
+  keyHandler.current = (event) => {
+    if (event.ctrlKey || event.metaKey || event.altKey) return
+    const tag = event.target?.tagName
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || event.target?.isContentEditable) return
+    let pressed = null
+    if (event.key === 'Backspace') {
+      if (!canEdit || !selectedAnswer) return
+      pressed = 'erase'
+    } else {
+      const letter = event.key.length === 1 ? toKeypadWord(event.key) : ''
+      if (letter.length !== 1 || !KEYPAD_LETTERS.has(letter)) return
+      if (!canEdit || selectedAnswer.length >= selectedWord.length) return
+      pressed = letter
+    }
+    event.preventDefault()
+    if (event.repeat) return
+    if (pressed === 'erase') eraseLetter()
+    else enterLetter(pressed)
+    setPressedKey(pressed)
+    window.clearTimeout(pressTimer.current)
+    pressTimer.current = window.setTimeout(() => setPressedKey(null), 140)
+  }
+  useEffect(() => {
+    if (!decoderOpen) return
+    const onKey = (event) => keyHandler.current(event)
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [decoderOpen])
+  useEffect(() => () => window.clearTimeout(pressTimer.current), [])
 
   useEffect(() => {
     if (stage !== 'label' || !POSTS.every((post) => answers[post.id] === correctWords[post.id])) return
@@ -1048,7 +1090,7 @@ export default function InfluencerAvenue({ node }) {
                     <button
                       key={letter}
                       type="button"
-                      className="ia-key-cell"
+                      className={`ia-key-cell ${pressedKey === letter ? 'is-pressed' : ''}`}
                       disabled={!canEdit || selectedAnswer.length >= selectedWord.length}
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => enterLetter(letter)}
@@ -1060,7 +1102,7 @@ export default function InfluencerAvenue({ node }) {
                   ))}
                   <button
                     type="button"
-                    className="ia-decoder-erase"
+                    className={`ia-decoder-erase ${pressedKey === 'erase' ? 'is-pressed' : ''}`}
                     disabled={!canEdit || !selectedAnswer}
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={eraseLetter}

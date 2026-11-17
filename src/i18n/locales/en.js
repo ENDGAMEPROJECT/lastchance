@@ -131,6 +131,7 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Convincing — but not enough proof",
+          "body": "I think you are right fot he most part, but I just didn't see enough evidence in the Physical Internet. I'm buying it.",
           "Mia": {
             "body": "You convinced Mia, but you were too late. She didn't get to see all the evidence you could have found in the Physical Internet."
           },
@@ -171,7 +172,7 @@ export default {
       "saleBadge": "⚡ FLASH SALE",
       "wasPrice": "€600",
       "nowPrice": "€49",
-      "offerLabel": "30-minute deal",
+      "offerLabel": "40-minute deal",
       "endsIn": "Ends in",
       "offerUrgency": "Hurry before it's gone!",
       "buy": "BUY NOW",
@@ -188,80 +189,82 @@ export default {
         "options": [
           {
             "k": "A",
-            "text": "A company can't profit selling a €600 NovaPad X for €49. They'd go bankrupt, so it's fake.",
-            "correct": false
-          },
-          {
-            "k": "B",
-            "text": "That 30-minute countdown is just a high-pressure tactic to make you panic and buy without thinking.",
+            "text": "A countdown timer in an online shop can be fake",
             "correct": true
           },
           {
+            "k": "B",
+            "text": "That 40-minute countdown is just a high-pressure tactic to make you panic and buy without thinking.",
+            "correct": false
+          },
+          {
             "k": "C",
-            "text": "Look at the comments first. If people in the thread say it's a scam, don't buy it.",
+            "text": "A shop with an ad on social media is a safe shop",
             "correct": false
           },
           {
             "k": "D",
-            "text": "For €49, it's probably just a cheap, broken knockoff anyway.",
+            "text": "Real shops ask you to send your card number in a cha",
             "correct": false
           }
         ],
         "why": "Exactly — the ticking clock is manufactured urgency, built to make you act before you think.",
         "nudge": "Think about what that ticking clock is really doing to you.",
         "positiveFeedback": "You mean, the urgency makes you act before you think... ",
-        "negativeFeedback": "I don't know, that doesn't sound right."
+        "negativeFeedback": "I don't know, that doesn't sound right.",
+        "followUpQuestion": "Alright, what else?"
       },
       {
         "title": "The Source & Feed",
         "options": [
           {
             "k": "A",
-            "text": "Your phone is listening to us. We talked about tablets yesterday and the app used the mic.",
+            "text": "You talk about tablets. Then you see a tablet ad. The usual reason: your phone recorded you.",
             "correct": false
           },
           {
             "k": "B",
-            "text": "Does her profile have a verified checkmark? If not, it's a fake clone account impersonating her.",
+            "text": "Two people always see the same ads on the same website.",
             "correct": false
           },
           {
             "k": "C",
-            "text": "Your phone must have a virus or spyware forcing these specific ads onto your screen.",
+            "text": "If a famous person is in an ad, the product is safe.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "The platform's algorithm is tracking you. It fed your search history straight to predatory ad networks.",
+            "text": "Apps and websites use what you search and click to choose your ads",
             "correct": true
           }
         ],
         "why": "Right — it's not the mic or magic. Your search history was profiled and sold to ad networks.",
         "nudge": "It's not the mic or a virus — think about what the platform already knows about you.",
         "positiveFeedback": "Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. ",
-        "negativeFeedback": "That really doesn't make sense to me."
+        "negativeFeedback": "That really doesn't make sense to me.",
+        "followUpQuestion": "Ok, and apart from that?"
       },
       {
         "title": "The Destination",
         "options": [
           {
             "k": "A",
-            "text": "Look at the address bar. The URL says https://www.lunawear.com-official.shop/ — don't you find this long URL and the word \"official\" a little suspicious?",
-            "correct": true
+            "text": "“Lunawear.com-official.shop” is the same website as “lunawear.com”",
+            "correct": false
           },
           {
             "k": "B",
-            "text": "Check the lock icon. No https:// means your connection isn't encrypted, so it's a scam.",
+            "text": "A shop with many 5-star reviews is always a real shop",
             "correct": false
           },
           {
             "k": "C",
-            "text": "Don't type your card in. As long as you use Apple Pay or PayPal, you're 100% safe.",
-            "correct": false
+            "text": "A €600 tablet for €49 is a warning sign.",
+            "correct": true
           },
           {
             "k": "D",
-            "text": "Scroll to the bottom. No 'Copyright 2026' text is how you know it's fake.",
+            "text": "A website with a famous brand's logo is the brand's real shop",
             "correct": false
           }
         ],
@@ -275,12 +278,12 @@ export default {
       "eyebrow": "The Deal",
       "debugTag": "Pre-test",
       "title": "A message from {friend}",
-      "opening": "Look at this! An influencer I follow just posted a flash sale — the €600 NovaPad X for only €49! There are just 30 minutes left on the countdown. I'm entering my card info right now.",
+      "opening": "Look at this! An influencer I follow just posted a flash sale — the €600 NovaPad X for only €49! There are just 40 minutes left on the countdown. I'm entering my card info right now.",
       "responses": [
         "Whatever the reason for the setup, I don't want to miss out before the clock hits zero! Plus, she's a massive influencer — she wouldn't post something random. But the weird part is how this ad even knew I wanted a tablet. It popped up right at the top of my feed.",
         "Look, there are a million theories about how algorithms and accounts handle ads, but I'm looking at the actual store page right now. It has the official brand logo, great reviews, and a secure checkout."
       ],
-      "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running — you've got until it hits zero, thirty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
+      "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running — you've got until it hits zero, forty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
       "endingYou": "Deal. Let's look behind the screen.",
       "begin": "▶ Look behind the screen"
     },
@@ -560,85 +563,152 @@ export default {
     "room": {
       "link": {
         "context": "Inspect every URL. Small spelling changes can hide a fake destination.",
-        "prompts": [
-          "I do not know how to spot the extra words in these domains.",
-          "I do not know how to check whether the connection and domain ending are suspicious.",
-          "I do not know how to identify disguised or look-alike characters."
-        ],
-        "items": [
-          "Compare the domains letter by letter.",
-          "Watch for look-alike characters and unusual endings.",
-          "The safest link is the one that matches the real store exactly."
-        ],
-        "rounds": [
-          "Common suffixes: keep the genuine domain open and block the two addresses that add words after the real name.",
-          "HTTP vs HTTPS: keep the genuine store open and block both doors using http://.",
-          "Phishing attempts: read every character and block disguised look-alike addresses."
-        ]
+        "steps": {
+          "round1": {
+            "prompts": [
+              "Where do I start with these doors?",
+              "How do I spot the fake addresses here?",
+              "Which doors do I block?"
+            ],
+            "items": [
+              "Open each door to peek inside and read the whole address, not just the start. One door is the real store and two are fakes: you have to block both fakes.",
+              "The real website is the last part of the address before the first “/”. Look for words stuck onto the brand name, like “-official.shop” or “-dealz”: the real store doesn't need them.",
+              "Keep www.lunawear.com open. Block lunawear.com-official.shop and lunawear-dealz.com."
+            ]
+          },
+          "round2": {
+            "prompts": [
+              "Where should I look this time?",
+              "What is the difference between http and https?",
+              "Which doors do I block?"
+            ],
+            "items": [
+              "Look at the very beginning of each address, before the store's name. Compare how the three doors start.",
+              "https:// (with an “s”) means the connection is encrypted. http:// without the “s” is not secure. Also watch out for strange endings like “.free”.",
+              "Keep https://theshoefactory.com open. Block the two addresses that start with http://."
+            ]
+          },
+          "round3": {
+            "prompts": [
+              "All three addresses look the same. What do I do?",
+              "Which letters can be faked?",
+              "Which doors do I block?"
+            ],
+            "items": [
+              "They are almost identical on purpose. Read each address slowly, one letter at a time, and compare it with the real store name.",
+              "Some letters are disguised: “r” and “n” together look like an “m”, and letters from other alphabets can look like normal ones.",
+              "Keep https://magnumshop.com open. Block rnagnumshop.com (“rn” instead of “m”) and the one with “и” instead of “n”."
+            ]
+          },
+          "justify": {
+            "prompts": [
+              "How do I answer why I blocked them?",
+              "Are https and the padlock warning signs?",
+              "Which ones should I select?"
+            ],
+            "items": [
+              "Think back to the three crossroads: what did the fake addresses have that the real ones didn't? Select every warning sign you saw, and only those. Then press “Submit reasoning”.",
+              "No. https:// and the padlock only mean that the connection is encrypted. They don't prove a site is trustworthy, but they aren't warning signs either: don't select them.",
+              "Select the five warning signs: extra words after the real name, http:// instead of https://, odd endings like .free, look-alike letters and misspelled brand names."
+            ]
+          }
+        }
       },
       "influencer": {
         "context": "Separate genuine recommendations from paid or fabricated signals.",
-        "prompts": [
-          "I do not know how to decode the disclosure on each post.",
-          "I do not know what to do after I label the posts.",
-          "I do not know how to classify the three product images."
-        ],
-        "items": [
-          "Use the Emoji Decoding Card to identify",
-          "Run the reverse image search on all three products.",
-          "The mug is mass-produced, the NovaPad image is AI-generated, and the cupcakes are genuine."
-        ]
+        "steps": {
+          "labels": {
+            "prompts": [
+              "How do I find out each post's label?",
+              "How do the captions help?",
+              "Which label goes on each post?"
+            ],
+            "items": [
+              "Click a post to select it, then open your Bag and use the Emoji Decoding Card. On the card, press the letter for each emoji on the post's sticky note, in order.",
+              "Read each caption: a personal discount code means PAID, a brand that “sent” the product means GIFTED, and a product made together with a brand means COLLAB.",
+              "MiraMoves is PAID, TechWithLeo is GIFTED and ClaraSees is COLLAB."
+            ]
+          },
+          "search": {
+            "prompts": [
+              "How does the reverse image search work?",
+              "How do I read the search results?",
+              "Which stamp goes on each product?"
+            ],
+            "items": [
+              "Drag each product photo into the search engine and wait for the results. Then stamp the photo with the label that fits: Misleading Content, AI-generated or Verified.",
+              "Hundreds of cheap wholesale copies mean the product is not what it claims to be. AI art sites and fact-checks mean the image is AI-generated. A few official stores with similar prices mean it is real.",
+              "Mug: Misleading Content. NovaPad X: AI-generated. Bluetooth speaker: Verified. Then press “Confirm classifications”."
+            ]
+          }
+        }
       },
       "algorithm": {
         "context": "Follow the data trail behind the personalized feed.",
-        "prompts": [
-          "I do not know which code opens the targeting engine.",
-          "I do not know how to choose the missing factor in an equation.",
-          "I do not know how the completed profile explains the NovaPad ad."
-        ],
-        "items": [
-          "Use the six highlighted digits on the report. Search on the bag.",
-          "Match the missing factor to the person and the ad.",
-          "The engine combines age, interests, searches and insecurities."
-        ]
+        "steps": {
+          "code": {
+            "prompts": [
+              "Where do I find the door code?",
+              "Which numbers make up the code?",
+              "What is the code?"
+            ],
+            "items": [
+              "The code is hidden in one of the tools in your Bag. Open the Data Report and read it carefully.",
+              "Go through the report from top to bottom and write down every number in bold. There are six of them.",
+              "The code is 274181."
+            ]
+          },
+          "engine": {
+            "prompts": [
+              "What do I have to do in the engine?",
+              "How do I know which tile fits?",
+              "Which tiles are the right ones?"
+            ],
+            "items": [
+              "First choose the future you prefer: either answer lets you continue. Then, in each equation, drag the missing tile into the empty slot so the profile explains the ad.",
+              "Ask yourself who the ad is aimed at and why: their age, what they follow and what worries them. The right tile is the one that explains why that exact person sees that ad.",
+              "Skincare cream: Insecure about her skin. Muscle-gain supplement: Boy, 15–25. Baldness cream: Worried about going bald. Weight-loss pills: Follows diet & lifestyle pages."
+            ]
+          }
+        }
       },
       "ads": {
         "context": "Slow down the visual pressure and inspect what the ad is doing.",
         "prompts": [
-          "I do not know how to make the Truth Flashlight work.",
-          "I do not know what to look for under each poster.",
-          "I do not know how to assemble the exit code."
+          "How do I use the Truth Flashlight?",
+          "What should I look for on the posters?",
+          "What is the exit code?"
         ],
         "items": [
-          "Charge and sweep the flashlight across the wall.",
-          "Read the fine print, not the large promise.",
-          "Reveal all four hidden letters in poster order. They spell SAVE, which is the code for the exit."
+          "Open your Bag and use the Truth Flashlight. Wait for it to charge, then move the beam slowly over the dark posters.",
+          "Under the light, each poster shows the truth behind the ad. In each one, a letter is highlighted in red: note it down.",
+          "Read the four red letters from left to right across the wall: they spell SAVE. Type it in and open the exit."
         ]
       },
       "persuasion": {
-        "context": "Use the terminal to expose the final persuasion techniques.",
+        "context": "Name the trick behind each ad to reveal the password.",
         "prompts": [
-          "I do not know how to match a technique to a poster.",
-          "I do not know what the glowing letters are for.",
-          "I do not know what password to enter in the computer."
+          "What do I have to do here?",
+          "How do I tell the techniques apart?",
+          "What is the computer password?"
         ],
         "items": [
-          "Drag and drop each poster to its persuasion technique.",
-          "Each correct frame reveals one letter.",
-          "After all six matches, open the computer and enter FOOLED."
+          "Drag each technique frame onto the poster that uses that trick. If it's right, a letter on the poster gets circled.",
+          "Read each headline: few items left is FOMO, millions of buyers is Social Proof, an impossible promise is Exaggeration, a famous person is Influencer Endorsement, guilt about your family is Emotional Appeal, and a countdown is Urgency.",
+          "Read the six circled letters from left to right: FOOLED. Click the computer and type it in."
         ]
       },
       "rouletteInvestigation": {
         "context": "Spin several times and compare the results before deciding.",
         "prompts": [
-          "What should I check?",
-          "Does winning or losing prove cheating?",
-          "How do I finish the corridor?"
+          "What do I have to do with each wheel?",
+          "How can I tell if a wheel is rigged?",
+          "What is the answer for each wheel?"
         ],
         "items": [
-          "Spin the current wheel at least twice. Does it keep landing on the same slice? Compare the results shown beside it.",
-          "You can keep spinning before deciding. A repeated result is a clue to investigate, but can also happen by chance.",
-          "Choose Rigged or Not rigged. Read each explanation, then finish both wheels."
+          "Spin the wheel at least twice and watch where it lands. Then decide whether it is Rigged or Not rigged.",
+          "Compare the results listed next to the wheel. A fair wheel lands on different slices. A rigged one keeps giving you the same result every time.",
+          "Both wheels are rigged. MEGA SPIN always lands on a coupon, and GOLD RUSH never gives you a prize. Choose Rigged for both and read each explanation."
         ]
       }
     },
@@ -761,7 +831,7 @@ export default {
         "discount": "€49",
         "text": "Hurry up! Offer ends in limited time.",
         "cta": "BUY NOW!!",
-        "timePressure": "Only 30 mins left!!"
+        "timePressure": "Only 40 mins left!!"
       },
       "shoesAd1": {
         "headline": "BRAND NEW SNEAKERS",

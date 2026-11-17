@@ -51,7 +51,7 @@ function debugPosttestState(state, scenario) {
     activeNodeId: null,
     reviewNodeId: null,
     roomStarted: false,
-    linkRound: null,
+    hintStep: null,
     progress: Object.fromEntries(NODES.map((node, i) => [
       node.id, !timedOut || i < 2 ? 'done' : i === 2 ? 'available' : 'locked',
     ])),
@@ -73,7 +73,7 @@ const baseInitialState = {
   activeNodeId: null,
   reviewNodeId: null,
   roomStarted: false,
-  linkRound: null,
+  hintStep: null,
   progress: initialProgress(),
   inventory: DEBUG ? Object.values(ITEMS) : [], // Item[]; debug starts with every tool.
   evidence: [], // { id, label } collected clues to use on Max
@@ -100,7 +100,7 @@ export function reducer(state, action) {
       return { ...state, screen: 'enter', enterTour: null }
 
     case 'START_GAME':
-      return { ...state, screen: 'map', running: true, timeLeft: START_SECONDS, linkRound: null, enterTour: null }
+      return { ...state, screen: 'map', running: true, timeLeft: START_SECONDS, hintStep: null, enterTour: null }
 
     case 'FINISH':
       // Final decision from the post-test resolves the game.
@@ -125,7 +125,7 @@ export function reducer(state, action) {
         activeNodeId: action.id,
         reviewNodeId: null,
         roomStarted: returningToRoom ? state.roomStarted : false,
-        linkRound: returningToRoom ? state.linkRound : null,
+        hintStep: returningToRoom ? state.hintStep : null,
       }
     }
 
@@ -137,8 +137,8 @@ export function reducer(state, action) {
     case 'START_ROOM':
       return { ...state, roomStarted: true }
 
-    case 'SET_LINK_ROUND':
-      return { ...state, linkRound: action.round }
+    case 'SET_HINT_STEP':
+      return { ...state, hintStep: action.step }
 
     case 'GO_MAP':
       if (['posttest', 'win', 'lose'].includes(state.screen)) return state
@@ -193,7 +193,7 @@ export function reducer(state, action) {
           activeNodeId: null,
           reviewNodeId: null,
           roomStarted: false,
-          linkRound: null,
+          hintStep: null,
         }
       }
       // Debug lose jumps name the cause, so the lose screen shows that copy.
@@ -220,7 +220,7 @@ export function reducer(state, action) {
         activeNodeId: null,
         reviewNodeId: null,
         roomStarted: false,
-        linkRound: null,
+        hintStep: null,
         // The clock pauses during that cutscene; entering the post-test
         // (GOTO_SCREEN 'posttest') sets postDecision and resumes it.
         running: allDone ? false : state.running,
@@ -257,7 +257,7 @@ export function reducer(state, action) {
         }
         // Out of time before finishing the puzzles → still face the friend in
         // the post-test (last chance), but flagged as timed out.
-        return { ...state, timeLeft: 0, running: false, timedOut: true, screen: 'posttest', postDecision: true, activeNodeId: null, reviewNodeId: null, roomStarted: false, linkRound: null }
+        return { ...state, timeLeft: 0, running: false, timedOut: true, screen: 'posttest', postDecision: true, activeNodeId: null, reviewNodeId: null, roomStarted: false, hintStep: null }
       }
       return { ...state, timeLeft: t }
     }
@@ -423,7 +423,7 @@ export function GameProvider({ children }) {
     if (nodeId) markRoomStart(nodeId)
     dispatch({ type: 'START_ROOM' })
   }, [])
-  const setLinkRound = useCallback((round) => dispatch({ type: 'SET_LINK_ROUND', round }), [])
+  const setHintStep = useCallback((step) => dispatch({ type: 'SET_HINT_STEP', step }), [])
   const goMap = useCallback(() => dispatch({ type: 'GO_MAP' }), [])
   const completeRoom = useCallback((id) => dispatch({ type: 'COMPLETE_NODE', id }), [])
   const addItem = useCallback((item) => dispatch({ type: 'ADD_ITEM', item }), [])
@@ -467,7 +467,7 @@ export function GameProvider({ children }) {
     openNode,
     reviewNode,
     startRoom,
-    setLinkRound,
+    setHintStep,
     goMap,
     completeRoom,
     addItem,

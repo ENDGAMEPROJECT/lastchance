@@ -9,6 +9,21 @@ const ROOM_HINT_KEYS = {
   'persuasion-room': 'persuasion',
 }
 
+/* The briefing text each room shows before "Step inside" (see RoomFrame's
+   `intro` prop). The Hints panel repeats it so it can be re-read mid-puzzle. */
+const ROOM_INTRO_KEYS = {
+  'link-district': 'rooms.link.intro',
+  'roulette-corridor': 'rooms.roulette.investigation.intro',
+  'influencer-avenue': 'rooms.influencer.intro',
+  'algorithm-room': 'rooms.algorithm.intro',
+  'ads-corridor': 'rooms.ads.intro',
+  'persuasion-room': 'rooms.persuasion.intro',
+}
+
+export function getRoomIntroKey(activeNodeId) {
+  return ROOM_INTRO_KEYS[activeNodeId] || null
+}
+
 export function getHintContext(screen, activeNodeId) {
   if (screen === 'room' && ROOM_HINT_KEYS[activeNodeId]) {
     return `room.${ROOM_HINT_KEYS[activeNodeId]}`

@@ -4,7 +4,10 @@
    editable in one place.
    ============================================================ */
 
-export const GAME_MINUTES = 30
+import { settings } from './settings.js'
+
+/* Same value as the countdown, so the story text always matches the timer. */
+export const GAME_MINUTES = settings.timerMinutes
 
 export const NARRATIVE = {
   friend: 'Max',
@@ -14,7 +17,7 @@ export const NARRATIVE = {
     'Your friend Max just found a viral deal on the NovaPad X — 90% off, "today only". ' +
     'It looks incredible… which is exactly why you think it is a scam.',
   mission:
-    'You have 30 minutes — the time before the offer expires — to travel through the Physical Internet, ' +
+    'You have ' + GAME_MINUTES + ' minutes — the time before the offer expires — to travel through the Physical Internet, ' +
     'gather evidence about how ads and scams work, and convince Max not to buy. If the timer hits zero, Max buys it.',
 }
 

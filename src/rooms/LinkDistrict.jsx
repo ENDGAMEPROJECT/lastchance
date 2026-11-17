@@ -420,7 +420,7 @@ function DoorPage({ type, ambiguous, t }) {
 }
 
 export default function LinkDistrict({ node }) {
-  const { completeRoom, addEvidence, setLinkRound } = useGame()
+  const { completeRoom, addEvidence, setHintStep } = useGame()
   const t = useT()
   const cfg = settings.linkDistrict
   /* Progress, not UI: the crossroads reached, the doors blocked so far, the
@@ -433,9 +433,11 @@ export default function LinkDistrict({ node }) {
   const [errorAttempt, setErrorAttempt] = useState(0)
   const [phase, setPhase] = useRoomState('link.phase', 'block') // 'block' | 'justify' | 'done'
 
+  // Tell the Hints panel which step we're on: one hint set per crossroads,
+  // and one for the closing "why did you block them?" question.
   useEffect(() => {
-    setLinkRound(round)
-  }, [round, setLinkRound])
+    setHintStep(phase === 'block' ? `round${round + 1}` : 'justify')
+  }, [round, phase, setHintStep])
 
   const [reviewing, setReviewing] = useRoomState('link.reviewing', false) // showing the round's explanations
   const [flags, setFlags] = useRoomState('link.flags', {})

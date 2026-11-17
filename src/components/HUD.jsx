@@ -5,10 +5,10 @@ import { useT } from '../i18n/index.jsx'
 import { bgUrl } from '../game/assets.js'
 import { DEBUG, settings } from '../game/settings.js'
 import { isMuted, setMuted, playSound, preloadSound } from '../game/sound.js'
-import { getHintContext, getHintPlan } from '../game/hints.js'
+import { getHintContext, getHintPlan, getRoomIntroKey } from '../game/hints.js'
 import { track, OBJ, EXT } from '../game/xapi.js'
 import { useStage } from './Stage.jsx'
-import { ROOM_PROGRESS_EVENT } from '../game/roomProgress.js'
+import { useRoomState } from '../game/useRoomState.js'
 import Modal from './Modal.jsx'
 import DataReport from './DataReport.jsx'
 import DebugPosttestButtons from './DebugPosttestButtons.jsx'
@@ -23,7 +23,7 @@ const MOBILE_QUERY = `(max-width: ${settings.mobile.breakpoint}px)`
 const unfoldTap = (target) => Boolean(target.closest('.hud-m-nav:not(.is-expanded)')) && !document.querySelector('.modal-backdrop')
 
 /* Persistent top bar: countdown, mission recap, inventory & map access. */
-/* Desktop-only pointer under a lit-up Bag/Hints button: two chevrons bobbing
+/* Desktop-only pointer under a lit-up Bag button: two chevrons bobbing
    up towards it. Colour follows the button's reminder class (see HUD.css). */
 function ReminderArrow() {
   return (
@@ -35,7 +35,7 @@ function ReminderArrow() {
 }
 
 export default function HUD() {
-  const { screen, activeNodeId, roomStarted, linkRound, timeLeft, inventory, evidence, progress, goMap, startGame, postDecision, enterTour, narrative } = useGame()
+  const { screen, activeNodeId, roomStarted, hintStep, timeLeft, inventory, evidence, progress, goMap, startGame, postDecision, enterTour, narrative } = useGame()
   const t = useT()
   const [bagOpen, setBagOpen] = useState(false)
   const [bagTab, setBagTab] = useState('tools') // 'tools' | 'evidence'
@@ -80,52 +80,6 @@ export default function HUD() {
   const [reportOpen, setReportOpen] = useState(false)
   const [deniedItem, setDeniedItem] = useState(null)
   const [hintsOpen, setHintsOpen] = useState(false)
-  const [hintReminder, setHintReminder] = useState(false)
-
-  // Light up Hints when the player looks stuck in an unsolved room: enough
-  // clicks AND no puzzle progress for a while. Progress (reported by the room
-  // via useRoomProgress) restarts both counts; opening Hints turns the glow off
-  // until the next bit of progress.
-  const needsHint = screen === 'room' && roomStarted && progress[activeNodeId] !== 'done'
-  useEffect(() => {
-    setHintReminder(false)
-    if (!needsHint) return
-    const { clicks: minClicks, idleMs, idleMsWithItem } = settings.hintReminder
-    const waitMs = neededItem ? idleMsWithItem : idleMs
-    let timer
-    let clicks = 0
-    let elapsed = false
-    let consulted = false
-    const remind = () => {
-      if (!consulted && elapsed && clicks >= minClicks) setHintReminder(true)
-    }
-    const restart = () => {
-      window.clearTimeout(timer)
-      clicks = 0
-      elapsed = false
-      consulted = false
-      setHintReminder(false)
-      timer = window.setTimeout(() => { elapsed = true; remind() }, waitMs)
-    }
-    const onClick = (event) => {
-      if (event.target.closest('.hud-hints')) {
-        if (unfoldTap(event.target)) return
-        consulted = true
-        setHintReminder(false)
-      } else if (event.target.closest('.room-body') && !event.target.closest('.room-cleared-overlay')) {
-        clicks += 1
-        remind()
-      }
-    }
-    restart()
-    document.addEventListener('click', onClick, true)
-    window.addEventListener(ROOM_PROGRESS_EVENT, restart)
-    return () => {
-      window.clearTimeout(timer)
-      document.removeEventListener('click', onClick, true)
-      window.removeEventListener(ROOM_PROGRESS_EVENT, restart)
-    }
-  }, [needsHint, activeNodeId, neededItem])
   const [muted, setMutedState] = useState(isMuted())
   const toggleMute = () => setMutedState(setMuted(!muted))
   const [fullscreen, setFullscreen] = useState(Boolean(document.fullscreenElement))
@@ -156,39 +110,58 @@ export default function HUD() {
     }
   }
   const hintContext = getHintContext(screen, activeNodeId)
-  const hints = t(`hints.${hintContext}.items`)
   const hintPlan = getHintPlan(screen, activeNodeId, progress)
   const objectiveNode = hintPlan.objectiveNode
   const objectiveKey = hintPlan.objectiveKey
   const nodeObjectiveKey = objectiveNode ? `nodes.${objectiveNode.id}` : null
-  const linkRoundHint = screen === 'room' && roomStarted && activeNodeId === 'link-district' && linkRound !== null
-    ? t(`hints.room.link.rounds.${linkRound}`)
-    : null
-  const linkRoundPrompt = screen === 'room' && roomStarted && activeNodeId === 'link-district' && linkRound !== null
-    ? t(`hints.room.link.prompts.${linkRound}`)
-    : null
-  const baseHintPrompts = t(`hints.${hintContext}.prompts`)
-  const hintPrompts = linkRoundPrompt
-    ? [linkRoundPrompt, ...baseHintPrompts.filter((prompt) => prompt !== linkRoundPrompt)].slice(0, 3)
-    : baseHintPrompts
-  const [revealedHints, setRevealedHints] = useState([])
+  // The room's briefing text, so it can be re-read after "Step inside".
+  const roomIntroKey = screen === 'room' ? getRoomIntroKey(activeNodeId) : null
 
+  // Rooms with several stages report the one the player is on (hintStep), and
+  // get that stage's hints (hints.room.<room>.steps.<step>). If a stage has no
+  // hints in the dictionary yet, the room's general hints are used instead.
+  const stepSetKey = screen === 'room' && hintStep ? `hints.${hintContext}.steps.${hintStep}` : null
+  const hintSetKey = stepSetKey && Array.isArray(t(`${stepSetKey}.items`)) ? stepSetKey : `hints.${hintContext}`
+  const asList = (value) => (Array.isArray(value) ? value : [])
+  const hints = asList(t(`${hintSetKey}.items`))
+  const hintPrompts = asList(t(`${hintSetKey}.prompts`))
+
+  // Hints open in order, one at a time: each next hint unlocks
+  // settings.hints.unlockDelayMs after the previous one was read. Kept per
+  // room step (and across a refresh), so leaving and coming back does not
+  // reset the wait.
+  const [hintLog, setHintLog] = useRoomState('hud.hints', {})
+  const hintSeq = `${activeNodeId || screen}|${hintSetKey}`
+  const hintEntry = hintLog[hintSeq] || { read: 0, readyAt: 0 }
+  const [now, setNow] = useState(() => Date.now())
+  // Debug mode skips the wait so every hint can be checked straight away.
+  const nextLocked = !DEBUG && hintEntry.read < hints.length && now < hintEntry.readyAt
   useEffect(() => {
-    setRevealedHints([])
-  }, [hintsOpen, hintContext, linkRound])
+    if (!hintsOpen || !nextLocked) return
+    setNow(Date.now())
+    const tick = window.setInterval(() => setNow(Date.now()), 1000)
+    return () => window.clearInterval(tick)
+  }, [hintsOpen, nextLocked])
+  // Which read hints are folded closed. Transient: they reopen with the panel.
+  const [foldedHints, setFoldedHints] = useState([])
+  useEffect(() => { setFoldedHints([]) }, [hintsOpen, hintSeq])
 
-  const toggleHint = (index) => {
-    // Only the reveal is reported; re-collapsing a hint is not a new event.
-    // Read state directly rather than from the updater — StrictMode runs
-    // updaters twice in dev, which would double-report.
-    if (!revealedHints.includes(index)) {
-      // Keyed on the node, like every other statement's parent, so hint use
-      // joins to the rest of a district's activity.
-      track('asked', OBJ.hint(xapiNode, index + 1), { node: xapiNode, response: index + 1 })
+  const openHint = (index) => {
+    if (index < hintEntry.read) {
+      // Already read: just fold or unfold it. Not a new event.
+      setFoldedHints((current) => (current.includes(index)
+        ? current.filter((item) => item !== index)
+        : [...current, index]))
+      return
     }
-    setRevealedHints((current) => (current.includes(index)
-      ? current.filter((item) => item !== index)
-      : [...current, index]))
+    if (!DEBUG && (index !== hintEntry.read || Date.now() < hintEntry.readyAt)) return
+    // Keyed on the node, like every other statement's parent, so hint use
+    // joins to the rest of a district's activity.
+    track('asked', OBJ.hint(xapiNode, index + 1), { node: xapiNode, response: index + 1 })
+    setHintLog((log) => ({
+      ...log,
+      [hintSeq]: { read: Math.max(log[hintSeq]?.read ?? 0, index + 1), readyAt: Date.now() + settings.hints.unlockDelayMs },
+    }))
   }
 
   /* ---- xAPI: HUD panels and settings.
@@ -233,13 +206,10 @@ export default function HUD() {
     track('updated', OBJ.fullscreen(), { node: xapiNode, response: fullscreen ? 'on' : 'off' })
   }, [fullscreen])
 
-  // The game deciding the player looks stuck and lighting up Bag or Hints.
+  // The game deciding the player looks stuck and lighting up the Bag.
   useEffect(() => {
     if (bagReminder) track('experienced', OBJ.nudge(), { node: xapiNode, response: 'bag' })
   }, [bagReminder])
-  useEffect(() => {
-    if (hintReminder) track('experienced', OBJ.nudge(), { node: xapiNode, response: 'hints' })
-  }, [hintReminder])
 
   const itemRoom = { emojiCard: 'influencer-avenue', dataReport: 'algorithm-room', truthLight: 'ads-corridor' }
   const useItem = (item) => {
@@ -372,7 +342,7 @@ export default function HUD() {
             type="button"
             data-nav="hints"
             data-tour="hints"
-            className={`btn btn-amber hud-hints hud-m-btn hud-m-nav ${expanded ? 'is-expanded' : ''} ${tourClass('hints')} ${hintReminder && !hintsOpen && !touring ? 'hud-hint-reminder' : ''}`}
+            className={`btn btn-amber hud-hints hud-m-btn hud-m-nav ${expanded ? 'is-expanded' : ''} ${tourClass('hints')}`}
             onMouseDown={(event) => event.preventDefault()}
             onClick={navTap(touring ? undefined : openHints)}
             tabIndex={touring ? -1 : undefined}
@@ -482,7 +452,7 @@ export default function HUD() {
           )}
           {showHints && (
             <button
-              className={`btn btn-amber btn-sm hud-hints ${tourClass('hints')} ${hintReminder && !hintsOpen && !touring ? 'hud-hint-reminder' : ''}`}
+              className={`btn btn-amber btn-sm hud-hints ${tourClass('hints')}`}
               data-tour="hints"
               onClick={touring ? undefined : () => setHintsOpen(true)}
               tabIndex={touring ? -1 : undefined}
@@ -491,7 +461,6 @@ export default function HUD() {
               title={t('hud.hints')}
             >
               {t('hud.hints')}
-              {hintReminder && !hintsOpen && !touring && <ReminderArrow />}
             </button>
           )}
           <button
@@ -521,6 +490,13 @@ export default function HUD() {
       </header>}
 
       <Modal open={hintsOpen} onClose={() => setHintsOpen(false)} title={t('hints.title')} accent="amber" width={620} className="hud-modal">
+        {roomIntroKey && (
+          <div className="hint-instructions panel">
+            <div className="eyebrow" style={{ color: 'var(--amber)' }}>{t('common.howToPlay')}</div>
+            <p>{t(roomIntroKey)}</p>
+          </div>
+        )}
+
         <div className="hint-target panel">
           <div className="eyebrow" style={{ color: 'var(--cyan)' }}>{t('hints.targetLabel')}</div>
           {screen === 'map' && objectiveNode ? (
@@ -545,22 +521,27 @@ export default function HUD() {
 
         <p className="muted t-sm hints-context">{t(`hints.${hintContext}.context`)}</p>
         <div className="hints-list">
-          {(linkRoundHint
-            ? [linkRoundHint, ...hints.filter((hint) => hint !== linkRoundHint)].slice(0, 3)
-            : hints
-          ).map((hint, index) => {
-            const isRevealed = revealedHints.includes(index)
-            const prompt = Array.isArray(hintPrompts) && hintPrompts[index]
-              ? hintPrompts[index]
-              : t('hints.defaultPrompt', { number: index + 1 })
+          {hints.map((hint, index) => {
+            const isRead = index < hintEntry.read
+            const isOpen = isRead && !foldedHints.includes(index)
+            const isNext = index === hintEntry.read
+            const isLocked = !DEBUG && !isRead && (!isNext || nextLocked)
+            const prompt = hintPrompts[index] || t('hints.defaultPrompt', { number: index + 1 })
             return (
-              <div className={`hint-disclosure ${isRevealed ? 'is-open' : ''}`} key={index}>
-                <button type="button" className="hint-trigger" onClick={() => toggleHint(index)} aria-expanded={isRevealed}>
+              <div className={`hint-disclosure ${isOpen ? 'is-open' : ''} ${isLocked ? 'is-locked' : ''}`} key={`${hintSeq}-${index}`}>
+                <button type="button" className="hint-trigger" onClick={() => openHint(index)}
+                  aria-expanded={isOpen} aria-disabled={isLocked || undefined}>
                   <span className="hint-number">{index + 1}</span>
                   <span>{prompt}</span>
-                  <span className="hint-chevron" aria-hidden>{isRevealed ? '−' : '+'}</span>
+                  {isLocked ? (
+                    <span className="hint-lock mono" aria-hidden>
+                      🔒{isNext && <> {formatTime(Math.ceil((hintEntry.readyAt - now) / 1000))}</>}
+                    </span>
+                  ) : (
+                    <span className="hint-chevron" aria-hidden>{isOpen ? '−' : '+'}</span>
+                  )}
                 </button>
-                {isRevealed && <div className="hint-answer">{hint}</div>}
+                {isOpen && <div className="hint-answer">{hint}</div>}
               </div>
             )
           })}

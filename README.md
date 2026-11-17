@@ -1,7 +1,7 @@
 # The Physical Internet — Educational Escape Room
 
 An interactive, cyberpunk-styled escape room that teaches young people how online
-**advertising, scams and fraudulent websites** actually work. The player has 30 minutes
+**advertising, scams and fraudulent websites** actually work. The player has 40 minutes
 to travel a "physical internet" city, gather evidence, and convince their friend — **Mia**
 or **Max**, whichever they did not pick — not to buy a too-good-to-be-true viral deal before
 the fake "today only" countdown expires.
@@ -42,7 +42,7 @@ Flow of screens (see the `screen` state in `GameContext`, routed in `App.jsx`):
    post (a live phone **Product Preview** with a spoofed URL and a ticking "today only" timer)
    and asks whether he should buy. This diagnoses the player's starting instincts.
 3. **The Map** — four puzzle districts + two corridors on an oval "racetrack" progress map,
-   under a 30-minute countdown, with an inventory **Bag** (tools + evidence).
+   under a 40-minute countdown, with an inventory **Bag** (tools + evidence).
 4. **Post-test chat** — the finale: the player returns to the conversation with Max and must
    use the evidence they gathered to talk him out of the purchase before time runs out.
 5. **Win / Lose** — based on whether Max is convinced (or the timer expires).

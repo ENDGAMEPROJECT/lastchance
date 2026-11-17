@@ -5,7 +5,7 @@ export default {
     "begin": "▶ Comenzar",
     "submit": "Enviar",
     "enter": "Comenzar",
-    "next": "Siguente",
+    "next": "Siguiente",
     "locked": "Bloqueado",
     "cleared": "✓ Sala Desbloqueada",
     "enterNode": "Entrar",
@@ -111,9 +111,9 @@ export default {
       "evidenceButton": "Ver tus pruebas"
     },
     "lose": {
-      "eyebrow": "Tiempo expirado",
+      "eyebrow": "Tiempo agotado",
       "titleLead": "{friend}",
-      "titleAccent": "PULSA \"COMPRAR AHORA\"",
+      "titleAccent": "PULSÓ \"COMPRAR AHORA\"",
       "tag": "La cuenta atrás llegó a cero.",
       "heading": "La oferta ha llegado antes",
       "body": "Antes de que pudieras reunir todas las pruebas, la falsa cuenta regresiva de \"solo hoy\" surtió efecto y {friend} compró {product}. Esa urgencia era la clave del truco.",
@@ -122,7 +122,7 @@ export default {
       "again": "↻ Inténtalo de nuevo",
       "reasons": {
         "timeUp": {
-          "heading": "La oferta llegó antes",
+          "heading": "No pudo resistirse a la oferta",
           "body": "Antes de que terminaras de convencer a {friend}, la falsa cuenta atrás de \"solo hoy\" llegó a cero, y {friend} compró {product}. Esa urgencia era todo el truco."
         },
         "choseBuy": {
@@ -131,6 +131,7 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Convincente, pero sin pruebas suficientes",
+          "body": "Creo que tienes razón en general, pero no he visto suficientes pruebas en el «Internet físico». Voy a comprar la tablet.",
           "Mia": {
             "body": "Convenciste a Mia, pero llegaste tarde. No llegó a ver todas las pruebas que podrías haber encontrado en el Internet Físico."
           },
@@ -171,11 +172,11 @@ export default {
       "saleBadge": "⚡ OFERTA RELÁMPAGO",
       "wasPrice": "€600",
       "nowPrice": "€49",
-      "offerLabel": "Oferta de 30 minutos",
+      "offerLabel": "Oferta de 40 minutos",
       "endsIn": "Termina en",
       "offerUrgency": "¡Date prisa antes de que se acabe!",
       "buy": "COMPRA AHORA",
-      "caption": "¡¡¡Dios mío, ¿¡han bajado el precio de la NovaPad X a €49?! 😱🔥 ¡Aprovecha antes de que se agote! #oferta #anuncio",
+      "caption": "¡¡¡Dios mío, ¿¡han bajado el precio de el NovaPad X a €49?! 😱🔥 ¡Aprovecha antes de que se agote! #oferta #anuncio",
       "likes": "12.4k Me gusta"
     },
     "roundLabel": "Ronda {n} · {title}",
@@ -188,76 +189,78 @@ export default {
         "options": [
           {
             "k": "A",
-            "text": "Una empresa no puede obtener ganancias vendiendo una NovaPad X de 600€ por 49€. Quebrarían, así que es un engaño.",
-            "correct": false
-          },
-          {
-            "k": "B",
-            "text": "Esa cuenta regresiva de 30 minutos no es más que una táctica de alta presión para que entres en pánico y compres sin pensar.",
+            "text": "Un temporizador de cuenta atrás en una tienda online puede ser falso.",
             "correct": true
           },
           {
+            "k": "B",
+            "text": "Esa cuenta atrás de 40 minutos no es más que una táctica de alta presión para que entres en pánico y compres sin pensar.",
+            "correct": false
+          },
+          {
             "k": "C",
-            "text": "Primero lee los comentarios. Si alguien dice que es una estafa, no lo compres.",
+            "text": "Una tienda que se anuncia en las redes sociales es una tienda segura.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "Por 49 euros, probablemente sea solo una imitación barata y defectuosa.",
+            "text": "Las tiendas auténticas te piden que envíes el número de tu tarjeta por chat.",
             "correct": false
           }
         ],
         "why": "Exactamente: el tictac del reloj es una urgencia artificial, diseñada para que actúes antes de pensar.",
         "nudge": "Piensa en lo que realmente te está haciendo ese tictac del reloj.",
         "positiveFeedback": "¿Te refieres a que la urgencia te hace actuar antes de pensar...?",
-        "negativeFeedback": "No lo sé, eso no suena bien."
+        "negativeFeedback": "No lo sé, eso no suena bien.",
+        "followUpQuestion": "Vale, ¿qué más?"
       },
       {
         "title": "Fuente y feed",
         "options": [
           {
             "k": "A",
-            "text": "Tu teléfono nos está escuchando. Ayer hablamos de tabletas y la aplicación usó el micrófono.",
+            "text": "Hablas de tabletas. Luego ves un anuncio de una tableta. La razón habitual: tu móvil te ha grabado.",
             "correct": false
           },
           {
             "k": "B",
-            "text": "¿Su perfil tiene la marca de verificación? Si no, se trata de una cuenta falsa que se hace pasar por ella.",
+            "text": "Dos personas siempre ven los mismos anuncios en la misma página web.",
             "correct": false
           },
           {
             "k": "C",
-            "text": "Es probable que tu teléfono tenga un virus o software espía que esté forzando la aparición de estos anuncios específicos en tu pantalla.",
+            "text": "Si una persona famosa aparece en un anuncio, el producto es seguro.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "El algoritmo de la plataforma te está rastreando. Envió tu historial de búsqueda directamente a redes publicitarias abusivas.",
+            "text": "Las aplicaciones y las páginas web utilizan tus búsquedas y clics para elegir los anuncios que ves.",
             "correct": true
           }
         ],
         "why": "Exacto: no es el micrófono ni magia. Tu historial de búsqueda fue perfilado y vendido a redes publicitarias.",
         "nudge": "No es el micrófono ni un virus: piensa en lo que la plataforma ya sabe de ti.",
         "positiveFeedback": "Vale, no es el micrófono ni magia... Analizaron mi historial de búsqueda y lo vendieron a redes publicitarias.",
-        "negativeFeedback": "La verdad es que eso no tiene ningún sentido para mí."
+        "negativeFeedback": "La verdad es que eso no tiene ningún sentido para mí.",
+        "followUpQuestion": "Vale, ¿Y a parte de eso?"
       },
       {
         "title": "El destino",
         "options": [
           {
             "k": "A",
-            "text": "Mira la barra de direcciones. La URL dice https://www.lunawear.com-official.shop/ — ¿no te parece un poco sospechosa esa URL tan larga y la palabra \"official\"?",
-            "correct": true
+            "text": "«Lunawear.com-official.shop» es la misma página web que «lunawear.com».",
+            "correct": false
           },
           {
             "k": "B",
-            "text": "Mira el icono del candado. Si no hay https://, tu conexión no está cifrada, así que es una estafa.",
+            "text": "Una tienda con muchas reseñas de 5 estrellas siempre es una tienda auténtica.",
             "correct": false
           },
           {
             "k": "C",
             "text": "No metas la tarjeta. Mientras uses Apple Pay o PayPal, estás 100 % seguro.",
-            "correct": false
+            "correct": true
           },
           {
             "k": "D",
@@ -275,12 +278,12 @@ export default {
       "eyebrow": "La oferta",
       "debugTag": "Pre-test",
       "title": "Un mensaje de {friend}",
-      "opening": "¡Mira esto! Una influencer que sigo acaba de publicar una oferta flash: ¡la NovaPad X de 600 € por solo 49 €! Quedan solo 30 minutos en la cuenta atrás. Estoy metiendo los datos de mi tarjeta ahora mismo.",
+      "opening": "¡Mira esto! Una influencer que sigo acaba de publicar una oferta flash: ¡la NovaPad X de 600 € por solo 49 €! Quedan solo 40 minutos en la cuenta atrás. Estoy metiendo los datos de mi tarjeta ahora mismo.",
       "responses": [
         "Sea cual sea el motivo del montaje, ¡no quiero perdérmelo antes de que el reloj llegue a cero! Además, es una influencer enorme, no publicaría algo al azar. Pero lo raro es cómo este anuncio sabía que quería una tablet. Apareció justo arriba del todo en mi feed.",
         "A ver, hay mil teorías sobre cómo los algoritmos y las cuentas manejan los anuncios, pero ahora mismo estoy viendo la página real de la tienda. Tiene el logo oficial de la marca, reseñas estupendas y un pago seguro."
       ],
-      "endingFriend": "Mira, puedes diseccionar la página todo lo que quieras, ¡pero a mí todo me parece correcto! Estás siendo paranoico. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, treinta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
+      "endingFriend": "Mira, puedes diseccionar la página todo lo que quieras, ¡pero a mí todo me parece correcto! Estás siendo paranoico. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, cuarenta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
       "endingYou": "Trato hecho. Vamos a mirar detrás de la pantalla.",
       "begin": "▶ Mirar detrás de la pantalla"
     },
@@ -560,85 +563,152 @@ export default {
     "room": {
       "link": {
         "context": "Inspecciona cada URL. Pequeños cambios ortográficos pueden ocultar una dirección falsa.",
-        "prompts": [
-          "No sé cómo detectar las palabras adicionales en estos dominios.",
-          "No sé cómo comprobar si la conexión y la terminación del dominio son sospechosas.",
-          "No sé cómo identificar a personajes disfrazados o parecidos a otras personas."
-        ],
-        "items": [
-          "Compara los dominios letra por letra.",
-          "Presta atención a caracteres parecidos y finales inusuales.",
-          "El enlace más seguro es el que coincide exactamente con la tienda real."
-        ],
-        "rounds": [
-          "Sufijos comunes: mantén abierto el dominio original y bloquea las dos direcciones que añaden palabras después del nombre real.",
-          "HTTP vs HTTPS: mantén abierta la tienda original y bloquea ambas puertas usando http://.",
-          "Intentos de phishing: lee cada carácter y bloquea las direcciones que se parecen a las originales."
-        ]
+        "steps": {
+          "round1": {
+            "prompts": [
+              "¿Por dónde empiezo con estas puertas?",
+              "¿Cómo detecto aquí las direcciones falsas?",
+              "¿Qué puertas bloqueo?"
+            ],
+            "items": [
+              "Abre cada puerta para echar un vistazo y lee la dirección completa, no solo el principio. Una puerta es la tienda real y dos son falsas: tienes que bloquear las dos falsas.",
+              "La web real es la última parte de la dirección antes de la primera “/”. Fíjate en palabras pegadas al nombre de la marca, como “-official.shop” o “-dealz”: la tienda real no las necesita.",
+              "Deja abierta www.lunawear.com. Bloquea lunawear.com-official.shop y lunawear-dealz.com."
+            ]
+          },
+          "round2": {
+            "prompts": [
+              "¿Dónde tengo que mirar esta vez?",
+              "¿Qué diferencia hay entre http y https?",
+              "¿Qué puertas bloqueo?"
+            ],
+            "items": [
+              "Mira el principio de cada dirección, antes del nombre de la tienda. Compara cómo empiezan las tres puertas.",
+              "https:// (con “s”) significa que la conexión está cifrada. http:// sin la “s” no es seguro. Desconfía también de terminaciones raras como “.free”.",
+              "Deja abierta https://theshoefactory.com. Bloquea las dos direcciones que empiezan por http://."
+            ]
+          },
+          "round3": {
+            "prompts": [
+              "Las tres direcciones parecen iguales. ¿Qué hago?",
+              "¿Qué letras se pueden falsificar?",
+              "¿Qué puertas bloqueo?"
+            ],
+            "items": [
+              "Son casi idénticas a propósito. Lee cada dirección despacio, letra a letra, y compárala con el nombre real de la tienda.",
+              "Algunas letras van disfrazadas: una “r” y una “n” juntas parecen una “m”, y las letras de otros alfabetos pueden parecer normales.",
+              "Deja abierta https://magnumshop.com. Bloquea rnagnumshop.com (“rn” en lugar de “m”) y la que tiene una “и” en lugar de una “n”."
+            ]
+          },
+          "justify": {
+            "prompts": [
+              "¿Cómo respondo por qué las bloqueé?",
+              "¿El https y el candado son señales de alerta?",
+              "¿Cuáles tengo que seleccionar?"
+            ],
+            "items": [
+              "Recuerda los tres cruces: ¿qué tenían las direcciones falsas que no tenían las reales? Selecciona todas las señales de alerta que viste, y solo esas. Después pulsa “Enviar razonamiento”.",
+              "No. https:// y el candado solo indican que la conexión está cifrada. No demuestran que una web sea de fiar, pero tampoco son señales de alerta: no los selecciones.",
+              "Selecciona las cinco señales de alerta: palabras añadidas tras el nombre real, http:// en lugar de https://, terminaciones raras como .free, letras que imitan a otras y nombres de marca mal escritos."
+            ]
+          }
+        }
       },
       "influencer": {
         "context": "Distingue las recomendaciones genuinas de las señales pagadas o falsificadas.",
-        "prompts": [
-          "No sé cómo descifrar la información que aparece en cada publicación.",
-          "No sé qué hacer después de etiquetar las publicaciones.",
-          "No sé cómo clasificar las tres imágenes de los productos."
-        ],
-        "items": [
-          "Utiliza la tarjeta de decodificación de emojis para identificar",
-          "Realiza una búsqueda inversa de imágenes en los tres productos.",
-          "La taza es de producción masiva, la imagen de NovaPad es generada por IA y los cupcakes son auténticos."
-        ]
+        "steps": {
+          "labels": {
+            "prompts": [
+              "¿Cómo averiguo la etiqueta de cada publicación?",
+              "¿Cómo me ayudan los textos de las publicaciones?",
+              "¿Qué etiqueta va en cada publicación?"
+            ],
+            "items": [
+              "Haz clic en una publicación para seleccionarla, abre tu Mochila y usa la Tarjeta descodificadora de emojis. En la tarjeta, pulsa la letra de cada emoji de la nota adhesiva de la publicación, en orden.",
+              "Lee cada texto: un código de descuento personal significa PUBLI, una marca que le “envió” el producto significa REGALO, y un producto creado junto a una marca significa COLLAB.",
+              "MiraMoves es PUBLI, TechWithLeo es REGALO y ClaraSees es COLLAB."
+            ]
+          },
+          "search": {
+            "prompts": [
+              "¿Cómo funciona la búsqueda inversa de imágenes?",
+              "¿Cómo interpreto los resultados?",
+              "¿Qué sello va en cada producto?"
+            ],
+            "items": [
+              "Arrastra cada foto de producto al buscador y espera los resultados. Después sella la foto con la etiqueta adecuada: Contenido engañoso, Generado por IA o Verificado.",
+              "Cientos de copias baratas al por mayor significan que el producto no es lo que dice ser. Webs de arte con IA y verificaciones de datos significan que la imagen está generada por IA. Unas pocas tiendas oficiales con precios parecidos significan que es real.",
+              "Taza: Contenido engañoso. NovaPad X: Generado por IA. Altavoz Bluetooth: Verificado. Después pulsa “Confirmar clasificaciones”."
+            ]
+          }
+        }
       },
       "algorithm": {
         "context": "Sigue el rastro de datos que hay detrás del feed personalizado.",
-        "prompts": [
-          "No sé qué código abre el motor de selección de objetivos.",
-          "No sé cómo elegir el factor que falta en una ecuación.",
-          "No sé cómo el perfil completo explica el anuncio de NovaPad."
-        ],
-        "items": [
-          "Utiliza los seis dígitos resaltados en el informe. Busca en la bolsa.",
-          "Relaciona el factor que falta con la persona y el anuncio.",
-          "El motor de búsqueda combina edad, intereses, búsquedas e inseguridades."
-        ]
+        "steps": {
+          "code": {
+            "prompts": [
+              "¿Dónde encuentro el código de la puerta?",
+              "¿Qué números forman el código?",
+              "¿Cuál es el código?"
+            ],
+            "items": [
+              "El código está escondido en una de las herramientas de tu Mochila. Abre el Informe de datos y léelo con atención.",
+              "Recorre el informe de arriba abajo y apunta cada número en negrita. Hay seis.",
+              "El código es 274181."
+            ]
+          },
+          "engine": {
+            "prompts": [
+              "¿Qué tengo que hacer en el motor?",
+              "¿Cómo sé qué ficha encaja?",
+              "¿Qué fichas son las correctas?"
+            ],
+            "items": [
+              "Primero elige el futuro que prefieras: cualquiera de las dos respuestas te deja continuar. Después, en cada ecuación, arrastra la ficha que falta al hueco vacío para que el perfil explique el anuncio.",
+              "Pregúntate a quién va dirigido el anuncio y por qué: su edad, lo que sigue y lo que le preocupa. La ficha correcta es la que explica por qué esa persona concreta ve ese anuncio.",
+              "Crema para la piel: Insegura por su piel. Suplemento para ganar músculo: Chico, 15–25. Crema contra la calvicie: Preocupado por quedarse calvo. Pastillas adelgazantes: Sigue páginas de dietas y estilo de vida."
+            ]
+          }
+        }
       },
       "ads": {
         "context": "Disminuye la presión visual y examina qué está haciendo el anuncio.",
         "prompts": [
-          "No sé cómo hacer funcionar la linterna Truth Flashlight.",
-          "No sé qué buscar debajo de cada cartel.",
-          "No sé cómo generar el código de salida."
+          "¿Cómo uso la Linterna de la Verdad?",
+          "¿Qué tengo que buscar en los carteles?",
+          "¿Cuál es el código de salida?"
         ],
         "items": [
-          "Carga la linterna y muévela a lo largo de la pared.",
-          "Lee la letra pequeña, no la gran promesa.",
-          "Descubre las cuatro letras ocultas en el orden en que aparecen en el póster. Forman la palabra SAVE, que es el código para salir."
+          "Abre tu Mochila y usa la Linterna de la Verdad. Espera a que se cargue y después pasa el haz de luz despacio por los carteles oscuros.",
+          "Bajo la luz, cada cartel muestra la verdad que esconde el anuncio. En cada uno hay una letra resaltada en rojo: apúntala.",
+          "Lee las cuatro letras rojas de izquierda a derecha a lo largo de la pared: forman CEBO. Escríbelo y abre la salida."
         ]
       },
       "persuasion": {
-        "context": "Utilice la terminal para exponer las técnicas de persuasión finales.",
+        "context": "Pon nombre al truco de cada anuncio para descubrir la contraseña.",
         "prompts": [
-          "No sé cómo relacionar una técnica con un póster.",
-          "No sé para qué sirven las letras brillantes.",
-          "No sé qué contraseña debo introducir en el ordenador."
+          "¿Qué tengo que hacer aquí?",
+          "¿Cómo distingo las técnicas?",
+          "¿Cuál es la contraseña del ordenador?"
         ],
         "items": [
-          "Arrastra y suelta cada póster en la técnica de persuasión correspondiente.",
-          "Cada recuadro correcto revela una letra.",
-          "Después de los seis partidos, abre el ordenador e introduce FOOLED."
+          "Arrastra cada marco de técnica al cartel que usa ese truco. Si aciertas, se rodea con un círculo una letra del cartel.",
+          "Lee cada titular: pocas unidades disponibles es FOMO, millones de compradores es Prueba social, una promesa imposible es Exageración, una persona famosa es Recomendación de influencer, la culpa hacia tu familia es Apelación emocional y una cuenta atrás es Urgencia.",
+          "Lee las seis letras rodeadas de izquierda a derecha: TRAMPA. Haz clic en el ordenador y escríbela."
         ]
       },
       "rouletteInvestigation": {
         "context": "Gira varias veces y compara los resultados antes de decidir.",
         "prompts": [
-          "¿Qué debo revisar?",
-          "¿Ganar o perder demuestra que se ha hecho trampa?",
-          "¿Cómo termino el pasillo?"
+          "¿Qué tengo que hacer con cada ruleta?",
+          "¿Cómo sé si una ruleta está trucada?",
+          "¿Cuál es la respuesta de cada ruleta?"
         ],
         "items": [
-          "Gira la ruleta al menos dos veces. ¿Cae siempre en la misma sección? Compara los resultados que aparecen al lado.",
-          "Puedes seguir girando antes de decidir. Un resultado repetido es una pista para investigar, pero también puede ocurrir por casualidad.",
-          "Elige \"Con o sin equipo\". Lee cada explicación y luego completa ambas ruedas."
+          "Gira la ruleta al menos dos veces y fíjate en dónde cae. Después decide si está Trucada o No trucada.",
+          "Compara los resultados que aparecen junto a la ruleta. Una ruleta justa cae en casillas distintas. Una trucada te da siempre el mismo resultado.",
+          "Las dos ruletas están trucadas. MEGA GIRO siempre cae en un cupón y FIEBRE DEL ORO nunca te da premio. Elige Trucada en las dos y lee cada explicación."
         ]
       }
     },
@@ -761,7 +831,7 @@ export default {
         "discount": "€49",
         "text": "¡Date prisa! La oferta acaba en poco tiempo.",
         "cta": "¡¡COMPRA YA!!",
-        "timePressure": "¡¡Solo quedan 30 min!!"
+        "timePressure": "¡¡Solo quedan 40 min!!"
       },
       "shoesAd1": {
         "headline": "ZAPATILLAS RECIÉN LLEGADAS",
@@ -1223,9 +1293,9 @@ export default {
         "profileB1": "la edad de {friend}",
         "profileP2": "(adolescente),",
         "profileB2": "intereses",
-        "profileP3": "(videojuegos, tecnología nueva y búsquedas de la NovaPad X) e",
+        "profileP3": "(videojuegos, tecnología nueva y búsquedas de el NovaPad X) e",
         "profileB3": "inseguridades",
-        "profileP4": "(encajar, miedo a perderse la oferta). De ahí salió un anuncio perfectamente dirigido: justo la oferta del «90% de descuento» en la NovaPad X. Que {friend} lo viera nunca fue casualidad.",
+        "profileP4": "(encajar, miedo a perderse la oferta). De ahí salió un anuncio perfectamente dirigido: justo la oferta del «90% de descuento» en el NovaPad X. Que {friend} lo viera nunca fue casualidad.",
         "logEvidence": "Registrar esta prueba ✓",
         "finalLessonTitle": "Lo que has aprendido",
         "finalLesson": "Los anuncios personalizados combinan tu actividad, tus intereses y tus inseguridades para dirigirse a ti.",

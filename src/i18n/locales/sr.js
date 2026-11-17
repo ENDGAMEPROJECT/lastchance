@@ -131,6 +131,7 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Ubedljivo — ali bez dovoljno dokaza",
+          "body": "Mislim da si u pravu, ali nisam video dovoljno dokaza na „fizičkom internetu“. Kupiću tablet.",
           "Mia": {
             "body": "Ubedio/la si Miu, ali si zakasnio/la. Nije stigla da vidi sve dokaze koje si mogao/la da nađeš u fizičkom internetu."
           },
@@ -171,7 +172,7 @@ export default {
       "saleBadge": "⚡ BRZA RASPRODAJA",
       "wasPrice": "€600",
       "nowPrice": "€49",
-      "offerLabel": "Ponuda traje 30 minuta",
+      "offerLabel": "Ponuda traje 40 minuta",
       "endsIn": "Ističe za",
       "offerUrgency": "Požuri pre nego što nestane!",
       "buy": "KUPI ODMAH",
@@ -188,76 +189,78 @@ export default {
         "options": [
           {
             "k": "A",
-            "text": "Kompanija ne može da zaradi ako prodaje NovaPad X za €49 umesto za €600. Bankrotirala bi, dakle, ponuda je lažna.",
-            "correct": false
-          },
-          {
-            "k": "B",
-            "text": "Odbrojavanje od 30 minuta je samo taktika stvaranja pritiska kako bi te uspaničili i naveli da kupiš bez razmišljanja.",
+            "text": "Tajmer koji odbrojava vreme u onlajn prodavnici može biti lažan.",
             "correct": true
           },
           {
+            "k": "B",
+            "text": "Odbrojavanje od 40 minuta je samo taktika stvaranja pritiska kako bi te uspaničili i naveli da kupiš bez razmišljanja.",
+            "correct": false
+          },
+          {
             "k": "C",
-            "text": "Prvo pogledaj komentare. Ako ljudi u komentarima kažu da je prevara, nemoj da kupuješ.",
+            "text": "Prodavnica koja se reklamira na društvenim mrežama je bezbedna prodavnica.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "Za €49 je verovatno samo neka jeftina, pokvarena kopija.",
+            "text": "Prave prodavnice traže da pošalješ broj svoje kartice putem četa.",
             "correct": false
           }
         ],
         "why": "Upravo tako — odbrojavanje je veštački stvoren osećaj hitnosti, osmišljen da te navede da reaguješ pre nego što razmisliš.",
         "nudge": "Razmisli šta ti to odbrojavanje zapravo radi.",
         "positiveFeedback": "Misliš, hitnja te tera da reaguješ pre nego što razmisliš...",
-        "negativeFeedback": "Ne znam, to mi ne zvuči tačno."
+        "negativeFeedback": "Ne znam, to mi ne zvuči tačno.",
+        "followUpQuestion": "U redu, šta još?"
       },
       {
         "title": "Izvor i fid",
         "options": [
           {
             "k": "A",
-            "text": "Tvoj telefon nas prisluškuje. Juče smo pričali o tabletima, a aplikacija je koristila mikrofon.",
+            "text": "Pričaš o tabletima. Zatim vidiš reklamu za tablet. Uobičajeni razlog: telefon te je snimao.",
             "correct": false
           },
           {
             "k": "B",
-            "text": "Da li njen profil ima verifikacionu oznaku? Ako nema, to je lažni nalog koji se predstavlja kao ona.",
+            "text": "Dve osobe uvek vide iste reklame na istom sajtu.",
             "correct": false
           },
           {
             "k": "C",
-            "text": "Tvoj telefon sigurno ima virus ili špijunski softver koji ti prikazuje baš ove oglase.",
+            "text": "Ako se poznata osoba pojavljuje u reklami, proizvod je bezbedan.",
             "correct": false
           },
           {
             "k": "D",
-            "text": "Algoritam platforme te prati. Prosledio je tvoju istoriju pretrage direktno mrežama koje plasiraju agresivne oglase.",
+            "text": "Aplikacije i veb-sajtovi koriste ono što pretražuješ i na šta klikćeš da bi odabrali reklame koje vidiš.",
             "correct": true
           }
         ],
         "why": "Tako je — nije u pitanju mikrofon niti neka magija. Tvoja istorija pretrage je analizirana i prodata oglasnim mrežama.",
         "nudge": "Nije mikrofon niti virus — razmisli o tome šta platforma već zna o tebi.",
         "positiveFeedback": "Ok, nije mikrofon ni magija... Moja istorija pretrage je analizirana i prodata reklamnim mrežama.",
-        "negativeFeedback": "To mi stvarno nema nikakvog smisla."
+        "negativeFeedback": "To mi stvarno nema nikakvog smisla.",
+        "followUpQuestion": "A osim toga?"
       },
       {
         "title": "Odredište",
         "options": [
           {
             "k": "A",
-            "text": "Pogledaj adresnu traku. URL glasi https://www.lunawear.com-official.shop/ — zar ti ovaj dugačak URL i reč „official“ ne deluju malo sumnjivo?",
-            "correct": true
+            "text": "„Lunawear.com-official.shop” je isti sajt kao „lunawear.com”.",
+            "correct": false
           },
           {
             "k": "B",
-            "text": "Proveri ikonicu katanca. Ako nema https://, veza nije šifrovana, što znači da je u pitanju prevara.",
+            "text": "Prodavnica sa mnogo ocena od 5 zvezdica je uvek prava prodavnica.",
             "correct": false
           },
           {
             "k": "C",
             "text": "Nemoj unositi podatke kartice. Ako koristiš Apple Pay ili PayPal, 100% si bezbedan/na.",
-            "correct": false
+            "correct": true
           },
           {
             "k": "D",
@@ -275,12 +278,12 @@ export default {
       "eyebrow": "Ponuda",
       "debugTag": "Pre-test",
       "title": "Poruka od {friend_accusative}",
-      "opening": "Pogledaj ovo! Influenserka koju pratim upravo je objavila brzu rasprodaju — NovaPad X koji košta €600 sada je samo €49! Odbrojavanje pokazuje da je ostalo još samo 30 minuta. Upravo unosim podatke svoje kartice.",
+      "opening": "Pogledaj ovo! Influenserka koju pratim upravo je objavila brzu rasprodaju — NovaPad X koji košta €600 sada je samo €49! Odbrojavanje pokazuje da je ostalo još samo 40 minuta. Upravo unosim podatke svoje kartice.",
       "responses": [
         "Kakav god da je razlog za sve ovo, ne želim da propustim ponudu pre nego što odbrojavanje dođe do nule! Osim toga, ona je poznata influenserka — ne bi objavila nešto nasumično. Ali čudno je kako je ovaj oglas uopšte znao da želim tablet. Pojavio se odmah na vrhu mog fid-a.",
         "Slušaj, postoji milion teorija o tome kako algoritmi i nalozi prikazuju oglase, ali ja upravo gledam stranicu prodavnice. Ima zvanični logo brenda, odlične recenzije i bezbedno plaćanje."
       ],
-      "endingFriend": "Slušaj, možeš da analiziraš stranicu koliko god želiš, ali meni sve deluje u redu! Samo si paranoičan/na. Odbrojavanje i dalje traje — imaš još trideset minuta, odnosno dok ne stigne do nule, da dokažeš da je ovo zaista prevara. U suprotnom, kliknuću na kupovinu.",
+      "endingFriend": "Slušaj, možeš da analiziraš stranicu koliko god želiš, ali meni sve deluje u redu! Samo si paranoičan/na. Odbrojavanje i dalje traje — imaš još četrdeset minuta, odnosno dok ne stigne do nule, da dokažeš da je ovo zaista prevara. U suprotnom, kliknuću na kupovinu.",
       "endingYou": "Važi. Hajde da pogledamo šta se dešava iza ekrana.",
       "begin": "▶ Pogledaj šta se dešava iza ekrana"
     },
@@ -560,85 +563,152 @@ export default {
     "room": {
       "link": {
         "context": "Proveri svaki URL. Male promene u pisanju mogu sakriti lažno odredište.",
-        "prompts": [
-          "Ne znam kako da uočim dodatne reči u ovim domenima.",
-          "Ne znam kako da proverim da li su veza i završetak domena sumnjivi.",
-          "Ne znam kako da prepoznam prikrivene ili znakove koji oponašaju druge znakove."
-        ],
-        "items": [
-          "Uporedi domene slovo po slovo.",
-          "Obrati pažnju na znakove koji oponašaju druge znakove i neuobičajene završetke.",
-          "Najbezbedniji je link koji se u potpunosti podudara sa pravim veb-sajtom prodavnice."
-        ],
-        "rounds": [
-          "Uobičajeni nastavci: ostavi otvoren pravi domen, a blokiraj dve adrese koje dodaju reči nakon pravog naziva.",
-          "HTTP naspram HTTPS: ostavi otvoren pravi veb-sajt prodavnice, a blokiraj obe adrese koje koriste http://.",
-          "Pokušaji fišinga: pročitaj svaki znak i blokiraj adrese koje oponašaju prave."
-        ]
+        "steps": {
+          "round1": {
+            "prompts": [
+              "Odakle da počnem sa ovim vratima?",
+              "Kako da prepoznam lažne adrese?",
+              "Koja vrata da blokiram?"
+            ],
+            "items": [
+              "Otvori svaka vrata da zaviriš unutra i pročitaj celu adresu, ne samo početak. Jedna vrata vode u pravu prodavnicu, a dvoja su lažna: moraš da blokiraš oba lažna.",
+              "Pravi sajt je poslednji deo adrese pre prve kose crte “/”. Traži reči zalepljene uz ime brenda, kao što su “-official.shop” ili “-dealz”: pravoj prodavnici one nisu potrebne.",
+              "Ostavi vrata www.lunawear.com otvorena. Blokiraj lunawear.com-official.shop i lunawear-dealz.com."
+            ]
+          },
+          "round2": {
+            "prompts": [
+              "Gde treba da gledam ovaj put?",
+              "Koja je razlika između http i https?",
+              "Koja vrata da blokiram?"
+            ],
+            "items": [
+              "Pogledaj sam početak svake adrese, pre imena prodavnice. Uporedi kako počinju adrese na sva tri vrata.",
+              "https:// (sa “s”) znači da je veza šifrovana. http:// bez “s” nije bezbedan. Pazi i na čudne završetke kao što je “.free”.",
+              "Ostavi vrata https://theshoefactory.com otvorena. Blokiraj dve adrese koje počinju sa http://."
+            ]
+          },
+          "round3": {
+            "prompts": [
+              "Sve tri adrese izgledaju isto. Šta da radim?",
+              "Koja slova mogu da se falsifikuju?",
+              "Koja vrata da blokiram?"
+            ],
+            "items": [
+              "Namerno su skoro identične. Pročitaj svaku adresu polako, slovo po slovo, i uporedi je sa pravim imenom prodavnice.",
+              "Neka slova su prerušena: “r” i “n” zajedno liče na “m”, a slova iz drugih pisama mogu da izgledaju kao obična.",
+              "Ostavi vrata https://magnumshop.com otvorena. Blokiraj rnagnumshop.com (“rn” umesto “m”) i adresu u kojoj je “и” umesto “n”."
+            ]
+          },
+          "justify": {
+            "prompts": [
+              "Kako da objasnim zašto sam ih blokirao/la?",
+              "Da li su https i katanac znakovi upozorenja?",
+              "Koje treba da izaberem?"
+            ],
+            "items": [
+              "Seti se tri raskrsnice: šta su lažne adrese imale, a prave nisu? Izaberi sve znakove upozorenja koje si video/la, i samo njih. Zatim pritisni “Pošalji obrazloženje”.",
+              "Nisu. https:// i katanac znače samo da je veza šifrovana. Ne dokazuju da je sajt pouzdan, ali nisu ni znakovi upozorenja: nemoj da ih biraš.",
+              "Izaberi pet znakova upozorenja: dodate reči posle pravog imena, http:// umesto https://, čudne završetke kao što je .free, slova koja imitiraju druga slova i pogrešno napisana imena brendova."
+            ]
+          }
+        }
       },
       "influencer": {
         "context": "Razlikuj autentične preporuke od plaćenih ili izmišljenih signala.",
-        "prompts": [
-          "Ne znam kako da protumačim napomenu o sponzorstvu na svakoj objavi.",
-          "Ne znam šta da uradim nakon što označim objave.",
-          "Ne znam kako da klasifikujem tri slike proizvoda."
-        ],
-        "items": [
-          "Koristi karticu za dešifrovanje emodžija da identifikuješ",
-          "Pokreni pretragu obrnutom pretragom slike za sva tri proizvoda.",
-          "Šolja je masovno proizvedena, slika NovaPada je generisana pomoću veštačke inteligencije, a kolačići su autentični."
-        ]
+        "steps": {
+          "labels": {
+            "prompts": [
+              "Kako da otkrijem oznaku svake objave?",
+              "Kako mi pomažu opisi objava?",
+              "Koja oznaka ide na koju objavu?"
+            ],
+            "items": [
+              "Klikni na objavu da je izabereš, zatim otvori Torbu i iskoristi Karticu za dekodiranje emodžija. Na kartici pritisni slovo za svaki emodži sa cedulje na objavi, redom.",
+              "Pročitaj svaki opis: lični kod za popust znači PLAĆENO, brend koji je “poslao” proizvod znači GIFTED, a proizvod napravljen zajedno sa brendom znači SARADNJA.",
+              "MiraMoves je PLAĆENO, TechWithLeo je GIFTED, a ClaraSees je SARADNJA."
+            ]
+          },
+          "search": {
+            "prompts": [
+              "Kako funkcioniše obrnuta pretraga slike?",
+              "Kako da protumačim rezultate pretrage?",
+              "Koji pečat ide na koji proizvod?"
+            ],
+            "items": [
+              "Prevuci svaku fotografiju proizvoda u pretraživač i sačekaj rezultate. Zatim udari pečat na fotografiju sa odgovarajućom oznakom: Obmanjujući sadržaj, Generisano veštačkom inteligencijom ili Verifikovano.",
+              "Stotine jeftinih kopija na veliko znače da proizvod nije ono što tvrde. Sajtovi sa AI umetnošću i provere činjenica znače da je slika generisana veštačkom inteligencijom. Nekoliko zvaničnih prodavnica sa sličnim cenama znači da je proizvod pravi.",
+              "Šolja: Obmanjujući sadržaj. NovaPad X: Generisano veštačkom inteligencijom. Bluetooth zvučnik: Verifikovano. Zatim pritisni “Potvrdi klasifikacije”."
+            ]
+          }
+        }
       },
       "algorithm": {
         "context": "Prati trag podataka iza personalizovanog fida.",
-        "prompts": [
-          "Ne znam koji kod otvara mehanizam za targetiranje.",
-          "Ne znam kako da izaberem faktor koji nedostaje u jednačini.",
-          "Ne znam kako popunjen profil objašnjava oglas za NovaPad."
-        ],
-        "items": [
-          "Koristi šest označenih cifara u izveštaju. Pretraži Torbu.",
-          "Poveži faktor koji nedostaje sa osobom i oglasom.",
-          "Mehanizam kombinuje godine, interesovanja, pretrage i nesigurnosti."
-        ]
+        "steps": {
+          "code": {
+            "prompts": [
+              "Gde da nađem šifru za vrata?",
+              "Koji brojevi čine šifru?",
+              "Koja je šifra?"
+            ],
+            "items": [
+              "Šifra je skrivena u jednom od alata u tvojoj Torbi. Otvori Izveštaj o podacima i pažljivo ga pročitaj.",
+              "Prođi kroz izveštaj od vrha do dna i zapiši svaki podebljani broj. Ima ih šest.",
+              "Šifra je 274181."
+            ]
+          },
+          "engine": {
+            "prompts": [
+              "Šta treba da radim u mehanizmu?",
+              "Kako da znam koja pločica odgovara?",
+              "Koje pločice su prave?"
+            ],
+            "items": [
+              "Prvo izaberi budućnost koju više voliš: sa oba odgovora možeš da nastaviš. Zatim u svakoj jednačini prevuci pločicu koja nedostaje u prazno polje, tako da profil objašnjava oglas.",
+              "Zapitaj se kome je oglas namenjen i zašto: koliko ima godina, šta prati i šta ga brine. Prava pločica je ona koja objašnjava zašto baš ta osoba vidi baš taj oglas.",
+              "Krema za negu kože: Nesigurna zbog svoje kože. Suplement za povećanje mišićne mase: Dečak, 15–25. Krema protiv ćelavosti: Zabrinut zbog ćelavljenja. Tablete za mršavljenje: Prati stranice o ishrani i životnom stilu."
+            ]
+          }
+        }
       },
       "ads": {
         "context": "Uspori vizuelni pritisak i pažljivo pogledaj šta oglas pokušava da uradi.",
         "prompts": [
-          "Ne znam kako da pokrenem Svetiljku istine.",
-          "Ne znam šta da tražim ispod svakog postera.",
-          "Ne znam kako da sastavim izlazni kod."
+          "Kako da koristim Lampu istine?",
+          "Šta treba da tražim na posterima?",
+          "Koja je šifra za izlaz?"
         ],
         "items": [
-          "Napuni svetiljku i osvetli njome ceo zid.",
-          "Pročitaj sitna slova, a ne veliko obećanje.",
-          "Otkrij sva četiri skrivena slova redom kojim se pojavljuju na posterima. Dobićeš SAVE, što je kod za izlaz."
+          "Otvori Torbu i iskoristi Lampu istine. Sačekaj da se napuni, a zatim polako prelazi snopom svetlosti preko tamnih postera.",
+          "Pod svetlom svaki poster otkriva istinu iza oglasa. Na svakom je jedno slovo istaknuto crvenom bojom: zapiši ga.",
+          "Pročitaj četiri crvena slova na zidu sleva nadesno: čine reč TRIK. Ukucaj je i otvori izlaz."
         ]
       },
       "persuasion": {
-        "context": "Koristi terminal da otkriješ poslednje tehnike ubeđivanja.",
+        "context": "Imenuj trik iza svakog oglasa da otkriješ lozinku.",
         "prompts": [
-          "Ne znam kako da povežem tehniku sa posterom.",
-          "Ne znam čemu služe svetleća slova.",
-          "Ne znam koju lozinku da unesem u računar."
+          "Šta treba da radim ovde?",
+          "Kako da razlikujem tehnike?",
+          "Koja je lozinka za računar?"
         ],
         "items": [
-          "Prevuci svaki poster do odgovarajuće tehnike ubeđivanja.",
-          "Svaki tačno uparen poster otkriva jedno slovo.",
-          "Kada napraviš svih šest podudaranja, otvori računar i unesi FOOLED."
+          "Prevuci svaki okvir sa tehnikom na poster koji koristi taj trik. Ako je tačno, jedno slovo na posteru biće zaokruženo.",
+          "Pročitaj svaki naslov: malo preostalih komada je FOMO, milioni kupaca su Društveni dokaz, nemoguće obećanje je Preuveličavanje, poznata osoba je Preporuka influensera, krivica prema porodici je Apelovanje na emocije, a odbrojavanje je Osećaj hitnosti.",
+          "Pročitaj šest zaokruženih slova sleva nadesno: OBMANA. Klikni na računar i ukucaj je."
         ]
       },
       "rouletteInvestigation": {
         "context": "Zavrtite nekoliko puta i uporedite rezultate pre nego što donesete odluku.",
         "prompts": [
-          "Šta treba da proverim?",
-          "Da li pobeda ili poraz dokazuju da je točak namešten?",
-          "Kako da završim koridor?"
+          "Šta treba da radim sa svakim točkom?",
+          "Kako da znam da li je točak namešten?",
+          "Koji je odgovor za svaki točak?"
         ],
         "items": [
-          "Zavrtite trenutni točak najmanje dva puta. Da li se stalno zaustavlja na istom polju? Uporedi rezultate prikazane pored njega.",
-          "Možeš da nastaviš da vrtiš točak pre nego što doneseš odluku. Ponavljanje istog rezultata je znak koji treba istražiti, ali može se desiti i slučajno.",
-          "Izaberi Namešteno ili Nije namešteno. Pročitaj svako objašnjenje, pa završi oba točka."
+          "Zavrti točak najmanje dva puta i pogledaj gde se zaustavlja. Zatim odluči da li je Namešten ili Nije namešten.",
+          "Uporedi rezultate prikazane pored točka. Pošten točak se zaustavlja na različitim poljima. Namešten točak ti svaki put daje isti rezultat.",
+          "Oba točka su nameštena. MEGA VRTEŠKA uvek staje na kuponu, a ZLATNA GROZNICA ti nikad ne daje nagradu. Izaberi Namešten za oba i pročitaj objašnjenja."
         ]
       }
     },
@@ -761,7 +831,7 @@ export default {
         "discount": "€49",
         "text": "Požuri! Ponuda ističe za kratko vreme.",
         "cta": "KUPI ODMAH!!",
-        "timePressure": "Ostalo je samo 30 min!!"
+        "timePressure": "Ostalo je samo 40 min!!"
       },
       "shoesAd1": {
         "headline": "POTPUNO NOVE PATIKE",
