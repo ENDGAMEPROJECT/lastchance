@@ -284,7 +284,7 @@ export default {
         "Kuule, algoritmeista ja tileistä on miljoona teoriaa, mutta katson juuri nyt itse kaupan sivua. Siinä on virallinen brändilogo, loistavat arvostelut ja turvallinen kassa."
       ],
       "endingFriend": "Kuule, voit pilkkoa sivua miten haluat, mutta minusta kaikki näyttää ihan hyvältä! Sinä vain vainoharhailet. Laskuri käy yhä — sinulla on siihen asti kun se nollautuu, neljäkymmentä minuuttia, aikaa todistaa, että tämä on oikeasti huijaus. Muuten painan ostaa.",
-      "endingYou": "Sovittu. Katsotaan ruudun taakse.",
+      "endingYou": "Sovittu. Mennään puhelimesi kautta Fyysiseen internetiin katsomaan, mitä tuo tarjous piilottaa.",
       "begin": "▶ Katso ruudun taakse"
     },
     "posttest": {
@@ -870,7 +870,8 @@ export default {
         "brand": "Magnum Shop",
         "text": "Tarjous voimassa 19.–29. syyskuuta"
       },
-      "debugSkip": "Ohita ovet ja lopputesti (debug)"
+      "debugSkip": "Ohita ovet ja lopputesti (debug)",
+      "evidence": "”Tarjouksen” linkki oli jäljitelmäosoite, ei oikea kauppa."
     },
     "roulette": {
       "spin": "🎰 Pyöräytä",
@@ -928,7 +929,7 @@ export default {
               "Ei palkintoa"
             ],
             "rules": "Voita puhelin, kannettava tai jopa 100 € — pyöräytä!",
-            "feedback": "Pelillistäminen tarkoittaa pelien elementtien — pisteiden, palkintojen tai onnenpyörien — käyttöä asioissa, jotka eivät ole pelejä. Sovellukset ja verkkokaupat käyttävät sitä tehdäkseen ostamisesta hauskaa, jotta viivyt pidempään ja kulutat enemmän huomaamattasi."
+            "feedback": "Tämä onnenpyörä oli viritetty pysähtymään aina kohtaan ”Ei palkintoa”. Sen isoja palkintoja ei voi koskaan voittaa: ne ovat siinä vain, jotta jatkaisit pyörittämistä. Joka kerta tuntuu, että voitto oli lähellä ja seuraavalla kerralla onnistaa, joten yrität uudelleen. Sillä välin menetät aikaasi ja huomiotasi, ja kauppa saa lisää aikaa näyttää sinulle tarjouksiaan."
           }
         },
         "debugSkip": "Ohita onnenpyörät (debug)"
@@ -1092,8 +1093,32 @@ export default {
         "learn": "käänteinen kuvahaku kertoo, onko ”käsintehdyn”, ”ainutlaatuisen” tai ”aidon” tuotteen kuva oikeasti varastettu, massatuotettu kymmenissä dropshipping-kaupoissa tai tekoälyn luoma. Jos osumia ei löydy lainkaan, kuva voi olla väärennös.",
         "hint": "Hae ensin, luokittele sitten kaikki kolme.",
         "confirm": "Vahvista luokittelut →",
+        "lookFirst": "Katso ensin tulokset tehdäksesi päätöksen.",
+        "scrollDown": "Vieritä alas",
         "stampHere": "Leimaa tähän",
         "removeStamp": "Poista leima"
+      },
+      "explain": {
+        "lookForTitle": "Mihin minun pitäisi kiinnittää huomiota?",
+        "priceTitle": "Vertaa hintoja",
+        "priceText": "Suuria hintaeroja samalle tuotteelle",
+        "claimsTitle": "Vertaa tuotteesta esitettyjä väitteitä",
+        "claimsText": "Mistä tahansa tuotteen ominaisuudesta: sen alkuperästä, valmistustavasta…",
+        "claimsCaption1": "Alkuperäinen posliinipupu JAPANISTA",
+        "claimsCaption2": "Muovipupu, valmistettu Meksikossa",
+        "title": "Mainoksen lisäksi — entä itse tuote?",
+        "body": "Onko tuote sitä, mitä väitetään? Käänteinen kuvahaku auttaa tarkistamaan: haet kuvalla, ja se löytää juuri sen kuvan tai samankaltaisia verkosta, jolloin voit varmistaa onko kuva oikeasti sitä mitä myyjä väittää.",
+        "instructions": "Tee ensin käänteinen kuvahaku. Arvioi sitten tulosten perusteella tuotteen aitous.",
+        "useShop": "Ihastuitko johonkin vaatteeseen julkaisussa? Tee käänteinen kuvahaku löytääksesi, mistä sen oikeasti voi ostaa.",
+        "useVerify": "Etkö ole varma, onko vaikuttajan tuote aito? Tee käänteinen haku nähdäksesi, onko se oikeasti ainutlaatuinen — vai sama massatuote jota kaikki myyvät.",
+        "searchLabel": "käänteinen kuvahaku",
+        "searching": "Haetaan verkosta…",
+        "dragHint": "↓ Vedä myyjän kuva käänteiseen kuvahakuun",
+        "queryCaption": "Myyjä sanoo: ”ainutlaatuinen käsintehty takki” · 180 €",
+        "resultsLabel": "Sama kuva löytyi täältä:",
+        "takeawayLabel": "Koukku:",
+        "takeaway": "Tuo ”ainutlaatuinen käsintehty” takki on sama massatuote, jota myydään 9–14 eurolla kymmenissä dropshipping-kaupoissa. Kuva paljasti sen.",
+        "continue": "Kokeile nyt itse →"
       },
       "products": [
         {
@@ -1143,7 +1168,7 @@ export default {
             "price": "49€",
             "urgency": "Kiirehdi! Tarjous päättyy pian!",
             "oldPrice": "600€",
-            "fake": "VÄÄRENNÖS!!!"
+            "fake": "Väärennos!"
           },
           "matches": [
             {
@@ -1155,12 +1180,12 @@ export default {
               "title": "Scifi-tabletti — tekoälyn luoma kuva"
             },
             {
-              "site": "lunawear.com-official.shop/",
-              "title": "Rajoitettu tarjous - NovaPad LunaWearsin sponsoroimana vain 49 €"
-            },
-            {
               "site": "fakedetector-ads-news.org",
               "title": "SE ON VÄÄRENNÖS! - Varo NovaPad X:ää, jota LunaWears muka sponsoroi"
+            },
+            {
+              "site": "lunawear.com-official.shop/",
+              "title": "Rajoitettu tarjous - NovaPad LunaWearsin sponsoroimana vain 49 €"
             },
             {
               "site": "mediamarket.shop",
@@ -1218,21 +1243,6 @@ export default {
         "help": "Yhdistä jokainen muistilapun emoji sen kirjaimeen lukeaksesi piilotetun merkinnän.",
         "noSelection": "Ei valittua julkaisua",
         "erase": "Poista viimeinen kirjain"
-      },
-      "explain": {
-        "title": "Mainoksen lisäksi — entä itse tuote?",
-        "body": "Onko tuote sitä, mitä väitetään? Käänteinen kuvahaku auttaa tarkistamaan: haet kuvalla, ja se löytää juuri sen kuvan tai samankaltaisia verkosta, jolloin voit varmistaa onko kuva oikeasti sitä mitä myyjä väittää.",
-        "instructions": "Tee ensin käänteinen kuvahaku. Arvioi sitten tulosten perusteella tuotteen aitous.",
-        "useShop": "Ihastuitko johonkin vaatteeseen julkaisussa? Tee käänteinen kuvahaku löytääksesi, mistä sen oikeasti voi ostaa.",
-        "useVerify": "Etkö ole varma, onko vaikuttajan tuote aito? Tee käänteinen haku nähdäksesi, onko se oikeasti ainutlaatuinen — vai sama massatuote jota kaikki myyvät.",
-        "searchLabel": "käänteinen kuvahaku",
-        "searching": "Haetaan verkosta…",
-        "dragHint": "↓ Vedä myyjän kuva käänteiseen kuvahakuun",
-        "queryCaption": "Myyjä sanoo: ”ainutlaatuinen käsintehty takki” · 180 €",
-        "resultsLabel": "Sama kuva löytyi täältä:",
-        "takeawayLabel": "Koukku:",
-        "takeaway": "Tuo ”ainutlaatuinen käsintehty” takki on sama massatuote, jota myydään 9–14 eurolla kymmenissä dropshipping-kaupoissa. Kuva paljasti sen.",
-        "continue": "Kokeile nyt itse →"
       },
       "labelFeedback": {
         "title": "Kaupalliset julkaisut on merkittävä",

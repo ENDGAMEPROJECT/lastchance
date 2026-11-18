@@ -19,7 +19,7 @@ const ROOM_IMAGES = {
   'influencer-avenue': [
     bgUrl('influencer.png'), bgUrl('objects/emoji-decoding-card.png'),
     assetUrl('icons/price-tag.svg'),
-    ...['cupcakes', 'cupcakes1', 'cupcakes2', 'cupcakes3', 'mug', 'novapad', 'novapad1', 'novapad2', 'jacket']
+    ...['cupcakes', 'cupcakes1', 'cupcakes2', 'cupcakes3', 'mug', 'novapad', 'novapad1', 'novapad2', 'jacket', 'compare-prices', 'bunny-1', 'bunny-2']
       .map((name) => assetUrl(`products/${name}.png`)),
     /* The reverse-image-search results and the scripted explainer demo
        reveal a dozen listing photos at once (RESULT_THUMBS and DEMO_MATCHES

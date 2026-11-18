@@ -164,7 +164,7 @@ export function Draggable({
 export function DropZone({
   id, accept, onDrop, disabled, className, overClassName, as: Tag = 'div', children, ...rest
 }) {
-  const { registerZone, overId, selected, dropSelected } = useDnd()
+  const { registerZone, overId, selected, dropSelected, drag } = useDnd()
   const ref = useRef(null)
   const api = useRef({})
   api.current.accepts = (k) => !disabled && (accept ? accept.includes(k) : true)
@@ -181,13 +181,15 @@ export function DropZone({
 
   const isOver = overId === id
   const canTapDrop = selected && api.current.accepts(selected.kind)
+  // Something this zone accepts is being dragged right now (not yet over it).
+  const isTarget = drag && drag.moved && api.current.accepts(drag.kind)
 
   const onClick = () => { if (canTapDrop) dropSelected(id) }
 
   return (
     <Tag
       ref={ref}
-      className={cx('dnd-zone', className, isOver && 'dnd-over', isOver && overClassName, canTapDrop && 'dnd-can-drop')}
+      className={cx('dnd-zone', className, isOver && 'dnd-over', isOver && overClassName, canTapDrop && 'dnd-can-drop', isTarget && 'dnd-drag-target')}
       onClick={onClick}
       {...rest}
     >

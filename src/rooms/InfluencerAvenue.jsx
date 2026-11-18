@@ -89,6 +89,16 @@ const PRODUCT_NAMES = {
   speaker: 'Product: Speaker',
 }
 
+/* Desktop explainer, "What should I look for?": the two example cards
+   (rooms.influencer.explain.*). image = file in public/products; icon = placeholder
+   for a card whose image hasn't arrived yet. */
+const LOOK_FOR = [
+  { n: 1, icon: '🏷️', image: 'compare-prices.png', title: 'priceTitle', text: 'priceText' },
+  // Two photos side by side, each captioned (the second sits 16px lower).
+  { n: 2, icon: '📝', title: 'claimsTitle', text: 'claimsText',
+    pair: [{ image: 'bunny-1.png', caption: 'claimsCaption1' }, { image: 'bunny-2.png', caption: 'claimsCaption2' }] },
+]
+
 /* ---- Stage 2 content: the three products for reverse image search ---- */
 const PRODUCTS = [
   {
@@ -102,7 +112,7 @@ const PRODUCTS = [
       h: 480,
       layers: [
         { key: 'price', className: 'ia-art-tag', x: 302, y: 54 },
-        { key: 'label', className: 'ia-art-handmade', x: 240, y: 110, w: 190 },
+        { key: 'label', className: 'ia-art-handmade', x: 232, y: 110, w: 236 },
       ],
     },
     // emoji: '☕',
@@ -124,7 +134,9 @@ const PRODUCTS = [
         { text: '😱😱😱', className: 'ia-art-emoji', x: 20, y: 308 },
       ],
       // Big stamp-like text over a reverse-search result photo: { result index: art key }.
-      resultOverlays: { 3: 'fake' },
+      // The index is the result's number in the sheet (…products.1.matches.N): if
+      // a result is renumbered there, update it here too (2 = fakedetector-ads-news).
+      resultOverlays: { 2: 'fake' },
     },
     // emoji: '📱',
     hue: 'linear-gradient(135deg, #7a2ce0, #2b6bff)',
@@ -297,12 +309,13 @@ function influencerImageUrl(id, locale) {
    challenge (same UI as stage 2). English-only copy, by request — no i18n keys. */
 const DEMO_PHASES = ['drag', 'search', 'results', 'hold', 'stamp']
 // ratio = image height / width, used to place each match in the shortest column
+// price: optional listing-price chip (same look as the real results).
 const DEMO_MATCHES = [
-  { img: 'shoes1.png', ratio: 1.05, site: 'solecraft.store', desc: 'Classic leather boat shoes, brown' },
-  { img: 'shoes2.png', ratio: 1.08, site: 'vintedly.com', desc: 'Designer boat shoes · barely worn' },
+  { img: 'shoes1.png', ratio: 1.05, site: 'solecraft.store', desc: 'Classic leather boat shoes, brown', price: '€129,95*' },
+  { img: 'shoes2.png', ratio: 1.08, site: 'vintedly.com', desc: 'Designer boat shoes · barely worn', price: '€85*' },
   { img: 'shoes3.png', ratio: 0.94, site: 'luxe-resale.co', desc: 'Brown leather deck shoes, size 38' },
   { img: 'shoes4.png', ratio: 0.81, site: 'instapic.com', desc: '@styledaily · weekend look' },
-  { img: 'shoes5.png', ratio: 1.13, site: 'shoefinder.net', desc: 'Same model sold by the official brand store' },
+  { img: 'shoes5.png', ratio: 1.13, site: 'shoefinder.net', desc: 'Same model sold by the official brand store', price: '€129,95*' },
   { img: 'shoes.png', ratio: 0.71, site: 'swingfeet.shop', desc: 'Lindy hop dance shoes · handmade' },
 ]
 // Same stamps, in the same order, as the real rack (labels via rooms.influencer.classify.*).
@@ -444,7 +457,15 @@ function ReverseSearchDemo({ phase }) {
                     <ul key={c} className="ia-matches-col">
                       {col.map((m) => (
                         <li key={m.site} className="ia-match" style={{ animationDelay: `${m.i * 110}ms` }}>
-                          <img className="ia-match-img" src={productUrl(m.img)} alt="" />
+                          <span className="ia-match-media">
+                            <img className="ia-match-img" src={productUrl(m.img)} alt="" />
+                            {m.price && (
+                              <span className="ia-match-price">
+                                <img src={assetUrl('icons/price-tag.svg')} alt="" aria-hidden />
+                                {m.price}
+                              </span>
+                            )}
+                          </span>
                           <span className="ia-match-site">
                             <span className="ia-match-fav">{m.site.charAt(0)}</span>
                             <span className="ia-match-site-name">{m.site}</span>
@@ -645,20 +666,32 @@ export default function InfluencerAvenue({ node }) {
   // The label recap and the reverse-search explainer can't be skipped: their
   // continue buttons appear once the text has had time to be read.
   const labelFeedback = useReadingGate(['intro', 'paidDesc', 'paidExample', 'collabDesc', 'collabExample', 'giftedDesc', 'giftedExample']
-    .map((key) => t(`rooms.influencer.labelFeedback.${key}`)), stage === 'labelFeedback', 15000)
-  // Mobile splits the explainer in two steps — 1: title + body, 2: how to play
-  // + demo — each with its own reading gate. Desktop shows both at once.
+    .map((key) => t(`rooms.influencer.labelFeedback.${key}`)), stage === 'labelFeedback', 10000)
+  // The explainer is split in two steps on every device — 1: title + body, 2: how to play
+  // + demo — each with its own reading gate.
   const mobile = useMobileView()
   const [explainStep, setExplainStep] = useState(1)
   const [explainStep1Read, setExplainStep1Read] = useState(false)
-  const explainText = !mobile
-    ? [t('rooms.influencer.explain.body'), t('rooms.influencer.explain.instructions')]
-    : explainStep === 1 ? t('rooms.influencer.explain.body') : t('rooms.influencer.explain.instructions')
+  // Both layouts split the explainer in two steps (it used to be phone-only).
+  // Steps: 1 (title + body) → [phone only: 'look', the "What should I look
+  // for?" cards; desktop shows them inside step 1] → 2 (how to play + demo).
+  const explainText = explainStep === 2 ? t('rooms.influencer.explain.instructions') : t('rooms.influencer.explain.body')
   const explain = useReadingGate(explainText, stage === 'explain')
-  // Coming back from step 2 on mobile, step 1 has already been read — so its
+  // Coming back from step 2, step 1 has already been read — so its
   // Next is clickable immediately rather than re-running the wait.
   const explainStep1 = explainStep1Read ? { ...explain, ready: true } : explain
-  const demoVisible = stage === 'explain' && (!mobile || explainStep === 2)
+  const demoVisible = stage === 'explain' && explainStep === 2
+  // Desktop step 1, "What should I look for?": which example card is
+  // highlighted (1 = prices, 2 = claims). The button to the second card
+  // unlocks 3s after the first is shown, and stays unlocked after that.
+  const [lookFor, setLookFor] = useState(1)
+  const [lookForReady, setLookForReady] = useState(false)
+  const lookForShown = stage === 'explain' && (mobile ? explainStep === 'look' : explainStep === 1)
+  useEffect(() => {
+    if (!lookForShown || lookForReady) return
+    const timer = window.setTimeout(() => setLookForReady(true), 3000)
+    return () => window.clearTimeout(timer)
+  }, [lookForShown, lookForReady])
   const [demoRun, setDemoRun] = useState(0) // bumped to replay the demo
 
   // Play the explainer's demo while it's open, on a loop: drag the shoes into
@@ -866,9 +899,56 @@ export default function InfluencerAvenue({ node }) {
     setPicks((p) => { const next = { ...p }; delete next[id]; return next })
   }
   // Click the product's slot while holding a stamp → press it.
-  function applyStamp(id) { if (heldStamp) { stampVerdict(id, heldStamp); setHeldStamp(null) } }
+  function applyStamp(id) {
+    if (!heldStamp) return
+    // A stamp grabbed on another product can't be pressed on unseen results.
+    if (!isSeen(id)) { setHeldStamp(null); setStampLockMsg(true); return }
+    stampVerdict(id, heldStamp); setHeldStamp(null)
+  }
 
   const searchTimer = useRef(null)
+
+  /* Results must be looked at before stamping. A product's stamps unlock once
+     the player has started scrolling its results AND STAMP_UNLOCK_MS have
+     passed since that first scroll (if there's nothing below to scroll to,
+     the count starts when the results open); an already-stamped product
+     stays unlocked.
+     If they're still unscrolled after NUDGE_MS, arrows + "Scroll down"
+     appear right under the game. */
+  const NUDGE_MS = 5000
+  const STAMP_UNLOCK_MS = 15000
+  const resultsScrollRef = useRef(null)
+  const [resultsScrolled, setResultsScrolled] = useState({}) // productId -> true
+  const [resultsTimed, setResultsTimed] = useState({}) // productId -> true once open long enough
+  const [scrollNudge, setScrollNudge] = useState(false)
+  const [stampLockMsg, setStampLockMsg] = useState(false)
+  const isSeen = (id) => !!(id && (picks[id] || (resultsScrolled[id] && resultsTimed[id])))
+  const shownSeen = isSeen(shownId)
+  const shownScrolled = !!(shownId && resultsScrolled[shownId])
+  const markScrolled = (id) => setResultsScrolled((m) => (m[id] ? m : { ...m, [id]: true }))
+  useEffect(() => {
+    setScrollNudge(false)
+    if (stage !== 'verify' || !shownId || activeId || shownScrolled) return
+    const id = shownId
+    // Nothing to scroll → nothing hidden: counts as scrolled.
+    const frame = window.requestAnimationFrame(() => {
+      const el = resultsScrollRef.current
+      if (el && el.scrollHeight - el.clientHeight <= 8) markScrolled(id)
+    })
+    const timer = window.setTimeout(() => setScrollNudge(true), NUDGE_MS)
+    return () => { window.cancelAnimationFrame(frame); window.clearTimeout(timer) }
+  }, [stage, shownId, activeId, shownScrolled])
+  useEffect(() => { setStampLockMsg(false) }, [shownId])
+  // The 15s count starts only once the player has begun scrolling the results.
+  useEffect(() => {
+    if (stage !== 'verify' || !shownId || activeId || !shownScrolled || resultsTimed[shownId]) return
+    const id = shownId
+    const timer = window.setTimeout(() => setResultsTimed((m) => ({ ...m, [id]: true })), STAMP_UNLOCK_MS)
+    return () => window.clearTimeout(timer)
+  }, [stage, shownId, activeId, shownScrolled, resultsTimed])
+  function onResultsScroll(event) {
+    if (shownId && event.currentTarget.scrollTop > 8) markScrolled(shownId)
+  }
   useEffect(() => () => { clearTimeout(searchTimer.current); stopSound('search.mp3') }, [])
 
   useEffect(() => {
@@ -947,6 +1027,13 @@ export default function InfluencerAvenue({ node }) {
     <RoomFrame
       node={node}
       bgImage={bgUrl('influencer.png')}
+      // In the reverse search, the back arrow returns to its own explainer
+      // (step 1, already read), not to the room's entry briefing.
+      onBack={stage === 'verify' ? () => {
+        setHeldStamp(null)
+        setExplainStep(1)
+        setStage('explain')
+      } : undefined}
       intro={t('rooms.influencer.intro')}
       solved={solved}
       solvedTitle={t('rooms.influencer.solvedTitle')}
@@ -1173,15 +1260,63 @@ export default function InfluencerAvenue({ node }) {
       {/* ===================== TRANSITION: what is reverse image search ===================== */}
       {stage === 'explain' && (
         <div className="ia-stage ia-explain fade-in">
-          <div className="ia-explain-card ia-search-intro panel clip">
-            {(!mobile || explainStep === 1) && <>
+          <div className={`ia-explain-card ia-search-intro panel clip ${explainStep === 1 ? 'is-step1' : ''}`}>
+            {explainStep === 1 && <>
             <h3 className="ia-explain-title">{t('rooms.influencer.explain.title')}</h3>
-            {/* Mobile step 1: an example product photo to the left of the explanation. */}
-            <div className="ia-explain-intro">
+            {/* Step 1 — phone: an example product photo to the left of the
+                explanation. Desktop: the text alone, centred. */}
+            <div className={`ia-explain-intro ${mobile ? '' : 'is-centered'}`}>
               {mobile && <img className="ia-explain-img" src={productUrl('jacket.png')} alt="" />}
               <p className="ia-explain-body">{t('rooms.influencer.explain.body')}</p>
             </div>
             </>}
+            {/* "What should I look for?" — two example cards shown one at a
+                time: the first with an arrow to the right (unlocks after 3s),
+                the second with an arrow back to the left. Desktop: under the
+                step-1 text. Phone: a screen of its own between step 1 and the demo. */}
+            {lookForShown && (() => {
+              const c = LOOK_FOR[lookFor - 1]
+              return <>
+                <h4 className="ia-lookfor-title">{t('rooms.influencer.explain.lookForTitle')}</h4>
+                <div className="ia-lookfor">
+                  {/* Each side keeps its slot (hidden when unused) so the card stays centred. */}
+                  <button type="button" className={`ia-lookfor-arrow ${lookFor === 2 ? '' : 'is-hidden'}`}
+                    aria-label={t('common.back')} title={t('common.back')}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => setLookFor(1)} tabIndex={lookFor === 2 ? 0 : -1}>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+                  </button>
+                  <div key={c.n} className="ia-lookfor-card fade-in">
+                    {/* The example image (or a placeholder icon until it arrives). */}
+                    {c.pair ? (
+                      <div className="ia-lookfor-pair">
+                        {c.pair.map((p) => (
+                          <figure key={p.image} className="ia-lookfor-pair-item">
+                            <img src={productUrl(p.image)} alt="" />
+                            <figcaption>{t(`rooms.influencer.explain.${p.caption}`)}</figcaption>
+                          </figure>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className={`ia-lookfor-img ${c.image ? 'has-image' : ''}`} aria-hidden="true">
+                        {c.image ? <img src={productUrl(c.image)} alt="" /> : <span>{c.icon}</span>}
+                      </div>
+                    )}
+                    <div className="ia-lookfor-copy">
+                      <h5 className="ia-lookfor-card-title">{t(`rooms.influencer.explain.${c.title}`)}</h5>
+                      <p className="ia-lookfor-text">{t(`rooms.influencer.explain.${c.text}`)}</p>
+                    </div>
+                  </div>
+                  <button type="button" className={`ia-lookfor-arrow ${lookFor === 1 ? '' : 'is-hidden'}`}
+                    aria-label={t('common.next')} title={t('common.next')}
+                    disabled={lookFor === 1 && !lookForReady}
+                    onMouseDown={(event) => event.preventDefault()}
+                    onClick={() => setLookFor(2)} tabIndex={lookFor === 1 ? 0 : -1}>
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+                  </button>
+                </div>
+              </>
+            })()}
 
             {/* Two everyday uses: find where to buy something you like, and verify a claim. */}
             {/* <div className="ia-explain-uses">
@@ -1205,18 +1340,33 @@ export default function InfluencerAvenue({ node }) {
               <b className="lead-label">{t('rooms.influencer.explain.takeawayLabel')}</b> {t('rooms.influencer.explain.takeaway')}
             </div> */}
 
-            {mobile && explainStep === 1 && <GateButton gate={explainStep1} className="btn-purple btn-lg" onClick={() => {
-              setExplainStep1Read(true)
-              setExplainStep(2)
-            }}>
-              {t('common.next')}
-            </GateButton>}
-            {/* Desktop shows the actions from the start (the Continue inside is
-                gated); mobile only once step 2 is on screen. */}
-            {(!mobile || explainStep === 2) && <div className="ia-explain-actions">
+            {/* Phone, step 1: Next to the "look for" cards. */}
+            {mobile && explainStep === 1 && <div className="ia-explain-actions">
+              <GateButton gate={explainStep1} className="btn-purple btn-lg" onClick={() => {
+                setExplainStep1Read(true)
+                setExplainStep('look')
+              }}>
+                {t('common.next')}
+              </GateButton>
+            </div>}
+            {/* Next to the demo, once the second card is shown (desktop: in
+                step 1; phone: on the cards screen, with Back to step 1). */}
+            {lookForShown && (mobile || lookFor === 2) && <div className="ia-explain-actions">
               {mobile && <button className="btn btn-ghost btn-lg" onClick={() => setExplainStep(1)}>
                 {t('common.back')}
               </button>}
+              {lookFor === 2 && <GateButton gate={explainStep1} className="btn-purple btn-lg" onClick={() => {
+                setExplainStep1Read(true)
+                setExplainStep(2)
+              }}>
+                {t('common.next')}
+              </GateButton>}
+            </div>}
+            {/* Step 2: Back to step 1, and the (gated) Continue into the challenge. */}
+            {explainStep === 2 && <div className="ia-explain-actions">
+              <button className="btn btn-ghost btn-lg" onClick={() => setExplainStep(mobile ? 'look' : 1)}>
+                {t('common.back')}
+              </button>
               <GateButton gate={explain} className="btn-purple btn-lg" onClick={() => {
                 track('viewed', OBJ.searchExplainer(), { node: node.id })
                 setStage('verify')
@@ -1414,7 +1564,10 @@ export default function InfluencerAvenue({ node }) {
                         </div>
                       </div>
                       <div className="ia-engine-cols">
-                        <div className="ia-prod-result">
+                        <div className="ia-prod-result-wrap">
+                        {/* Until the player scrolls, a glow pulses over the scrollbar. */}
+                        {!shownScrolled && <span className="ia-scrollbar-pulse" aria-hidden="true" />}
+                        <div className="ia-prod-result" ref={resultsScrollRef} onScroll={onResultsScroll}>
                           <div className="t-xs upper dim">{t('rooms.influencer.stage2.matchesTitle')}</div>
                           {/* Masonry of web matches: each photo at its natural aspect ratio,
                               site name on top, product title underneath. */}
@@ -1456,7 +1609,26 @@ export default function InfluencerAvenue({ node }) {
                           <div className="ia-result-sum t-xs">{shownCopy.result}</div>
                           <div className="t-xs dim ia-prod-hint">{shownCopy.hint}</div>
                         </div>
+                        </div>
                         <div className="ia-engine-classify">
+                          {/* Tiny countdown line: fills over STAMP_UNLOCK_MS from the first
+                              scroll; empty until then, gone once the stamps unlock. */}
+                          {!shownSeen && (
+                            <div className="ia-stamp-timer" aria-hidden="true">
+                              {shownScrolled && (
+                                <span key={shown.id} className="ia-stamp-timer-fill"
+                                  style={{ animationDuration: `${STAMP_UNLOCK_MS}ms` }} />
+                              )}
+                            </div>
+                          )}
+                          {stampLockMsg && !shownSeen && (
+                            <div className="ia-stamp-locked-msg" role="status">
+                              <span>{t('rooms.influencer.stage2.lookFirst')}</span>
+                              <CloseButton className="ia-stamp-locked-close"
+                                onMouseDown={(event) => event.preventDefault()}
+                                onClick={() => setStampLockMsg(false)} />
+                            </div>
+                          )}
                           <div className="t-xs upper dim">{t('rooms.influencer.stage2.classifyPrompt')}</div>
                           {/* Grab a stamp-maker; your cursor becomes it, then click the slot by the image. */}
                           <div className="ia-stamprack">
@@ -1464,8 +1636,9 @@ export default function InfluencerAvenue({ node }) {
                               <button
                                 key={value}
                                 type="button"
-                                className={`ia-stampmaker ia-stamp-${value} ${heldStamp === value ? 'held' : ''} ${picks[shown.id] === value ? 'inked' : ''}`}
-                                onClick={(e) => grabStamp(value, e)}
+                                className={`ia-stampmaker ia-stamp-${value} ${heldStamp === value ? 'held' : ''} ${picks[shown.id] === value ? 'inked' : ''} ${shownSeen ? '' : 'is-locked'}`}
+                                aria-disabled={!shownSeen || undefined}
+                                onClick={(e) => { if (!shownSeen) { setStampLockMsg(true); return } grabStamp(value, e) }}
                               >
                                 <span className="ia-stampmaker-face" aria-hidden />
                                 <span className="ia-stamp-label">{t(`rooms.influencer.classify.${value}`)}</span>
@@ -1483,6 +1656,15 @@ export default function InfluencerAvenue({ node }) {
           </div>
 
           <div className="ia-actions">
+            {scrollNudge && (
+              <div className="ia-scroll-nudge" role="status">
+                <span className="ia-scroll-nudge-arrow" aria-hidden="true">
+                  <span className="ia-scroll-nudge-chevron" />
+                  <span className="ia-scroll-nudge-chevron" />
+                </span>
+                <span className="ia-scroll-nudge-text">{t('rooms.influencer.stage2.scrollDown')}</span>
+              </div>
+            )}
             {verifyErr
               ? <div className="banner wrong shake ia-banner">{verifyErr}</div>
               : <span className="game-prompt">

@@ -284,7 +284,7 @@ export default {
         "Look, there are a million theories about how algorithms and accounts handle ads, but I'm looking at the actual store page right now. It has the official brand logo, great reviews, and a secure checkout."
       ],
       "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running — you've got until it hits zero, forty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
-      "endingYou": "Deal. Let's look behind the screen.",
+      "endingYou": "Deal. Let's use your phone to get into the Physical Internet and see what that offer is hiding.",
       "begin": "▶ Look behind the screen"
     },
     "posttest": {
@@ -870,7 +870,8 @@ export default {
         "brand": "Magnum Shop",
         "text": "Offer valid from 19 to 29 september"
       },
-      "debugSkip": "Skip doors and final test (debug)"
+      "debugSkip": "Skip doors and final test (debug)",
+      "evidence": "The “deal” link was a look-alike domain, not the real store."
     },
     "roulette": {
       "spin": "🎰 Spin",
@@ -928,7 +929,7 @@ export default {
               "No prize"
             ],
             "rules": "Win a phone, a laptop or up to €100 — give it a spin!",
-            "feedback": "Gamification means using game elements, like points, rewards, or spinning wheels, in things that aren't really games. Apps and online shops use it to make buying feel fun, so you stay longer and spend more without noticing."
+            "feedback": "This wheel was rigged to always land on \"No prize\". The big prizes on it can never be won: they are only there to keep you spinning. Every spin feels like a near miss, like you'll win next time, so you try again. Meanwhile you lose your time and attention, and the shop gets more time to show you its offers."
           }
         },
         "debugSkip": "Skip roulette (debug)"
@@ -1092,8 +1093,32 @@ export default {
         "learn": "a reverse image search checks whether a “handmade”, “unique” or “real” product photo is actually stolen, mass-produced across dozens of dropshipping stores, or AI-generated. No results at all can mean the image is fake.",
         "hint": "Search first, then classify all three.",
         "confirm": "Confirm classifications →",
+        "lookFirst": "Look at the results first to make a decision.",
+        "scrollDown": "Look at the results first",
         "stampHere": "Stamp here",
         "removeStamp": "Remove stamp"
+      },
+      "explain": {
+        "lookForTitle": "What should I look for?",
+        "priceTitle": "Compare the prices",
+        "priceText": "Big price differences for the same item",
+        "claimsTitle": "Compare the claims about the product",
+        "claimsText": "About any aspect of the product: its origin, how it was made…",
+        "claimsCaption1": "Original porcelain bunny from JAPAN",
+        "claimsCaption2": "Plastic bunny made in Mexico",
+        "title": "Besides the ad — what about the product?",
+        "body": "Is the product what they claim? A reverse image search helps you check: you search with a photo, and it finds that exact picture or similar ones that appear online, so you can verify whether the image is really what the seller claims.",
+        "instructions": "First reverse search the image. Then, look at the results to judge the product's authenticity.",
+        "useShop": "Love a piece of clothing you saw in a post? Reverse-search the photo to find where you can actually buy it.",
+        "useVerify": "Not sure an influencer's product is genuine? Reverse-search it to see if it's really unique — or the same mass-produced item everyone's selling.",
+        "searchLabel": "reverse image search",
+        "searching": "Searching the web…",
+        "dragHint": "↓ Drag the seller's photo into a reverse image search",
+        "queryCaption": "Seller says: “one-of-a-kind handmade jacket” · €180",
+        "resultsLabel": "Same photo found on:",
+        "takeawayLabel": "The catch:",
+        "takeaway": "That “unique handmade” jacket is the same mass-produced item selling for €9–14 on dozens of dropshipping shops. The photo gave it away.",
+        "continue": "Now try it yourself →"
       },
       "products": [
         {
@@ -1155,12 +1180,12 @@ export default {
               "title": "Sci-fi tablet — AI artwork"
             },
             {
-              "site": "lunawear.com-official.shop/",
-              "title": "Limited Time Offer - NovaPad Sponsored By LunaWears For Only €49"
-            },
-            {
               "site": "fakedetector-ads-news.org",
               "title": "IT'S FAKE! - Be careful with the NovaPad X supposedly sponsored by LunaWears"
+            },
+            {
+              "site": "lunawear.com-official.shop/",
+              "title": "Limited Time Offer - NovaPad Sponsored By LunaWears For Only €49"
             },
             {
               "site": "mediamarket.shop",
@@ -1218,21 +1243,6 @@ export default {
         "help": "Match each emoji on a sticky-note to its letter to read the hidden label.",
         "noSelection": "No post selected",
         "erase": "Delete last letter"
-      },
-      "explain": {
-        "title": "Besides the ad — what about the product?",
-        "body": "Is the product what they claim? A reverse image search helps you check: you search with a photo, and it finds that exact picture or similar ones that appear online, so you can verify whether the image is really what the seller claims.",
-        "instructions": "First reverse search the image. Then, look at the results to judge the product's authenticity.",
-        "useShop": "Love a piece of clothing you saw in a post? Reverse-search the photo to find where you can actually buy it.",
-        "useVerify": "Not sure an influencer's product is genuine? Reverse-search it to see if it's really unique — or the same mass-produced item everyone's selling.",
-        "searchLabel": "reverse image search",
-        "searching": "Searching the web…",
-        "dragHint": "↓ Drag the seller's photo into a reverse image search",
-        "queryCaption": "Seller says: “one-of-a-kind handmade jacket” · €180",
-        "resultsLabel": "Same photo found on:",
-        "takeawayLabel": "The catch:",
-        "takeaway": "That “unique handmade” jacket is the same mass-produced item selling for €9–14 on dozens of dropshipping shops. The photo gave it away.",
-        "continue": "Now try it yourself →"
       },
       "labelFeedback": {
         "title": "Sponsored posts must be labeled",

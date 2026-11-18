@@ -65,6 +65,10 @@ export const settings = {
      holographic tunnel (HoloTunnel) runs before the core flashes to white.
      The tunnel loops, so any length works; it speeds up over this time. */
   portal: { tunnelMs: 9000 },
+  /* Ads Corridor: true = the room goes dark while the Truth Flashlight is on
+     (only the beam lights the wall); false = the room stays lit, so the other
+     glossy posters stay visible and the beam just flips the one under it. */
+  adsCorridor: { darkRoom: false, litDim: 0.25 }, // litDim: how much the lit room darkens (0–1)
 
   /* Remind players to inspect their tools after BOTH thresholds are met. */
   bagReminder: { clicks: 2, delayMs: 25000 },

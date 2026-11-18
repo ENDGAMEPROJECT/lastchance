@@ -99,7 +99,7 @@
 }
 
 /* When the flashlight is ON, the wall dims so the beam pops */
-.ac-wrap.light-on .ac-wall {
+.ac-wrap.dark-room.light-on .ac-wall {
   background:
     radial-gradient(
       120% 90% at 50% -10%,
@@ -545,4 +545,23 @@
 .ac-type-error {
   font-size: 16px;
   text-align: center;
+}
+
+/* Lit room (settings.adsCorridor.darkRoom = false): the flashlight leaves the
+   room and the other glossy posters as they are; the beam is just a warm glow
+   (no dark surround) and the poster under it flips to its truth. */
+.ac-wrap.lit-room.light-on .ac-wall { cursor: crosshair; }
+.ac-wrap.lit-room .ac-flashlight {
+  /* A strong pale-violet torch: hot near-white core, violet halo, soft falloff. */
+  background:
+    radial-gradient(
+      circle calc(9 * 1.0625 * var(--pu)) at var(--Xpos) var(--Ypos),
+      rgba(246, 236, 255, 0.55) 0,
+      rgba(214, 180, 255, 0.42) 22%,
+      rgba(176, 130, 255, 0.24) 50%,
+      rgba(150, 100, 255, 0.08) 75%,
+      transparent 100%
+    );
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 18px rgba(190, 150, 255, 0.6));
 }

@@ -49,6 +49,88 @@
 }
 .ia-explain-intro { display: flex; align-items: center; gap: 20px; }
 @media (max-width: 1180px) { .ia-explain-intro .ia-explain-body { flex: 1; text-align: left; } }
+.ia-explain-intro .ia-explain-body { flex: 1; }
+.ia-explain-intro.is-centered .ia-explain-body { text-align: center; }
+
+/* Desktop only (> 1180px): step 1 of the reverse-search explainer is 20% narrower. */
+@media (min-width: 1181px) {
+  .ia-explain-card.ia-search-intro.is-step1 { max-width: 688px; }
+}
+/* "What should I look for?" cards — desktop (in step 1) and phone (own screen). */
+.ia-lookfor-title {
+  margin: 6px 0 0;
+  font-family: var(--font-retro);
+  font-size: 1.3rem;
+  color: var(--purple);
+}
+.ia-lookfor { display: flex; align-items: center; justify-content: center; gap: 14px; width: 100%; }
+.ia-lookfor-card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--purple);
+  background: rgba(20, 16, 40, 0.6);
+  box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.45), 0 0 18px rgba(168, 85, 247, 0.35);
+  text-align: left;
+}
+/* Placeholder image box (to be replaced by the real example images). */
+.ia-lookfor-img {
+  flex: none;
+  width: 208px; /* same box as the real images, so both cards line up */
+  height: 156px;
+  border-radius: 8px;
+  border: 1px dashed rgba(216, 180, 254, 0.5);
+  background: rgba(168, 85, 247, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+}
+/* Title with its text underneath, both beside the image. */
+/* A real image: no dashed placeholder frame; wider box for the 4:3 photo. */
+.ia-lookfor-img.has-image { min-width: 160px; min-height: 120px; border: none; background: none; overflow: hidden; }
+.ia-lookfor-img.has-image img { width: 100%; height: 200px; object-fit: contain; display: block; }
+/* Two captioned photos side by side: the first flush to the top, the
+   second 16px lower. */
+.ia-lookfor-pair { flex: none; display: flex; align-items: flex-start; gap: 10px; }
+.ia-lookfor-pair-item { margin: 0; width: 110px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.ia-lookfor-pair-item + .ia-lookfor-pair-item { margin-top: 16px; }
+.ia-lookfor-pair-item img { width: 100%; height: auto; display: block; border-radius: 6px; }
+.ia-lookfor-pair-item figcaption { font-size: 0.78rem; line-height: 1.3; text-align: center; color: var(--muted, #c9c9d6); }
+.ia-lookfor-copy { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.ia-lookfor-arrow {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(168, 85, 247, 0.6);
+  background: rgba(20, 16, 40, 0.8);
+  color: #e4baff;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+}
+.ia-lookfor-arrow svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.ia-lookfor-arrow:hover:not(:disabled) { background: rgba(168, 85, 247, 0.25); border-color: var(--purple); }
+.ia-lookfor-arrow:disabled { opacity: 0.35; cursor: default; }
+.ia-lookfor-arrow.is-hidden { visibility: hidden; }
+.ia-lookfor-card-title { margin: 0; font-size: 1.35rem; line-height: 1.25; color: #fff; }
+.ia-lookfor-text { margin: 0; font-size: 0.95rem; line-height: 1.4; color: var(--muted, #c9c9d6); }
+@media (max-width: 1180px) {
+  .ia-lookfor-title { font-size: 1.5rem; }
+  .ia-lookfor-card-title { font-size: calc(22px * var(--text-boost, 1)); }
+  .ia-lookfor-text { font-size: calc(20px * var(--text-boost, 1)); }
+  .ia-lookfor-pair-item figcaption { font-size: calc(16px * var(--text-boost, 1)); }
+  .ia-lookfor-arrow { width: 60px; height: 60px; }
+  .ia-lookfor-arrow svg { width: 30px; height: 30px; }
+}
 .ia-explain-img { display: block; flex: none; width: 26%; height: auto; max-height: 200px; object-fit: contain; }
 .ia-explain-actions { display: flex; justify-content: center; gap: 12px; }
 .ia-explain-title { font-family: var(--font-retro);font-size: 1.4rem; color: var(--purple); 
@@ -1144,6 +1226,13 @@ button.ia-view-publication {
   background: #2c2440;
   box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.35), 0 2px 8px rgba(0, 0, 0, 0.45);
 }
+/* An image is being dragged: the search input lights up slightly as the
+   destination (stronger once it's actually over it, .is-over). */
+.ia-engine-drop.dnd-drag-target:not(.is-over) {
+  border-color: rgba(192, 132, 252, 0.6);
+  background: #28243a;
+  box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.25), 0 0 14px rgba(168, 85, 247, 0.3), 0 2px 8px rgba(0, 0, 0, 0.45);
+}
 .ia-engine-lens { flex: none; font-size: 0.9rem; opacity: 0.7; }
 /* The dropped image, fitted to the bar's short height. */
 .ia-engine-chip {
@@ -1257,6 +1346,30 @@ button.ia-view-publication {
     grid-template-columns: 1fr 270px
    }
 }
+/* Wrapper = the grid cell; it anchors the scrollbar pulse, which must not
+   scroll with the results. */
+.ia-prod-result-wrap { position: relative; min-height: 0; display: flex; flex-direction: column; }
+.ia-prod-result-wrap > .ia-prod-result { flex: 1; }
+/* Pulsing glow over the 28px scrollbar until the player first scrolls. */
+.ia-scrollbar-pulse {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 28px;
+  border-radius: 14px;
+  pointer-events: none;
+  z-index: 1;
+  background: rgba(216, 180, 254, 0.18);
+  box-shadow: 0 0 0 1px rgba(216, 180, 254, 0.5), 0 0 16px rgba(192, 132, 252, 0.8);
+  animation: ia-scrollbar-pulse 1.4s ease-in-out infinite;
+}
+@keyframes ia-scrollbar-pulse {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 1; }
+}
+.reduced-motion .ia-scrollbar-pulse { animation: none; opacity: 0.7; }
+@media (prefers-reduced-motion: reduce) { .ia-scrollbar-pulse { animation: none; opacity: 0.7; } }
 .ia-prod-result {
   min-height: 0;
   overflow-y: auto;
@@ -1327,14 +1440,142 @@ grid-template-columns: 1fr 1fr 1fr;
   margin: -42.5px 0 0 -48.5px;
 }
 
-/* Purple scrollbars in the reverse-search stage so they stay visible on the dark UI. */
-.ia-prod-result, .ia-imgtray-items, .ia-stage {
-  scrollbar-width: thin;
-  scrollbar-color: #a855f7 rgba(168, 85, 247, 0.12);
-}
+/* Purple scrollbars in the reverse-search stage so they stay visible on the dark UI.
+   The results lists (game + tutorial demo) get a wide, easy-to-spot bar.
+   Note: Chrome ignores ::-webkit-scrollbar when the standard scrollbar-width /
+   scrollbar-color are set, so those go only to browsers without the
+   -webkit- pseudo (Firefox), via @supports. */
 .ia-prod-result::-webkit-scrollbar, .ia-imgtray-items::-webkit-scrollbar, .ia-stage::-webkit-scrollbar { width: 8px; }
 .ia-prod-result::-webkit-scrollbar-thumb, .ia-imgtray-items::-webkit-scrollbar-thumb, .ia-stage::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 8px; }
 .ia-prod-result::-webkit-scrollbar-track, .ia-imgtray-items::-webkit-scrollbar-track, .ia-stage::-webkit-scrollbar-track { background: rgba(168, 85, 247, 0.12); border-radius: 8px; }
+.ia-prod-result::-webkit-scrollbar, .ia-demo-results::-webkit-scrollbar { width: 28px; }
+.ia-prod-result::-webkit-scrollbar-thumb, .ia-demo-results::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 14px; border: 3px solid transparent; background-clip: padding-box; min-height: 48px; }
+.ia-prod-result::-webkit-scrollbar-track, .ia-demo-results::-webkit-scrollbar-track { background: rgba(168, 85, 247, 0.16); border-radius: 14px; }
+@supports not selector(::-webkit-scrollbar) {
+  .ia-prod-result, .ia-imgtray-items, .ia-stage, .ia-demo-results { scrollbar-color: #a855f7 rgba(168, 85, 247, 0.12); }
+  .ia-imgtray-items, .ia-stage { scrollbar-width: thin; }
+  .ia-prod-result, .ia-demo-results { scrollbar-width: auto; }
+}
+
+/* "Scroll down" nudge: under the game, centred below the results column
+   (tray + gap on the left, classify column + gap on the right), arrows
+   pointing up at the results with the text beneath. Neon pink leaning red. */
+.ia-actions { position: relative; --ia-tray: 190px; --ia-classify: 230px; }
+.ia-scroll-nudge {
+  position: absolute;
+  top: -8px; /* tucked right up against the bottom of the game */
+  left: calc(var(--ia-tray) + 16px);
+  right: calc(var(--ia-classify) + 16px);
+  display: flex;
+  flex-direction: row; /* arrows left, text right */
+  align-items: center;
+  justify-content: flex-start; /* sits at the left edge of the results column */
+  padding-left: 12px;
+  gap: 12px;
+  pointer-events: none;
+  z-index: 2;
+  --nudge: #ff2a6d;
+  --nudge-glow: rgba(255, 30, 90, 0.75);
+  --nudge-arrow: #f489fd;
+  --nudge-arrow-glow: rgba(244, 137, 253, 0.75);
+}
+.ia-scroll-nudge-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+  animation: ia-nudge-bob 1.2s ease-in-out infinite;
+}
+.ia-scroll-nudge-chevron {
+  width: 24px;
+  height: 24px;
+  border-top: 5px solid var(--nudge-arrow);
+  border-left: 5px solid var(--nudge-arrow);
+  transform: rotate(45deg);
+  filter: drop-shadow(0 0 6px var(--nudge-arrow-glow));
+  animation: ia-nudge-fade 1.2s ease-in-out infinite;
+}
+.ia-scroll-nudge-chevron + .ia-scroll-nudge-chevron { margin-top: -10px; animation-delay: 0.2s; }
+.ia-scroll-nudge-text {
+  font-family: var(--font-retro);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #f489fd;
+  text-shadow: 0 0 8px var(--nudge-glow), 0 0 2px rgba(0, 0, 0, 0.9);
+  white-space: nowrap;
+  margin-left: 0.4rem
+}
+@keyframes ia-nudge-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes ia-nudge-fade { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+@media (max-width: 1180px) {
+  .ia-actions { --ia-tray: 290px; --ia-classify: 270px; }
+  .ia-scroll-nudge-chevron { color: #f489fd; width: 32px; height: 32px; border-width: 6px; }
+  .ia-scroll-nudge-text { font-size: calc(20px * var(--text-boost, 1)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ia-scroll-nudge-arrow, .ia-scroll-nudge-chevron { animation: none; opacity: 1; }
+}
+
+/* Stamps locked until the shown product's results have been looked at. */
+.ia-stampmaker.is-locked { opacity: 0.4; filter: grayscale(0.7); cursor: not-allowed; }
+.ia-stampmaker.is-locked:hover { border-color: var(--line); transform: none; }
+/* The stamp column anchors the notice and the timer line. */
+.ia-engine-classify { position: relative; }
+/* "Look at the results first": a light-blue notice floating over the top of
+   the stamp column, slightly see-through, with a ✕ to dismiss it. */
+.ia-stamp-locked-msg {
+  position: absolute;
+  top: 8px;
+  left: 6px;
+  right: 6px;
+  z-index: 5;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 10px 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #7fd6ff;
+  background: #cfeeff;
+  color: #062a44;
+  opacity: 0.85;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.35;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45), 0 0 14px rgba(127, 214, 255, 0.35);
+  animation: fade-in 0.25s ease both;
+}
+.ia-stamp-locked-msg > span { flex: 1; padding-top: 2px; }
+.ia-stamp-locked-msg .ia-stamp-locked-close { flex: none; width: 28px; height: 28px; }
+.ia-stamp-locked-msg .ia-stamp-locked-close svg { width: 14px; height: 14px; }
+@media (max-width: 1180px) {
+  .ia-stamp-locked-msg .ia-stamp-locked-close { width: 40px; height: 40px; }
+  .ia-stamp-locked-msg .ia-stamp-locked-close svg { width: 20px; height: 20px; }
+}
+/* Tiny countdown line at the very top of the stamp column. */
+.ia-stamp-timer {
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(70, 120, 160, 0.12);
+  overflow: hidden;
+  flex: none;
+}
+.ia-stamp-timer-fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: #3a6f94; /* muted steel blue: present but quiet */
+  transform-origin: left center;
+  animation-name: ia-stamp-timer;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+@keyframes ia-stamp-timer { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (max-width: 1180px) {
+  .ia-stamp-locked-msg { font-size: calc(18px * var(--text-boost, 1)); }
+  .ia-stamp-timer { height: 4px; }
+}
 
 /* ---------- Explainer demo: scripted run of the reverse-search challenge ----------
    Fixed 820 × 300 layout so the flying image / stamp keyframes land precisely. */
@@ -1492,13 +1733,8 @@ grid-template-columns: 1fr 1fr 1fr;
   flex-direction: column;
   gap: 6px;
   padding-right: 4px;
-  scrollbar-width: thin;
-  scrollbar-color: #a855f7 rgba(168, 85, 247, 0.12);
 }
 .ia-demo-results > * { flex: none; }
-.ia-demo-results::-webkit-scrollbar { width: 8px; }
-.ia-demo-results::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 8px; }
-.ia-demo-results::-webkit-scrollbar-track { background: rgba(168, 85, 247, 0.12); border-radius: 8px; }
 .ia-demo-classify { display: flex; flex-direction: column; gap: 5px; }
 .ia-demo-results .ia-matches, .ia-demo-results .ia-matches-col { gap: 8px; }
 .ia-demo-results .ia-match-img { border-radius: 9px; }
@@ -1617,15 +1853,28 @@ grid-template-columns: 1fr 1fr 1fr;
   background: #8a6a4a;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
 }
+/* The "Handmade" headline: an eye-catching label — black, heavy and big on a
+   light-yellow card, so it reads at a glance even in the small thumbnails. */
 .ia-art-handmade {
   white-space: normal !important;
   font-family: var(--font-script);
-  font-size: 44px;
-  font-weight: 800;
-  line-height: 1.02;
-  text-align: right;
-  color: #261d1d;
-  text-shadow: 0 2px 6px rgba(255, 254, 253, 0.75), 0 0 2px rgba(249, 246, 245, 0.6);
+  font-size: 50px;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+  color: #000;
+  background: rgba(255, 244, 176, 0.8);
+  padding: 8px 24px 10px; /* even room both sides; the script's last stroke needs it */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  -webkit-text-stroke: 0.6px #000; /* extra weight for script faces without a 900 cut */
+  /* Hug the word, anchored to the photo's RIGHT edge so a longer word grows
+     leftwards instead of running off the image (that clipped the "e" of
+     "Handmade"). Widest word: "Käsityöläisen" ≈ 268px at 50px. */
+  width: max-content !important;
+  max-width: 330px;
+  left: auto !important;
+  right: 12px;
 }
 
 /* Price chip on a reverse-search result photo (Lens-style), top-left corner */
@@ -1637,17 +1886,20 @@ grid-template-columns: 1fr 1fr 1fr;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 3px 8px 3px 6px;
+  padding: 5px 12px 5px 9px;
   border-radius: 999px;
   background: #fff;
   color: #202124;
   font-family: var(--font-neogrotesk);
-  font-size: 0.68rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
   line-height: 1.2;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
-.ia-match-price img { width: 12px; height: 12px; display: block; }
+.ia-match-price img { width: 17px; height: 17px; display: block; }
+/* The tutorial demo's thumbnails are smaller, so its chips are too. */
+.ia-demo-results .ia-match-price { top: 5px; left: 5px; padding: 3px 8px 3px 6px; font-size: 0.72rem; gap: 4px; }
+.ia-demo-results .ia-match-price img { width: 12px; height: 12px; }
 
 /* Bluetooth speaker: yellow sale sticker, black bold-italic grotesk, half-size decimals */
 .ia-art-sale {

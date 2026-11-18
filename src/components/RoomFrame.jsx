@@ -37,6 +37,7 @@ export default function RoomFrame({
   bgImage,
   dimBackground = false,
   showBack = true, // the top-left "back to the instructions" arrow
+  onBack, // optional: what that arrow does instead (e.g. back to a room's own sub-explainer)
   solved = false,
   solvedText,
   reward = null,
@@ -106,7 +107,11 @@ export default function RoomFrame({
       {bgImage && <div className="bg-slot" style={{ backgroundImage: `url(${bgImage})` }} />}
       {/* Optional lights-out layer: darkens the background image itself. Sits
           just above .bg-slot but behind all interactive content. */}
-      {dimBackground && <div className="bg-blackout" aria-hidden />}
+      {/* true = full lights-out; a number = that darkness (0–1) instead. */}
+      {dimBackground !== false && dimBackground != null && (
+        <div className="bg-blackout" aria-hidden
+          style={typeof dimBackground === 'number' ? { background: `rgba(2, 3, 10, ${dimBackground})` } : undefined} />
+      )}
 
       {(!started || reviewing) && (
         <div className={`room-briefing fade-in ${reviewing ? 'is-review' : ''}`}>
@@ -141,7 +146,7 @@ export default function RoomFrame({
             <button type="button" className="room-brief-back"
               aria-label={t('common.back')} title={t('common.back')}
               onMouseDown={(event) => event.preventDefault()}
-              onClick={() => setReviewing(true)}>
+              onClick={() => (onBack ? onBack() : setReviewing(true))}>
               <svg viewBox="0 0 32 24" aria-hidden="true" focusable="false"><path d="M13 4 5 12l8 8M5 12h23" /></svg>
             </button>
           )}

@@ -11,7 +11,11 @@ import { useRoomProgress } from '../game/roomProgress.js'
 import { track, OBJ } from '../game/xapi.js'
 import RoomFrame from '../components/RoomFrame.jsx'
 import { useStage } from '../components/Stage.jsx'
+import { settings } from '../game/settings.js'
 import './AdsCorridor.css'
+
+// Whether the flashlight darkens the room (see settings.adsCorridor).
+const DARK_ROOM = settings.adsCorridor.darkRoom
 
 /* CORRIDOR (between Puzzle 3 and 4) — Ads Corridor.
    Per the brief: glossy ads hide the truth in the fine print. The player
@@ -243,14 +247,14 @@ export default function AdsCorridor({ node }) {
       bgImage={bgUrl('ads.png')}
       // Lights-out: darken the whole scene (incl. the background image) while
       // the flashlight is on, so only the beam reveals the posters.
-      dimBackground={lightOn}
+      dimBackground={lightOn && (DARK_ROOM || settings.adsCorridor.litDim)}
       intro={t('rooms.ads.intro')}
       solved={solved}
       solvedTitle={t('rooms.ads.solvedTitle')}
       solvedText={t('rooms.ads.solvedText')}
       onContinue={() => completeRoom(node.id)}
     >
-      <div className={`ac-wrap fade-in ${lightOn ? 'light-on' : ''}`}>
+      <div className={`ac-wrap fade-in ${lightOn ? 'light-on' : ''} ${DARK_ROOM ? 'dark-room' : 'lit-room'}`}>
         <div className="ac-layout">
           {/* Left: corridor wall with its posters + cursor-tracked flashlight */}
           <div
