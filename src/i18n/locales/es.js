@@ -61,7 +61,7 @@ export default {
     "titleAccent": "INTERNET FÍSICO",
     "tagline": "// Anuncios · Estafas · Sitios web fraudulentos — descifrado",
     "situationTitle": "La situación",
-    "hook": "Tu amigo {friend} acaba de encontrar una oferta viral en {product}: ¡90% de descuento, solo por hoy! Parece increíble… y por eso mismo crees que es una estafa.",
+    "hook": "{friend:Tu amigo|Tu amiga} {friend} acaba de encontrar una oferta viral en {product}: ¡90% de descuento, solo por hoy! Parece increíble… y por eso mismo crees que es una estafa.",
     "context": "Para mostrarle a {friend} cómo funcionan realmente las estafas y la publicidad, ambos entran en una versión física de Internet: una ciudad de neón donde las tiendas, las plataformas sociales y los anuncios se convierten en distritos por los que se puede pasear.",
     "clock": "⏱ {minutes}:00 en el reloj",
     "mission": "Tienes {minutes} minutos —el tiempo que queda antes de que expire la oferta— para navegar por Internet, recopilar información sobre cómo funcionan los anuncios y las estafas, y convencer a {friend} de que no compre. Si el temporizador llega a cero, {friend} lo compra.",
@@ -127,7 +127,7 @@ export default {
         },
         "choseBuy": {
           "heading": "Sin argumentos",
-          "body": "Te quedaste sin formas de convencer a {friend}. Sin estar convencido, {friend} decidió lanzarse y compró {product}."
+          "body": "Te quedaste sin formas de convencer a {friend}. Sin estar {friend:convencido|convencida}, {friend} decidió lanzarse y compró {product}."
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Convincente, pero sin pruebas suficientes",
@@ -259,7 +259,7 @@ export default {
           },
           {
             "k": "C",
-            "text": "No metas la tarjeta. Mientras uses Apple Pay o PayPal, estás 100 % seguro.",
+            "text": "No metas la tarjeta. Mientras uses Apple Pay o PayPal, estás 100 % {friend:seguro|segura}.",
             "correct": true
           },
           {
@@ -283,7 +283,7 @@ export default {
         "Sea cual sea el motivo del montaje, ¡no quiero perdérmelo antes de que el reloj llegue a cero! Además, es una influencer enorme, no publicaría algo al azar. Pero lo raro es cómo este anuncio sabía que quería una tablet. Apareció justo arriba del todo en mi feed.",
         "A ver, hay mil teorías sobre cómo los algoritmos y las cuentas manejan los anuncios, pero ahora mismo estoy viendo la página real de la tienda. Tiene el logo oficial de la marca, reseñas estupendas y un pago seguro."
       ],
-      "endingFriend": "Mira, puedes diseccionar la página todo lo que quieras, ¡pero a mí todo me parece correcto! Estás siendo paranoico. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, cuarenta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
+      "endingFriend": "Mira, puedes diseccionar la página todo lo que quieras, ¡pero a mí todo me parece correcto! Estás siendo {player:paranoico|paranoica}. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, cuarenta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
       "endingYou": "Trato hecho. Vamos a mirar detrás de la pantalla.",
       "begin": "▶ Mirar detrás de la pantalla"
     },
@@ -295,7 +295,7 @@ export default {
       "friend": {
         "responses": [
           "¿Qué acaba de pasar? ¿Crees que algo de lo que hemos visto era... real?",
-          "Ya, sobre eso... Sin ofender, {player}, pero quiero esta tablet de verdad. ¿Y si no es una estafa? ¡¡Creo que estoy dispuesto a arriesgarme!!",
+          "Ya, sobre eso... Sin ofender, {player}, pero quiero esta tablet de verdad. ¿Y si no es una estafa? ¡¡Creo que estoy {friend:dispuesto|dispuesta} a arriesgarme!!",
           "Dime simplemente las razones más fuertes por las que crees que es una estafa."
         ]
       },
@@ -308,7 +308,7 @@ export default {
       },
       "responses": [
         "Te escucho, pero la presión se siente muy real con ese reloj corriendo delante de mí. Y no es solo el temporizador: no dejo de pensar que venía de una de mis creadoras favoritas. Pero sigue el misterio de cómo acabó llegándome.",
-        "Tío, es una locura cómo se gestiona todo entre bambalinas en estas apps. Pero al final del día sigo mirando esta página de pago intentando decidir si es seguro meter mis datos."
+        "{player:Tío|Tía}, es una locura cómo se gestiona todo entre bambalinas en estas apps. Pero al final del día sigo mirando esta página de pago intentando decidir si es seguro meter mis datos."
       ],
       "convinced": "Me has convencido. Ahora entiendo las señales de alerta y cómo esta oferta intentaba influir en mí. No voy a comprar la tablet.",
       "endingFriend": "Uf, me has dado mucho que procesar, pero tengo que decidir ahora mismo: el temporizador está a punto de llegar a cero. Con todo lo que hemos visto, dímelo claro: ¿cierro esta pestaña y protejo mis datos, o me arriesgo y la compro?",
@@ -319,7 +319,7 @@ export default {
       "retryGiveUp": "Dejar que {friend} compre la tablet"
     },
     "mastery": {
-      "banner": "Una vez más: sigo sin estar convencido. Dame la razón más fuerte de cada una."
+      "banner": "Una vez más: sigo sin estar {friend:convencido|convencida}. Dame la razón más fuerte de cada una."
     }
   },
   "enter": {
@@ -334,8 +334,8 @@ export default {
     "mission": "¡Tendremos que explorar los distritos, reunir pruebas de cómo funciona la estafa y volver al instituto antes de que caduque la oferta!",
     "mapText": "Tu ruta por el Internet Físico. Viaja de distrito en distrito: completa uno para desbloquear el siguiente, hasta la decisión final.",
     "bagText": "Tus herramientas y las pruebas que recojas. Ábrela para usar objetos en los retos y repasar las pruebas que le enseñarás a {friend}.",
-    "hintsText": "¿Atascado en un reto? En \"Pistas\" tienes las claves del distrito en el que estás.",
-    "finalLine": "¿Listo? El temporizador arranca en cuanto abras el mapa."
+    "hintsText": "¿{player:Atascado|Atascada} en un reto? En \"Pistas\" tienes las claves del distrito en el que estás.",
+    "finalLine": "¿{player:Listo|Lista}? El temporizador arranca en cuanto abras el mapa."
   },
   "return": {
     "playerLine": "¡Ha ido bien! Creo que hemos reunido pruebas más que de sobra.",
@@ -408,7 +408,7 @@ export default {
     }
   },
   "session": {
-    "title": "Bienvenido de nuevo",
+    "title": "Hola de nuevo",
     "message": "Tienes una partida en curso. ¿Continúas donde lo dejaste o empiezas desde el principio?",
     "progress": "Distritos completados: {done}/{total} · quedan {time}",
     "resume": "Continuar partida",
@@ -509,7 +509,7 @@ export default {
     "noTarget": "Regresa al mapa para elegir un distrito disponible.",
     "mapObjective": {
       "title": "Abierto {district}",
-      "text": "Esta es la siguiente sala disponible en la investigación. Accede a ella desde el mapa cuando estés listo para comenzar el desafío."
+      "text": "Esta es la siguiente sala disponible en la investigación. Accede a ella desde el mapa cuando estés {player:listo|lista} para comenzar el desafío."
     },
     "objectives": {
       "pretest": {
@@ -548,7 +548,7 @@ export default {
       ]
     },
     "posttest": {
-      "context": "Utiliza lo que has descubierto para ayudar a tu amigo a tomar la decisión final.",
+      "context": "Utiliza lo que has descubierto para ayudar a {friend:tu amigo|tu amiga} a tomar la decisión final.",
       "prompts": [
         "No sé cómo separar las pruebas reales de la mera retórica persuasiva.",
         "No sé cuáles son las señales de advertencia más importantes.",
@@ -1079,7 +1079,7 @@ export default {
         "runSearch": "🔍 Ejecutar búsqueda inversa",
         "engineBar": "reverse-image-search.io",
         "engineDrop": "Arrastra aquí una imagen de producto para buscarla al revés",
-        "trayLabel": "Tus imágenes de producto guardadas",
+        "trayLabel": "Tus imágenes guardadas",
         "classifyPrompt": "Entonces este producto es…",
         "searching": "Buscando en la web",
         "matchesTitle": "Coincidencias encontradas",
@@ -1092,6 +1092,8 @@ export default {
         "learn": "una búsqueda inversa de imágenes comprueba si la foto de un producto «artesanal», «único» o «real» está en realidad robada, fabricada en masa en decenas de tiendas de dropshipping o generada por IA. Que no aparezca ningún resultado también puede significar que la imagen es falsa.",
         "hint": "Busca primero y luego clasifica los tres.",
         "confirm": "Confirmar clasificaciones →",
+        "lookFirst": "Mira los resultados para tomar una decisión.",
+        "scrollDown": "Compara los resultados",
         "stampHere": "Sella aquí",
         "removeStamp": "Quitar el sello"
       },
@@ -1100,7 +1102,7 @@ export default {
           "name": "Taza de cerámica artesanal",
           "art": {
             "price": "18,99 €",
-            "label": "Artesanal"
+            "label": "Taza única"
           },
           "matches": [
             {
@@ -1143,7 +1145,7 @@ export default {
             "price": "49€",
             "urgency": "¡Date prisa! ¡La oferta acaba en poco tiempo!",
             "oldPrice": "600€",
-            "fake": "¡¡¡FALSO!!!"
+            "fake": "¡FALSO!"
           },
           "matches": [
             {
@@ -1155,12 +1157,12 @@ export default {
               "title": "Tablet de ciencia ficción — obra generada por IA"
             },
             {
-              "site": "lunawear.com-official.shop/",
-              "title": "Oferta por tiempo limitado - NovaPad patrocinada por LunaWears por solo 49 €"
-            },
-            {
               "site": "fakedetector-ads-news.org",
               "title": "¡ES FALSO! - Cuidado con la NovaPad X supuestamente patrocinada por LunaWears"
+            },
+            {
+              "site": "lunawear.com-official.shop/",
+              "title": "Oferta por tiempo limitado - NovaPad patrocinada por LunaWears por solo 49 €"
             },
             {
               "site": "mediamarket.shop",
@@ -1224,7 +1226,7 @@ export default {
         "body": "¿Es el producto lo que dicen? Una búsqueda inversa de imágenes te ayuda a comprobarlo: buscas con una foto y encuentra esa misma imagen u otras parecidas que aparecen en internet, para que verifiques si la imagen es de verdad lo que el vendedor afirma.",
         "instructions": "Primero haz la búsqueda inversa de la imagen. Después, mira los resultados para juzgar la autenticidad del producto.",
         "useShop": "¿Te encanta una prenda que viste en una publicación? Haz una búsqueda inversa de la foto para encontrar dónde comprarla de verdad.",
-        "useVerify": "¿No estás seguro de que el producto de un influencer sea auténtico? Búscalo al revés para ver si es realmente único o el mismo artículo fabricado en masa que vende todo el mundo.",
+        "useVerify": "¿No estás {player:seguro|segura} de que el producto de un influencer sea auténtico? Búscalo al revés para ver si es realmente único o el mismo artículo fabricado en masa que vende todo el mundo.",
         "searchLabel": "búsqueda inversa de imágenes",
         "searching": "Buscando en la web…",
         "dragHint": "↓ Arrastra la foto del vendedor a una búsqueda inversa de imágenes",
@@ -1475,7 +1477,7 @@ export default {
           "glossyTitle": "🛡️ ¡VIRUS DETECTADO!",
           "glossyBody": "Tu dispositivo puede estar en riesgo: ¡descarga SecureNow GRATIS!",
           "glossyBadge": "GRATIS",
-          "truth": "La advertencia es falsa y el «antivirus» es el malware. Las alertas reales nunca llegan desde un anuncio. Si no estás seguro, no lo abras.",
+          "truth": "La advertencia es falsa y el «antivirus» es el malware. Las alertas reales nunca llegan desde un anuncio. Si no estás {player:seguro|segura}, no lo abras.",
           "truthTitle": "🚨 No tenías un virus... ahora sí",
           "letter": "B"
         }

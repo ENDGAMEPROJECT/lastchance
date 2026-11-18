@@ -1,8 +1,26 @@
+/* Gendered wording. Languages that inflect adjectives/participles by gender
+   (es "paranoico/paranoica", sr "spreman/spremna") write both forms in the
+   Sheet cell and say WHO the word agrees with:
+
+     {player:masculine|feminine}  -> the character the player plays
+     {friend:masculine|feminine}  -> the friend being convinced
+
+   e.g. "Estás siendo {player:paranoico|paranoica}." (the friend is talking
+   about the player) or "Creo que estoy {friend:dispuesto|dispuesta}" (the
+   friend talking about themselves). Masculine always comes first. The
+   genders come from characters.js via characterVars (player_gender /
+   friend_gender). Without them (no narrative) both forms show as "m/f". */
+const GENDERED = /\{(player|friend):([^{}|]*)\|([^{}|]*)\}/g
+
 // Text comes from the translation sheet; character roles supply variables only.
 export function interpolate(value, vars = {}) {
-  return typeof value === 'string'
-    ? value.replace(/\{(\w+)\}/g, (match, name) => name in vars ? String(vars[name]) : match)
-    : value
+  if (typeof value !== 'string') return value
+  return value
+    .replace(GENDERED, (match, who, masculine, feminine) => {
+      const gender = vars[`${who}_gender`]
+      return gender === 'F' ? feminine : gender === 'M' ? masculine : `${masculine}/${feminine}`
+    })
+    .replace(/\{(\w+)\}/g, (match, name) => name in vars ? String(vars[name]) : match)
 }
 
 // Map recursively because conversations and reports return entire arrays/objects.
@@ -20,6 +38,8 @@ export function characterVars(narrative, dict) {
     friend: narrative.friend,
     player: narrative.player,
     product: narrative.product,
+    player_gender: narrative.playerGender,
+    friend_gender: narrative.friendGender,
   }
 
   /* Languages that inflect the name itself — Finnish cases, Serbian cases —

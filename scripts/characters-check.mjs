@@ -62,4 +62,15 @@ for (const [locale, dictionary] of Object.entries(dictionaries)) {
     assert.equal(translated.rooms.algorithm.report.entries[0].text, `Sheet activity for ${vars.friend}`)
   }
 }
+// Gendered wording agrees with the right character in each role.
+const gendered = 'Estás {player:paranoico|paranoica}; estoy {friend:dispuesto|dispuesta}.'
+assert.equal(interpolate(gendered, characterVars(getNarrative('mia'))), 'Estás paranoica; estoy dispuesto.')
+assert.equal(interpolate(gendered, characterVars(getNarrative('max'))), 'Estás paranoico; estoy dispuesta.')
+assert.equal(interpolate(gendered, {}), 'Estás paranoico/paranoica; estoy dispuesto/dispuesta.')
+for (const [locale, dictionary] of Object.entries(dictionaries)) {
+  for (const character of ['mia', 'max']) {
+    const bound = mapText(dictionary, (text) => interpolate(text, characterVars(getNarrative(character))))
+    mapText(bound, (text, path) => assert(!/\{(player|friend):/.test(text), `${locale}/${character}: ${path} has an unresolved gender marker`))
+  }
+}
 console.log('Character checks passed: both roles, all locales, story references, nested translations and unchanged assessment answers.')

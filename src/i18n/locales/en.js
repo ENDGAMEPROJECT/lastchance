@@ -1092,6 +1092,8 @@ export default {
         "learn": "a reverse image search checks whether a “handmade”, “unique” or “real” product photo is actually stolen, mass-produced across dozens of dropshipping stores, or AI-generated. No results at all can mean the image is fake.",
         "hint": "Search first, then classify all three.",
         "confirm": "Confirm classifications →",
+        "lookFirst": "Look at the results first to make a decision.",
+        "scrollDown": "Look at the results first",
         "stampHere": "Stamp here",
         "removeStamp": "Remove stamp"
       },
@@ -1155,12 +1157,12 @@ export default {
               "title": "Sci-fi tablet — AI artwork"
             },
             {
-              "site": "lunawear.com-official.shop/",
-              "title": "Limited Time Offer - NovaPad Sponsored By LunaWears For Only €49"
-            },
-            {
               "site": "fakedetector-ads-news.org",
               "title": "IT'S FAKE! - Be careful with the NovaPad X supposedly sponsored by LunaWears"
+            },
+            {
+              "site": "lunawear.com-official.shop/",
+              "title": "Limited Time Offer - NovaPad Sponsored By LunaWears For Only €49"
             },
             {
               "site": "mediamarket.shop",

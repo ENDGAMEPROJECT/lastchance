@@ -71,6 +71,7 @@ export function getNarrative(character = 'mia') {
   return {
     character: playerId,
     player: CHARACTERS[playerId].name,
+    playerGender: CHARACTERS[playerId].gender,
     friend: CHARACTERS[friendId].name,
     friendId,
     friendGender: CHARACTERS[friendId].gender,

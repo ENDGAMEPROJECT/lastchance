@@ -17,7 +17,7 @@ export default {
     "eyebrow": "Podešavanje igrača",
     "titleLead": "POSLEDNJA ŠANSA",
     "titleAccent": "ZA BEKSTVO",
-    "tagline": "// escape room o oglasima, prevarama i lažnim veb-sajtovima",
+    "tagline": "// escape soba o oglasima, prevarama i lažnim veb-sajtovima",
     "subtitle": "Podesi svog igrača, a zatim se poveži na Fizički internet.",
     "aliasLabel": "Izaberi nadimak",
     "aliasPlaceholder": "npr. Ne0nRunner",
@@ -30,11 +30,11 @@ export default {
     "characterError": "Izaberi lika",
     "languageError": "Izaberi jezik",
     "characterLabel": "Izaberi svog lika",
-    "characterMia": "Mia",
-    "characterMax": "Max"
+    "characterMia": "Mila",
+    "characterMax": "Marko"
   },
   "rotate": {
-    "title": "Okreni telefon",
+    "title": "Rotiraj telefon",
     "text": "Ostatak igre igra se u položenom režimu. Okreni telefon na stranu da nastaviš."
   },
   "hud": {
@@ -45,30 +45,30 @@ export default {
     "bag": "🎒 Torba",
     "muteSound": "Isključi zvuk",
     "unmuteSound": "Uključi zvuk",
-    "inventoryTitle": "Inventar i dokazi",
-    "tools": "Alati i nagrade",
-    "noTools": "Još ništa nije prikupljeno. Reši zagonetke da bi osvojio/la alate.",
+    "inventoryTitle": "Predmeti i Dokazi",
+    "tools": "Alati i Nagrade",
+    "noTools": "Još uvek ništa nije sakupljeno. Reši zagonetke da bi osvojio/la alate.",
     "evidenceHeading": "Dokazi o ponudi",
     "noEvidence": "Prikupi dokaze u svakom okrugu kako bi na kraju ubedio/la {friend_accusative}.",
     "hints": "💡 Saveti",
     "enterFullscreen": "Prikaži preko celog ekrana",
     "exitFullscreen": "Izađi iz prikaza preko celog ekrana",
-    "fullscreenError": "Prikaz preko celog ekrana nije moguće uključiti. Pokušaj ponovo."
+    "fullscreenError": "Nije moguće uključiti prikaz preko celog ekrana. Pokušaj ponovo."
   },
   "intro": {
-    "eyebrow": "Edukativni escape room",
+    "eyebrow": "Edukativna escape soba",
     "titleLead": "/",
     "titleAccent": "FIZIČKI INTERNET",
-    "tagline": "// oglasi · prevare · lažni veb-sajtovi — razotkriveni",
+    "tagline": "// oglasi · prevare · lažni veb-sajtovi - dekodirani",
     "situationTitle": "Situacija",
-    "hook": "Tvoj prijatelj {friend} upravo je pronašao viralnu ponudu za {product} — 90% popusta, „samo danas“. Deluje neverovatno… upravo zato misliš da je prevara.",
-    "context": "Da biste {friend_dative} pokazali kako prevare i oglašavanje zaista funkcionišu, oboje se povezujete na fizičku verziju Interneta — neonski grad u kojem prodavnice, društvene platforme i oglasi postaju okruzi kroz koje možete da se krećete.",
+    "hook": "{friend:Tvoj prijatelj|Tvoja prijateljica} {friend} upravo je {friend:pronašao|pronašla} viralnu ponudu za {product} - 90% popusta, „samo danas“. Deluje neverovatno… upravo zato misliš da je prevara.",
+    "context": "Da biste {friend_dative} pokazali kako prevare i oglašavanje zaista funkcionišu, oboje se povezujete na fizičku verziju Interneta - neonski grad u kojem prodavnice, društvene platforme i oglasi postaju zone kroz koje možete da se krećete.",
     "clock": "⏱ {minutes}:00 na satu",
-    "mission": "Imaš {minutes} minuta — toliko vremena pre nego što ponuda istekne — da prođeš kroz Fizički internet, prikupiš dokaze o tome kako funkcionišu oglasi i prevare i ubediš {friend} da ne kupuje. Ako vreme istekne, {friend} će kupiti proizvod.",
+    "mission": "Imaš {minutes} minuta - toliko vremena pre nego što ponuda istekne - da prođeš kroz Fizički internet, prikupiš dokaze o tome kako funkcionišu oglasi i prevare i ubediš {friend} da ne kupuje. Ako vreme istekne, {friend} će kupiti proizvod.",
     "steps": [
       {
         "title": "1 · Istraži",
-        "text": "Četiri okruga, dva prolaza. U svakom ćeš naučiti po jednu taktiku koju oglašivači koriste."
+        "text": "Četiri okruga, dva prolaza. U svakoj ćeš naučiti po jednu taktiku koju oglašivači koriste."
       },
       {
         "title": "2 · Prikupi",
@@ -79,7 +79,7 @@ export default {
         "text": "Stigni do Konačne odluke i iskoristi svoje dokaze pre nego što vreme istekne."
       }
     ],
-    "start": "▶ Uđi unutra — pokreni sat",
+    "start": "▶ Uđi unutra - pokreni sat",
     "pretest": "Pre-test: prvo reci {friend_dative} šta već misliš o ovoj ponudi. Zatim uđi na Internet."
   },
   "map": {
@@ -92,7 +92,7 @@ export default {
   },
   "roomframe": {
     "clearedDefaultTitle": "Okrug završen",
-    "clearedDefaultText": "Odlično. Sledeći čvor je otključan na mapi.",
+    "clearedDefaultText": "Odlično. Sledeći segment je otključan na mapi.",
     "collect": "prikupi",
     "collected": "Predmet prikupljeno",
     "addedToBag": "dodato u torbu"
@@ -103,10 +103,10 @@ export default {
       "titleLead": "{friend}",
       "titleAccent": "NIJE KUPIO/LA",
       "tag": "Ponuda je istekla, a ostalo je još {time}",
-      "heading": "Izneo/la si dokaze",
-      "body": "Pomoću dokaza koje si prikupio/la širom fizičkog interneta, pokazao/la si {friend_dative} da je oglas za tablet ‘NovaPad X’ najverovatnije prevara.",
+      "heading": "{player:Izneo|Iznela} si dokaze",
+      "body": "Pomoću dokaza koje si {player:prikupio|prikupila} širom fizičkog interneta, {player:pokazao|pokazala} si {friend_dative} da je oglas za tablet ‘NovaPad X’ najverovatnije prevara.",
       "evidenceHeading": "Predočeni dokazi",
-      "posttest": "Post-test: ponovo razgovaraj sa {friend_instrumental}. Šta si naučio/la o prepoznavanju prevara, obavezi navođenja sponzorstava i tome zašto je ono što deluje „predobro da bi bilo istinito“ obično upravo to?",
+      "posttest": "Post-test: ponovo razgovaraj sa {friend_instrumental}. Šta si {player:naučio|naučila} o prepoznavanju prevara, obavezi navođenja sponzorstava i tome zašto je ono što deluje „predobro da bi bilo istinito“ obično upravo to?",
       "again": "↻ Igraj ponovo",
       "evidenceButton": "Pogledaj svoje dokaze"
     },
@@ -116,32 +116,32 @@ export default {
       "titleAccent": "KLIKNI „KUPI ODMAH“",
       "tag": "Odbrojavanje je stiglo do nule",
       "heading": "Ponuda je bila brža",
-      "body": "Pre nego što si uspeo/la da prikupiš sve dokaze, lažno odbrojavanje „samo danas“ je odradilo svoje i {friend} je kupio {product}. Cela fora bila je u stvaranju osećaja hitnosti.",
+      "body": "Pre nego što si {player:uspeo|uspela} da prikupiš sve dokaze, lažno odbrojavanje „samo danas“ je odradilo svoje i {friend} je {friend:kupio|kupila} {product}. Cela fora bila je u stvaranju osećaja hitnosti.",
       "lessonLabel": "Pouka:",
-      "lesson": "Veštački stvoren osećaj hitnosti („ostala su samo 3 komada!“, „ponuda ističe za 5:00“) osmišljen je tako da te spreči da razmisliš. Uspori — prava ponuda će biti tu i sutra.",
+      "lesson": "Veštački stvoren osećaj hitnosti („ostala su samo 3 komada!“, „ponuda ističe za 5:00“) osmišljen je tako da te spreči da razmisliš. Uspori, prava ponuda će biti tu i sutra.",
       "again": "↻ Pokušaj ponovo",
       "reasons": {
         "timeUp": {
           "heading": "Ponuda je bila brža",
-          "body": "Pre nego što si uspeo/la da ubediš {friend_accusative}, lažno odbrojavanje „samo danas“ stiglo je do nule — i {friend} je kupio/la {product}. Taj osećaj hitnosti bio je cela fora."
+          "body": "Pre nego što si {player:uspeo|uspela} da ubediš {friend_accusative}, lažno odbrojavanje „samo danas“ stiglo je do nule — i {friend} je {friend:kupio|kupila} {product}. Taj osećaj hitnosti bio je cela fora."
         },
         "choseBuy": {
           "heading": "Ponestalo ti je argumenata",
-          "body": "Ponestalo ti je načina da ubediš {friend_accusative}. I dalje neubeđen/a, {friend} je odlučio/la da rizikuje i kupio/la {product}."
+          "body": "Ponestalo ti je načina da ubediš {friend_accusative}. I dalje {friend:neubeđen|neubeđena}, {friend} je {friend:odlučio|odlučila} da rizikuje i {friend:kupio|kupila} {product}."
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Ubedljivo — ali bez dovoljno dokaza",
           "body": "Mislim da si u pravu, ali nisam video dovoljno dokaza na „fizičkom internetu“. Kupiću tablet.",
           "Mia": {
-            "body": "Ubedio/la si Miu, ali si zakasnio/la. Nije stigla da vidi sve dokaze koje si mogao/la da nađeš u fizičkom internetu."
+            "body": "{player:Ubedio|Ubedila} si Miu, ali si {player:zakasnio|zakasnila}. Nije stigla da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
           },
           "Max": {
-            "body": "Ubedio/la si Maxa, ali si zakasnio/la. Nije stigao da vidi sve dokaze koje si mogao/la da nađeš u fizičkom internetu."
+            "body": "{player:Ubedio|Ubedila} si Maxa, ali si {player:zakasnio|zakasnila}. Nije stigao da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
           }
         },
         "notEnoughEvidenceUnconvincing": {
-          "heading": "Nisi ubedio/la",
-          "body": "Nisi me ubedio/la — a nisam video/videla ni dovoljno dokaza u fizičkom internetu. Kupujem ga."
+          "heading": "Nisi {player:ubedio|ubedila}",
+          "body": "Nisi me {player:ubedio|ubedila} — a nisam {friend:video|videla} ni dovoljno dokaza u fizičkom internetu. Kupujem ga."
         }
       },
       "missingEvidence": {
@@ -155,12 +155,12 @@ export default {
     "whatHappened": {
       "titleLose": "Šta se desilo {friend_dative}:",
       "titleWin": "Šta je moglo da se desi {friend_dative}:",
-      "Max": "Max je izgubio novac i nikada nije dobio proizvod. Podaci sa njegove kartice mogu biti ukradeni i iskorišćeni za dodatne kupovine.",
-      "Mia": "Mia je izgubila novac i nikada nije dobila proizvod. Podaci sa njene kartice mogu biti ukradeni i iskorišćeni za dodatne kupovine."
+      "Max": "Marko je izgubio novac i nikada nije dobio proizvod. Podaci sa njegove kartice mogu biti ukradeni i iskorišćeni za dodatne kupovine.",
+      "Mia": "Mila je izgubila novac i nikada nije dobila proizvod. Podaci sa njene kartice mogu biti ukradeni i iskorišćeni za dodatne kupovine."
     },
     "whatCould": {
-      "Max": "Max bi izgubio novac i nikada ne bi dobio proizvod. Podaci sa njegove kartice mogli su biti ukradeni i iskorišćeni za dodatne kupovine.",
-      "Mia": "Mia bi izgubila novac i nikada ne bi dobila proizvod. Podaci sa njene kartice mogli su biti ukradeni i iskorišćeni za dodatne kupovine."
+      "Max": "Marko bi izgubio novac i nikada ne bi dobio proizvod. Podaci sa njegove kartice mogli su biti ukradeni i iskorišćeni za dodatne kupovine.",
+      "Mia": "Mila bi izgubila novac i nikada ne bi dobila proizvod. Podaci sa njene kartice mogli su biti ukradeni i iskorišćeni za dodatne kupovine."
     }
   },
   "story": {
@@ -182,7 +182,7 @@ export default {
     "roundLabel": "Runda {n} · {title}",
     "respondPrompt": "Odgovori {friend_dative}",
     "you": "Ti",
-    "diagnosticNote": "Ovde nema pogrešnih odgovora — samo reci šta misliš.",
+    "diagnosticNote": "Ovde nema pogrešnih odgovora, samo reci šta misliš.",
     "rounds": [
       {
         "title": "Tajmer",
@@ -208,9 +208,9 @@ export default {
             "correct": false
           }
         ],
-        "why": "Upravo tako — odbrojavanje je veštački stvoren osećaj hitnosti, osmišljen da te navede da reaguješ pre nego što razmisliš.",
+        "why": "Upravo tako, odbrojavanje je veštački stvoren osećaj hitnosti, osmišljen da te navede da reaguješ pre nego što razmisliš.",
         "nudge": "Razmisli šta ti to odbrojavanje zapravo radi.",
-        "positiveFeedback": "Misliš, hitnja te tera da reaguješ pre nego što razmisliš...",
+        "positiveFeedback": "Misliš, hitnost te tera da reaguješ pre nego što razmisliš...",
         "negativeFeedback": "Ne znam, to mi ne zvuči tačno.",
         "followUpQuestion": "U redu, šta još?"
       },
@@ -259,7 +259,7 @@ export default {
           },
           {
             "k": "C",
-            "text": "Nemoj unositi podatke kartice. Ako koristiš Apple Pay ili PayPal, 100% si bezbedan/na.",
+            "text": "Nemoj unositi podatke kartice. Ako koristiš Apple Pay ili PayPal, 100% si {friend:bezbedan|bezbedna}.",
             "correct": true
           },
           {
@@ -283,7 +283,7 @@ export default {
         "Kakav god da je razlog za sve ovo, ne želim da propustim ponudu pre nego što odbrojavanje dođe do nule! Osim toga, ona je poznata influenserka — ne bi objavila nešto nasumično. Ali čudno je kako je ovaj oglas uopšte znao da želim tablet. Pojavio se odmah na vrhu mog fid-a.",
         "Slušaj, postoji milion teorija o tome kako algoritmi i nalozi prikazuju oglase, ali ja upravo gledam stranicu prodavnice. Ima zvanični logo brenda, odlične recenzije i bezbedno plaćanje."
       ],
-      "endingFriend": "Slušaj, možeš da analiziraš stranicu koliko god želiš, ali meni sve deluje u redu! Samo si paranoičan/na. Odbrojavanje i dalje traje — imaš još četrdeset minuta, odnosno dok ne stigne do nule, da dokažeš da je ovo zaista prevara. U suprotnom, kliknuću na kupovinu.",
+      "endingFriend": "Slušaj, možeš da analiziraš stranicu koliko god želiš, ali meni sve deluje u redu! Samo si {player:paranoičan|paranoična}. Odbrojavanje i dalje traje — imaš još četrdeset minuta, odnosno dok ne stigne do nule, da dokažeš da je ovo zaista prevara. U suprotnom, kliknuću na kupovinu.",
       "endingYou": "Važi. Hajde da pogledamo šta se dešava iza ekrana.",
       "begin": "▶ Pogledaj šta se dešava iza ekrana"
     },
@@ -291,35 +291,35 @@ export default {
       "eyebrow": "Konačna odluka",
       "debugTag": "Post-test",
       "title": "{friend} se predomišlja",
-      "opening": "Vratio si se. Još gledam stranicu za plaćanje. Pre nego što kupim, reci mi šta si saznao o ovoj ponudi.",
+      "opening": "{player:Vratio|Vratila} si se. Još gledam stranicu za plaćanje. Pre nego što kupim, reci mi šta si {player:saznao|saznala} o ovoj ponudi.",
       "friend": {
         "responses": [
           "Šta se upravo desilo? Misliš da je išta od onoga što smo videli bilo... stvarno?",
-          "Da, povodom toga... Bez uvrede, {player}, ali stvarno želim ovaj tablet. Šta ako nije prevara? Mislim da sam spreman/na da rizikujem!!",
+          "Da, povodom toga... Bez uvrede, {player}, ali stvarno želim ovaj tablet. Šta ako nije prevara? Mislim da sam {friend:spreman|spremna} da rizikujem!!",
           "Samo mi reci najjače razloge zašto misliš da je prevara."
         ]
       },
       "player": {
         "responses": [
-          "Naravno da je bilo stvarno, videli smo sve razloge zašto je ponuda prevara, sećaš se? Da ne bi nasela/nasedao.",
+          "Naravno da je bilo stvarno, videli smo sve razloge zašto je ponuda prevara, sećaš se? Da ne bi {friend:naseo|nasela}.",
           "Hajde, zakasnićemo na čas.",
           "{friend}! Reci mi da se šališ..."
         ]
       },
       "responses": [
         "Razumem te, ali pritisak deluje toliko stvarno dok gledam kako vreme otkucava. I nije samo tajmer — stalno razmišljam o tome da je ponuda došla od jedne od mojih omiljenih kreatorki. Ali i dalje mi nije jasno kako mi se uopšte pojavila.",
-        "Čoveče, način na koji se sve odvija iza kulisa ovih aplikacija je neverovatan. Ali na kraju krajeva, i dalje gledam ovu stranicu za plaćanje i pokušavam da odlučim da li je bezbedno da unesem svoje podatke."
+        "{player:Čoveče|Ženo}, način na koji se sve odvija iza kulisa ovih aplikacija je neverovatan. Ali na kraju krajeva, i dalje gledam ovu stranicu za plaćanje i pokušavam da odlučim da li je bezbedno da unesem svoje podatke."
       ],
-      "convinced": "Ubedio si me. Sada razumem znake upozorenja i kako je ova ponuda pokušala da utiče na mene. Neću kupiti tablet.",
-      "endingFriend": "Uh, dao/la si mi mnogo toga o čemu treba da razmislim, ali moram odmah da odlučim — tajmer samo što nije stigao do nule. Na osnovu svega što smo pogledali, reci mi direktno: da li da zatvorim ovu karticu i zaštitim svoje podatke ili da rizikujem i kupim?",
+      "convinced": "{player:Ubedio|Ubedila} si me. Sada razumem znake upozorenja i kako je ova ponuda pokušala da utiče na mene. Neću kupiti tablet.",
+      "endingFriend": "Uh, {player:dao|dala} si mi mnogo toga o čemu treba da razmislim, ali moram odmah da odlučim — tajmer samo što nije stigao do nule. Na osnovu svega što smo pogledali, reci mi direktno: da li da zatvorim ovu karticu i zaštitim svoje podatke ili da rizikujem i kupim?",
       "choiceClose": "Zatvori karticu. Ovo je prevara.",
       "choiceBuy": "Klikni na kupovinu. Hajde da rizikujemo.",
-      "retryFriend": "Nisi mi dao dovoljno razloga da ne kupim tablet, pa ću ga kupiti. Još ima vremena da pokušaš ponovo: objasni mi ono u šta me još nisi ubedio.",
+      "retryFriend": "Nisi mi {player:dao|dala} dovoljno razloga da ne kupim tablet, pa ću ga kupiti. Još ima vremena da pokušaš ponovo: objasni mi ono u šta me još nisi {player:ubedio|ubedila}.",
       "retryAgain": "Pokušaj ponovo da ubediš {friend_accusative}",
       "retryGiveUp": "Pusti {friend_dative} da kupi tablet"
     },
     "mastery": {
-      "banner": "Još jednom — još uvek nisam ubeđen/a. Daj mi najjači razlog za svaku opciju."
+      "banner": "Još jednom — još uvek nisam {friend:ubeđen|ubeđena}. Daj mi najjači razlog za svaku opciju."
     }
   },
   "enter": {
@@ -1092,6 +1092,8 @@ export default {
         "learn": "obrnuta pretraga slike proverava da li je fotografija „ručno rađenog“, „jedinstvenog“ ili „pravog“ proizvoda zapravo ukradena, masovno proizvedena u desetinama dropshipping prodavnica ili generisana veštačkom inteligencijom. Ako nema nijednog rezultata, slika može biti lažna.",
         "hint": "Prvo pretraži, pa klasifikuj sva tri.",
         "confirm": "Potvrdi klasifikacije →",
+        "lookFirst": "Prvo pogledaj rezultate da bi doneo odluku.",
+        "scrollDown": "Skroluj nadole",
         "stampHere": "Pečatiraj ovde",
         "removeStamp": "Ukloni pečat"
       },
@@ -1155,12 +1157,12 @@ export default {
               "title": "Sci-fi tablet — AI umetnička slika"
             },
             {
-              "site": "lunawear.com-official.shop/",
-              "title": "Ponuda na ograničeno vreme - NovaPad sponzorisan od LunaWears za samo 49 €"
-            },
-            {
               "site": "fakedetector-ads-news.org",
               "title": "LAŽNO JE! - Budite oprezni sa NovaPad X koji navodno sponzoriše LunaWears"
+            },
+            {
+              "site": "lunawear.com-official.shop/",
+              "title": "Ponuda na ograničeno vreme - NovaPad sponzorisan od LunaWears za samo 49 €"
             },
             {
               "site": "mediamarket.shop",

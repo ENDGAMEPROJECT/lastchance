@@ -1092,6 +1092,8 @@ export default {
         "learn": "käänteinen kuvahaku kertoo, onko ”käsintehdyn”, ”ainutlaatuisen” tai ”aidon” tuotteen kuva oikeasti varastettu, massatuotettu kymmenissä dropshipping-kaupoissa tai tekoälyn luoma. Jos osumia ei löydy lainkaan, kuva voi olla väärennös.",
         "hint": "Hae ensin, luokittele sitten kaikki kolme.",
         "confirm": "Vahvista luokittelut →",
+        "lookFirst": "Katso ensin tulokset tehdäksesi päätöksen.",
+        "scrollDown": "Vieritä alas",
         "stampHere": "Leimaa tähän",
         "removeStamp": "Poista leima"
       },
@@ -1143,7 +1145,7 @@ export default {
             "price": "49€",
             "urgency": "Kiirehdi! Tarjous päättyy pian!",
             "oldPrice": "600€",
-            "fake": "VÄÄRENNÖS!!!"
+            "fake": "Väärennos!"
           },
           "matches": [
             {
@@ -1155,12 +1157,12 @@ export default {
               "title": "Scifi-tabletti — tekoälyn luoma kuva"
             },
             {
-              "site": "lunawear.com-official.shop/",
-              "title": "Rajoitettu tarjous - NovaPad LunaWearsin sponsoroimana vain 49 €"
-            },
-            {
               "site": "fakedetector-ads-news.org",
               "title": "SE ON VÄÄRENNÖS! - Varo NovaPad X:ää, jota LunaWears muka sponsoroi"
+            },
+            {
+              "site": "lunawear.com-official.shop/",
+              "title": "Rajoitettu tarjous - NovaPad LunaWearsin sponsoroimana vain 49 €"
             },
             {
               "site": "mediamarket.shop",
