@@ -284,7 +284,7 @@ export default {
         "A ver, hay mil teorías sobre cómo los algoritmos y las cuentas manejan los anuncios, pero ahora mismo estoy viendo la página real de la tienda. Tiene el logo oficial de la marca, reseñas estupendas y un pago seguro."
       ],
       "endingFriend": "Mira, puedes diseccionar la página todo lo que quieras, ¡pero a mí todo me parece correcto! Estás siendo {player:paranoico|paranoica}. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, cuarenta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
-      "endingYou": "Trato hecho. Vamos a mirar detrás de la pantalla.",
+      "endingYou": "Trato hecho. Usemos tu móvil para entrar al Internet físico y ver qué esconde esa oferta.",
       "begin": "▶ Mirar detrás de la pantalla"
     },
     "posttest": {

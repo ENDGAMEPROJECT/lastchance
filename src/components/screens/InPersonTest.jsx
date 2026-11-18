@@ -36,8 +36,11 @@ const FADE_MS = 350
    of their latest line while listening; `endingPose(passed)` sets the
    player's pose (null = neutral) during the friend's ending line.
    `phoneAction` ({ label, onClick }): instead of action buttons, the last line
-   turns the phone into the way forward — a big glow, its label beside it. */
-export default function InPersonTest({ script: p, intro, replyPose, endingPose, phoneAction, mastery = false, actions = [], requirePhoneView = true, assessment = false, questionIndices, skipOpening = false, assessmentEnding, onComplete }) {
+   turns the phone into the way forward — a big glow, lit while that line is
+   said (the player's endingYou names the phone, so the cue is in the text).
+   `quietPhone`: the phone stays unlit and only highlights under the pointer
+   (post-test, where it is optional rather than a step to take). */
+export default function InPersonTest({ script: p, intro, replyPose, endingPose, phoneAction, quietPhone = false, mastery = false, actions = [], requirePhoneView = true, assessment = false, questionIndices, skipOpening = false, assessmentEnding, onComplete }) {
   const { reducedMotion, narrative } = useGame()
   const t = useT()
   const friend = narrative.friend
@@ -103,9 +106,11 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
 
   const speechReady = phase === 'options' || elapsed >= readingTime
   const visibleLetters = reducedMotion || phase === 'options' ? line.length : Math.floor(elapsed / LETTER_MS)
-  const atEnd = phase === (p.endingYou ? 'endingYou' : 'endingFriend') && speechReady
+  const lastPhase = p.endingYou ? 'endingYou' : 'endingFriend'
+  const atEnd = phase === lastPhase && speechReady
   const showActions = atEnd && actions.length > 0
-  const phonePortal = atEnd && Boolean(phoneAction)
+  // The last line points at the phone, so it lights up as soon as it starts.
+  const phonePortal = Boolean(phoneAction) && phase === lastPhase
 
   const showOptions = phase === 'options' && !needsPhoneView
   // While the player must answer, the bubble slides up to make room below it —
@@ -274,7 +279,7 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
             <button
               ref={phoneRef}
               type="button"
-              className={`pretest-phone ${narrative.character === 'max' ? 'phone-mia' : ''} ${phoneClicked ? '' : 'is-unseen'} ${asking ? 'is-dimmed' : ''} ${poses.friend ? 'is-away' : ''} ${phonePortal ? 'is-portal' : ''}`}
+              className={`pretest-phone ${narrative.character === 'max' ? 'phone-mia' : ''} ${phoneClicked ? '' : 'is-unseen'} ${asking ? 'is-dimmed' : ''} ${poses.friend ? 'is-away' : ''} ${phonePortal ? 'is-portal' : ''} ${quietPhone ? 'is-quiet' : ''}`}
               onMouseDown={(event) => event.preventDefault()}
               onClick={phonePortal ? () => {
                 if (!assessment && !completed.current) {
@@ -300,7 +305,6 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
               title={phonePortal ? phoneAction.label : t('story.product.offerLabel')}
               aria-haspopup={phonePortal ? undefined : 'dialog'}
             >
-              {phonePortal && <span className="pretest-phone-portal-label" aria-hidden="true">{phoneAction.label}</span>}
               <svg className="pretest-phone-light" viewBox={narrative.character === 'max' ? '1008 418 96 108' : '648 496 108 100'} aria-hidden="true">
                 {/* Trace only the exposed handset; the fingers stay unlit. */}
                 <path d={narrative.character === 'max'

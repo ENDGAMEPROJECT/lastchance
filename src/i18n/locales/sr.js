@@ -284,7 +284,7 @@ export default {
         "Slušaj, postoji milion teorija o tome kako algoritmi i nalozi prikazuju oglase, ali ja upravo gledam stranicu prodavnice. Ima zvanični logo brenda, odlične recenzije i bezbedno plaćanje."
       ],
       "endingFriend": "Slušaj, možeš da analiziraš stranicu koliko god želiš, ali meni sve deluje u redu! Samo si {player:paranoičan|paranoična}. Odbrojavanje i dalje traje — imaš još četrdeset minuta, odnosno dok ne stigne do nule, da dokažeš da je ovo zaista prevara. U suprotnom, kliknuću na kupovinu.",
-      "endingYou": "Važi. Hajde da pogledamo šta se dešava iza ekrana.",
+      "endingYou": "Važi. Hajde da preko tvog telefona uđemo u fizički internet i vidimo šta ta ponuda krije.",
       "begin": "▶ Pogledaj šta se dešava iza ekrana"
     },
     "posttest": {

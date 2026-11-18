@@ -284,7 +284,7 @@ export default {
         "Kuule, algoritmeista ja tileistä on miljoona teoriaa, mutta katson juuri nyt itse kaupan sivua. Siinä on virallinen brändilogo, loistavat arvostelut ja turvallinen kassa."
       ],
       "endingFriend": "Kuule, voit pilkkoa sivua miten haluat, mutta minusta kaikki näyttää ihan hyvältä! Sinä vain vainoharhailet. Laskuri käy yhä — sinulla on siihen asti kun se nollautuu, neljäkymmentä minuuttia, aikaa todistaa, että tämä on oikeasti huijaus. Muuten painan ostaa.",
-      "endingYou": "Sovittu. Katsotaan ruudun taakse.",
+      "endingYou": "Sovittu. Mennään puhelimesi kautta Fyysiseen internetiin katsomaan, mitä tuo tarjous piilottaa.",
       "begin": "▶ Katso ruudun taakse"
     },
     "posttest": {

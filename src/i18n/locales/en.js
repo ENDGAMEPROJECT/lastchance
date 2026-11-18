@@ -284,7 +284,7 @@ export default {
         "Look, there are a million theories about how algorithms and accounts handle ads, but I'm looking at the actual store page right now. It has the official brand logo, great reviews, and a secure checkout."
       ],
       "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running — you've got until it hits zero, forty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
-      "endingYou": "Deal. Let's look behind the screen.",
+      "endingYou": "Deal. Let's use your phone to get into the Physical Internet and see what that offer is hiding.",
       "begin": "▶ Look behind the screen"
     },
     "posttest": {
