@@ -943,9 +943,10 @@ export default {
       "solvedText": "You labelled the ads and detected the untrustworthy products",
       "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
       "stage1": {
+        "howToSpot": "How do I know what type of post I am seeing?",
         "badge": "Stage 1 / 2",
         "tag": "Content labelling",
-        "prompt": "Choose the right label for each post",
+        "prompt": "Attach the sticky note with the correct label to each post.",
         "openDecoder": "🔑 Open Decoder Card",
         "verified": "Verified",
         "viewPublication": "View Publication",
@@ -962,6 +963,8 @@ export default {
         "commentsTitle": "Comments",
         "commentCount": "{count} comments",
         "likeComment": "Like comment by {name}",
+        "checkPlacement": "Check labels",
+        "wrongPlacement": "Some labels are on the wrong post. Move them and check again.",
         "selectPost": "Select Post",
         "answerProgress": "{count} / {total}"
       },

@@ -261,7 +261,91 @@
 .ia-label-stage .ia-head { flex: none; flex-wrap: nowrap; }
 .ia-label-stage .ia-head .game-prompt { flex: 1; margin: 0; }
 
-/* ---------- Stage 1: posts row ---------- */
+/* ---------- Stage 1: post-its column + posts row ---------- */
+.ia-label-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  gap: 16px;
+  position: relative; /* stuck post-its are placed in it, over the posts */
+}
+/* 200px column on the left holding the three emoji post-its. Above the posts
+   so a post-it being dragged passes over them. */
+.ia-notes-dock {
+  flex: none;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 22px;
+  padding-top: 12px;
+  position: relative;
+  z-index: 5;
+}
+.ia-note-slot { flex: none; width: 176px; height: 0; }
+/* Check button, at the bottom of the post-its column. */
+.ia-notes-check {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+.ia-notes-check .btn { width: 100%; }
+/* Wrong placement notice: Link District's error box (.ld-block-progress.is-error),
+   pinned over the top of the stage. */
+.ia-label-stage { position: relative; }
+.ia-place-err {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  translate: -50% 0; /* not transform: the shake animates transform */
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  max-width: min(720px, 90%);
+  padding: 11px 12px 11px 15px;
+  border: 2px solid var(--red);
+  border-radius: 10px;
+  background: rgba(90, 12, 30, 0.9);
+  box-shadow: 0 0 22px rgba(255, 59, 92, 0.5), inset 0 0 18px rgba(255, 59, 92, 0.12);
+  color: #ffb8c4;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.4;
+  animation: shake 0.4s ease;
+}
+.ia-place-err > span { flex: 1; min-width: 0; }
+.ia-place-err { align-items: flex-start; }
+/* Red ✕, at the top of the notice (not centred on it). */
+.close-btn.ia-place-err-close {
+  --size: 28px;
+  flex: none;
+  align-self: flex-start;
+  margin-top: -2px;
+  border-color: var(--red);
+  background: rgba(60, 6, 20, 0.95);
+  color: #ff5c78;
+  box-shadow: 0 0 10px rgba(255, 59, 92, 0.45);
+}
+.close-btn.ia-place-err-close svg { filter: drop-shadow(0 0 3px rgba(255, 59, 92, 0.6)); }
+.close-btn.ia-place-err-close:hover {
+  color: #fff;
+  border-color: #ff5c78;
+  background: rgba(120, 14, 36, 0.95);
+  box-shadow: 0 0 14px rgba(255, 59, 92, 0.7);
+}
+@media (max-width: 1180px) {
+  .ia-place-err { font-size: calc(0.9rem * var(--text-boost, 1)); }
+  .close-btn.ia-place-err-close { --size: 40px; }
+}
+@media (prefers-reduced-motion: reduce) { .ia-place-err { animation: none; } }
+.ia-label-body .ia-posts { flex: 1; min-width: 0; margin: 0; }
 .ia-posts {
   flex: 1;
   min-height: 0;
@@ -285,11 +369,23 @@
   border: 1px solid var(--line);
   background: var(--panel);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
-  cursor: pointer;
+  position: relative; /* a stuck post-it is placed inside it */
   transition: border-color 0.25s, box-shadow 0.25s;
 }
-.ia-post:hover { border-color: var(--cyan); }
 .ia-post > * { flex-shrink: 0; }
+/* The post-its moved out of the cards: the comments take the freed space
+   (whatever is left under the photo and caption) and scroll inside it. */
+.ia-post { overflow: hidden; }
+.ia-post > .ia-caption { margin-bottom: 0; }
+.ia-post > .ia-comments { flex: 1 1 0; height: auto; min-height: 60px; }
+/* Desktop: the cards fill the stage down to the bottom (the comments grow).
+   The keyboard's slot only takes room while it's open; the cards then get
+   shorter from the bottom (their tops, and the post-its on them, stay put). */
+@media (min-width: 1181px) {
+  .ia-posts { grid-template-rows: minmax(0, 1fr); }
+  .ia-post { height: auto; min-height: 0; }
+  .ia-decoder-slot:not(.is-open) { height: 0; }
+}
 /* Mobile (≤1180px, = settings.mobile.breakpoint): text is boosted per device
    and the keyboard below is taller, so a fixed card height would spill under
    the keyboard on some phones. Instead the cards fill exactly the row left
@@ -298,7 +394,39 @@
 @media (max-width: 1180px) {
   .ia-posts { grid-template-rows: minmax(0, 1fr); }
   .ia-post { height: auto; min-height: 0; }
-  .ia-post > .ia-photo { flex: 1 1 0; height: auto; min-height: 48px; }
+  /* Every photo the same height (a share of the card, all cards are the same
+     height), shown whole over a dark backdrop rather than cropped; the caption
+     takes the rest and is cut to the lines that fit. */
+  .ia-post > .ia-photo {
+    flex: 0 0 55%;
+    height: auto;
+    min-height: 120px;
+    background-size: contain !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #08090b;
+  }
+  .ia-post > .ia-caption.is-fill { flex: 1 1 0; min-height: 1.3em; overflow: hidden; margin-bottom: 0; }
+}
+/* A post-it being dragged is more than half over this post. */
+.ia-post-backdrop {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  background: #1c1a2e; /* dark purple-blue-grey */
+}
+.ia-post-backdrop > .ia-post { flex: 1 1 auto; min-height: 0; }
+/* Posts sit at 50% until hovered (or a dragged post-it is over one, or the
+   keyboard is focused inside one). */
+.ia-label-stage .ia-post { opacity: 0.5; transition: opacity 0.2s, border-color 0.25s, box-shadow 0.25s; }
+.ia-label-stage .ia-post:hover,
+.ia-label-stage .ia-post.is-drop-target,
+.ia-label-stage .ia-post:has(:focus-visible) { opacity: 1; }
+.ia-post.is-drop-target {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 1px var(--cyan), 0 0 22px rgba(22, 242, 255, 0.5), 0 10px 24px rgba(0, 0, 0, 0.45);
 }
 .ia-post.solved {
   border-color: var(--green);
@@ -474,7 +602,7 @@ button.ia-view-publication {
 }
 .ia-view-publication:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 .ia-publication {
-  transform: scale(0.67);
+  transform: scale(0.871); /* was 0.67, +30% */
   transform-origin: center;
   width: min(1100px, 94vw);
   height: min(650px, 90dvh);
@@ -541,11 +669,12 @@ button.ia-view-publication {
   .ia-publication-footer { padding: 10px 14px; }
 }
 
-/* Emoji sticky-note */
+/* Emoji post-it: click → its letters input shows; decoded → the word, big;
+   all three decoded → draggable onto the posts. */
 .ia-note {
   position: relative;
-  align-self: center;
-  width: 82%;
+  flex: none;
+  width: 226px;
   padding: 12px 10px 8px;
   background: linear-gradient(160deg, #FFFFFF, #fdffdc);
   color: #4a3a00;
@@ -553,6 +682,75 @@ button.ia-view-publication {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
   transform: rotate(-1.4deg);
   text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.ia-notes-dock .ia-note:nth-child(2) { transform: rotate(1.2deg); }
+.ia-notes-dock .ia-note:hover,
+.ia-notes-dock .ia-note:focus-visible {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 0 0 0 2px rgba(22, 242, 255, 0.55), 0 10px 22px rgba(0, 0, 0, 0.55);
+  outline: none;
+}
+.ia-note.is-selected {
+  box-shadow: 0 0 0 2px var(--cyan), 0 0 16px rgba(22, 242, 255, 0.45), 0 8px 18px rgba(0, 0, 0, 0.5);
+}
+.ia-note.is-draggable { cursor: grab; touch-action: none; }
+.ia-note.is-dragging {
+  z-index: 50;
+  cursor: grabbing;
+  transition: none;
+  transform: rotate(3deg) scale(1.06);
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.6);
+}
+/* Stuck on its post, where it was dropped. */
+.ia-note.is-placed {
+  position: absolute;
+  z-index: 6;
+  transform: rotate(-2deg);
+}
+.ia-note.is-placed.is-dragging { z-index: 50; }
+.ia-note-word {
+  padding: 4px 0 6px;
+  font-family: var(--font-retro);
+  font-weight: 900;
+  line-height: 1.05;
+  color: #1a1400;
+  overflow-wrap: anywhere;
+}
+/* The small letters input under the emojis (only on the clicked post-it). */
+.ia-note-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 4px 3px;
+  border: 1px solid rgba(74, 58, 0, 0.35);
+  border-radius: 4px;
+  background: rgba(4, 8, 20, 0.85);
+  color: var(--text);
+}
+.ia-note-input.bad { border-color: var(--red); color: var(--red); }
+.ia-note-input .ia-answer-letters { gap: 3px; }
+.ia-note-input .ia-answer-letter {
+  flex: 0 1 15px;
+  width: 15px;
+  height: 20px;
+  font-size: 0.85rem;
+  line-height: 18px;
+}
+/* Phone: the letters input is 60% bigger (long words still shrink to fit). */
+@media (max-width: 1180px) {
+  .ia-note-input { padding: 6px 6px 5px; gap: 3px; }
+  .ia-note-input .ia-answer-letters { gap: 5px; }
+  .ia-note-input .ia-answer-letter {
+    flex: 0 1 24px;
+    width: 24px;
+    height: 32px;
+    font-size: 1.36rem;
+    line-height: 29px;
+  }
 }
 .ia-note-tape {
   position: absolute;
@@ -565,7 +763,7 @@ button.ia-view-publication {
   display: flex; flex-wrap: wrap; gap: 5px;
   justify-content: center;
   font-size: 1.25rem; line-height: 1;
-  padding: 0.2rem 0 0.6rem 0
+  padding: 0.2rem 0 0.6rem 0;
 }
 .ia-note-cap { margin-top: 5px; color: #7a6410; font-style: italic; }
 

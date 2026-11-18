@@ -943,9 +943,10 @@ export default {
       "solvedText": "Označio/la si oglase i otkrio/la proizvode kojima se ne može verovati",
       "evidenceLabel": "Objave su skrivale plaćene promocije, a fotografija proizvoda je generisana pomoću veštačke inteligencije bez ikakvih stvarnih rezultata.",
       "stage1": {
+        "howToSpot": "Kako da znam koju vrstu objave gledam?",
         "badge": "Faza 1 / 2",
         "tag": "Označavanje sadržaja",
-        "prompt": "Izaberi odgovarajuću oznaku za svaku objavu",
+        "prompt": "Na svaku objavu zalepite lepljivu belešku sa odgovarajućom oznakom.",
         "openDecoder": "🔑 Otvori karticu za dešifrovanje",
         "verified": "Potvrđeno",
         "viewPublication": "Pogledaj objavu",
@@ -962,6 +963,8 @@ export default {
         "commentsTitle": "Komentari",
         "commentCount": "Komentari: {count}",
         "likeComment": "Označi da ti se sviđa komentar korisnika {name}",
+        "checkPlacement": "Proveri oznake",
+        "wrongPlacement": "Neke oznake su na pogrešnoj objavi. Pomeri ih i proveri ponovo.",
         "selectPost": "Izaberi objavu",
         "answerProgress": "{count} / {total}"
       },

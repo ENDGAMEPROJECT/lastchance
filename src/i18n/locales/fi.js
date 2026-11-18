@@ -943,9 +943,10 @@ export default {
       "solvedText": "Merkitsit mainokset ja tunnistit epäluotettavat tuotteet",
       "evidenceLabel": "Julkaisut piilottivat maksettuja mainoksia, ja tuotekuva oli tekoälyn luoma ilman yhtään aitoa osumaa.",
       "stage1": {
+        "howToSpot": "Mistä tiedän, minkä tyyppistä julkaisua katselen?",
         "badge": "Vaihe 1 / 2",
         "tag": "Sisällön merkitseminen",
-        "prompt": "Valitse oikea merkintä jokaiselle julkaisulle",
+        "prompt": "Kiinnitä oikealla merkinnällä varustettu tarralappu jokaiseen tolppaan.",
         "openDecoder": "🔑 Avaa purkukortti",
         "verified": "Vahvistettu",
         "viewPublication": "Katso julkaisu",
@@ -962,6 +963,8 @@ export default {
         "commentsTitle": "Kommentit",
         "commentCount": "{count} kommenttia",
         "likeComment": "Tykkää käyttäjän {name} kommentista",
+        "checkPlacement": "Tarkista merkinnät",
+        "wrongPlacement": "Osa merkinnöistä on väärässä julkaisussa. Siirrä niitä ja tarkista uudelleen.",
         "selectPost": "Valitse julkaisu",
         "answerProgress": "{count} / {total}"
       },

@@ -943,9 +943,10 @@ export default {
       "solvedText": "Etiquetaste los anuncios y detectaste los productos poco fiables",
       "evidenceLabel": "Las publicaciones escondían promociones pagadas, y la foto del producto estaba generada por IA, sin ningún resultado real.",
       "stage1": {
+        "howToSpot": "¿Cómo sé qué tipo de publicación estoy viendo?",
         "badge": "Fase 1 / 2",
         "tag": "Etiquetado de contenido",
-        "prompt": "Elige la etiqueta correcta para cada publicación",
+        "prompt": "Pega el post-it con la etiqueta correcta en cada publicación",
         "openDecoder": "🔑 Abrir tarjeta descodificadora",
         "verified": "Verificado",
         "viewPublication": "Ver publicación",
@@ -962,6 +963,8 @@ export default {
         "commentsTitle": "Comentarios",
         "commentCount": "{count} comentarios",
         "likeComment": "Dar me gusta al comentario de {name}",
+        "checkPlacement": "Comprobar etiquetas",
+        "wrongPlacement": "Algunas etiquetas están en la publicación equivocada. Muévelas y vuelve a comprobar.",
         "selectPost": "Seleccionar publicación",
         "answerProgress": "{count} / {total}"
       },
