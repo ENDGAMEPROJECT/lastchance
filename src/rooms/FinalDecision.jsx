@@ -111,6 +111,7 @@ export default function FinalDecision() {
       key={run}
       script={script}
       requirePhoneView={false}
+      quietPhone
       assessment
       questionIndices={questionIndices}
       skipOpening={run > 0}

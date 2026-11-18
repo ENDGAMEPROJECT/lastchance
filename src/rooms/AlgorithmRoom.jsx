@@ -520,7 +520,7 @@ export default function AlgorithmRoom({ node }) {
                     <span className="ar-col-tag t-xs dim" style={{ alignSelf: "center" }}>{t('rooms.algorithm.equations.adTitle')}</span>
                     <div className={`ar-ad ${stepSolved ? 'active' : ''}`}
                       style={{
-                        backgroundImage: `url("${import.meta.env.BASE_URL}algorithm-room/${row.id}.png")`,
+                        backgroundImage: `url("${bgUrl(`algorithm-room/${row.id}.png`)}")`,
                         backgroundSize: "cover"
                       }}
                     >

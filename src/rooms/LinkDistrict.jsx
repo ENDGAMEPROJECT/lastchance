@@ -578,7 +578,7 @@ export default function LinkDistrict({ node }) {
   }
 
   function finishRoom() {
-    addEvidence({ id: 'ev-links', label: 'The “deal” link was a look-alike domain, not the real store.' })
+    addEvidence({ id: 'ev-links', label: t('rooms.link.evidence') })
     setPhase('done')
   }
 

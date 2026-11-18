@@ -207,7 +207,7 @@ export default function RouletteCorridor({ node }) {
                 : null}
             </div>
             {!verified[active] && (
-              <button className={results.length >= MIN_SPINS ? 'rc-respin' : 'btn btn-magenta'} onMouseDown={preventFocusScroll} onClick={() => spinWheel(wheel)} disabled={!!spinning[active] || solved}>
+              <button className="btn btn-magenta" onMouseDown={preventFocusScroll} onClick={() => spinWheel(wheel)} disabled={!!spinning[active] || solved}>
                 {results.length ? t('rooms.roulette.investigation.spinAgain') : t('rooms.roulette.spin')}
               </button>
             )}
@@ -246,8 +246,8 @@ export default function RouletteCorridor({ node }) {
                   <div className="rc-history">
                     <b>{t('rooms.roulette.investigation.historyLabel', { n: results.length })}</b>
                     <ol>
-                      {results.slice(-5).map((result, index) => (
-                        <li key={results.length - Math.min(results.length, 5) + index}>{wheelText(active, 'segments')[result]}</li>
+                      {results.map((result, index) => (
+                        <li key={index}>{wheelText(active, 'segments')[result]}</li>
                       ))}
                     </ol>
                   </div>

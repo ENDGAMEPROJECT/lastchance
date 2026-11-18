@@ -1244,6 +1244,24 @@ export default {
         "noSelection": "Ninguna publicación seleccionada",
         "erase": "Borrar la última letra"
       },
+<<<<<<< HEAD
+=======
+      "explain": {
+        "title": "Más allá del anuncio: ¿qué hay el producto?",
+        "body": "¿Es el producto lo que dicen? Una búsqueda inversa de imágenes te ayuda a comprobarlo: buscas con una foto y encuentra esa misma imagen u otras parecidas que aparecen en internet, para que verifiques si la imagen es de verdad lo que el vendedor afirma.",
+        "instructions": "Primero haz la búsqueda inversa de la imagen. Después, mira los resultados para juzgar la autenticidad del producto.",
+        "useShop": "¿Te encanta una prenda que viste en una publicación? Haz una búsqueda inversa de la foto para encontrar dónde comprarla de verdad.",
+        "useVerify": "¿No estás {player:seguro|segura} de que el producto de un influencer sea auténtico? Búscalo al revés para ver si es realmente único o el mismo artículo fabricado en masa que vende todo el mundo.",
+        "searchLabel": "búsqueda inversa de imágenes",
+        "searching": "Buscando en la web…",
+        "dragHint": "↓ Arrastra la foto del vendedor a una búsqueda inversa de imágenes",
+        "queryCaption": "El vendedor dice: «chaqueta artesanal única» · 180 €",
+        "resultsLabel": "La misma foto encontrada en:",
+        "takeawayLabel": "La trampa:",
+        "takeaway": "Esa chaqueta «artesanal única» es el mismo artículo fabricado en masa que se vende por 9–14 € en decenas de tiendas de dropshipping. La foto la delató.",
+        "continue": "Ahora inténtalo tú →"
+      },
+>>>>>>> 2711d479b17609cfa1c008fc8ff6699e9c79a3c0
       "labelFeedback": {
         "title": "Las publicaciones patrocinadas deben etiquetarse",
         "intro": "Cuando a un creador o influencer le pagan, se asocia con una marca o le regalan un producto, tiene que declararlo de forma clara y por delante. Así puedes distinguirlos:",

@@ -245,7 +245,7 @@
 /* fomo */
 .pl-fomo {
   border-color: rgba(16, 12, 13, 0.4);
-  background-image: url("/persuasion-lab/fomo.png");
+  background-image: url("/persuasion-lab/fomo.webp");
   background-size: cover;
   text-align: center;
   .pl-poster-head {
@@ -265,7 +265,7 @@
 }
 .pl-social {
   border-color: rgba(255, 59, 92, 0.4);
-  background-image: url("/persuasion-lab/social.png");
+  background-image: url("/persuasion-lab/social.webp");
   background-size: cover;
   text-align: center;
   .pl-poster-head {
@@ -287,7 +287,7 @@
 
 .pl-exagg {
   border-color: rgba(95, 59, 255, 0.4);
-  background-image: url("/persuasion-lab/exagg.png");
+  background-image: url("/persuasion-lab/exagg.webp");
   background-size: cover;
   text-align: center;
   .pl-poster-head {
@@ -308,7 +308,7 @@
 }
 .pl-influencer {
    border-color: rgba(95, 59, 255, 0.4);
-  background-image: url("/persuasion-lab/influencer.png");
+  background-image: url("/persuasion-lab/influencer.webp");
   background-size: cover;
   text-align: center;
   .pl-poster-head {
@@ -332,7 +332,7 @@
 }
 .pl-emotional {
   border-color: rgba(95, 59, 255, 0.4);
-  background-image: url("/persuasion-lab/emotional.png");
+  background-image: url("/persuasion-lab/emotional.webp");
   background-size: cover;
   text-align: center;
   .pl-poster-head {
@@ -355,7 +355,7 @@
 }
 .pl-urgency {
   border-color: rgba(95, 59, 255, 0.4);
-  background-image: url("/persuasion-lab/urgency.png");
+  background-image: url("/persuasion-lab/urgency.webp");
   background-size: cover;
   text-align: center;
   .pl-poster-head {
