@@ -870,7 +870,8 @@ export default {
         "brand": "Magnum Shop",
         "text": "Offer valid from 19 to 29 september"
       },
-      "debugSkip": "Skip doors and final test (debug)"
+      "debugSkip": "Skip doors and final test (debug)",
+      "evidence": "The “deal” link was a look-alike domain, not the real store."
     },
     "roulette": {
       "spin": "🎰 Spin",
@@ -928,7 +929,7 @@ export default {
               "No prize"
             ],
             "rules": "Win a phone, a laptop or up to €100 — give it a spin!",
-            "feedback": "Gamification means using game elements, like points, rewards, or spinning wheels, in things that aren't really games. Apps and online shops use it to make buying feel fun, so you stay longer and spend more without noticing."
+            "feedback": "This wheel was rigged to always land on \"No prize\". The big prizes on it can never be won: they are only there to keep you spinning. Every spin feels like a near miss, like you'll win next time, so you try again. Meanwhile you lose your time and attention, and the shop gets more time to show you its offers."
           }
         },
         "debugSkip": "Skip roulette (debug)"

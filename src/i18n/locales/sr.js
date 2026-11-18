@@ -101,7 +101,7 @@ export default {
     "win": {
       "eyebrow": "Misija završena",
       "titleLead": "{friend}",
-      "titleAccent": "NIJE KUPIO/LA",
+      "titleAccent": "{friend:NIJE KUPIO|NIJE KUPILA}",
       "tag": "Ponuda je istekla, a ostalo je još {time}",
       "heading": "{player:Izneo|Iznela} si dokaze",
       "body": "Pomoću dokaza koje si {player:prikupio|prikupila} širom fizičkog interneta, {player:pokazao|pokazala} si {friend_dative} da je oglas za tablet ‘NovaPad X’ najverovatnije prevara.",
@@ -870,7 +870,8 @@ export default {
         "brand": "Magnum Shop",
         "text": "Ponuda važi od 19. do 29. septembra"
       },
-      "debugSkip": "Preskoči vrata i završni test (debug)"
+      "debugSkip": "Preskoči vrata i završni test (debug)",
+      "evidence": "Link „ponude“ je bio domen koji oponaša pravu prodavnicu, a ne sama prodavnica."
     },
     "roulette": {
       "spin": "🎰 Vrti",
@@ -928,7 +929,7 @@ export default {
               "Nema nagrade"
             ],
             "rules": "Osvoji telefon, laptop ili do 100 € — zavrti točak!",
-            "feedback": "Gejmifikacija znači korišćenje elemenata igre, poput poena, nagrada ili točkova sreće, u stvarima koje zapravo nisu igre. Aplikacije i onlajn prodavnice to koriste da kupovina deluje zabavno, pa ostaješ duže i trošiš više a da ne primetiš."
+            "feedback": "Ovaj točak je namešten da se uvek zaustavi na „Nema nagrade“. Velike nagrade na njemu nikada ne možeš da osvojiš: tu su samo da bi {player:nastavio|nastavila} da okrećeš. Svaki put deluje kao da si za malo {player:promašio|promašila} i da ćeš sledeći put dobiti, pa pokušavaš ponovo. U međuvremenu gubiš vreme i pažnju, a prodavnica dobija više vremena da ti pokazuje svoje ponude."
           }
         },
         "debugSkip": "Preskoči rulete (debug)"

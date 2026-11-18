@@ -101,7 +101,7 @@ export default {
     "win": {
       "eyebrow": "Misión cumplida",
       "titleLead": "{friend}",
-      "titleAccent": "NO COMPRADO",
+      "titleAccent": "NO LO HA COMPRADO",
       "tag": "La oferta ha expirado con {time} de margen.",
       "heading": "Has presentado tu caso",
       "body": "Utilizando las pruebas que recabaste en internet, le demostraste a {friend} que el anuncio de la tableta ‘NovaPad X’ probablemente era una estafa.",
@@ -870,7 +870,8 @@ export default {
         "brand": "Magnum Shop",
         "text": "Oferta válida del 19 al 29 de septiembre"
       },
-      "debugSkip": "Saltar puertas y test final (debug)"
+      "debugSkip": "Saltar puertas y test final (debug)",
+      "evidence": "El enlace de la «oferta» era un dominio imitador, no la tienda real."
     },
     "roulette": {
       "spin": "🎰 Girar",
@@ -928,7 +929,7 @@ export default {
               "Sin premio"
             ],
             "rules": "Gana un móvil, un portátil o hasta 100 €: ¡dale una vuelta!",
-            "feedback": "La gamificación consiste en usar elementos de juego, como puntos, recompensas o ruletas, en cosas que no son juegos. Las apps y las tiendas online la usan para que comprar resulte divertido, así te quedas más tiempo y gastas más sin darte cuenta."
+            "feedback": "Esta ruleta estaba trucada para caer siempre en «Sin premio». Los premios grandes que ves en ella no puedes ganarlos nunca: están ahí para que sigas girando. Cada vez parece que casi lo consigues y que a la próxima te toca, así que vuelves a intentarlo. Mientras tanto, pierdes tu tiempo y tu atención, y la tienda gana más tiempo para enseñarte sus ofertas."
           }
         },
         "debugSkip": "Saltar ruletas (debug)"

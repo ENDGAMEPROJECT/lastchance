@@ -870,7 +870,8 @@ export default {
         "brand": "Magnum Shop",
         "text": "Tarjous voimassa 19.–29. syyskuuta"
       },
-      "debugSkip": "Ohita ovet ja lopputesti (debug)"
+      "debugSkip": "Ohita ovet ja lopputesti (debug)",
+      "evidence": "”Tarjouksen” linkki oli jäljitelmäosoite, ei oikea kauppa."
     },
     "roulette": {
       "spin": "🎰 Pyöräytä",
@@ -928,7 +929,7 @@ export default {
               "Ei palkintoa"
             ],
             "rules": "Voita puhelin, kannettava tai jopa 100 € — pyöräytä!",
-            "feedback": "Pelillistäminen tarkoittaa pelien elementtien — pisteiden, palkintojen tai onnenpyörien — käyttöä asioissa, jotka eivät ole pelejä. Sovellukset ja verkkokaupat käyttävät sitä tehdäkseen ostamisesta hauskaa, jotta viivyt pidempään ja kulutat enemmän huomaamattasi."
+            "feedback": "Tämä onnenpyörä oli viritetty pysähtymään aina kohtaan ”Ei palkintoa”. Sen isoja palkintoja ei voi koskaan voittaa: ne ovat siinä vain, jotta jatkaisit pyörittämistä. Joka kerta tuntuu, että voitto oli lähellä ja seuraavalla kerralla onnistaa, joten yrität uudelleen. Sillä välin menetät aikaasi ja huomiotasi, ja kauppa saa lisää aikaa näyttää sinulle tarjouksiaan."
           }
         },
         "debugSkip": "Ohita onnenpyörät (debug)"

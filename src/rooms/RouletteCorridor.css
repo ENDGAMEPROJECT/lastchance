@@ -244,6 +244,10 @@
   list-style: none;
   margin: 8px 0 0;
   padding: 0;
+  /* Every spin is listed; a long run scrolls inside the panel instead of
+     pushing the verdict buttons out of the fixed stage. */
+  max-height: 140px;
+  overflow-y: auto;
 }
 .rc-history li {
   border: 1px solid var(--line);
@@ -263,7 +267,6 @@
   color: var(--red);
   background: rgba(255, 60, 80, 0.14);
 }
-.rc-respin,
 .rc-back {
   background: none;
   border: 0;
@@ -274,7 +277,6 @@
   font-size: 0.9rem;
   cursor: pointer;
 }
-.rc-respin:hover,
 .rc-back:hover {
   color: var(--cyan);
 }
