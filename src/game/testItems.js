@@ -23,33 +23,45 @@ export const TEST_ITEMS = [
     // i18n title: "The Timer"
     slug: 'q1-artificial-urgency',
     name: 'Spotting artificial urgency (the countdown)',
+    correct: 'A',
     options: {
-      A: 'margin-implausible',             // "they'd go bankrupt at that price"
-      B: 'countdown-is-pressure-tactic',   // CORRECT
-      C: 'trust-the-comments',
-      D: 'assume-cheap-knockoff',
+      A: 'countdown-can-be-fake',          // CORRECT
+      B: 'countdown-is-pressure-tactic',   // true of THIS deal, but not yet knowable
+      C: 'social-ad-means-safe-shop',
+      D: 'real-shops-ask-card-in-chat',
     },
   },
   {
     // i18n title: "The Source & Feed"
     slug: 'q2-ad-targeting',
     name: 'Why the ad appeared: algorithmic targeting vs. folk theories',
+    correct: 'D',
     options: {
       A: 'phone-mic-listening',
-      B: 'check-verified-badge',
-      C: 'device-has-spyware',
+      B: 'everyone-sees-the-same-ads',
+      C: 'celebrity-means-safe',
       D: 'algorithm-tracked-search-history', // CORRECT
     },
   },
   {
-    // i18n title: "The Destination"
-    slug: 'q3-url-inspection',
-    name: 'Judging a link by its full URL',
+    /* i18n title: "The Destination".
+
+       Renamed from `q3-url-inspection` / "Judging a link by its full URL": the
+       November 2026 rewrite of the sheet turned this item from URL reading into
+       distinguishing a genuine warning sign (an implausible price) from false
+       trust signals (reviews, a brand logo, a look-alike domain that "is the
+       same site"). The old id named a question that is no longer asked, so
+       keeping it would have pooled two different items under one activity —
+       worse than a visible break. Answers recorded before 17 Nov 2026 belong
+       to the old item and are not comparable with these. */
+    slug: 'q3-trust-signals',
+    name: 'Telling a genuine warning sign from false trust signals',
+    correct: 'C',
     options: {
-      A: 'read-the-full-url',              // CORRECT
-      B: 'https-lock-means-safe',
-      C: 'payment-method-protects',
-      D: 'missing-copyright-footer',
+      A: 'lookalike-domain-is-same-site',
+      B: 'five-star-reviews-mean-real',
+      C: 'implausible-price-is-warning',   // CORRECT
+      D: 'brand-logo-means-official',
     },
   },
 ]

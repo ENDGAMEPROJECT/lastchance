@@ -98,6 +98,28 @@ for (const [i, round] of en.story.rounds.entries()) {
   const correct = round.options.filter((o) => o.correct === true)
   ok(correct.length === 1, `story.rounds[${i}] should have exactly one correct option, has ${correct.length}`)
 }
+
+/* WHICH option is correct, declared in testItems.js and checked in EVERY
+   language. The sheet lives outside this repo, and a November 2026 rewrite of
+   it moved the answers on items 1 and 3. Nothing failed, so the option slugs
+   went on naming the old reasoning and every answer reached the LRS under the
+   wrong label. Checking the declaration against all four locales also catches
+   a half-finished re-import, where one language disagrees with the rest. */
+for (const [code, dict] of Object.entries(dictionaries)) {
+  const rounds = dict.story?.rounds
+  ok(Array.isArray(rounds) && rounds.length === TEST_ITEMS.length,
+    `${code}: story.rounds has ${rounds?.length} round(s), testItems.js has ${TEST_ITEMS.length}`)
+  TEST_ITEMS.forEach((item, i) => {
+    const round = rounds?.[i]
+    if (!round) return
+    ok(has(item, 'correct'), `testItems[${i}] (${item.slug}) must declare which option is correct`)
+    const marked = round.options.filter((o) => o.correct === true).map((o) => o.k)
+    ok(marked.length === 1 && marked[0] === item.correct,
+      `${code}: story.rounds[${i}] (${item.slug}) marks ${marked.join('+') || 'nothing'} correct, but `
+      + `testItems.js declares ${item.correct}. If the sheet changed the answer, the option slugs `
+      + `almost certainly need rewriting too — they name the reasoning, not the letter.`)
+  })
+}
 const slugs = TEST_ITEMS.map((t) => t.slug)
 ok(new Set(slugs).size === slugs.length, 'testItems.js slugs must be unique')
 for (const [i, item] of TEST_ITEMS.entries()) {
