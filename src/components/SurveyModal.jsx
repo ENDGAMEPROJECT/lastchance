@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useT } from '../i18n/index.jsx'
 import { track, OBJ, EXT } from '../game/xapi.js'
 import './SurveyModal.css'
@@ -42,6 +42,11 @@ export default function SurveyModal({ onClose, onSubmitted }) {
   const [answers, setAnswers] = useState({})
   const [step, setStep] = useState(0)
   const [showHint, setShowHint] = useState(false)
+  /* Submit fires the statement and then closes the modal, so a fast second
+     click can land before the close re-renders and report the survey twice.
+     A ref, not state: it has to be true for the very next call, which a
+     setState would not be. */
+  const sentRef = useRef(false)
 
   const section = SECTIONS[step]
   const isLast = step === SECTIONS.length - 1
@@ -64,6 +69,8 @@ export default function SurveyModal({ onClose, onSubmitted }) {
   const next = () => {
     if (!complete) return setShowHint(true)
     if (!isLast) return setStep((s) => s + 1)
+    if (sentRef.current) return // a second click on Submit, already reported
+    sentRef.current = true
     /* One statement carries the whole survey: result.response for readers
        that only show the response string, and the answers object in an
        extension so each item stays queryable. */

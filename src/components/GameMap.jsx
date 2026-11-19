@@ -5,6 +5,7 @@ import { track, OBJ } from '../game/xapi.js'
 import { DEBUG } from '../game/settings.js'
 import { bgUrl } from '../game/assets.js'
 import { useMobileView } from '../game/device.js'
+import SurveyButton from './SurveyButton.jsx'
 import DebugPosttestButtons from './DebugPosttestButtons.jsx'
 import DebugPortalButton from './DebugPortalButton.jsx'
 import DebugEvidenceButton from './DebugEvidenceButton.jsx'
@@ -367,6 +368,14 @@ export default function GameMap() {
           <div className="map-progress-bar"><span style={{ width: `${pct}%` }} /></div>
           <span className="mono t-sm">{doneCount}/{NODES.length} · {pct}%</span>
         </div>
+        {/* Once the clock has gone the run can end at any moment — the player
+            may do one more district, or simply stop — so the survey is offered
+            from here rather than waiting for an ending they might never reach.
+            The map is where the timeout nudge already sends them, and where
+            the Final Decision station has just unlocked, so it is the one
+            screen they are certain to pass through. Disappears once answered;
+            the end screen then thanks them instead of asking again. */}
+        {timedOut && <SurveyButton className="btn btn-magenta btn-sm map-survey" />}
         {DEBUG && (
           <div className="map-debug">
             <span className="chip bad">🐞 DEBUG · jump to</span>

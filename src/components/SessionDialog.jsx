@@ -1,4 +1,6 @@
 import { useGame, formatTime } from '../game/GameContext.jsx'
+import SurveyModal from './SurveyModal.jsx'
+import { useSurveyOffer } from './SurveyButton.jsx'
 import { useT } from '../i18n/index.jsx'
 import './SessionDialog.css'
 
@@ -13,8 +15,14 @@ import './SessionDialog.css'
 export default function SessionDialog() {
   const { pendingRun, resumeRun, discardRun, NODES } = useGame()
   const t = useT()
+  const survey = useSurveyOffer()
 
   if (!pendingRun) return null
+
+  /* In place of this dialog, not over it: the survey brings its own backdrop
+     and panel, and showing both at once reads as a modal inside a modal.
+     Closing it returns here, with the run still on offer. */
+  if (survey.open) return <SurveyModal onClose={survey.close} onSubmitted={survey.submitted} />
 
   const progress = pendingRun.progress || {}
   const done = Object.values(progress).filter((s) => s === 'done').length
@@ -64,6 +72,15 @@ export default function SessionDialog() {
           <button type="button" className="btn btn-cyan btn-lg" onClick={resumeRun} autoFocus>
             {t('session.resume')}
           </button>
+          {/* The feedback survey, from here rather than only from an ending:
+              whoever is looking at this dialog may be coming back to a run
+              they will not finish, at whatever point they left it. Gone once
+              answered, so a second refresh does not ask again. */}
+          {!survey.done && (
+            <button type="button" className="btn btn-amber" onClick={survey.show}>
+              {t('survey.bannerButton')}
+            </button>
+          )}
           {/* Quieter when there is something to lose: the warning above says
               what, and the default action should be the safe one. */}
           <button type="button" className={postTestPending ? 'btn btn-ghost' : 'btn btn-magenta'}

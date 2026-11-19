@@ -267,3 +267,11 @@
     line-height: 1.15;
   }
 }
+
+/* The survey offer, shown in the map header once the clock has run out (see
+   GameMap's `timedOut` block). The margin is on the button itself rather than
+   on a wrapper: SurveyButton renders nothing once the survey is answered, and
+   a wrapper would be left behind holding this margin as dead space.
+   .map-head is centred, so an inline-block button needs no help to sit
+   centred under the progress bar. */
+.map-survey { margin-top: 10px; }

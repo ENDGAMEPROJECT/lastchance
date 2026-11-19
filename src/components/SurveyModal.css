@@ -15,7 +15,7 @@
 
 .sv-modal {
   width: 100%;
-  max-width: 700px;
+  max-width: 980px;
   max-height: 100%;
   display: flex;
   flex-direction: column;
@@ -26,10 +26,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px 10px;
+  padding: 16px 24px 12px;
   border-bottom: 1px solid var(--line);
 }
-.sv-head h3 { margin: 0; font-size: 1.2rem; }
+.sv-head h3 { margin: 0; font-size: 1.34rem; }
 .sv-x {
   background: transparent;
   border: 1px solid var(--line);
@@ -55,44 +55,44 @@
 /* The 16-item section is long by design (it mirrors ECHO's instrument), so
    the body is the only scrolling part and the buttons stay reachable. */
 .sv-body {
-  padding: 14px 18px;
+  padding: 18px 24px;
   overflow-y: auto;
   flex: 1;
   min-height: 0;
 }
 
-.sv-section-title { margin: 0 0 4px; font-size: 1.02rem; line-height: 1.35; }
+.sv-section-title { margin: 0 0 6px; font-size: 1.16rem; line-height: 1.35; }
 .sv-range {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   color: var(--muted);
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   line-height: 1.4;
 }
 
-.sv-items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.sv-items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .sv-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
-  padding: 7px 10px;
+  gap: 18px;
+  padding: 10px 14px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: rgba(10, 14, 30, 0.5);
 }
 /* Only after a failed Next, so nothing is red before the player has had a go. */
 .sv-item.missing { border-color: rgba(255, 70, 140, 0.55); }
-.sv-item-text { font-size: 0.9rem; line-height: 1.35; flex: 1; }
+.sv-item-text { font-size: 1rem; line-height: 1.4; flex: 1; }
 
-.sv-scale { display: flex; gap: 5px; flex-shrink: 0; }
+.sv-scale { display: flex; gap: 7px; flex-shrink: 0; }
 .sv-dot {
-  width: 30px; height: 30px;
+  width: 34px; height: 34px;
   border-radius: 50%;
   border: 1px solid var(--line);
   background: transparent;
   color: var(--muted);
   font-family: var(--font-mono);
-  font-size: 0.82rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
 }
@@ -112,10 +112,10 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 12px 18px 14px;
+  padding: 14px 24px 16px;
   border-top: 1px solid var(--line);
 }
-.sv-step { color: var(--muted); font-size: 0.82rem; }
+.sv-step { color: var(--muted); font-size: 0.88rem; }
 .sv-actions .btn:disabled { opacity: 0.4; cursor: default; }
 
 /* ---- the invitation on the end screens ---- */
