@@ -82,8 +82,9 @@ export default function RouletteCorridor({ node }) {
     }
   }, [])
 
-  // The sheet numbers wheels by play order; their ids are w1 / w3.
-  const wheelNo = (id) => WHEELS.findIndex((w) => w.id === id) + 1
+  // The number the wheel is known by in the LRS — declared on the wheel (see
+  // rouletteData.js), not its array position, so an id always means one wheel.
+  const wheelNo = (id) => WHEELS.find((w) => w.id === id)?.xapiNo
   const wheel = WHEELS.find((w) => w.id === active)
   const verdict = answers[active]
   const results = history[active] || []

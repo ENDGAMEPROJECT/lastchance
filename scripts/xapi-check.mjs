@@ -11,6 +11,7 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import path from 'node:path'
 import { NODES } from '../src/game/gameData.js'
+import { ROULETTE_WHEELS } from '../src/game/rouletteData.js'
 
 const SRC = 'src'
 const problems = []
@@ -89,6 +90,20 @@ for (const file of files) {
     }
   }
 
+  /* --- module constants used BARE (not called), so the XAPI_EXPORTS check
+         above cannot see them: its pattern requires a `(` or `.` after the
+         name. A missing import for one of these is invisible to the build and
+         only throws when the component renders. DEBUG has shipped that way. --- */
+  // 'settings' is deliberately NOT checked: the word appears inside the import
+  // path '../game/settings.js', so a bare-identifier regex matches the string
+  // literal and reports every file that imports from it.
+  for (const sym of ['DEBUG', 'IS_PHONE']) {
+    if (!new RegExp(`\\b${sym}\\b`).test(code)) continue
+    const imported = new RegExp(`import\\s*\\{[^}]*\\b${sym}\\b[^}]*\\}`).test(code)
+    const declared = new RegExp(`(const|let|function)\\s+${sym}\\b`).test(code)
+    ok(imported || declared, `${where}: uses ${sym} but neither imports nor declares it`)
+  }
+
   /* --- react hooks: used but not imported (the class `vite build` is blind
          to — it shipped a crash once) --- */
   const reactImport = code.match(/import \{([^}]*)\} from 'react'/)
@@ -99,6 +114,37 @@ for (const file of files) {
       ok(!new RegExp(`\\b${hook}\\s*[(<]`).test(body) || names.includes(hook),
         `${where}: uses ${hook} but does not import it from react`)
   }
+}
+
+/* ---- Activity ids must always mean the same thing ----
+   Several objects are numbered in the LRS (objects/posts/<n>,
+   objects/roulette<n>). That number has to be DECLARED on the item, never
+   taken from its position in an array: deriving it means a reorder — or an
+   insertion, and InfluencerAvenue still has a commented-out fourth post —
+   silently re-points every id and invalidates data already collected. Nothing
+   else in the build would notice, which is why it is checked here. */
+const numbered = (label, items) => {
+  const nums = items.map((it) => it.xapiNo)
+  items.forEach((it, i) => ok(Number.isInteger(it.xapiNo) && it.xapiNo > 0,
+    `${label}[${i}] (${it.id ?? '?'}) needs a positive integer xapiNo — see postNo()/wheelNo()`))
+  ok(new Set(nums).size === nums.length, `${label}: xapiNo values must be unique, got ${nums.join(', ')}`)
+}
+numbered('ROULETTE_WHEELS', ROULETTE_WHEELS)
+
+/* POSTS lives inside a .jsx room and is not exported, so read it from source.
+   If this block stops matching, the check fails rather than passing silently. */
+const influencerSrc = readFileSync('src/rooms/InfluencerAvenue.jsx', 'utf8')
+const postsBlock = influencerSrc.match(/const POSTS = \[([\s\S]*?)\n\]/)
+ok(postsBlock, 'could not find the POSTS array in rooms/InfluencerAvenue.jsx')
+if (postsBlock) {
+  // Only live entries: commented-out posts must not count.
+  const live = postsBlock[1].split('\n').filter((l) => !/^\s*\/\//.test(l)).join('\n')
+  const ids = [...live.matchAll(/^\s*id:\s*'([\w-]+)'/gm)].map((m) => m[1])
+  const nos = [...live.matchAll(/^\s*xapiNo:\s*(\d+)/gm)].map((m) => Number(m[1]))
+  ok(ids.length > 0, 'POSTS: no live entries found')
+  ok(ids.length === nos.length,
+    `POSTS: ${ids.length} post(s) (${ids.join(', ')}) but ${nos.length} xapiNo value(s) — every post needs one`)
+  ok(new Set(nos).size === nos.length, `POSTS: xapiNo values must be unique, got ${nos.join(', ')}`)
 }
 
 if (problems.length) {

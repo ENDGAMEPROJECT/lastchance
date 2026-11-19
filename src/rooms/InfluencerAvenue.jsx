@@ -35,6 +35,7 @@ import './InfluencerAvenue.css'
 const POSTS = [
   {
     id: 'paid',
+    xapiNo: 1, // stable xAPI id — see postNo()
     verified: true,
     followers: '1.2M',
     hue: 'linear-gradient(135deg, #ff8fd4, #b06bff)', // the faux photo block
@@ -43,6 +44,7 @@ const POSTS = [
   },
   {
     id: 'gifted',
+    xapiNo: 2, // stable xAPI id — see postNo()
     verified: true,
     followers: '850K',
      hue: 'linear-gradient(135deg, #ff1100, #ffbf6b)', 
@@ -51,6 +53,7 @@ const POSTS = [
   },
   {
     id: 'collab',
+    xapiNo: 3, // stable xAPI id — see postNo()
     verified: false,
     followers: '670K',
      hue: 'linear-gradient(135deg, #8fe5ff, #6b93ff)', 
@@ -70,7 +73,16 @@ const POSTS = [
 
 /* Statements identify a post by its position, never by its id: the ids are
    the correct labels, so using them would leak the answer key. */
-const postNo = (id) => POSTS.findIndex((p) => p.id === id) + 1
+/* The number a post is known by in the LRS (objects/posts/<n>).
+
+   DECLARED on each post rather than taken from its position in POSTS, because
+   an activity id must always mean the same thing: deriving it from the array
+   index means reordering POSTS — or uncommenting the fourth post below —
+   silently re-points every id and invalidates data already collected, with no
+   error anywhere. The post's own `id` cannot be used: 'paid'/'gifted'/'collab'
+   are the puzzle's answers, and would leak them into the activity id.
+   `npm run check:xapi` fails if an xapiNo is missing or duplicated. */
+const postNo = (id) => POSTS.find((p) => p.id === id)?.xapiNo
 
 /* The emoji post-its sit in a column left of the posts, in an order that
    doesn't line up with the posts (a note's id is the post it belongs to). */
@@ -966,6 +978,16 @@ export default function InfluencerAvenue({ node }) {
     setPlaced((prev) => ({ ...prev, [d.id]: { post: best, x, y } }))
   }
 
+  /* The Emoji Decoding Card is only wanted while the labels are being decoded.
+     Stage 1 can be left without ever opening it — the labels may have been
+     explained before the game (see setStage('explain') above), or a debug skip
+     — so say the tool is done the moment the stage moves on, or the bag goes on
+     prompting for it all through the reverse-search stage. */
+  useEffect(() => {
+    if (stage === 'label') return
+    window.dispatchEvent(new CustomEvent('lastchance:tool-done', { detail: { id: 'emojiCard' } }))
+  }, [stage])
+
   /* ---- Stage 2 state ---- */
   const [activeId, setActiveId] = useState(null) // product image being uploaded/searched in the engine
   const [shownId, setShownId] = useState(null) // whose results are open under the engine
@@ -1037,7 +1059,13 @@ export default function InfluencerAvenue({ node }) {
      If they're still unscrolled after NUDGE_MS, arrows + "Scroll down"
      appear right under the game. */
   const NUDGE_MS = 5000
-  const STAMP_UNLOCK_MS = 15000
+  /* 6s, not 15: the results carry 11-16 words, which readingGate's own ~315 wpm
+     pace puts at 2.6-3.5s, so 15s was four to five times the reading it gates —
+     and it is paid three times over, once per product. The scroll requirement
+     above is what actually evidences the results were looked at; this is only
+     a floor under it, so it needs headroom over the reading time, not a
+     multiple of it. The countdown line below fills over this value. */
+  const STAMP_UNLOCK_MS = 6000
   const resultsScrollRef = useRef(null)
   const [resultsScrolled, setResultsScrolled] = useState({}) // productId -> true
   const [resultsTimed, setResultsTimed] = useState({}) // productId -> true once open long enough
