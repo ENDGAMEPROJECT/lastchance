@@ -59,12 +59,12 @@ export default {
     "eyebrow": "Sala de escape educativa",
     "titleLead": "/",
     "titleAccent": "INTERNET FÍSICO",
-    "tagline": "// Anuncios · Estafas · Sitios web fraudulentos — descifrado",
+    "tagline": "// Anuncios · Estafas · Sitios web fraudulentos → descifrado",
     "situationTitle": "La situación",
     "hook": "{friend:Tu amigo|Tu amiga} {friend} acaba de encontrar una oferta viral en {product}: ¡90% de descuento, solo por hoy! Parece increíble… y por eso mismo crees que es una estafa.",
     "context": "Para mostrarle a {friend} cómo funcionan realmente las estafas y la publicidad, ambos entran en una versión física de Internet: una ciudad de neón donde las tiendas, las plataformas sociales y los anuncios se convierten en distritos por los que se puede pasear.",
     "clock": "⏱ {minutes}:00 en el reloj",
-    "mission": "Tienes {minutes} minutos —el tiempo que queda antes de que expire la oferta— para navegar por Internet, recopilar información sobre cómo funcionan los anuncios y las estafas, y convencer a {friend} de que no compre. Si el temporizador llega a cero, {friend} lo compra.",
+    "mission": "Tienes {minutes} minutos (el tiempo que queda antes de que expire la oferta) para navegar por Internet, recopilar información sobre cómo funcionan los anuncios y las estafas, y convencer a {friend} de que no compre. Si el temporizador llega a cero, {friend} lo compra.",
     "steps": [
       {
         "title": "1 · Explorar",
@@ -79,7 +79,7 @@ export default {
         "text": "Toma la decisión final y utiliza tus pruebas antes de que se acabe el tiempo."
       }
     ],
-    "start": "▶ Entra — pon en marcha el reloj",
+    "start": "▶ Entra:  pon en marcha el reloj",
     "pretest": "Prueba previa: primero, cuéntale a {friend} qué opinas sobre esta oferta. Luego, entra en Internet."
   },
   "map": {
@@ -412,7 +412,8 @@ export default {
     "message": "Tienes una partida en curso. ¿Continúas donde lo dejaste o empiezas desde el principio?",
     "progress": "Distritos completados: {done}/{total} · quedan {time}",
     "resume": "Continuar partida",
-    "restart": "Empezar de nuevo"
+    "restart": "Empezar de nuevo",
+    "postTestPending": " Todavía no has hablado con tu amigo/a: empezar de nuevo lo perderá."
   },
   "survey": {
     "bannerTitle": "¡Gracias por jugar!",
@@ -640,6 +641,10 @@ export default {
               "Cientos de copias baratas al por mayor significan que el producto no es lo que dice ser. Webs de arte con IA y verificaciones de datos significan que la imagen está generada por IA. Unas pocas tiendas oficiales con precios parecidos significan que es real.",
               "Taza: Contenido engañoso. NovaPad X: Generado por IA. Altavoz Bluetooth: Verificado. Después pulsa “Confirmar clasificaciones”."
             ]
+          },
+          "door": {
+            "prompts": "¿Cómo entro?",
+            "items": "Haz clic (o toca) la puerta para cruzarla."
           }
         }
       },
@@ -769,7 +774,7 @@ export default {
       "preview": {
         "newArrivals": "NOVEDADES",
         "storeCaption": "Estilo sin esfuerzo, cada día.",
-        "megaSale": "⚠ MEGAOFERTA — ¡SOLO HOY! ⚠",
+        "megaSale": "⚠ MEGAOFERTA: ¡SOLO HOY! ⚠",
         "shopNow": "¡COMPRA YA!",
         "shopBar": "DISCOUNT SHOPZ ▤",
         "limited": "⚠ ¡¡¡TIEMPO LIMITADO!!! ⚠"
@@ -788,9 +793,9 @@ export default {
           "category": "HTTP frente a HTTPS",
           "prompt": "Fíjate en el principio de cada dirección. ¿Qué conexión es realmente segura?",
           "notes": {
-            "a": "https:// — una conexión cifrada, y la tienda es real.",
-            "b": "http:// sin la “s”: la conexión NO está cifrada.",
-            "c": "http:// Y una terminación rara “.free”: aléjate."
+            "a": "https:// → una conexión cifrada, y la tienda es real.",
+            "b": "http:// sin la “s” → la conexión NO está cifrada.",
+            "c": "http:// Y una terminación rara “.free” → aléjate."
           }
         },
         {
@@ -879,7 +884,7 @@ export default {
       "investigation": {
         "intro": "Gira cada ruleta dos veces. ¿Está trucada o no?",
         "wheelProgress": "Ruleta {n} / {total}",
-        "solvedTitle": "Pasillo superado — afirmaciones comprobadas",
+        "solvedTitle": "Pasillo superado:  afirmaciones comprobadas",
         "spinAgain": "Girar otra vez",
         "solvedText": "Detectaste las dos ruletas trucadas. Lleva tus pruebas al siguiente distrito.",
         "evidence": "Las recompensas tipo juego y la sensación de tener suerte pueden hacer que sigas jugando y gastes más.",
@@ -939,7 +944,7 @@ export default {
     },
     "influencer": {
       "intro": "Una avenida de neón con vallas publicitarias y feeds de influencers. Mira más allá del brillo: etiqueta los patrocinios y luego comprueba qué son realmente los productos.",
-      "solvedTitle": "Avenida de los Influencers superada — Informe de datos obtenido 📄",
+      "solvedTitle": "Avenida de los Influencers superada: Informe de datos obtenido 📄",
       "solvedText": "Etiquetaste los anuncios y detectaste los productos poco fiables",
       "evidenceLabel": "Las publicaciones escondían promociones pagadas, y la foto del producto estaba generada por IA, sin ningún resultado real.",
       "stage1": {
@@ -967,6 +972,16 @@ export default {
         "wrongPlacement": "Algunas etiquetas están en la publicación equivocada. Muévelas y vuelve a comprobar.",
         "selectPost": "Seleccionar publicación",
         "answerProgress": "{count} / {total}"
+      },
+      "stage1Done": {
+        "title": "¡Anuncios al descubierto!",
+        "body": "¡Buen trabajo! Has destapado el acuerdo que había detrás de cada publicación: una promoción pagada, un producto regalado y una colaboración con una marca. ",
+        "next": "Siguiente →"
+      },
+      "door": {
+        "prompt": "Una misteriosa puerta esconde un pasadizo secreto a una nueva sala. ¿Qué ocultará?",
+        "action": "Cruzar la puerta",
+        "chamberIntro": "Has entrado en la Cámara de los Productos Infinitos. Todos los productos que hay aquí los venden influencers, pero ¿es cierto lo que dicen sobre ellos?"
       },
       "labels": {
         "paid": "PUBLI",
@@ -1038,7 +1053,7 @@ export default {
           "clues": [
             "Etiquetó a la marca como socio creativo",
             "Diseñaron juntos el sabor",
-            "“#publicidad” — trabajaron juntos en el lanzamiento"
+            "“#publicidad” → trabajaron juntos en el lanzamiento"
           ]
         },
         {
@@ -1133,7 +1148,7 @@ export default {
           "matches": [
             {
               "site": "aliluxe-deals.shop",
-              "title": "Taza de café de cerámica — lote de 500 unidades",
+              "title": "Taza de café de cerámica: lote de 500 unidades",
               "price": "€0,84*"
             },
             {
@@ -1143,7 +1158,7 @@ export default {
             },
             {
               "site": "quickship-goods.net",
-              "title": "Taza de cerámica rústica — precio mayorista",
+              "title": "Taza de cerámica rústica: precio mayorista",
               "price": "-"
             },
             {
@@ -1153,12 +1168,12 @@ export default {
             },
             {
               "site": "homestylewholesale.net",
-              "title": "Taza de cerámica modelo CM-204 — 0,95 €/unidad",
+              "title": "Taza de cerámica modelo CM-204: 0,95 €/unidad",
               "price": "€0.95*"
             },
             {
               "site": "mega-bazaar.shop",
-              "title": "Tazas de cerámica baratas — 1,90 € / unidad",
+              "title": "Tazas de cerámica baratas: 1,90 € / unidad",
               "price": "€1,90*"
             }
           ],
@@ -1180,7 +1195,7 @@ export default {
             },
             {
               "site": "promptgallery.art",
-              "title": "Tablet de ciencia ficción — obra generada por IA"
+              "title": "Tablet de ciencia ficción: obra generada por IA"
             },
             {
               "site": "fakedetector-ads-news.org",
@@ -1280,7 +1295,7 @@ export default {
         "optionBTag": "Opción B",
         "optionBBefore": "Ver",
         "optionBBold": "muchos más",
-        "optionBAfter": "anuncios y cortes publicitarios — pero se recogen muchos menos datos tuyos.",
+        "optionBAfter": "ads: but your personal data is collected.",
         "wrongTitle": "Respuesta incorrecta.",
         "wrongText": "Acabas de cambiar tu privacidad por comodidad. «Personalizado» es el algoritmo: menos anuncios significa que recoge y perfila más datos tuyos para elegirlos.",
         "goodTitle": "Buena respuesta.",
@@ -1434,7 +1449,7 @@ export default {
     },
     "ads": {
       "intro": "Un pasillo lleno de anuncios luminosos y ofertas tentadoras. Pero… ¿son tan buenas como parecen?",
-      "solvedTitle": "Pasillo superado — has leído la letra pequeña",
+      "solvedTitle": "Pasillo superado:  has leído la letra pequeña",
       "solvedText": "Este tipo de anuncios capta tu atención inmediatamente con cosas gratis, promesas de enriquecerse, peligro inminente... Sospecha de cualquier contenido que te cree una reacción emocional demasiado intensa.",
       "pickup": "Recoges la Linterna de la Verdad 🔦",
       "torchCharging": "🔦 Cargando…",
@@ -1496,8 +1511,8 @@ export default {
     },
     "persuasion": {
       "intro": "Una galería de anuncios llamativos. Cada uno se apoya en un único truco de persuasión: nómbralo enmarcando el cartel.",
-      "solvedTitle": "Laboratorio de Persuasión superado — contraseña TRAMPA",
-      "solvedText": "En cuanto sabes nombrar el truco —FOMO, urgencia, una celebridad prestada— deja de funcionar contigo. Esa es toda la defensa.",
+      "solvedTitle": "Laboratorio de Persuasión superado:  contraseña TRAMPA",
+      "solvedText": "En cuanto sabes nombrar el truco (FOMO, urgencia, una celebridad prestada) deja de funcionar contigo. Esa es toda la defensa.",
       "learn": {
         "lead": "Detecta el truco.",
         "body": "Los anuncios persuaden con técnicas que tienen nombre: FOMO (miedo a perderse algo), prueba social («todo el mundo lo compra»), exageración, recomendación de influencers, apelación emocional y urgencia. Las campañas reales suelen apilar varias a la vez para colarse por delante de tu juicio."
@@ -1506,7 +1521,7 @@ export default {
       "hints": {
         "start": "Arrastra y suelta cada marco de técnica sobre el cartel que le corresponde.",
         "allDone": "Los seis enmarcados: las letras forman una contraseña. Haz clic en el ordenador para escribirla.",
-        "correct": "Correct — a letter surfaced. Keep framing the rest.",
+        "correct": "Correcto: una latra ha aparecido. Continua con el resto",
         "wrong": "Esa técnica no encaja con este anuncio. Marco devuelto: prueba con otro.",
         "wrongSpecific": "No del todo. Míralo otra vez: {clue}"
       },

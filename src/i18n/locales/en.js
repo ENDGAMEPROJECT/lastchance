@@ -59,12 +59,12 @@ export default {
     "eyebrow": "Educational Escape Room",
     "titleLead": "THE",
     "titleAccent": "PHYSICAL INTERNET",
-    "tagline": "// ads · scams · fraudulent websites — decoded",
+    "tagline": "// ads · scams · fraudulent websites → decoded",
     "situationTitle": "The situation",
-    "hook": "Your friend {friend} just found a viral deal on {product} — 90% off, \"today only\". It looks incredible… which is exactly why you think it is a scam.",
-    "context": "To show {friend} how scams and advertising really work, you both step inside a physical version of the Internet — a neon city where shops, social platforms and ads become districts you can walk through.",
+    "hook": "Your friend {friend} just found a viral deal on {product}:  90% off, \"today only\". It looks incredible… which is exactly why you think it is a scam.",
+    "context": "To show {friend} how scams and advertising really work, you both step inside a physical version of the Internet:  a neon city where shops, social platforms and ads become districts you can walk through.",
     "clock": "⏱ {minutes}:00 on the clock",
-    "mission": "You have {minutes} minutes — the time before the offer expires — to travel through the Physical Internet, gather evidence about how ads and scams work, and convince {friend} not to buy. If the timer hits zero, {friend} buys it.",
+    "mission": "You have {minutes} minutes (the time before the offer expires) to travel through the Physical Internet, gather evidence about how ads and scams work, and convince {friend} not to buy. If the timer hits zero, {friend} buys it.",
     "steps": [
       {
         "title": "1 · Explore",
@@ -79,7 +79,7 @@ export default {
         "text": "Reach the Final Decision and use your evidence before time runs out."
       }
     ],
-    "start": "▶ Step inside — start the clock",
+    "start": "▶ Step inside:  start the clock",
     "pretest": "Pre-test: first, tell {friend} what you already think about this deal. Then enter the Internet."
   },
   "map": {
@@ -88,7 +88,7 @@ export default {
     "titleAccent": "district",
     "subtitle": "Travel the network, gather evidence, and reach the Final Decision before the offer expires.",
     "start": "▶ START · Pre-test with {friend}",
-    "lockedTip": "Locked — finish the previous district"
+    "lockedTip": "Locked:  finish the previous district"
   },
   "roomframe": {
     "clearedDefaultTitle": "District cleared",
@@ -118,19 +118,19 @@ export default {
       "heading": "The offer got them first",
       "body": "Before you could finish gathering proof, the fake \"today only\" countdown did its job and {friend} bought {product}. That urgency was the whole trick.",
       "lessonLabel": "Lesson:",
-      "lesson": "artificial urgency (\"only 3 left!\", \"offer ends in 5:00\") is designed to stop you from thinking. Slow down — a real deal will still be there tomorrow.",
+      "lesson": "artificial urgency (\"only 3 left!\", \"offer ends in 5:00\") is designed to stop you from thinking. Slow down:  a real deal will still be there tomorrow.",
       "again": "↻ Try again",
       "reasons": {
         "timeUp": {
           "heading": "The offer got them first",
-          "body": "Before you could finish convincing {friend}, the fake \"today only\" countdown hit zero — and {friend} bought {product}. That urgency was the whole trick."
+          "body": "Before you could finish convincing {friend}, the fake \"today only\" countdown hit zero: and {friend} bought {product}. That urgency was the whole trick."
         },
         "choseBuy": {
           "heading": "Out of arguments",
           "body": "You ran out of ways to convince {friend}. Still unconvinced, {friend} decided to go for it and bought {product}."
         },
         "notEnoughEvidenceConvincing": {
-          "heading": "Convincing — but not enough proof",
+          "heading": "Convincing: but not enough proof",
           "body": "I think you are right fot he most part, but I just didn't see enough evidence in the Physical Internet. I'm buying it.",
           "Mia": {
             "body": "You convinced Mia, but you were too late. She didn't get to see all the evidence you could have found in the Physical Internet."
@@ -141,7 +141,7 @@ export default {
         },
         "notEnoughEvidenceUnconvincing": {
           "heading": "Not convinced",
-          "body": "You didn't convince me — and I didn't see enough evidence in the Physical Internet either. I'm buying it."
+          "body": "You didn't convince me: and I didn't see enough evidence in the Physical Internet either. I'm buying it."
         }
       },
       "missingEvidence": {
@@ -182,7 +182,7 @@ export default {
     "roundLabel": "Round {n} · {title}",
     "respondPrompt": "Respond to {friend}",
     "you": "You",
-    "diagnosticNote": "No wrong answers here — just tell me what you think.",
+    "diagnosticNote": "No wrong answers here:  just tell me what you think.",
     "rounds": [
       {
         "title": "The Timer",
@@ -208,7 +208,7 @@ export default {
             "correct": false
           }
         ],
-        "why": "Exactly — the ticking clock is manufactured urgency, built to make you act before you think.",
+        "why": "Exactly:  the ticking clock is manufactured urgency, built to make you act before you think.",
         "nudge": "Think about what that ticking clock is really doing to you.",
         "positiveFeedback": "You mean, the urgency makes you act before you think... ",
         "negativeFeedback": "I don't know, that doesn't sound right.",
@@ -238,8 +238,8 @@ export default {
             "correct": true
           }
         ],
-        "why": "Right — it's not the mic or magic. Your search history was profiled and sold to ad networks.",
-        "nudge": "It's not the mic or a virus — think about what the platform already knows about you.",
+        "why": "Right:  it's not the mic or magic. Your search history was profiled and sold to ad networks.",
+        "nudge": "It's not the mic or a virus:  think about what the platform already knows about you.",
         "positiveFeedback": "Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. ",
         "negativeFeedback": "That really doesn't make sense to me.",
         "followUpQuestion": "Ok, and apart from that?"
@@ -268,8 +268,8 @@ export default {
             "correct": false
           }
         ],
-        "why": "Yes — read the URL letter by letter. 'bargalns' with an 'l' is a look-alike domain, not the real store.",
-        "nudge": "The real tell is in the address bar itself — read it character by character.",
+        "why": "Yes, read the URL letter by letter. 'bargalns' with an 'l' is a look-alike domain, not the real store.",
+        "nudge": "The real tell is in the address bar itself: read it character by character.",
         "positiveFeedback": "Oh, now I remember! A suspicious URL can be a sign that a website is fake and just pretending to be the real store.",
         "negativeFeedback": "Yeah, right, and I'm supposed to believe that?"
       }
@@ -278,12 +278,12 @@ export default {
       "eyebrow": "The Deal",
       "debugTag": "Pre-test",
       "title": "A message from {friend}",
-      "opening": "Look at this! An influencer I follow just posted a flash sale — the €600 NovaPad X for only €49! There are just 40 minutes left on the countdown. I'm entering my card info right now.",
+      "opening": "Look at this! An influencer I follow just posted a flash sale:  the €600 NovaPad X for only €49! There are just 40 minutes left on the countdown. I'm entering my card info right now.",
       "responses": [
-        "Whatever the reason for the setup, I don't want to miss out before the clock hits zero! Plus, she's a massive influencer — she wouldn't post something random. But the weird part is how this ad even knew I wanted a tablet. It popped up right at the top of my feed.",
+        "Whatever the reason for the setup, I don't want to miss out before the clock hits zero! Plus, she's a massive influencer:  she wouldn't post something random. But the weird part is how this ad even knew I wanted a tablet. It popped up right at the top of my feed.",
         "Look, there are a million theories about how algorithms and accounts handle ads, but I'm looking at the actual store page right now. It has the official brand logo, great reviews, and a secure checkout."
       ],
-      "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running — you've got until it hits zero, forty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
+      "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running:  you've got until it hits zero, forty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
       "endingYou": "Deal. Let's use your phone to get into the Physical Internet and see what that offer is hiding.",
       "begin": "▶ Look behind the screen"
     },
@@ -307,11 +307,11 @@ export default {
         ]
       },
       "responses": [
-        "I hear you, but the pressure feels so real with that clock ticking right in front of me. And it's not just the timer — I keep thinking it came from one of my favourite creators. But there's still the mystery of how it ended up on my radar.",
+        "I hear you, but the pressure feels so real with that clock ticking right in front of me. And it's not just the timer:  I keep thinking it came from one of my favourite creators. But there's still the mystery of how it ended up on my radar.",
         "Man, the way everything's handled behind the scenes on these apps is wild. But at the end of the day, I'm still staring at this checkout page trying to decide if it's safe to type my details in."
       ],
       "convinced": "You've convinced me. Now I understand the warning signs and how this offer tried to influence me. I'm not buying the tablet.",
-      "endingFriend": "Ugh, you've given me a lot to process, but I need to choose right now — the timer's about to hit zero. Based on everything we looked at, give it to me straight: do I close this tab and protect my data, or take the risk and buy it?",
+      "endingFriend": "Ugh, you've given me a lot to process, but I need to choose right now: the timer's about to hit zero. Based on everything we looked at, give it to me straight: do I close this tab and protect my data, or take the risk and buy it?",
       "choiceClose": "Close the tab. It’s a scam.",
       "choiceBuy": "Hit buy. Let’s risk it.",
       "retryFriend": "You haven't given me enough reasons not to buy it... There's still time before the offer expires: explain the points you haven't convinced me about yet",
@@ -319,20 +319,20 @@ export default {
       "retryGiveUp": "Let {friend} buy the tablet"
     },
     "mastery": {
-      "banner": "One more time — I am still not convinced. Give me the strongest reason for each."
+      "banner": "One more time:  I am still not convinced. Give me the strongest reason for each."
     }
   },
   "enter": {
     "eyebrow": "We are inside",
     "titleLead": "Welcome to the",
     "titleAccent": "PHYSICAL INTERNET",
-    "friendLine": "Alright — you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
+    "friendLine": "Alright:  you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
     "playerLine": "Yes, we have a deal. Let's uncover why this offer is a scam, and how it was built.",
     "toolsTitle": "First, the gear",
     "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
     "clock": "⏱ {minutes}:00 starts the moment we start walking",
     "mission": "We’ll have to explore the districts, gather evidence of how the scam works, and make it back to school before the offer expires!",
-    "mapText": "Your route through the Physical Internet. Travel from district to district — clear one to unlock the next, all the way to the final decision.",
+    "mapText": "Your route through the Physical Internet. Travel from district to district:  clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
     "hintsText": "Stuck on a puzzle? Hints has clues for the district you're in.",
     "finalLine": "Ready? The timer starts as soon as you open the map."
@@ -347,13 +347,13 @@ export default {
     "start": {
       "title": "Start",
       "subtitle": "Pre-test · The message from {friend}",
-      "blurb": "Where it began — {friend} sent you the deal and asked what you think.",
+      "blurb": "Where it began: {friend} sent you the deal and asked what you think.",
       "kind": "gate"
     },
     "link-district": {
       "title": "Link District",
       "subtitle": "Puzzle 1 · Fraudulent Links",
-      "blurb": "A router-block of doors. Only one URL is the real store — block the fakes.",
+      "blurb": "A router-block of doors. Only one URL is the real store: block the fakes.",
       "kind": "puzzle"
     },
     "roulette-corridor": {
@@ -412,7 +412,8 @@ export default {
     "message": "You have a run in progress. Pick up where you left off, or start again from the beginning?",
     "progress": "Districts cleared: {done}/{total} · {time} left",
     "resume": "Resume run",
-    "restart": "Start over"
+    "restart": "Start over",
+    "postTestPending": " You haven't spoken to your friend yet: starting over loses that"
   },
   "survey": {
     "bannerTitle": "Thanks for playing!",
@@ -640,6 +641,10 @@ export default {
               "Hundreds of cheap wholesale copies mean the product is not what it claims to be. AI art sites and fact-checks mean the image is AI-generated. A few official stores with similar prices mean it is real.",
               "Mug: Misleading Content. NovaPad X: AI-generated. Bluetooth speaker: Verified. Then press “Confirm classifications”."
             ]
+          },
+          "door": {
+            "prompts": "How do I get in?",
+            "items": "Click (or tap) the door to go through it."
           }
         }
       },
@@ -741,12 +746,12 @@ export default {
       "closeDoor": "✕ Close door",
       "doorHelp": "Open a door to peek at the site inside · read the address · use “Block” to shut the fraudulent ones",
       "tapToBlock": "Tap a door to block the link · tap again to unblock",
-      "addressHint": "The padlock & “https” mean the connection is private — NOT that the site is trustworthy.",
-      "linkTip": "A link — you can only check its real security once you open it",
+      "addressHint": "The padlock & “https” mean the connection is private: NOT that the site is trustworthy.",
+      "linkTip": "A link: you can only check its real security once you open it",
       "barNotSecure": "Not secure",
       "barLookalike": "⚠ Look-alike letters",
       "secureConn": "Encrypted connection (https)",
-      "insecureConn": "Not secure — unencrypted http connection",
+      "insecureConn": "Not secure: unencrypted http connection",
       "blockThis": "🔒 Block this link",
       "unblock": "↺ Unblock",
       "inspect": "Inspect the address & preview.",
@@ -757,7 +762,7 @@ export default {
       "finalRouter": "Advance to the next crossroads→",
       "reviewTitle": "Why those doors?",
       "errStillOpenOld": "At least one fraudulent link is still open. Block every fake before continuing.",
-      "errBlockedSafeOld": "You blocked the real store! That is the one safe door — leave it open.",
+      "errBlockedSafeOld": "You blocked the real store! That is the one safe door: leave it open.",
       "justifyLeadLabel": "Why have you locked those doors?",
       "justifyLead": "Click on the warning signs",
       "justifyErrWrong": "HTTPS, a padlock or a familiar-looking name is not a warning sign by itself, but none proves a site is safe. A familiar name can hide a typo or look-alike letter: check the full domain for those specific differences.",
@@ -769,7 +774,7 @@ export default {
       "preview": {
         "newArrivals": "NEW ARRIVALS",
         "storeCaption": "Effortless style, every day.",
-        "megaSale": "⚠ MEGA SALE — TODAY ONLY! ⚠",
+        "megaSale": "⚠ MEGA SALE: TODAY ONLY! ⚠",
         "shopNow": "SHOP NOW!",
         "shopBar": "DISCOUNT SHOPZ ▤",
         "limited": "⚠ LIMITED TIME!!! ⚠"
@@ -777,10 +782,10 @@ export default {
       "rounds": [
         {
           "category": "Common suffixes",
-          "prompt": "One is the real store. The others hide their true domain behind a familiar-looking name — read the whole address.",
+          "prompt": "One is the real store. The others hide their true domain behind a familiar-looking name: read the whole address.",
           "notes": {
             "a": "The genuine domain: lunawear.com",
-            "b": "The real site is “com-official.shop” — “lunawear” is only a subdomain glued on to fool you.",
+            "b": "The real site is “com-official.shop”: “lunawear” is only a subdomain glued on to fool you.",
             "c": "“-dealz” is an added, misspelled word tacked onto the brand."
           }
         },
@@ -788,9 +793,9 @@ export default {
           "category": "HTTP vs HTTPS",
           "prompt": "Look at the very start of each address. Which connection is actually secure?",
           "notes": {
-            "a": "https:// — an encrypted connection, and the real store.",
-            "b": "http:// with no “s” — the connection is NOT encrypted.",
-            "c": "http:// AND an odd “.free” ending — steer well clear."
+            "a": "https:// → an encrypted connection, and the real store.",
+            "b": "http:// with no “s” → the connection is NOT encrypted.",
+            "c": "http:// AND an odd “.free” ending → steer well clear."
           }
         },
         {
@@ -798,8 +803,8 @@ export default {
           "prompt": "These look almost identical to the real store. Inspect them character by character.",
           "notes": {
             "a": "The genuine magnumshop.com.",
-            "b": "The “rn” is disguised as an “m” — read it slowly: r-n-agnumshop.",
-            "c": "One letter is a foreign look-alike — the Cyrillic “и” swapped in for an “n”."
+            "b": "The “rn” is disguised as an “m” → read it slowly: r-n-agnumshop.",
+            "c": "One letter is a foreign look-alike → the Cyrillic “и” swapped in for an “n”."
           }
         }
       ],
@@ -807,7 +812,7 @@ export default {
         "suffix": "Extra words bolted on after the real name (…com-official.shop, -dealz)",
         "httpNoS": "The address uses http:// instead of the encrypted https://",
         "weirdTld": "Odd domain endings like .sbs, .xyz or .free instead of .com",
-        "homoglyph": "Letters swapped for look-alikes — “rn” for “m”, or foreign characters",
+        "homoglyph": "Letters swapped for look-alikes → “rn” for “m”, or foreign characters",
         "typo": "Misspellings of the brand name (e.g. “dealz”)",
         "httpsGood": "It starts with https://",
         "lock": "The browser shows a little padlock icon"
@@ -879,7 +884,7 @@ export default {
       "investigation": {
         "intro": "Spin each wheel twice. Is it rigged or not rigged?",
         "wheelProgress": "Wheel {n} / {total}",
-        "solvedTitle": "Corridor cleared — claims checked",
+        "solvedTitle": "Corridor cleared: claims checked",
         "spinAgain": "Spin again",
         "solvedText": "You spotted both rigged wheels. Take your evidence to the next district.",
         "evidence": "Game-like rewards and the feeling of being lucky can make you keep playing and spend more.",
@@ -899,7 +904,7 @@ export default {
           "title": "You won a discount coupon!",
           "coupon": "50% OFF"
         },
-        "retryBait": "“No prize this time! Keep spinning — your next try could be the big win!”",
+        "retryBait": "“No prize this time! Keep spinning: your next try could be the big win!”",
         "wheels": {
           "w1": {
             "name": "MEGA SPIN",
@@ -913,7 +918,7 @@ export default {
               "30% OFF",
               "No prize"
             ],
-            "rules": "Spin to unlock a discount coupon — up to 50% off!",
+            "rules": "Spin to unlock a discount coupon: up to 50% off!",
             "feedback": "How do these roulette games get you hooked? First, they give you a small prize, just enough to make you feel lucky. But the trick is that you end up spending far more than you’ve won. You feel like today’s your lucky day, so you carry on playing. That feeling of being lucky is what keeps you hooked."
           },
           "w3": {
@@ -928,7 +933,7 @@ export default {
               "€50",
               "No prize"
             ],
-            "rules": "Win a phone, a laptop or up to €100 — give it a spin!",
+            "rules": "Win a phone, a laptop or up to €100: give it a spin!",
             "feedback": "This wheel was rigged to always land on \"No prize\". The big prizes on it can never be won: they are only there to keep you spinning. Every spin feels like a near miss, like you'll win next time, so you try again. Meanwhile you lose your time and attention, and the shop gets more time to show you its offers."
           }
         },
@@ -939,7 +944,7 @@ export default {
     },
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
-      "solvedTitle": "Influencer Avenue cleared — Data Report obtained 📄",
+      "solvedTitle": "Influencer Avenue cleared: Data Report obtained 📄",
       "solvedText": "You labelled the ads and detected the untrustworthy products",
       "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",
       "stage1": {
@@ -958,7 +963,7 @@ export default {
         "correct": "✓ {label}",
         "wrong": "✗ wrong label",
         "learnLabel": "Why it matters:",
-        "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising — even when it is dressed up as a personal recommendation.",
+        "learn": "sponsored content must be clearly labelled. A #ad, a gifted product, an affiliate link or a discount code all signal advertising: even when it is dressed up as a personal recommendation.",
         "hint": "Tap or drag a label chip, then drop it on the matching post.",
         "commentsTitle": "Comments",
         "commentCount": "{count} comments",
@@ -967,6 +972,16 @@ export default {
         "wrongPlacement": "Some labels are on the wrong post. Move them and check again.",
         "selectPost": "Select Post",
         "answerProgress": "{count} / {total}"
+      },
+      "stage1Done": {
+        "title": "Hidden deals exposed!",
+        "body": "Nice work. You uncovered the deal behind every post: a paid promotion, a gifted product and a brand collab. ",
+        "next": "Next →"
+      },
+      "door": {
+        "prompt": "A mysterious door conceals a secret passageway to a new room. What might it be hiding?",
+        "action": "Go through the door",
+        "chamberIntro": "You have entered the Chamber of Endless Products. Every item in here is being sold by an influencer, but is it really what they claim? "
       },
       "labels": {
         "paid": "PAID",
@@ -1038,7 +1053,7 @@ export default {
           "clues": [
             "Tagged the brand as a creative partner",
             "Co-designed the flavour together",
-            "“#ad” — worked jointly on the launch"
+            "“#ad” → worked jointly on the launch"
           ]
         },
         {
@@ -1109,11 +1124,11 @@ export default {
         "claimsText": "About any aspect of the product: its origin, how it was made…",
         "claimsCaption1": "Original porcelain bunny from JAPAN",
         "claimsCaption2": "Plastic bunny made in Mexico",
-        "title": "Besides the ad — what about the product?",
+        "title": "Besides the ad: what about the product?",
         "body": "Is the product what they claim? A reverse image search helps you check: you search with a photo, and it finds that exact picture or similar ones that appear online, so you can verify whether the image is really what the seller claims.",
         "instructions": "First reverse search the image. Then, look at the results to judge the product's authenticity.",
         "useShop": "Love a piece of clothing you saw in a post? Reverse-search the photo to find where you can actually buy it.",
-        "useVerify": "Not sure an influencer's product is genuine? Reverse-search it to see if it's really unique — or the same mass-produced item everyone's selling.",
+        "useVerify": "Not sure an influencer's product is genuine? Reverse-search it to see if it's really unique: or the same mass-produced item everyone's selling.",
         "searchLabel": "reverse image search",
         "searching": "Searching the web…",
         "dragHint": "↓ Drag the seller's photo into a reverse image search",
@@ -1133,7 +1148,7 @@ export default {
           "matches": [
             {
               "site": "aliluxe-deals.shop",
-              "title": "Ceramic Coffee Mug — bulk 500 pieces",
+              "title": "Ceramic Coffee Mug: bulk 500 pieces",
               "price": "€0,84*"
             },
             {
@@ -1143,7 +1158,7 @@ export default {
             },
             {
               "site": "quickship-goods.net",
-              "title": "Rustic Ceramic Cup — Wholesale Price",
+              "title": "Rustic Ceramic Cup: Wholesale Price",
               "price": "-"
             },
             {
@@ -1153,12 +1168,12 @@ export default {
             },
             {
               "site": "homestylewholesale.net",
-              "title": "Ceramic Mug Model CM-204 — €0.95/unit",
+              "title": "Ceramic Mug Model CM-204: €0.95/unit",
               "price": "€0.95*"
             },
             {
               "site": "mega-bazaar.shop",
-              "title": "Cheap ceramic mugs — €1.90 / unit",
+              "title": "Cheap ceramic mugs: €1.90 / unit",
               "price": "€1,90*"
             }
           ],
@@ -1180,7 +1195,7 @@ export default {
             },
             {
               "site": "promptgallery.art",
-              "title": "Sci-fi tablet — AI artwork"
+              "title": "Sci-fi tablet: AI artwork"
             },
             {
               "site": "fakedetector-ads-news.org",
@@ -1242,32 +1257,32 @@ export default {
       },
       "decoder": {
         "title": "🔑 Emoji Decoding Card",
-        "noCard": "You would normally have earned this card back in Link District — here it is anyway.",
+        "noCard": "You would normally have earned this card back in Link District: here it is anyway.",
         "help": "Match each emoji on a sticky-note to its letter to read the hidden label.",
         "noSelection": "No post selected",
         "erase": "Delete last letter"
       },
       "labelFeedback": {
         "title": "Sponsored posts must be labeled",
-        "intro": "When a creator or an influencer is paid, partnered with, or gifted a product, they have to disclose it — clearly and up front. Here's how to tell them apart:",
+        "intro": "When a creator or an influencer is paid, partnered with, or gifted a product, they have to disclose it: clearly and up front. Here's how to tell them apart:",
         "paidDesc": "The creator is paid by the brand to post about it.",
         "paidExample": "Tell-tale signs: an affiliate link, or a personal discount code like “LUNA20”.",
         "collabDesc": "A creative partnership, made together with the brand.",
         "collabExample": "Tell-tale signs: a “paid partnership” tag, or #ad on a co-created post.",
         "giftedDesc": "The creator was sent the product for free.",
-        "giftedExample": "Tell-tale signs: “gifted”, or “thanks @brand for sending this” — a free item, no payment.",
+        "giftedExample": "Tell-tale signs: “gifted”, or “thanks @brand for sending this”: a free item, no payment.",
         "continue": "Got it →"
       }
     },
     "algorithm": {
       "intro": "A giant computer uses personal data to decide which ads people see. Step inside and discover how it creates personalized ads from this data.",
       "solvedTitle": "Algorithm Control Room cracked · Evidence logged ",
-      "solvedText": "You watched the algorithm turn {friend}'s age, interests and possible insecurities into a single ad. That is not coincidence — it is the result of his advertisement profile",
+      "solvedText": "You watched the algorithm turn {friend}'s age, interests and possible insecurities into a single ad. That is not coincidence: it is the result of his advertisement profile",
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",
         "prompt": "Enter the six-digit code.",
-        "error": "Access denied — that code is wrong.",
+        "error": "Access denied: that code is wrong.",
         "submit": "Unlock →"
       },
       "choice": {
@@ -1276,13 +1291,13 @@ export default {
         "optionATag": "Option A",
         "optionABefore": "See",
         "optionABold": "fewer, personalised",
-        "optionAAfter": "ads — but your personal data is collected.",
+        "optionAAfter": "ads: but your personal data is collected.",
         "optionBTag": "Option B",
         "optionBBefore": "See",
         "optionBBold": "many more",
-        "optionBAfter": "ads and ad-breaks — but far less of your data is collected.",
+        "optionBAfter": "ads and ad-breaks: but far less of your data is collected.",
         "wrongTitle": "Wrong answer.",
-        "wrongText": "You just traded your privacy for convenience. “Personalised” is the algorithm — fewer ads means it is collecting and profiling more of your data to pick them.",
+        "wrongText": "You just traded your privacy for convenience. “Personalised” is the algorithm: fewer ads means it is collecting and profiling more of your data to pick them.",
         "goodTitle": "Good answer.",
         "goodText": "More ads is annoying, but you kept your data and partly slipped the personalisation algorithm. Convenience is the bait it uses to make profiling feel like a favour.",
         "afterNote": "Either way, the machine still tries to profile everyone. Let’s see how.",
@@ -1297,7 +1312,7 @@ export default {
         "slotPlaceholder": "drop tile",
         "stepBadge": "Equation {n} / {total}",
         "profileBadge": "Profile complete",
-        "dragHint": "Drag the missing factor into the equation — the one that fits this exact person.",
+        "dragHint": "Drag the missing factor into the equation: the one that fits this exact person.",
         "wrongHint": "That factor doesn’t fit this person. Look at what the ad is really selling.",
         "navTerminal": "Ad Terminal",
         "terminalTitle": "AD-OUTPUT TERMINAL",
@@ -1308,7 +1323,7 @@ export default {
         "profileB2": "interests",
         "profileP3": "(gaming, new tech and searches for the NovaPad X) and",
         "profileB3": "insecurities",
-        "profileP4": "(fitting in, fear of missing the deal). Out came one perfectly-aimed ad — the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
+        "profileP4": "(fitting in, fear of missing the deal). Out came one perfectly-aimed ad: the exact NovaPad X “90% off” offer. It was never a coincidence {friend} saw it.",
         "logEvidence": "Log this evidence ✓",
         "finalLessonTitle": "What you learned",
         "finalLesson": "Personalised ads combine your activity, interests, and insecurities to target you.",
@@ -1434,14 +1449,14 @@ export default {
     },
     "ads": {
       "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
-      "solvedTitle": "Corridor cleared — you read the fine print",
+      "solvedTitle": "Corridor cleared: you read the fine print",
       "solvedText": "These ads draw your attention immediatly with free stuff, promises of getting rich, inminent danger...  Be wary of any content that triggers a very strong emotional reaction in you.",
       "pickup": "You pick up the Truth Flashlight 🔦",
       "torchCharging": "🔦 Charging…",
       "torchOn": "🔦 Flashlight ON",
       "torchOff": "🔦 Truth Flashlight",
-      "hintCharging": "The cheap torch flickers awake — bait ads love to waste a moment of your time…",
-      "hintOn": "Sweep the beam across the dark wall — each poster lights up and reveals the truth.",
+      "hintCharging": "The cheap torch flickers awake:  bait ads love to waste a moment of your time…",
+      "hintOn": "Sweep the beam across the dark wall:  each poster lights up and reveals the truth.",
       "hintOff": "Switch it on, then sweep the beam over the posters to reveal what they really say.",
       "glossyCta": "TAP TO CLAIM →",
       "fineprint": "* terms & conditions apply",
@@ -1457,12 +1472,12 @@ export default {
       "exitButton": "Open exit →",
       "errCode": "That is not the code. Illuminate all four posters and read the letters hiding in the fine print.",
       "learnLabel": "Read the fine print.",
-      "learn": "Ads shouting “free”, “you won” or “€0 today” usually hide the real cost in tiny print below — always read what you are actually agreeing to before you tap.",
+      "learn": "Ads shouting “free”, “you won” or “€0 today” usually hide the real cost in tiny print below:  always read what you are actually agreeing to before you tap.",
       "evidence": "Behind the “free trial” ad was a hidden €59/month auto-renewing subscription.",
       "posters": [
         {
           "glossyTitle": "FREE 30-DAY TRIAL!",
-          "glossyBody": "Try SunCloud Premium — €0 today!",
+          "glossyBody": "Try SunCloud Premium:  €0 today!",
           "glossyBadge": "€0",
           "truth": "After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.",
           "truthTitle": "😩 Automatic renovation",
@@ -1478,7 +1493,7 @@ export default {
         },
         {
           "glossyTitle": "📈 GET RICH QUICK!",
-          "glossyBody": "Turn €100 into €10,000 in one week — guaranteed!",
+          "glossyBody": "Turn €100 into €10,000 in one week:  guaranteed!",
           "glossyBadge": "×100",
           "truth": "Every euro you “invest” is gone, and the sky-high “returns” on screen are fake.",
           "truthTitle": "📉 A pure scam",
@@ -1486,7 +1501,7 @@ export default {
         },
         {
           "glossyTitle": "🛡️ VIRUS DETECTED!",
-          "glossyBody": "Your device may be at risk — download SecureNow FREE!",
+          "glossyBody": "Your device may be at risk:  download SecureNow FREE!",
           "glossyBadge": "FREE",
           "truth": "The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad.",
           "truthTitle": "🚨 You didn´t have a virus... now you do",
@@ -1495,9 +1510,9 @@ export default {
       ]
     },
     "persuasion": {
-      "intro": "A gallery of glossy ads. Each one leans on a single persuasion trick — name it by framing the poster.",
-      "solvedTitle": "Persuasion Lab cleared — password FOOLED",
-      "solvedText": "Once you can name the trick — FOMO, urgency, a borrowed celebrity — it stops working on you. That is the whole defence.",
+      "intro": "A gallery of glossy ads. Each one leans on a single persuasion trick:  name it by framing the poster.",
+      "solvedTitle": "Persuasion Lab cleared:  password FOOLED",
+      "solvedText": "Once you can name the trick:  FOMO, urgency, a borrowed celebrity:  it stops working on you. That is the whole defence.",
       "learn": {
         "lead": "Spot the trick.",
         "body": "Ads persuade with named techniques: FOMO (fear of missing out), social proof (\"everyone's buying it\"), exaggeration, influencer endorsement, emotional appeal and urgency. Real campaigns often stack several of these at once to slip past your judgement."
@@ -1505,9 +1520,9 @@ export default {
       "trayLabel": "TECHNIQUE FRAMES",
       "hints": {
         "start": "Drag and drop each technique frame onto the matching poster.",
-        "allDone": "All six framed — the letters spell a password. Click the computer to type it in.",
-        "correct": "Correct — a letter surfaced. Keep framing the rest.",
-        "wrong": "That technique does not match this ad. Frame returned — try another.",
+        "allDone": "All six framed:  the letters spell a password. Click the computer to type it in.",
+        "correct": "Correct:  a letter surfaced. Keep framing the rest.",
+        "wrong": "That technique does not match this ad. Frame returned:  try another.",
         "wrongSpecific": "Not quite. Look again: {clue}"
       },
       "dragHint": "Drag onto its poster",
@@ -1524,12 +1539,12 @@ export default {
           "letter": "O"
         },
         {
-          "headline": "Lose 10kg in just 3 DAYS — guaranteed miracle!",
+          "headline": "Lose 10kg in just 3 DAYS:  guaranteed miracle!",
           "sub": "You'll be surprised.",
           "letter": "O"
         },
         {
-          "headline": "As seen on @StarCeleb's page — she LOVES it!",
+          "headline": "As seen on @StarCeleb's page:  she LOVES it!",
           "sub": "#ad",
           "letter": "L"
         },
@@ -1539,7 +1554,7 @@ export default {
           "letter": "E"
         },
         {
-          "headline": "OFFER ENDS IN 04:59 — buy NOW before it's gone!",
+          "headline": "OFFER ENDS IN 04:59:  buy NOW before it's gone!",
           "sub": "Tick, tock…",
           "letter": "D"
         }
@@ -1554,7 +1569,7 @@ export default {
       },
       "passwordLearn": {
         "lead": "Named and disarmed.",
-        "body": "Six posters, six tricks. The letters they hid, read left to right, are the exit password — proof you saw through every one."
+        "body": "Six posters, six tricks. The letters they hid, read left to right, are the exit password:  proof you saw through every one."
       },
       "openComputer": "Use the computer →",
       "closeComputer": "Close the screen",
@@ -1566,7 +1581,7 @@ export default {
       "unlock": "Unlock →",
       "pwError": "Access denied. Read the glowing letters in poster order and try again.",
       "hiddenLetter": "hidden letter {letter}",
-      "evidence": "Every poster used a named persuasion trick — FOMO, social proof, urgency and more.",
+      "evidence": "Every poster used a named persuasion trick:  FOMO, social proof, urgency and more.",
       "info": {
         "button": "Persuasion techniques",
         "title": "Persuasion techniques",
