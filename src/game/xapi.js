@@ -240,6 +240,7 @@ export const OBJ = {
 
   // Puzzle 3 — Algorithm Control Room
   doorKeypad: () => a('objects/door-keypad', 'Control room door keypad', 'interaction'),
+  productsDoor: () => a('objects/products-door', 'Products chamber door', 'interaction'),
   roomCode: () => a('objects/room-code', 'Code', 'solution'),
   privacyChoice: () => a('objects/privacy-choice', 'Privacy trade-off', 'choice'),
   equation: (rid, name) => a(`objects/equations/${rid}`, name, 'choice'),

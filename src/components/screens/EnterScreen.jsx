@@ -8,7 +8,7 @@ import { playSound, stopSound } from '../../game/sound.js'
 import { DEBUG, settings } from '../../game/settings.js'
 import { bgUrl } from '../../game/assets.js'
 import DialogNav from './DialogNav.jsx'
-import HoloTunnel from '../HoloTunnel.jsx'
+import PortalTunnel from '../PortalTunnel.jsx'
 import DialogScene, { sceneBackground } from './DialogScene.jsx'
 import './screens.css'
 import './pretest.css'
@@ -22,7 +22,7 @@ const { letterMs: LETTER_MS, holdMs: HOLD_MS } = settings.typewriter
 // Intro timeline (motion only): the coded holographic tunnel (HoloTunnel)
 // runs with the portal rings over it; in its last FLASH_MS the core swells to a whiteout; the white fades
 // to black (WHITE_MS), then the black slowly fades to the scene (BLACK_MS).
-const TUNNEL_MS = settings.portal.tunnelMs
+const TUNNEL_MS = settings.portal.video ? settings.portal.videoMs : settings.portal.tunnelMs
 const FLASH_MS = 1900
 const WHITE_MS = 1800
 const BLACK_MS = 6000
@@ -271,7 +271,7 @@ export default function EnterScreen() {
         )}
       </div>
 
-      {phase === 'tunnel' && <HoloTunnel className="enter-video-host" rampMs={TUNNEL_MS} paused={paused} />}
+      {phase === 'tunnel' && <PortalTunnel className="enter-video-host" rampMs={TUNNEL_MS} paused={paused} />}
       {phase === 'tunnel' && (
         <div className="portal-warp enter-warp is-playing" aria-hidden
           style={{ '--flash': `${FLASH_MS}ms`, '--flash-delay': `${Math.max(0, TUNNEL_MS - FLASH_MS)}ms` }}>

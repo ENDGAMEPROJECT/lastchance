@@ -1,0 +1,15 @@
+/* Portal tunnel video (PortalTunnel.jsx). Fills its parent; black behind it
+   until the first frame paints. */
+.portal-tunnel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #020309;
+  pointer-events: none;
+}
+.portal-tunnel-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

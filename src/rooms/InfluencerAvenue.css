@@ -674,6 +674,7 @@ button.ia-view-publication {
 .ia-note {
   position: relative;
   flex: none;
+  height: 110px;
   width: 226px;
   padding: 12px 10px 8px;
   background: linear-gradient(160deg, #FFFFFF, #fdffdc);
@@ -682,9 +683,14 @@ button.ia-view-publication {
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
   transform: rotate(-1.4deg);
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  justify-content: center;
   cursor: pointer;
   user-select: none;
   transition: transform 0.18s ease, box-shadow 0.18s ease;
+
 }
 .ia-notes-dock .ia-note:nth-child(2) { transform: rotate(1.2deg); }
 .ia-notes-dock .ia-note:hover,
@@ -1781,7 +1787,7 @@ grid-template-columns: 1fr 1fr 1fr;
   position: relative;
   flex: none;
   width: 820px;
-  height: 330px;
+  height: 360px;
   text-align: left;
   margin: 12px 0;
 
@@ -1853,7 +1859,7 @@ grid-template-columns: 1fr 1fr 1fr;
   top: 0;
   right: 0;
   bottom: 0;
-  height: 336px;
+  height: 356px;
   display: flex;
   flex-direction: column;
   border-radius: var(--radius);
@@ -2136,3 +2142,137 @@ grid-template-columns: 1fr 1fr 1fr;
 
 /* a result that is the seller's own ad (ProductArt) clips to the photo's rounded corners */
 .ia-art.ia-match-img { height: auto; }
+
+/* ---- HUD info (i) pop-over content (InfluencerInfo) ---- */
+.ia-info { display: flex; flex-direction: column; align-items: stretch; gap: 12px; text-align: left; }
+.ia-info .ia-explain-body { max-width: none; }
+.ia-info .ia-lookfor-title { margin: 4px 0 0; }
+.ia-info .ia-lookfor-img.has-image { width: 180px; min-width: 0; min-height: 0; height: auto; }
+.ia-info .ia-lookfor-img.has-image img { height: 140px; }
+.ia-info .ia-explain-instructions { margin: 0; }
+/* Desktop: the two "what to look for" cards side by side, image on top, and
+   every photo in the same-height box (phone keeps the stacked layout). */
+@media (min-width: 1181px) {
+  .ia-info-lookfor { display: flex; align-items: stretch; gap: 14px; }
+  .ia-info-lookfor .ia-lookfor-card { flex: 1 1 0; flex-direction: column; align-items: stretch; }
+  .ia-info .ia-lookfor-img.has-image { width: 100%; height: 150px; }
+  .ia-info .ia-lookfor-img.has-image img { width: 100%; height: 150px; object-fit: contain; }
+  .ia-info .ia-lookfor-pair { width: 100%; justify-content: center; gap: 12px; }
+  .ia-info .ia-lookfor-pair-item { flex: 1 1 0; width: auto; }
+  .ia-info .ia-lookfor-pair-item + .ia-lookfor-pair-item { margin-top: 0; }
+  .ia-info .ia-lookfor-pair-item img { width: 100%; border-radius: 5px; height: 110px; object-fit: contain; }
+}
+@media (max-width: 1180px) {
+  .ia-info .ia-explain-body { font-size: calc(1rem * var(--text-boost, 1)); }
+}
+
+/* ---- Stage 1 cleared: feedback pop-over over the labelled posts ---- */
+.ia-pop-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(2, 3, 10, 0.62);
+}
+.ia-pop {
+  max-width: 580px;
+  width: 100%;
+  padding: 24px 30px 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+.ia-pop-icon { font-size: 2.6rem; line-height: 1; filter: drop-shadow(0 0 14px var(--purple)); }
+.ia-pop .ia-explain-body { margin: 0 0 8px; }
+@media (max-width: 1180px) {
+  .ia-pop { max-width: 820px; }
+}
+
+/* =========================================================
+   THE PRODUCTS-CHAMBER DOOR (bg-reverse-search-door.png)
+   Same mechanics as the Algorithm Room's door: the keypad in the picture is
+   the only hotspot, aligned with the background's cover sizing.
+   ========================================================= */
+.ia-door-scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px 0 0;
+  text-align: center;
+}
+.ia-door-head {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 16px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: rgba(14, 6, 24, 0.74);
+  border: 1px solid rgba(168, 85, 247, 0.45);
+  backdrop-filter: blur(2px);
+}
+.ia-door-head .game-prompt { margin: 0; }
+@media (max-width: 1180px) {
+  .ia-door-head { max-width: 760px; }
+}
+/* Match the fixed stage (scene padding included), like .ar-door-keypad-map. */
+.ia-door-map {
+  position: absolute;
+  left: calc(50% - 640px);
+  top: -12px;
+  width: 1280px;
+  height: calc(100% + 28px);
+  pointer-events: none;
+  overflow: visible;
+}
+/* the background image's own pixel box, centred; DoorArtMap scales it to cover */
+.ia-door-art {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1677px;
+  height: 938px;
+  margin: -469px 0 0 -838.5px;
+  transform-origin: 50% 50%;
+}
+/* hotspot over the pictured door (frame included), in image px */
+.ia-door-hotspot {
+  position: absolute;
+  left: 590px;
+  top: 130px;
+  width: 500px;
+  height: 685px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  outline: none;
+}
+.ia-door-hotspot:focus-visible { outline: 3px solid var(--magenta); outline-offset: 4px; }
+/* The fade through the door: to black on the door, from black in the chamber.
+   Sized like .ia-door-map so it covers the whole scene. */
+.ia-door-fade {
+  position: absolute;
+  left: calc(50% - 640px);
+  top: -12px;
+  width: 1280px;
+  height: calc(100% + 28px);
+  z-index: 70;
+  background: #000;
+  pointer-events: none;
+}
+.ia-door-fade.to-black { animation: ia-fade-in 0.7s ease-in forwards; }
+.ia-door-fade.from-black { animation: ia-fade-out 0.6s ease-out forwards; }
+@keyframes ia-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ia-fade-out { from { opacity: 1; } to { opacity: 0; } }
+
+/* Through the door: the step-in card fills the room body like the briefing. */
+.ia-chamber { position: relative; height: 100%; }

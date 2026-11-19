@@ -11,15 +11,46 @@ import { useStage } from './Stage.jsx'
 import { useRoomState } from '../game/useRoomState.js'
 import Modal from './Modal.jsx'
 import DataReport from './DataReport.jsx'
+import { InfluencerInfo } from '../rooms/InfluencerAvenue.jsx'
 import DebugPosttestButtons from './DebugPosttestButtons.jsx'
 import DebugPortalButton from './DebugPortalButton.jsx'
 import DebugCharacterButton from './DebugCharacterButton.jsx'
 import DebugLanguageButton from './DebugLanguageButton.jsx'
 import './HUD.css'
 
-/* Rooms with an info button (i) beside Hints → their i18n block
-   ({ button, title, items: [{ name, text }] }). */
-const INFO_ROOMS = { 'persuasion-room': 'rooms.persuasion.info' }
+/* Rooms with an info button (i) beside Hints: the button's label and the
+   pop-over's title (i18n keys), its width and its body. hintStep is the room's
+   current step (GameContext), so a room can change the info as it moves on. */
+const INFO_ROOMS = {
+  'persuasion-room': () => ({
+    button: 'rooms.persuasion.info.button',
+    title: 'rooms.persuasion.info.title',
+    width: 620,
+    render: (t) => (
+      <dl className="info-list">
+        {[].concat(t('rooms.persuasion.info.items') || []).filter((item) => item && typeof item === 'object').map((item, i) => (
+          <div key={i} className="info-item">
+            <dt>{item.name}</dt>
+            <dd>{item.text}</dd>
+          </div>
+        ))}
+      </dl>
+    ),
+  }),
+  // Label game → the label explainer; reverse image search → its explainer.
+  // (No info pop-over at the products-chamber door.)
+  'influencer-avenue': (hintStep) => hintStep === 'door' ? null : hintStep === 'search' ? {
+    button: 'rooms.influencer.explain.lookForTitle',
+    title: 'rooms.influencer.explain.title',
+    width: 900,
+    render: () => <InfluencerInfo step="search" />,
+  } : {
+    button: 'rooms.influencer.info.labelsButton',
+    title: 'rooms.influencer.labelFeedback.title',
+    width: 900,
+    render: () => <InfluencerInfo step="labels" />,
+  },
+}
 
 const MOBILE_QUERY = `(max-width: ${settings.mobile.breakpoint}px)`
 // On mobile a first tap only unfolds a HUD button's label; it isn't "opening" it.
@@ -295,7 +326,7 @@ export default function HUD() {
   // pointing at the next district. Elsewhere (setup, conversations, endings)
   // there's nothing to hint, so don't offer the button.
   const showHints = screen === 'room' || screen === 'map' || touring
-  const infoKey = screen === 'room' && !touring ? INFO_ROOMS[activeNodeId] : null
+  const info = screen === 'room' && !touring && INFO_ROOMS[activeNodeId] ? INFO_ROOMS[activeNodeId](hintStep) : null
 
   const mobileHud = (
     <div className="hud-m">
@@ -345,17 +376,17 @@ export default function HUD() {
       </div>
 
       <div className="hud-m-col hud-m-right">
-        {infoKey && (
+        {info && (
           <button
             type="button"
             data-nav="info"
             className={`btn hud-info hud-m-btn hud-m-nav ${expanded ? 'is-expanded' : ''}`}
             onMouseDown={(event) => event.preventDefault()}
             onClick={navTap(openInfo)}
-            aria-label={t(`${infoKey}.button`)}
+            aria-label={t(info.button)}
             aria-expanded={expanded}
           >
-            {expanded ? t(`${infoKey}.button`) : 'i'}
+            {expanded ? t(info.button) : 'i'}
           </button>
         )}
         {showHints && (
@@ -471,14 +502,14 @@ export default function HUD() {
               <DebugLanguageButton />
             </span>
           )}
-          {infoKey && (
+          {info && (
             <button
               type="button"
               className="hud-info"
               onMouseDown={(event) => event.preventDefault()}
               onClick={openInfo}
-              aria-label={t(`${infoKey}.button`)}
-              title={t(`${infoKey}.button`)}
+              aria-label={t(info.button)}
+              title={t(info.button)}
             >
               i
             </button>
@@ -647,17 +678,10 @@ export default function HUD() {
         </div>
       </Modal>
 
-      {infoKey && (
-        <Modal open={infoOpen} onClose={() => setInfoOpen(false)} title={t(`${infoKey}.title`)}
-          accent="magenta" width={620} className="hud-modal info-modal">
-          <dl className="info-list">
-            {asList(t(`${infoKey}.items`)).map((item, i) => (
-              <div key={i} className="info-item">
-                <dt>{item.name}</dt>
-                <dd>{item.text}</dd>
-              </div>
-            ))}
-          </dl>
+      {info && (
+        <Modal open={infoOpen} onClose={() => setInfoOpen(false)} title={t(info.title)}
+          accent="magenta" width={info.width} className="hud-modal info-modal">
+          {info.render(t)}
         </Modal>
       )}
 

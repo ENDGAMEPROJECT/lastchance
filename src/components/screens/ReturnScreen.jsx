@@ -3,7 +3,7 @@ import { useGame, formatTime } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
 import { playSound, stopSound } from '../../game/sound.js'
 import DialogNav from './DialogNav.jsx'
-import HoloTunnel from '../HoloTunnel.jsx'
+import PortalTunnel from '../PortalTunnel.jsx'
 import DialogScene from './DialogScene.jsx'
 import './screens.css'
 import './pretest.css'
@@ -16,7 +16,7 @@ import { DEBUG, settings } from '../../game/settings.js'
 const { letterMs: LETTER_MS, holdMs: HOLD_MS } = settings.typewriter
 
 // Same reading pace / fade as the portal arrival (EnterScreen).
-const TUNNEL_MS = settings.portal.tunnelMs // the coded tunnel (HoloTunnel)
+const TUNNEL_MS = settings.portal.video ? settings.portal.videoMs : settings.portal.tunnelMs // video length, or the coded tunnel's
 const FLASH_MS = 1900
 const WHITE_HOLD_MS = 2000 // the core's whiteout holds on white before the post-test fades in
 // Arrival, as after the first portal trip: hold on black, then the black slowly
@@ -143,7 +143,7 @@ export default function ReturnScreen() {
           style={{ '--white': `${HOLD_BLACK_MS}ms`, '--black': `${BLACK_MS}ms` }} />
       )}
       {phase === 'tunnel' && <div className="enter-blackout" aria-hidden />}
-      {phase === 'tunnel' && <HoloTunnel className="enter-video-host" rampMs={TUNNEL_MS} />}
+      {phase === 'tunnel' && <PortalTunnel className="enter-video-host" rampMs={TUNNEL_MS} />}
       {phase === 'tunnel' && (
         <div className="portal-warp enter-warp is-playing" aria-hidden
           style={{ '--flash': `${FLASH_MS}ms`, '--flash-delay': `${Math.max(0, TUNNEL_MS - FLASH_MS)}ms` }}>

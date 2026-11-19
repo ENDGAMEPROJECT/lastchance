@@ -23,6 +23,7 @@ export const WEBP = {
   "bg/algorithm-keypad.jpg": "bg/algorithm-keypad.webp",
   "bg/algorithm.png": "bg/algorithm.webp",
   "bg/bg-ph-internet.png": "bg/bg-ph-internet.webp",
+  "bg/bg-reverse-search-door.png": "bg/bg-reverse-search-door.webp",
   "bg/bg-school.png": "bg/bg-school.webp",
   "bg/computer.png": "bg/computer.webp",
   "bg/conversation.png": "bg/conversation.webp",

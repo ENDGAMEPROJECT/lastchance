@@ -48,7 +48,7 @@ export default {
     "inventoryTitle": "Inventory & Evidence",
     "tools": "Tools & Rewards",
     "noTools": "Nothing collected yet. Solve puzzles to earn tools.",
-    "evidenceHeading": "Evidence on the deal",
+    "evidenceHeading": "Gathered evidence",
     "noEvidence": "Collect proof in each district to convince {friend} at the end.",
     "hints": "💡 Hints",
     "enterFullscreen": "Enter fullscreen",
@@ -396,7 +396,7 @@ export default {
   "items": {
     "emojiCard": {
       "name": "Emoji Decoding Card",
-      "desc": "A key that maps emojis to letters. "
+      "desc": "A decoding key that maps emojis to letters. "
     },
     "dataReport": {
       "name": "Data Report on {friend}",
@@ -640,6 +640,10 @@ export default {
               "Hundreds of cheap wholesale copies mean the product is not what it claims to be. AI art sites and fact-checks mean the image is AI-generated. A few official stores with similar prices mean it is real.",
               "Mug: Misleading Content. NovaPad X: AI-generated. Bluetooth speaker: Verified. Then press “Confirm classifications”."
             ]
+          },
+          "door": {
+            "prompts": "How do I get in?",
+            "items": "Click (or tap) the door to go through it."
           }
         }
       },
@@ -968,6 +972,16 @@ export default {
         "selectPost": "Select Post",
         "answerProgress": "{count} / {total}"
       },
+      "stage1Done": {
+        "title": "Hidden deals exposed!",
+        "body": "Nice work. You uncovered the deal behind every post: a paid promotion, a gifted product and a brand collab. ",
+        "next": "Next →"
+      },
+      "door": {
+        "prompt": "A mysterious door conceals a secret passageway to a new room. What might it be hiding?",
+        "action": "Go through the door",
+        "chamberIntro": "You have entered the Chamber of Endless Products. Every item in here is being sold by an influencer, but is it really what they claim? "
+      },
       "labels": {
         "paid": "PAID",
         "collab": "COLLAB",
@@ -1293,7 +1307,7 @@ export default {
         "badge": "Targeting engine · solve every equation",
         "prompt": "Fill the missing slot to complete each person's ad.",
         "adTitle": "Ad",
-        "adFlag": "AD ACTIVATED",
+        "adFlag": "AD EXPOSED",
         "slotPlaceholder": "drop tile",
         "stepBadge": "Equation {n} / {total}",
         "profileBadge": "Profile complete",

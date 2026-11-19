@@ -17,7 +17,7 @@ const ROOM_IMAGES = {
   ].map(bgUrl),
   'roulette-corridor': [bgUrl('roulette.png')],
   'influencer-avenue': [
-    bgUrl('influencer.png'), bgUrl('objects/emoji-decoding-card.png'),
+    bgUrl('influencer.png'), bgUrl('bg-reverse-search-door.png'), bgUrl('bg-reverse-search.webp'), bgUrl('objects/emoji-decoding-card.png'),
     assetUrl('icons/price-tag.svg'),
     ...['cupcakes', 'cupcakes1', 'cupcakes2', 'cupcakes3', 'mug', 'novapad', 'novapad1', 'novapad2', 'jacket', 'compare-prices', 'bunny-1', 'bunny-2']
       .map((name) => assetUrl(`products/${name}.png`)),
@@ -104,9 +104,9 @@ export function getAssetPreloadPlan({ screen, character = 'mia', locale = 'en', 
     case 'welcome':
       return { current: [bgUrl('welcome.gif'), bgUrl('algorithm-room/mia-figure-nobg.png'), bgUrl('algorithm-room/max-figure-nobg.png'), ...CREDIT_IMAGES], next: conversation }
     case 'pretest':
-      return { current: conversation, next: [...arrival, ...MAP_IMAGES] }
+      return { current: conversation, next: [...arrival, ...MAP_IMAGES], video: PORTAL_VIDEO }
     case 'enter':
-      return { current: arrival, next: [...MAP_IMAGES, ...nextRoom] }
+      return { current: arrival, next: [...MAP_IMAGES, ...nextRoom], video: PORTAL_VIDEO }
     case 'map':
       return { current: MAP_IMAGES, next: nextRoom }
     case 'room':
@@ -114,9 +114,10 @@ export function getAssetPreloadPlan({ screen, character = 'mia', locale = 'en', 
       return {
         current: roomImages(nodeId, narrative, locale),
         next: nextNodeId ? nextRoom : arrival,
+        video: nextNodeId ? undefined : PORTAL_VIDEO,
       }
     case 'return':
-      return { current: arrival, next: [...conversation, bgUrl('conversation.png')] }
+      return { current: arrival, next: [...conversation, bgUrl('conversation.png')], video: PORTAL_VIDEO }
     case 'posttest':
       return { current: [...conversation, bgUrl('conversation.png')], next: endingImages(narrative) }
     case 'win':
@@ -139,15 +140,33 @@ export const GAME_IMAGES = [...new Set([
   }),
 ])]
 
-// Reuse the same <video> and buffer in EnterScreen; never fetch it separately.
+/* The portal tunnel video (PortalTunnel), named without its extension: a
+   WebM (VP9, much lighter at the same quality) plus an H.264 MP4 for browsers
+   without WebM. Both are re-encoded from abduction-scene-1.mp4 with the index
+   at the start and a keyframe every half second. */
+export const PORTAL_VIDEO = 'transitions-videos/abduction-scene'
+
+// Reuse the same <video> and buffer on the portal screens; never fetch it separately.
 const videoCache = new Map()
 export function getPreloadedVideo(path) {
   if (!videoCache.has(path)) {
     const video = document.createElement('video')
-    video.preload = 'auto'
+    /* Muted + inline as real attributes, not only properties: some browsers
+       (Safari/iOS) read the attributes when deciding whether a video may
+       autoplay, and a refused play() leaves just the first frame on screen. */
     video.muted = true
+    video.defaultMuted = true
+    video.setAttribute('muted', '')
     video.playsInline = true
-    video.src = assetUrl(path)
+    video.setAttribute('playsinline', '')
+    video.setAttribute('webkit-playsinline', '')
+    video.preload = 'auto'
+    for (const [ext, type] of [['webm', 'video/webm; codecs="vp9"'], ['mp4', 'video/mp4']]) {
+      const source = document.createElement('source')
+      source.src = assetUrl(`${path}.${ext}`)
+      source.type = type
+      video.appendChild(source)
+    }
     video.load()
     videoCache.set(path, video)
   }

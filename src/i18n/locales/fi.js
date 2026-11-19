@@ -640,6 +640,10 @@ export default {
               "Satoja halpoja tukkukopioita tarkoittaa, ettei tuote ole sitä, mitä väitetään. Tekoälytaidesivustot ja faktantarkistukset tarkoittavat, että kuva on tekoälyn luoma. Muutama virallinen kauppa samanlaisilla hinnoilla tarkoittaa, että tuote on aito.",
               "Muki: Harhaanjohtava sisältö. NovaPad X: Tekoälyn luoma. Bluetooth-kaiutin: Vahvistettu. Paina sitten “Vahvista luokittelut”."
             ]
+          },
+          "door": {
+            "prompts": "Miten pääsen sisään?",
+            "items": "Napsauta (tai napauta) ovea kulkeaksesi siitä."
           }
         }
       },
@@ -968,6 +972,16 @@ export default {
         "selectPost": "Valitse julkaisu",
         "answerProgress": "{count} / {total}"
       },
+      "stage1Done": {
+        "title": "Piilotetut sopimukset paljastettu!",
+        "body": "Hienoa! Paljastit jokaisen julkaisun takana olevan sopimuksen: maksetun mainoksen, lahjaksi saadun tuotteen ja yhteistyön brändin kanssa. ",
+        "next": "Seuraava →"
+      },
+      "door": {
+        "prompt": "Salaperäinen ovi kätkee sisäänsä salaisen käytävän uuteen huoneeseen. Mitä salaisuuksia se pitää sisällään?",
+        "action": "Kulje ovesta",
+        "chamberIntro": "Olet astunut Äärettömän Tuotteiden Kamariin. Kaikki täällä olevat tuotteet ovat vaikuttajien myymiä, mutta pitääkö paikkansa se, mitä he niistä sanovat?"
+      },
       "labels": {
         "paid": "MAKSETTU",
         "collab": "YHTEISTYÖ",
@@ -1293,7 +1307,7 @@ export default {
         "badge": "Kohdennusmoottori · ratkaise jokainen yhtälö",
         "prompt": "Täytä puuttuva kohta saadaksesi kunkin henkilön mainoksen valmiiksi.",
         "adTitle": "Mainos",
-        "adFlag": "MAINOS AKTIVOITU",
+        "adFlag": "MAINOS NÄYTETTYNÄ",
         "slotPlaceholder": "pudota palanen",
         "stepBadge": "Yhtälö {n} / {total}",
         "profileBadge": "Profiili valmis",
