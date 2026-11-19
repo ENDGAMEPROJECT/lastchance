@@ -1293,7 +1293,7 @@ export default {
         "badge": "Kohdennusmoottori · ratkaise jokainen yhtälö",
         "prompt": "Täytä puuttuva kohta saadaksesi kunkin henkilön mainoksen valmiiksi.",
         "adTitle": "Mainos",
-        "adFlag": "MAINOS AKTIVOITU",
+        "adFlag": "MAINOS NÄYTETTYNÄ",
         "slotPlaceholder": "pudota palanen",
         "stepBadge": "Yhtälö {n} / {total}",
         "profileBadge": "Profiili valmis",

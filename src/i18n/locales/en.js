@@ -48,7 +48,7 @@ export default {
     "inventoryTitle": "Inventory & Evidence",
     "tools": "Tools & Rewards",
     "noTools": "Nothing collected yet. Solve puzzles to earn tools.",
-    "evidenceHeading": "Evidence on the deal",
+    "evidenceHeading": "Gathered evidence",
     "noEvidence": "Collect proof in each district to convince {friend} at the end.",
     "hints": "💡 Hints",
     "enterFullscreen": "Enter fullscreen",
@@ -396,7 +396,7 @@ export default {
   "items": {
     "emojiCard": {
       "name": "Emoji Decoding Card",
-      "desc": "A key that maps emojis to letters. "
+      "desc": "A decoding key that maps emojis to letters. "
     },
     "dataReport": {
       "name": "Data Report on {friend}",
@@ -1293,7 +1293,7 @@ export default {
         "badge": "Targeting engine · solve every equation",
         "prompt": "Fill the missing slot to complete each person's ad.",
         "adTitle": "Ad",
-        "adFlag": "AD ACTIVATED",
+        "adFlag": "AD EXPOSED",
         "slotPlaceholder": "drop tile",
         "stepBadge": "Equation {n} / {total}",
         "profileBadge": "Profile complete",

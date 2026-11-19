@@ -19,13 +19,13 @@ export default {
     "titleAccent": "PARA ESCAPAR",
     "tagline": "// una sala de escape sobre anuncios, estafas y sitios web fraudulentos",
     "subtitle": "Configura tu reproductor y luego conéctate a Internet físico.",
-    "aliasLabel": "Elige un alias",
+    "aliasLabel": "Elige un nombre",
     "aliasPlaceholder": "p. ej. Ne0nRunner",
     "ageLabel": "Tu edad",
     "agePlaceholder": "p. ej. 14",
     "languageLabel": "Idioma",
     "start": "Entrar",
-    "aliasError": "Introduce un alias para continuar.",
+    "aliasError": "Introduce un nombre para continuar.",
     "ageError": "Introduce una edad válida (1–120).",
     "characterError": "Elige un personaje",
     "languageError": "Elige un idioma",
@@ -48,7 +48,7 @@ export default {
     "inventoryTitle": "Inventario & evidencia",
     "tools": "Herramientas & recompensas",
     "noTools": "Aún no has conseguido nada. Resuelve puzles para ganar herramientas.",
-    "evidenceHeading": "Pruebas sobre la oferta",
+    "evidenceHeading": "Pruebas recopiladas",
     "noEvidence": "Reúne pruebas en cada distrito para convencer a {friend} al final.",
     "hints": "💡 Pistas",
     "enterFullscreen": "Entrar en pantalla completa",
@@ -91,8 +91,8 @@ export default {
     "lockedTip": "Bloqueado: finaliza el distrito anterior."
   },
   "roomframe": {
-    "clearedDefaultTitle": "Distrito despejado",
-    "clearedDefaultText": "Buen trabajo. El siguiente nodo está desbloqueado en el mapa.",
+    "clearedDefaultTitle": "Distrito superado",
+    "clearedDefaultText": "Buen trabajo. El siguiente punto está desbloqueado en el mapa.",
     "collect": "recoger",
     "collected": "Objeto recogido",
     "addedToBag": "añadido a la mochila"
@@ -176,7 +176,7 @@ export default {
       "endsIn": "Termina en",
       "offerUrgency": "¡Date prisa antes de que se acabe!",
       "buy": "COMPRA AHORA",
-      "caption": "¡¡¡Dios mío, ¿¡han bajado el precio de el NovaPad X a €49?! 😱🔥 ¡Aprovecha antes de que se agote! #oferta #anuncio",
+      "caption": "¡¡¡Dios mío, ¿¡han bajado el precio del NovaPad X a €49?! 😱🔥 ¡Aprovecha antes de que se agote! #oferta #anuncio",
       "likes": "12.4k Me gusta"
     },
     "roundLabel": "Ronda {n} · {title}",
@@ -199,7 +199,7 @@ export default {
           },
           {
             "k": "C",
-            "text": "Una tienda que se anuncia en las redes sociales es una tienda segura.",
+            "text": "Una tienda con anuncios en las redes sociales es una tienda segura.",
             "correct": false
           },
           {
@@ -208,8 +208,8 @@ export default {
             "correct": false
           }
         ],
-        "why": "Exactamente: el tictac del reloj es una urgencia artificial, diseñada para que actúes antes de pensar.",
-        "nudge": "Piensa en lo que realmente te está haciendo ese tictac del reloj.",
+        "why": "Exactamente: la cuenta atrás es una urgencia artificial, diseñada para que actúes antes de pensar.",
+        "nudge": "Piensa en lo que realmente te está haciendo esa cuenta atrás de reloj",
         "positiveFeedback": "¿Te refieres a que la urgencia te hace actuar antes de pensar...?",
         "negativeFeedback": "No lo sé, eso no suena bien.",
         "followUpQuestion": "Vale, ¿qué más?"
@@ -219,7 +219,7 @@ export default {
         "options": [
           {
             "k": "A",
-            "text": "Hablas de tabletas. Luego ves un anuncio de una tableta. La razón habitual: tu móvil te ha grabado.",
+            "text": "Hablas de tablets. Luego ves un anuncio de una tablet. La razón habitual: tu móvil te ha grabado.",
             "correct": false
           },
           {
@@ -238,7 +238,7 @@ export default {
             "correct": true
           }
         ],
-        "why": "Exacto: no es el micrófono ni magia. Tu historial de búsqueda fue perfilado y vendido a redes publicitarias.",
+        "why": "Exacto: no es el micrófono ni magia. Tu historial de búsqueda se utilizó para elaborar un perfil sobre ti y venderlo a redes publicitarias",
         "nudge": "No es el micrófono ni un virus: piensa en lo que la plataforma ya sabe de ti.",
         "positiveFeedback": "Vale, no es el micrófono ni magia... Analizaron mi historial de búsqueda y lo vendieron a redes publicitarias.",
         "negativeFeedback": "La verdad es que eso no tiene ningún sentido para mí.",
@@ -264,11 +264,11 @@ export default {
           },
           {
             "k": "D",
-            "text": "Baja hasta abajo del todo. Si no pone 'Copyright 2026', así sabes que es falsa.",
+            "text": "Ve hasta abajo del todo. Si no pone 'Copyright 2026', sabes que es falsa.",
             "correct": false
           }
         ],
-        "why": "Sí: lee la URL letra a letra. 'bargalns' con una 'l' es un dominio imitador, no la tienda real.",
+        "why": "Sí: lee la URL letra a letra. 'bargalns' con una 'l' es un dominio de web imitado, no la tienda real.",
         "nudge": "La pista de verdad está en la propia barra de direcciones: léela carácter a carácter.",
         "positiveFeedback": "¡Ah, ahora me acuerdo! Una URL sospechosa puede ser señal de que una web es falsa y solo finge ser la tienda real.",
         "negativeFeedback": "Ya, claro, ¿y se supone que me lo tengo que creer?"
@@ -280,10 +280,10 @@ export default {
       "title": "Un mensaje de {friend}",
       "opening": "¡Mira esto! Una influencer que sigo acaba de publicar una oferta flash: ¡la NovaPad X de 600 € por solo 49 €! Quedan solo 40 minutos en la cuenta atrás. Estoy metiendo los datos de mi tarjeta ahora mismo.",
       "responses": [
-        "Sea cual sea el motivo del montaje, ¡no quiero perdérmelo antes de que el reloj llegue a cero! Además, es una influencer enorme, no publicaría algo al azar. Pero lo raro es cómo este anuncio sabía que quería una tablet. Apareció justo arriba del todo en mi feed.",
+        "Sea cual sea el motivo del montaje, ¡no quiero perder la oferta antes de que el reloj llegue a cero! Además, es una influencer enorme, no publicaría algo al azar. Pero lo raro es cómo este anuncio sabía que quería una tablet. Apareció justo arriba del todo en mi feed.",
         "A ver, hay mil teorías sobre cómo los algoritmos y las cuentas manejan los anuncios, pero ahora mismo estoy viendo la página real de la tienda. Tiene el logo oficial de la marca, reseñas estupendas y un pago seguro."
       ],
-      "endingFriend": "Mira, puedes diseccionar la página todo lo que quieras, ¡pero a mí todo me parece correcto! Estás siendo {player:paranoico|paranoica}. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, cuarenta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
+      "endingFriend": "Mira, puedes analizar la página todo lo que quieras, ¡pero a mí todo me parece correcto! Estás siendo {player:paranoico|paranoica}. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, cuarenta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
       "endingYou": "Trato hecho. Usemos tu móvil para entrar al Internet físico y ver qué esconde esa oferta.",
       "begin": "▶ Mirar detrás de la pantalla"
     },
@@ -324,17 +324,17 @@ export default {
   },
   "enter": {
     "eyebrow": "Estamos dentro",
-    "titleLead": "Bienvenidos al",
+    "titleLead": "Bienvenidos/as al",
     "titleAccent": "INTERNET FÍSICO",
-    "friendLine": "Muy bien: tienes {minutes} minutos para convencerme de que esta oferta es una estafa. Si ese reloj llega a cero, compro {product}.",
+    "friendLine": "Muy bien: tienes {minutes} minutos para convencerme de que esta oferta es una estafa. Si ese reloj llega a cero, compro la {product}.",
     "playerLine": "Sí, trato hecho. Vamos a descubrir por qué esta oferta es una estafa y cómo está montada.",
     "toolsTitle": "Primero, el equipo",
     "toolsIntro": "Dos cosas te acompañan a todas partes aquí dentro. Las encontrarás en la barra superior de la pantalla.",
     "clock": "⏱ {minutes}:00 empieza en cuanto echemos a andar",
-    "mission": "¡Tendremos que explorar los distritos, reunir pruebas de cómo funciona la estafa y volver al instituto antes de que caduque la oferta!",
-    "mapText": "Tu ruta por el Internet Físico. Viaja de distrito en distrito: completa uno para desbloquear el siguiente, hasta la decisión final.",
-    "bagText": "Tus herramientas y las pruebas que recojas. Ábrela para usar objetos en los retos y repasar las pruebas que le enseñarás a {friend}.",
-    "hintsText": "¿{player:Atascado|Atascada} en un reto? En \"Pistas\" tienes las claves del distrito en el que estás.",
+    "mission": "¡Tendremos que explorar los distritos, reunir pruebas de cómo funciona la estafa y volver al instituto antes de que termine la oferta!",
+    "mapText": "Tu ruta por el Internet Físico. Viaja de distrito en distrito: completa los retos de cada uno para desbloquear el siguiente, hasta la decisión final.",
+    "bagText": "Tus herramientas y las pruebas que recojas están aquí. Ábrela para usar objetos en los retos y repasar las pruebas que le enseñarás a {friend}.",
+    "hintsText": "¿{player:Atascada|Atascado} en un reto? En \"Pistas\" tienes las claves del distrito en el que estás.",
     "finalLine": "¿{player:Listo|Lista}? El temporizador arranca en cuanto abras el mapa."
   },
   "return": {
@@ -351,7 +351,7 @@ export default {
       "kind": "gate"
     },
     "link-district": {
-      "title": "Distrito de los Enlaces",
+      "title": "Distrito de \"Los Enlaces\"",
       "subtitle": "Reto 1 · Enlaces fraudulentos",
       "blurb": "Un bloque de puertas tipo router. Solo una URL es la tienda real: bloquea las falsas.",
       "kind": "puzzle"
@@ -493,7 +493,7 @@ export default {
     "brief": {
       "welcome": "Prepara tu carrera",
       "pretest": "Lee la oferta antes de entrar en la red.",
-      "map": "Elija el siguiente distrito en la pista de evidencia.",
+      "map": "Elige el siguiente distrito en la pista de evidencia.",
       "room": "Resuelve el enigma del distrito y registra tus hallazgos.",
       "posttest": "Usa tus pruebas para proteger a {friend}.",
       "win": "Ejecución completada: revisa qué te protegió",
@@ -734,11 +734,11 @@ export default {
   "rooms": {
     "link": {
       "intro": "Un router con tres puertas. Cada una es un enlace que dice ser una tienda. Cierra las fraudulentas.",
-      "solvedTitle": "Distrito de los Enlaces superado · Tarjeta descodificadora de emojis obtenida 🔑",
+      "solvedTitle": "Distrito de \"Los Enlaces\" superado · Tarjeta descodificadora de emojis obtenida 🔑",
       "solvedText": "Bloqueaste todas las falsas y aprendiste qué hace sospechosa a una URL. La tarjeta desbloquea las etiquetas de la Avenida de los Influencers.",
       "routerBadge": "Cruce {current} / {total}",
       "peek": "🔍 Mirar dentro de la puerta",
-      "closeDoor": "✕ Cerrar pierta",
+      "closeDoor": "✕ Cerrar puerta",
       "doorHelp": "Abre una puerta para ver el sitio por dentro · lee la dirección · usa “Bloquear” para cerrar las fraudulentas",
       "tapToBlock": "Toca una puerta para bloquear el enlace · toca otra vez para desbloquear",
       "addressHint": "El candado y “https” significan que la conexión es privada, NO que el sitio sea de fiar.",
@@ -780,15 +780,15 @@ export default {
           "prompt": "Una es la tienda real. Las otras esconden su dominio verdadero tras un nombre que parece familiar: lee la dirección entera.",
           "notes": {
             "a": "El dominio auténtico: lunawear.com",
-            "b": "El sitio real es “com-official.shop”: “lunawear” es solo un subdominio pegado delante para engañarte.",
-            "c": "“-dealz” es una palabra añadida y mal escrita pegada a la marca."
+            "b": "El sitio real es “com-official.shop”: “lunawear” es solo un subdominio añadido delante para engañarte.",
+            "c": "“-dealz” es una palabra añadida y mal escrita añadida a la marca."
           }
         },
         {
           "category": "HTTP frente a HTTPS",
           "prompt": "Fíjate en el principio de cada dirección. ¿Qué conexión es realmente segura?",
           "notes": {
-            "a": "https:// — una conexión cifrada, y la tienda real.",
+            "a": "https:// — una conexión cifrada, y la tienda es real.",
             "b": "http:// sin la “s”: la conexión NO está cifrada.",
             "c": "http:// Y una terminación rara “.free”: aléjate."
           }
@@ -1249,7 +1249,7 @@ export default {
       },
       "labelFeedback": {
         "title": "Las publicaciones patrocinadas deben etiquetarse",
-        "intro": "Cuando a un creador o influencer le pagan, se asocia con una marca o le regalan un producto, tiene que declararlo de forma clara y por delante. Así puedes distinguirlos:",
+        "intro": "Cuando a un creador o influencer le pagan, se asocia con una marca o le regalan un producto, tiene que declararlo de forma clara y visible.",
         "paidDesc": "La marca paga al creador por publicar sobre ella.",
         "paidExample": "Señales delatoras: un enlace de afiliado o un código de descuento personal como «LUNA20».",
         "collabDesc": "Una colaboración creativa, hecha junto con la marca.",
@@ -1293,7 +1293,7 @@ export default {
         "badge": "Motor de segmentación · resuelve todas las ecuaciones",
         "prompt": "Rellena el hueco que falta para completar el anuncio de cada persona.",
         "adTitle": "Anuncio",
-        "adFlag": "ANUNCIO ACTIVADO",
+        "adFlag": "ANUNCIO EXPUESTO",
         "slotPlaceholder": "suelta la ficha",
         "stepBadge": "Ecuación {n} / {total}",
         "profileBadge": "Perfil completo",
