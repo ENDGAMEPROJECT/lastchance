@@ -33,6 +33,14 @@ export default function SessionDialog() {
   const whereId = pendingRun.activeNodeId
     || NODES.find((n) => progress[n.id] === 'available')?.id
   const where = whereId ? t(`nodes.${whereId}.title`) : null
+  /* The saved run reached the final conversation but never had it — all
+     districts cleared, or the clock gone and the player carrying on. Starting
+     over throws that away, and with it the only post-measure of what they
+     learned, so say so rather than letting the button do it quietly. */
+  const postTestPending = (pendingRun.timedOut
+    || (NODES.every((n) => progress[n.id] === 'done') && pendingRun.returnTalked))
+    && !['posttest', 'win', 'lose'].includes(pendingRun.screen)
+
   const evidence = pendingRun.evidence?.length ?? 0
   const tools = pendingRun.inventory?.length ?? 0
 
@@ -49,11 +57,17 @@ export default function SessionDialog() {
           <span>{t('hints.stats.evidence')}: {evidence}</span>
           <span>{t('hints.stats.tools')}: {tools}</span>
         </p>
+        {postTestPending && (
+          <p className="session-pending">{t('session.postTestPending')}</p>
+        )}
         <div className="session-actions">
           <button type="button" className="btn btn-cyan btn-lg" onClick={resumeRun} autoFocus>
             {t('session.resume')}
           </button>
-          <button type="button" className="btn btn-magenta" onClick={discardRun}>
+          {/* Quieter when there is something to lose: the warning above says
+              what, and the default action should be the safe one. */}
+          <button type="button" className={postTestPending ? 'btn btn-ghost' : 'btn btn-magenta'}
+            onClick={discardRun}>
             {t('session.restart')}
           </button>
         </div>

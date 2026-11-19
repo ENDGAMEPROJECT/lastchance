@@ -70,6 +70,11 @@ export const settings = {
      glossy posters stay visible and the beam just flips the one under it. */
   adsCorridor: { darkRoom: false, litDim: 0.25 }, // litDim: how much the lit room darkens (0–1)
 
+  /* Once the final conversation is available — all districts cleared, or the
+     clock gone and the player carrying on — nudge the Map button for `showMs`
+     every `everyMs`, so an unfinished post-test is not forgotten. */
+  decisionReminder: { everyMs: 90000, showMs: 6000 },
+
   /* Remind players to inspect their tools — whichever of these comes FIRST:
      `afterClicksMs` once they have clicked `clicks` times in the room (they
      are clearly trying things, so prompt quickly), or `idleMs` regardless of

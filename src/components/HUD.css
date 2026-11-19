@@ -227,6 +227,27 @@
 .hud-bag-reminder {
   animation: hud-bag-glow 1.2s ease-in-out infinite;
 }
+/* The same nudge in the Map button's own cyan, for when the final decision is
+   waiting and the player is off exploring. */
+.hud-map-reminder {
+  animation: hud-map-glow 1.2s ease-in-out infinite;
+}
+@keyframes hud-map-glow {
+  0%,
+  100% {
+    border-color: var(--cyan);
+    box-shadow: 0 0 10px rgba(22, 242, 255, 0.4);
+  }
+  50% {
+    border-color: #d7feff;
+    color: #fff;
+    background: rgba(22, 242, 255, 0.5);
+    box-shadow:
+      0 0 18px rgba(215, 254, 255, 0.95),
+      0 0 38px rgba(22, 242, 255, 0.9),
+      inset 0 0 12px rgba(215, 254, 255, 0.25);
+  }
+}
 @keyframes hud-bag-glow {
   0%,
   100% {

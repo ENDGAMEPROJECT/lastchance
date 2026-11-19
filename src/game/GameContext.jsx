@@ -44,7 +44,7 @@ function debugPosttestState(state, scenario) {
     screen: 'posttest',
     timedOut,
     timeLeft: timedOut ? 0 : 300,
-    running: !timedOut,
+    running: false, // the post-test is not timed (see START_POSTTEST_DECISION)
     postDecision: true,
     posttestSession: state.posttestSession + 1,
     loseReason: null,
@@ -112,8 +112,15 @@ export function reducer(state, action) {
 
     case 'START_POSTTEST_DECISION':
       if (state.screen !== 'posttest') return state
-      // Keep the remaining deadline visible throughout the assessment and retries.
-      return { ...state, postDecision: true, running: !state.timedOut && state.timeLeft > 0 }
+      /* The clock STOPS here. The post-test is the measurement — the same three
+         items as the pre-test, compared across countries — so timing it means a
+         wrong answer can no longer be told apart from a player who simply ran
+         out, and the retry would drain the same clock that the player most
+         needs in order to think. The remaining time stays on screen, frozen.
+
+         The stake is unaffected: running out DURING the puzzles still sets
+         timedOut, and the friend then buys whatever the player argues. */
+      return { ...state, postDecision: true, running: false }
 
     case 'OPEN_NODE': {
       if (['posttest', 'win', 'lose'].includes(state.screen)) return state
@@ -189,7 +196,7 @@ export function reducer(state, action) {
           posttestSession: state.posttestSession + 1,
           posttestEntry: action.fromWhite ? 'white' : null,
           postDecision: true,
-          running: state.timeLeft > 0,
+          running: false, // the post-test is not timed (see START_POSTTEST_DECISION)
           activeNodeId: null,
           reviewNodeId: null,
           roomStarted: false,
@@ -250,14 +257,20 @@ export function reducer(state, action) {
       if (!state.running) return state
       const t = state.timeLeft - 1
       if (t <= 0) {
-        // Already in the post-test → puzzles were finished in time and the
-        // retry clock just ran out. The friend stops waiting and buys.
+        /* Backstop only: the post-test now enters with the clock stopped, so
+           this should be unreachable. If a future route starts it again,
+           failing closed here beats a clock that silently never expires. */
         if (state.screen === 'posttest') {
           return { ...state, timeLeft: 0, running: false, screen: 'lose', loseReason: 'timeUp' }
         }
-        // Out of time before finishing the puzzles → still face the friend in
-        // the post-test (last chance), but flagged as timed out.
-        return { ...state, timeLeft: 0, running: false, timedOut: true, screen: 'posttest', postDecision: true, activeNodeId: null, reviewNodeId: null, roomStarted: false, hintStep: null }
+        /* Out of time before finishing the puzzles. The outcome is sealed —
+           timedOut means the friend buys whatever is argued later — but the
+           player is NOT pulled out of the room. Running out at puzzle 3 used to
+           mean never seeing puzzles 4-6, which in a classroom throws away half
+           the material over a clock. They finish at their own pace and face the
+           friend when they choose; the map's Final Decision unlocks on timedOut
+           so they can also end it at any moment. */
+        return { ...state, timeLeft: 0, running: false, timedOut: true }
       }
       return { ...state, timeLeft: t }
     }
@@ -400,6 +413,23 @@ export function GameProvider({ children }) {
     })
   }, [state.screen, state.timeLeft, state.evidence.length, state.loseReason])
 
+  /* The final conversation is available but has not been had yet — either every
+     district is cleared, or the clock ran out and the player chose to keep
+     going. This is the state worth protecting: closing the window here loses
+     the post-test, and with it the only post-measure of what was learned. */
+  const postTestPending = (state.timedOut
+    || (NODES.every((n) => state.progress[n.id] === 'done') && state.returnTalked))
+    && !['posttest', 'win', 'lose'].includes(state.screen)
+
+  useEffect(() => {
+    if (!postTestPending) return
+    /* Browsers ignore any custom text and show their own wording, so this needs
+       no translation — preventDefault is what raises the prompt at all. */
+    const warn = (event) => { event.preventDefault(); event.returnValue = '' }
+    window.addEventListener('beforeunload', warn)
+    return () => window.removeEventListener('beforeunload', warn)
+  }, [postTestPending])
+
   const submitWelcome = useCallback((player) => {
     // A new run starts here: no puzzle state from an earlier run in this tab.
     clearRoomState()
@@ -451,6 +481,7 @@ export function GameProvider({ children }) {
 
   const value = {
     ...state,
+    postTestPending,
     narrative,
     NODES,
     ITEMS,

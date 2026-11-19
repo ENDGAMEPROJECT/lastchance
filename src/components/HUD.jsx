@@ -40,7 +40,7 @@ function ReminderArrow() {
 }
 
 export default function HUD() {
-  const { screen, activeNodeId, roomStarted, hintStep, timeLeft, inventory, evidence, progress, goMap, startGame, postDecision, enterTour, narrative } = useGame()
+  const { screen, activeNodeId, roomStarted, hintStep, timeLeft, inventory, evidence, progress, goMap, startGame, postDecision, enterTour, narrative, postTestPending } = useGame()
   const t = useT()
   const [bagOpen, setBagOpen] = useState(false)
   const [bagTab, setBagTab] = useState('tools') // 'tools' | 'evidence'
@@ -253,6 +253,26 @@ export default function HUD() {
     if (bagReminder) track('experienced', OBJ.nudge(), { node: xapiNode, response: 'bag' })
   }, [bagReminder])
 
+  /* The final conversation is waiting and the player has wandered off — once
+     the clock is gone they may keep exploring, so this is a recurring nudge
+     rather than a one-off: the Map button glows for a few seconds every so
+     often, and the station itself pulses once they get there. Silent on the
+     map, where the station is already visible. */
+  const [mapReminder, setMapReminder] = useState(false)
+  useEffect(() => {
+    setMapReminder(false)
+    if (!postTestPending || screen === 'map') return
+    const { everyMs, showMs } = settings.decisionReminder
+    let hide
+    const pulse = () => {
+      setMapReminder(true)
+      hide = window.setTimeout(() => setMapReminder(false), showMs)
+    }
+    const timer = window.setInterval(pulse, everyMs)
+    hide = window.setTimeout(pulse, everyMs / 2) // one early, so it is not a long silence
+    return () => { window.clearInterval(timer); window.clearTimeout(hide); }
+  }, [postTestPending, screen])
+
   const itemRoom = { emojiCard: 'influencer-avenue', dataReport: 'algorithm-room', truthLight: 'ads-corridor' }
   /* A tool can be taken out anywhere. In the wrong room it simply does nothing
      — each room listens only for its own item — rather than being refused,
@@ -415,7 +435,7 @@ export default function HUD() {
             type="button"
             data-tour="map"
             data-nav="map"
-            className={`btn btn-cyan hud-m-btn hud-m-nav ${expanded ? 'is-expanded' : ''} ${tourClass('map')}`}
+            className={`btn btn-cyan hud-m-btn hud-m-nav ${expanded ? 'is-expanded' : ''} ${mapReminder ? 'hud-map-reminder' : ''} ${tourClass('map')}`}
             onMouseDown={(event) => event.preventDefault()}
             onClick={navTap(mapReady ? startGame : touring ? undefined : () => { closePanels(); goMap() })}
             tabIndex={mapBlocked ? -1 : undefined}
@@ -541,7 +561,7 @@ export default function HUD() {
             {muted ? '🔇' : '🔊'}
           </button>
           {(showNav || touring) && screen !== 'map' && (
-            <button className={`btn btn-cyan btn-sm ${tourClass('map')}`} data-tour="map"
+            <button className={`btn btn-cyan btn-sm ${tourClass('map')} ${mapReminder ? 'hud-map-reminder' : ''}`} data-tour="map"
               onClick={mapReady ? startGame : touring ? undefined : goMap}
               onMouseDown={(event) => event.preventDefault()}
               tabIndex={mapBlocked ? -1 : undefined} aria-disabled={mapBlocked || undefined}>

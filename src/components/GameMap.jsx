@@ -306,7 +306,7 @@ function useCentred(ref, mobile, deps) {
 }
 
 export default function GameMap() {
-  const { NODES, progress, openNode, reviewNode, gotoScreen, narrative, returnTalked, reducedMotion } = useGame()
+  const { NODES, progress, openNode, reviewNode, gotoScreen, narrative, returnTalked, reducedMotion, timedOut } = useGame()
   const t = useT()
   const vars = { friend: narrative.friend }
   const boardRef = useRef(null)
@@ -345,8 +345,10 @@ export default function GameMap() {
       art: 'final',
       kind: 'gate',
       accent: 'magenta',
-      status: (allDone && returnTalked) || DEBUG ? 'available' : 'locked',
-      calling: allDone && returnTalked,
+      // timedOut opens it too: once the clock is gone the player may finish the
+      // districts first, but must always be able to end the run when they want.
+      status: (allDone && returnTalked) || timedOut || DEBUG ? 'available' : 'locked',
+      calling: (allDone && returnTalked) || timedOut,
       onOpen: () => {
         track('launched', OBJ.finalPortal(), { node: 'map' })
         return gotoScreen(returnTalked && !reducedMotion ? 'return' : 'posttest')
