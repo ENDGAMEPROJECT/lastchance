@@ -19,6 +19,14 @@
 import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs'
 import path from 'node:path'
 import { build } from 'esbuild'
+import { WEBP } from '../src/game/webpAssets.js'
+
+/* bgUrl()/assetUrl() serve the optimised .webp whenever one is listed, so the
+   catalogue — which is built by RUNNING preloadAssets.js — holds webp paths,
+   while the source still writes the original .png/.jpg names. Resolve the
+   referenced side the same way before comparing, or every converted image
+   reads as uncatalogued. */
+const asServed = (p) => WEBP[p] || p
 
 const PUBLIC = 'public'
 const SRC = 'src'
@@ -78,7 +86,8 @@ if (missingFiles.length) {
   for (const p of missingFiles) problems.push(`    ${p}`)
 }
 
-const notPreloaded = [...referenced].filter((p) => !catalogue.has(p) && onDisk.has(p)).sort()
+const notPreloaded = [...new Set([...referenced].map(asServed))]
+  .filter((p) => !catalogue.has(p) && onDisk.has(p)).sort()
 if (notPreloaded.length) {
   problems.push(`${notPreloaded.length} image(s) the source uses but the catalogue does not list:`)
   for (const p of notPreloaded) problems.push(`    ${p}`)
