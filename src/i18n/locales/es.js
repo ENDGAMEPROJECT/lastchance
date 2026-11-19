@@ -1546,7 +1546,7 @@ export default {
       ],
       "techniques": {
         "fomo": "FOMO",
-        "social": "Prueba social",
+        "social": "Presión social",
         "exagg": "Exageración",
         "influencer": "Recomendación de influencer",
         "emotional": "Apelación emocional",
@@ -1566,7 +1566,37 @@ export default {
       "unlock": "Desbloquear →",
       "pwError": "Acceso denegado. Lee las letras brillantes en el orden de los carteles e inténtalo otra vez.",
       "hiddenLetter": "letra oculta {letter}",
-      "evidence": "Cada cartel usaba un truco de persuasión con nombre propio: FOMO, prueba social, urgencia y más."
+      "evidence": "Cada cartel usaba un truco de persuasión con nombre propio: FOMO, prueba social, urgencia y más.",
+      "info": {
+        "button": "Técnicas de persuasión",
+        "title": "Técnicas de persuasión",
+        "items": [
+          {
+            "name": "FOMO (miedo a perderse algo)",
+            "text": "Mensajes que generan miedo a perder una oportunidad para impulsar una compra, como «Solo quedan 3 unidades»."
+          },
+          {
+            "name": "Exageración",
+            "text": "Anuncios que prometen resultados extraordinarios o beneficios poco realistas que el producto difícilmente puede ofrecer."
+          },
+          {
+            "name": "Uso de influencers o famosos",
+            "text": "Personas conocidas que promocionan productos aprovechando su popularidad y la confianza de sus seguidores."
+          },
+          {
+            "name": "Prueba social",
+            "text": "Mensajes que destacan la popularidad de un producto para generar confianza, como «Miles de personas ya lo han comprado»."
+          },
+          {
+            "name": "Apelación emocional",
+            "text": "Anuncios que buscan provocar emociones, como alegría, miedo o tristeza, para influir en las decisiones de compra."
+          },
+          {
+            "name": "Urgencia",
+            "text": "Mensajes que presionan para comprar rápidamente mediante ofertas temporales o productos que parecen estar a punto de agotarse."
+          }
+        ]
+      }
     }
   },
   "debug": {

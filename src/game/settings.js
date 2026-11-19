@@ -71,7 +71,7 @@ export const settings = {
   adsCorridor: { darkRoom: false, litDim: 0.25 }, // litDim: how much the lit room darkens (0–1)
 
   /* Remind players to inspect their tools after BOTH thresholds are met. */
-  bagReminder: { clicks: 2, delayMs: 25000 },
+  bagReminder: { clicks: 2, delayMs: 32000 },
 
   /* Hints unlock one at a time: the first is open straight away, and each
      next one only becomes available `unlockDelayMs` after the previous one

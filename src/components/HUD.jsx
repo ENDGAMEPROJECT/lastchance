@@ -17,6 +17,10 @@ import DebugCharacterButton from './DebugCharacterButton.jsx'
 import DebugLanguageButton from './DebugLanguageButton.jsx'
 import './HUD.css'
 
+/* Rooms with an info button (i) beside Hints → their i18n block
+   ({ button, title, items: [{ name, text }] }). */
+const INFO_ROOMS = { 'persuasion-room': 'rooms.persuasion.info' }
+
 const MOBILE_QUERY = `(max-width: ${settings.mobile.breakpoint}px)`
 // On mobile a first tap only unfolds a HUD button's label; it isn't "opening" it.
 // (With a pop-over already open the buttons act on the first tap — see navTap.)
@@ -80,6 +84,9 @@ export default function HUD() {
   const [reportOpen, setReportOpen] = useState(false)
   const [deniedItem, setDeniedItem] = useState(null)
   const [hintsOpen, setHintsOpen] = useState(false)
+  // "Persuasion techniques" info, beside Hints. Only the Persuasion Lab has
+  // one for now (rooms.persuasion.info); another room can be added to INFO_ROOMS.
+  const [infoOpen, setInfoOpen] = useState(false)
   const [muted, setMutedState] = useState(isMuted())
   const toggleMute = () => setMutedState(setMuted(!muted))
   const [fullscreen, setFullscreen] = useState(Boolean(document.fullscreenElement))
@@ -254,14 +261,15 @@ export default function HUD() {
   }, [expanded])
   // With a pop-over open (e.g. the Bag), a tap acts at once: the buttons are
   // already in view and the player is switching panels.
-  const panelOpen = hintsOpen || bagOpen || reportOpen
+  const panelOpen = hintsOpen || bagOpen || reportOpen || infoOpen
   const navTap = (action) => () => {
     if (!expanded && !panelOpen) return setExpanded(true)
     setExpanded(false)
     action?.()
   }
   // Only one pop-over at a time: opening one closes the others.
-  const closePanels = () => { setHintsOpen(false); setBagOpen(false); setReportOpen(false) }
+  const closePanels = () => { setHintsOpen(false); setBagOpen(false); setReportOpen(false); setInfoOpen(false) }
+  const openInfo = () => { closePanels(); setInfoOpen(true) }
   const openHints = () => { closePanels(); setHintsOpen(true) }
   const openBag = () => { closePanels(); setBagOpen(true) }
 
@@ -287,6 +295,7 @@ export default function HUD() {
   // pointing at the next district. Elsewhere (setup, conversations, endings)
   // there's nothing to hint, so don't offer the button.
   const showHints = screen === 'room' || screen === 'map' || touring
+  const infoKey = screen === 'room' && !touring ? INFO_ROOMS[activeNodeId] : null
 
   const mobileHud = (
     <div className="hud-m">
@@ -336,7 +345,19 @@ export default function HUD() {
       </div>
 
       <div className="hud-m-col hud-m-right">
-      
+        {infoKey && (
+          <button
+            type="button"
+            data-nav="info"
+            className={`btn hud-info hud-m-btn hud-m-nav ${expanded ? 'is-expanded' : ''}`}
+            onMouseDown={(event) => event.preventDefault()}
+            onClick={navTap(openInfo)}
+            aria-label={t(`${infoKey}.button`)}
+            aria-expanded={expanded}
+          >
+            {expanded ? t(`${infoKey}.button`) : 'i'}
+          </button>
+        )}
         {showHints && (
           <button
             type="button"
@@ -449,6 +470,18 @@ export default function HUD() {
               <DebugCharacterButton />
               <DebugLanguageButton />
             </span>
+          )}
+          {infoKey && (
+            <button
+              type="button"
+              className="hud-info"
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={openInfo}
+              aria-label={t(`${infoKey}.button`)}
+              title={t(`${infoKey}.button`)}
+            >
+              i
+            </button>
           )}
           {showHints && (
             <button
@@ -613,6 +646,20 @@ export default function HUD() {
           </div>
         </div>
       </Modal>
+
+      {infoKey && (
+        <Modal open={infoOpen} onClose={() => setInfoOpen(false)} title={t(`${infoKey}.title`)}
+          accent="magenta" width={620} className="hud-modal info-modal">
+          <dl className="info-list">
+            {asList(t(`${infoKey}.items`)).map((item, i) => (
+              <div key={i} className="info-item">
+                <dt>{item.name}</dt>
+                <dd>{item.text}</dd>
+              </div>
+            ))}
+          </dl>
+        </Modal>
+      )}
 
       <Modal open={reportOpen} onClose={() => setReportOpen(false)} title={t('rooms.algorithm.report.modalTitle')} accent="amber" width={960} className="report-modal">
         <DataReport />

@@ -813,3 +813,58 @@ body.debug-hidden
     font-size: calc(1.1rem * 20 / 17);
   }
 }
+
+/* ---- Info (i) button, left of Hints, and its pop-over ---- */
+/* Same look the (i) had in the room: a pink-ringed circle with a serif
+   italic i. Desktop: a plain button (no .btn, whose padding/font/uppercase
+   would override this). Phone: it also carries .hud-m-btn for its place in
+   the round-button column, so the look is restated above those rules. */
+button.hud-info,
+.hud-m-edges .hud-m-col .hud-m-btn.hud-info {
+  width: 38px;
+  height: 38px;
+  display: inline-grid;
+  place-items: center;
+  padding: 0;
+  border: 2px solid #ff8fe0;
+  border-radius: 50%;
+  background: rgba(30, 6, 34, 0.88);
+  color: #ffc4ee;
+  font: italic 900 1.35rem/1 Georgia, 'Times New Roman', serif;
+  letter-spacing: 0;
+  text-transform: none;
+  box-shadow: 0 0 12px rgba(255, 43, 214, 0.45);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+button.hud-info:hover, button.hud-info:focus-visible,
+.hud-m-edges .hud-m-col .hud-m-btn.hud-info:hover {
+  background: rgba(70, 12, 74, 0.95);
+  box-shadow: 0 0 18px rgba(255, 43, 214, 0.75);
+  transform: scale(1.08);
+}
+button.hud-info:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+@media (max-width: 1180px) {
+  .hud-m-edges .hud-m-col .hud-m-btn.hud-info { width: 64px; height: 64px; font-size: 2.1rem; }
+  /* Expanded nav: it shows its label, so it becomes a pill like the others. */
+  .hud-m-edges .hud-m-col .hud-m-btn.hud-info.is-expanded {
+    width: 100%;
+    border-radius: 999px;
+    padding: 0 22px;
+    font: 700 18px/1.1 var(--font-ui);
+  }
+}
+.info-modal .modal-head h3 {
+  font-family: var(--font-retro);
+  font-size: 1.9rem;
+  line-height: 1.1;
+  color: #ffc4ee; /* light pink */
+}
+.info-list { margin: 0; display: flex; flex-direction: column; gap: 10px; text-align: left; }
+.info-item dt { font-weight: 800; color: #ff5fd2; font-size: 1rem; }
+.info-item dd { margin: 2px 0 0; font-size: 0.9rem; line-height: 1.4; color: #eee6f4; }
+@media (max-width: 1180px) {
+  .info-modal .modal-head h3 { font-size: calc(1.9rem * var(--text-boost, 1)); }
+  .info-item dt { font-size: calc(1rem * var(--text-boost, 1)); }
+  .info-item dd { font-size: calc(0.9rem * var(--text-boost, 1)); }
+}

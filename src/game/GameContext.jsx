@@ -12,7 +12,7 @@ import { getNarrative } from './characters.js'
 import { NarrativeContext } from './NarrativeContext.jsx'
 import { NODES, GAME_MINUTES, ITEMS } from './gameData.js'
 import { DEBUG, DEBUG_SCREEN, DEBUG_POSTTEST_SCENARIO, DEBUG_CHARACTER } from './settings.js'
-import { saveRun, loadRun, clearRun } from './session.js'
+import { saveRun, loadRun, clearRun, clearRoomState } from './session.js'
 import { playSound, preloadSound, playLoopFor } from './sound.js'
 import { track, OBJ, once, resetOnce, markRoomStart, roomDuration } from './xapi.js'
 
@@ -400,7 +400,11 @@ export function GameProvider({ children }) {
     })
   }, [state.screen, state.timeLeft, state.evidence.length, state.loseReason])
 
-  const submitWelcome = useCallback((player) => dispatch({ type: 'SUBMIT_WELCOME', player }), [])
+  const submitWelcome = useCallback((player) => {
+    // A new run starts here: no puzzle state from an earlier run in this tab.
+    clearRoomState()
+    dispatch({ type: 'SUBMIT_WELCOME', player })
+  }, [])
   const enterInternet = useCallback(() => dispatch({ type: 'ENTER_INTERNET' }), [])
   const startGame = useCallback(() => {
     // Committing to the run: the 30-minute countdown starts here.

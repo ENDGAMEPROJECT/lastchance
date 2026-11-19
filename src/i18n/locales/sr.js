@@ -130,13 +130,13 @@ export default {
           "body": "Ponestalo ti je načina da ubediš {friend_accusative}. I dalje {friend:neubeđen|neubeđena}, {friend} je {friend:odlučio|odlučila} da rizikuje i {friend:kupio|kupila} {product}."
         },
         "notEnoughEvidenceConvincing": {
-          "heading": "Ubedljivo — ali bez dovoljno dokaza",
+          "heading": "Ubedljivo, ali bez dovoljno dokaza",
           "body": "Mislim da si u pravu, ali nisam video dovoljno dokaza na „fizičkom internetu“. Kupiću tablet.",
           "Mia": {
-            "body": "{player:Ubedio|Ubedila} si Miu, ali si {player:zakasnio|zakasnila}. Nije stigla da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
+            "body": "{player:Ubedio|Ubedila} si Milu, ali si {player:zakasnio|zakasnila}. Nije stigla da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
           },
           "Max": {
-            "body": "{player:Ubedio|Ubedila} si Maxa, ali si {player:zakasnio|zakasnila}. Nije stigao da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
+            "body": "{player:Ubedio|Ubedila} si Marka, ali si {player:zakasnio|zakasnila}. Nije stigao da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
           }
         },
         "notEnoughEvidenceUnconvincing": {
@@ -215,7 +215,7 @@ export default {
         "followUpQuestion": "U redu, šta još?"
       },
       {
-        "title": "Izvor i fid",
+        "title": "Izvor i novosti",
         "options": [
           {
             "k": "A",
@@ -238,8 +238,8 @@ export default {
             "correct": true
           }
         ],
-        "why": "Tako je — nije u pitanju mikrofon niti neka magija. Tvoja istorija pretrage je analizirana i prodata oglasnim mrežama.",
-        "nudge": "Nije mikrofon niti virus — razmisli o tome šta platforma već zna o tebi.",
+        "why": "Tako je, nije u pitanju mikrofon niti neka magija. Tvoja istorija pretrage je analizirana i prodata oglasnim mrežama.",
+        "nudge": "Nije mikrofon niti virus, razmisli o tome šta platforma već zna o tebi.",
         "positiveFeedback": "Ok, nije mikrofon ni magija... Moja istorija pretrage je analizirana i prodata reklamnim mrežama.",
         "negativeFeedback": "To mi stvarno nema nikakvog smisla.",
         "followUpQuestion": "A osim toga?"
@@ -268,9 +268,9 @@ export default {
             "correct": false
           }
         ],
-        "why": "Tako je — čitaj URL slovo po slovo. „bargalns“ sa slovom „l“ je domen koji oponaša pravi, a ne domen prave prodavnice.",
-        "nudge": "Pravi trag nalazi se u samoj adresnoj traci — čitaj je znak po znak.",
-        "positiveFeedback": "O, sad se setim! Sumnjiv URL može biti znak da je sajt lažan i da se samo pretvara da je prava prodavnica.",
+        "why": "Tako je, čitaj URL slovo po slovo. „bargalns“ sa slovom „l“ je domen koji oponaša pravi, a ne domen prave prodavnice.",
+        "nudge": "Pravi trag nalazi se u samoj adresnoj traci - čitaj je znak po znak.",
+        "positiveFeedback": "Oh, sada se sećam! Sumnjiv URL može biti znak da je sajt lažan i da se samo pretvara da je prava prodavnica.",
         "negativeFeedback": "Da, baš, i ja treba to da poverujem?"
       }
     ],
@@ -280,10 +280,10 @@ export default {
       "title": "Poruka od {friend_accusative}",
       "opening": "Pogledaj ovo! Influenserka koju pratim upravo je objavila brzu rasprodaju — NovaPad X koji košta €600 sada je samo €49! Odbrojavanje pokazuje da je ostalo još samo 40 minuta. Upravo unosim podatke svoje kartice.",
       "responses": [
-        "Kakav god da je razlog za sve ovo, ne želim da propustim ponudu pre nego što odbrojavanje dođe do nule! Osim toga, ona je poznata influenserka — ne bi objavila nešto nasumično. Ali čudno je kako je ovaj oglas uopšte znao da želim tablet. Pojavio se odmah na vrhu mog fid-a.",
+        "Kakav god da je razlog za sve ovo, ne želim da propustim ponudu pre nego što odbrojavanje dođe do nule! Osim toga, ona je poznata influenserka, ne bi objavila nešto nasumično. Ali čudno je kako je ovaj oglas uopšte znao da želim tablet. Pojavio se odmah na vrhu mog fid-a.",
         "Slušaj, postoji milion teorija o tome kako algoritmi i nalozi prikazuju oglase, ali ja upravo gledam stranicu prodavnice. Ima zvanični logo brenda, odlične recenzije i bezbedno plaćanje."
       ],
-      "endingFriend": "Slušaj, možeš da analiziraš stranicu koliko god želiš, ali meni sve deluje u redu! Samo si {player:paranoičan|paranoična}. Odbrojavanje i dalje traje — imaš još četrdeset minuta, odnosno dok ne stigne do nule, da dokažeš da je ovo zaista prevara. U suprotnom, kliknuću na kupovinu.",
+      "endingFriend": "Slušaj, možeš da analiziraš stranicu koliko god želiš, ali meni sve deluje u redu! Samo si {player:paranoičan|paranoična}. Odbrojavanje i dalje traje, imaš još četrdeset minuta, odnosno dok ne stigne do nule, da dokažeš da je ovo zaista prevara. U suprotnom, kliknuću na kupovinu.",
       "endingYou": "Važi. Hajde da preko tvog telefona uđemo u fizički internet i vidimo šta ta ponuda krije.",
       "begin": "▶ Pogledaj šta se dešava iza ekrana"
     },
@@ -307,11 +307,11 @@ export default {
         ]
       },
       "responses": [
-        "Razumem te, ali pritisak deluje toliko stvarno dok gledam kako vreme otkucava. I nije samo tajmer — stalno razmišljam o tome da je ponuda došla od jedne od mojih omiljenih kreatorki. Ali i dalje mi nije jasno kako mi se uopšte pojavila.",
+        "Razumem te, ali pritisak deluje toliko stvarno dok gledam kako vreme otkucava. I nije samo tajmer - stalno razmišljam o tome da je ponuda došla od jedne od mojih omiljenih kreatorki. Ali i dalje mi nije jasno kako mi se uopšte pojavila.",
         "{player:Čoveče|Ženo}, način na koji se sve odvija iza kulisa ovih aplikacija je neverovatan. Ali na kraju krajeva, i dalje gledam ovu stranicu za plaćanje i pokušavam da odlučim da li je bezbedno da unesem svoje podatke."
       ],
       "convinced": "{player:Ubedio|Ubedila} si me. Sada razumem znake upozorenja i kako je ova ponuda pokušala da utiče na mene. Neću kupiti tablet.",
-      "endingFriend": "Uh, {player:dao|dala} si mi mnogo toga o čemu treba da razmislim, ali moram odmah da odlučim — tajmer samo što nije stigao do nule. Na osnovu svega što smo pogledali, reci mi direktno: da li da zatvorim ovu karticu i zaštitim svoje podatke ili da rizikujem i kupim?",
+      "endingFriend": "Uh, {player:dao|dala} si mi mnogo toga o čemu treba da razmislim, ali moram odmah da odlučim - tajmer samo što nije stigao do nule. Na osnovu svega što smo pogledali, reci mi direktno: da li da zatvorim ovu karticu i zaštitim svoje podatke ili da rizikujem i kupim?",
       "choiceClose": "Zatvori karticu. Ovo je prevara.",
       "choiceBuy": "Klikni na kupovinu. Hajde da rizikujemo.",
       "retryFriend": "Nisi mi {player:dao|dala} dovoljno razloga da ne kupim tablet, pa ću ga kupiti. Još ima vremena da pokušaš ponovo: objasni mi ono u šta me još nisi {player:ubedio|ubedila}.",
@@ -326,13 +326,13 @@ export default {
     "eyebrow": "Unutra smo",
     "titleLead": "Dobro došao/la u",
     "titleAccent": "FIZIČKI INTERNET",
-    "friendLine": "U redu — imaš {minutes} minuta da me ubediš da je ova ponuda prevara. Ako odbrojavanje stigne do nule, kupiću {product}.",
+    "friendLine": "U redu, imaš {minutes} minuta da me ubediš da je ova ponuda prevara. Ako odbrojavanje stigne do nule, kupiću {product}.",
     "playerLine": "Da, dogovoreno. Hajde da otkrijemo zašto je ova ponuda prevara i kako je napravljena.",
     "toolsTitle": "Prvo, oprema",
-    "toolsIntro": "Dve stvari putuju sa tobom svuda po ovom prostoru. Naći ćeš ih u traci na vrhu ekrana.",
+    "toolsIntro": "Dve stvari putuju sa tobom svuda po ovom prostoru. Naći ćeš ih u sekciji na vrhu ekrana.",
     "clock": "⏱ {minutes}:00 počinje onog trenutka kada krenemo da hodamo",
     "mission": "Moraćemo da istražimo okruge, prikupimo dokaze o tome kako prevara funkcioniše i vratimo se u školu pre nego što ponuda istekne!",
-    "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga — završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
+    "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga - završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
     "bagText": "Tvoji alati i dokazi koje prikupiš. Otvori ih da bi koristio/la predmete u zagonetkama i pregledao/la dokaze koje ćeš pokazati {friend_dative}.",
     "hintsText": "Zaglavio/la si na zagonetki? Saveti sadrže tragove za okrug u kojem se nalaziš.",
     "finalLine": "Spreman/na? Tajmer kreće čim otvoriš mapu."
@@ -347,13 +347,13 @@ export default {
     "start": {
       "title": "Počni",
       "subtitle": "Pre-test · Poruka od {friend_accusative}",
-      "blurb": "Gde je sve počelo — {friend} ti je poslao/la ponudu i pitao/la šta misliš.",
+      "blurb": "Gde je sve počelo - {friend} ti je poslao/la ponudu i pitao/la šta misliš.",
       "kind": "gate"
     },
     "link-district": {
       "title": "Okrug sa linkovima",
       "subtitle": "Zagonetka 1 · Lažni linkovi",
-      "blurb": "Blok sa vratima na ruteru. Samo jedan URL vodi do prave prodavnice — blokiraj lažne.",
+      "blurb": "Blok sa vratima na ruteru. Samo jedan URL vodi do prave prodavnice - blokiraj lažne.",
       "kind": "puzzle"
     },
     "roulette-corridor": {
@@ -464,25 +464,25 @@ export default {
   "names": {
     "mia": {
       "nominative": "Mia",
-      "genitive": "Mije",
+      "genitive": "Mile",
       "partitive": "Mia",
       "allative": "Mia",
       "ablative": "Mia",
       "elative": "Mia",
-      "accusative": "Miju",
-      "dative": "Miji",
-      "instrumental": "Mijom"
+      "accusative": "Milu",
+      "dative": "Mili",
+      "instrumental": "Milom"
     },
     "max": {
       "nominative": "Max",
-      "genitive": "Maksa",
+      "genitive": "Marka",
       "partitive": "Max",
       "allative": "Max",
       "ablative": "Max",
       "elative": "Max",
-      "accusative": "Maksa",
-      "dative": "Maksu",
-      "instrumental": "Maksom"
+      "accusative": "Marka",
+      "dative": "Marku",
+      "instrumental": "Markom"
     }
   },
   "hints": {
@@ -501,7 +501,7 @@ export default {
     },
     "stats": {
       "time": "Preostalo vreme",
-      "districts": "Okrugi",
+      "districts": "Okruzi",
       "tools": "Alati",
       "evidence": "Dokazi"
     },
@@ -531,7 +531,7 @@ export default {
       "items": [
         "Obrati pažnju na odbrojavanje, ogroman popust i obećanje da je ponuda vremenski ograničena.",
         "Zapitaj se da li su influenser, komentari i profesionalno uređena stranica dovoljni da dokažu da je ponuda bezbedna.",
-        "Imaj na umu svoje prve nedoumice. Okrugi koji slede pružiće ti dokaze kojima možeš da ih proveriš."
+        "Imaj na umu svoje prve nedoumice. Okruzi koji slede pružiće ti dokaze kojima možeš da ih proveriš."
       ]
     },
     "map": {
@@ -543,7 +543,7 @@ export default {
       ],
       "items": [
         "Osvetljena stanica je spremna za istraživanje; zatamnjena stanica je i dalje zaključana.",
-        "Okrugi su povezani u niz, tako da završetak jednog otključava sledeći.",
+        "Okruzi su povezani u niz, tako da završetak jednog otključava sledeći.",
         "Proveri svoju Torbu nakon svakog završenog okruga: novi alati će ti pomoći u kasnijim zagonetkama."
       ]
     },
@@ -625,8 +625,8 @@ export default {
             ],
             "items": [
               "Klikni na objavu da je izabereš, zatim otvori Torbu i iskoristi Karticu za dekodiranje emodžija. Na kartici pritisni slovo za svaki emodži sa cedulje na objavi, redom.",
-              "Pročitaj svaki opis: lični kod za popust znači PLAĆENO, brend koji je “poslao” proizvod znači GIFTED, a proizvod napravljen zajedno sa brendom znači SARADNJA.",
-              "MiraMoves je PLAĆENO, TechWithLeo je GIFTED, a ClaraSees je SARADNJA."
+              "Pročitaj svaki opis: lični kod za popust znači PLAĆENO, brend koji je “poslao” proizvod znači POKLONJENO, a proizvod napravljen zajedno sa brendom znači SARADNJA.",
+              "MiraMoves je PLAĆENO, TechWithLeo je POKLONJENO, a ClaraSees je SARADNJA."
             ]
           },
           "search": {
@@ -699,7 +699,7 @@ export default {
         ]
       },
       "rouletteInvestigation": {
-        "context": "Zavrtite nekoliko puta i uporedite rezultate pre nego što donesete odluku.",
+        "context": "Zavrti nekoliko puta i uporedi rezultate pre nego što doneseš odluku.",
         "prompts": [
           "Šta treba da radim sa svakim točkom?",
           "Kako da znam da li je točak namešten?",
@@ -1566,7 +1566,37 @@ export default {
       "unlock": "Otključaj →",
       "pwError": "Pristup odbijen. Pročitaj svetleća slova redom kojim se pojavljuju na posterima i pokušaj ponovo.",
       "hiddenLetter": "skriveno slovo {letter}",
-      "evidence": "Svaki poster koristio je prepoznatljivu tehniku ubeđivanja — FOMO, društveni dokaz, osećaj hitnosti i još mnogo toga."
+      "evidence": "Svaki poster koristio je prepoznatljivu tehniku ubeđivanja — FOMO, društveni dokaz, osećaj hitnosti i još mnogo toga.",
+      "info": {
+        "button": "Tehnike ubeđivanja",
+        "title": "Tehnike ubeđivanja",
+        "items": [
+          {
+            "name": "FOMO (strah da ćeš nešto propustiti)",
+            "text": "Poruke koje izazivaju strah od propuštene prilike da bi podstakle kupovinu, kao „Ostalo je samo 3 komada”."
+          },
+          {
+            "name": "Preterivanje",
+            "text": "Reklame koje obećavaju izuzetne rezultate ili nerealne koristi koje proizvod teško može da pruži."
+          },
+          {
+            "name": "Influenseri ili poznate ličnosti",
+            "text": "Poznate osobe koje reklamiraju proizvode koristeći svoju popularnost i poverenje svojih pratilaca."
+          },
+          {
+            "name": "Društveni dokaz",
+            "text": "Poruke koje ističu popularnost proizvoda da bi izgradile poverenje, kao „Hiljade ljudi ga je već kupilo”."
+          },
+          {
+            "name": "Emocionalni apel",
+            "text": "Reklame koje pokušavaju da izazovu emocije, kao što su radost, strah ili tuga, da bi uticale na odluke o kupovini."
+          },
+          {
+            "name": "Hitnost",
+            "text": "Poruke koje teraju na brzu kupovinu pomoću vremenski ograničenih ponuda ili proizvoda koji kao da će uskoro nestati."
+          }
+        ]
+      }
     }
   },
   "debug": {

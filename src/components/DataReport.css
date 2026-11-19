@@ -51,9 +51,8 @@
 .data-report-headings span:nth-child(3) { grid-column: 5; }
 .data-report-row { min-height: 31px; border-top: 0; font-size: 0.84rem; line-height: 1.15; }
 .data-report-time { color: #77709c; font-size: 0.72rem; }
-.data-report-icon { color: #60578e; font-size: 0.92rem; text-align: center; }
+.data-report-icon { color: #60578e; font-size: 1.05rem; line-height: 1; text-align: center; }
 .data-report-activity { color: #4d466d; line-height: 1.18; }
-.data-report-activity strong { padding: 0 2px; color: #1579bd; background: rgba(112, 198, 255, 0.35); }
 .data-report-arrow { color: #7168a2; font-size: 1rem; }
 .data-report-result { font: 700 0.76rem/1.15 var(--font-mono); }
 .data-report-result.green { color: #5b9b7d; }

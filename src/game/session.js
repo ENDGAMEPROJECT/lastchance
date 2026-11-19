@@ -73,7 +73,18 @@ export function clearRun() {
   try {
     store().removeItem(KEY)
     store().removeItem(SURVEY_KEY)
-    // Starting over must not leave a half-solved puzzle behind.
+  } catch { /* ignore */ }
+  // Starting over must not leave a half-solved puzzle behind.
+  clearRoomState()
+}
+
+/* Drop every room's saved puzzle state. Called by clearRun and also when a
+   brand-new run begins (the welcome form): room state can outlive the run
+   record — the run isn't saved on the welcome screen, and a new run in the
+   same tab never goes through "start over" — and a stale 'roulette.solved'
+   would open the next run's roulette already cleared. */
+export function clearRoomState() {
+  try {
     const s = store()
     for (let i = s.length - 1; i >= 0; i--) {
       const k = s.key(i)

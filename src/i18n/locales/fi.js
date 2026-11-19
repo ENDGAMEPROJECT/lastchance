@@ -1566,7 +1566,37 @@ export default {
       "unlock": "Avaa →",
       "pwError": "Pääsy evätty. Lue hehkuvat kirjaimet julisteiden järjestyksessä ja yritä uudelleen.",
       "hiddenLetter": "piilotettu kirjain {letter}",
-      "evidence": "Jokainen juliste käytti nimettyä suostuttelukeinoa — FOMO, sosiaalinen todiste, kiire ja muita."
+      "evidence": "Jokainen juliste käytti nimettyä suostuttelukeinoa — FOMO, sosiaalinen todiste, kiire ja muita.",
+      "info": {
+        "button": "Suostuttelutekniikat",
+        "title": "Suostuttelutekniikat",
+        "items": [
+          {
+            "name": "FOMO (pelko jäädä jostain paitsi)",
+            "text": "Viestit, jotka herättävät pelkoa menettää tilaisuus ja saavat ostamaan, kuten ”Vain 3 jäljellä”."
+          },
+          {
+            "name": "Liioittelu",
+            "text": "Mainokset, jotka lupaavat poikkeuksellisia tuloksia tai epärealistisia hyötyjä, joita tuote tuskin pystyy tarjoamaan."
+          },
+          {
+            "name": "Vaikuttajat tai julkkikset",
+            "text": "Tunnetut ihmiset, jotka mainostavat tuotteita hyödyntäen suosiotaan ja seuraajiensa luottamusta."
+          },
+          {
+            "name": "Sosiaalinen todiste",
+            "text": "Viestit, jotka korostavat tuotteen suosiota luottamuksen herättämiseksi, kuten ”Tuhannet ovat jo ostaneet sen”."
+          },
+          {
+            "name": "Tunteisiin vetoaminen",
+            "text": "Mainokset, jotka yrittävät herättää tunteita, kuten iloa, pelkoa tai surua, vaikuttaakseen ostopäätöksiin."
+          },
+          {
+            "name": "Kiire",
+            "text": "Viestit, jotka painostavat ostamaan nopeasti määräaikaisilla tarjouksilla tai tuotteilla, jotka näyttävät olevan loppumassa."
+          }
+        ]
+      }
     }
   },
   "debug": {

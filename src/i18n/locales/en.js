@@ -1262,7 +1262,7 @@ export default {
     "algorithm": {
       "intro": "A giant computer uses personal data to decide which ads people see. Step inside and discover how it creates personalized ads from this data.",
       "solvedTitle": "Algorithm Control Room cracked · Evidence logged ",
-      "solvedText": "You watched the algorithm turn {friend}'s age, interests and possible insecurities into a single ad. That is not coincidence — it the result of his advertisement profile",
+      "solvedText": "You watched the algorithm turn {friend}'s age, interests and possible insecurities into a single ad. That is not coincidence — it is the result of his advertisement profile",
       "evidence": "The ad was hand-picked by an algorithm using {friend}’s age, interests and insecurities.",
       "unlock": {
         "badge": "ACCESS · Algorithm Control Room",
@@ -1566,7 +1566,37 @@ export default {
       "unlock": "Unlock →",
       "pwError": "Access denied. Read the glowing letters in poster order and try again.",
       "hiddenLetter": "hidden letter {letter}",
-      "evidence": "Every poster used a named persuasion trick — FOMO, social proof, urgency and more."
+      "evidence": "Every poster used a named persuasion trick — FOMO, social proof, urgency and more.",
+      "info": {
+        "button": "Persuasion techniques",
+        "title": "Persuasion techniques",
+        "items": [
+          {
+            "name": "FOMO (fear of missing out)",
+            "text": "Messages that create a fear of losing an opportunity to push a purchase."
+          },
+          {
+            "name": "Exaggeration",
+            "text": "Ads that promise extraordinary results or unrealistic benefits that the product can hardly deliver."
+          },
+          {
+            "name": "Influencers or celebrities",
+            "text": "Well-known people who promote products, using their popularity and the trust of their followers."
+          },
+          {
+            "name": "Social proof",
+            "text": "Messages that highlight how popular a product is to build trust and social pressure."
+          },
+          {
+            "name": "Emotional appeal",
+            "text": "Ads that try to stir emotions, like joy, fear or sadness, to influence buying decisions."
+          },
+          {
+            "name": "Urgency",
+            "text": "Messages that pressure you to buy quickly with limited-time offers or products that seem about to sell out."
+          }
+        ]
+      }
     }
   },
   "debug": {

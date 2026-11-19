@@ -418,9 +418,9 @@
   background: #1c1a2e; /* dark purple-blue-grey */
 }
 .ia-post-backdrop > .ia-post { flex: 1 1 auto; min-height: 0; }
-/* Posts sit at 50% until hovered (or a dragged post-it is over one, or the
+/* Posts sit at 30% until hovered (or a dragged post-it is over one, or the
    keyboard is focused inside one). */
-.ia-label-stage .ia-post { opacity: 0.5; transition: opacity 0.2s, border-color 0.25s, box-shadow 0.25s; }
+.ia-label-stage .ia-post { opacity: 0.3; transition: opacity 0.2s, border-color 0.25s, box-shadow 0.25s; }
 .ia-label-stage .ia-post:hover,
 .ia-label-stage .ia-post.is-drop-target,
 .ia-label-stage .ia-post:has(:focus-visible) { opacity: 1; }
