@@ -61,8 +61,8 @@ export default {
     "titleAccent": "PHYSICAL INTERNET",
     "tagline": "// ads · scams · fraudulent websites → decoded",
     "situationTitle": "The situation",
-    "hook": "Your friend {friend} just found a viral deal on {product}:  90% off, \"today only\". It looks incredible… which is exactly why you think it is a scam.",
-    "context": "To show {friend} how scams and advertising really work, you both step inside a physical version of the Internet:  a neon city where shops, social platforms and ads become districts you can walk through.",
+    "hook": "Your friend {friend} just found a viral deal on {product}: 90% off, \"today only\". It looks incredible… which is exactly why you think it is a scam.",
+    "context": "To show {friend} how scams and advertising really work, you both step inside a physical version of the Internet: a neon city where shops, social platforms and ads become districts you can walk through.",
     "clock": "⏱ {minutes}:00 on the clock",
     "mission": "You have {minutes} minutes (the time before the offer expires) to travel through the Physical Internet, gather evidence about how ads and scams work, and convince {friend} not to buy. If the timer hits zero, {friend} buys it.",
     "steps": [
@@ -79,7 +79,7 @@ export default {
         "text": "Reach the Final Decision and use your evidence before time runs out."
       }
     ],
-    "start": "▶ Step inside:  start the clock",
+    "start": "▶ Step inside: start the clock",
     "pretest": "Pre-test: first, tell {friend} what you already think about this deal. Then enter the Internet."
   },
   "map": {
@@ -88,7 +88,7 @@ export default {
     "titleAccent": "district",
     "subtitle": "Travel the network, gather evidence, and reach the Final Decision before the offer expires.",
     "start": "▶ START · Pre-test with {friend}",
-    "lockedTip": "Locked:  finish the previous district"
+    "lockedTip": "Locked: finish the previous district"
   },
   "roomframe": {
     "clearedDefaultTitle": "District cleared",
@@ -118,7 +118,7 @@ export default {
       "heading": "The offer got them first",
       "body": "Before you could finish gathering proof, the fake \"today only\" countdown did its job and {friend} bought {product}. That urgency was the whole trick.",
       "lessonLabel": "Lesson:",
-      "lesson": "artificial urgency (\"only 3 left!\", \"offer ends in 5:00\") is designed to stop you from thinking. Slow down:  a real deal will still be there tomorrow.",
+      "lesson": "artificial urgency (\"only 3 left!\", \"offer ends in 5:00\") is designed to stop you from thinking. Slow down: a real deal will still be there tomorrow.",
       "again": "↻ Try again",
       "reasons": {
         "timeUp": {
@@ -182,7 +182,7 @@ export default {
     "roundLabel": "Round {n} · {title}",
     "respondPrompt": "Respond to {friend}",
     "you": "You",
-    "diagnosticNote": "No wrong answers here:  just tell me what you think.",
+    "diagnosticNote": "No wrong answers here: just tell me what you think.",
     "rounds": [
       {
         "title": "The Timer",
@@ -204,11 +204,11 @@ export default {
           },
           {
             "k": "D",
-            "text": "Real shops ask you to send your card number in a cha",
+            "text": "Real shops ask you to send your card number in a chat",
             "correct": false
           }
         ],
-        "why": "Exactly:  the ticking clock is manufactured urgency, built to make you act before you think.",
+        "why": "Exactly: the ticking clock is manufactured urgency, built to make you act before you think.",
         "nudge": "Think about what that ticking clock is really doing to you.",
         "positiveFeedback": "You mean, the urgency makes you act before you think... ",
         "negativeFeedback": "I don't know, that doesn't sound right.",
@@ -238,8 +238,8 @@ export default {
             "correct": true
           }
         ],
-        "why": "Right:  it's not the mic or magic. Your search history was profiled and sold to ad networks.",
-        "nudge": "It's not the mic or a virus:  think about what the platform already knows about you.",
+        "why": "Right: it's not the mic or magic. Your search history was profiled and sold to ad networks.",
+        "nudge": "It's not the mic or a virus: think about what the platform already knows about you.",
         "positiveFeedback": "Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. ",
         "negativeFeedback": "That really doesn't make sense to me.",
         "followUpQuestion": "Ok, and apart from that?"
@@ -278,12 +278,12 @@ export default {
       "eyebrow": "The Deal",
       "debugTag": "Pre-test",
       "title": "A message from {friend}",
-      "opening": "Look at this! An influencer I follow just posted a flash sale:  the €600 NovaPad X for only €49! There are just 40 minutes left on the countdown. I'm entering my card info right now.",
+      "opening": "Look at this! An influencer I follow just posted a flash sale: the €600 NovaPad X for only €49! There are just 40 minutes left on the countdown. I'm entering my card info right now.",
       "responses": [
-        "Whatever the reason for the setup, I don't want to miss out before the clock hits zero! Plus, she's a massive influencer:  she wouldn't post something random. But the weird part is how this ad even knew I wanted a tablet. It popped up right at the top of my feed.",
+        "Whatever the reason for the setup, I don't want to miss out before the clock hits zero! Plus, she's a massive influencer: she wouldn't post something random. But the weird part is how this ad even knew I wanted a tablet. It popped up right at the top of my feed.",
         "Look, there are a million theories about how algorithms and accounts handle ads, but I'm looking at the actual store page right now. It has the official brand logo, great reviews, and a secure checkout."
       ],
-      "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running:  you've got until it hits zero, forty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
+      "endingFriend": "Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running: you've got until it hits zero, forty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy.",
       "endingYou": "Deal. Let's use your phone to get into the Physical Internet and see what that offer is hiding.",
       "begin": "▶ Look behind the screen"
     },
@@ -307,7 +307,7 @@ export default {
         ]
       },
       "responses": [
-        "I hear you, but the pressure feels so real with that clock ticking right in front of me. And it's not just the timer:  I keep thinking it came from one of my favourite creators. But there's still the mystery of how it ended up on my radar.",
+        "I hear you, but the pressure feels so real with that clock ticking right in front of me. And it's not just the timer: I keep thinking it came from one of my favourite creators. But there's still the mystery of how it ended up on my radar.",
         "Man, the way everything's handled behind the scenes on these apps is wild. But at the end of the day, I'm still staring at this checkout page trying to decide if it's safe to type my details in."
       ],
       "convinced": "You've convinced me. Now I understand the warning signs and how this offer tried to influence me. I'm not buying the tablet.",
@@ -319,20 +319,20 @@ export default {
       "retryGiveUp": "Let {friend} buy the tablet"
     },
     "mastery": {
-      "banner": "One more time:  I am still not convinced. Give me the strongest reason for each."
+      "banner": "One more time: I am still not convinced. Give me the strongest reason for each."
     }
   },
   "enter": {
     "eyebrow": "We are inside",
     "titleLead": "Welcome to the",
     "titleAccent": "PHYSICAL INTERNET",
-    "friendLine": "Alright:  you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
+    "friendLine": "Alright: you've got {minutes} minutes to convince me this deal is a scam. If that clock hits zero, I'm buying {product}.",
     "playerLine": "Yes, we have a deal. Let's uncover why this offer is a scam, and how it was built.",
     "toolsTitle": "First, the gear",
     "toolsIntro": "Two things travel with you everywhere in here. You'll find them in the bar at the top of the screen.",
     "clock": "⏱ {minutes}:00 starts the moment we start walking",
     "mission": "We’ll have to explore the districts, gather evidence of how the scam works, and make it back to school before the offer expires!",
-    "mapText": "Your route through the Physical Internet. Travel from district to district:  clear one to unlock the next, all the way to the final decision.",
+    "mapText": "Your route through the Physical Internet. Travel from district to district: clear one to unlock the next, all the way to the final decision.",
     "bagText": "Your tools and the evidence you collect. Open it to use items inside puzzles and to review the proof you'll show {friend}.",
     "hintsText": "Stuck on a puzzle? Hints has clues for the district you're in.",
     "finalLine": "Ready? The timer starts as soon as you open the map."
@@ -1450,13 +1450,13 @@ export default {
     "ads": {
       "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
       "solvedTitle": "Corridor cleared: you read the fine print",
-      "solvedText": "These ads draw your attention immediatly with free stuff, promises of getting rich, inminent danger...  Be wary of any content that triggers a very strong emotional reaction in you.",
+      "solvedText": "These ads draw your attention immediatly with free stuff, promises of getting rich, inminent danger... Be wary of any content that triggers a very strong emotional reaction in you.",
       "pickup": "You pick up the Truth Flashlight 🔦",
       "torchCharging": "🔦 Charging…",
       "torchOn": "🔦 Flashlight ON",
       "torchOff": "🔦 Truth Flashlight",
-      "hintCharging": "The cheap torch flickers awake:  bait ads love to waste a moment of your time…",
-      "hintOn": "Sweep the beam across the dark wall:  each poster lights up and reveals the truth.",
+      "hintCharging": "The cheap torch flickers awake: bait ads love to waste a moment of your time…",
+      "hintOn": "Sweep the beam across the dark wall: each poster lights up and reveals the truth.",
       "hintOff": "Switch it on, then sweep the beam over the posters to reveal what they really say.",
       "glossyCta": "TAP TO CLAIM →",
       "fineprint": "* terms & conditions apply",
@@ -1472,12 +1472,12 @@ export default {
       "exitButton": "Open exit →",
       "errCode": "That is not the code. Illuminate all four posters and read the letters hiding in the fine print.",
       "learnLabel": "Read the fine print.",
-      "learn": "Ads shouting “free”, “you won” or “€0 today” usually hide the real cost in tiny print below:  always read what you are actually agreeing to before you tap.",
+      "learn": "Ads shouting “free”, “you won” or “€0 today” usually hide the real cost in tiny print below: always read what you are actually agreeing to before you tap.",
       "evidence": "Behind the “free trial” ad was a hidden €59/month auto-renewing subscription.",
       "posters": [
         {
           "glossyTitle": "FREE 30-DAY TRIAL!",
-          "glossyBody": "Try SunCloud Premium:  €0 today!",
+          "glossyBody": "Try SunCloud Premium: €0 today!",
           "glossyBadge": "€0",
           "truth": "After a month, it auto-renews at €59/month. Cancelling requires calling a phone line open 2 hours a week.",
           "truthTitle": "😩 Automatic renovation",
@@ -1493,7 +1493,7 @@ export default {
         },
         {
           "glossyTitle": "📈 GET RICH QUICK!",
-          "glossyBody": "Turn €100 into €10,000 in one week:  guaranteed!",
+          "glossyBody": "Turn €100 into €10,000 in one week: guaranteed!",
           "glossyBadge": "×100",
           "truth": "Every euro you “invest” is gone, and the sky-high “returns” on screen are fake.",
           "truthTitle": "📉 A pure scam",
@@ -1501,7 +1501,7 @@ export default {
         },
         {
           "glossyTitle": "🛡️ VIRUS DETECTED!",
-          "glossyBody": "Your device may be at risk:  download SecureNow FREE!",
+          "glossyBody": "Your device may be at risk: download SecureNow FREE!",
           "glossyBadge": "FREE",
           "truth": "The warning is fake and the “antivirus” IS the malware. Real alerts never come from an ad.",
           "truthTitle": "🚨 You didn´t have a virus... now you do",
@@ -1510,9 +1510,9 @@ export default {
       ]
     },
     "persuasion": {
-      "intro": "A gallery of glossy ads. Each one leans on a single persuasion trick:  name it by framing the poster.",
-      "solvedTitle": "Persuasion Lab cleared:  password FOOLED",
-      "solvedText": "Once you can name the trick:  FOMO, urgency, a borrowed celebrity:  it stops working on you. That is the whole defence.",
+      "intro": "A gallery of glossy ads. Each one leans on a single persuasion trick: name it by framing the poster.",
+      "solvedTitle": "Persuasion Lab cleared: password FOOLED",
+      "solvedText": "Once you can name the trick: FOMO, urgency, a borrowed celebrity: it stops working on you. That is the whole defence.",
       "learn": {
         "lead": "Spot the trick.",
         "body": "Ads persuade with named techniques: FOMO (fear of missing out), social proof (\"everyone's buying it\"), exaggeration, influencer endorsement, emotional appeal and urgency. Real campaigns often stack several of these at once to slip past your judgement."
@@ -1520,9 +1520,9 @@ export default {
       "trayLabel": "TECHNIQUE FRAMES",
       "hints": {
         "start": "Drag and drop each technique frame onto the matching poster.",
-        "allDone": "All six framed:  the letters spell a password. Click the computer to type it in.",
-        "correct": "Correct:  a letter surfaced. Keep framing the rest.",
-        "wrong": "That technique does not match this ad. Frame returned:  try another.",
+        "allDone": "All six framed: the letters spell a password. Click the computer to type it in.",
+        "correct": "Correct: a letter surfaced. Keep framing the rest.",
+        "wrong": "That technique does not match this ad. Frame returned: try another.",
         "wrongSpecific": "Not quite. Look again: {clue}"
       },
       "dragHint": "Drag onto its poster",
@@ -1539,12 +1539,12 @@ export default {
           "letter": "O"
         },
         {
-          "headline": "Lose 10kg in just 3 DAYS:  guaranteed miracle!",
+          "headline": "Lose 10kg in just 3 DAYS: guaranteed miracle!",
           "sub": "You'll be surprised.",
           "letter": "O"
         },
         {
-          "headline": "As seen on @StarCeleb's page:  she LOVES it!",
+          "headline": "As seen on @StarCeleb's page: she LOVES it!",
           "sub": "#ad",
           "letter": "L"
         },
@@ -1554,7 +1554,7 @@ export default {
           "letter": "E"
         },
         {
-          "headline": "OFFER ENDS IN 04:59:  buy NOW before it's gone!",
+          "headline": "OFFER ENDS IN 04:59: buy NOW before it's gone!",
           "sub": "Tick, tock…",
           "letter": "D"
         }
@@ -1569,7 +1569,7 @@ export default {
       },
       "passwordLearn": {
         "lead": "Named and disarmed.",
-        "body": "Six posters, six tricks. The letters they hid, read left to right, are the exit password:  proof you saw through every one."
+        "body": "Six posters, six tricks. The letters they hid, read left to right, are the exit password: proof you saw through every one."
       },
       "openComputer": "Use the computer →",
       "closeComputer": "Close the screen",
@@ -1581,7 +1581,7 @@ export default {
       "unlock": "Unlock →",
       "pwError": "Access denied. Read the glowing letters in poster order and try again.",
       "hiddenLetter": "hidden letter {letter}",
-      "evidence": "Every poster used a named persuasion trick:  FOMO, social proof, urgency and more.",
+      "evidence": "Every poster used a named persuasion trick: FOMO, social proof, urgency and more.",
       "info": {
         "button": "Persuasion techniques",
         "title": "Persuasion techniques",

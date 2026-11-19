@@ -62,7 +62,7 @@ export default {
     "tagline": "// oglasi · prevare · lažni veb-sajtovi → dekodirani",
     "situationTitle": "Situacija",
     "hook": "{friend:Tvoj prijatelj|Tvoja prijateljica} {friend} upravo je {friend:pronašao|pronašla} viralnu ponudu za {product} - 90% popusta, „samo danas“. Deluje neverovatno… upravo zato misliš da je prevara.",
-    "context": "Da biste {friend_dative} pokazali kako prevare i oglašavanje zaista funkcionišu, oboje se povezujete na fizičku verziju Interneta:  neonski grad u kojem prodavnice, društvene platforme i oglasi postaju zone kroz koje možete da se krećete.",
+    "context": "Da biste {friend_dative} pokazali kako prevare i oglašavanje zaista funkcionišu, oboje se povezujete na fizičku verziju Interneta: neonski grad u kojem prodavnice, društvene platforme i oglasi postaju zone kroz koje možete da se krećete.",
     "clock": "⏱ {minutes}:00 na satu",
     "mission": "{friend:Tvoj prijatelj|Tvoja prijateljica} {friend} upravo je {friend:pronašao|pronašla} viralnu ponudu za {product}: 90% popusta, „samo danas“. Deluje neverovatno… upravo zato misliš da je prevara.",
     "steps": [
@@ -79,7 +79,7 @@ export default {
         "text": "Stigni do Konačne odluke i iskoristi svoje dokaze pre nego što vreme istekne."
       }
     ],
-    "start": "▶ Uđi unutra:  pokreni sat",
+    "start": "▶ Uđi unutra: pokreni sat",
     "pretest": "Pre-test: prvo reci {friend_dative} šta već misliš o ovoj ponudi. Zatim uđi na Internet."
   },
   "map": {
@@ -88,7 +88,7 @@ export default {
     "titleAccent": "okrug",
     "subtitle": "Putuj kroz mrežu, prikupljaj dokaze i stigni do Konačne odluke pre nego što ponuda istekne.",
     "start": "▶ START · Pre-test sa {friend_instrumental}",
-    "lockedTip": "Zaključano:  završi prethodni okrug"
+    "lockedTip": "Zaključano: završi prethodni okrug"
   },
   "roomframe": {
     "clearedDefaultTitle": "Okrug završen",
@@ -269,7 +269,7 @@ export default {
           }
         ],
         "why": "Tako je, čitaj URL slovo po slovo. „bargalns“ sa slovom „l“ je domen koji oponaša pravi, a ne domen prave prodavnice.",
-        "nudge": "Pravi trag nalazi se u samoj adresnoj traci:  čitaj je znak po znak.",
+        "nudge": "Pravi trag nalazi se u samoj adresnoj traci: čitaj je znak po znak.",
         "positiveFeedback": "Oh, sada se sećam! Sumnjiv URL može biti znak da je sajt lažan i da se samo pretvara da je prava prodavnica.",
         "negativeFeedback": "Da, baš, i ja treba to da poverujem?"
       }
@@ -278,7 +278,7 @@ export default {
       "eyebrow": "Ponuda",
       "debugTag": "Pre-test",
       "title": "Poruka od {friend_accusative}",
-      "opening": "Pogledaj ovo! Influenserka koju pratim upravo je objavila brzu rasprodaju:  NovaPad X koji košta €600 sada je samo €49! Odbrojavanje pokazuje da je ostalo još samo 40 minuta. Upravo unosim podatke svoje kartice.",
+      "opening": "Pogledaj ovo! Influenserka koju pratim upravo je objavila brzu rasprodaju: NovaPad X koji košta €600 sada je samo €49! Odbrojavanje pokazuje da je ostalo još samo 40 minuta. Upravo unosim podatke svoje kartice.",
       "responses": [
         "Kakav god da je razlog za sve ovo, ne želim da propustim ponudu pre nego što odbrojavanje dođe do nule! Osim toga, ona je poznata influenserka, ne bi objavila nešto nasumično. Ali čudno je kako je ovaj oglas uopšte znao da želim tablet. Pojavio se odmah na vrhu mog fid-a.",
         "Slušaj, postoji milion teorija o tome kako algoritmi i nalozi prikazuju oglase, ali ja upravo gledam stranicu prodavnice. Ima zvanični logo brenda, odlične recenzije i bezbedno plaćanje."
@@ -307,11 +307,11 @@ export default {
         ]
       },
       "responses": [
-        "Razumem te, ali pritisak deluje toliko stvarno dok gledam kako vreme otkucava. I nije samo tajmer:  stalno razmišljam o tome da je ponuda došla od jedne od mojih omiljenih kreatorki. Ali i dalje mi nije jasno kako mi se uopšte pojavila.",
+        "Razumem te, ali pritisak deluje toliko stvarno dok gledam kako vreme otkucava. I nije samo tajmer: stalno razmišljam o tome da je ponuda došla od jedne od mojih omiljenih kreatorki. Ali i dalje mi nije jasno kako mi se uopšte pojavila.",
         "{player:Čoveče|Ženo}, način na koji se sve odvija iza kulisa ovih aplikacija je neverovatan. Ali na kraju krajeva, i dalje gledam ovu stranicu za plaćanje i pokušavam da odlučim da li je bezbedno da unesem svoje podatke."
       ],
       "convinced": "{player:Ubedio|Ubedila} si me. Sada razumem znake upozorenja i kako je ova ponuda pokušala da utiče na mene. Neću kupiti tablet.",
-      "endingFriend": "Uh, {player:dao|dala} si mi mnogo toga o čemu treba da razmislim, ali moram odmah da odlučim:  tajmer samo što nije stigao do nule. Na osnovu svega što smo pogledali, reci mi direktno: da li da zatvorim ovu karticu i zaštitim svoje podatke ili da rizikujem i kupim?",
+      "endingFriend": "Uh, {player:dao|dala} si mi mnogo toga o čemu treba da razmislim, ali moram odmah da odlučim: tajmer samo što nije stigao do nule. Na osnovu svega što smo pogledali, reci mi direktno: da li da zatvorim ovu karticu i zaštitim svoje podatke ili da rizikujem i kupim?",
       "choiceClose": "Zatvori karticu. Ovo je prevara.",
       "choiceBuy": "Klikni na kupovinu. Hajde da rizikujemo.",
       "retryFriend": "Nisi mi {player:dao|dala} dovoljno razloga da ne kupim tablet, pa ću ga kupiti. Još ima vremena da pokušaš ponovo: objasni mi ono u šta me još nisi {player:ubedio|ubedila}.",
@@ -319,7 +319,7 @@ export default {
       "retryGiveUp": "Pusti {friend_dative} da kupi tablet"
     },
     "mastery": {
-      "banner": "Još jednom:  još uvek nisam {friend:ubeđen|ubeđena}. Daj mi najjači razlog za svaku opciju."
+      "banner": "Još jednom: još uvek nisam {friend:ubeđen|ubeđena}. Daj mi najjači razlog za svaku opciju."
     }
   },
   "enter": {
@@ -332,7 +332,7 @@ export default {
     "toolsIntro": "Dve stvari putuju sa tobom svuda po ovom prostoru. Naći ćeš ih u sekciji na vrhu ekrana.",
     "clock": "⏱ {minutes}:00 počinje onog trenutka kada krenemo da hodamo",
     "mission": "Moraćemo da istražimo okruge, prikupimo dokaze o tome kako prevara funkcioniše i vratimo se u školu pre nego što ponuda istekne!",
-    "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga:  završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
+    "mapText": "Tvoja ruta kroz Fizički internet. Putuj od okruga do okruga: završi jedan da bi otključao/la sledeći, sve do konačne odluke.",
     "bagText": "Tvoji alati i dokazi koje prikupiš. Otvori ih da bi koristio/la predmete u zagonetkama i pregledao/la dokaze koje ćeš pokazati {friend_dative}.",
     "hintsText": "Zaglavio/la si na zagonetki? Saveti sadrže tragove za okrug u kojem se nalaziš.",
     "finalLine": "Spreman/na? Tajmer kreće čim otvoriš mapu."
@@ -347,13 +347,13 @@ export default {
     "start": {
       "title": "Počni",
       "subtitle": "Pre-test · Poruka od {friend_accusative}",
-      "blurb": "Gde je sve počelo:  {friend} ti je poslao/la ponudu i pitao/la šta misliš.",
+      "blurb": "Gde je sve počelo: {friend} ti je poslao/la ponudu i pitao/la šta misliš.",
       "kind": "gate"
     },
     "link-district": {
       "title": "Okrug sa linkovima",
       "subtitle": "Zagonetka 1 · Lažni linkovi",
-      "blurb": "Blok sa vratima na ruteru. Samo jedan URL vodi do prave prodavnice:  blokiraj lažne.",
+      "blurb": "Blok sa vratima na ruteru. Samo jedan URL vodi do prave prodavnice: blokiraj lažne.",
       "kind": "puzzle"
     },
     "roulette-corridor": {
@@ -746,12 +746,12 @@ export default {
       "closeDoor": "✕ Zatvori vrata",
       "doorHelp": "Otvori vrata da zaviriš na stranicu · pročitaj adresu · koristi „Blokiraj“ da zatvoriš lažna vrata",
       "tapToBlock": "Dodirni vrata da blokiraš link · dodirni ponovo da ga odblokiraš",
-      "addressHint": "Katanac i „https“ znače da je veza privatna:  NE da je stranica pouzdana.",
-      "linkTip": "Link:  tek kada ga otvoriš možeš da proveriš njegovu stvarnu bezbednost",
+      "addressHint": "Katanac i „https“ znače da je veza privatna: NE da je stranica pouzdana.",
+      "linkTip": "Link: tek kada ga otvoriš možeš da proveriš njegovu stvarnu bezbednost",
       "barNotSecure": "Nije bezbedno",
       "barLookalike": "⚠ Slova sličnog izgleda",
       "secureConn": "Šifrovana veza (https)",
-      "insecureConn": "Nije bezbedno:  nešifrovana http veza",
+      "insecureConn": "Nije bezbedno: nešifrovana http veza",
       "blockThis": "🔒 Blokiraj ovaj link",
       "unblock": "↺ Odblokiraj",
       "inspect": "Proveri adresu i pregled stranice.",
@@ -774,7 +774,7 @@ export default {
       "preview": {
         "newArrivals": "NOVO U PONUDI",
         "storeCaption": "Jednostavan stil, svakog dana.",
-        "megaSale": "⚠ MEGA RASPRODAJA:  SAMO DANAS! ⚠",
+        "megaSale": "⚠ MEGA RASPRODAJA: SAMO DANAS! ⚠",
         "shopNow": "KUPI ODMAH!",
         "shopBar": "DISCOUNT SHOPZ ▤",
         "limited": "⚠ VREMENSKI OGRANIČENA PONUDA!!! ⚠"
@@ -782,10 +782,10 @@ export default {
       "rounds": [
         {
           "category": "Uobičajeni sufiksi",
-          "prompt": "Jedna je prava prodavnica. Ostale kriju svoj pravi domen iza imena koje deluje poznato:  pročitaj celu adresu.",
+          "prompt": "Jedna je prava prodavnica. Ostale kriju svoj pravi domen iza imena koje deluje poznato: pročitaj celu adresu.",
           "notes": {
             "a": "Pravi domen: lunawear.com",
-            "b": "Pravi sajt je „com-official.shop“:  „lunawear“ je samo poddomen postavljen da te prevari.",
+            "b": "Pravi sajt je „com-official.shop“: „lunawear“ je samo poddomen postavljen da te prevari.",
             "c": "„-dealz“ je dodata, pogrešno napisana reč zalepljena na brend."
           }
         },
@@ -803,8 +803,8 @@ export default {
           "prompt": "Izgledaju gotovo identično kao prava prodavnica. Pregledaj ih znak po znak.",
           "notes": {
             "a": "Prava magnumshop.com.",
-            "b": "„rn“ je prerušeno u „m“:  pročitaj polako: r-n-agnumshop.",
-            "c": "Jedno slovo je strani dvojnik:  ćirilično „и“ ubačeno umesto „n“."
+            "b": "„rn“ je prerušeno u „m“: pročitaj polako: r-n-agnumshop.",
+            "c": "Jedno slovo je strani dvojnik: ćirilično „и“ ubačeno umesto „n“."
           }
         }
       ],
@@ -812,7 +812,7 @@ export default {
         "suffix": "Dodatne reči zalepljene posle pravog imena (…com-official.shop, -dealz)",
         "httpNoS": "Adresa koristi http:// umesto šifrovanog https://",
         "weirdTld": "Čudni nastavci domena poput .sbs, .xyz ili .free umesto .com",
-        "homoglyph": "Slova zamenjena sličnim:  „rn“ umesto „m“, ili strani znakovi",
+        "homoglyph": "Slova zamenjena sličnim: „rn“ umesto „m“, ili strani znakovi",
         "typo": "Greške u pisanju imena brenda (npr. „dealz“)",
         "httpsGood": "Počinje sa https://",
         "lock": "Pregledač prikazuje malu ikonicu katanca"
@@ -884,7 +884,7 @@ export default {
       "investigation": {
         "intro": "Zavrti svaki točak dva puta. Da li je namešten ili nije?",
         "wheelProgress": "Točak {n} / {total}",
-        "solvedTitle": "Koridor završen:  tvrdnje proverene",
+        "solvedTitle": "Koridor završen: tvrdnje proverene",
         "spinAgain": "Zavrti ponovo",
         "solvedText": "Uočio/la si oba nameštena točka. Ponesi dokaze u sledeći okrug.",
         "evidence": "Nagrade nalik igri i osećaj da imaš sreće mogu da te nateraju da nastaviš da igraš i potrošiš više.",
@@ -904,7 +904,7 @@ export default {
           "title": "Osvojio/la si kupon za popust!",
           "coupon": "50% POPUSTA"
         },
-        "retryBait": "„Ovog puta nema nagrade! Nastavi da vrtiš:  sledeći pokušaj mogao bi da bude veliki dobitak!“",
+        "retryBait": "„Ovog puta nema nagrade! Nastavi da vrtiš: sledeći pokušaj mogao bi da bude veliki dobitak!“",
         "wheels": {
           "w1": {
             "name": "MEGA VRTEŠKA",
@@ -918,7 +918,7 @@ export default {
               "30% POPUSTA",
               "Nema nagrade"
             ],
-            "rules": "Vrti da otključaš kupon za popust:  do 50% popusta!",
+            "rules": "Vrti da otključaš kupon za popust: do 50% popusta!",
             "feedback": "Kako te ove rulet igre navuku? Prvo ti daju malu nagradu, taman toliko da osetiš da imaš sreće. Ali trik je u tome što na kraju potrošiš mnogo više nego što si dobio/la. Čini ti se da je danas tvoj srećan dan, pa nastaviš da igraš. Taj osećaj sreće je ono što te drži navučenim."
           },
           "w3": {
@@ -933,7 +933,7 @@ export default {
               "50€",
               "Nema nagrade"
             ],
-            "rules": "Osvoji telefon, laptop ili do 100 €:  zavrti točak!",
+            "rules": "Osvoji telefon, laptop ili do 100 €: zavrti točak!",
             "feedback": "Ovaj točak je namešten da se uvek zaustavi na „Nema nagrade“. Velike nagrade na njemu nikada ne možeš da osvojiš: tu su samo da bi {player:nastavio|nastavila} da okrećeš. Svaki put deluje kao da si za malo {player:promašio|promašila} i da ćeš sledeći put dobiti, pa pokušavaš ponovo. U međuvremenu gubiš vreme i pažnju, a prodavnica dobija više vremena da ti pokazuje svoje ponude."
           }
         },
@@ -944,7 +944,7 @@ export default {
     },
     "influencer": {
       "intro": "Neonska avenija bilborda i fidova influensera. Pogledaj iza sjaja: označi sponzorisane objave, a zatim proveri šta su proizvodi zapravo.",
-      "solvedTitle": "Avenija influensera završena:  Dobijen Izveštaj o podacima 📄",
+      "solvedTitle": "Avenija influensera završena: Dobijen Izveštaj o podacima 📄",
       "solvedText": "Označio/la si oglase i otkrio/la proizvode kojima se ne može verovati",
       "evidenceLabel": "Objave su skrivale plaćene promocije, a fotografija proizvoda je generisana pomoću veštačke inteligencije bez ikakvih stvarnih rezultata.",
       "stage1": {
@@ -963,7 +963,7 @@ export default {
         "correct": "✓ {label}",
         "wrong": "✗ pogrešna oznaka",
         "learnLabel": "Zašto je važno:",
-        "learn": "sponzorisani sadržaj mora biti jasno označen. #oglas, poklonjeni proizvod, partnerski link ili kod za popust ukazuju na oglašavanje:  čak i kada je predstavljeno kao lična preporuka.",
+        "learn": "sponzorisani sadržaj mora biti jasno označen. #oglas, poklonjeni proizvod, partnerski link ili kod za popust ukazuju na oglašavanje: čak i kada je predstavljeno kao lična preporuka.",
         "hint": "Dodirni ili prevuci oznaku, a zatim je postavi na odgovarajuću objavu.",
         "commentsTitle": "Komentari",
         "commentCount": "Komentari: {count}",
@@ -1053,11 +1053,11 @@ export default {
           "clues": [
             "Označio brend kao kreativnog partnera",
             "Zajedno osmislili ukus",
-            "„#ad“:  zajedno radili na lansiranju"
+            "„#ad“: zajedno radili na lansiranju"
           ]
         },
         {
-          "caption": "Influenserka se nalazi u svetlom, dobro osvetljenom studiju za izradu rukotvorina, nasmejana je i nosi detaljno izrađenu ručno rađenu patchwork jaknu. U ruci drži rukom pisanu poruku zanatlije. Tekst na slici: „OGRANIČENA SARADNJA:  SAMO 25 KOMADA“. Dugme ili stikер: „Kupi odmah“. Mala oznaka na vrhu: „Plaćena saradnja sa @The_Local_Stitch“. Vidljiv link u biografiji.",
+          "caption": "Influenserka se nalazi u svetlom, dobro osvetljenom studiju za izradu rukotvorina, nasmejana je i nosi detaljno izrađenu ručno rađenu patchwork jaknu. U ruci drži rukom pisanu poruku zanatlije. Tekst na slici: „OGRANIČENA SARADNJA: SAMO 25 KOMADA“. Dugme ili stikер: „Kupi odmah“. Mala oznaka na vrhu: „Plaćena saradnja sa @The_Local_Stitch“. Vidljiv link u biografiji.",
           "product": "Ručno rađena jakna",
           "username": "ClaraSees",
           "followers": "312K",
@@ -1148,7 +1148,7 @@ export default {
           "matches": [
             {
               "site": "aliluxe-deals.shop",
-              "title": "Keramička šolja za kafu:  veleprodaja 500 komada",
+              "title": "Keramička šolja za kafu: veleprodaja 500 komada",
               "price": "€0,84*"
             },
             {
@@ -1158,7 +1158,7 @@ export default {
             },
             {
               "site": "quickship-goods.net",
-              "title": "Rustična keramička šolja:  veleprodajna cena",
+              "title": "Rustična keramička šolja: veleprodajna cena",
               "price": "-"
             },
             {
@@ -1168,12 +1168,12 @@ export default {
             },
             {
               "site": "homestylewholesale.net",
-              "title": "Keramička šolja model CM-204:  100RSD/komad",
+              "title": "Keramička šolja model CM-204: 100RSD/komad",
               "price": "100 RSD*"
             },
             {
               "site": "mega-bazaar.shop",
-              "title": "Jeftine keramičke šolje:  100RSD/ komad",
+              "title": "Jeftine keramičke šolje: 100RSD/ komad",
               "price": "200 RSD"
             }
           ],
@@ -1295,9 +1295,9 @@ export default {
         "optionBTag": "Opcija B",
         "optionBBefore": "Vidi",
         "optionBBold": "mnogo više",
-        "optionBAfter": "oglasa i reklamnih pauza:  ali se prikuplja mnogo manje tvojih podataka.",
+        "optionBAfter": "oglasa i reklamnih pauza: ali se prikuplja mnogo manje tvojih podataka.",
         "wrongTitle": "Pogrešan odgovor.",
-        "wrongText": "Upravo si menjao/la privatnost za praktičnost. „Personalizovano“ je rezultat algoritma:  manje oglasa znači da se prikuplja i profilira više tvojih podataka kako bi ih odabrao.",
+        "wrongText": "Upravo si menjao/la privatnost za praktičnost. „Personalizovano“ je rezultat algoritma: manje oglasa znači da se prikuplja i profilira više tvojih podataka kako bi ih odabrao.",
         "goodTitle": "Tačan odgovor.",
         "goodText": "Više oglasa je dosadno, ali sačuvao/la si svoje podatke i delimično izbegao/la algoritam za personalizaciju. Praktičnost je mamac kojim te navodi da profilisanje doživiš kao uslugu.",
         "afterNote": "U svakom slučaju, mašina i dalje pokušava da napravi profil svakoga. Hajde da vidimo kako.",
@@ -1312,7 +1312,7 @@ export default {
         "slotPlaceholder": "prevuci pločicu",
         "stepBadge": "Jednačina {n} / {total}",
         "profileBadge": "Profil završen",
-        "dragHint": "Prevuci faktor koji nedostaje u jednačinu:  onaj koji odgovara baš ovoj osobi.",
+        "dragHint": "Prevuci faktor koji nedostaje u jednačinu: onaj koji odgovara baš ovoj osobi.",
         "wrongHint": "Taj faktor ne odgovara ovoj osobi. Pogledaj šta oglas zaista prodaje.",
         "navTerminal": "Terminal za oglase",
         "terminalTitle": "TERMINAL ZA IZLAZ OGLASA",
@@ -1323,7 +1323,7 @@ export default {
         "profileB2": "interesovanja",
         "profileP3": "(gejming, nova tehnologija i pretrage za NovaPad X) i",
         "profileB3": "nesigurnosti",
-        "profileP4": "(uklapanje, strah da će propustiti ponudu). Rezultat je bio jedan savršeno ciljani oglas:  upravo ona ponuda za NovaPad X „90% popusta“. Nije slučajno što je {friend} video taj oglas.",
+        "profileP4": "(uklapanje, strah da će propustiti ponudu). Rezultat je bio jedan savršeno ciljani oglas: upravo ona ponuda za NovaPad X „90% popusta“. Nije slučajno što je {friend} video taj oglas.",
         "logEvidence": "Zabeleži ovaj dokaz ✓",
         "finalLessonTitle": "Ono što si naučio/la",
         "finalLesson": "Personalizovani oglasi kombinuju tvoje aktivnosti, interesovanja i nesigurnosti kako bi te targetirali.",
@@ -1449,14 +1449,14 @@ export default {
     },
     "ads": {
       "intro": "Neonski servisni tunel oblepljen sa četiri svetleća reklamna postera. Deluju velikodušno. Nisu.",
-      "solvedTitle": "Koridor očišćen:  pročitali ste sitna slova",
+      "solvedTitle": "Koridor očišćen: pročitali ste sitna slova",
       "solvedText": "Stigao/la si do poslednje runde! Ovi oglasi su napravljeni da se osećaš veoma srećno kako bi nasela/nasedao na prevaru. Budi oprezan/na prema svakom sadržaju koji u tebi izaziva veoma snažnu emotivnu reakciju.",
       "pickup": "Uzimate baterijsku lampu Istine 🔦",
       "torchCharging": "🔦 Punjenje…",
       "torchOn": "🔦 Lampa UKLJUČENA",
       "torchOff": "🔦 Baterijska lampa Istine",
-      "hintCharging": "Jeftina lampa treperi i pali se:  primamljivi oglasi vole da vam uzmu trenutak vremena…",
-      "hintOn": "Pređite snopom svetlosti preko mračnog zida:  svaki poster će zasvetleti i otkriti istinu.",
+      "hintCharging": "Jeftina lampa treperi i pali se: primamljivi oglasi vole da vam uzmu trenutak vremena…",
+      "hintOn": "Pređite snopom svetlosti preko mračnog zida: svaki poster će zasvetleti i otkriti istinu.",
       "hintOff": "Uključite je, zatim pređite snopom preko postera da otkrijete šta zaista piše.",
       "glossyCta": "DODIRNI DA PREUZMEŠ →",
       "fineprint": "* primenjuju se odredbe i uslovi",
@@ -1472,12 +1472,12 @@ export default {
       "exitButton": "Otvori izlaz →",
       "errCode": "To nije kod. Osvetlite sva četiri postera i pročitajte slova skrivena u sitnim slovima.",
       "learnLabel": "Pročitajte sitna slova.",
-      "learn": "Oglasi koji viču „besplatno“, „osvojili ste“ ili „0 RSD danas“ obično kriju stvarnu cenu u sitnim slovima ispod:  uvek pročitajte na šta zapravo pristajete pre nego što kliknete.",
+      "learn": "Oglasi koji viču „besplatno“, „osvojili ste“ ili „0 RSD danas“ obično kriju stvarnu cenu u sitnim slovima ispod: uvek pročitajte na šta zapravo pristajete pre nego što kliknete.",
       "evidence": "Iza oglasa „besplatna proba“ krila se pretplata od 7,000RSD mesečno koja se automatski obnavlja.",
       "posters": [
         {
           "glossyTitle": "BESPLATNA PROBA OD 30 DANA!",
-          "glossyBody": "Isprobajte SunCloud Premium:  0 RSD danas!",
+          "glossyBody": "Isprobajte SunCloud Premium: 0 RSD danas!",
           "glossyBadge": "0RSD",
           "truth": "Nakon mesec dana, automatski se obnavlja po ceni od 59 € mesečno. Otkazivanje zahteva poziv telefonskoj liniji koja radi 2 sata nedeljno.",
           "truthTitle": "😩 Automatska obnova",
@@ -1493,7 +1493,7 @@ export default {
         },
         {
           "glossyTitle": "📈 BRZO SE OBOGATITE!",
-          "glossyBody": "Pretvorite 100 € u 10.000 € za samo kratku nedelju:  garantovano!",
+          "glossyBody": "Pretvorite 100 € u 10.000 € za samo kratku nedelju: garantovano!",
           "glossyBadge": "×100",
           "truth": "Svaki evro koji „uložite“ je izgubljen, a ogromni „prihodi“ na ekranu su lažni.",
           "truthTitle": "Čista prevara",
@@ -1501,7 +1501,7 @@ export default {
         },
         {
           "glossyTitle": "🛡️ VIRUS OTKRIVEN!",
-          "glossyBody": "Vaš uređaj je možda ugrožen:  preuzmite SecureNow BESPLATNO!",
+          "glossyBody": "Vaš uređaj je možda ugrožen: preuzmite SecureNow BESPLATNO!",
           "glossyBadge": "BESPLATNO",
           "truth": "Upozorenje je lažno, a „antivirus“ JE zlonamerni softver. Prava upozorenja nikad ne dolaze iz oglasa.",
           "truthTitle": "🚨 Niste imali virus... ali ga sada imate",
@@ -1510,8 +1510,8 @@ export default {
       ]
     },
     "persuasion": {
-      "intro": "Galerija sjajnih oglasa. Svaki se oslanja na jednu tehniku ubeđivanja:  prepoznaj je tako što ćeš uokviriti poster.",
-      "solvedTitle": "Laboratorija ubeđivanja završena:  lozinka FOOLED",
+      "intro": "Galerija sjajnih oglasa. Svaki se oslanja na jednu tehniku ubeđivanja: prepoznaj je tako što ćeš uokviriti poster.",
+      "solvedTitle": "Laboratorija ubeđivanja završena: lozinka FOOLED",
       "solvedText": "Kada umeš da prepoznaš tehniku (FOMO, osećaj hitnosti, pozivanje na poznatu ličnost) ona više ne deluje na tebe. To je cela zaštita.",
       "learn": {
         "lead": "Prepoznaj tehniku.",
@@ -1520,9 +1520,9 @@ export default {
       "trayLabel": "OKVIRI TEHNIKA",
       "hints": {
         "start": "Prevuci i pusti svaki okvir tehnike na odgovarajući poster.",
-        "allDone": "Svih šest je uokvireno:  slova čine lozinku. Klikni na računar da je uneseš.",
-        "correct": "Tačno:  pojavilo se jedno slovo. Nastavi da uokviruješ ostale.",
-        "wrong": "Ta tehnika ne odgovara ovom oglasu. Okvir je vraćen:  pokušaj ponovo.",
+        "allDone": "Svih šest je uokvireno: slova čine lozinku. Klikni na računar da je uneseš.",
+        "correct": "Tačno: pojavilo se jedno slovo. Nastavi da uokviruješ ostale.",
+        "wrong": "Ta tehnika ne odgovara ovom oglasu. Okvir je vraćen: pokušaj ponovo.",
         "wrongSpecific": "Nije baš tako. Pogledaj ponovo: {clue}"
       },
       "dragHint": "Prevuci na odgovarajući poster",
@@ -1539,7 +1539,7 @@ export default {
           "letter": "B"
         },
         {
-          "headline": "Izgubi 10 kg za samo 3 DANA:  čudesan rezultat zagarantovan!",
+          "headline": "Izgubi 10 kg za samo 3 DANA: čudesan rezultat zagarantovan!",
           "sub": "Rezultati nisu tipični.",
           "letter": "M"
         },
@@ -1554,7 +1554,7 @@ export default {
           "letter": "N"
         },
         {
-          "headline": "PONUDA ISTIČE ZA 04:59:  KUPI ODMAH pre nego što nestane!",
+          "headline": "PONUDA ISTIČE ZA 04:59: KUPI ODMAH pre nego što nestane!",
           "sub": "Tik-tak…",
           "letter": "A"
         }
@@ -1569,7 +1569,7 @@ export default {
       },
       "passwordLearn": {
         "lead": "Prepoznata i onesposobljena.",
-        "body": "Šest postera, šest tehnika. Slova koja su skrivali, pročitana sleva nadesno, čine lozinku za izlaz:  dokaz da si prozreo/la svaku od njih."
+        "body": "Šest postera, šest tehnika. Slova koja su skrivali, pročitana sleva nadesno, čine lozinku za izlaz: dokaz da si prozreo/la svaku od njih."
       },
       "openComputer": "Koristi računar →",
       "closeComputer": "Zatvori ekran",
@@ -1581,7 +1581,7 @@ export default {
       "unlock": "Otključaj →",
       "pwError": "Pristup odbijen. Pročitaj svetleća slova redom kojim se pojavljuju na posterima i pokušaj ponovo.",
       "hiddenLetter": "skriveno slovo {letter}",
-      "evidence": "Svaki poster koristio je prepoznatljivu tehniku ubeđivanja:  FOMO, društveni dokaz, osećaj hitnosti i još mnogo toga.",
+      "evidence": "Svaki poster koristio je prepoznatljivu tehniku ubeđivanja: FOMO, društveni dokaz, osećaj hitnosti i još mnogo toga.",
       "info": {
         "button": "Tehnike ubeđivanja",
         "title": "Tehnike ubeđivanja",

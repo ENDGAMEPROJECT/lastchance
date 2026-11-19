@@ -79,7 +79,7 @@ export default {
         "text": "Toma la decisión final y utiliza tus pruebas antes de que se acabe el tiempo."
       }
     ],
-    "start": "▶ Entra:  pon en marcha el reloj",
+    "start": "▶ Entra: pon en marcha el reloj",
     "pretest": "Prueba previa: primero, cuéntale a {friend} qué opinas sobre esta oferta. Luego, entra en Internet."
   },
   "map": {
@@ -884,7 +884,7 @@ export default {
       "investigation": {
         "intro": "Gira cada ruleta dos veces. ¿Está trucada o no?",
         "wheelProgress": "Ruleta {n} / {total}",
-        "solvedTitle": "Pasillo superado:  afirmaciones comprobadas",
+        "solvedTitle": "Pasillo superado: afirmaciones comprobadas",
         "spinAgain": "Girar otra vez",
         "solvedText": "Detectaste las dos ruletas trucadas. Lleva tus pruebas al siguiente distrito.",
         "evidence": "Las recompensas tipo juego y la sensación de tener suerte pueden hacer que sigas jugando y gastes más.",
@@ -991,7 +991,7 @@ export default {
       },
       "posts": [
         {
-          "caption": "Me explotaron la cabeza los nuevos @nachos pimientos de padrón. Eso sí, a ver si inventan algún aparatito para disfrazar el croc croc.  #nachossinruidoya  #spiceandcroc ",
+          "caption": "Me explotaron la cabeza los nuevos @nachos pimientos de padrón. Eso sí, a ver si inventan algún aparatito para disfrazar el croc croc. #nachossinruidoya #spiceandcroc ",
           "product": "Snack crujiente",
           "username": "Rmelilla",
           "followers": "482K",
@@ -1277,7 +1277,7 @@ export default {
     "algorithm": {
       "intro": "Un ordenador gigante usa cantidades enormes de datos personales para decidir qué anuncios ve cada persona. Entra en la sala para averiguar cómo crea anuncios personalizados",
       "solvedTitle": "Sala de Control del Algoritmo descifrada · Prueba registrada ",
-      "solvedText": "Ya  visto cómo el algoritmo convertía la edad, los intereses y las posibles inseguridades de {friend} en un único anuncio. Eso no es casualidad: es el resultado de su perfil publicitario.",
+      "solvedText": "Ya visto cómo el algoritmo convertía la edad, los intereses y las posibles inseguridades de {friend} en un único anuncio. Eso no es casualidad: es el resultado de su perfil publicitario.",
       "evidence": "El anuncio fue elegido a dedo por un algoritmo usando la edad, los intereses y las inseguridades de {friend}.",
       "unlock": {
         "badge": "ACCESO · Sala de Control del Algoritmo",
@@ -1449,7 +1449,7 @@ export default {
     },
     "ads": {
       "intro": "Un pasillo lleno de anuncios luminosos y ofertas tentadoras. Pero… ¿son tan buenas como parecen?",
-      "solvedTitle": "Pasillo superado:  has leído la letra pequeña",
+      "solvedTitle": "Pasillo superado: has leído la letra pequeña",
       "solvedText": "Este tipo de anuncios capta tu atención inmediatamente con cosas gratis, promesas de enriquecerse, peligro inminente... Sospecha de cualquier contenido que te cree una reacción emocional demasiado intensa.",
       "pickup": "Recoges la Linterna de la Verdad 🔦",
       "torchCharging": "🔦 Cargando…",
@@ -1511,7 +1511,7 @@ export default {
     },
     "persuasion": {
       "intro": "Una galería de anuncios llamativos. Cada uno se apoya en un único truco de persuasión: nómbralo enmarcando el cartel.",
-      "solvedTitle": "Laboratorio de Persuasión superado:  contraseña TRAMPA",
+      "solvedTitle": "Laboratorio de Persuasión superado: contraseña TRAMPA",
       "solvedText": "En cuanto sabes nombrar el truco (FOMO, urgencia, una celebridad prestada) deja de funcionar contigo. Esa es toda la defensa.",
       "learn": {
         "lead": "Detecta el truco.",

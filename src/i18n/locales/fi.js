@@ -62,9 +62,9 @@ export default {
     "tagline": "// mainokset · huijaukset · valesivustot → purettuna",
     "situationTitle": "Tilanne",
     "hook": "Ystäväsi {friend} löysi juuri viraalin tarjouksen: {product} 90 % alennuksella, \"vain tänään\". Se näyttää uskomattomalta… juuri siksi epäilet sitä huijaukseksi.",
-    "context": "Näyttääksesi {friend_allative}, miten huijaukset ja mainonta oikeasti toimivat, astutte yhdessä sisään internetin fyysiseen versioon:  neonkaupunkiin, jossa kaupat, sosiaaliset alustat ja mainokset ovat kaupunginosia, joissa voi kävellä.",
+    "context": "Näyttääksesi {friend_allative}, miten huijaukset ja mainonta oikeasti toimivat, astutte yhdessä sisään internetin fyysiseen versioon: neonkaupunkiin, jossa kaupat, sosiaaliset alustat ja mainokset ovat kaupunginosia, joissa voi kävellä.",
     "clock": "⏱ {minutes}:00 kellossa",
-    "mission": "Sinulla on {minutes} minuuttia:  sen verran ennen kuin tarjous päättyy:  matkustaa Fyysisen internetin halki, kerätä todisteita mainosten ja huijausten toiminnasta ja vakuuttaa {friend_nominative}, ettei kannata ostaa. Jos ajastin nollautuu, {friend} ostaa sen.",
+    "mission": "Sinulla on {minutes} minuuttia: sen verran ennen kuin tarjous päättyy: matkustaa Fyysisen internetin halki, kerätä todisteita mainosten ja huijausten toiminnasta ja vakuuttaa {friend_nominative}, ettei kannata ostaa. Jos ajastin nollautuu, {friend} ostaa sen.",
     "steps": [
       {
         "title": "1 · Tutki",
@@ -79,7 +79,7 @@ export default {
         "text": "Pääse lopulliseen päätökseen ja käytä todisteesi ennen kuin aika loppuu."
       }
     ],
-    "start": "▶ Astu sisään:  käynnistä kello",
+    "start": "▶ Astu sisään: käynnistä kello",
     "pretest": "Alkutesti: kerro ensin {friend_allative}, mitä jo ajattelet tästä tarjouksesta. Astu sitten internetiin."
   },
   "map": {
@@ -88,7 +88,7 @@ export default {
     "titleAccent": "kaupunginosa",
     "subtitle": "Kulje verkon läpi, kerää todisteita ja saavuta lopullinen päätös ennen kuin tarjous päättyy.",
     "start": "▶ ALOITA · Alkutesti {friend_genitive} kanssa",
-    "lockedTip": "Lukittu:  suorita edellinen kaupunginosa"
+    "lockedTip": "Lukittu: suorita edellinen kaupunginosa"
   },
   "roomframe": {
     "clearedDefaultTitle": "Kaupunginosa selvitetty",
@@ -118,7 +118,7 @@ export default {
       "heading": "Tarjous ehti ensin",
       "body": "Ennen kuin ehdit kerätä todisteet loppuun, valheellinen \"vain tänään\" -laskuri teki tehtävänsä ja {friend} osti {product}. Juuri se kiire oli koko kikka.",
       "lessonLabel": "Opetus:",
-      "lesson": "keinotekoinen kiire (\"vain 3 jäljellä!\", \"tarjous päättyy 5:00\") on suunniteltu estämään ajattelu. Hidasta:  oikea tarjous on huomennakin olemassa.",
+      "lesson": "keinotekoinen kiire (\"vain 3 jäljellä!\", \"tarjous päättyy 5:00\") on suunniteltu estämään ajattelu. Hidasta: oikea tarjous on huomennakin olemassa.",
       "again": "↻ Yritä uudelleen",
       "reasons": {
         "timeUp": {
@@ -130,7 +130,7 @@ export default {
           "body": "Sinulta loppuivat keinot vakuuttaa {friend_nominative}. Yhä vakuuttumatta {friend} päätti ottaa riskin ja osti {product}."
         },
         "notEnoughEvidenceConvincing": {
-          "heading": "Vakuuttavaa:  mutta todisteita liian vähän",
+          "heading": "Vakuuttavaa: mutta todisteita liian vähän",
           "body": "Olet varmaan oikeassa, mutta en ole nähnyt tarpeeksi todisteita \"fyysisessä internetissä\". Aion ostaa tabletin.",
           "Mia": {
             "body": "Vakuutit Mian, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
@@ -182,7 +182,7 @@ export default {
     "roundLabel": "Kierros {n} · {title}",
     "respondPrompt": "Vastaa {friend_allative}",
     "you": "Sinä",
-    "diagnosticNote": "Tässä ei ole vääriä vastauksia:  kerro vain, mitä ajattelet.",
+    "diagnosticNote": "Tässä ei ole vääriä vastauksia: kerro vain, mitä ajattelet.",
     "rounds": [
       {
         "title": "Ajastin",
@@ -208,7 +208,7 @@ export default {
             "correct": false
           }
         ],
-        "why": "Juuri niin:  tikittävä kello on keinotekoista kiirettä, rakennettu saamaan sinut toimimaan ennen kuin ehdit ajatella.",
+        "why": "Juuri niin: tikittävä kello on keinotekoista kiirettä, rakennettu saamaan sinut toimimaan ennen kuin ehdit ajatella.",
         "nudge": "Mieti, mitä tuo tikittävä kello oikeasti tekee sinulle.",
         "positiveFeedback": "Siis tarkoitat, että kiire saa toimimaan ennen kuin ehtii ajatella...",
         "negativeFeedback": "En tiedä, tuo ei kuulosta oikealta.",
@@ -238,8 +238,8 @@ export default {
             "correct": true
           }
         ],
-        "why": "Aivan:  kyse ei ole mikrofonista eikä taikuudesta. Hakuhistoriastasi tehtiin profiili, joka myytiin mainosverkostoille.",
-        "nudge": "Kyse ei ole mikrofonista eikä viruksesta:  mieti, mitä alusta jo tietää sinusta.",
+        "why": "Aivan: kyse ei ole mikrofonista eikä taikuudesta. Hakuhistoriastasi tehtiin profiili, joka myytiin mainosverkostoille.",
+        "nudge": "Kyse ei ole mikrofonista eikä viruksesta: mieti, mitä alusta jo tietää sinusta.",
         "positiveFeedback": "Okei, kyse ei ole mikrofonista eikä taikuudesta... Hakuhistoriani analysoitiin ja myytiin mainosverkostoille.",
         "negativeFeedback": "Tuossa ei kyllä ole minulle mitään järkeä.",
         "followUpQuestion": "Ja sen lisäksi?"
@@ -269,7 +269,7 @@ export default {
           }
         ],
         "why": "Kyllä, lue URL kirjain kirjaimelta. 'bargalns' l-kirjaimella on jäljitelmäosoite, ei oikea kauppa.",
-        "nudge": "Varsinainen vihje on itse osoiterivillä:  lue se merkki merkiltä.",
+        "nudge": "Varsinainen vihje on itse osoiterivillä: lue se merkki merkiltä.",
         "positiveFeedback": "Ai niin, nytpä muistan! Epäilyttävä URL voi olla merkki siitä, että sivusto on väärennös ja vain esittää oikeaa kauppaa.",
         "negativeFeedback": "Joo joo, ja tuohon minun pitäisi muka uskoa?"
       }
@@ -278,12 +278,12 @@ export default {
       "eyebrow": "Tarjous",
       "debugTag": "Alkutesti",
       "title": "Viesti {friend_ablative}",
-      "opening": "Katso tätä! Seuraamani vaikuttaja julkaisi juuri pikatarjouksen:  €600 maksava NovaPad X nyt vain €49! Laskurissa on enää 40 minuuttia. Syötän korttitietojani juuri nyt.",
+      "opening": "Katso tätä! Seuraamani vaikuttaja julkaisi juuri pikatarjouksen: €600 maksava NovaPad X nyt vain €49! Laskurissa on enää 40 minuuttia. Syötän korttitietojani juuri nyt.",
       "responses": [
-        "Oli syy mikä tahansa, en halua jäädä paitsi ennen kuin kello nollautuu! Ja hän on valtava vaikuttaja:  ei hän mitä tahansa julkaisisi. Outoa on se, mistä tämä mainos tiesi, että halusin tabletin. Se ilmestyi suoraan syötteeni kärkeen.",
+        "Oli syy mikä tahansa, en halua jäädä paitsi ennen kuin kello nollautuu! Ja hän on valtava vaikuttaja: ei hän mitä tahansa julkaisisi. Outoa on se, mistä tämä mainos tiesi, että halusin tabletin. Se ilmestyi suoraan syötteeni kärkeen.",
         "Kuule, algoritmeista ja tileistä on miljoona teoriaa, mutta katson juuri nyt itse kaupan sivua. Siinä on virallinen brändilogo, loistavat arvostelut ja turvallinen kassa."
       ],
-      "endingFriend": "Kuule, voit pilkkoa sivua miten haluat, mutta minusta kaikki näyttää ihan hyvältä! Sinä vain vainoharhailet. Laskuri käy yhä:  sinulla on siihen asti kun se nollautuu, neljäkymmentä minuuttia, aikaa todistaa, että tämä on oikeasti huijaus. Muuten painan ostaa.",
+      "endingFriend": "Kuule, voit pilkkoa sivua miten haluat, mutta minusta kaikki näyttää ihan hyvältä! Sinä vain vainoharhailet. Laskuri käy yhä: sinulla on siihen asti kun se nollautuu, neljäkymmentä minuuttia, aikaa todistaa, että tämä on oikeasti huijaus. Muuten painan ostaa.",
       "endingYou": "Sovittu. Mennään puhelimesi kautta Fyysiseen internetiin katsomaan, mitä tuo tarjous piilottaa.",
       "begin": "▶ Katso ruudun taakse"
     },
@@ -307,11 +307,11 @@ export default {
         ]
       },
       "responses": [
-        "Kuulen kyllä, mutta paine tuntuu todella aidolta kun kello tikittää edessäni. Eikä kyse ole vain ajastimesta:  mietin koko ajan, että se tuli yhdeltä lempitekijöistäni. Silti on yhä arvoitus, miten se ylipäätään päätyi eteeni.",
+        "Kuulen kyllä, mutta paine tuntuu todella aidolta kun kello tikittää edessäni. Eikä kyse ole vain ajastimesta: mietin koko ajan, että se tuli yhdeltä lempitekijöistäni. Silti on yhä arvoitus, miten se ylipäätään päätyi eteeni.",
         "Huh, on aika villiä miten kaikki hoidetaan kulissien takana näissä sovelluksissa. Mutta loppujen lopuksi tuijotan yhä tätä maksusivua ja yritän päättää, onko turvallista syöttää tietoni."
       ],
       "convinced": "Sait minut vakuuttuneeksi. Nyt ymmärrän varoitusmerkit ja sen, miten tämä tarjous yritti vaikuttaa minuun. En osta tablettia.",
-      "endingFriend": "Huh, annoit paljon sulateltavaa, mutta minun on valittava juuri nyt:  ajastin on nollautumassa. Kaiken näkemämme perusteella, sano suoraan: suljenko tämän välilehden ja suojaan tietoni, vai otanko riskin ja ostan?",
+      "endingFriend": "Huh, annoit paljon sulateltavaa, mutta minun on valittava juuri nyt: ajastin on nollautumassa. Kaiken näkemämme perusteella, sano suoraan: suljenko tämän välilehden ja suojaan tietoni, vai otanko riskin ja ostan?",
       "choiceClose": "Sulje välilehti. Se on huijaus.",
       "choiceBuy": "Paina ostaa. Otetaan riski.",
       "retryFriend": "Et ole antanut minulle tarpeeksi syitä jättää sitä ostamatta... Aikaa on vielä ennen tarjouksen päättymistä: selitä ne kohdat, joista et ole vielä vakuuttanut minua",
@@ -319,20 +319,20 @@ export default {
       "retryGiveUp": "Anna {friend_genitive} ostaa tabletti"
     },
     "mastery": {
-      "banner": "Vielä kerran:  en ole vieläkään vakuuttunut. Anna kustakin vahvin perustelu."
+      "banner": "Vielä kerran: en ole vieläkään vakuuttunut. Anna kustakin vahvin perustelu."
     }
   },
   "enter": {
     "eyebrow": "Olemme sisällä",
     "titleLead": "Tervetuloa",
     "titleAccent": "FYYSISEEN INTERNETIIN",
-    "friendLine": "Selvä:  sinulla on {minutes} minuuttia aikaa vakuuttaa minut, että tämä tarjous on huijaus. Jos kello nollautuu, ostan {product}.",
+    "friendLine": "Selvä: sinulla on {minutes} minuuttia aikaa vakuuttaa minut, että tämä tarjous on huijaus. Jos kello nollautuu, ostan {product}.",
     "playerLine": "Kyllä, sovittu. Selvitetään, miksi tämä tarjous on huijaus ja miten se on rakennettu.",
     "toolsTitle": "Ensin varusteet",
     "toolsIntro": "Kaksi asiaa kulkee mukanasi kaikkialla täällä. Löydät ne näytön yläreunan palkista.",
     "clock": "⏱ {minutes}:00 alkaa sillä hetkellä kun lähdemme kävelemään",
     "mission": "Meidän on tutkittava kaupunginosat, kerättävä todisteet huijauksen toiminnasta ja ehdittävä takaisin kouluun ennen kuin tarjous päättyy!",
-    "mapText": "Reittisi Fyysisen internetin halki. Matkaa kaupunginosasta toiseen:  selvitä yksi avataksesi seuraavan, aina lopulliseen päätökseen asti.",
+    "mapText": "Reittisi Fyysisen internetin halki. Matkaa kaupunginosasta toiseen: selvitä yksi avataksesi seuraavan, aina lopulliseen päätökseen asti.",
     "bagText": "Työkalusi ja keräämäsi todisteet. Avaa se käyttääksesi esineitä pulmissa ja kerrataksesi todisteet, jotka näytät {friend_allative}.",
     "hintsText": "Jumissa pulman kanssa? Vinkeistä löydät apua siihen kaupunginosaan, jossa olet.",
     "finalLine": "Valmiina? Ajastin käynnistyy heti kun avaat kartan."
@@ -795,7 +795,7 @@ export default {
           "notes": {
             "a": "https:// → salattu yhteys ja oikea kauppa.",
             "b": "http:// ilman “s”-kirjainta → yhteyttä EI ole salattu.",
-            "c": "http:// JA outo “.free”-pääte  → pysy kaukana."
+            "c": "http:// JA outo “.free”-pääte → pysy kaukana."
           }
         },
         {
@@ -1449,14 +1449,14 @@ export default {
     },
     "ads": {
       "intro": "Neonvalaistu huoltotunneli, jonka seinillä on neljä hehkuvaa mainosjulistetta. Ne näyttävät anteliailta. Ne eivät ole.",
-      "solvedTitle": "Käytävä selvitetty:  luit pienen präntin",
+      "solvedTitle": "Käytävä selvitetty: luit pienen präntin",
       "solvedText": "Pääsit viimeiselle kierrokselle! Nämä mainokset oli suunniteltu saamaan sinut tuntemaan olosi hyvin onnelliseksi ja onnekkaaksi, jotta lankeaisit huijaukseen. Suhtaudu varauksella kaikkeen sisältöön, joka herättää sinussa hyvin voimakkaan tunnereaktion.",
       "pickup": "Poimit Totuuslampun 🔦",
       "torchCharging": "🔦 Latautuu…",
       "torchOn": "🔦 Lamppu PÄÄLLÄ",
       "torchOff": "🔦 Totuuslamppu",
-      "hintCharging": "Halpa lamppu herää välkkyen:  syöttimainokset rakastavat hetkesi haaskaamista…",
-      "hintOn": "Pyyhkäise valokeilalla pimeää seinää:  jokainen juliste syttyy ja paljastaa totuuden.",
+      "hintCharging": "Halpa lamppu herää välkkyen: syöttimainokset rakastavat hetkesi haaskaamista…",
+      "hintOn": "Pyyhkäise valokeilalla pimeää seinää: jokainen juliste syttyy ja paljastaa totuuden.",
       "hintOff": "Sytytä se ja pyyhkäise sitten valokeilalla julisteita paljastaaksesi, mitä ne oikeasti sanovat.",
       "glossyCta": "NAPAUTA JA LUNASTA →",
       "fineprint": "* ehdot voimassa",
@@ -1472,12 +1472,12 @@ export default {
       "exitButton": "Avaa uloskäynti →",
       "errCode": "Tuo ei ole koodi. Valaise kaikki neljä julistetta ja lue pieneen tekstiin piilotetut kirjaimet.",
       "learnLabel": "Lue pienellä kirjoitettu teksti.",
-      "learn": "Mainokset, jotka huutavat ”ilmainen”, ”voitit” tai ”0 € tänään”, piilottavat todellisen hinnan yleensä pienellä tekstillä alareunaan:  lue aina, mihin olet oikeasti sitoutumassa ennen kuin napautat.",
+      "learn": "Mainokset, jotka huutavat ”ilmainen”, ”voitit” tai ”0 € tänään”, piilottavat todellisen hinnan yleensä pienellä tekstillä alareunaan: lue aina, mihin olet oikeasti sitoutumassa ennen kuin napautat.",
       "evidence": "”Ilmaisen kokeilun” mainoksen takana oli piilotettu 59 €/kk automaattisesti uusiutuva tilaus.",
       "posters": [
         {
           "glossyTitle": "ILMAINEN 30 PÄIVÄN KOKEILU!",
-          "glossyBody": "Kokeile SunCloud Premiumia:  0 € tänään!",
+          "glossyBody": "Kokeile SunCloud Premiumia: 0 € tänään!",
           "glossyBadge": "€0",
           "truth": "Kuukauden jälkeen se uusiutuu automaattisesti hintaan 59 €/kk. Peruminen vaatii soittamisen puhelinnumeroon, joka on auki 2 tuntia viikossa.",
           "truthTitle": "😩 Automaattinen uusiutuminen",
@@ -1493,7 +1493,7 @@ export default {
         },
         {
           "glossyTitle": "📈 RIKASTU NOPEASTI!",
-          "glossyBody": "Muuta 100 € summaksi 10 000 € viikossa:  takuulla!",
+          "glossyBody": "Muuta 100 € summaksi 10 000 € viikossa: takuulla!",
           "glossyBadge": "×100",
           "truth": "Jokainen ”sijoittamasi” euro katoaa, ja ruudulla näkyvät huikeat ”tuotot” ovat valheellisia.",
           "truthTitle": "Täysi huijaus",
@@ -1501,7 +1501,7 @@ export default {
         },
         {
           "glossyTitle": "🛡️ VIRUS HAVAITTU!",
-          "glossyBody": "Laitteesi voi olla vaarassa:  lataa SecureNow ILMAISEKSI!",
+          "glossyBody": "Laitteesi voi olla vaarassa: lataa SecureNow ILMAISEKSI!",
           "glossyBadge": "ILMAINEN",
           "truth": "Varoitus on väärennös ja ”virustorjunta” ON haittaohjelma. Aidot hälytykset eivät koskaan tule mainoksesta.",
           "truthTitle": "🚨 Sinulla ei ollut virusta... nyt on",
@@ -1510,9 +1510,9 @@ export default {
       ]
     },
     "persuasion": {
-      "intro": "Galleria kiiltäviä mainoksia. Jokainen nojaa yhteen suostuttelun keinoon:  nimeä se kehystämällä juliste.",
-      "solvedTitle": "Suostuttelulaboratorio selvitetty:  salasana FOOLED",
-      "solvedText": "Heti kun osaat nimetä kikan:  FOMO, kiire, lainattu julkkis:  se lakkaa tehoamasta sinuun. Siinä on koko puolustus.",
+      "intro": "Galleria kiiltäviä mainoksia. Jokainen nojaa yhteen suostuttelun keinoon: nimeä se kehystämällä juliste.",
+      "solvedTitle": "Suostuttelulaboratorio selvitetty: salasana FOOLED",
+      "solvedText": "Heti kun osaat nimetä kikan: FOMO, kiire, lainattu julkkis: se lakkaa tehoamasta sinuun. Siinä on koko puolustus.",
       "learn": {
         "lead": "Tunnista kikka.",
         "body": "Mainokset suostuttelevat nimetyillä keinoilla: FOMO (pelko jäädä paitsi), sosiaalinen todiste (”kaikki ostavat sen”), liioittelu, vaikuttajan suositus, tunteisiin vetoaminen ja kiire. Oikeat kampanjat pinoavat usein useita näistä päällekkäin ohittaakseen harkintasi."
@@ -1520,9 +1520,9 @@ export default {
       "trayLabel": "KEINOKEHYKSET",
       "hints": {
         "start": "Vedä ja pudota jokainen keinokehys sitä vastaavan julisteen päälle.",
-        "allDone": "Kaikki kuusi kehystetty:  kirjaimet muodostavat salasanan. Klikkaa tietokonetta kirjoittaaksesi sen.",
+        "allDone": "Kaikki kuusi kehystetty: kirjaimet muodostavat salasanan. Klikkaa tietokonetta kirjoittaaksesi sen.",
         "correct": "Oikein!",
-        "wrong": "Tuo keino ei sovi tähän mainokseen. Kehys palautettu:  kokeile toista.",
+        "wrong": "Tuo keino ei sovi tähän mainokseen. Kehys palautettu: kokeile toista.",
         "wrongSpecific": "Ei aivan. Katso uudelleen: {clue}"
       },
       "dragHint": "Vedä sen julisteen päälle",
@@ -1539,12 +1539,12 @@ export default {
           "letter": "N"
         },
         {
-          "headline": "Pudota 10 kg vain 3 PÄIVÄSSÄ:  taattu ihme!",
+          "headline": "Pudota 10 kg vain 3 PÄIVÄSSÄ: taattu ihme!",
           "sub": "Tulet yllättymään.",
           "letter": "S"
         },
         {
-          "headline": "Nähty @StarCelebin sivulla:  hän RAKASTAA sitä!",
+          "headline": "Nähty @StarCelebin sivulla: hän RAKASTAA sitä!",
           "sub": "#mainos",
           "letter": "O"
         },
@@ -1554,7 +1554,7 @@ export default {
           "letter": "J"
         },
         {
-          "headline": "TARJOUS PÄÄTTYY 04:59:  osta NYT ennen kuin se loppuu!",
+          "headline": "TARJOUS PÄÄTTYY 04:59: osta NYT ennen kuin se loppuu!",
           "sub": "Tik, tak…",
           "letter": "A"
         }
@@ -1569,7 +1569,7 @@ export default {
       },
       "passwordLearn": {
         "lead": "Nimetty ja riisuttu aseista.",
-        "body": "Kuusi julistetta, kuusi kikkaa. Niiden piilottamat kirjaimet vasemmalta oikealle luettuna ovat uloskäynnin salasana:  todiste siitä, että näit jokaisen läpi."
+        "body": "Kuusi julistetta, kuusi kikkaa. Niiden piilottamat kirjaimet vasemmalta oikealle luettuna ovat uloskäynnin salasana: todiste siitä, että näit jokaisen läpi."
       },
       "openComputer": "Käytä tietokonetta →",
       "closeComputer": "Sulje näyttö",
@@ -1581,7 +1581,7 @@ export default {
       "unlock": "Avaa →",
       "pwError": "Pääsy evätty. Lue hehkuvat kirjaimet julisteiden järjestyksessä ja yritä uudelleen.",
       "hiddenLetter": "piilotettu kirjain {letter}",
-      "evidence": "Jokainen juliste käytti nimettyä suostuttelukeinoa:  FOMO, sosiaalinen todiste, kiire ja muita.",
+      "evidence": "Jokainen juliste käytti nimettyä suostuttelukeinoa: FOMO, sosiaalinen todiste, kiire ja muita.",
       "info": {
         "button": "Suostuttelutekniikat",
         "title": "Suostuttelutekniikat",
