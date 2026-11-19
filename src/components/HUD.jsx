@@ -6,6 +6,7 @@ import { bgUrl } from '../game/assets.js'
 import { DEBUG, settings } from '../game/settings.js'
 import { isMuted, setMuted, playSound, preloadSound } from '../game/sound.js'
 import { getHintContext, getHintPlan, getRoomIntroKey } from '../game/hints.js'
+import { ROOM_PROGRESS_EVENT } from '../game/roomProgress.js'
 import { track, OBJ, EXT } from '../game/xapi.js'
 import { useStage } from './Stage.jsx'
 import { useRoomState } from '../game/useRoomState.js'
@@ -58,31 +59,65 @@ export default function HUD() {
   useEffect(() => {
     setBagReminder(false)
     if (!needsBag) return
+    const { clicks: minClicks, afterClicksMs, idleMs } = settings.bagReminder
     let clicks = 0
-    let elapsed = false
-    let consulted = false
-    const remind = () => {
-      if (!consulted && elapsed && clicks >= settings.bagReminder.clicks) setBagReminder(true)
+    let used = false
+    let idleTimer
+    let clickTimer
+    const show = () => { if (!used) setBagReminder(true) }
+    /* Opening the bag RE-ARMS the reminder instead of silencing it for good:
+       looking inside only proves the player looked, not that it helped, so if
+       they carry on clicking around with nothing to show for it the glow comes
+       back. Puzzle progress re-arms it too, so anyone actually getting on with
+       the room is never nagged. Only USING the needed tool stops it for good —
+       that is the thing the reminder exists to prompt. */
+    const restart = () => {
+      window.clearTimeout(idleTimer)
+      window.clearTimeout(clickTimer)
+      clicks = 0
+      clickTimer = undefined
+      setBagReminder(false)
+      idleTimer = window.setTimeout(show, idleMs)
+    }
+    /* Two ways the prompt stops being useful: the player uses the tool, or the
+       room moves past the point the tool was for. The second matters because
+       holding a tool is not the same as still needing it — the Data Report is
+       only wanted AT the keypad, and anyone who gets past it without opening
+       the bag (a replayer who remembers the code, or a debug skip) would
+       otherwise be nagged for the rest of the room. Rooms announce that with
+       `lastchance:tool-done`. */
+    const onDone = (event) => {
+      if (event.detail?.id !== neededItem) return
+      used = true
+      window.clearTimeout(idleTimer)
+      window.clearTimeout(clickTimer)
+      setBagReminder(false)
     }
     const onClick = (event) => {
       if (event.target.closest('[data-tour="bag"]')) {
         if (unfoldTap(event.target)) return
-        consulted = true
-        setBagReminder(false)
+        restart()
       } else if (event.target.closest('.room-body') && !event.target.closest('.room-cleared-overlay')) {
         clicks += 1
-        remind()
+        // Armed on the Nth click only: further clicks must not keep pushing it back.
+        if (clicks >= minClicks && !clickTimer) clickTimer = window.setTimeout(show, afterClicksMs)
       }
     }
-    const timer = window.setTimeout(() => { elapsed = true; remind() }, settings.bagReminder.delayMs)
+    restart()
     document.addEventListener('click', onClick, true)
+    window.addEventListener(ROOM_PROGRESS_EVENT, restart)
+    window.addEventListener('lastchance:use-item', onDone)
+    window.addEventListener('lastchance:tool-done', onDone)
     return () => {
-      window.clearTimeout(timer)
+      window.clearTimeout(idleTimer)
+      window.clearTimeout(clickTimer)
       document.removeEventListener('click', onClick, true)
+      window.removeEventListener(ROOM_PROGRESS_EVENT, restart)
+      window.removeEventListener('lastchance:use-item', onDone)
+      window.removeEventListener('lastchance:tool-done', onDone)
     }
-  }, [needsBag, activeNodeId])
+  }, [needsBag, activeNodeId, neededItem])
   const [reportOpen, setReportOpen] = useState(false)
-  const [deniedItem, setDeniedItem] = useState(null)
   const [hintsOpen, setHintsOpen] = useState(false)
   // "Persuasion techniques" info, beside Hints. Only the Persuasion Lab has
   // one for now (rooms.persuasion.info); another room can be added to INFO_ROOMS.
@@ -219,18 +254,19 @@ export default function HUD() {
   }, [bagReminder])
 
   const itemRoom = { emojiCard: 'influencer-avenue', dataReport: 'algorithm-room', truthLight: 'ads-corridor' }
+  /* A tool can be taken out anywhere. In the wrong room it simply does nothing
+     — each room listens only for its own item — rather than being refused,
+     which is truer to the fiction: you can get a torch out of a bag in any
+     room, it just doesn't help you there. The Data Report is a document, so it
+     opens wherever the player wants to re-read it.
+     result.success still records whether the use had an effect, so the data
+     shows a player reaching for the wrong tool without the game blocking it. */
   const useItem = (item) => {
-    if (itemRoom[item.id] !== activeNodeId) {
-      // Reaching for the right tool in the wrong room: logged as an
-      // unsuccessful use, which is more informative than silence.
-      track('used', OBJ.reward(item.id), {
-        node: activeNodeId, response: `${item.id};${activeNodeId}`, success: false,
-      })
-      setDeniedItem(item.id)
-      window.setTimeout(() => setDeniedItem(null), 700)
-      return
-    }
-    track('used', OBJ.reward(item.id), { node: activeNodeId, success: true })
+    track('used', OBJ.reward(item.id), {
+      node: activeNodeId,
+      response: `${item.id};${activeNodeId}`,
+      success: itemRoom[item.id] === activeNodeId,
+    })
     setBagOpen(false)
     if (item.id === 'dataReport') setReportOpen(true)
     else window.dispatchEvent(new CustomEvent('lastchance:use-item', { detail: { id: item.id } }))
@@ -619,7 +655,7 @@ export default function HUD() {
                   <button
                     key={it.id}
                     type="button"
-                    className={`bag-item panel ${it.id === 'dataReport' ? 'bag-item-report' : ''} ${deniedItem === it.id ? 'bag-item-denied' : ''}`}
+                    className={`bag-item panel ${it.id === 'dataReport' ? 'bag-item-report' : ''}`}
                     onClick={() => useItem(it)}
                   >
                     <div><img className="bag-icon" src={bgUrl(it.id === 'dataReport' ? narrative.reportImage : it.image)} alt="" /></div>

@@ -70,8 +70,12 @@ export const settings = {
      glossy posters stay visible and the beam just flips the one under it. */
   adsCorridor: { darkRoom: false, litDim: 0.25 }, // litDim: how much the lit room darkens (0–1)
 
-  /* Remind players to inspect their tools after BOTH thresholds are met. */
-  bagReminder: { clicks: 2, delayMs: 32000 },
+  /* Remind players to inspect their tools — whichever of these comes FIRST:
+     `afterClicksMs` once they have clicked `clicks` times in the room (they
+     are clearly trying things, so prompt quickly), or `idleMs` regardless of
+     clicks (so someone who just sits there is still helped). Opening the bag
+     or making puzzle progress restarts both; using the tool stops them. */
+  bagReminder: { clicks: 2, afterClicksMs: 5000, idleMs: 20000 },
 
   /* Hints unlock one at a time: the first is open straight away, and each
      next one only becomes available `unlockDelayMs` after the previous one
