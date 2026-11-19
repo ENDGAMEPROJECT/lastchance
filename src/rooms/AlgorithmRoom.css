@@ -173,9 +173,19 @@
    PHASE: UNLOCK — keypad terminal
    ========================================================= */
 .ar-unlock {
+  position: relative; /* containing block for .ar-debug-skip */
   display: flex;
   justify-content: center;
 }
+/* DEBUG ONLY: the "skip keypad" shortcut. Top-right so it never sits over the
+   pictured keypad or the back arrow. */
+.ar-debug-skip {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  z-index: 20;
+}
+
 .ar-keypad-back {
   position: absolute;
   top: 4px;

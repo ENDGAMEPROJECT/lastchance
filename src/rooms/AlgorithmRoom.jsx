@@ -2,6 +2,7 @@ import { Fragment, useEffect, useLayoutEffect, useMemo, useRef, useState } from 
 import { useGame } from '../game/GameContext.jsx'
 import { CODES, ITEMS } from '../game/gameData.js'
 import { bgUrl } from '../game/assets.js'
+import { DEBUG } from '../game/settings.js'
 import { IS_PHONE, useMobileView } from '../game/device.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { playSound, preloadSound } from '../game/sound.js'
@@ -261,6 +262,17 @@ export default function AlgorithmRoom({ node }) {
     }
   }
 
+  /* DEBUG ONLY: jump past the sealed door and its keypad. Deliberately fires no
+     `submitted` statement for the code — skipping it is not solving it, and a
+     debug shortcut must not put answers it never earned into the LRS. */
+  function skipKeypadForDebug() {
+    if (!DEBUG) return
+    window.clearTimeout(clearTimer.current)
+    setStatus('idle')
+    setCode('')
+    setPhase('choice')
+  }
+
   function pressKey(k) {
     if (status === 'ok' || code.length === 6) return // locked while a full code is being judged
     // The pad was silent to type on. playSound restarts the one cached element,
@@ -275,6 +287,15 @@ export default function AlgorithmRoom({ node }) {
       if (next.length === 6) checkCode(next)
     }
   }
+
+  /* The Data Report is only needed AT the keypad. Once the door is behind us —
+     correct code, or the debug skip — say so, so the bag stops prompting for a
+     tool that has nothing left to do. An effect on `phase` rather than a call
+     in each branch, so no route out of the door can miss it. */
+  useEffect(() => {
+    if (phase === 'door' || phase === 'unlock') return
+    window.dispatchEvent(new CustomEvent('lastchance:tool-done', { detail: { id: 'dataReport' } }))
+  }, [phase])
 
   /* ---- equations helpers ---- */
   // Drop a tile into the current equation's blank: correct → it locks in and the
@@ -341,6 +362,12 @@ export default function AlgorithmRoom({ node }) {
               aria-label={t('rooms.algorithm.door.action')}
             />
           </DoorKeypadMap>
+          {DEBUG && (
+            <button type="button" className="btn btn-sm btn-ghost ar-debug-skip"
+              onMouseDown={(event) => event.preventDefault()} onClick={skipKeypadForDebug}>
+              {'skip keypad'}
+            </button>
+          )}
         </div>
       )}
 
@@ -360,6 +387,13 @@ export default function AlgorithmRoom({ node }) {
               <path d="M13 4 5 12l8 8M5 12h23" />
             </svg>
           </button>
+          {DEBUG && (
+            <button type="button" className="btn btn-sm btn-ghost ar-debug-skip"
+              disabled={status === 'ok'}
+              onMouseDown={(event) => event.preventDefault()} onClick={skipKeypadForDebug}>
+              {'skip keypad'}
+            </button>
+          )}
           <div className="ar-terminal panel clip panel-glow-cyan">
             <div className="ar-term-head">
               {/* Access light: red on a wrong code, green when it unlocks. */}
