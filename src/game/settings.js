@@ -61,10 +61,13 @@ export const settings = {
      messages are short and the speaker is "typing" at you. */
   typewriter: { letterMs: 25, holdMs: 1500, chatMs: 12 },
 
-  /* The portal trip (school ⇄ Physical Internet): how long the coded
-     holographic tunnel (HoloTunnel) runs before the core flashes to white.
-     The tunnel loops, so any length works; it speeds up over this time. */
-  portal: { tunnelMs: 9000 },
+  /* The portal trip (school ⇄ Physical Internet).
+     video: true = play the tunnel video (PortalTunnel); the trip then lasts
+     videoMs, the clip's length. If the video can't play (blocked autoplay,
+     slow network, a stall) the coded tunnel (HoloTunnel) takes over.
+     video: false = always the coded tunnel, for tunnelMs (it loops, so any
+     length works; it speeds up over this time). */
+  portal: { video: true, videoMs: 4460, tunnelMs: 9000 },
   /* Ads Corridor: true = the room goes dark while the Truth Flashlight is on
      (only the beam lights the wall); false = the room stays lit, so the other
      glossy posters stay visible and the beam just flips the one under it. */

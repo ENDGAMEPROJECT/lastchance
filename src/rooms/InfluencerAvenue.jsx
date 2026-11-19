@@ -111,6 +111,10 @@ const PRODUCT_NAMES = {
 /* Desktop explainer, "What should I look for?": the two example cards
    (rooms.influencer.explain.*). image = file in public/products; icon = placeholder
    for a card whose image hasn't arrived yet. */
+/* Length of one loop of the explainer's scripted reverse-search demo; the
+   "Now you try" button unlocks after one full loop. */
+const DEMO_LOOP_MS = 11500
+
 const LOOK_FOR = [
   { n: 1, icon: '🏷️', image: 'compare-prices.png', title: 'priceTitle', text: 'priceText' },
   // Two photos side by side, each captioned (the second sits 16px lower).
@@ -671,6 +675,97 @@ function PublicationOverlay({ post, copy, locale, liked, onToggle, onClose }) {
   )
 }
 
+/* The products-chamber door (bg-reverse-search-door.png) in its own 1677x938
+   pixel space, cover-fitted over the scene exactly like the background image,
+   so the door hotspot lands on the pictured door. Same approach as the
+   Algorithm Room's door (DoorKeypadMap there). */
+const DOOR_ART = { w: 1677, h: 938 }
+function DoorArtMap({ children }) {
+  const ref = useRef(null)
+  const [fit, setFit] = useState(0)
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el) return
+    // client sizes are layout px, unaffected by the stage's scale transform
+    const measure = () => setFit(Math.max(el.clientWidth / DOOR_ART.w, el.clientHeight / DOOR_ART.h))
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+  return (
+    <div className="ia-door-map" ref={ref}>
+      <div className="ia-door-art" style={{ transform: `scale(${fit})`, visibility: fit ? undefined : 'hidden' }}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
+/* The three disclosure labels (#publi / #collab / #regalo) with their tells:
+   on the screen before the game and in the HUD's info (i) pop-over. */
+function LabelCards() {
+  const t = useT()
+  return (
+    <div className="ia-lf-cards">
+      {['paid', 'collab', 'gifted'].map((key) => (
+        <div key={key} className={`ia-lf-card ${key}`}>
+          <img className="ia-lf-img" src={bgUrl(`influencers/feedback/${key}.png`)} alt="" />
+          <span className="ia-lf-tag">{t(`rooms.influencer.labels.${key}`)}</span>
+          <div className="ia-lf-desc">{t(`rooms.influencer.labelFeedback.${key}Desc`)}</div>
+          <div className="ia-lf-ex t-xs">{t(`rooms.influencer.labelFeedback.${key}Example`)}</div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/* Body of the HUD's info (i) pop-over in this room (the HUD supplies the
+   title). step 'labels' (the label game): the label explainer. step 'search'
+   (the reverse image search): its explainer, both "what do I look for?" cards
+   and the how-to-play line. */
+export function InfluencerInfo({ step }) {
+  const t = useT()
+  if (step !== 'search') {
+    return (
+      <div className="ia-info">
+        <p className="ia-explain-body">{t('rooms.influencer.labelFeedback.intro')}</p>
+        <h4 className="ia-lookfor-title">{t('rooms.influencer.stage1.howToSpot')}</h4>
+        <LabelCards />
+      </div>
+    )
+  }
+  return (
+    <div className="ia-info">
+      <p className="ia-explain-body">{t('rooms.influencer.explain.body')}</p>
+      <h4 className="ia-lookfor-title">{t('rooms.influencer.explain.lookForTitle')}</h4>
+      <div className="ia-info-lookfor">
+      {LOOK_FOR.map((c) => (
+        <div key={c.n} className="ia-lookfor-card">
+          {c.pair ? (
+            <div className="ia-lookfor-pair">
+              {c.pair.map((p) => (
+                <figure key={p.image} className="ia-lookfor-pair-item">
+                  <img src={productUrl(p.image)} alt="" />
+                  <figcaption>{t(`rooms.influencer.explain.${p.caption}`)}</figcaption>
+                </figure>
+              ))}
+            </div>
+          ) : (
+            <div className="ia-lookfor-img has-image" aria-hidden="true"><img src={productUrl(c.image)} alt="" /></div>
+          )}
+          <div className="ia-lookfor-copy">
+            <h5 className="ia-lookfor-card-title">{t(`rooms.influencer.explain.${c.title}`)}</h5>
+            <p className="ia-lookfor-text">{t(`rooms.influencer.explain.${c.text}`)}</p>
+          </div>
+        </div>
+      ))}
+      </div>
+      <p className="ia-explain-instructions"><b className="lead-label">{t('common.howToPlay')}</b> {t('rooms.influencer.explain.instructions')}</p>
+    </div>
+  )
+}
+
 export default function InfluencerAvenue({ node }) {
   const { completeRoom, addEvidence, hasItem, setHintStep } = useGame()
   const { locale } = useI18n()
@@ -680,11 +775,12 @@ export default function InfluencerAvenue({ node }) {
      already decoded the labels comes back to the reverse-image search
      rather than to the start of the room. Everything else in here is
      transient (a held stamp, an open panel) and deliberately is not. */
-  const [stage, setStage] = useRoomState('influencer.stage', 'labelFeedback') // 'labelFeedback' (what each label means) → 'label' → 'explain' → 'verify' → solved
+  const [stage, setStage] = useRoomState('influencer.stage', 'labelFeedback') // 'labelFeedback' (what each label means) → 'label' → 'door' → 'chamber' → 'explain' → 'verify' → solved
   const [solved, setSolved] = useRoomState('influencer.solved', false)
   // Hints follow the stage: decoding the labels, then the reverse image search.
   useEffect(() => {
-    setHintStep(stage === 'label' || stage === 'labelFeedback' ? 'labels' : 'search')
+    setHintStep(stage === 'label' || stage === 'labelFeedback' ? 'labels'
+      : stage === 'door' ? 'door' : 'search')
   }, [stage, setHintStep])
   const [demoPhase, setDemoPhase] = useState('drag') // explainer's scripted reverse-search demo
   // The label recap and the reverse-search explainer can't be skipped: their
@@ -700,7 +796,9 @@ export default function InfluencerAvenue({ node }) {
   // Steps: 1 (title + body) → [phone only: 'look', the "What should I look
   // for?" cards; desktop shows them inside step 1] → 2 (how to play + demo).
   const explainText = explainStep === 2 ? t('rooms.influencer.explain.instructions') : t('rooms.influencer.explain.body')
-  const explain = useReadingGate(explainText, stage === 'explain')
+  // Step 2's "Now you try" waits for one full loop of the demo (DEMO_LOOP_MS)
+  // rather than just the instructions' reading time.
+  const explain = useReadingGate(explainText, stage === 'explain', explainStep === 2 ? DEMO_LOOP_MS : undefined)
   // Coming back from step 2, step 1 has already been read — so its
   // Next is clickable immediately rather than re-running the wait.
   const explainStep1 = explainStep1Read ? { ...explain, ready: true } : explain
@@ -727,7 +825,7 @@ export default function InfluencerAvenue({ node }) {
       [3200, () => { stopSound('search.mp3'); playSound('twinkle.mp3'); setDemoPhase('results') }],
       [8600, () => setDemoPhase('hold')],
       [9500, () => { setDemoPhase('stamp'); playSound('stamp.mp3') }],
-      [11500, () => { setDemoPhase('drag'); setDemoRun((n) => n + 1) }],
+      [DEMO_LOOP_MS, () => { setDemoPhase('drag'); setDemoRun((n) => n + 1) }],
     ].map(([ms, fn]) => window.setTimeout(fn, ms))
     return () => { timers.forEach(window.clearTimeout); stopSound('search.mp3') }
   }, [demoVisible, demoRun])
@@ -889,14 +987,33 @@ export default function InfluencerAvenue({ node }) {
     playSound('twinkle.mp3')
     setLabelsChecked(true)
   }
-  useEffect(() => {
-    if (stage !== 'label' || !labelsChecked) return
-    const timer = window.setTimeout(() => {
-      setDecoderOpen(false)
-      setStage('explain') // the labels were already explained before the game
-    }, 900)
-    return () => window.clearTimeout(timer)
-  }, [stage, labelsChecked])
+  // Labels right: a feedback pop-over over the posts, whose Next leads to the
+  // products-chamber door.
+  const stage1Done = useReadingGate(['title', 'body'].map((key) => t(`rooms.influencer.stage1Done.${key}`)),
+    stage === 'label' && labelsChecked)
+  function leaveLabels() {
+    setDecoderOpen(false)
+    setLabelsChecked(false)
+    setStage('door')
+  }
+
+  /* ---- The products-chamber door: touching it fades to black and the
+     player steps into the chamber (whose background is bg-reverse-search). */
+  const DOOR_FADE_MS = 700
+  const [doorFading, setDoorFading] = useState(false)
+  const doorTimer = useRef(null)
+  useEffect(() => () => window.clearTimeout(doorTimer.current), [])
+  useEffect(() => { preloadSound('open_door.mp3'); preloadSound('note_stick.wav') }, [])
+  function enterDoor() {
+    if (doorFading) return
+    track('opened', OBJ.productsDoor(), { node: node.id })
+    playSound('open_door.mp3')
+    setDoorFading(true)
+    doorTimer.current = window.setTimeout(() => {
+      setDoorFading(false)
+      setStage('chamber')
+    }, DOOR_FADE_MS)
+  }
 
   /* ---- Dragging the post-its onto the posts ----
      Only once all three are decoded. A post-it counts as on a post when more
@@ -963,6 +1080,7 @@ export default function InfluencerAvenue({ node }) {
       return
     }
     track('dropped', OBJ.post(postNo(best)), { node: node.id, response: d.id })
+    playSound('note_stick.wav') // the post-it pressed onto the post
     // Stick it where it was dropped, nudged fully inside the post.
     const body = labelBodyRef.current.getBoundingClientRect()
     const r = postRefs.current[best].getBoundingClientRect()
@@ -1139,7 +1257,7 @@ export default function InfluencerAvenue({ node }) {
   // DEBUG ONLY: remove this function and the marked button below to restore the full first stage.
   function skipFirstStageForDebug() {
     setDecoderOpen(false)
-    setStage('explain') // land on the reverse-search instructions, not the challenge itself
+    setStage('door') // land on the products-chamber door, not the challenge itself
   }
 
   function submitVerify() {
@@ -1242,7 +1360,11 @@ export default function InfluencerAvenue({ node }) {
   return (
     <RoomFrame
       node={node}
-      bgImage={bgUrl('influencer.png')}
+      // Posts: the avenue. The door, then — once through it — the products chamber.
+      bgImage={bgUrl(stage === 'label' || stage === 'labelFeedback' ? 'influencer.png'
+        : stage === 'door' ? 'bg-reverse-search-door.png' : 'bg-reverse-search.webp')}
+      // The chamber card is a step-in, like the room's own briefing.
+      showBack={stage !== 'chamber'}
       // In the reverse search, the back arrow returns to its own explainer
       // (step 1, already read), not to the room's entry briefing.
       onBack={stage === 'verify' ? () => {
@@ -1437,6 +1559,58 @@ export default function InfluencerAvenue({ node }) {
       )}
 
       {/* ============= FEEDBACK: what each disclosure label means ============= */}
+      {/* Stage 1 cleared: feedback pop-over over the labelled posts. */}
+      {stage === 'label' && labelsChecked && (
+        <div className="ia-pop-backdrop fade-in">
+          <section className="ia-pop panel clip panel-glow-purple" role="dialog" aria-modal="true"
+            aria-labelledby="ia-stage1-done-title">
+            <div className="ia-pop-icon" aria-hidden="true">🏷️</div>
+            <h3 id="ia-stage1-done-title" className="ia-explain-title">{t('rooms.influencer.stage1Done.title')}</h3>
+            <p className="ia-explain-body">{t('rooms.influencer.stage1Done.body')}</p>
+            <GateButton gate={stage1Done} className="btn-purple btn-lg" onClick={leaveLabels}>
+              {t('rooms.influencer.stage1Done.next')}
+            </GateButton>
+          </section>
+        </div>
+      )}
+
+      {/* ===================== THE PRODUCTS-CHAMBER DOOR ===================== */}
+      {stage === 'door' && (
+        <div className="ia-door-scene fade-in">
+          <div className="ia-door-head">
+            <p className="game-prompt">{t('rooms.influencer.door.prompt')}</p>
+          </div>
+          <DoorArtMap>
+            <button
+              type="button"
+              className="ia-door-hotspot"
+              disabled={doorFading}
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={enterDoor}
+              aria-label={t('rooms.influencer.door.action')}
+            />
+          </DoorArtMap>
+          {doorFading && <div className="ia-door-fade to-black" aria-hidden="true" />}
+        </div>
+      )}
+
+      {/* Through the door: a step-in card, like each room's entry briefing. */}
+      {stage === 'chamber' && (
+        <div className="room-briefing ia-chamber fade-in">
+          <div className="ia-door-fade from-black" aria-hidden="true" />
+          <div className="briefing-card panel clip panel-glow-purple">
+            <div className="briefing-icon accent-purple">🛍️</div>
+            <p className="briefing-text">{t('rooms.influencer.door.chamberIntro')}</p>
+            <button className="btn btn-purple btn-lg briefing-begin" onClick={() => {
+              setExplainStep(1)
+              setStage('explain')
+            }}>
+              {t('common.begin')}
+            </button>
+          </div>
+        </div>
+      )}
+
       {stage === 'labelFeedback' && (
         <div className="ia-stage ia-explain fade-in">
           <div className="ia-explain-card panel clip">
@@ -1444,26 +1618,7 @@ export default function InfluencerAvenue({ node }) {
             <p className="ia-explain-body">{t('rooms.influencer.labelFeedback.intro')}</p>
 
             <h4 className="ia-lookfor-title ia-lf-howto">{t('rooms.influencer.stage1.howToSpot')}</h4>
-            <div className="ia-lf-cards">
-              <div className="ia-lf-card paid">
-                <img className="ia-lf-img" src={bgUrl('influencers/feedback/paid.png')} alt="" />
-                <span className="ia-lf-tag">{t('rooms.influencer.labels.paid')}</span>
-                <div className="ia-lf-desc">{t('rooms.influencer.labelFeedback.paidDesc')}</div>
-                <div className="ia-lf-ex t-xs">{t('rooms.influencer.labelFeedback.paidExample')}</div>
-              </div>
-              <div className="ia-lf-card collab">
-                <img className="ia-lf-img" src={bgUrl('influencers/feedback/collab.png')} alt="" />
-                <span className="ia-lf-tag">{t('rooms.influencer.labels.collab')}</span>
-                <div className="ia-lf-desc">{t('rooms.influencer.labelFeedback.collabDesc')}</div>
-                <div className="ia-lf-ex t-xs">{t('rooms.influencer.labelFeedback.collabExample')}</div>
-              </div>
-              <div className="ia-lf-card gifted">
-                <img className="ia-lf-img" src={bgUrl('influencers/feedback/gifted.png')} alt="" />
-                <span className="ia-lf-tag">{t('rooms.influencer.labels.gifted')}</span>
-                <div className="ia-lf-desc">{t('rooms.influencer.labelFeedback.giftedDesc')}</div>
-                <div className="ia-lf-ex t-xs">{t('rooms.influencer.labelFeedback.giftedExample')}</div>
-              </div>
-            </div>
+            <LabelCards />
 
             <GateButton gate={labelFeedback} className="btn-purple btn-lg" onClick={() => {
               track('viewed', OBJ.labelsRecap(), { node: node.id })
