@@ -30,8 +30,8 @@ export default {
     "characterError": "Elige un personaje",
     "languageError": "Elige un idioma",
     "characterLabel": "Elige tu personaje",
-    "characterMia": "Mia",
-    "characterMax": "Max"
+    "characterMia": "María",
+    "characterMax": "Marcos"
   },
   "rotate": {
     "title": "Gira tu móvil",
@@ -84,7 +84,7 @@ export default {
   },
   "map": {
     "eyebrow": "Mapa del Internet físico ",
-    "titleLead": "Elige tu próximo",
+    "titleLead": "Ve al siguiente",
     "titleAccent": "distrito",
     "subtitle": "Recorre la red, reúne pruebas y llega a la decisión final antes de que expire la oferta.",
     "start": "▶ INICIO · Prueba previa con {friend}",
@@ -133,10 +133,10 @@ export default {
           "heading": "Convincente, pero sin pruebas suficientes",
           "body": "Creo que tienes razón en general, pero no he visto suficientes pruebas en el «Internet físico». Voy a comprar la tablet.",
           "Mia": {
-            "body": "Convenciste a Mia, pero llegaste tarde. No llegó a ver todas las pruebas que podrías haber encontrado en el Internet Físico."
+            "body": "Convenciste a {friend}, pero llegaste tarde. No llegó a ver todas las pruebas que podrías haber encontrado en el Internet Físico."
           },
           "Max": {
-            "body": "Convenciste a Max, pero llegaste tarde. No llegó a ver todas las pruebas que podrías haber encontrado en el Internet Físico."
+            "body": "Convenciste a {friend}, pero llegaste tarde. No llegó a ver todas las pruebas que podrías haber encontrado en el Internet Físico."
           }
         },
         "notEnoughEvidenceUnconvincing": {
@@ -155,12 +155,12 @@ export default {
     "whatHappened": {
       "titleLose": "¿Qué le pasó a {friend}?",
       "titleWin": "¿Qué le pudo haber pasado a {friend}?",
-      "Max": "Max perdió el dinero y nunca recibió el producto. Es posible que le roben los datos de su tarjeta y los utilicen para realizar más compras.",
-      "Mia": "Mia perdió el dinero y nunca recibió el producto. Es posible que le roben los datos de su tarjeta y los utilicen para realizar más compras."
+      "Max": "{friend} perdió el dinero y nunca recibió el producto. Es posible que le roben los datos de su tarjeta y los utilicen para realizar más compras.",
+      "Mia": "{friend} perdió el dinero y nunca recibió el producto. Es posible que le roben los datos de su tarjeta y los utilicen para realizar más compras."
     },
     "whatCould": {
-      "Max": "Max habría perdido el dinero y nunca habría recibido el producto. Sus datos bancarios podrían haber sido robados y utilizados para compras más cosas.",
-      "Mia": "Mia habría perdido el dinero y nunca habría recibido el producto. Los datos de su tarjeta podrían haber sido robados y utilizados para realizar más compras."
+      "Max": "{friend} habría perdido el dinero y nunca habría recibido el producto. Sus datos bancarios podrían haber sido robados y utilizados para compras más cosas.",
+      "Mia": "{friend} habría perdido el dinero y nunca habría recibido el producto. Los datos de su tarjeta podrían haber sido robados y utilizados para realizar más compras."
     }
   },
   "story": {
@@ -259,12 +259,12 @@ export default {
           },
           {
             "k": "C",
-            "text": "No metas la tarjeta. Mientras uses Apple Pay o PayPal, estás 100 % {friend:seguro|segura}.",
+            "text": "Una tablet de 600 € por 49 € es una señal de alarma.",
             "correct": true
           },
           {
             "k": "D",
-            "text": "Ve hasta abajo del todo. Si no pone 'Copyright 2026', sabes que es falsa.",
+            "text": "Una página con el logo de una marca famosa es la tienda real de la marca.",
             "correct": false
           }
         ],
@@ -465,26 +465,26 @@ export default {
   },
   "names": {
     "mia": {
-      "nominative": "Mia",
-      "genitive": "Mia",
-      "partitive": "Mia",
-      "allative": "Mia",
-      "ablative": "Mia",
-      "elative": "Mia",
-      "accusative": "Mia",
-      "dative": "Mia",
-      "instrumental": "Mia"
+      "nominative": "María",
+      "genitive": "María",
+      "partitive": "María",
+      "allative": "María",
+      "ablative": "María",
+      "elative": "María",
+      "accusative": "María",
+      "dative": "María",
+      "instrumental": "María"
     },
     "max": {
-      "nominative": "Max",
-      "genitive": "Max",
-      "partitive": "Max",
-      "allative": "Max",
-      "ablative": "Max",
-      "elative": "Max",
-      "accusative": "Max",
-      "dative": "Max",
-      "instrumental": "Max"
+      "nominative": "Marcos",
+      "genitive": "Marcos",
+      "partitive": "Marcos",
+      "allative": "Marcos",
+      "ablative": "Marcos",
+      "elative": "Marcos",
+      "accusative": "Marcos",
+      "dative": "Marcos",
+      "instrumental": "Marcos"
     }
   },
   "hints": {
@@ -533,7 +533,7 @@ export default {
       "items": [
         "Fíjate en la cuenta atrás, el enorme descuento y la promesa de una oferta por tiempo limitado.",
         "Pregúntate si la presencia del influencer, los comentarios y una web atractiva son suficientes para demostrar que la oferta es segura.",
-        "Ten presentes tus principales preocupaciones. Los distritos que te esperan te darán pruebas para ponerlas a prueba."
+        "Recuerda tus primeras sospechas. Los distritos que tienes por delante te darán pistas para comprobarlas."
       ]
     },
     "map": {

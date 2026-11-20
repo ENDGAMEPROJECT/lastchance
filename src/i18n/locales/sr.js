@@ -48,7 +48,7 @@ export default {
     "inventoryTitle": "Predmeti i Dokazi",
     "tools": "Alati i Nagrade",
     "noTools": "Još uvek ništa nije sakupljeno. Reši zagonetke da bi osvojio/la alate.",
-    "evidenceHeading": "Dokazi o ponudi",
+    "evidenceHeading": "Prikupljeni dokazi",
     "noEvidence": "Prikupi dokaze u svakom okrugu kako bi na kraju ubedio/la {friend_accusative}.",
     "hints": "💡 Saveti",
     "enterFullscreen": "Prikaži preko celog ekrana",
@@ -133,10 +133,10 @@ export default {
           "heading": "Ubedljivo, ali bez dovoljno dokaza",
           "body": "Mislim da si u pravu, ali nisam {friend:video|videla} dovoljno dokaza na „fizičkom internetu“. Kupiću tablet.",
           "Mia": {
-            "body": "{player:Ubedio|Ubedila} si Milu, ali si {player:zakasnio|zakasnila}. Nije stigla da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
+            "body": "{player:Ubedio|Ubedila} si {friend_accusative}, ali si {player:zakasnio|zakasnila}. Nije stigla da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
           },
           "Max": {
-            "body": "{player:Ubedio|Ubedila} si Marka, ali si {player:zakasnio|zakasnila}. Nije stigao da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
+            "body": "{player:Ubedio|Ubedila} si {friend_accusative}, ali si {player:zakasnio|zakasnila}. Nije stigao da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
           }
         },
         "notEnoughEvidenceUnconvincing": {
@@ -155,12 +155,12 @@ export default {
     "whatHappened": {
       "titleLose": "Šta se desilo {friend_dative}:",
       "titleWin": "Šta je moglo da se desi {friend_dative}:",
-      "Max": "Marko je izgubio novac i nikada nije dobio proizvod. Podaci sa njegove kartice mogu biti ukradeni i iskorišćeni za dodatne kupovine.",
-      "Mia": "Mila je izgubila novac i nikada nije dobila proizvod. Podaci sa njene kartice mogu biti ukradeni i iskorišćeni za dodatne kupovine."
+      "Max": "{friend} je izgubio novac i nikada nije dobio proizvod. Podaci sa njegove kartice mogu biti ukradeni i iskorišćeni za dodatne kupovine.",
+      "Mia": "{friend} je izgubila novac i nikada nije dobila proizvod. Podaci sa njene kartice mogu biti ukradeni i iskorišćeni za dodatne kupovine."
     },
     "whatCould": {
-      "Max": "Marko bi izgubio novac i nikada ne bi dobio proizvod. Podaci sa njegove kartice mogli su biti ukradeni i iskorišćeni za dodatne kupovine.",
-      "Mia": "Mila bi izgubila novac i nikada ne bi dobila proizvod. Podaci sa njene kartice mogli su biti ukradeni i iskorišćeni za dodatne kupovine."
+      "Max": "{friend} bi izgubio novac i nikada ne bi dobio proizvod. Podaci sa njegove kartice mogli su biti ukradeni i iskorišćeni za dodatne kupovine.",
+      "Mia": "{friend} bi izgubila novac i nikada ne bi dobila proizvod. Podaci sa njene kartice mogli su biti ukradeni i iskorišćeni za dodatne kupovine."
     }
   },
   "story": {
@@ -259,12 +259,12 @@ export default {
           },
           {
             "k": "C",
-            "text": "Nemoj unositi podatke kartice. Ako koristiš Apple Pay ili PayPal, 100% si {friend:bezbedan|bezbedna}.",
+            "text": "Tablet od 600 evra za 49 evra je znak za uzbunu.",
             "correct": true
           },
           {
             "k": "D",
-            "text": "Skroluj do dna stranice. Ako nema teksta „Copyright 2026“, znaćeš da je sajt lažan.",
+            "text": "Sajt sa logom poznatog brenda je prava prodavnica tog brenda.",
             "correct": false
           }
         ],
@@ -465,7 +465,7 @@ export default {
   },
   "names": {
     "mia": {
-      "nominative": "Mia",
+      "nominative": "Mila",
       "genitive": "Mile",
       "partitive": "Mia",
       "allative": "Mia",
@@ -476,7 +476,7 @@ export default {
       "instrumental": "Milom"
     },
     "max": {
-      "nominative": "Max",
+      "nominative": "Marko",
       "genitive": "Marka",
       "partitive": "Max",
       "allative": "Max",

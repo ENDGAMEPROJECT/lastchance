@@ -30,8 +30,8 @@ export default {
     "characterError": "Valitse hahmo",
     "languageError": "Valitse kieli",
     "characterLabel": "Valitse hahmosi",
-    "characterMia": "Mia",
-    "characterMax": "Max"
+    "characterMia": "Minna",
+    "characterMax": "Markku"
   },
   "rotate": {
     "title": "Käännä puhelimesi",
@@ -48,7 +48,7 @@ export default {
     "inventoryTitle": "Tavarat ja todisteet",
     "tools": "Työkalut ja palkinnot",
     "noTools": "Et ole vielä kerännyt mitään. Ratkaise pulmia ansaitaksesi työkaluja.",
-    "evidenceHeading": "Todisteet tarjouksesta",
+    "evidenceHeading": " Kerätyt todisteet",
     "noEvidence": "Kerää todisteita jokaisesta kaupunginosasta, jotta voit lopuksi vakuuttaa {friend_genitive}.",
     "hints": "💡 Vinkit",
     "enterFullscreen": "Siirry koko näytön tilaan",
@@ -133,10 +133,10 @@ export default {
           "heading": "Vakuuttavaa: mutta todisteita liian vähän",
           "body": "Olet varmaan oikeassa, mutta en ole nähnyt tarpeeksi todisteita \"fyysisessä internetissä\". Aion ostaa tabletin.",
           "Mia": {
-            "body": "Vakuutit Mian, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
+            "body": "Vakuutit {friend_genitive}, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
           },
           "Max": {
-            "body": "Vakuutit Maxin, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
+            "body": "Vakuutit {friend_genitive}, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
           }
         },
         "notEnoughEvidenceUnconvincing": {
@@ -155,12 +155,12 @@ export default {
     "whatHappened": {
       "titleLose": "Mitä {friend_allative} tapahtui:",
       "titleWin": "Mitä {friend_allative} olisi voinut tapahtua:",
-      "Max": "Max menetti rahansa eikä saanut tuotetta koskaan. Hänen korttitietonsa on voitu varastaa ja käyttää muihin ostoksiin.",
-      "Mia": "Mia menetti rahansa eikä saanut tuotetta koskaan. Hänen korttitietonsa on voitu varastaa ja käyttää muihin ostoksiin."
+      "Max": "{friend} menetti rahansa eikä saanut tuotetta koskaan. Hänen korttitietonsa on voitu varastaa ja käyttää muihin ostoksiin.",
+      "Mia": "{friend} menetti rahansa eikä saanut tuotetta koskaan. Hänen korttitietonsa on voitu varastaa ja käyttää muihin ostoksiin."
     },
     "whatCould": {
-      "Max": "Max olisi menettänyt rahansa eikä olisi saanut tuotetta koskaan. Hänen korttitietonsa olisi voitu varastaa ja käyttää muihin ostoksiin.",
-      "Mia": "Mia olisi menettänyt rahansa eikä olisi saanut tuotetta koskaan. Hänen korttitietonsa olisi voitu varastaa ja käyttää muihin ostoksiin."
+      "Max": "{friend} olisi menettänyt rahansa eikä olisi saanut tuotetta koskaan. Hänen korttitietonsa olisi voitu varastaa ja käyttää muihin ostoksiin.",
+      "Mia": "{friend} olisi menettänyt rahansa eikä olisi saanut tuotetta koskaan. Hänen korttitietonsa olisi voitu varastaa ja käyttää muihin ostoksiin."
     }
   },
   "story": {
@@ -259,12 +259,12 @@ export default {
           },
           {
             "k": "C",
-            "text": "Älä syötä korttiasi. Kunhan käytät Apple Payta tai PayPalia, olet 100 % turvassa.",
+            "text": "600 euron tabletti 49 eurolla on varoitusmerkki.",
             "correct": true
           },
           {
             "k": "D",
-            "text": "Selaa sivun alalaitaan. Jos siellä ei lue 'Copyright 2026', tiedät sen olevan väärennös.",
+            "text": "Sivusto, jolla on tunnetun brändin logo, on brändin oikea kauppa.",
             "correct": false
           }
         ],
@@ -465,23 +465,23 @@ export default {
   },
   "names": {
     "mia": {
-      "nominative": "Mia",
-      "genitive": "Mian",
-      "partitive": "Miaa",
-      "allative": "Mialle",
-      "ablative": "Mialta",
-      "elative": "Miasta",
+      "nominative": "Minna",
+      "genitive": "Minnan",
+      "partitive": "Minnaa",
+      "allative": "Minnalle",
+      "ablative": "Minnalta",
+      "elative": "Minnasta",
       "accusative": "Mia",
       "dative": "Mia",
       "instrumental": "Mia"
     },
     "max": {
-      "nominative": "Max",
-      "genitive": "Maxin",
-      "partitive": "Maxia",
-      "allative": "Maxille",
-      "ablative": "Maxilta",
-      "elative": "Maxista",
+      "nominative": "Markku",
+      "genitive": "Markun",
+      "partitive": "Markkua",
+      "allative": "Markulle",
+      "ablative": "Markulta",
+      "elative": "Markusta",
       "accusative": "Max",
       "dative": "Max",
       "instrumental": "Max"
