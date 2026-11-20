@@ -83,7 +83,14 @@ for (const file of files) {
   const imported = xapiImport ? xapiImport[1].split(',').map((s) => s.trim()) : []
   for (const sym of XAPI_EXPORTS) {
     const used = new RegExp(`\\b${sym}\\s*[(.]`).test(code)
-    if (used && !imported.includes(sym)) {
+    /* A local of the same name is not the xAPI export. sound.js has
+       `const track = settings.ambience.tracks[…]` and reads `track.file`,
+       which the pattern above cannot tell from a call to track(). Skipping a
+       declared name costs us a file that both shadows the export AND needs
+       it — rare, and far cheaper than a standing false positive, which
+       teaches people to run check:xapi and ignore what it says. */
+    const declared = new RegExp(`(const|let|var|function)\\s+${sym}\\b`).test(code)
+    if (used && !declared && !imported.includes(sym)) {
       // `track(` etc. only counts if the file imports from xapi at all.
       if (xapiImport || ['track', 'OBJ'].includes(sym))
         ok(false, `${where}: uses ${sym} but does not import it from game/xapi.js`)
