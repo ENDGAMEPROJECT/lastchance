@@ -83,24 +83,22 @@ function EvidenceReport({ open, onClose }) {
   )
 }
 
-/* The feedback survey, offered on both endings. An invitation rather than a
-   wall: a player who just lost should not be made to fill in a form before
-   they can read why. Asked once per run (see session.js), so a refresh on
-   the end screen does not nag. */
-function SurveyInvite() {
+/* The ways out of a finished run: start over, or go to the ENDGAME resources.
+   The same two ECHO offers. "Continue exploring ECHO" is deliberately not
+   among them — there is nothing to keep exploring here, and the label names
+   the wrong escape room. Closing returns to the end screen, where the
+   evidence report still is.
+
+   This is also the confirmation step for "Play again" / "Try again". Those
+   buttons used to call reset() on the click, which clears the saved run, the
+   evidence and the survey ask with no way back — one stray tap on a finished
+   run and the whole thing was gone. Reusing this modal means the restart
+   takes a second, deliberate press, and costs no new translation. */
+function EndOptions({ onClose }) {
   const t = useT()
   const { reset } = useGame()
-  const [open, setOpen] = useState(false)
-  const [done, setDone] = useState(isSurveyDone)
-  const [options, setOptions] = useState(false)
-
-  /* Once the survey is in, the run really is over: offer the ways out, the
-     same two ECHO offers. "Continue exploring ECHO" is deliberately not
-     among them — there is nothing to keep exploring here, and the label
-     names the wrong escape room. Closing returns to this screen, where the
-     evidence report still is. */
-  const endOptions = options && (
-    <div className="sv-backdrop" onClick={() => setOptions(false)}>
+  return (
+    <div className="sv-backdrop" onClick={onClose}>
       <div
         className="sv-modal eo-modal panel clip panel-glow-cyan fade-in"
         role="dialog" aria-modal="true"
@@ -108,7 +106,7 @@ function SurveyInvite() {
       >
         <div className="sv-head">
           <h3 className="accent-cyan">{t('escapeRoomEnd.title')}</h3>
-          <button className="sv-x" onClick={() => setOptions(false)} aria-label={t('common.close')}>✕</button>
+          <button className="sv-x" onClick={onClose} aria-label={t('common.close')}>✕</button>
         </div>
         <div className="sv-body eo-body">
           <p className="eo-description">{t('escapeRoomEnd.description')}</p>
@@ -129,6 +127,19 @@ function SurveyInvite() {
       </div>
     </div>
   )
+}
+
+/* The feedback survey, offered on both endings. An invitation rather than a
+   wall: a player who just lost should not be made to fill in a form before
+   they can read why. Asked once per run (see session.js), so a refresh on
+   the end screen does not nag. */
+function SurveyInvite() {
+  const t = useT()
+  const [open, setOpen] = useState(false)
+  const [done, setDone] = useState(isSurveyDone)
+  const [options, setOptions] = useState(false)
+
+  const endOptions = options && <EndOptions onClose={() => setOptions(false)} />
 
   if (done) {
     return (
@@ -163,10 +174,11 @@ function SurveyInvite() {
 }
 
 export function WinScreen() {
-  const { timeLeft, reset, narrative } = useGame()
+  const { timeLeft, narrative } = useGame()
   useEffect(() => { playSound('win.mp3') }, [])
   const t = useT()
   const [reportOpen, setReportOpen] = useState(false)
+  const [restartOpen, setRestartOpen] = useState(false)
   const vars = { friend: narrative.friend, product: narrative.product, time: formatTime(timeLeft) }
   // Large buttons on desktop (>1180px); regular size on phones (≤1180px,
   // = settings.mobile.breakpoint). Re-renders when the window crosses it.
@@ -190,7 +202,8 @@ export function WinScreen() {
         <WhatHappenedCard titleKey="end.whatHappened.titleWin" textKey="end.whatCould" narrative={narrative} vars={vars} light />
 
         <div className="end-actions">
-          <button className={`btn-magenta win-again ${btnClass}`} onClick={reset}>{t('end.win.again')}</button>
+          {/* Confirmed, not immediate: see EndOptions. */}
+          <button className={`btn-magenta win-again ${btnClass}`} onClick={() => setRestartOpen(true)}>{t('end.win.again')}</button>
           <button className={`btn-light ${btnClass}`} onMouseDown={(e) => e.preventDefault()} onClick={() => setReportOpen(true)}>
             {t('end.win.evidenceButton')}
           </button>
@@ -198,15 +211,17 @@ export function WinScreen() {
         <SurveyInvite />
       </div>
       <EvidenceReport open={reportOpen} onClose={() => setReportOpen(false)} />
+      {restartOpen && <EndOptions onClose={() => setRestartOpen(false)} />}
     </div>
   )
 }
 
 export function LoseScreen() {
-  const { reset, loseReason, narrative } = useGame()
+  const { loseReason, narrative } = useGame()
   useEffect(() => { playSound('lose.mp3') }, [])
   const t = useT()
   const [reportOpen, setReportOpen] = useState(false)
+  const [restartOpen, setRestartOpen] = useState(false)
   const vars = { friend: narrative.friend, product: narrative.product }
   const btnClass = useMobileView() ? 'btn' : 'btn btn-lg' // as on the win screen
 
@@ -241,7 +256,8 @@ export function LoseScreen() {
         <WhatHappenedCard titleKey="end.whatHappened.titleLose" textKey="end.whatHappened" narrative={narrative} vars={vars} />
 
         <div className="end-actions">
-          <button className={`btn-cyan ${btnClass}`} onClick={reset}>{t('end.lose.again')}</button>
+          {/* Confirmed, not immediate: see EndOptions. */}
+          <button className={`btn-cyan ${btnClass}`} onClick={() => setRestartOpen(true)}>{t('end.lose.again')}</button>
           <button className={`btn-magenta ${btnClass}`} onMouseDown={(e) => e.preventDefault()} onClick={() => setReportOpen(true)}>
             {t('end.lose.missingEvidence.button')}
           </button>
@@ -249,6 +265,7 @@ export function LoseScreen() {
         <SurveyInvite />
       </div>
       <EvidenceReport open={reportOpen} onClose={() => setReportOpen(false)} />
+      {restartOpen && <EndOptions onClose={() => setRestartOpen(false)} />}
     </div>
   )
 }

@@ -318,7 +318,7 @@ export default function AlgorithmRoom({ node }) {
   }
   // Fires exactly once, when the player logs the evidence after a clean run.
   function finish() {
-    track('viewed', OBJ.algoProfile(narrative.friend), { node: node.id })
+    track('viewed', OBJ.algoProfile(narrative.friendGender), { node: node.id })
     addEvidence({
       id: 'ev-algo',
       label: t('rooms.algorithm.evidence', { friend: narrative.friend }),

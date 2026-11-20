@@ -1,10 +1,12 @@
 // Validate DYNAMIC t(`...${id}...`) keys by importing the real id
 // lists (gameData) and each room's fragment, then checking membership.
 import { readFileSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 import dictionaries from '../src/i18n/dictionaries.js'
 const { en } = dictionaries
 import { NODES, ITEMS } from '../src/game/gameData.js'
 import { ROULETTE_WHEELS, ROULETTE_SEGMENTS } from '../src/game/rouletteData.js'
+import { EMOJI_KEY, toKeypadWord } from '../src/game/gameData.js'
 import { TEST_ITEMS } from '../src/game/testItems.js'
 
 const problems = []
@@ -120,6 +122,92 @@ for (const [code, dict] of Object.entries(dictionaries)) {
       + `almost certainly need rewriting too — they name the reasoning, not the letter.`)
   })
 }
+/* The WORDING those slugs were written against. The check above catches the
+   answer moving between options; it is blind to an option reworded in place,
+   which keeps its key and its tick while its slug goes on naming reasoning
+   the option no longer expresses. That is how the November drift stayed
+   invisible. Fingerprint the English title and options, and any rewording
+   fails here once — deliberately noisy: the fix is to re-read the options,
+   confirm each slug still describes one, and paste the new hash in. */
+const norm = (text) => String(text).replace(/\s+/g, ' ').trim()
+const itemHash = (round) => createHash('sha1')
+  .update([norm(round.title), ...round.options.map((o) => norm(o.text))].join(' ~ '))
+  .digest('hex').slice(0, 10)
+
+for (const [i, round] of en.story.rounds.entries()) {
+  const item = TEST_ITEMS[i]
+  if (!item) continue
+  ok(has(item, 'textHash'), `testItems[${i}] (${item.slug}) needs a textHash — see itemHash()`)
+  const actual = itemHash(round)
+  if (item.textHash && item.textHash !== actual) {
+    const shown = round.options
+      .map((o) => `        ${o.k} ${String(item.options[o.k]).padEnd(32)} "${norm(o.text)}"`)
+      .join('\n')
+    ok(false, `story.rounds[${i}] (${item.slug}) has been reworded since its slugs were written.\n`
+      + `      Re-read the options against their slugs; update any that no longer fit, then set\n`
+      + `      textHash: '${actual}' (was '${item.textHash}').\n${shown}`)
+  }
+}
+
+/* ---- Every language must be able to SOLVE the three code puzzles ----
+
+   These are the two places where a translation can lock a player out with
+   nothing on screen to say why, so they are checked in all four languages
+   rather than trusted.
+
+   1. The Influencer Avenue keypad spells the post's label in the player's
+      language, on an A–Z emoji keypad. toKeypadWord folds accents away and
+      maps the stroke letters by hand, but it cannot invent a key: a Cyrillic
+      label folds to nothing, leaving a stage whose answer is the empty string
+      and which therefore can never be completed.
+   2. The Ads Corridor and the Persuasion Lab build their exit code from one
+      highlighted letter per poster, set per language. If a poster's letter
+      does not occur in that poster's own copy there is nothing to highlight,
+      so the code can never be read off the wall. */
+const KEYPAD = new Set(Object.values(EMOJI_KEY))
+
+for (const [code, dict] of Object.entries(dictionaries)) {
+  const labels = dict.rooms?.influencer?.labels || {}
+  for (const [id, label] of Object.entries(labels)) {
+    const word = toKeypadWord(label)
+    ok(word.length > 0,
+      `${code}: rooms.influencer.labels.${id} ("${label}") has no letter the emoji keypad can spell, `
+      + 'so that post could never be decoded. The label must use the Latin alphabet.')
+    // A letter the fold threw away, rather than folded — see STROKE_LETTERS.
+    for (const ch of String(label)) {
+      if (/\p{L}/u.test(ch) && toKeypadWord(ch) === '') {
+        ok(false, `${code}: rooms.influencer.labels.${id} ("${label}") loses "${ch}" on the way to the `
+          + 'keypad. Add it to STROKE_LETTERS in gameData.js, or pick a label without it.')
+      }
+    }
+    for (const ch of word) {
+      ok(KEYPAD.has(ch), `${code}: rooms.influencer.labels.${id} needs the letter "${ch}", `
+        + 'which no emoji in EMOJI_KEY stands for.')
+    }
+  }
+
+  for (const room of ['ads', 'persuasion']) {
+    const posters = dict.rooms?.[room]?.posters
+    if (!Array.isArray(posters)) continue
+    posters.forEach((poster, i) => {
+      const letter = poster?.letter
+      if (letter === undefined) return
+      ok(/^[A-Za-z]$/.test(String(letter)),
+        `${code}: rooms.${room}.posters[${i}].letter is "${letter}" — it must be a single A–Z letter, `
+        + 'because the player types the finished code on a keyboard.')
+      /* Everything the poster SAYS, which is where the letter has to be
+         hiding. `letter` itself is excluded: it is a string on the same
+         object, so including it made this test pass on its own answer. */
+      const copy = Object.entries(poster)
+        .filter(([k, v]) => k !== 'letter' && typeof v === 'string')
+        .map(([, v]) => v).join(' ').toUpperCase()
+      ok(copy.includes(String(letter).toUpperCase()),
+        `${code}: rooms.${room}.posters[${i}] has to hide the letter "${letter}", but that letter does `
+        + 'not appear anywhere in its text, so there is nothing to highlight and the code cannot be read.')
+    })
+  }
+}
+
 const slugs = TEST_ITEMS.map((t) => t.slug)
 ok(new Set(slugs).size === slugs.length, 'testItems.js slugs must be unique')
 for (const [i, item] of TEST_ITEMS.entries()) {

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useGame, formatTime } from '../game/GameContext.jsx'
 import SurveyModal from './SurveyModal.jsx'
 import { useSurveyOffer } from './SurveyButton.jsx'
@@ -16,6 +17,10 @@ export default function SessionDialog() {
   const { pendingRun, resumeRun, discardRun, NODES } = useGame()
   const t = useT()
   const survey = useSurveyOffer()
+  /* "Start over" destroys the saved run on the click — the progress, the
+     evidence, the pending survey — and sits next to Resume, so one mis-tap
+     used to end a run that was still going. Arm it first. */
+  const [confirmRestart, setConfirmRestart] = useState(false)
 
   if (!pendingRun) return null
 
@@ -68,26 +73,45 @@ export default function SessionDialog() {
         {postTestPending && (
           <p className="session-pending">{t('session.postTestPending')}</p>
         )}
-        <div className="session-actions">
-          <button type="button" className="btn btn-cyan btn-lg" onClick={resumeRun} autoFocus>
-            {t('session.resume')}
-          </button>
-          {/* The feedback survey, from here rather than only from an ending:
-              whoever is looking at this dialog may be coming back to a run
-              they will not finish, at whatever point they left it. Gone once
-              answered, so a second refresh does not ask again. */}
-          {!survey.done && (
-            <button type="button" className="btn btn-amber" onClick={survey.show}>
-              {t('survey.bannerButton')}
+        {confirmRestart ? (
+          /* Armed: say plainly what the button is about to do, then ask again.
+             The lines above already give the specifics — districts cleared,
+             time left, the unanswered survey — so this says only what they do
+             not: that it cannot be undone. Back is the focused default,
+             because the safe action should be the easy one. */
+          <>
+            <p className="session-confirm" role="alert">{t('session.confirmRestart')}</p>
+            <div className="session-actions">
+              <button type="button" className="btn btn-cyan btn-lg" onClick={() => setConfirmRestart(false)} autoFocus>
+                {t('common.back')}
+              </button>
+              <button type="button" className="btn btn-magenta" onClick={discardRun}>
+                {t('session.restart')}
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="session-actions">
+            <button type="button" className="btn btn-cyan btn-lg" onClick={resumeRun} autoFocus>
+              {t('session.resume')}
             </button>
-          )}
-          {/* Quieter when there is something to lose: the warning above says
-              what, and the default action should be the safe one. */}
-          <button type="button" className={postTestPending ? 'btn btn-ghost' : 'btn btn-magenta'}
-            onClick={discardRun}>
-            {t('session.restart')}
-          </button>
-        </div>
+            {/* The feedback survey, from here rather than only from an ending:
+                whoever is looking at this dialog may be coming back to a run
+                they will not finish, at whatever point they left it. Gone once
+                answered, so a second refresh does not ask again. */}
+            {!survey.done && (
+              <button type="button" className="btn btn-amber" onClick={survey.show}>
+                {t('survey.bannerButton')}
+              </button>
+            )}
+            {/* Quieter when there is something to lose: the warning above says
+                what, and the default action should be the safe one. */}
+            <button type="button" className={postTestPending ? 'btn btn-ghost' : 'btn btn-magenta'}
+              onClick={() => setConfirmRestart(true)}>
+              {t('session.restart')}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

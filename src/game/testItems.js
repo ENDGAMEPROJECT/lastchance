@@ -22,6 +22,7 @@ export const TEST_ITEMS = [
   {
     // i18n title: "The Timer"
     slug: 'q1-artificial-urgency',
+    textHash: '0176ae2502', // of the English title + the four option texts
     name: 'Spotting artificial urgency (the countdown)',
     correct: 'A',
     options: {
@@ -34,6 +35,7 @@ export const TEST_ITEMS = [
   {
     // i18n title: "The Source & Feed"
     slug: 'q2-ad-targeting',
+    textHash: '003a43921c', // of the English title + the four option texts
     name: 'Why the ad appeared: algorithmic targeting vs. folk theories',
     correct: 'D',
     options: {
@@ -55,6 +57,7 @@ export const TEST_ITEMS = [
        worse than a visible break. Answers recorded before 17 Nov 2026 belong
        to the old item and are not comparable with these. */
     slug: 'q3-trust-signals',
+    textHash: '5c7898cf86', // of the English title + the four option texts
     name: 'Telling a genuine warning sign from false trust signals',
     correct: 'C',
     options: {
