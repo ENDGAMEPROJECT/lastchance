@@ -127,6 +127,30 @@ export const EMOJI_KEY = {
   '🏆': 'Y', '❤️': 'Z',
 }
 
+/* Letters the keypad has no key for and that Unicode will NOT decompose.
+   NFD turns Ć into C + a combining mark, so stripping marks folds Ć, Č, Š, Ž,
+   Ö, Ä, Ñ and the accented vowels down to A–Z on its own. Letters built from a
+   STROKE instead of a mark have no canonical decomposition, so they survive
+   NFD and are then dropped by the [^A-Z] filter — silently. Đ is an ordinary
+   letter of the Serbian Latin alphabet, so ĐUBRE used to become UBRE with
+   nothing to show that a letter had gone. Mapped by hand instead. */
+const STROKE_LETTERS = { 'Đ': 'D', 'Ð': 'D', 'Ł': 'L', 'Ø': 'O', 'Æ': 'AE', 'Œ': 'OE', 'Þ': 'TH', 'ẞ': 'SS', 'ß': 'SS' }
+
+/* A localised label as the emoji keypad can spell it: EMOJI_KEY is A–Z only
+   (see the note there), so accents fold away — COLABORACIÓN → COLABORACION,
+   PLAĆENO → PLACENO, YHTEISTYÖ → YHTEISTYO — and spaces and punctuation go.
+   Checked per language by `npm run check:i18n`: a label that folds to nothing
+   (a Cyrillic one would) leaves a stage with no solution, which no amount of
+   playing would recover from. */
+export function toKeypadWord(label) {
+  return String(label)
+    .toUpperCase()
+    .replace(/[^\u0000-\u007F]/g, (ch) => STROKE_LETTERS[ch] ?? ch)
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^A-Z]/g, '')
+}
+
 /* Convenience: encode a word back to its emoji string using EMOJI_KEY. */
 export function encodeWord(word) {
   const inv = Object.fromEntries(Object.entries(EMOJI_KEY).map(([e, l]) => [l, e]))

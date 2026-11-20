@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useGame } from '../game/GameContext.jsx'
-import { ITEMS, EMOJI_KEY, encodeWord } from '../game/gameData.js'
+import { ITEMS, EMOJI_KEY, encodeWord, toKeypadWord } from '../game/gameData.js'
 import { bgUrl, assetUrl } from '../game/assets.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { DEBUG } from '../game/settings.js'
@@ -93,11 +93,9 @@ const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v))
 /* The word on each post's emoji sticky-note — and the answer the player
    types — is the post's label in the current language
    (rooms.influencer.labels.<id>, e.g. PAID / PAGADO / MAKSETTU / PLAĆENO).
-   The keypad only has A–Z (EMOJI_KEY), so accents are folded away
-   (COLABORACIÓN → COLABORACION, PLAĆENO → PLACENO, YHTEISTYÖ → YHTEISTYO) and
-   anything else (spaces, punctuation) is dropped. */
-const toKeypadWord = (label) =>
-  label.normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().replace(/[^A-Z]/g, '')
+   The fold itself is toKeypadWord in gameData.js, beside EMOJI_KEY — the
+   checker needs it too, and a second copy here would be the thing that
+   drifts. */
 const KEYPAD_LETTERS = new Set(Object.values(EMOJI_KEY))
 
 /* Stable English names for analytics: the product copy is localised, so it

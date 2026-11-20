@@ -6,6 +6,7 @@ import dictionaries from '../src/i18n/dictionaries.js'
 const { en } = dictionaries
 import { NODES, ITEMS } from '../src/game/gameData.js'
 import { ROULETTE_WHEELS, ROULETTE_SEGMENTS } from '../src/game/rouletteData.js'
+import { EMOJI_KEY, toKeypadWord } from '../src/game/gameData.js'
 import { TEST_ITEMS } from '../src/game/testItems.js'
 
 const problems = []
@@ -145,6 +146,65 @@ for (const [i, round] of en.story.rounds.entries()) {
     ok(false, `story.rounds[${i}] (${item.slug}) has been reworded since its slugs were written.\n`
       + `      Re-read the options against their slugs; update any that no longer fit, then set\n`
       + `      textHash: '${actual}' (was '${item.textHash}').\n${shown}`)
+  }
+}
+
+/* ---- Every language must be able to SOLVE the three code puzzles ----
+
+   These are the two places where a translation can lock a player out with
+   nothing on screen to say why, so they are checked in all four languages
+   rather than trusted.
+
+   1. The Influencer Avenue keypad spells the post's label in the player's
+      language, on an A–Z emoji keypad. toKeypadWord folds accents away and
+      maps the stroke letters by hand, but it cannot invent a key: a Cyrillic
+      label folds to nothing, leaving a stage whose answer is the empty string
+      and which therefore can never be completed.
+   2. The Ads Corridor and the Persuasion Lab build their exit code from one
+      highlighted letter per poster, set per language. If a poster's letter
+      does not occur in that poster's own copy there is nothing to highlight,
+      so the code can never be read off the wall. */
+const KEYPAD = new Set(Object.values(EMOJI_KEY))
+
+for (const [code, dict] of Object.entries(dictionaries)) {
+  const labels = dict.rooms?.influencer?.labels || {}
+  for (const [id, label] of Object.entries(labels)) {
+    const word = toKeypadWord(label)
+    ok(word.length > 0,
+      `${code}: rooms.influencer.labels.${id} ("${label}") has no letter the emoji keypad can spell, `
+      + 'so that post could never be decoded. The label must use the Latin alphabet.')
+    // A letter the fold threw away, rather than folded — see STROKE_LETTERS.
+    for (const ch of String(label)) {
+      if (/\p{L}/u.test(ch) && toKeypadWord(ch) === '') {
+        ok(false, `${code}: rooms.influencer.labels.${id} ("${label}") loses "${ch}" on the way to the `
+          + 'keypad. Add it to STROKE_LETTERS in gameData.js, or pick a label without it.')
+      }
+    }
+    for (const ch of word) {
+      ok(KEYPAD.has(ch), `${code}: rooms.influencer.labels.${id} needs the letter "${ch}", `
+        + 'which no emoji in EMOJI_KEY stands for.')
+    }
+  }
+
+  for (const room of ['ads', 'persuasion']) {
+    const posters = dict.rooms?.[room]?.posters
+    if (!Array.isArray(posters)) continue
+    posters.forEach((poster, i) => {
+      const letter = poster?.letter
+      if (letter === undefined) return
+      ok(/^[A-Za-z]$/.test(String(letter)),
+        `${code}: rooms.${room}.posters[${i}].letter is "${letter}" — it must be a single A–Z letter, `
+        + 'because the player types the finished code on a keyboard.')
+      /* Everything the poster SAYS, which is where the letter has to be
+         hiding. `letter` itself is excluded: it is a string on the same
+         object, so including it made this test pass on its own answer. */
+      const copy = Object.entries(poster)
+        .filter(([k, v]) => k !== 'letter' && typeof v === 'string')
+        .map(([, v]) => v).join(' ').toUpperCase()
+      ok(copy.includes(String(letter).toUpperCase()),
+        `${code}: rooms.${room}.posters[${i}] has to hide the letter "${letter}", but that letter does `
+        + 'not appear anywhere in its text, so there is nothing to highlight and the code cannot be read.')
+    })
   }
 }
 
