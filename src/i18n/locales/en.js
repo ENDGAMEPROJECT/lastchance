@@ -944,6 +944,9 @@ export default {
     },
     "influencer": {
       "intro": "A neon avenue of billboards and influencer feeds. Read past the gloss: label the sponsorships, then check what the products really are.",
+      "info": {
+        "labelsButton": "ℹ️ INFO"
+      },
       "solvedTitle": "Influencer Avenue cleared: Data Report obtained 📄",
       "solvedText": "You labelled the ads and detected the untrustworthy products",
       "evidenceLabel": "The posts hid paid promotions, and the product photo was AI-generated with zero real results.",

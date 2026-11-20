@@ -293,7 +293,17 @@
   gap: 6px;
   width: 100%;
 }
-.ia-notes-check .btn { width: 100%; }
+.ia-notes-check .btn {
+  /* As wide as its label, on one line, in every language (COMPROBAR
+     ETIQUETAS is long, PROVERI OZNAKE short); tighter tracking and side
+     padding than a plain .btn so the long ones still fit the column. */
+  width: max-content;
+  max-width: none;
+  white-space: nowrap;
+  letter-spacing: 0.06em;
+  padding-left: 16px;
+  padding-right: 16px;
+}
 /* Wrong placement notice: Link District's error box (.ld-block-progress.is-error),
    pinned over the top of the stage. */
 .ia-label-stage { position: relative; }
@@ -512,8 +522,7 @@
   height: 80px;
   overflow-y: auto;
   overscroll-behavior: contain;
-  scrollbar-width: thin;
-  scrollbar-color: #62666e #202327;
+  --sb-thumb: #62666e; --sb-thumb-hover: #8a8f98; /* grey, like the social-app card */
   list-style: none;
   margin: 0;
   padding: 10px 8px;
@@ -638,7 +647,9 @@ button.ia-view-publication {
 .ia-publication-author > span { font-size: 0.75rem; color: #a4aab3; }
 /* Look + size: shared .close-btn (CloseButton). Only its spot here. */
 .ia-publication-close { align-self: start; }
-.ia-publication-thread { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #62666e #202327; }
+/* Phone: half the shared mobile close-button size (78px). */
+@media (max-width: 1180px) { .close-btn.ia-publication-close { --size: 39px; } }
+.ia-publication-thread { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; --sb-thumb: #62666e; --sb-thumb-hover: #8a8f98; }
 .ia-publication-caption { font-family: var(--font-neogrotesk); 
   margin: 0; padding: 22px 20px; font-size: 0.9rem; line-height: 1.55; overflow-wrap: anywhere; 
 @media (max-width: 1180px) {
@@ -772,6 +783,20 @@ button.ia-view-publication {
   padding: 0.2rem 0 0.6rem 0;
 }
 .ia-note-cap { margin-top: 5px; color: #7a6410; font-style: italic; }
+/* Phone: smaller post-its with smaller emojis (one line for most words), so
+   the column of three plus the Check button fits above the open keyboard. */
+@media (max-width: 1180px) {
+  /* At least the post-its' width; wider when a language's Check label needs it. */
+  .ia-notes-dock { width: max-content; min-width: 216px; gap: 10px; padding-top: 4px; }
+  .ia-note { width: 200px; height: auto; min-height: 58px; padding: 7px 3px 3px; gap: 3px; }
+  .ia-note-emojis { gap: 1px; font-size: 20px; padding: 0; } /* 15px + 30% */
+  .ia-note-tape { width: 44px; height: 12px; top: -6px; }
+  .ia-note-input { padding: 3px 3px 2px; }
+  /* Check labels: 30% smaller than the phone .btn (font, padding, width). */
+  .ia-notes-check .btn { font-size: calc(1rem * 1.33 * 0.7); padding: 11px 14px; }
+  .ia-note-input .ia-answer-letters { gap: 3px; }
+  .ia-note-input .ia-answer-letter { flex: 0 1 20px; width: 20px; height: 27px; font-size: 1.1rem; line-height: 25px; }
+}
 
 /* The selected post receives letters from the decoder keyboard. */
 .ia-answer {
@@ -903,6 +928,14 @@ button.ia-view-publication {
 .ia-key-cell:focus-visible, .ia-decoder-erase:focus-visible, .ia-answer:focus-visible {
   outline: 2px solid var(--cyan);
   outline-offset: 2px;
+}
+/* The keyboard's emojis and the post-its' must look the same. Buttons don't
+   inherit the page font (they fell back to Arial, i.e. the system emoji), so
+   both name the game's own emoji font first (game/emojiFont.js), with each
+   platform's colour emoji font behind it for browsers that can't paint it. */
+.ia-key-emoji,
+.ia-note-emojis {
+  font-family: 'Game Emoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
 }
 .ia-key-emoji { font-size: 1.25rem; line-height: 1; }
 .ia-key-letter { color: #fff; font-size: 0.9rem; font-weight: 700; }

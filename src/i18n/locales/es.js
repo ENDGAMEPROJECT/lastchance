@@ -285,7 +285,7 @@ export default {
       ],
       "endingFriend": "Mira, puedes analizar la página todo lo que quieras, ¡pero a mí todo me parece correcto! Estás siendo {player:paranoico|paranoica}. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, cuarenta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
       "endingYou": "Trato hecho. Usemos tu móvil para entrar al Internet físico y ver qué esconde esa oferta.",
-      "begin": "▶ Mirar detrás de la pantalla"
+      "begin": "▶ Pulsa el móvil para entrar en el mundo digital"
     },
     "posttest": {
       "eyebrow": "La decisión final",
@@ -359,7 +359,7 @@ export default {
     "roulette-corridor": {
       "title": "Pasillo de la Ruleta",
       "subtitle": "Pasillo · Cebo gamificado",
-      "blurb": "Dos ruletas con ofertas tentadoras. Investiga cómo intenta influirte cada una.",
+      "blurb": "Felici",
       "kind": "corridor"
     },
     "influencer-avenue": {
@@ -738,7 +738,7 @@ export default {
   },
   "rooms": {
     "link": {
-      "intro": "Un router con tres puertas. Cada una es un enlace que dice ser una tienda. Cierra las fraudulentas.",
+      "intro": "Una sala con tres puertas. Cada una es un enlace que dice ser una tienda. Cierra las fraudulentas.",
       "solvedTitle": "Distrito de \"Los Enlaces\" superado · Tarjeta descodificadora de emojis obtenida 🔑",
       "solvedText": "Bloqueaste todas las falsas y aprendiste qué hace sospechosa a una URL. La tarjeta desbloquea las etiquetas de la Avenida de los Influencers.",
       "routerBadge": "Cruce {current} / {total}",
@@ -895,7 +895,7 @@ export default {
           "fair": "No trucada"
         },
         "retry": "No del todo. Mira los resultados e inténtalo otra vez.",
-        "correct": "Correcto! Esta rueda está trucada",
+        "correct": "No del todo. Mira los resultados e inténtalo otra vez.",
         "next": "Siguiente ruleta →",
         "finish": "Registrar la prueba ✓",
         "observe": "Gira al menos {count} veces. ¿Cambian los resultados?",
@@ -943,7 +943,10 @@ export default {
       "solvedText": "Comparaste giros repetidos, explicaste tus sospechas y descubriste cómo funcionaba cada ruleta."
     },
     "influencer": {
-      "intro": "Una avenida de neón con vallas publicitarias y feeds de influencers. Mira más allá del brillo: etiqueta los patrocinios y luego comprueba qué son realmente los productos.",
+      "intro": "Una avenida con luces de neón, vallas publicitarias y feeds de influencers. Mira más allá del brillo: etiqueta los patrocinios y luego comprueba qué son realmente los productos.",
+      "info": {
+        "labelsButton": "ℹ️ INFO"
+      },
       "solvedTitle": "Avenida de los Influencers superada: Informe de datos obtenido 📄",
       "solvedText": "Etiquetaste los anuncios y detectaste los productos poco fiables",
       "evidenceLabel": "Las publicaciones escondían promociones pagadas, y la foto del producto estaba generada por IA, sin ningún resultado real.",
@@ -985,7 +988,7 @@ export default {
       },
       "labels": {
         "paid": "PUBLI",
-        "collab": "COLLAB",
+        "collab": "COLABORACIÓN",
         "gifted": "REGALO",
         "nothing": "NADA"
       },
@@ -1097,7 +1100,7 @@ export default {
         "prompt": "Haz una búsqueda inversa de cada foto y luego clasifica lo que realmente es con los sellos de abajo.",
         "runSearch": "🔍 Ejecutar búsqueda inversa",
         "engineBar": "reverse-image-search.io",
-        "engineDrop": "Arrastra aquí una imagen de producto para buscarla al revés",
+        "engineDrop": "Arrastra aquí una imagen de producto para hacer una búsqueda inversa de imagen",
         "trayLabel": "Tus imágenes guardadas",
         "classifyPrompt": "Entonces este producto es…",
         "searching": "Buscando en la web",
@@ -1125,17 +1128,17 @@ export default {
         "claimsCaption1": "Conejito de porcelana original de JAPÓN",
         "claimsCaption2": "Conejito de plástico hecho en México",
         "title": "Más allá del anuncio: ¿qué hay del producto?",
-        "body": "¿Es el producto lo que dicen? Una búsqueda inversa de imágenes te ayuda a comprobarlo: buscas con una foto y encuentra esa misma imagen u otras parecidas que aparecen en internet, para que verifiques si la imagen es de verdad lo que el vendedor afirma.",
-        "instructions": "Primero haz la búsqueda inversa de la imagen. Después, mira los resultados para juzgar la autenticidad del producto.",
+        "body": "¿Es el producto lo que dicen? Una búsqueda inversa de imágenes te ayuda a comprobarlo. ¿Cómo funciona? Fácil, buscas con una foto y encuentra esa misma imagen u otras parecidas que aparecen en internet, para que verifiques si la imagen es de verdad lo que el vendedor afirma.",
+        "instructions": "Primero haz la búsqueda inversa de la imagen. Después, mira los resultados para juzgar la autenticidad del producto. Finalmente, añade el sello que corresponda",
         "useShop": "¿Te encanta una prenda que viste en una publicación? Haz una búsqueda inversa de la foto para encontrar dónde comprarla de verdad.",
-        "useVerify": "¿No estás {player:seguro|segura} de que el producto de un influencer sea auténtico? Búscalo al revés para ver si es realmente único o el mismo artículo fabricado en masa que vende todo el mundo.",
+        "useVerify": "¿No estás {player:seguro|segura} de que el producto de un influencer sea auténtico? Haz una búsqueda inversa de la foto para ver si es realmente único o el mismo artículo fabricado en masa que vende todo el mundo.",
         "searchLabel": "búsqueda inversa de imágenes",
         "searching": "Buscando en la web…",
-        "dragHint": "↓ Arrastra la foto del vendedor a una búsqueda inversa de imágenes",
+        "dragHint": "↓ Arrastra la foto del vendedor y haz una búsqueda inversa de imágenes",
         "queryCaption": "El vendedor dice: «chaqueta artesanal única» · 180 €",
         "resultsLabel": "La misma foto encontrada en:",
         "takeawayLabel": "La trampa:",
-        "takeaway": "Esa chaqueta «artesanal única» es el mismo artículo fabricado en masa que se vende por 9–14 € en decenas de tiendas de dropshipping. La foto la delató.",
+        "takeaway": "Esa chaqueta «artesanal única» es el mismo artículo fabricado en grandes cantidades que se vende por 9–14 € en miles de tiendas de dropshipping. La foto la delató.",
         "continue": "Ahora inténtalo tú →"
       },
       "products": [
@@ -1263,21 +1266,21 @@ export default {
         "erase": "Borrar la última letra"
       },
       "labelFeedback": {
-        "title": "Las publicaciones patrocinadas deben etiquetarse",
-        "intro": "Cuando a un creador o influencer le pagan, se asocia con una marca o le regalan un producto, tiene que declararlo de forma clara y visible.",
-        "paidDesc": "La marca paga al creador por publicar sobre ella.",
-        "paidExample": "Señales delatoras: un enlace de afiliado o un código de descuento personal como «LUNA20».",
+        "title": "AVISO: La publicidad tiene que estar etiquetada en redes sociales",
+        "intro": "Cuando a un creador de contenido o influencer le pagan, se asocia con una marca o le regalan un producto, tiene que informarlo de manera muy clara y visible. ",
+        "paidDesc": "La marca paga al creador por publicar contenido sobre ella.",
+        "paidExample": "Señales de alerta: un código de descuento personal como «LUNA20».",
         "collabDesc": "Una colaboración creativa, hecha junto con la marca.",
-        "collabExample": "Señales delatoras: una etiqueta de «colaboración pagada» o #publicidad en una publicación co-creada.",
+        "collabExample": "Señales de alerta: una etiqueta de «colaboración pagada» o #publi en una publicación co-creada.",
         "giftedDesc": "Al creador le enviaron el producto gratis.",
-        "giftedExample": "Señales delatoras: «regalado», o «gracias @marca por enviarme esto»: un artículo gratis, sin pago.",
+        "giftedExample": "Señales de alerta: «regalado», o «gracias @marca por enviarme esto»: un artículo gratis, sin pagos.",
         "continue": "Entendido →"
       }
     },
     "algorithm": {
       "intro": "Un ordenador gigante usa cantidades enormes de datos personales para decidir qué anuncios ve cada persona. Entra en la sala para averiguar cómo crea anuncios personalizados",
-      "solvedTitle": "Sala de Control del Algoritmo descifrada · Prueba registrada ",
-      "solvedText": "Ya visto cómo el algoritmo convertía la edad, los intereses y las posibles inseguridades de {friend} en un único anuncio. Eso no es casualidad: es el resultado de su perfil publicitario.",
+      "solvedTitle": "Sala de Control del Algoritmo descifrada · Prueba superada",
+      "solvedText": "Ya has visto cómo el algoritmo convertía la edad, los intereses y las posibles inseguridades de {friend} en un único anuncio. Eso no es casualidad: es el resultado de su perfil publicitario.",
       "evidence": "El anuncio fue elegido a dedo por un algoritmo usando la edad, los intereses y las inseguridades de {friend}.",
       "unlock": {
         "badge": "ACCESO · Sala de Control del Algoritmo",
@@ -1295,11 +1298,11 @@ export default {
         "optionBTag": "Opción B",
         "optionBBefore": "Ver",
         "optionBBold": "muchos más",
-        "optionBAfter": "ads: but your personal data is collected.",
+        "optionBAfter": "anuncios: pero menos información personal tuya se analiza",
         "wrongTitle": "Respuesta incorrecta.",
-        "wrongText": "Acabas de cambiar tu privacidad por comodidad. «Personalizado» es el algoritmo: menos anuncios significa que recoge y perfila más datos tuyos para elegirlos.",
+        "wrongText": "Acabas de cambiar tu privacidad por comodidad. «Personalizado» es el algoritmo: menos anuncios significa que recoge y analiza más datos tuyos para personalizar los anuncios.",
         "goodTitle": "Buena respuesta.",
-        "goodText": "Más anuncios molesta, pero conservaste tus datos y esquivaste en parte el algoritmo de personalización. La comodidad es el cebo que usa para que el perfilado parezca un favor.",
+        "goodText": "Más anuncios molesta, pero conservas tus datos y esquivas en parte el algoritmo de personalización. La comodidad es la trampa que usan las plataformas para que la personalización parezca algo bueno. ",
         "afterNote": "En cualquier caso, la máquina sigue intentando perfilar a todo el mundo. Veamos cómo.",
         "continue": "Entrar en el motor de segmentación →"
       },
@@ -1309,21 +1312,21 @@ export default {
         "prompt": "Rellena el hueco que falta para completar el anuncio de cada persona.",
         "adTitle": "Anuncio",
         "adFlag": "ANUNCIO EXPUESTO",
-        "slotPlaceholder": "suelta la ficha",
+        "slotPlaceholder": "coloca la ficha",
         "stepBadge": "Ecuación {n} / {total}",
         "profileBadge": "Perfil completo",
-        "dragHint": "Arrastra el factor que falta a la ecuación: el que encaja con esta persona concreta.",
-        "wrongHint": "Ese factor no encaja con esta persona. Fíjate en lo que el anuncio vende en realidad.",
+        "dragHint": "Arrastra el elemento que falta a la ecuación: el que encaja con esta persona concreta.",
+        "wrongHint": "Ese dato no encaja con esta persona. Fíjate en lo que el anuncio vende en realidad.",
         "navTerminal": "Terminal de anuncios",
         "terminalTitle": "TERMINAL DE SALIDA DE ANUNCIOS",
         "profileTitle": "▚ PERFIL RECONSTRUIDO ▚",
-        "profileP1": "El motor cruzó",
+        "profileP1": "El motor juntó",
         "profileB1": "la edad de {friend}",
         "profileP2": "(adolescente),",
         "profileB2": "intereses",
         "profileP3": "(videojuegos, tecnología nueva y búsquedas de el NovaPad X) e",
         "profileB3": "inseguridades",
-        "profileP4": "(encajar, miedo a perderse la oferta). De ahí salió un anuncio perfectamente dirigido: justo la oferta del «90% de descuento» en el NovaPad X. Que {friend} lo viera nunca fue casualidad.",
+        "profileP4": "(encajar, miedo a perderse la oferta). Del análisis salió un anuncio perfectamente dirigido: justo la oferta del «90% de descuento» en el NovaPad X. Que {friend} lo viera nunca fue casualidad.",
         "logEvidence": "Registrar esta prueba ✓",
         "finalLessonTitle": "Lo que has aprendido",
         "finalLesson": "Los anuncios personalizados combinan tu actividad, tus intereses y tus inseguridades para dirigirse a ti.",
@@ -1331,7 +1334,7 @@ export default {
         "lastBtn": "Ver el perfil de {friend} →"
       },
       "cols": [
-        "Demografía",
+        "Demografía (edad, sexo)",
         "Sigue / le gusta",
         "Inseguridades"
       ],
@@ -1342,7 +1345,7 @@ export default {
             "0": "Chica, 13–17",
             "1": "Sigue a influencers de belleza"
           },
-          "feedbackLesson": "El algoritmo combina la edad de la usuaria, las cuentas que sigue, sus «me gusta» y el tiempo que pasa viendo vídeos de cuidado de la piel para mostrarle anuncios dirigidos que fomentan la compra."
+          "feedbackLesson": "El algoritmo combina la edad de la usuaria, las cuentas que sigue, sus «me gusta» y el tiempo que pasa viendo vídeos de cuidado de la piel para mostrarle anuncios personalizados que fomentan la compra."
         },
         "r2": {
           "ad": "Suplemento para ganar músculo",
@@ -1358,7 +1361,7 @@ export default {
             "0": "Hombre, 25–35",
             "1": "Sigue canales de tecnología"
           },
-          "feedbackLesson": "Los clics en productos contra la caída del cabello o ver repetidamente contenido relacionado pueden sugerir esa preocupación. Un algoritmo puede usar esas acciones para mostrarle a alguien anuncios de caída del cabello que ofrecen una supuesta solución a su inquietud."
+          "feedbackLesson": "Los clics en productos contra la caída del cabello o ver repetidamente contenido relacionado pueden sugerir esa preocupación. Un algoritmo puede usar esas acciones para mostrarle a alguien anuncios de caída del cabello que ofrecen una supuesta solución a su preocupación."
         },
         "r4": {
           "ad": "Pastillas adelgazantes",
@@ -1366,7 +1369,7 @@ export default {
             "0": "Mujer, 30–45",
             "2": "Insegura por su peso"
           },
-          "feedbackLesson": "Seguir páginas de dietas, dar «me gusta» a publicaciones sobre adelgazar y ver vídeos relacionados alimenta un perfil publicitario. El algoritmo usa esos rastros para seleccionar un anuncio que encaje."
+          "feedbackLesson": "Seguir páginas de dietas, dar «me gusta» a publicaciones sobre adelgazar y ver vídeos relacionados genera un perfil publicitario. El algoritmo usa esos datos para seleccionar un anuncio que encaje."
         }
       },
       "tiles": {

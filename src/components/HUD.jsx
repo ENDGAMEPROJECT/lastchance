@@ -41,7 +41,7 @@ const INFO_ROOMS = {
   // Label game → the label explainer; reverse image search → its explainer.
   // (No info pop-over at the products-chamber door.)
   'influencer-avenue': (hintStep) => hintStep === 'door' ? null : hintStep === 'search' ? {
-    button: 'rooms.influencer.explain.lookForTitle',
+    button: 'rooms.influencer.info.labelsButton',
     title: 'rooms.influencer.explain.title',
     width: 900,
     render: () => <InfluencerInfo step="search" />,
@@ -669,7 +669,7 @@ export default function HUD() {
 
       </Modal>
 
-      <Modal open={bagOpen} onClose={() => setBagOpen(false)} title={t('hud.inventoryTitle')} accent="purple" width={620} className="hud-modal">
+      <Modal open={bagOpen} onClose={() => setBagOpen(false)} title={t('hud.inventoryTitle')} accent="purple" width={620} className="hud-modal bag-modal">
         {/* Two tabs: the tools you carry, and the evidence gathered so far. */}
         <div className="bag-tabs" role="tablist">
           {[

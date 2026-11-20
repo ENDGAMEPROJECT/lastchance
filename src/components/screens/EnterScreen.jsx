@@ -4,7 +4,7 @@ import { track, OBJ } from '../../game/xapi.js'
 import { useT } from '../../i18n/index.jsx'
 import { useStage } from '../Stage.jsx'
 import { GAME_MINUTES } from '../../game/gameData.js'
-import { playSound, stopSound } from '../../game/sound.js'
+import { playSound, stopSound, setAmbience } from '../../game/sound.js'
 import { DEBUG, settings } from '../../game/settings.js'
 import { bgUrl } from '../../game/assets.js'
 import DialogNav from './DialogNav.jsx'
@@ -84,6 +84,8 @@ export default function EnterScreen() {
   // The whoosh rides the tunnel into the Physical Internet; stopped if the
   // player leaves mid-tunnel so it can't keep ringing.
   const tunnel = phase === 'tunnel'
+  // The Physical Internet's hum starts once the player is through the portal.
+  useEffect(() => { setAmbience(phase === 'done' ? 'internet' : null) }, [phase])
   useEffect(() => {
     if (!tunnel) return
     playSound('portal_whoosh.mp3')

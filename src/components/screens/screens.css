@@ -795,8 +795,6 @@ h3.win-congrats {
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     padding: 12px 20px 20px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(120, 160, 255, 0.35) transparent;
   }
 }
 
