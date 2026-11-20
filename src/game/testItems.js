@@ -22,12 +22,12 @@ export const TEST_ITEMS = [
   {
     // i18n title: "The Timer"
     slug: 'q1-artificial-urgency',
-    textHash: '0176ae2502', // of the English title + the four option texts
+    textHash: '60d27d3a54', // of the English title + the four option texts
     name: 'Spotting artificial urgency (the countdown)',
     correct: 'A',
     options: {
       A: 'countdown-can-be-fake',          // CORRECT
-      B: 'countdown-is-pressure-tactic',   // true of THIS deal, but not yet knowable
+      B: 'prize-link-is-safe',
       C: 'social-ad-means-safe-shop',
       D: 'real-shops-ask-card-in-chat',
     },
