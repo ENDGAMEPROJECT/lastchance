@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useGame, formatTime } from '../../game/GameContext.jsx'
 import { useT } from '../../i18n/index.jsx'
-import { playSound, stopSound } from '../../game/sound.js'
+import { playSound, stopSound, setAmbience } from '../../game/sound.js'
 import DialogNav from './DialogNav.jsx'
 import PortalTunnel from '../PortalTunnel.jsx'
 import DialogScene from './DialogScene.jsx'
@@ -90,6 +90,9 @@ export default function ReturnScreen() {
   // Tunnel: the coded holographic tunnel runs for TUNNEL_MS, then cuts to
   // white, then into the post-test. The whoosh rides it back out of the
   // Physical Internet (stopped if the screen goes away mid-tunnel).
+  // Still in the Physical Internet while talking; its hum fades out as the
+  // tunnel back to school opens.
+  useEffect(() => { setAmbience(phase !== 'tunnel' && phase !== 'white' ? 'internet' : null) }, [phase])
   useEffect(() => {
     if (phase === 'tunnel') {
       playSound('portal_whoosh.mp3')

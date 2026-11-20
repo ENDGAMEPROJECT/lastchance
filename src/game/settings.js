@@ -71,7 +71,19 @@ export const settings = {
   /* Ads Corridor: true = the room goes dark while the Truth Flashlight is on
      (only the beam lights the wall); false = the room stays lit, so the other
      glossy posters stay visible and the beam just flips the one under it. */
-  adsCorridor: { darkRoom: false, litDim: 0.25 }, // litDim: how much the lit room darkens (0–1)
+  /* Looped background sounds (public/sounds), one at a time, cross-faded:
+     internet — the Physical Internet: arrival, map, rooms, return talk.
+     school   — the pre-test and post-test conversations at school.
+     Silent in the portal tunnels and on the welcome / end screens.
+     volume 0–1 per track; fadeMs = fade in/out. */
+  ambience: {
+    fadeMs: 1500,
+    tracks: {
+      internet: { file: 'bg_sound_noise.mp3', volume: 0.4 },
+      school: { file: 'ambience_school.mp3', volume: 0.05 },
+    },
+  },
+  adsCorridor: { darkRoom: false, litDim: 0.5 }, // litDim: how much the lit room darkens (0–1)
 
   /* Once the final conversation is available — all districts cleared, or the
      clock gone and the player carrying on — nudge the Map button for `showMs`

@@ -944,6 +944,9 @@ export default {
     },
     "influencer": {
       "intro": "Neonska avenija bilborda i fidova influensera. Pogledaj iza sjaja: označi sponzorisane objave, a zatim proveri šta su proizvodi zapravo.",
+      "info": {
+        "labelsButton": "ℹ️ INFO"
+      },
       "solvedTitle": "Avenija influensera završena: Dobijen Izveštaj o podacima 📄",
       "solvedText": "Označio/la si oglase i otkrio/la proizvode kojima se ne može verovati",
       "evidenceLabel": "Objave su skrivale plaćene promocije, a fotografija proizvoda je generisana pomoću veštačke inteligencije bez ikakvih stvarnih rezultata.",

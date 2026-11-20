@@ -2,6 +2,8 @@
    (so it works under '/lastchance/' in production) and plays them on demand.
    Best-effort: any failure (autoplay policy, missing file) is swallowed so it
    never interrupts the game. */
+import { settings } from './settings.js'
+
 const BASE = import.meta.env.BASE_URL
 
 export const soundUrl = (name) => `${BASE}sounds/${name}`
@@ -21,14 +23,63 @@ export function setMuted(value) {
   try { localStorage.setItem(MUTE_KEY, muted ? '1' : '0') } catch { /* ignore */ }
   // Silence anything already playing when muting.
   if (muted) {
+    for (const k in fadeTimers) window.clearInterval(fadeTimers[k])
     for (const k in cache) {
       try { cache[k].pause(); cache[k].currentTime = 0 } catch { /* ignore */ }
     }
-  }
+  } else startAmbience() // unmuted: the current background track comes back
   return muted
 }
 
 export function toggleMuted() { return setMuted(!muted) }
+
+/* ---- Background ambience ----
+   Looped tracks from settings.ambience.tracks (the Physical Internet's hum,
+   the school), one at a time and faded in and out. Screens name the one that
+   should play with setAmbience('internet' | 'school' | null); muting pauses
+   it and unmuting brings it back. */
+let ambience = null // key of the track that should be playing
+const fadeTimers = {}
+function fadeTo(name, target, ms, done) {
+  const a = get(name)
+  window.clearInterval(fadeTimers[name])
+  const steps = Math.max(1, Math.round(ms / 50))
+  const from = a.volume
+  let i = 0
+  fadeTimers[name] = window.setInterval(() => {
+    i += 1
+    a.volume = Math.min(1, Math.max(0, from + (target - from) * (i / steps)))
+    if (i >= steps) { window.clearInterval(fadeTimers[name]); done?.() }
+  }, 50)
+}
+function startAmbience() {
+  const track = ambience && settings.ambience.tracks[ambience]
+  if (muted || !track) return
+  try {
+    const a = get(track.file)
+    a.loop = true
+    if (a.paused) { a.volume = 0; a.play().catch(() => {}) }
+    fadeTo(track.file, track.volume, settings.ambience.fadeMs)
+  } catch { /* ignore */ }
+}
+export function setAmbience(key) {
+  const next = key || null
+  if (next === ambience) return
+  const prev = ambience && settings.ambience.tracks[ambience]
+  ambience = next
+  // Fade the old track out (and pause it once silent, unless it's wanted again).
+  if (prev) {
+    try {
+      const a = cache[prev.file]
+      if (a && !a.paused) {
+        fadeTo(prev.file, 0, settings.ambience.fadeMs, () => {
+          if (settings.ambience.tracks[ambience]?.file !== prev.file) a.pause()
+        })
+      }
+    } catch { /* ignore */ }
+  }
+  startAmbience()
+}
 function get(name) {
   let a = cache[name]
   if (!a) {

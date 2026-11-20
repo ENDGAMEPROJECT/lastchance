@@ -4,6 +4,7 @@ import { preloadGameAssets } from './game/preloadAssets.js'
 import { useI18n } from './i18n/index.jsx'
 import Stage from './components/Stage.jsx'
 import { IS_PHONE } from './game/device.js'
+import { setAmbience } from './game/sound.js'
 import { DndProvider } from './components/dnd/Dnd.jsx'
 import HUD from './components/HUD.jsx'
 import SessionDialog from './components/SessionDialog.jsx'
@@ -44,6 +45,16 @@ export default function App() {
   useEffect(() => {
     document.body.classList.toggle('reduced-motion', reducedMotion)
   }, [reducedMotion])
+
+  // Background sound: the Physical Internet's hum on the map and in the rooms,
+  // the school's ambience in the pre-test and post-test, nothing on the
+  // welcome and end screens. The arrival and the return talk switch it
+  // themselves (the hum starts after the tunnel in and stops at the tunnel out).
+  useEffect(() => {
+    if (screen === 'map' || screen === 'room' || screen === 'review') setAmbience('internet')
+    else if (screen === 'pretest' || screen === 'posttest') setAmbience('school')
+    else if (screen !== 'enter' && screen !== 'return') setAmbience(null)
+  }, [screen])
 
   // WelcomeScreen owns its draft character selection. Later stages prepare
   // only the current destination and the next room in the route.

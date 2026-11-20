@@ -944,6 +944,9 @@ export default {
     },
     "influencer": {
       "intro": "Neonbulevardi täynnä mainostauluja ja vaikuttajien syötteitä. Katso kiillon taakse: merkitse kaupalliset yhteistyöt ja tarkista sitten, mitä tuotteet oikeasti ovat.",
+      "info": {
+        "labelsButton": "ℹ️ INFO"
+      },
       "solvedTitle": "Vaikuttajabulevardi selvitetty: Datakooste saatu 📄",
       "solvedText": "Merkitsit mainokset ja tunnistit epäluotettavat tuotteet",
       "evidenceLabel": "Julkaisut piilottivat maksettuja mainoksia, ja tuotekuva oli tekoälyn luoma ilman yhtään aitoa osumaa.",

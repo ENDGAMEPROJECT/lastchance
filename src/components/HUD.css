@@ -824,6 +824,19 @@ body.debug-hidden
   .hud-modal .bag-name {
     font-size: calc(1.1rem * 20 / 17);
   }
+
+  /* The Bag never scrolls on a phone: same width as the other HUD pop-overs,
+     but it may grow up and down to the whole stage height, with tighter
+     spacing, so the taller of its two tabs (all tools / all evidence) fits. */
+  .modal-backdrop:has(> .bag-modal) { padding: 8px 24px; }
+  .modal.hud-modal.bag-modal { max-height: 100%; }
+  .bag-modal .modal-head { padding: 10px 18px; }
+  .bag-modal .modal-body { padding: 12px 20px 14px; overflow: visible; }
+  .bag-modal .bag-tabs { margin-bottom: 8px; }
+  .bag-modal .bag-grid { gap: 6px; margin-top: 4px; }
+  .bag-modal .bag-item { padding: 6px 12px; }
+  .bag-modal .bag-icon { width: 64px; margin-right: 8px; }
+  .bag-modal .evidence-list { gap: 4px; margin-top: 4px; }
 }
 
 /* ---- Info (i) button, left of Hints, and its pop-over ---- */
