@@ -92,3 +92,19 @@
   opacity: 0.6;
 }
 .session-where { color: var(--cyan); }
+
+/* The "this cannot be undone" line, shown once Start over is armed. Magenta
+   rather than the amber of .session-pending: that one is a nudge about
+   something still to do, this one is about to destroy the run, and the colour
+   matches the button it is warning about. */
+.session-confirm {
+  margin: 0;
+  padding: 9px 12px;
+  border: 1px solid rgba(255, 70, 140, 0.5);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 70, 140, 0.1);
+  color: var(--magenta);
+  font-size: 0.86rem;
+  line-height: 1.4;
+  text-align: center;
+}

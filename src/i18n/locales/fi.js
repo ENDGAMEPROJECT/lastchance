@@ -413,7 +413,8 @@ export default {
     "progress": "Kaupunginosia selvitetty: {done}/{total} · aikaa jäljellä {time}",
     "resume": "Jatka kierrosta",
     "restart": "Aloita alusta",
-    "postTestPending": "Et ole vielä puhunut ystäväsi kanssa: alusta aloittaminen hävittää sen. "
+    "postTestPending": "Et ole vielä puhunut ystäväsi kanssa: alusta aloittaminen hävittää sen. ",
+    "confirmRestart": "Alusta aloittaminen poistaa tämän kierroksen ja kaiken siinä kerätyn. Tätä ei voi peruuttaa."
   },
   "survey": {
     "bannerTitle": "Kiitos pelaamisesta!",

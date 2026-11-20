@@ -62,13 +62,13 @@ export default {
     "tagline": "// Anuncios · Estafas · Sitios web fraudulentos → descifrado",
     "situationTitle": "La situación",
     "hook": "{friend:Tu amigo|Tu amiga} {friend} acaba de encontrar una oferta viral en {product}: ¡90% de descuento, solo por hoy! Parece increíble… y por eso mismo crees que es una estafa.",
-    "context": "Para mostrarle a {friend} cómo funcionan realmente las estafas y la publicidad, ambos entran en una versión física de Internet: una ciudad de neón donde las tiendas, las plataformas sociales y los anuncios se convierten en distritos por los que se puede pasear.",
+    "context": "Para mostrarle a {friend} cómo funcionan realmente las estafas y la publicidad, ambos entran en una versión física de Internet: una ciudad de neón donde las tiendas, las redes sociales y los anuncios se convierten en distritos por los que se puede pasear.",
     "clock": "⏱ {minutes}:00 en el reloj",
     "mission": "Tienes {minutes} minutos (el tiempo que queda antes de que expire la oferta) para navegar por Internet, recopilar información sobre cómo funcionan los anuncios y las estafas, y convencer a {friend} de que no compre. Si el temporizador llega a cero, {friend} lo compra.",
     "steps": [
       {
         "title": "1 · Explorar",
-        "text": "Cuatro distritos, dos corredores. Cada uno enseña un truco que utilizan los anunciantes."
+        "text": "Cuatro distritos, dos pasillos. Cada uno enseña un truco que utilizan los anunciantes."
       },
       {
         "title": "2 · Reunir",
@@ -80,7 +80,7 @@ export default {
       }
     ],
     "start": "▶ Entra: pon en marcha el reloj",
-    "pretest": "Prueba previa: primero, cuéntale a {friend} qué opinas sobre esta oferta. Luego, entra en Internet."
+    "pretest": "Primera prueba: primero, cuéntale a {friend} qué opinas sobre esta oferta. Luego, entra en Internet."
   },
   "map": {
     "eyebrow": "Mapa del Internet físico ",
@@ -105,8 +105,8 @@ export default {
       "tag": "La oferta ha expirado con {time} de margen.",
       "heading": "Has presentado tu caso",
       "body": "Utilizando las pruebas que recabaste en internet, le demostraste a {friend} que el anuncio de la tableta ‘NovaPad X’ probablemente era una estafa.",
-      "evidenceHeading": "Evidencia presentada",
-      "posttest": "Después de la prueba: vuelve a hablar con {friend}.¿Qué has aprendido sobre cómo detectar estafas, la importancia de la transparencia y por qué lo que parece demasiado bueno para ser verdad suele serlo?",
+      "evidenceHeading": "Pruebas recopiladas",
+      "posttest": "Test final: vuelve a hablar con {friend}. ¿Qué has aprendido sobre cómo reconocer estafas, qué es la publicidad encubierta y por qué una oferta increíble puede ser un timo?",
       "again": "↻ Jugar de nuevo",
       "evidenceButton": "Ver tus pruebas"
     },
@@ -116,7 +116,7 @@ export default {
       "titleAccent": "PULSÓ \"COMPRAR AHORA\"",
       "tag": "La cuenta atrás llegó a cero.",
       "heading": "La oferta ha llegado antes",
-      "body": "Antes de que pudieras reunir todas las pruebas, la falsa cuenta regresiva de \"solo hoy\" surtió efecto y {friend} compró {product}. Esa urgencia era la clave del truco.",
+      "body": "Antes de que pudieras reunir todas las pruebas, la cuenta atrás falsa de \"solo hoy\" surtió efecto y {friend} compró {product}. Esa urgencia era la clave del timo.",
       "lessonLabel": "Lección:",
       "lesson": "La urgencia artificial (\"¡Solo quedan 3!\", \"La oferta termina en 5:00\") está diseñada para impedir que pienses. Tómate tu tiempo: mañana habrá una buena oferta.",
       "again": "↻ Inténtalo de nuevo",
@@ -155,12 +155,12 @@ export default {
     "whatHappened": {
       "titleLose": "¿Qué le pasó a {friend}?",
       "titleWin": "¿Qué le pudo haber pasado a {friend}?",
-      "Max": "Max perdió el dinero y nunca recibió el producto. Es posible que le roben los datos de su tarjeta y los utilicen para realizar compras adicionales.",
-      "Mia": "Mia perdió el dinero y nunca recibió el producto. Es posible que le roben los datos de su tarjeta y los utilicen para realizar compras adicionales."
+      "Max": "Max perdió el dinero y nunca recibió el producto. Es posible que le roben los datos de su tarjeta y los utilicen para realizar más compras.",
+      "Mia": "Mia perdió el dinero y nunca recibió el producto. Es posible que le roben los datos de su tarjeta y los utilicen para realizar más compras."
     },
     "whatCould": {
-      "Max": "Max habría perdido el dinero y nunca habría recibido el producto. Sus datos bancarios podrían haber sido robados y utilizados para compras adicionales.",
-      "Mia": "Mia habría perdido el dinero y nunca habría recibido el producto. Los datos de su tarjeta podrían haber sido robados y utilizados para realizar compras adicionales."
+      "Max": "Max habría perdido el dinero y nunca habría recibido el producto. Sus datos bancarios podrían haber sido robados y utilizados para compras más cosas.",
+      "Mia": "Mia habría perdido el dinero y nunca habría recibido el producto. Los datos de su tarjeta podrían haber sido robados y utilizados para realizar más compras."
     }
   },
   "story": {
@@ -189,7 +189,7 @@ export default {
         "options": [
           {
             "k": "A",
-            "text": "Un temporizador de cuenta atrás en una tienda online puede ser falso.",
+            "text": "Una cuenta atrás en una tienda online puede ser falsa.",
             "correct": true
           },
           {
@@ -204,11 +204,11 @@ export default {
           },
           {
             "k": "D",
-            "text": "Las tiendas auténticas te piden que envíes el número de tu tarjeta por chat.",
+            "text": "Las tiendas reales te piden que envíes el número de tu tarjeta por chat.",
             "correct": false
           }
         ],
-        "why": "Exactamente: la cuenta atrás es una urgencia artificial, diseñada para que actúes antes de pensar.",
+        "why": "Exactamente: la cuenta atrás es una táctica para generar urgencia y actúes antes de pensar.",
         "nudge": "Piensa en lo que realmente te está haciendo esa cuenta atrás de reloj",
         "positiveFeedback": "¿Te refieres a que la urgencia te hace actuar antes de pensar...?",
         "negativeFeedback": "No lo sé, eso no suena bien.",
@@ -219,7 +219,7 @@ export default {
         "options": [
           {
             "k": "A",
-            "text": "Hablas de tablets. Luego ves un anuncio de una tablet. La razón habitual: tu móvil te ha grabado.",
+            "text": "Hablas con un amigo sobre tablets. Luego ves un anuncio de una tablet. La razón: tu móvil te escucha.",
             "correct": false
           },
           {
@@ -278,9 +278,9 @@ export default {
       "eyebrow": "La oferta",
       "debugTag": "Pre-test",
       "title": "Un mensaje de {friend}",
-      "opening": "¡Mira esto! Una influencer que sigo acaba de publicar una oferta flash: ¡la NovaPad X de 600 € por solo 49 €! Quedan solo 40 minutos en la cuenta atrás. Estoy metiendo los datos de mi tarjeta ahora mismo.",
+      "opening": "¡Mira esto! Una influencer que sigo acaba de publicar una oferta flash: ¡la NovaPad X de 600 € por solo 49 €! Quedan solo 40 minutos para poder comprarla a ese precio. Estoy metiendo los datos de mi tarjeta ahora mismo.",
       "responses": [
-        "Sea cual sea el motivo del montaje, ¡no quiero perder la oferta antes de que el reloj llegue a cero! Además, es una influencer enorme, no publicaría algo al azar. Pero lo raro es cómo este anuncio sabía que quería una tablet. Apareció justo arriba del todo en mi feed.",
+        "¡No quiero perder la oferta antes de que la cuenta atrás llegue a cero! Además, es una influencer muy famosa, no publicaría algo falso. Pero lo raro es cómo sabían que quería una tablet. Apareció justo al principio de mi feed.",
         "A ver, hay mil teorías sobre cómo los algoritmos y las cuentas manejan los anuncios, pero ahora mismo estoy viendo la página real de la tienda. Tiene el logo oficial de la marca, reseñas estupendas y un pago seguro."
       ],
       "endingFriend": "Mira, puedes analizar la página todo lo que quieras, ¡pero a mí todo me parece correcto! Estás siendo {player:paranoico|paranoica}. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, cuarenta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
@@ -296,7 +296,7 @@ export default {
         "responses": [
           "¿Qué acaba de pasar? ¿Crees que algo de lo que hemos visto era... real?",
           "Ya, sobre eso... Sin ofender, {player}, pero quiero esta tablet de verdad. ¿Y si no es una estafa? ¡¡Creo que estoy {friend:dispuesto|dispuesta} a arriesgarme!!",
-          "Dime simplemente las razones más fuertes por las que crees que es una estafa."
+          "Dime simplemente las principales razones por las que crees que es una estafa."
         ]
       },
       "player": {
@@ -307,11 +307,11 @@ export default {
         ]
       },
       "responses": [
-        "Te escucho, pero la presión se siente muy real con ese reloj corriendo delante de mí. Y no es solo el temporizador: no dejo de pensar que venía de una de mis creadoras favoritas. Pero sigue el misterio de cómo acabó llegándome.",
+        "Te escucho, pero siento mucha presión con ese reloj corriendo delante de mí. Y no es solo el temporizador: no dejo de pensar que lo anunciaba una de mis creadoras favoritas. Pero sigue el misterio de cómo acabó llegándome la oferta.",
         "{player:Tío|Tía}, es una locura cómo se gestiona todo entre bambalinas en estas apps. Pero al final del día sigo mirando esta página de pago intentando decidir si es seguro meter mis datos."
       ],
       "convinced": "Me has convencido. Ahora entiendo las señales de alerta y cómo esta oferta intentaba influir en mí. No voy a comprar la tablet.",
-      "endingFriend": "Uf, me has dado mucho que procesar, pero tengo que decidir ahora mismo: el temporizador está a punto de llegar a cero. Con todo lo que hemos visto, dímelo claro: ¿cierro esta pestaña y protejo mis datos, o me arriesgo y la compro?",
+      "endingFriend": "Uf, me has dado mucho que pensar, pero tengo que decidir ahora mismo: el temporizador está a punto de llegar a cero. Con todo lo que hemos visto, dímelo claro: ¿cierro esta pestaña y protejo mis datos, o me arriesgo y la compro?",
       "choiceClose": "Cierra la pestaña. Es una estafa.",
       "choiceBuy": "Dale a comprar. Arriesguémonos.",
       "retryFriend": "No me has dado suficientes razones para no comprarla... Todavía puedes intentarlo de nuevo: explícame los puntos sobre los que aún no me has convencido.",
@@ -353,7 +353,7 @@ export default {
     "link-district": {
       "title": "Distrito de \"Los Enlaces\"",
       "subtitle": "Reto 1 · Enlaces fraudulentos",
-      "blurb": "Un bloque de puertas tipo router. Solo una URL es la tienda real: bloquea las falsas.",
+      "blurb": "Delante de ti, tres puertas. Solo una dirección web lleva a la tienda real: bloquea las falsas.",
       "kind": "puzzle"
     },
     "roulette-corridor": {
@@ -365,7 +365,7 @@ export default {
     "influencer-avenue": {
       "title": "Avenida de los Influencers",
       "subtitle": "Reto 2 · Etiquetas y falsificaciones",
-      "blurb": "Descifra las etiquetas de patrocinio y comprueba qué productos son realmente auténticos.",
+      "blurb": "Descifra las etiquetas de publicidad y comprueba qué productos son realmente auténticos.",
       "kind": "puzzle"
     },
     "algorithm-room": {
@@ -413,7 +413,8 @@ export default {
     "progress": "Distritos completados: {done}/{total} · quedan {time}",
     "resume": "Continuar partida",
     "restart": "Empezar de nuevo",
-    "postTestPending": " Todavía no has hablado con tu amigo/a: empezar de nuevo lo perderá."
+    "postTestPending": " Todavía no has hablado con tu amigo/a: empezar de nuevo lo perderá.",
+    "confirmRestart": "Empezar de nuevo borra esta partida y todo lo que has conseguido. No se puede deshacer."
   },
   "survey": {
     "bannerTitle": "¡Gracias por jugar!",
@@ -494,7 +495,7 @@ export default {
     "brief": {
       "welcome": "Prepara tu carrera",
       "pretest": "Lee la oferta antes de entrar en la red.",
-      "map": "Elige el siguiente distrito en la pista de evidencia.",
+      "map": "Elige el siguiente distrito.",
       "room": "Resuelve el enigma del distrito y registra tus hallazgos.",
       "posttest": "Usa tus pruebas para proteger a {friend}.",
       "win": "Ejecución completada: revisa qué te protegió",
@@ -515,7 +516,7 @@ export default {
     "objectives": {
       "pretest": {
         "title": "Completa la conversación previa a la prueba.",
-        "text": "Lee el mensaje de {friend}, elige la respuesta que mejor explique tu primera impresión y usa el último botón para entrar en Internet físico."
+        "text": "Lee el mensaje de {friend}, elige la respuesta que mejor explique tu primera impresión y usa el último botón para entrar en Internet."
       },
       "posttest": {
         "title": "Toma la decisión final",
@@ -523,7 +524,7 @@ export default {
       }
     },
     "pretest": {
-      "context": "Crea tu primera impresión antes de que comience la investigación.",
+      "context": "Hazte una primera idea del tema antes de que empiece el juego.",
       "prompts": [
         "No sé cómo reconocer la presión en esta oferta.",
         "No sé qué hace que un influencer o una página sean dignos de confianza.",
@@ -531,7 +532,7 @@ export default {
       ],
       "items": [
         "Fíjate en la cuenta atrás, el enorme descuento y la promesa de una oferta por tiempo limitado.",
-        "Pregúntate si la presencia del influencer, los comentarios y la página bien cuidada son suficientes para demostrar que la oferta es segura.",
+        "Pregúntate si la presencia del influencer, los comentarios y una web atractiva son suficientes para demostrar que la oferta es segura.",
         "Ten presentes tus principales preocupaciones. Los distritos que te esperan te darán pruebas para ponerlas a prueba."
       ]
     },
@@ -540,10 +541,10 @@ export default {
       "prompts": [
         "No sé a qué estación puedo entrar ahora.",
         "No sé cómo funciona la cadena de distritos.",
-        "No sé cuándo mis herramientas me serán útiles."
+        "No sé cuándo me serán útiles las herramientas."
       ],
       "items": [
-        "Una estación iluminada está lista para ser explorada; una estación oscura aún permanece cerrada.",
+        "Una estación iluminada está lista para ser explorada; una estación oscura aún permanece bloqueada.",
         "Los distritos están diseñados como una cadena, por lo que al completar uno se desbloquea el siguiente.",
         "Revisa tu mochila después de resolver cada distrito: las nuevas herramientas te ayudarán con los puzles posteriores."
       ]
@@ -551,14 +552,14 @@ export default {
     "posttest": {
       "context": "Utiliza lo que has descubierto para ayudar a {friend:tu amigo|tu amiga} a tomar la decisión final.",
       "prompts": [
-        "No sé cómo separar las pruebas reales de la mera retórica persuasiva.",
+        "No sé cómo distinguir las pruebas de verdad de los adornos para convencerme.",
         "No sé cuáles son las señales de advertencia más importantes.",
         "No sé cómo explicar el riesgo antes de elegir."
       ],
       "items": [
-        "Distinga la urgencia artificial de una oferta realmente buena.",
-        "Recuerda que un creador conocido o una página con un diseño cuidado no son prueba de seguridad.",
-        "Utiliza la información que tienes en tu bolso para explicar el riesgo antes de elegir."
+        "Descubre qué ofertas te meten prisa a propósito y cuáles son ofertas reales.",
+        "Recuerda que un creador conocido o una web atractiva y cuidada no son prueba de seguridad.",
+        "Utiliza los elementos que tienes en tu mochila para ayudarte a jugar."
       ]
     },
     "room": {
@@ -572,8 +573,8 @@ export default {
               "¿Qué puertas bloqueo?"
             ],
             "items": [
-              "Abre cada puerta para echar un vistazo y lee la dirección completa, no solo el principio. Una puerta es la tienda real y dos son falsas: tienes que bloquear las dos falsas.",
-              "La web real es la última parte de la dirección antes de la primera “/”. Fíjate en palabras pegadas al nombre de la marca, como “-official.shop” o “-dealz”: la tienda real no las necesita.",
+              "Abre cada puerta para echar un vistazo y lee la dirección completa, no solo el principio. Una puerta es la tienda real y dos son falsas. Bloquea las falsas.",
+              "La web real es lo que aparece antes de la primera “/”. Fíjate en palabras pegadas al nombre de la marca, como “-official.shop” o “-dealz”: la tienda real no las pone.",
               "Deja abierta www.lunawear.com. Bloquea lunawear.com-official.shop y lunawear-dealz.com."
             ]
           },
@@ -608,15 +609,15 @@ export default {
               "¿Cuáles tengo que seleccionar?"
             ],
             "items": [
-              "Recuerda los tres cruces: ¿qué tenían las direcciones falsas que no tenían las reales? Selecciona todas las señales de alerta que viste, y solo esas. Después pulsa “Enviar razonamiento”.",
-              "No. https:// y el candado solo indican que la conexión está cifrada. No demuestran que una web sea de fiar, pero tampoco son señales de alerta: no los selecciones.",
+              "¿Qué tenían las direcciones falsas que no tenían las reales? Selecciona todas las señales de alerta que viste, y solo esas. Después pulsa “Enviar razonamiento”.",
+              "No. https:// y el candado solo indican que la conexión está cifrada. No demuestran que una web sea de fiar, pero tampoco son sospechosos: no los selecciones.",
               "Selecciona las cinco señales de alerta: palabras añadidas tras el nombre real, http:// en lugar de https://, terminaciones raras como .free, letras que imitan a otras y nombres de marca mal escritos."
             ]
           }
         }
       },
       "influencer": {
-        "context": "Distingue las recomendaciones genuinas de las señales pagadas o falsificadas.",
+        "context": "Descubre qué opiniones son sinceras y cuáles están pagadas o son falsas.",
         "steps": {
           "labels": {
             "prompts": [
@@ -638,7 +639,7 @@ export default {
             ],
             "items": [
               "Arrastra cada foto de producto al buscador y espera los resultados. Después sella la foto con la etiqueta adecuada: Contenido engañoso, Generado por IA o Verificado.",
-              "Cientos de copias baratas al por mayor significan que el producto no es lo que dice ser. Webs de arte con IA y verificaciones de datos significan que la imagen está generada por IA. Unas pocas tiendas oficiales con precios parecidos significan que es real.",
+              "Si hay cientos de copias baratas, el producto no es lo que dice ser. Si aparece en webs de arte con IA y la han verificado agencias de periodistas, la imagen la ha creado una IA. Si hay pocas tiendas oficiales con precios parecidos, es de verdad.",
               "Taza: Contenido engañoso. NovaPad X: Generado por IA. Altavoz Bluetooth: Verificado. Después pulsa “Confirmar clasificaciones”."
             ]
           },
@@ -729,9 +730,9 @@ export default {
       "lose": {
         "context": "El temporizador se agotó, pero la lección aún está disponible.",
         "items": [
-          "La urgencia interrumpe el pensamiento cuidadoso.",
-          "Una cuenta regresiva no convierte una oferta en confiable.",
-          "Haz una pausa y verifica la información a través de una fuente independiente."
+          "La urgencia interrumpe el pensamiento crítico.",
+          "Una cuenta atrás no convierte una oferta en confiable.",
+          "Haz una pausa y verifica la información a través de una fuente fiable."
         ]
       }
     }
@@ -1138,7 +1139,7 @@ export default {
         "queryCaption": "El vendedor dice: «chaqueta artesanal única» · 180 €",
         "resultsLabel": "La misma foto encontrada en:",
         "takeawayLabel": "La trampa:",
-        "takeaway": "Esa chaqueta «artesanal única» es el mismo artículo fabricado en grandes cantidades que se vende por 9–14 € en miles de tiendas de dropshipping. La foto la delató.",
+        "takeaway": "Esa chaqueta “artesanal” y “única” es la misma que fabrican masivamente en una fábrica y que miles de tiendas online venden por 9-14 €.",
         "continue": "Ahora inténtalo tú →"
       },
       "products": [
@@ -1267,13 +1268,13 @@ export default {
       },
       "labelFeedback": {
         "title": "AVISO: La publicidad tiene que estar etiquetada en redes sociales",
-        "intro": "Cuando a un creador de contenido o influencer le pagan, se asocia con una marca o le regalan un producto, tiene que informarlo de manera muy clara y visible. ",
+        "intro": "Cuando a un creador de contenido o influencer le pagan, colabora con una marca o le regalan un producto, tiene que informarlo de manera muy clara y visible. ",
         "paidDesc": "La marca paga al creador por publicar contenido sobre ella.",
         "paidExample": "Señales de alerta: un código de descuento personal como «LUNA20».",
         "collabDesc": "Una colaboración creativa, hecha junto con la marca.",
         "collabExample": "Señales de alerta: una etiqueta de «colaboración pagada» o #publi en una publicación co-creada.",
         "giftedDesc": "Al creador le enviaron el producto gratis.",
-        "giftedExample": "Señales de alerta: «regalado», o «gracias @marca por enviarme esto»: un artículo gratis, sin pagos.",
+        "giftedExample": "Señales de alerta: «regalo», o «gracias @marca por enviarme esto»: corresponden a un artículo gratis que les han enviado.",
         "continue": "Entendido →"
       }
     },
@@ -1302,8 +1303,8 @@ export default {
         "wrongTitle": "Respuesta incorrecta.",
         "wrongText": "Acabas de cambiar tu privacidad por comodidad. «Personalizado» es el algoritmo: menos anuncios significa que recoge y analiza más datos tuyos para personalizar los anuncios.",
         "goodTitle": "Buena respuesta.",
-        "goodText": "Más anuncios molesta, pero conservas tus datos y esquivas en parte el algoritmo de personalización. La comodidad es la trampa que usan las plataformas para que la personalización parezca algo bueno. ",
-        "afterNote": "En cualquier caso, la máquina sigue intentando perfilar a todo el mundo. Veamos cómo.",
+        "goodText": "Ver más anuncios es molesto, pero a cambio proteges tus datos y reduces el efecto del algoritmo de personalización. Las plataformas usan la comodidad como cebo: nos hacen creer que la personalización es algo bueno, cuando en realidad les sirve para saber más sobre ti.",
+        "afterNote": "En cualquier caso, la máquina sigue intentando hacer el perfil de todo el mundo. Veamos cómo.",
         "continue": "Entrar en el motor de segmentación →"
       },
       "equations": {

@@ -84,7 +84,7 @@ export default {
   },
   "map": {
     "eyebrow": "Physical Internet Map",
-    "titleLead": "Choose your next",
+    "titleLead": "Go to the next",
     "titleAccent": "district",
     "subtitle": "Travel the network, gather evidence, and reach the Final Decision before the offer expires.",
     "start": "▶ START · Pre-test with {friend}",
@@ -413,7 +413,8 @@ export default {
     "progress": "Districts cleared: {done}/{total} · {time} left",
     "resume": "Resume run",
     "restart": "Start over",
-    "postTestPending": " You haven't spoken to your friend yet: starting over loses that"
+    "postTestPending": " You haven't spoken to your friend yet: starting over loses that",
+    "confirmRestart": "Starting over deletes this run and everything gathered in it. This cannot be undone."
   },
   "survey": {
     "bannerTitle": "Thanks for playing!",
@@ -532,7 +533,7 @@ export default {
       "items": [
         "Notice the countdown, the huge discount, and the promise of a limited-time deal.",
         "Ask yourself whether the influencer, comments, and polished page are enough to prove the offer is safe.",
-        "Keep your first concerns in mind. The districts ahead will give you evidence to test them."
+        "Recuerda tus primeras sospechas. Los distritos que tienes por delante te darán pistas para comprobarlas."
       ]
     },
     "map": {

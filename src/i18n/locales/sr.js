@@ -413,7 +413,8 @@ export default {
     "progress": "Završeni okruzi: {done}/{total} · preostalo {time}",
     "resume": "Nastavi igru",
     "restart": "Počni iz početka",
-    "postTestPending": "Još nisi {player:razgovarao|razgovarala} sa {friend:prijateljem|prijateljicom}: ako počneš iz početka, to se gubi."
+    "postTestPending": "Još nisi {player:razgovarao|razgovarala} sa {friend:prijateljem|prijateljicom}: ako počneš iz početka, to se gubi.",
+    "confirmRestart": "Ako počneš iz početka, ova igra i sve što si u njoj {player:prikupio|prikupila} biće izbrisano. Ovo se ne može poništiti."
   },
   "survey": {
     "bannerTitle": "Hvala što si igrao/la!",
@@ -989,7 +990,7 @@ export default {
       "labels": {
         "paid": "PLAĆENO",
         "collab": "SARADNJA",
-        "gifted": "GIFTED",
+        "gifted": "POKLON",
         "nothing": "NIŠTA"
       },
       "posts": [
