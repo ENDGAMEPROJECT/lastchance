@@ -30,8 +30,8 @@ export default {
     "characterError": "Valitse hahmo",
     "languageError": "Valitse kieli",
     "characterLabel": "Valitse hahmosi",
-    "characterMia": "Mia",
-    "characterMax": "Max"
+    "characterMia": "Minna",
+    "characterMax": "Markku"
   },
   "rotate": {
     "title": "Käännä puhelimesi",
@@ -48,7 +48,7 @@ export default {
     "inventoryTitle": "Tavarat ja todisteet",
     "tools": "Työkalut ja palkinnot",
     "noTools": "Et ole vielä kerännyt mitään. Ratkaise pulmia ansaitaksesi työkaluja.",
-    "evidenceHeading": "Todisteet tarjouksesta",
+    "evidenceHeading": " Kerätyt todisteet",
     "noEvidence": "Kerää todisteita jokaisesta kaupunginosasta, jotta voit lopuksi vakuuttaa {friend_genitive}.",
     "hints": "💡 Vinkit",
     "enterFullscreen": "Siirry koko näytön tilaan",
@@ -84,7 +84,7 @@ export default {
   },
   "map": {
     "eyebrow": "Fyysinen internetkartta",
-    "titleLead": "Valitse seuraava",
+    "titleLead": "Mene seuraava",
     "titleAccent": "kaupunginosa",
     "subtitle": "Kulje verkon läpi, kerää todisteita ja saavuta lopullinen päätös ennen kuin tarjous päättyy.",
     "start": "▶ ALOITA · Alkutesti {friend_genitive} kanssa",
@@ -133,10 +133,10 @@ export default {
           "heading": "Vakuuttavaa: mutta todisteita liian vähän",
           "body": "Olet varmaan oikeassa, mutta en ole nähnyt tarpeeksi todisteita \"fyysisessä internetissä\". Aion ostaa tabletin.",
           "Mia": {
-            "body": "Vakuutit Mian, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
+            "body": "Vakuutit {friend_genitive}, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
           },
           "Max": {
-            "body": "Vakuutit Maxin, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
+            "body": "Vakuutit {friend_genitive}, mutta myöhästyit. Hän ei ehtinyt nähdä kaikkia todisteita, jotka olisit voinut löytää Fyysisestä internetistä."
           }
         },
         "notEnoughEvidenceUnconvincing": {
@@ -155,12 +155,12 @@ export default {
     "whatHappened": {
       "titleLose": "Mitä {friend_allative} tapahtui:",
       "titleWin": "Mitä {friend_allative} olisi voinut tapahtua:",
-      "Max": "Max menetti rahansa eikä saanut tuotetta koskaan. Hänen korttitietonsa on voitu varastaa ja käyttää muihin ostoksiin.",
-      "Mia": "Mia menetti rahansa eikä saanut tuotetta koskaan. Hänen korttitietonsa on voitu varastaa ja käyttää muihin ostoksiin."
+      "Max": "{friend} menetti rahansa eikä saanut tuotetta koskaan. Hänen korttitietonsa on voitu varastaa ja käyttää muihin ostoksiin.",
+      "Mia": "{friend} menetti rahansa eikä saanut tuotetta koskaan. Hänen korttitietonsa on voitu varastaa ja käyttää muihin ostoksiin."
     },
     "whatCould": {
-      "Max": "Max olisi menettänyt rahansa eikä olisi saanut tuotetta koskaan. Hänen korttitietonsa olisi voitu varastaa ja käyttää muihin ostoksiin.",
-      "Mia": "Mia olisi menettänyt rahansa eikä olisi saanut tuotetta koskaan. Hänen korttitietonsa olisi voitu varastaa ja käyttää muihin ostoksiin."
+      "Max": "{friend} olisi menettänyt rahansa eikä olisi saanut tuotetta koskaan. Hänen korttitietonsa olisi voitu varastaa ja käyttää muihin ostoksiin.",
+      "Mia": "{friend} olisi menettänyt rahansa eikä olisi saanut tuotetta koskaan. Hänen korttitietonsa olisi voitu varastaa ja käyttää muihin ostoksiin."
     }
   },
   "story": {
@@ -194,7 +194,7 @@ export default {
           },
           {
             "k": "B",
-            "text": "Tuo 40 minuutin laskuri on vain painostuskeino, jolla sinut saadaan panikoimaan ja ostamaan ajattelematta.",
+            "text": "Viestissä kerrotaan, että olet voittanut palkinnon. Linkin klikkaaminen on turvallista.",
             "correct": false
           },
           {
@@ -210,7 +210,7 @@ export default {
         ],
         "why": "Juuri niin: tikittävä kello on keinotekoista kiirettä, rakennettu saamaan sinut toimimaan ennen kuin ehdit ajatella.",
         "nudge": "Mieti, mitä tuo tikittävä kello oikeasti tekee sinulle.",
-        "positiveFeedback": "Siis tarkoitat, että kiire saa toimimaan ennen kuin ehtii ajatella...",
+        "positiveFeedback": "Vaikka siis sanotaan, että tarjouksen päättymiseen on 40 minuuttia, se ei todellisuudessa pääty 40 minuutin kuluttua...",
         "negativeFeedback": "En tiedä, tuo ei kuulosta oikealta.",
         "followUpQuestion": "Selvä, mitä muuta?"
       },
@@ -259,12 +259,12 @@ export default {
           },
           {
             "k": "C",
-            "text": "Älä syötä korttiasi. Kunhan käytät Apple Payta tai PayPalia, olet 100 % turvassa.",
+            "text": "600 euron tabletti 49 eurolla on varoitusmerkki.",
             "correct": true
           },
           {
             "k": "D",
-            "text": "Selaa sivun alalaitaan. Jos siellä ei lue 'Copyright 2026', tiedät sen olevan väärennös.",
+            "text": "Sivusto, jolla on tunnetun brändin logo, on brändin oikea kauppa.",
             "correct": false
           }
         ],
@@ -413,7 +413,8 @@ export default {
     "progress": "Kaupunginosia selvitetty: {done}/{total} · aikaa jäljellä {time}",
     "resume": "Jatka kierrosta",
     "restart": "Aloita alusta",
-    "postTestPending": "Et ole vielä puhunut ystäväsi kanssa: alusta aloittaminen hävittää sen. "
+    "postTestPending": "Et ole vielä puhunut ystäväsi kanssa: alusta aloittaminen hävittää sen. ",
+    "confirmRestart": "Alusta aloittaminen poistaa tämän kierroksen ja kaiken siinä kerätyn. Tätä ei voi peruuttaa."
   },
   "survey": {
     "bannerTitle": "Kiitos pelaamisesta!",
@@ -464,23 +465,23 @@ export default {
   },
   "names": {
     "mia": {
-      "nominative": "Mia",
-      "genitive": "Mian",
-      "partitive": "Miaa",
-      "allative": "Mialle",
-      "ablative": "Mialta",
-      "elative": "Miasta",
+      "nominative": "Minna",
+      "genitive": "Minnan",
+      "partitive": "Minnaa",
+      "allative": "Minnalle",
+      "ablative": "Minnalta",
+      "elative": "Minnasta",
       "accusative": "Mia",
       "dative": "Mia",
       "instrumental": "Mia"
     },
     "max": {
-      "nominative": "Max",
-      "genitive": "Maxin",
-      "partitive": "Maxia",
-      "allative": "Maxille",
-      "ablative": "Maxilta",
-      "elative": "Maxista",
+      "nominative": "Markku",
+      "genitive": "Markun",
+      "partitive": "Markkua",
+      "allative": "Markulle",
+      "ablative": "Markulta",
+      "elative": "Markusta",
       "accusative": "Max",
       "dative": "Max",
       "instrumental": "Max"

@@ -48,7 +48,7 @@ export default {
     "inventoryTitle": "Predmeti i Dokazi",
     "tools": "Alati i Nagrade",
     "noTools": "Još uvek ništa nije sakupljeno. Reši zagonetke da bi osvojio/la alate.",
-    "evidenceHeading": "Dokazi o ponudi",
+    "evidenceHeading": "Prikupljeni dokazi",
     "noEvidence": "Prikupi dokaze u svakom okrugu kako bi na kraju ubedio/la {friend_accusative}.",
     "hints": "💡 Saveti",
     "enterFullscreen": "Prikaži preko celog ekrana",
@@ -84,7 +84,7 @@ export default {
   },
   "map": {
     "eyebrow": "Mapa fizičkog interneta",
-    "titleLead": "Izaberi sledeći",
+    "titleLead": "Idi u sledeći",
     "titleAccent": "okrug",
     "subtitle": "Putuj kroz mrežu, prikupljaj dokaze i stigni do Konačne odluke pre nego što ponuda istekne.",
     "start": "▶ START · Pre-test sa {friend_instrumental}",
@@ -131,12 +131,12 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Ubedljivo, ali bez dovoljno dokaza",
-          "body": "Mislim da si u pravu, ali nisam video dovoljno dokaza na „fizičkom internetu“. Kupiću tablet.",
+          "body": "Mislim da si u pravu, ali nisam {friend:video|videla} dovoljno dokaza na „fizičkom internetu“. Kupiću tablet.",
           "Mia": {
-            "body": "{player:Ubedio|Ubedila} si Milu, ali si {player:zakasnio|zakasnila}. Nije stigla da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
+            "body": "{player:Ubedio|Ubedila} si {friend_accusative}, ali si {player:zakasnio|zakasnila}. Nije stigla da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
           },
           "Max": {
-            "body": "{player:Ubedio|Ubedila} si Marka, ali si {player:zakasnio|zakasnila}. Nije stigao da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
+            "body": "{player:Ubedio|Ubedila} si {friend_accusative}, ali si {player:zakasnio|zakasnila}. Nije stigao da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
           }
         },
         "notEnoughEvidenceUnconvincing": {
@@ -155,12 +155,12 @@ export default {
     "whatHappened": {
       "titleLose": "Šta se desilo {friend_dative}:",
       "titleWin": "Šta je moglo da se desi {friend_dative}:",
-      "Max": "Marko je izgubio novac i nikada nije dobio proizvod. Podaci sa njegove kartice mogu biti ukradeni i iskorišćeni za dodatne kupovine.",
-      "Mia": "Mila je izgubila novac i nikada nije dobila proizvod. Podaci sa njene kartice mogu biti ukradeni i iskorišćeni za dodatne kupovine."
+      "Max": "{friend} je izgubio novac i nikada nije dobio proizvod. Podaci sa njegove kartice mogu biti ukradeni i iskorišćeni za dodatne kupovine.",
+      "Mia": "{friend} je izgubila novac i nikada nije dobila proizvod. Podaci sa njene kartice mogu biti ukradeni i iskorišćeni za dodatne kupovine."
     },
     "whatCould": {
-      "Max": "Marko bi izgubio novac i nikada ne bi dobio proizvod. Podaci sa njegove kartice mogli su biti ukradeni i iskorišćeni za dodatne kupovine.",
-      "Mia": "Mila bi izgubila novac i nikada ne bi dobila proizvod. Podaci sa njene kartice mogli su biti ukradeni i iskorišćeni za dodatne kupovine."
+      "Max": "{friend} bi izgubio novac i nikada ne bi dobio proizvod. Podaci sa njegove kartice mogli su biti ukradeni i iskorišćeni za dodatne kupovine.",
+      "Mia": "{friend} bi izgubila novac i nikada ne bi dobila proizvod. Podaci sa njene kartice mogli su biti ukradeni i iskorišćeni za dodatne kupovine."
     }
   },
   "story": {
@@ -194,7 +194,7 @@ export default {
           },
           {
             "k": "B",
-            "text": "Odbrojavanje od 40 minuta je samo taktika stvaranja pritiska kako bi te uspaničili i naveli da kupiš bez razmišljanja.",
+            "text": "U poruci piše da ste osvojili nagradu. Bezbedno je kliknuti na link.",
             "correct": false
           },
           {
@@ -210,7 +210,7 @@ export default {
         ],
         "why": "Upravo tako, odbrojavanje je veštački stvoren osećaj hitnosti, osmišljen da te navede da reaguješ pre nego što razmisliš.",
         "nudge": "Razmisli šta ti to odbrojavanje zapravo radi.",
-        "positiveFeedback": "Misliš, hitnost te tera da reaguješ pre nego što razmisliš...",
+        "positiveFeedback": "Dakle, iako kažu da je preostalo 40 minuta do isteka ponude, ona zapravo ne ističe za 40 minuta...",
         "negativeFeedback": "Ne znam, to mi ne zvuči tačno.",
         "followUpQuestion": "U redu, šta još?"
       },
@@ -259,12 +259,12 @@ export default {
           },
           {
             "k": "C",
-            "text": "Nemoj unositi podatke kartice. Ako koristiš Apple Pay ili PayPal, 100% si {friend:bezbedan|bezbedna}.",
+            "text": "Tablet od 600 evra za 49 evra je znak za uzbunu.",
             "correct": true
           },
           {
             "k": "D",
-            "text": "Skroluj do dna stranice. Ako nema teksta „Copyright 2026“, znaćeš da je sajt lažan.",
+            "text": "Sajt sa logom poznatog brenda je prava prodavnica tog brenda.",
             "correct": false
           }
         ],
@@ -413,7 +413,8 @@ export default {
     "progress": "Završeni okruzi: {done}/{total} · preostalo {time}",
     "resume": "Nastavi igru",
     "restart": "Počni iz početka",
-    "postTestPending": "Još nisi {player:razgovarao|razgovarala} sa {friend:prijateljem|prijateljicom}: ako počneš iz početka, to se gubi."
+    "postTestPending": "Još nisi {player:razgovarao|razgovarala} sa {friend:prijateljem|prijateljicom}: ako počneš iz početka, to se gubi.",
+    "confirmRestart": "Ako počneš iz početka, ova igra i sve što si u njoj {player:prikupio|prikupila} biće izbrisano. Ovo se ne može poništiti."
   },
   "survey": {
     "bannerTitle": "Hvala što si igrao/la!",
@@ -464,7 +465,7 @@ export default {
   },
   "names": {
     "mia": {
-      "nominative": "Mia",
+      "nominative": "Mila",
       "genitive": "Mile",
       "partitive": "Mia",
       "allative": "Mia",
@@ -475,7 +476,7 @@ export default {
       "instrumental": "Milom"
     },
     "max": {
-      "nominative": "Max",
+      "nominative": "Marko",
       "genitive": "Marka",
       "partitive": "Max",
       "allative": "Max",
@@ -989,7 +990,7 @@ export default {
       "labels": {
         "paid": "PLAĆENO",
         "collab": "SARADNJA",
-        "gifted": "GIFTED",
+        "gifted": "POKLON",
         "nothing": "NIŠTA"
       },
       "posts": [
@@ -1453,7 +1454,7 @@ export default {
     "ads": {
       "intro": "Neonski servisni tunel oblepljen sa četiri svetleća reklamna postera. Deluju velikodušno. Nisu.",
       "solvedTitle": "Koridor očišćen: pročitali ste sitna slova",
-      "solvedText": "Stigao/la si do poslednje runde! Ovi oglasi su napravljeni da se osećaš veoma srećno kako bi nasela/nasedao na prevaru. Budi oprezan/na prema svakom sadržaju koji u tebi izaziva veoma snažnu emotivnu reakciju.",
+      "solvedText": "Stigao/la si do poslednje runde! Ovi oglasi su napravljeni da se osećaš veoma srećno kako bi naseo/la na prevaru. Budi oprezan/na prema svakom sadržaju koji u tebi izaziva veoma snažnu emotivnu reakciju.",
       "pickup": "Uzimate baterijsku lampu Istine 🔦",
       "torchCharging": "🔦 Punjenje…",
       "torchOn": "🔦 Lampa UKLJUČENA",

@@ -84,7 +84,7 @@ export default {
   },
   "map": {
     "eyebrow": "Physical Internet Map",
-    "titleLead": "Choose your next",
+    "titleLead": "Go to the next",
     "titleAccent": "district",
     "subtitle": "Travel the network, gather evidence, and reach the Final Decision before the offer expires.",
     "start": "▶ START · Pre-test with {friend}",
@@ -131,12 +131,12 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Convincing: but not enough proof",
-          "body": "I think you are right fot he most part, but I just didn't see enough evidence in the Physical Internet. I'm buying it.",
+          "body": "I think you are right for the most part, but I just didn't see enough evidence in the Physical Internet. I'm buying it.",
           "Mia": {
-            "body": "You convinced Mia, but you were too late. She didn't get to see all the evidence you could have found in the Physical Internet."
+            "body": "You convinced {friend}, but you were too late. She didn't get to see all the evidence you could have found in the Physical Internet."
           },
           "Max": {
-            "body": "You convinced Max, but you were too late. He didn't get to see all the evidence you could have found in the Physical Internet."
+            "body": "You convinced {friend}, but you were too late. He didn't get to see all the evidence you could have found in the Physical Internet."
           }
         },
         "notEnoughEvidenceUnconvincing": {
@@ -155,12 +155,12 @@ export default {
     "whatHappened": {
       "titleLose": "What happened to {friend}:",
       "titleWin": "What could have happened to {friend}:",
-      "Max": "Max lost the money and never received the product. His card details may be stolen and used for additional purchases.",
-      "Mia": "Mia lost the money and never received the product. Her card details may be stolen and used for additional purchases."
+      "Max": "{friend} lost the money and never received the product. His card details may be stolen and used for additional purchases.",
+      "Mia": "{friend} lost the money and never received the product. Her card details may be stolen and used for additional purchases."
     },
     "whatCould": {
-      "Max": "Max would have lost the money and never received the product. His card details could have been stolen and used for additional purchases.",
-      "Mia": "Mia would have lost the money and never received the product. Her card details could have been stolen and used for additional purchases."
+      "Max": "{friend} would have lost the money and never received the product. His card details could have been stolen and used for additional purchases.",
+      "Mia": "{friend} would have lost the money and never received the product. Her card details could have been stolen and used for additional purchases."
     }
   },
   "story": {
@@ -194,7 +194,7 @@ export default {
           },
           {
             "k": "B",
-            "text": "That 40-minute countdown is just a high-pressure tactic to make you panic and buy without thinking.",
+            "text": "A message says you won a prize. It's safe to click the link",
             "correct": false
           },
           {
@@ -210,7 +210,7 @@ export default {
         ],
         "why": "Exactly: the ticking clock is manufactured urgency, built to make you act before you think.",
         "nudge": "Think about what that ticking clock is really doing to you.",
-        "positiveFeedback": "You mean, the urgency makes you act before you think... ",
+        "positiveFeedback": "So, even though they say there are 40 minutes left until an offer ends, it doesn’t actually end in 40 minutes...",
         "negativeFeedback": "I don't know, that doesn't sound right.",
         "followUpQuestion": "Alright, what else?"
       },
@@ -413,7 +413,8 @@ export default {
     "progress": "Districts cleared: {done}/{total} · {time} left",
     "resume": "Resume run",
     "restart": "Start over",
-    "postTestPending": " You haven't spoken to your friend yet: starting over loses that"
+    "postTestPending": " You haven't spoken to your friend yet: starting over loses that",
+    "confirmRestart": "Starting over deletes this run and everything gathered in it. This cannot be undone."
   },
   "survey": {
     "bannerTitle": "Thanks for playing!",
@@ -532,7 +533,7 @@ export default {
       "items": [
         "Notice the countdown, the huge discount, and the promise of a limited-time deal.",
         "Ask yourself whether the influencer, comments, and polished page are enough to prove the offer is safe.",
-        "Keep your first concerns in mind. The districts ahead will give you evidence to test them."
+        "Remember your initial suspicions. The districts ahead will give you clues to confirm them."
       ]
     },
     "map": {
@@ -1453,7 +1454,7 @@ export default {
     "ads": {
       "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
       "solvedTitle": "Corridor cleared: you read the fine print",
-      "solvedText": "These ads draw your attention immediatly with free stuff, promises of getting rich, inminent danger... Be wary of any content that triggers a very strong emotional reaction in you.",
+      "solvedText": "These ads draw your attention immediately with free stuff, promises of getting rich, inminent danger... Be wary of any content that triggers a very strong emotional reaction in you.",
       "pickup": "You pick up the Truth Flashlight 🔦",
       "torchCharging": "🔦 Charging…",
       "torchOn": "🔦 Flashlight ON",
