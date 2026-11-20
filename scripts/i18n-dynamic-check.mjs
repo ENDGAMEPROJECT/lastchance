@@ -1,6 +1,7 @@
 // Validate DYNAMIC t(`...${id}...`) keys by importing the real id
 // lists (gameData) and each room's fragment, then checking membership.
 import { readFileSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 import dictionaries from '../src/i18n/dictionaries.js'
 const { en } = dictionaries
 import { NODES, ITEMS } from '../src/game/gameData.js'
@@ -120,6 +121,33 @@ for (const [code, dict] of Object.entries(dictionaries)) {
       + `almost certainly need rewriting too — they name the reasoning, not the letter.`)
   })
 }
+/* The WORDING those slugs were written against. The check above catches the
+   answer moving between options; it is blind to an option reworded in place,
+   which keeps its key and its tick while its slug goes on naming reasoning
+   the option no longer expresses. That is how the November drift stayed
+   invisible. Fingerprint the English title and options, and any rewording
+   fails here once — deliberately noisy: the fix is to re-read the options,
+   confirm each slug still describes one, and paste the new hash in. */
+const norm = (text) => String(text).replace(/\s+/g, ' ').trim()
+const itemHash = (round) => createHash('sha1')
+  .update([norm(round.title), ...round.options.map((o) => norm(o.text))].join(' ~ '))
+  .digest('hex').slice(0, 10)
+
+for (const [i, round] of en.story.rounds.entries()) {
+  const item = TEST_ITEMS[i]
+  if (!item) continue
+  ok(has(item, 'textHash'), `testItems[${i}] (${item.slug}) needs a textHash — see itemHash()`)
+  const actual = itemHash(round)
+  if (item.textHash && item.textHash !== actual) {
+    const shown = round.options
+      .map((o) => `        ${o.k} ${String(item.options[o.k]).padEnd(32)} "${norm(o.text)}"`)
+      .join('\n')
+    ok(false, `story.rounds[${i}] (${item.slug}) has been reworded since its slugs were written.\n`
+      + `      Re-read the options against their slugs; update any that no longer fit, then set\n`
+      + `      textHash: '${actual}' (was '${item.textHash}').\n${shown}`)
+  }
+}
+
 const slugs = TEST_ITEMS.map((t) => t.slug)
 ok(new Set(slugs).size === slugs.length, 'testItems.js slugs must be unique')
 for (const [i, item] of TEST_ITEMS.entries()) {
