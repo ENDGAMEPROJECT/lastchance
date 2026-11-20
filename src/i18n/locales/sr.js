@@ -270,7 +270,7 @@ export default {
         ],
         "why": "Tako je, čitaj URL slovo po slovo. „bargalns“ sa slovom „l“ je domen koji oponaša pravi, a ne domen prave prodavnice.",
         "nudge": "Pravi trag nalazi se u samoj adresnoj traci: čitaj je znak po znak.",
-        "positiveFeedback": "Oh, sada se sećam! Sumnjiv URL može biti znak da je sajt lažan i da se samo pretvara da je prava prodavnica.",
+        "positiveFeedback": "Da, pretpostavljam da je malo sumnjivo...",
         "negativeFeedback": "Da, baš, i ja treba to da poverujem?"
       }
     ],

@@ -241,7 +241,7 @@ export default {
         "why": "Exacto: no es el micrófono ni magia. Tu historial de búsqueda se utilizó para elaborar un perfil sobre ti y venderlo a redes publicitarias",
         "nudge": "No es el micrófono ni un virus: piensa en lo que la plataforma ya sabe de ti.",
         "positiveFeedback": "Vale, no es el micrófono ni magia... Analizaron mi historial de búsqueda y lo vendieron a redes publicitarias.",
-        "negativeFeedback": "La verdad es que eso no tiene ningún sentido para mí.",
+        "negativeFeedback": "La verdad es que eso no tiene ningún sentido.",
         "followUpQuestion": "Vale, ¿Y a parte de eso?"
       },
       {
@@ -270,7 +270,7 @@ export default {
         ],
         "why": "Sí: lee la URL letra a letra. 'bargalns' con una 'l' es un dominio de web imitado, no la tienda real.",
         "nudge": "La pista de verdad está en la propia barra de direcciones: léela carácter a carácter.",
-        "positiveFeedback": "¡Ah, ahora me acuerdo! Una URL sospechosa puede ser señal de que una web es falsa y solo finge ser la tienda real.",
+        "positiveFeedback": "Sí, supongo que es algo sospechoso...",
         "negativeFeedback": "Ya, claro, ¿y se supone que me lo tengo que creer?"
       }
     ],

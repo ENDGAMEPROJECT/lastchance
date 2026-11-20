@@ -270,7 +270,7 @@ export default {
         ],
         "why": "Kyllä, lue URL kirjain kirjaimelta. 'bargalns' l-kirjaimella on jäljitelmäosoite, ei oikea kauppa.",
         "nudge": "Varsinainen vihje on itse osoiterivillä: lue se merkki merkiltä.",
-        "positiveFeedback": "Ai niin, nytpä muistan! Epäilyttävä URL voi olla merkki siitä, että sivusto on väärennös ja vain esittää oikeaa kauppaa.",
+        "positiveFeedback": "Joo, taidanpa vähän epäillä...",
         "negativeFeedback": "Joo joo, ja tuohon minun pitäisi muka uskoa?"
       }
     ],

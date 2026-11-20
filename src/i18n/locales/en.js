@@ -270,7 +270,7 @@ export default {
         ],
         "why": "Yes, read the URL letter by letter. 'bargalns' with an 'l' is a look-alike domain, not the real store.",
         "nudge": "The real tell is in the address bar itself: read it character by character.",
-        "positiveFeedback": "Oh, now I remember! A suspicious URL can be a sign that a website is fake and just pretending to be the real store.",
+        "positiveFeedback": "Yes, I guess it is a bit suspicious...",
         "negativeFeedback": "Yeah, right, and I'm supposed to believe that?"
       }
     ],
