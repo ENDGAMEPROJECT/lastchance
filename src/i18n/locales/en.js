@@ -131,7 +131,7 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Convincing: but not enough proof",
-          "body": "I think you are right fot he most part, but I just didn't see enough evidence in the Physical Internet. I'm buying it.",
+          "body": "I think you are right for he most part, but I just didn't see enough evidence in the Physical Internet. I'm buying it.",
           "Mia": {
             "body": "You convinced Mia, but you were too late. She didn't get to see all the evidence you could have found in the Physical Internet."
           },

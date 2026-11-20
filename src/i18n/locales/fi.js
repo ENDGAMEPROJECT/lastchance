@@ -84,7 +84,7 @@ export default {
   },
   "map": {
     "eyebrow": "Fyysinen internetkartta",
-    "titleLead": "Valitse seuraava",
+    "titleLead": "Mene seuraava",
     "titleAccent": "kaupunginosa",
     "subtitle": "Kulje verkon läpi, kerää todisteita ja saavuta lopullinen päätös ennen kuin tarjous päättyy.",
     "start": "▶ ALOITA · Alkutesti {friend_genitive} kanssa",

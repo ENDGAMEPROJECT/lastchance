@@ -371,7 +371,7 @@ export default {
     "algorithm-room": {
       "title": "Sala de Control del Algoritmo",
       "subtitle": "Reto 3 · Personalización",
-      "blurb": "Alimenta las ecuaciones de segmentación para ver cómo el algoritmo perfila a una persona.",
+      "blurb": "Resuelve las siguiente ecuaciones para ver cómo el algoritmo perfila a una persona.",
       "kind": "puzzle"
     },
     "ads-corridor": {
@@ -383,7 +383,7 @@ export default {
     "persuasion-room": {
       "title": "Laboratorio de Persuasión",
       "subtitle": "Reto 4 · Técnicas de persuasión",
-      "blurb": "Enmarca cada anuncio con el truco que utiliza. Revela las letras y forma la contraseña.",
+      "blurb": "Une cada anuncio con el truco que utiliza. Descubre las letras y forma la contraseña.",
       "kind": "puzzle"
     },
     "final-decision": {
@@ -400,7 +400,7 @@ export default {
     },
     "dataReport": {
       "name": "Informe de datos sobre {friend}",
-      "desc": "Un dosier con los datos de internet de {friend}."
+      "desc": "Un dosier con los datos personales de {friend}."
     },
     "truthLight": {
       "name": "Linterna de la Verdad",
@@ -783,7 +783,7 @@ export default {
       "rounds": [
         {
           "category": "Sufijos habituales",
-          "prompt": "Una es la tienda real. Las otras esconden su dominio verdadero tras un nombre que parece familiar: lee la dirección entera.",
+          "prompt": "Una es la tienda real. Las otras dos son falsas: lee con atención para descubrir cuáles.",
           "notes": {
             "a": "El dominio auténtico: lunawear.com",
             "b": "El sitio real es “com-official.shop”: “lunawear” es solo un subdominio añadido delante para engañarte.",
@@ -883,7 +883,7 @@ export default {
       "spin": "🎰 Girar",
       "spinning": "Girando…",
       "investigation": {
-        "intro": "Gira cada ruleta dos veces. ¿Está trucada o no?",
+        "intro": "Tira de la ruleta dos veces. ¿Está trucada o no?",
         "wheelProgress": "Ruleta {n} / {total}",
         "solvedTitle": "Pasillo superado: afirmaciones comprobadas",
         "spinAgain": "Girar otra vez",
@@ -920,7 +920,7 @@ export default {
               "Sin premio"
             ],
             "rules": "¡Gira para desbloquear un cupón de descuento, hasta un 50%!",
-            "feedback": "¿Cómo te enganchan estos juegos de ruleta? Primero te dan un premio pequeño, lo justo para que te sientas con suerte. Pero el truco es que acabas gastando mucho más de lo que has ganado. Sientes que hoy es tu día de suerte, así que sigues jugando. Esa sensación de suerte es lo que te mantiene enganchado."
+            "feedback": "¿Cómo te enganchan estos juegos tipo ruleta? Primero te dan un premio pequeño, lo justo para que te sientas con suerte. Pero el truco es que acabas gastando mucho más de lo que has ganado. Sientes que hoy es tu día de suerte, así que sigues jugando. Esa sensación de suerte es lo que te mantiene enganchado."
           },
           "w3": {
             "name": "FIEBRE DEL ORO",
@@ -941,16 +941,16 @@ export default {
         "debugSkip": "Saltar ruletas (debug)"
       },
       "solvedTitle": "Pasillo de la Ruleta superado",
-      "solvedText": "Comparaste giros repetidos, explicaste tus sospechas y descubriste cómo funcionaba cada ruleta."
+      "solvedText": "Comparaste varias tiradas, explicaste tus sospechas y descubriste cómo funcionaba cada ruleta."
     },
     "influencer": {
-      "intro": "Una avenida con luces de neón, vallas publicitarias y feeds de influencers. Mira más allá del brillo: etiqueta los patrocinios y luego comprueba qué son realmente los productos.",
+      "intro": "Una avenida con luces de neón, vallas publicitarias y feeds de influencers. ¿Eres capaz de reconocer la publicidad encubierta y productos falsos?",
       "info": {
         "labelsButton": "ℹ️ INFO"
       },
       "solvedTitle": "Avenida de los Influencers superada: Informe de datos obtenido 📄",
       "solvedText": "Etiquetaste los anuncios y detectaste los productos poco fiables",
-      "evidenceLabel": "Las publicaciones escondían promociones pagadas, y la foto del producto estaba generada por IA, sin ningún resultado real.",
+      "evidenceLabel": "Las publicaciones escondían publicidad pagadas, y la foto del producto estaba generada por IA, sin ningún resultado real.",
       "stage1": {
         "howToSpot": "¿Cómo sé qué tipo de publicación estoy viendo?",
         "badge": "Fase 1 / 2",
@@ -967,7 +967,7 @@ export default {
         "correct": "✓ {label}",
         "wrong": "✗ etiqueta incorrecta",
         "learnLabel": "Por qué importa:",
-        "learn": "el contenido patrocinado debe estar claramente etiquetado. Un #publicidad, un producto regalado, un enlace de afiliado o un código de descuento son todos señales de publicidad, incluso cuando se disfrazan de recomendación personal.",
+        "learn": "el contenido publicitario debe estar claramente etiquetado. Un #publi, un #gifted, un enlace de afiliado o un código de descuento son todos señales de que es publicidad, incluso cuando parecen una recomendación personal sincera.",
         "hint": "Toca o arrastra una etiqueta y suéltala sobre la publicación que corresponda.",
         "commentsTitle": "Comentarios",
         "commentCount": "{count} comentarios",
@@ -1112,7 +1112,7 @@ export default {
         "classifyCount": "Productos clasificados: {count} / {total}",
         "errWrong": "Una o más clasificaciones son incorrectas. Vuelve a leer lo que devolvió cada búsqueda.",
         "learnLabel": "Herramienta real, hábito real:",
-        "learn": "una búsqueda inversa de imágenes comprueba si la foto de un producto «artesanal», «único» o «real» está en realidad robada, fabricada en masa en decenas de tiendas de dropshipping o generada por IA. Que no aparezca ningún resultado también puede significar que la imagen es falsa.",
+        "learn": "una búsqueda inversa de imágenes comprueba si la foto de un producto «artesanal», «único» o «real» está en realidad robada, fabricada en masa en decenas de tiendas online o generada por IA. Que no aparezca ningún resultado también puede significar que la imagen es falsa.",
         "hint": "Busca primero y luego clasifica los tres.",
         "confirm": "Confirmar clasificaciones →",
         "lookFirst": "Mira los resultados para tomar una decisión.",
@@ -1129,9 +1129,9 @@ export default {
         "claimsCaption1": "Conejito de porcelana original de JAPÓN",
         "claimsCaption2": "Conejito de plástico hecho en México",
         "title": "Más allá del anuncio: ¿qué hay del producto?",
-        "body": "¿Es el producto lo que dicen? Una búsqueda inversa de imágenes te ayuda a comprobarlo. ¿Cómo funciona? Fácil, buscas con una foto y encuentra esa misma imagen u otras parecidas que aparecen en internet, para que verifiques si la imagen es de verdad lo que el vendedor afirma.",
+        "body": "¿Es un producto real y fiable? Una búsqueda inversa de imágenes te ayuda a comprobarlo. ¿Cómo funciona? Fácil, buscas con una foto y encuentra esa misma imagen u otras parecidas que aparecen en internet, para que verifiques si la imagen es de verdad lo que el vendedor afirma.",
         "instructions": "Primero haz la búsqueda inversa de la imagen. Después, mira los resultados para juzgar la autenticidad del producto. Finalmente, añade el sello que corresponda",
-        "useShop": "¿Te encanta una prenda que viste en una publicación? Haz una búsqueda inversa de la foto para encontrar dónde comprarla de verdad.",
+        "useShop": "¿Te encanta una prenda que viste en una publicación? Haz una búsqueda inversa de la foto para encontrar dónde comprarla de manera segura y oficial.",
         "useVerify": "¿No estás {player:seguro|segura} de que el producto de un influencer sea auténtico? Haz una búsqueda inversa de la foto para ver si es realmente único o el mismo artículo fabricado en masa que vende todo el mundo.",
         "searchLabel": "búsqueda inversa de imágenes",
         "searching": "Buscando en la web…",
@@ -1262,7 +1262,7 @@ export default {
       "decoder": {
         "title": "🔑 Tarjeta descodificadora de emojis",
         "noCard": "Normalmente habrías conseguido esta tarjeta en el Distrito de los Enlaces; aquí la tienes de todos modos.",
-        "help": "Haz coincidir cada emoji de una nota adhesiva con su letra para leer la etiqueta oculta.",
+        "help": "Haz coincidir cada emoji del post-it con su letra para leer la etiqueta oculta.",
         "noSelection": "Ninguna publicación seleccionada",
         "erase": "Borrar la última letra"
       },
@@ -1279,10 +1279,10 @@ export default {
       }
     },
     "algorithm": {
-      "intro": "Un ordenador gigante usa cantidades enormes de datos personales para decidir qué anuncios ve cada persona. Entra en la sala para averiguar cómo crea anuncios personalizados",
+      "intro": "Este ordenador usa cantidades enormes de datos personales para decidir qué anuncios ve cada persona. Entra en la sala para averiguar cómo crea anuncios personalizados",
       "solvedTitle": "Sala de Control del Algoritmo descifrada · Prueba superada",
       "solvedText": "Ya has visto cómo el algoritmo convertía la edad, los intereses y las posibles inseguridades de {friend} en un único anuncio. Eso no es casualidad: es el resultado de su perfil publicitario.",
-      "evidence": "El anuncio fue elegido a dedo por un algoritmo usando la edad, los intereses y las inseguridades de {friend}.",
+      "evidence": "El anuncio fue elegido por un algoritmo usando la edad, los intereses y las inseguridades de {friend}.",
       "unlock": {
         "badge": "ACCESO · Sala de Control del Algoritmo",
         "prompt": "Introduce el código de seis dígitos.",
@@ -1301,7 +1301,7 @@ export default {
         "optionBBold": "muchos más",
         "optionBAfter": "anuncios: pero menos información personal tuya se analiza",
         "wrongTitle": "Respuesta incorrecta.",
-        "wrongText": "Acabas de cambiar tu privacidad por comodidad. «Personalizado» es el algoritmo: menos anuncios significa que recoge y analiza más datos tuyos para personalizar los anuncios.",
+        "wrongText": "Acabas de cambiar tu privacidad por una experiencia más cómoda. Aunque la red social te enseñe menos anuncios, ha recogido muchos más datos sobre ti para personalizar la publicidad que te enseña al máximo",
         "goodTitle": "Buena respuesta.",
         "goodText": "Ver más anuncios es molesto, pero a cambio proteges tus datos y reduces el efecto del algoritmo de personalización. Las plataformas usan la comodidad como cebo: nos hacen creer que la personalización es algo bueno, cuando en realidad les sirve para saber más sobre ti.",
         "afterNote": "En cualquier caso, la máquina sigue intentando hacer el perfil de todo el mundo. Veamos cómo.",
@@ -1310,7 +1310,7 @@ export default {
       "equations": {
         "feedbackTitle": "Ecuación resuelta: ¿por qué este anuncio?",
         "badge": "Motor de segmentación · resuelve todas las ecuaciones",
-        "prompt": "Rellena el hueco que falta para completar el anuncio de cada persona.",
+        "prompt": "Rellena el hueco que falta para completar el anuncio que le llegará a cada persona.",
         "adTitle": "Anuncio",
         "adFlag": "ANUNCIO EXPUESTO",
         "slotPlaceholder": "coloca la ficha",
@@ -1327,7 +1327,7 @@ export default {
         "profileB2": "intereses",
         "profileP3": "(videojuegos, tecnología nueva y búsquedas de el NovaPad X) e",
         "profileB3": "inseguridades",
-        "profileP4": "(encajar, miedo a perderse la oferta). Del análisis salió un anuncio perfectamente dirigido: justo la oferta del «90% de descuento» en el NovaPad X. Que {friend} lo viera nunca fue casualidad.",
+        "profileP4": "(encajar, miedo a perderse la oferta). Del análisis salió un anuncio personalizado: justo la oferta del «90% de descuento» en el NovaPad X. Que {friend} lo viera nunca fue casualidad.",
         "logEvidence": "Registrar esta prueba ✓",
         "finalLessonTitle": "Lo que has aprendido",
         "finalLesson": "Los anuncios personalizados combinan tu actividad, tus intereses y tus inseguridades para dirigirse a ti.",
@@ -1354,7 +1354,7 @@ export default {
             "1": "Sigue a influencers de fitness",
             "2": "Inseguro por estar delgado"
           },
-          "feedbackLesson": "Un chico adolescente sigue páginas de fitness y da «me gusta» a publicaciones sobre ganar músculo. Por eso recibe un anuncio de un suplemento muscular. Los sistemas publicitarios miran lo que hace la gente en internet y muestran anuncios en los que es probable que hagan clic, aunque el producto no sea algo que realmente necesiten."
+          "feedbackLesson": "Un chico adolescente sigue páginas de fitness y da «me gusta» a publicaciones sobre ganar músculo. Por eso recibe un anuncio de un suplemento muscular. Los algoritmos estudianlo que hace la gente en internet y muestran anuncios en los que es probable que hagan clic, aunque el producto no sea algo que realmente necesiten."
         },
         "r3": {
           "ad": "Crema contra la calvicie",
@@ -1362,10 +1362,10 @@ export default {
             "0": "Hombre, 25–35",
             "1": "Sigue canales de tecnología"
           },
-          "feedbackLesson": "Los clics en productos contra la caída del cabello o ver repetidamente contenido relacionado pueden sugerir esa preocupación. Un algoritmo puede usar esas acciones para mostrarle a alguien anuncios de caída del cabello que ofrecen una supuesta solución a su preocupación."
+          "feedbackLesson": "Los clics en productos contra la caída del pelo o ver repetidamente contenido relacionado con ese tema pueden sugerir esa preocupación. Un algoritmo puede usar esas acciones para mostrarle a alguien anuncios de caída del pelo que ofrecen una supuesta solución a su preocupación."
         },
         "r4": {
-          "ad": "Pastillas adelgazantes",
+          "ad": "Pastillas para adelgazar",
           "slots": {
             "0": "Mujer, 30–45",
             "2": "Insegura por su peso"
@@ -1453,7 +1453,7 @@ export default {
     },
     "ads": {
       "intro": "Un pasillo lleno de anuncios luminosos y ofertas tentadoras. Pero… ¿son tan buenas como parecen?",
-      "solvedTitle": "Pasillo superado: has leído la letra pequeña",
+      "solvedTitle": "Reto superado: has leído la letra pequeña",
       "solvedText": "Este tipo de anuncios capta tu atención inmediatamente con cosas gratis, promesas de enriquecerse, peligro inminente... Sospecha de cualquier contenido que te cree una reacción emocional demasiado intensa.",
       "pickup": "Recoges la Linterna de la Verdad 🔦",
       "torchCharging": "🔦 Cargando…",
@@ -1514,23 +1514,23 @@ export default {
       ]
     },
     "persuasion": {
-      "intro": "Una galería de anuncios llamativos. Cada uno se apoya en un único truco de persuasión: nómbralo enmarcando el cartel.",
+      "intro": "Una galería de anuncios llamativos. Cada uno representa una estrategia de persuasión de la publicidad: únelos arrastrando la estrategia al cartel.",
       "solvedTitle": "Laboratorio de Persuasión superado: contraseña TRAMPA",
-      "solvedText": "En cuanto sabes nombrar el truco (FOMO, urgencia, una celebridad prestada) deja de funcionar contigo. Esa es toda la defensa.",
+      "solvedText": "En cuanto sabes nombrar el truco (FOMO, urgencia, una celebridad prestada) puedes reconocerlo la siguiente vez y quizá deje de funcionar en ti.",
       "learn": {
         "lead": "Detecta el truco.",
-        "body": "Los anuncios persuaden con técnicas que tienen nombre: FOMO (miedo a perderse algo), prueba social («todo el mundo lo compra»), exageración, recomendación de influencers, apelación emocional y urgencia. Las campañas reales suelen apilar varias a la vez para colarse por delante de tu juicio."
+        "body": "Los anuncios persuaden con técnicas que tienen nombre: FOMO (miedo a perderse algo), prueba social («todo el mundo lo compra»), exageración, recomendación de influencers, apelación emocional y urgencia. Las campañas reales suelen utilizar varias a la vez."
       },
       "trayLabel": "MARCOS DE TÉCNICAS",
       "hints": {
-        "start": "Arrastra y suelta cada marco de técnica sobre el cartel que le corresponde.",
-        "allDone": "Los seis enmarcados: las letras forman una contraseña. Haz clic en el ordenador para escribirla.",
-        "correct": "Correcto: una latra ha aparecido. Continua con el resto",
-        "wrong": "Esa técnica no encaja con este anuncio. Marco devuelto: prueba con otro.",
+        "start": "Arrastra y suelta cada estrategia publicitaria sobre el cartel que le corresponde.",
+        "allDone": "Has conseguido unirlos todos: ahora las letras forman una contraseña. Haz clic en el ordenador para escribirla.",
+        "correct": "Correcto: una letra ha aparecido. Continua con el resto",
+        "wrong": "Esa técnica no encaja con este anuncio. Prueba con otra.",
         "wrongSpecific": "No del todo. Míralo otra vez: {clue}"
       },
       "dragHint": "Arrástralo a su cartel",
-      "count": "Enmarcados {matched} / {total}",
+      "count": "Unidos {matched} / {total}",
       "posters": [
         {
           "headline": "¡SOLO QUEDAN 3 EN STOCK!",
@@ -1539,7 +1539,7 @@ export default {
         },
         {
           "headline": "¡Más de 2 MILLONES de personas ya lo han comprado!",
-          "sub": "Únete a la multitud.",
+          "sub": "Únete al resto de personas.",
           "letter": "R"
         },
         {
@@ -1553,7 +1553,7 @@ export default {
           "letter": "M"
         },
         {
-          "headline": "No falles a tu familia. Por favor. ",
+          "headline": "No decepciones a tu familia. ",
           "sub": "Ellos lo dieron todo por ti.",
           "letter": "P"
         },
@@ -1573,7 +1573,7 @@ export default {
       },
       "passwordLearn": {
         "lead": "Nombrado y desarmado.",
-        "body": "Seis carteles, seis trucos. Las letras que escondían, leídas de izquierda a derecha, son la contraseña de salida: la prueba de que los viste venir todos."
+        "body": "Seis carteles, seis estrategias. Las letras que escondían, leídas de izquierda a derecha, son la contraseña de salida: la prueba de que los viste venir todos."
       },
       "openComputer": "Usar el ordenador →",
       "closeComputer": "Cerrar la pantalla",

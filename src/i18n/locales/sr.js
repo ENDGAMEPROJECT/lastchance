@@ -84,7 +84,7 @@ export default {
   },
   "map": {
     "eyebrow": "Mapa fizičkog interneta",
-    "titleLead": "Izaberi sledeći",
+    "titleLead": "Idi u sledeći",
     "titleAccent": "okrug",
     "subtitle": "Putuj kroz mrežu, prikupljaj dokaze i stigni do Konačne odluke pre nego što ponuda istekne.",
     "start": "▶ START · Pre-test sa {friend_instrumental}",
@@ -131,7 +131,7 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Ubedljivo, ali bez dovoljno dokaza",
-          "body": "Mislim da si u pravu, ali nisam video dovoljno dokaza na „fizičkom internetu“. Kupiću tablet.",
+          "body": "Mislim da si u pravu, ali nisam {friend:video|videla} dovoljno dokaza na „fizičkom internetu“. Kupiću tablet.",
           "Mia": {
             "body": "{player:Ubedio|Ubedila} si Milu, ali si {player:zakasnio|zakasnila}. Nije stigla da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
           },
@@ -1454,7 +1454,7 @@ export default {
     "ads": {
       "intro": "Neonski servisni tunel oblepljen sa četiri svetleća reklamna postera. Deluju velikodušno. Nisu.",
       "solvedTitle": "Koridor očišćen: pročitali ste sitna slova",
-      "solvedText": "Stigao/la si do poslednje runde! Ovi oglasi su napravljeni da se osećaš veoma srećno kako bi nasela/nasedao na prevaru. Budi oprezan/na prema svakom sadržaju koji u tebi izaziva veoma snažnu emotivnu reakciju.",
+      "solvedText": "Stigao/la si do poslednje runde! Ovi oglasi su napravljeni da se osećaš veoma srećno kako bi naseo/la na prevaru. Budi oprezan/na prema svakom sadržaju koji u tebi izaziva veoma snažnu emotivnu reakciju.",
       "pickup": "Uzimate baterijsku lampu Istine 🔦",
       "torchCharging": "🔦 Punjenje…",
       "torchOn": "🔦 Lampa UKLJUČENA",
