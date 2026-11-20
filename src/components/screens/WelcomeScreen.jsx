@@ -105,12 +105,12 @@ export default function WelcomeScreen() {
           <legend>{t('welcome.characterLabel')}</legend>
           <div className="character-picker">
             <label className={`character-option is-mia ${character === 'mia' ? 'on' : ''}`}>
-              <input type="radio" name="character" value="mia" checked={character === 'mia'} onChange={() => { setErr(''); setCharacter('mia'); track('selected', OBJ.character(), { node: 'intro', response: 'mia' }) }} />
+              <input type="radio" name="character" value="mia" checked={character === 'mia'} onChange={() => { setErr(''); setCharacter('mia'); track('selected', OBJ.character(), { node: 'intro', response: 'female-player;male-friend' }) }} />
               <img className="character-figure" src={bgUrl('algorithm-room/mia-figure-nobg.png')} alt="" draggable={false} />
               <span className="character-name">{t('welcome.characterMia')}</span>
             </label>
             <label className={`character-option is-max ${character === 'max' ? 'on' : ''}`}>
-              <input type="radio" name="character" value="max" checked={character === 'max'} onChange={() => { setErr(''); setCharacter('max'); track('selected', OBJ.character(), { node: 'intro', response: 'max' }) }} />
+              <input type="radio" name="character" value="max" checked={character === 'max'} onChange={() => { setErr(''); setCharacter('max'); track('selected', OBJ.character(), { node: 'intro', response: 'male-player;female-friend' }) }} />
               <img className="character-figure" src={bgUrl('algorithm-room/max-figure-nobg.png')} alt="" draggable={false} />
               <span className="character-name">{t('welcome.characterMax')}</span>
             </label>

@@ -245,7 +245,13 @@ export const OBJ = {
   privacyChoice: () => a('objects/privacy-choice', 'Privacy trade-off', 'choice'),
   equation: (rid, name) => a(`objects/equations/${rid}`, name, 'choice'),
   equationLesson: (rid, name) => a(`objects/equations/${rid}/lesson`, `${name} lesson`, 'tip'),
-  algoProfile: (friend) => a('objects/profile', `Algorithmic profile of ${friend}`, 'tip'),
+  /* By the friend's GENDER, never their name: the characters are renamed per
+     language (Mila/Marko in Serbian), so a name here would make the activity
+     mean something different in each one — and an activity's definition name
+     has to mean the same thing everywhere. The two characters are one male and
+     one female, so the friend's gender identifies which pairing was played. */
+  algoProfile: (friendGender) => a('objects/profile',
+    `Algorithmic profile of the ${friendGender === 'F' ? 'female' : 'male'} friend`, 'tip'),
 
   // Corridor 2 — Ads
   poster: (id, name) => a(`objects/posters/${id}`, name, 'image'),

@@ -65,14 +65,27 @@ function dialogScene(scenery, playerId) {
 export const sceneFiles = ({ image, characters }) => [image, ...characters.flatMap((character) =>
   [character, ...Object.values(character.poses)].flatMap(({ active, inactive }) => [active, inactive]))]
 
-export function getNarrative(character = 'mia') {
+/* `names` is the current language's names.<id> block from the translation
+   Sheet (see characterText.js). A language may call these two characters
+   something else: Serbian already declines them as Mila and Marko in every
+   case except the nominative, which used to come from CHARACTERS below — so a
+   Serbian player read "Mia" as the subject and "Milu" as the object of the
+   same sentence. The nominative now comes from the Sheet too, and the two
+   agree.
+
+   Nothing outside the fiction uses these names: art is keyed by ID, the
+   per-friend copy in the Sheet is keyed .Mia/.Max off the ID, and xAPI names
+   the pairing by GENDER so an activity means the same thing in every
+   language. A rename therefore touches the dialogue and nothing else. */
+export function getNarrative(character = 'mia', names = null) {
   const playerId = character === 'max' ? 'max' : 'mia'
   const friendId = playerId === 'max' ? 'mia' : 'max'
+  const localised = (id) => names?.[id]?.nominative || CHARACTERS[id].name
   return {
     character: playerId,
-    player: CHARACTERS[playerId].name,
+    player: localised(playerId),
     playerGender: CHARACTERS[playerId].gender,
-    friend: CHARACTERS[friendId].name,
+    friend: localised(friendId),
     friendId,
     friendGender: CHARACTERS[friendId].gender,
     friendProfileImage: CHARACTERS[friendId].profileImage,

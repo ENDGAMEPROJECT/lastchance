@@ -173,6 +173,10 @@ export default function EnterScreen() {
   // The empty arrival scene shows until the dialogue starts (and during the HUD tour).
   const backdrop = intro || step.who === 'tour' ? 'initial' : step.who
   const name = step.who === 'player' ? narrative.player : friend
+  /* Which of the two is talking, by ID: the display name is translatable
+     (getNarrative), so comparing it to 'Mia' would silently pick the wrong
+     bubble in any language that renames the characters. */
+  const speakerId = step.who === 'player' ? narrative.character : narrative.friendId
   const glitchBackground = backdrop === 'initial'
     ? { backgroundImage: `url(${bgUrl('initial-ph-internet.png')})` }
     : sceneBackground(narrative.internetScene, backdrop)
@@ -245,7 +249,7 @@ export default function EnterScreen() {
         </div>
 
         {!intro && step.who !== 'tour' && (
-          <div key={stepIndex} className={`pretest-speech ${name === 'Mia' ? 'is-mia' : 'is-max'}`}>
+          <div key={stepIndex} className={`pretest-speech ${speakerId === 'mia' ? 'is-mia' : 'is-max'}`}>
             <div className="pretest-speech-name" data-text={name} aria-hidden="true">{name}</div>
             <p className="pretest-line" aria-label={step.text} aria-live="polite" aria-atomic="true">
               <span aria-hidden="true">

@@ -106,6 +106,10 @@ export default function ReturnScreen() {
   }, [phase, enterPosttestFromWhite])
 
   const name = step.who === 'player' ? narrative.player : narrative.friend
+  /* Which of the two is talking, by ID: the display name is translatable
+     (getNarrative), so comparing it to 'Mia' would silently pick the wrong
+     bubble in any language that renames the characters. */
+  const speakerId = step.who === 'player' ? narrative.character : narrative.friendId
 
   return (
     <div className="scene pretest-scene enter-scene return-scene">
@@ -115,7 +119,7 @@ export default function ReturnScreen() {
         </div>
 
         {phase === 'talk' && (
-          <div key={stepIndex} className={`pretest-speech ${name === 'Mia' ? 'is-mia' : 'is-max'}`}>
+          <div key={stepIndex} className={`pretest-speech ${speakerId === 'mia' ? 'is-mia' : 'is-max'}`}>
             <div className="pretest-speech-name" data-text={name} aria-hidden="true">{name}</div>
             <p className="pretest-line" aria-label={step.text} aria-live="polite" aria-atomic="true">
               <span aria-hidden="true">

@@ -10,6 +10,8 @@
 import { createContext, useContext, useReducer, useEffect, useCallback, useRef, useMemo, useState } from 'react'
 import { getNarrative } from './characters.js'
 import { NarrativeContext } from './NarrativeContext.jsx'
+import { useI18n } from '../i18n/index.jsx'
+import dictionaries from '../i18n/dictionaries.js'
 import { NODES, GAME_MINUTES, ITEMS } from './gameData.js'
 import { DEBUG, DEBUG_SCREEN, DEBUG_POSTTEST_SCENARIO, DEBUG_CHARACTER } from './settings.js'
 import { saveRun, loadRun, clearRun, clearRoomState } from './session.js'
@@ -300,7 +302,13 @@ export function GameProvider({ children }) {
      (see SessionDialog). Read once — re-reading after a resume would find
      the run we just restored. */
   const [pendingRun, setPendingRun] = useState(loadRun)
-  const narrative = useMemo(() => getNarrative(state.player.character), [state.player.character])
+  /* The characters' names are translatable (see getNarrative), so the
+     narrative has to be rebuilt when the language changes. */
+  const { locale } = useI18n()
+  const narrative = useMemo(
+    () => getNarrative(state.player.character, dictionaries[locale]?.names),
+    [state.player.character, locale],
+  )
   const runningRef = useRef(state.running)
   runningRef.current = state.running
 

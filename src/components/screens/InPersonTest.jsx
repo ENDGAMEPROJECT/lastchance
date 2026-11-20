@@ -74,7 +74,8 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
   const readKeys = useRef(new Set()) // lines already read: coming Back shows them complete
   const [speechProgress, setSpeechProgress] = useState({ key: '', elapsed: 0 })
   const playerSpeaking = ['reply', 'endingYou'].includes(phase) || (phase === 'intro' && intro[introIndex].who === 'player')
-  const miaSpeaking = (playerSpeaking ? narrative.player : friend) === 'Mia'
+  // By ID, not by display name: a translation may rename the characters.
+  const miaSpeaking = (playerSpeaking ? narrative.character : narrative.friendId) === 'mia'
   const posed = Boolean(replyPose || endingPose) || (hasIntro && intro.some((l) => l.pose))
   const poses = { player: null, friend: null }
   if (hasIntro && !skipOpening) {
