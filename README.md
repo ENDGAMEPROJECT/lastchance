@@ -2,9 +2,10 @@
 
 An interactive, cyberpunk-styled escape room that teaches young people how online
 **advertising, scams and fraudulent websites** actually work. The player has 40 minutes
-to travel a "physical internet" city, gather evidence, and convince their friend — **Mia**
-or **Max**, whichever they did not pick — not to buy a too-good-to-be-true viral deal before
-the fake "today only" countdown expires.
+to travel a "physical internet" city, gather evidence, and convince their friend — whichever
+of the two characters they did not pick — not to buy a too-good-to-be-true viral deal. The
+fake "today only" countdown does not end the run when it expires: the outcome is sealed, but
+the player carries on through the remaining districts and still faces the conversation.
 
 Built with **React 18 + Vite**. All interactive elements are hand-built with HTML/CSS/SVG
 (no game engine, no external UI libraries — zero runtime UI dependencies). All copy runs
@@ -30,6 +31,11 @@ Run `npm run check:all` before pushing: the three checks catch the mistakes a bu
 cannot see — a missing translation key, a `track()` call naming a verb that does not
 exist, an image the preloader promises but nobody shipped.
 
+`check:i18n` also guards what the Sheet can break from outside the repo: which pre/post-test
+option is correct (in all four locales), whether an item has been reworded since its xAPI
+slugs were written, and whether every language can still spell the Influencer keypad word and
+find its corridor code letters. All three have gone wrong at least once.
+
 ## The game
 
 The whole game runs inside a fixed **1280×720 (16:9) stage** that is scaled as a single unit
@@ -37,24 +43,28 @@ to fit the window and letterboxed (`components/Stage.jsx`), so the layout never 
 
 Flow of screens (see the `screen` state in `GameContext`, routed in `App.jsx`):
 
-1. **Welcome** — pick an alias, age, language, and character (Mia or Max). Mia helps Max spot the NovaPad scam; Max helps Mia instead. This choice controls the speakers, hints, data report and ending throughout the run. The Algorithm Control Room displays the friend's figure: `max-figure-nobg.png` when playing Mia, `mia-figure-nobg.png` when playing Max.
-2. **Pre-test chat** — a messaging-app conversation with **Max**, who shows a viral flash-sale
-   post (a live phone **Product Preview** with a spoofed URL and a ticking "today only" timer)
-   and asks whether he should buy. This diagnoses the player's starting instincts.
+1. **Welcome** — pick an alias, age, language, and character. Each helps the other spot the NovaPad scam. **The two characters are named per language** (`names.<id>.nominative` in the Sheet): Mia/Max in English, María/Marcos in Spanish, Minna/Markku in Finnish, Mila/Marko in Serbian. Art, gender and the per-friend copy are keyed by ID, so a rename touches only the dialogue. This choice controls the speakers, hints, data report and ending throughout the run. The Algorithm Control Room displays the friend's figure: `max-figure-nobg.png` when playing Mia, `mia-figure-nobg.png` when playing Max.
+2. **Pre-test chat** — a messaging-app conversation with the friend, who shows a viral
+   flash-sale post (a live phone **Product Preview** with a spoofed URL and a ticking "today
+   only" timer) and asks whether to buy. Three items, each a claim about the deal of which
+   exactly one is true. Answers are recorded with no feedback — the same three return at the
+   end — which is what makes the pair comparable.
 3. **The Map** — four puzzle districts + two corridors on an oval "racetrack" progress map,
    under a 40-minute countdown, with an inventory **Bag** (tools + evidence).
-4. **Post-test chat** — the finale: the player returns to the conversation with Max and must
-   use the evidence they gathered to talk him out of the purchase before time runs out.
-5. **Win / Lose** — based on whether Max is convinced (or the timer expires).
+4. **Post-test chat** — the finale: the player returns to the conversation and must use the
+   evidence to talk the friend out of the purchase. **The clock stops here**, retries
+   included, so a wrong answer is never confounded with running out of time to think.
+5. **Win / Lose** — all three right and the countdown never expired during the puzzles, and
+   the friend is convinced. If it did expire, the friend buys whatever is argued.
 
 | # | Node | Type | Teaches |
 |---|------|------|---------|
 | 1 | **Link District** | Puzzle | Spot & block fraudulent look-alike URLs (typosquatting, homoglyphs, http vs https, odd TLDs). Doors open to reveal the site; order is shuffled. Reward: *Emoji Decoding Card*. |
-| 2 | **Roulette Corridor** | Corridor | Spin two rigged wheels at least twice each and choose Rigged or Not rigged. Correct choices reveal two short lessons: what gamification is and how feeling lucky can lead to more spending and playing. Icons accompany the translated labels; there are no extra reasoning choices. |
-| 3 | **Influencer Avenue** | Puzzle | Decode sponsorship labels (PAID/COLLAB/GIFTED) + simulated reverse-image-search to spot fake/AI products. Reward: *Data Report*. |
+| 2 | **Roulette Corridor** | Corridor | Spin two rigged wheels at least twice each and choose Rigged or Not rigged. Both are rigged, in the two opposite ways the lesson needs: one always lands on the same token coupon, the other never lands on a prize at all and nudges you to spin again. Icons accompany the translated labels; there are no extra reasoning choices. |
+| 3 | **Influencer Avenue** | Puzzle | An explainer defines the three labels, then the player decodes the emoji notes with the *Emoji Card* **and drags each onto the post it describes**. Decoding gives the vocabulary; placing it needs the post's tell-tale sign. Then a simulated reverse-image-search to spot fake/AI products. Reward: *Data Report*. |
 | 4 | **Algorithm Control Room** | Puzzle | How personalization equations target ads using your demographics, follows & insecurities. Reward: *Truth Flashlight*. |
 | 5 | **Ads Corridor** | Corridor | A cursor-tracked "Truth Flashlight" (carried in from the Algorithm Room) burns away the gloss to reveal the fine print + a hidden exit code. |
-| 6 | **Persuasion Lab** | Puzzle | Name the persuasion technique on each poster (FOMO, social proof, urgency…) by dragging frames onto them; then click the computer to type the revealed password. |
+| 6 | **Persuasion Lab** | Puzzle | Name the persuasion technique on each poster (FOMO, social proof, urgency…) by dragging frames onto them, then type the revealed password into the computer's terminal. No right/wrong feedback on placement, on purpose: it keeps the player reasoning rather than brute-forcing. The HUD carries a **Persuasion techniques** button in this room only. |
 
 The finale is the **Post-test** conversation (there is no separate "Final Decision" node).
 
@@ -173,6 +183,11 @@ Sound effects live in `public/sounds/` and play through `src/game/sound.js`:
 - Wired in for tactile feedback: door open/close/blocked/rotate (Link District), roulette
   spin + win, a "correct" twinkle and a shared `wrong.mp3` on any incorrect answer, and an
   inventory chime fired centrally from `GameContext` whenever a new item is earned.
+- **Background ambience** — one looped bed at a time, named by the screen with
+  `setAmbience('internet' | 'school' | null)` and cross-faded over `settings.ambience.fadeMs`.
+  The tracks and their volumes are config (`settings.ambience.tracks`), so the school hum sits
+  far quieter than the Physical Internet's. Muting pauses the bed and unmuting brings it back,
+  rather than restarting it.
 
 To add a sound: drop the file in `public/sounds/`, then `playSound('file.mp3')` (and optionally
 `preloadSound('file.mp3')` on mount).
@@ -182,8 +197,9 @@ To add a sound: drop the file in `public/sounds/`, then `playSound('file.mp3')` 
 A refresh used to cost the whole run. The reducer state is plain JSON, so it is saved to
 `sessionStorage` on every change and offered back on the next load: `SessionDialog` names
 what is at stake — districts cleared, time left, where the run stands, what it is carrying
-— and the player chooses **Resume** or **Start over**. Nothing is restored silently, which
-would strand someone who wanted a fresh start on a stranger's half-finished game.
+— and the player chooses **Resume**, **the survey**, or **Start over** (which then asks for
+confirmation). Nothing is restored silently, which would strand someone who wanted a fresh
+start on a stranger's half-finished game.
 
 `sessionStorage` rather than `localStorage` on purpose, matching where the xAPI actor is
 kept: on a shared classroom machine the next student starts their own run instead of
@@ -198,12 +214,19 @@ make resuming seamless; it would touch all six rooms.
 
 ## Feedback survey
 
-Both endings offer a short survey (`SurveyModal`), modelled on the one in the ECHO escape
-room so results from the two rooms line up. Four sections — a 1–5 opinion, two 1–7 blocks,
+A short survey (`SurveyModal`), modelled on the one in the ECHO escape room so results from
+the two rooms line up. Offered on both endings, from the resume dialog for any saved run, and
+in the map header once the countdown has expired — a class period ends when it ends, and a run
+that stopped early is the one whose feedback is worth having. All three go through
+`SurveyButton`. Four sections — a 1–5 opinion, two 1–7 blocks,
 and free text — are config rather than markup, so the item count is whatever the Sheet
 holds, in every language: adding a question is a row, not a code change. Ratings are
-required, the comment box is not. It is asked once per run and submitting opens the end
-options: restart, or the ENDGAME project site.
+required, the comment box is not. It is asked once per run (`session.js`), so answering it
+anywhere satisfies the end screen too — it shows its thanks line instead of asking again.
+Submitting opens the end options: restart, or the ENDGAME project site.
+
+**Restarting asks first**, both from the endings and from the resume dialog: `reset()` drops
+the saved run, the evidence and the survey ask, and it is reachable from exactly one button.
 
 ## Learning analytics (xAPI)
 
@@ -216,6 +239,13 @@ Because failure is silent by design, **nothing is logged unless debug mode is on
 `?debug` to diagnose a deployed build. Verbs, objects and parent activities live in one
 catalogue, and `npm run check:xapi` verifies every `track()` call names entries that exist,
 which a build cannot see (most calls live in handlers that never run during a render).
+
+**An activity must mean the same thing in every language.** Nothing localisable enters an id
+or a name: the characters are renamed per language, so the algorithmic profile is named by the
+friend's gender and the character choice records the pairing, not the name. The pre/post-test
+items carry stable English slugs in `game/testItems.js`, naming the reasoning an option
+represents rather than its letter. Numbered ids (`objects/posts/<n>`) are declared on the
+item, never derived from array position, so a reorder cannot silently re-point them.
 
 ## Editing text / adding a language
 
@@ -237,9 +267,14 @@ loudly on the rest.
 
 **Declined names.** `{friend}` only works as a subject. Finnish and Serbian inflect the name
 itself, so a `names.<character>.<form>` row in the Sheet becomes the variable
-`{friend_<form>}` — `names.mia.genitive` makes `{friend_genitive}` render "Mian" in Finnish
-and "Mije" in Serbian. One string then serves both characters, and a translator can add or
+`{friend_<form>}` — `names.mia.genitive` makes `{friend_genitive}` render "Minnan" in Finnish
+and "Mile" in Serbian. One string then serves both characters, and a translator can add or
 fix a case without a code change.
+
+**The nominative comes from the Sheet too**, so a language can rename the characters outright:
+`names.<id>.nominative` feeds `{friend}`, `{player}` and `{friend_nominative}` alike. Two
+consequences: never compare the display name to decide who is speaking (use the character ID),
+and a string that spells a name out instead of interpolating it will keep the old one.
 
 **UI copy that must survive an import** — the resume dialog, the fullscreen and rotate
 prompts — lives in small local files (`src/i18n/locales/session.js`, `fullscreen.js`,
