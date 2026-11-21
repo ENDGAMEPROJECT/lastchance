@@ -131,7 +131,7 @@ export default {
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Ubedljivo, ali bez dovoljno dokaza",
-          "body": "Mislim da si u pravu, ali nisam {friend:video|videla} dovoljno dokaza na „fizičkom internetu“. Kupiću tablet.",
+          "body": "Mislim da si u pravu, ali nisam {friend:video|videla} dovoljno dokaza na „fizičkom internetu“. Kupiću tablet.",
           "Mia": {
             "body": "{player:Ubedio|Ubedila} si {friend_accusative}, ali si {player:zakasnio|zakasnila}. Nije stigla da vidi sve dokaze koje si {player:mogao|mogla} da nađeš u fizičkom internetu."
           },
@@ -955,7 +955,7 @@ export default {
         "howToSpot": "Kako da znam koju vrstu objave gledam?",
         "badge": "Faza 1 / 2",
         "tag": "Označavanje sadržaja",
-        "prompt": "Na svaku objavu zalepite belešku sa odgovarajućom oznakom.",
+        "prompt": "Na svaku objavu zalepite belešku sa odgovarajućom oznakom.",
         "openDecoder": "🔑 Otvori karticu za dešifrovanje",
         "verified": "Potvrđeno",
         "viewPublication": "Pogledaj objavu",
@@ -1454,7 +1454,7 @@ export default {
     "ads": {
       "intro": "Neonski servisni tunel oblepljen sa četiri svetleća reklamna postera. Deluju velikodušno. Nisu.",
       "solvedTitle": "Koridor očišćen: pročitali ste sitna slova",
-      "solvedText": "Stigao/la si do poslednje runde! Ovi oglasi su napravljeni da se osećaš veoma srećno kako bi naseo/la na prevaru. Budi oprezan/na prema svakom sadržaju koji u tebi izaziva veoma snažnu emotivnu reakciju.",
+      "solvedText": "Ovi oglasi vam odmah privlače pažnju besplatnim stvarima, obećanjima o brzom bogaćenju, upozorenjima na neposrednu opasnost... Budite oprezni sa svakim sadržajem koji u vama izaziva veoma snažnu emotivnu reakciju.",
       "pickup": "Uzimate baterijsku lampu Istine 🔦",
       "torchCharging": "🔦 Punjenje…",
       "torchOn": "🔦 Lampa UKLJUČENA",

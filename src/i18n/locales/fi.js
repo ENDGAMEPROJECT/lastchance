@@ -955,7 +955,7 @@ export default {
         "howToSpot": "Mistä tiedän, minkä tyyppistä julkaisua katselen?",
         "badge": "Vaihe 1 / 2",
         "tag": "Sisällön merkitseminen",
-        "prompt": "Kiinnitä oikealla merkinnällä varustettu tarralappu jokaiseen tolppaan.",
+        "prompt": "Kiinnitä oikealla merkinnällä varustettu tarralappu jokaiseen julkaisuun.",
         "openDecoder": "🔑 Avaa purkukortti",
         "verified": "Vahvistettu",
         "viewPublication": "Katso julkaisu",
