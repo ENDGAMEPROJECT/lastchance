@@ -841,7 +841,7 @@
   flex-wrap: wrap;
   gap: 12px 16px;
   width: 100%;
-  max-width: 900px;
+  max-width: 1000px;
   padding: 28px 24px;
   border-radius: var(--radius);
   border: 1px solid var(--line);
@@ -890,7 +890,12 @@
 .ar-opts-tiles .ar-tile.tray {
   width: auto;
   min-width: 140px;
-  max-width: 168px;
+  /* 190, no 168: la ecuación 2 es la única cuyos dos términos visibles son
+     largos (las otras llevan siempre un dato demográfico corto), y en español
+     son 30 y 26 caracteres donde el inglés tiene 27. A 168px la etiqueta
+     necesitaba una línea más y la fila quedaba descuadrada. La fila tiene
+     holgura: cabía en 845 de 900px, y ahora el máximo sube a 1000. */
+  max-width: 190px;
   min-height: 116px;
   flex-direction: column;
   align-items: center;
@@ -923,6 +928,9 @@
 }
 .ar-equation .ar-ad {
   min-width: 128px;
+  /* Era la única ficha sin tope, así que un nombre de anuncio largo la
+     estiraba y se comía el ancho de los términos. */
+  max-width: 190px;
   @media (max-width: 1180px) {
     min-width: 260px;
     min-height: 160px;
