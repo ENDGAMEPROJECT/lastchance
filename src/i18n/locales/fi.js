@@ -194,7 +194,7 @@ export default {
           },
           {
             "k": "B",
-            "text": "Viestissä kerrotaan, että olet voittanut palkinnon. Linkin klikkaaminen on turvallista.",
+            "text": "Jos mainoksessa sanotaan, että olet voittanut palkinnon, linkkiä on turvallista klikata.",
             "correct": false
           },
           {
@@ -895,7 +895,7 @@ export default {
           "rigged": "Manipuloitu",
           "fair": "Ei manipuloitu"
         },
-        "retry": "Ei aivan. Katso tuloksia ja yritä uudelleen.",
+        "retry": "Katso tuloksia ja yritä uudelleen.",
         "correct": "Oikein! Tämä pyörä on peukaloitu.",
         "next": "Seuraava pyörä →",
         "finish": "Kirjaa todiste ✓",
@@ -1220,8 +1220,8 @@ export default {
               "price": "€610,15*"
             }
           ],
-          "result": "Kuva jäljitettiin tekoälygeneraattoreihin. Disinformaatiotoimistot lataisivat tämän kuvan verkkoon.",
-          "hint": "3 retail listings with great difference in prices."
+          "result": "Useat disinformaatiotoimistot latasivat tämän kuvan.",
+          "hint": "Kuva linkitetty tekoälygeneraattoreihin."
         },
         {
           "name": "Bluetooth-kaiutin B766",

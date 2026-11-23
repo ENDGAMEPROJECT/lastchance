@@ -92,6 +92,6 @@ export function getNarrative(character = 'mia', names = null) {
     reportImage: `objects/${friendId}-report.png`, // max-report.png / mia-report.png
     schoolScene: dialogScene('school', playerId),
     internetScene: dialogScene('internet', playerId),
-    product: 'the "NovaPad X" tablet',
+    product: '"NovaPad X" tablet',
   }
 }

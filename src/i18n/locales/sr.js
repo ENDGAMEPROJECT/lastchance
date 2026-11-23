@@ -194,7 +194,7 @@ export default {
           },
           {
             "k": "B",
-            "text": "U poruci piše da ste osvojili nagradu. Bezbedno je kliknuti na link.",
+            "text": "Ako u oglasu piše da ste osvojili nagradu, onda je bezbedno kliknuti na link.",
             "correct": false
           },
           {
@@ -895,7 +895,7 @@ export default {
           "rigged": "Namešten",
           "fair": "Nije namešten"
         },
-        "retry": "Ne baš. Pogledaj rezultate i pokušaj ponovo.",
+        "retry": "Pogledaj rezultate i pokušaj ponovo.",
         "correct": "Tačno! Ovaj točak je namešten.",
         "next": "Sledeći točak →",
         "finish": "Zabeleži dokaz ✓",
@@ -1220,8 +1220,8 @@ export default {
               "price": "71,000 RSD*"
             }
           ],
-          "result": "Slika je povezana sa AI generatorima. Agencije za dezinformacije su postavile ovu sliku.",
-          "hint": "3 retail listings with great difference in prices."
+          "result": "Nekoliko dezinformativnih agencija je postavilo ovu sliku.",
+          "hint": "Slika povezana sa AI generatorima."
         },
         {
           "name": "Bluetooth zvučnik B766",

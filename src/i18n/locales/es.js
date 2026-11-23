@@ -176,7 +176,7 @@ export default {
       "endsIn": "Termina en",
       "offerUrgency": "¡Date prisa antes de que se acabe!",
       "buy": "COMPRA AHORA",
-      "caption": "¡¡¡Dios mío, ¿¡han bajado el precio del NovaPad X a €49?! 😱🔥 ¡Aprovecha antes de que se agote! #oferta #anuncio",
+      "caption": "¡¡¡Dios mío, ¿¡han bajado el precio del NovaPad X a €49?!!! 😱🔥 ¡Aprovecha antes de que se agote! #oferta #anuncio",
       "likes": "12.4k Me gusta"
     },
     "roundLabel": "Ronda {n} · {title}",
@@ -194,7 +194,7 @@ export default {
           },
           {
             "k": "B",
-            "text": "Un mensaje dice que ganaste un premio. Seguro que es seguro clicar en él.",
+            "text": "Si el anuncio dice que has ganado un premio, entonces no hay duda de que es seguro.",
             "correct": false
           },
           {
@@ -283,7 +283,7 @@ export default {
         "¡No quiero perder la oferta antes de que la cuenta atrás llegue a cero! Además, es una influencer muy famosa, no publicaría algo falso. Pero lo raro es cómo sabían que quería una tablet. Apareció justo al principio de mi feed.",
         "A ver, hay mil teorías sobre cómo los algoritmos y las cuentas manejan los anuncios, pero ahora mismo estoy viendo la página real de la tienda. Tiene el logo oficial de la marca, reseñas estupendas y un pago seguro."
       ],
-      "endingFriend": "Mira, puedes analizar la página todo lo que quieras, ¡pero a mí todo me parece correcto! Estás siendo {player:paranoico|paranoica}. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, cuarenta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
+      "endingFriend": "Mira, puedes analizar la página todo lo que quieras, ¡Pero a mí todo me parece correcto! Estás siendo {player:paranoico|paranoica}. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, cuarenta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar.",
       "endingYou": "Trato hecho. Usemos tu móvil para entrar al Internet físico y ver qué esconde esa oferta.",
       "begin": "▶ Pulsa el móvil para entrar en el mundo digital"
     },
@@ -895,8 +895,8 @@ export default {
           "rigged": "Trucada",
           "fair": "No trucada"
         },
-        "retry": "No del todo. Mira los resultados e inténtalo otra vez.",
-        "correct": "No del todo. Mira los resultados e inténtalo otra vez.",
+        "retry": "Mira los resultados e inténtalo otra vez.",
+        "correct": "¡Correcto! Esta rueda está trucada.",
         "next": "Siguiente ruleta →",
         "finish": "Registrar la prueba ✓",
         "observe": "Gira al menos {count} veces. ¿Cambian los resultados?",
@@ -905,7 +905,7 @@ export default {
           "title": "¡Has ganado un cupón de descuento!",
           "coupon": "50% DE DESCUENTO"
         },
-        "retryBait": "«¡Esta vez no hay premio! Sigue girando: ¡tu próximo intento podría ser el premio gordo!»",
+        "retryBait": "«¡Esta vez no hay premio! Sigue girando: ¡Tu próximo intento podría ser el premio gordo!»",
         "wheels": {
           "w1": {
             "name": "MEGA GIRO",
@@ -934,7 +934,7 @@ export default {
               "€50",
               "Sin premio"
             ],
-            "rules": "Gana un móvil, un portátil o hasta 100 €: ¡dale una vuelta!",
+            "rules": "Gana un móvil, un portátil o hasta 100 €: ¡Dale una vuelta!",
             "feedback": "Esta ruleta estaba trucada para caer siempre en «Sin premio». Los premios grandes que ves en ella no puedes ganarlos nunca: están ahí para que sigas girando. Cada vez parece que casi lo consigues y que a la próxima te toca, así que vuelves a intentarlo. Mientras tanto, pierdes tu tiempo y tu atención, y la tienda gana más tiempo para enseñarte sus ofertas."
           }
         },
@@ -1220,8 +1220,8 @@ export default {
               "price": "€610,15*"
             }
           ],
-          "result": "Imagen rastreada hasta generadores de IA. Agencias de desinformación subieron esta imagen.",
-          "hint": "3 retail listings with great difference in prices."
+          "result": "Varias agencias de desinformación subieron esta imagen.",
+          "hint": "Imagen vinculada con generadores de IA."
         },
         {
           "name": "Altavoz Bluetooth B766",
@@ -1483,7 +1483,7 @@ export default {
           "glossyTitle": "¡PRUEBA GRATIS 30 DÍAS!",
           "glossyBody": "Prueba SunCloud Premium: ¡0 € hoy!",
           "glossyBadge": "€0",
-          "truth": "Al cabo de un mes se renueva automáticamente a 59 €/mes. Cancelar exige llamar a un teléfono abierto 2 horas por semana.",
+          "truth": "Al cabo de un mes se renueva automáticamente a 59 €/mes. Cancelar exige llamar a un teléfono que sólo está operativo 2 horas por semana.",
           "truthTitle": "😩 Renovación automática",
           "letter": "E"
         },
@@ -1497,7 +1497,7 @@ export default {
         },
         {
           "glossyTitle": "📈 ¡HAZTE RICO RÁPIDO!",
-          "glossyBody": "Convierte 100 € en 10.000 € en una semana: ¡garantizado!",
+          "glossyBody": "Convierte 100 € en 10.000 € en una semana: ¡Garantizado!",
           "glossyBadge": "×100",
           "truth": "Cada euro que «inviertes» desaparece, y las rentabilidades altísimas que ves en pantalla son falsas.",
           "truthTitle": "Una gran estafa",
@@ -1516,7 +1516,7 @@ export default {
     "persuasion": {
       "intro": "Una galería de anuncios llamativos. Cada uno representa una estrategia de persuasión de la publicidad: únelos arrastrando la estrategia al cartel.",
       "solvedTitle": "Laboratorio de Persuasión superado: contraseña TRAMPA",
-      "solvedText": "En cuanto sabes nombrar el truco (FOMO, urgencia, una celebridad prestada) puedes reconocerlo la siguiente vez y quizá deje de funcionar en ti.",
+      "solvedText": "En cuanto sabes nombrar el truco (FOMO, urgencia, recomendación de influencer...) puedes reconocerlo la próxima vez y quizá deje de tener efecto en ti.",
       "learn": {
         "lead": "Detecta el truco.",
         "body": "Los anuncios persuaden con técnicas que tienen nombre: FOMO (miedo a perderse algo), prueba social («todo el mundo lo compra»), exageración, recomendación de influencers, apelación emocional y urgencia. Las campañas reales suelen utilizar varias a la vez."

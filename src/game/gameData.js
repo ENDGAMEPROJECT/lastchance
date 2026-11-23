@@ -12,7 +12,7 @@ export const GAME_MINUTES = settings.timerMinutes
 export const NARRATIVE = {
   friend: 'Max',
   player: 'Mia',
-  product: 'the "NovaPad X" tablet',
+  product: '"NovaPad X" tablet',
   hook:
     'Your friend Max just found a viral deal on the NovaPad X — 90% off, "today only". ' +
     'It looks incredible… which is exactly why you think it is a scam.',

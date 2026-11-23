@@ -194,7 +194,7 @@ export default {
           },
           {
             "k": "B",
-            "text": "A message says you won a prize. It's safe to click the link",
+            "text": "If the ad says you won a prize, then it's safe to click the link",
             "correct": false
           },
           {
@@ -895,7 +895,7 @@ export default {
           "rigged": "Rigged",
           "fair": "Not rigged"
         },
-        "retry": "Not quite. Look at the results and try again.",
+        "retry": "Look at the results and try again.",
         "correct": "Correct! This wheel is rigged.",
         "next": "Next wheel →",
         "finish": "Log the evidence ✓",
@@ -1220,8 +1220,8 @@ export default {
               "price": "€610,15*"
             }
           ],
-          "result": "Image traced to AI generators. Disinformation agencies uploaded this image.",
-          "hint": "3 retail listings with different product names and great difference in prices."
+          "result": "Disinformation agencies uploaded this image.",
+          "hint": "Image traced to AI generators."
         },
         {
           "name": "Bluetooth Speaker B766",
