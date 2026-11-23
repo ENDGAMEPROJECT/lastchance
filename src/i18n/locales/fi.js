@@ -17,8 +17,8 @@ export default {
     "eyebrow": "Pelaajan asetukset",
     "titleLead": "VIIMEINEN MAHDOLLISUUS",
     "titleAccent": "PAETA",
-    "tagline": "// pakohuone mainoksista, huijauksista ja valesivustoista",
-    "subtitle": "Luo pelaajasi ja kytkeydy Fyysiseen internetiin.",
+    "tagline": "// pakohuonepeli mainoksista, huijauksista ja valesivustoista",
+    "subtitle": "Luo pelihahmosi ja kytkeydy Fyysiseen internetiin.",
     "aliasLabel": "Valitse nimimerkki",
     "aliasPlaceholder": "esim. Ne0nRunner",
     "ageLabel": "Ikäsi",
@@ -30,8 +30,8 @@ export default {
     "characterError": "Valitse hahmo",
     "languageError": "Valitse kieli",
     "characterLabel": "Valitse hahmosi",
-    "characterMia": "Minna",
-    "characterMax": "Markku"
+    "characterMia": "Mia",
+    "characterMax": "Max"
   },
   "rotate": {
     "title": "Käännä puhelimesi",
@@ -56,7 +56,7 @@ export default {
     "fullscreenError": "Koko näytön tilaa ei voitu ottaa käyttöön. Yritä uudelleen."
   },
   "intro": {
-    "eyebrow": "Opetuksellinen pakohuone",
+    "eyebrow": "Opetuksellinen pakohuonepeli",
     "titleLead": "FYYSINEN",
     "titleAccent": "INTERNET",
     "tagline": "// mainokset · huijaukset · valesivustot → purettuna",
@@ -64,7 +64,7 @@ export default {
     "hook": "Ystäväsi {friend} löysi juuri viraalin tarjouksen: {product} 90 % alennuksella, \"vain tänään\". Se näyttää uskomattomalta… juuri siksi epäilet sitä huijaukseksi.",
     "context": "Näyttääksesi {friend_allative}, miten huijaukset ja mainonta oikeasti toimivat, astutte yhdessä sisään internetin fyysiseen versioon: neonkaupunkiin, jossa kaupat, sosiaaliset alustat ja mainokset ovat kaupunginosia, joissa voi kävellä.",
     "clock": "⏱ {minutes}:00 kellossa",
-    "mission": "Sinulla on {minutes} minuuttia: sen verran ennen kuin tarjous päättyy: matkustaa Fyysisen internetin halki, kerätä todisteita mainosten ja huijausten toiminnasta ja vakuuttaa {friend_nominative}, ettei kannata ostaa. Jos ajastin nollautuu, {friend} ostaa sen.",
+    "mission": "Sinulla on {minutes} minuuttia aikaa (sen verran ennen kuin tarjous päättyy) matkustaa Fyysisen internetin halki, kerätä todisteita mainosten ja huijausten toiminnasta ja vakuuttaa {friend_nominative}, ettei kannata ostaa. Jos ajastin nollautuu, {friend} ostaa sen.",
     "steps": [
       {
         "title": "1 · Tutki",
@@ -84,8 +84,8 @@ export default {
   },
   "map": {
     "eyebrow": "Fyysinen internetkartta",
-    "titleLead": "Mene seuraava",
-    "titleAccent": "kaupunginosa",
+    "titleLead": "Mene seuraavaan",
+    "titleAccent": "kaupunginosaan",
     "subtitle": "Kulje verkon läpi, kerää todisteita ja saavuta lopullinen päätös ennen kuin tarjous päättyy.",
     "start": "▶ ALOITA · Alkutesti {friend_genitive} kanssa",
     "lockedTip": "Lukittu: suorita edellinen kaupunginosa"
@@ -118,16 +118,16 @@ export default {
       "heading": "Tarjous ehti ensin",
       "body": "Ennen kuin ehdit kerätä todisteet loppuun, valheellinen \"vain tänään\" -laskuri teki tehtävänsä ja {friend} osti {product}. Juuri se kiire oli koko kikka.",
       "lessonLabel": "Opetus:",
-      "lesson": "keinotekoinen kiire (\"vain 3 jäljellä!\", \"tarjous päättyy 5:00\") on suunniteltu estämään ajattelu. Hidasta: oikea tarjous on huomennakin olemassa.",
+      "lesson": "keinotekoinen kiire (\"vain 3 jäljellä!\", \"tarjous päättyy 5:00\") on suunniteltu estämään järkevää ajattelua. Hidasta: oikea tarjous on huomennakin olemassa.",
       "again": "↻ Yritä uudelleen",
       "reasons": {
         "timeUp": {
           "heading": "Tarjous ehti ensin",
-          "body": "Ennen kuin ehdit vakuuttaa {friend_genitive}, valheellinen \"vain tänään\" -laskuri nollautui: ja {friend} osti {product}. Juuri se kiire oli koko kikka."
+          "body": "Ennen kuin ehdit vakuuttaa {friend_genitive}, valheellinen \"vain tänään\" -laskuri nollautui ja {friend} osti {product}. Juuri se kiire oli koko kikka."
         },
         "choseBuy": {
           "heading": "Perustelut loppuivat",
-          "body": "Sinulta loppuivat keinot vakuuttaa {friend_nominative}. Yhä vakuuttumatta {friend} päätti ottaa riskin ja osti {product}."
+          "body": "Sinulta loppuivat keinot vakuuttaa {friend}. Yhä vakuuttumatta {friend} päätti ottaa riskin ja osti {product}."
         },
         "notEnoughEvidenceConvincing": {
           "heading": "Vakuuttavaa: mutta todisteita liian vähän",
@@ -141,7 +141,7 @@ export default {
         },
         "notEnoughEvidenceUnconvincing": {
           "heading": "Ei vakuuttunut",
-          "body": "Et vakuuttanut minua: enkä nähnyt tarpeeksi todisteita Fyysisessä internetissäkään. Ostan sen."
+          "body": "Et vakuuttanut minua, enkä nähnyt tarpeeksi todisteita Fyysisessä internetissäkään. Ostan sen."
         }
       },
       "missingEvidence": {
@@ -353,7 +353,7 @@ export default {
     "link-district": {
       "title": "Linkkikaupunginosa",
       "subtitle": "Pulma 1 · Petolliset linkit",
-      "blurb": "Reitittimen ovirivistö. Vain yksi URL on oikea kauppa: estä väärennökset.",
+      "blurb": "Reitittimen ovirivi. Vain yksi URL on oikea kauppa: estä väärennökset.",
       "kind": "puzzle"
     },
     "roulette-corridor": {
@@ -365,7 +365,7 @@ export default {
     "influencer-avenue": {
       "title": "Vaikuttajabulevardi",
       "subtitle": "Pulma 2 · Merkinnät ja väärennökset",
-      "blurb": "Pura kaupallisten yhteistöiden merkinnät ja tarkista, mitkä tuotteet ovat oikeasti aitoja.",
+      "blurb": "Pura kaupallisten yhteistöiden merkintäkoodit ja tarkista, mitkä tuotteet ovat oikeasti aitoja.",
       "kind": "puzzle"
     },
     "algorithm-room": {
@@ -404,7 +404,7 @@ export default {
     },
     "truthLight": {
       "name": "Totuuslamppu",
-      "desc": "Näyttää, mitä näyttävät mainokset piilottavat: pienen präntin ja suurten lupausten takana olevat koukut."
+      "desc": "Näyttää, mitä näyttävät mainokset piilottavat: pienen präntin ja koukut suurten lupausten takana."
     }
   },
   "session": {
@@ -465,23 +465,23 @@ export default {
   },
   "names": {
     "mia": {
-      "nominative": "Minna",
-      "genitive": "Minnan",
-      "partitive": "Minnaa",
-      "allative": "Minnalle",
-      "ablative": "Minnalta",
-      "elative": "Minnasta",
+      "nominative": "Mia",
+      "genitive": "Mian",
+      "partitive": "Miaa",
+      "allative": "Mialle",
+      "ablative": "Mialta",
+      "elative": "Miasta",
       "accusative": "Mia",
       "dative": "Mia",
       "instrumental": "Mia"
     },
     "max": {
-      "nominative": "Markku",
-      "genitive": "Markun",
-      "partitive": "Markkua",
-      "allative": "Markulle",
-      "ablative": "Markulta",
-      "elative": "Markusta",
+      "nominative": "Max",
+      "genitive": "Maxin",
+      "partitive": "Maxia",
+      "allative": "Maxille",
+      "ablative": "Maxilta",
+      "elative": "Maxista",
       "accusative": "Max",
       "dative": "Max",
       "instrumental": "Max"
@@ -539,7 +539,7 @@ export default {
     "map": {
       "context": "Valitse avattu kaupunginosa ja seuraa todistepolkua.",
       "prompts": [
-        "En tiedä, mihin asemaan voin seuraavaksi mennä.",
+        "En tiedä, mille asemalle voin seuraavaksi mennä.",
         "En tiedä, miten kaupunginosien ketju toimii.",
         "En tiedä, milloin työkaluistani on hyötyä."
       ],
@@ -786,7 +786,7 @@ export default {
           "prompt": "Yksi on oikea kauppa. Muut piilottavat todellisen verkkotunnuksensa tutulta näyttävän nimen taakse: lue koko osoite.",
           "notes": {
             "a": "Aito verkkotunnus: lunawear.com",
-            "b": "Oikea sivusto on “com-official.shop”: “lunawear” on vain eteen liimattu aliverkkotunnus, joka hämää.",
+            "b": "Todellinen sivusto on “com-official.shop”: “lunawear” on vain eteen liimattu aliverkkotunnus, joka hämää.",
             "c": "“-dealz” on brändin perään lisätty, väärin kirjoitettu sana."
           }
         },
@@ -956,7 +956,7 @@ export default {
         "badge": "Vaihe 1 / 2",
         "tag": "Sisällön merkitseminen",
         "prompt": "Kiinnitä oikealla merkinnällä varustettu tarralappu jokaiseen julkaisuun.",
-        "openDecoder": "🔑 Avaa purkukortti",
+        "openDecoder": "🔑 Avaa koodinpurkukortti",
         "verified": "Vahvistettu",
         "viewPublication": "Katso julkaisu",
         "followersSuffix": "seuraajaa",
@@ -985,7 +985,7 @@ export default {
       "door": {
         "prompt": "Salaperäinen ovi kätkee sisäänsä salaisen käytävän uuteen huoneeseen. Mitä salaisuuksia se pitää sisällään?",
         "action": "Kulje ovesta",
-        "chamberIntro": "Olet astunut Äärettömän Tuotteiden Kamariin. Kaikki täällä olevat tuotteet ovat vaikuttajien myymiä, mutta pitääkö paikkansa se, mitä he niistä sanovat?"
+        "chamberIntro": "Olet astunut Loputtomien Tuotteiden Kamariin. Kaikki täällä olevat tuotteet ovat vaikuttajien myymiä, mutta pitääkö paikkansa se, mitä he niistä sanovat?"
       },
       "labels": {
         "paid": "MAKSETTU",
@@ -1162,7 +1162,7 @@ export default {
             },
             {
               "site": "quickship-goods.net",
-              "title": "Rustiikki keramiikkakuppi: tukkuhinta",
+              "title": "Rustiikkinen keramiikkakuppi: tukkuhinta",
               "price": "-"
             },
             {
@@ -1260,7 +1260,7 @@ export default {
         "verified": "Vahvistettu"
       },
       "decoder": {
-        "title": "🔑 Emojien purkukortti",
+        "title": "🔑 Emojien koodinpurkukortti",
         "noCard": "Normaalisti olisit ansainnut tämän kortin jo Linkkikaupunginosassa: tässä se joka tapauksessa on.",
         "help": "Yhdistä jokainen muistilapun emoji sen kirjaimeen lukeaksesi piilotetun merkinnän.",
         "noSelection": "Ei valittua julkaisua",
@@ -1279,7 +1279,7 @@ export default {
       }
     },
     "algorithm": {
-      "intro": "Huriseva keskuskone jauhaa datasta kohdennettuja mainoksia. Pääse sisään ja opeta se profiloimaan ihminen.",
+      "intro": "Huriseva keskuskone jauhaa datasta kohdennettuja mainoksia. Astu sisään ja opeta se profiloimaan ihminen.",
       "solvedTitle": "Algoritmin valvomo murrettu · Todiste kirjattu ",
       "solvedText": "Näit, miten algoritmi muutti {friend_genitive} iän, kiinnostukset ja mahdolliset epävarmuudet yhdeksi mainokseksi. Se ei ole sattumaa: se on hänen mainosprofiilinsa tulos.",
       "evidence": "Mainoksen valitsi algoritmi {friend_genitive} iän, kiinnostusten ja epävarmuuksien perusteella.",
@@ -1295,11 +1295,11 @@ export default {
         "optionATag": "Vaihtoehto A",
         "optionABefore": "Näet",
         "optionABold": "vähemmän, personoituja",
-        "optionAAfter": "mainoksia: mutta henkilötietojasi kerätään.",
+        "optionAAfter": "mainoksia, mutta henkilötietojasi kerätään.",
         "optionBTag": "Vaihtoehto B",
         "optionBBefore": "Näet",
         "optionBBold": "paljon enemmän",
-        "optionBAfter": "mainoksia ja mainostaukoja: mutta tietojasi kerätään paljon vähemmän.",
+        "optionBAfter": "mainoksia ja mainostaukoja, mutta tietojasi kerätään paljon vähemmän.",
         "wrongTitle": "Väärä vastaus.",
         "wrongText": "Vaihdoit juuri yksityisyytesi mukavuuteen. ”Personoitu” tarkoittaa algoritmia: vähemmän mainoksia tarkoittaa, että se kerää ja profiloi enemmän tietojasi valitakseen ne.",
         "goodTitle": "Hyvä vastaus.",
@@ -1354,7 +1354,7 @@ export default {
             "1": "Seuraa fitnessvaikuttajia",
             "2": "Epävarma laihuudestaan"
           },
-          "feedbackLesson": "Teini-ikäinen poika seuraa fitness-sivuja ja tykkää lihasmassan kasvattamista käsittelevistä julkaisuista. Siksi hän saa mainoksen lihaslisäravinteesta. Mainosjärjestelmät katsovat, mitä ihmiset tekevät verkossa, ja näyttävät mainoksia joita he todennäköisesti klikkaavat: vaikka tuote ei olisi sellainen jota he oikeasti tarvitsevat."
+          "feedbackLesson": "Teini-ikäinen poika seuraa fitness-sivuja ja tykkää lihasmassan kasvattamista käsittelevistä julkaisuista. Siksi hän saa mainoksen lihaslisäravinteesta. Mainosjärjestelmät katsovat, mitä ihmiset tekevät verkossa, ja näyttävät mainoksia joita he todennäköisesti klikkaavat, vaikka tuote ei olisi sellainen jota he oikeasti tarvitsevat."
         },
         "r3": {
           "ad": "Kaljuuntumisvoide",
@@ -1454,12 +1454,12 @@ export default {
     "ads": {
       "intro": "Neonvalaistu huoltotunneli, jonka seinillä on neljä hehkuvaa mainosjulistetta. Ne näyttävät anteliailta. Ne eivät ole.",
       "solvedTitle": "Käytävä selvitetty: luit pienen präntin",
-      "solvedText": "Pääsit viimeiselle kierrokselle! Nämä mainokset oli suunniteltu saamaan sinut tuntemaan olosi hyvin onnelliseksi ja onnekkaaksi, jotta lankeaisit huijaukseen. Suhtaudu varauksella kaikkeen sisältöön, joka herättää sinussa hyvin voimakkaan tunnereaktion.",
+      "solvedText": "Nämä mainokset pyrkivät kaappaamaan huomiosi lupauksilla ilmaisesta tavarasta, helposta rikastumisesta, välittömästä vaarasta... Suhtaudu varauksella kaikkeen, mikä herättää sinussa voimakkaan tunnereaktion!",
       "pickup": "Poimit Totuuslampun 🔦",
       "torchCharging": "🔦 Latautuu…",
       "torchOn": "🔦 Lamppu PÄÄLLÄ",
       "torchOff": "🔦 Totuuslamppu",
-      "hintCharging": "Halpa lamppu herää välkkyen: syöttimainokset rakastavat hetkesi haaskaamista…",
+      "hintCharging": "Halpa taskulamppu herää välkkyen: syöttimainokset rakastavat aikasi haaskaamista…",
       "hintOn": "Pyyhkäise valokeilalla pimeää seinää: jokainen juliste syttyy ja paljastaa totuuden.",
       "hintOff": "Sytytä se ja pyyhkäise sitten valokeilalla julisteita paljastaaksesi, mitä ne oikeasti sanovat.",
       "glossyCta": "NAPAUTA JA LUNASTA →",
@@ -1515,8 +1515,8 @@ export default {
     },
     "persuasion": {
       "intro": "Galleria kiiltäviä mainoksia. Jokainen nojaa yhteen suostuttelun keinoon: nimeä se kehystämällä juliste.",
-      "solvedTitle": "Suostuttelulaboratorio selvitetty: salasana FOOLED",
-      "solvedText": "Heti kun osaat nimetä kikan: FOMO, kiire, lainattu julkkis: se lakkaa tehoamasta sinuun. Siinä on koko puolustus.",
+      "solvedTitle": "Suostuttelulaboratorio selvitetty: salasana ANSOJA",
+      "solvedText": "Heti kun osaat nimetä kikan – FOMO, kiire, lainattu julkkis – se lakkaa tehoamasta sinuun. Siinä on koko puolustus.",
       "learn": {
         "lead": "Tunnista kikka.",
         "body": "Mainokset suostuttelevat nimetyillä keinoilla: FOMO (pelko jäädä paitsi), sosiaalinen todiste (”kaikki ostavat sen”), liioittelu, vaikuttajan suositus, tunteisiin vetoaminen ja kiire. Oikeat kampanjat pinoavat usein useita näistä päällekkäin ohittaakseen harkintasi."
@@ -1548,7 +1548,7 @@ export default {
           "letter": "S"
         },
         {
-          "headline": "Nähty @StarCelebin sivulla: hän RAKASTAA sitä!",
+          "headline": "Nähty @StarCelebin sivulla: hän JUMALOI sitä!",
           "sub": "#mainos",
           "letter": "O"
         },
@@ -1565,7 +1565,7 @@ export default {
       ],
       "techniques": {
         "fomo": "FOMO",
-        "social": "Sosiaalinen todiste",
+        "social": "Sosiaalinen todistelu",
         "exagg": "Liioittelu",
         "influencer": "Vaikuttajan suositus",
         "emotional": "Tunteisiin vetoaminen",
@@ -1585,7 +1585,7 @@ export default {
       "unlock": "Avaa →",
       "pwError": "Pääsy evätty. Lue hehkuvat kirjaimet julisteiden järjestyksessä ja yritä uudelleen.",
       "hiddenLetter": "piilotettu kirjain {letter}",
-      "evidence": "Jokainen juliste käytti nimettyä suostuttelukeinoa: FOMO, sosiaalinen todiste, kiire ja muita.",
+      "evidence": "Jokainen juliste käytti nimettyä suostuttelukeinoa: FOMO, sosiaalinen todistelu, kiire ja muita.",
       "info": {
         "button": "Suostuttelutekniikat",
         "title": "Suostuttelutekniikat",
@@ -1603,7 +1603,7 @@ export default {
             "text": "Tunnetut ihmiset, jotka mainostavat tuotteita hyödyntäen suosiotaan ja seuraajiensa luottamusta."
           },
           {
-            "name": "Sosiaalinen todiste",
+            "name": "Sosiaalinen todistelu",
             "text": "Viestit, jotka korostavat tuotteen suosiota luottamuksen herättämiseksi, kuten ”Tuhannet ovat jo ostaneet sen”."
           },
           {

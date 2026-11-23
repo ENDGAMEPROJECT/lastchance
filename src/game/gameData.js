@@ -117,44 +117,84 @@ export const ITEMS = {
   },
 }
 
-/* Emoji → letter key, full A–Z: the Influencer Avenue sticky-notes spell the
-   label in the player's language (rooms.influencer.labels.*), accents folded. */
-export const EMOJI_KEY = {
-  '🤑': 'A', '🎁': 'B', '🤝': 'C', '⭐': 'D', '💰': 'E', '🔥': 'F',
-  '🔋': 'G', '💡': 'H', '😎': 'I', '🎮': 'J', '🎯': 'K', '👥': 'L',
-  '✉️': 'M', '📈': 'N', '✨': 'O', '🚀': 'P', '💬': 'Q', '🔍': 'R',
-  '💊': 'S', '⚡': 'T', '🏋️': 'U', '🎬': 'V', '🌐': 'W', '📦': 'X',
-  '🏆': 'Y', '❤️': 'Z',
+/* Emoji → letter keys for the Influencer Avenue sticky-notes, one keypad per
+   alphabet: the notes spell the post's label in the player's language
+   (rooms.influencer.labels.*). Every keypad uses the same emoji for the
+   letters they share; the extra letters take emojis that are already in the
+   self-hosted emoji font subset (game/emojiFont.js UNICODE_RANGE), so they are
+   drawn the same in every browser.
+
+   Serbian Latin has three digraphs that are single letters (DŽ, LJ, NJ). Each
+   is stored as its one-code-point Unicode form (Ǆ, Ǉ, Ǌ) so a word is still one
+   character per key; keyLabel() turns them back into two letters for display. */
+const LATIN_KEYS = [
+  ['🤑', 'A'], ['🎁', 'B'], ['🤝', 'C'], ['⭐', 'D'], ['💰', 'E'], ['🔥', 'F'],
+  ['🔋', 'G'], ['💡', 'H'], ['😎', 'I'], ['🎮', 'J'], ['🎯', 'K'], ['👥', 'L'],
+  ['✉️', 'M'], ['📈', 'N'], ['✨', 'O'], ['🚀', 'P'], ['💬', 'Q'], ['🔍', 'R'],
+  ['💊', 'S'], ['⚡', 'T'], ['🏋️', 'U'], ['🎬', 'V'], ['🌐', 'W'], ['📦', 'X'],
+  ['🏆', 'Y'], ['❤️', 'Z'],
+]
+const latin = Object.fromEntries(LATIN_KEYS.map(([e, l]) => [l, e]))
+const key = (letter) => [latin[letter], letter]
+
+export const KEYPADS = {
+  latin: LATIN_KEYS,
+  // Finnish: A–Z with Ä and Å beside A, and Ö beside O.
+  fi: LATIN_KEYS.flatMap((k) => k[1] === 'A' ? [k, ['🎉', 'Ä'], ['🔑', 'Å']]
+    : k[1] === 'O' ? [k, ['🧁', 'Ö']] : [k]),
+  // Spanish: A–Z with Ñ after N.
+  es: LATIN_KEYS.flatMap((k) => k[1] === 'N' ? [k, ['🎒', 'Ñ']] : [k]),
+  // Serbian Latin (Gaj's alphabet, in its own order): no Q, W, X, Y.
+  sr: [
+    key('A'), key('B'), key('C'), ['📢', 'Č'], ['🔗', 'Ć'], key('D'), ['🎥', 'Ǆ'],
+    ['🐶', 'Đ'], key('E'), key('F'), key('G'), key('H'), key('I'), key('J'),
+    key('K'), key('L'), ['💜', 'Ǉ'], key('M'), key('N'), ['📱', 'Ǌ'], key('O'),
+    key('P'), key('R'), key('S'), ['🧠', 'Š'], key('T'), key('U'), key('V'),
+    key('Z'), ['🐞', 'Ž'],
+  ],
 }
 
-/* Letters the keypad has no key for and that Unicode will NOT decompose.
-   NFD turns Ć into C + a combining mark, so stripping marks folds Ć, Č, Š, Ž,
-   Ö, Ä, Ñ and the accented vowels down to A–Z on its own. Letters built from a
-   STROKE instead of a mark have no canonical decomposition, so they survive
-   NFD and are then dropped by the [^A-Z] filter — silently. Đ is an ordinary
-   letter of the Serbian Latin alphabet, so ĐUBRE used to become UBRE with
-   nothing to show that a letter had gone. Mapped by hand instead. */
-const STROKE_LETTERS = { 'Đ': 'D', 'Ð': 'D', 'Ł': 'L', 'Ø': 'O', 'Æ': 'AE', 'Œ': 'OE', 'Þ': 'TH', 'ẞ': 'SS', 'ß': 'SS' }
+/* The keypad for a locale; languages without their own use the A–Z one. */
+export const keypadFor = (locale) => KEYPADS[locale] || KEYPADS.latin
 
-/* A localised label as the emoji keypad can spell it: EMOJI_KEY is A–Z only
-   (see the note there), so accents fold away — COLABORACIÓN → COLABORACION,
-   PLAĆENO → PLACENO, YHTEISTYÖ → YHTEISTYO — and spaces and punctuation go.
-   Checked per language by `npm run check:i18n`: a label that folds to nothing
-   (a Cyrillic one would) leaves a stage with no solution, which no amount of
-   playing would recover from. */
-export function toKeypadWord(label) {
-  return String(label)
-    .toUpperCase()
-    .replace(/[^\u0000-\u007F]/g, (ch) => STROKE_LETTERS[ch] ?? ch)
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^A-Z]/g, '')
+/* The digraph letters, as stored (one code point) and as shown. */
+const DIGRAPHS = { 'Ǆ': 'DŽ', 'Ǉ': 'LJ', 'Ǌ': 'NJ' }
+export const keyLabel = (letter) => DIGRAPHS[letter] || letter
+
+/* Letters a keypad lacks and that Unicode will NOT decompose. NFD turns Ć
+   into C + a combining mark, so stripping marks folds accented letters down to
+   A–Z on its own. Letters built from a STROKE instead of a mark have no
+   canonical decomposition, so they survive NFD and would then be dropped
+   silently. Mapped by hand instead (only used when the keypad lacks them). */
+const STROKE_LETTERS = {
+  'Đ': 'D', 'Ð': 'D', 'Ł': 'L', 'Ø': 'O', 'Æ': 'AE', 'Œ': 'OE', 'Þ': 'TH', 'ẞ': 'SS', 'ß': 'SS',
+  'Ǆ': 'DŽ', 'Ǉ': 'LJ', 'Ǌ': 'NJ',
 }
 
-/* Convenience: encode a word back to its emoji string using EMOJI_KEY. */
-export function encodeWord(word) {
-  const inv = Object.fromEntries(Object.entries(EMOJI_KEY).map(([e, l]) => [l, e]))
-  return word.toUpperCase().split('').map((l) => inv[l] || '·')
+/* A localised label as a keypad can spell it. Letters the keypad has are kept
+   as they are (Ä on the Finnish one, Ć and the digraphs on the Serbian one);
+   anything else has its accents folded away (COLABORACIÓN → COLABORACION) and
+   spaces and punctuation go. Checked per language by `npm run check:i18n`: a
+   label that folds to nothing (a Cyrillic one would) leaves a stage with no
+   solution. */
+export function toKeypadWord(label, keypad = KEYPADS.latin) {
+  const letters = new Set(keypad.map(([, l]) => l))
+  let text = String(label).normalize('NFC').toUpperCase()
+  for (const [one, pair] of Object.entries(DIGRAPHS)) {
+    if (letters.has(one)) text = text.split(pair).join(one)
+  }
+  let out = ''
+  for (const ch of text) {
+    if (letters.has(ch)) { out += ch; continue }
+    out += (STROKE_LETTERS[ch] ?? ch).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^A-Z]/g, '')
+  }
+  return out
+}
+
+/* Encode a keypad word back to its emojis. */
+export function encodeWord(word, keypad = KEYPADS.latin) {
+  const inv = Object.fromEntries(keypad.map(([e, l]) => [l, e]))
+  return [...word].map((l) => inv[l] || '·')
 }
 
 export const CODES = {

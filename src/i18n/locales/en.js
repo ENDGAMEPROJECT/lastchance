@@ -1454,7 +1454,7 @@ export default {
     "ads": {
       "intro": "A neon service tunnel plastered with four glowing ad posters. They look generous. They are not.",
       "solvedTitle": "Corridor cleared: you read the fine print",
-      "solvedText": "These ads draw your attention immediately with free stuff, promises of getting rich, inminent danger... Be wary of any content that triggers a very strong emotional reaction in you.",
+      "solvedText": "These ads draw your attention immediately with free stuff, promises of getting rich, imminent danger... Be wary of any content that triggers a very strong emotional reaction in you.",
       "pickup": "You pick up the Truth Flashlight 🔦",
       "torchCharging": "🔦 Charging…",
       "torchOn": "🔦 Flashlight ON",

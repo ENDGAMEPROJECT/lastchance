@@ -104,7 +104,7 @@ export default {
       "titleAccent": "NO LO HA COMPRADO",
       "tag": "La oferta ha expirado con {time} de margen.",
       "heading": "Has presentado tu caso",
-      "body": "Utilizando las pruebas que recabaste en internet, le demostraste a {friend} que el anuncio de la tableta ‘NovaPad X’ probablemente era una estafa.",
+      "body": "Utilizando las pruebas que reuniste en el Internet físico, le demostraste a {friend} que el anuncio de la tablet ‘NovaPad X’ probablemente era una estafa.",
       "evidenceHeading": "Pruebas recopiladas",
       "posttest": "Test final: vuelve a hablar con {friend}. ¿Qué has aprendido sobre cómo reconocer estafas, qué es la publicidad encubierta y por qué una oferta increíble puede ser un timo?",
       "again": "↻ Jugar de nuevo",
@@ -787,7 +787,7 @@ export default {
           "notes": {
             "a": "El dominio auténtico: lunawear.com",
             "b": "El sitio real es “com-official.shop”: “lunawear” es solo un subdominio añadido delante para engañarte.",
-            "c": "“-dealz” es una palabra añadida y mal escrita añadida a la marca."
+            "c": "“-dealz” es una palabra añadida y mal escrita agregada junto a la marca."
           }
         },
         {
@@ -1129,7 +1129,7 @@ export default {
         "claimsCaption1": "Conejito de porcelana original de JAPÓN",
         "claimsCaption2": "Conejito de plástico hecho en México",
         "title": "Más allá del anuncio: ¿qué hay del producto?",
-        "body": "¿Es un producto real y fiable? Una búsqueda inversa de imágenes te ayuda a comprobarlo. ¿Cómo funciona? Fácil, buscas con una foto y encuentra esa misma imagen u otras parecidas que aparecen en internet, para que verifiques si la imagen es de verdad lo que el vendedor afirma.",
+        "body": "¿Es un producto real y fiable? Una búsqueda inversa de imágenes te ayuda a comprobarlo. ¿Cómo funciona? Fácil, buscas con una foto y encuentras esa misma imagen u otras parecidas que aparecen en internet, para que verifiques si la imagen es de verdad lo que el vendedor afirma.",
         "instructions": "Primero haz la búsqueda inversa de la imagen. Después, mira los resultados para juzgar la autenticidad del producto. Finalmente, añade el sello que corresponda",
         "useShop": "¿Te encanta una prenda que viste en una publicación? Haz una búsqueda inversa de la foto para encontrar dónde comprarla de manera segura y oficial.",
         "useVerify": "¿No estás {player:seguro|segura} de que el producto de un influencer sea auténtico? Haz una búsqueda inversa de la foto para ver si es realmente único o el mismo artículo fabricado en masa que vende todo el mundo.",

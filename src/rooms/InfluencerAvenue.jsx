@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useGame } from '../game/GameContext.jsx'
-import { ITEMS, EMOJI_KEY, encodeWord, toKeypadWord } from '../game/gameData.js'
+import { ITEMS, encodeWord, keyLabel, keypadFor, toKeypadWord } from '../game/gameData.js'
 import { bgUrl, assetUrl } from '../game/assets.js'
 import { useReadingGate } from '../game/readingGate.js'
 import { DEBUG } from '../game/settings.js'
@@ -93,10 +93,11 @@ const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v))
 /* The word on each post's emoji sticky-note — and the answer the player
    types — is the post's label in the current language
    (rooms.influencer.labels.<id>, e.g. PAID / PAGADO / MAKSETTU / PLAĆENO).
-   The fold itself is toKeypadWord in gameData.js, beside EMOJI_KEY — the
-   checker needs it too, and a second copy here would be the thing that
-   drifts. */
-const KEYPAD_LETTERS = new Set(Object.values(EMOJI_KEY))
+   Each language has its own keypad (KEYPADS in gameData.js: A–Z, Finnish
+   adds Å Ä Ö, Serbian Latin has Č Ć Đ Š Ž and the digraphs DŽ LJ NJ). The fold
+   itself is toKeypadWord there too — the checker needs it, and a second copy
+   here would be the thing that drifts. */
+const shownWord = (word) => [...word].map(keyLabel).join('')
 
 /* Stable English names for analytics: the product copy is localised, so it
    cannot name the activity. Keys are PRODUCTS ids. */
@@ -868,10 +869,13 @@ export default function InfluencerAvenue({ node }) {
   const [decoderOpen, setDecoderOpen] = useState(false)
   const selectedPost = POSTS.find((post) => post.id === selectedPostId)
   const selectedAnswer = answers[selectedPostId] || ''
-  /* postId -> the word to decode, in the current language (see toKeypadWord). */
+  /* The emoji keypad for the current language, and postId -> the word to
+     decode in it (see toKeypadWord). */
+  const keypad = keypadFor(locale)
+  const keypadLetters = useMemo(() => new Set(keypad.map(([, letter]) => letter)), [keypad])
   const correctWords = useMemo(
-    () => Object.fromEntries(POSTS.map((p) => [p.id, toKeypadWord(t(`rooms.influencer.labels.${p.id}`))])),
-    [t]
+    () => Object.fromEntries(POSTS.map((p) => [p.id, toKeypadWord(t(`rooms.influencer.labels.${p.id}`), keypad)])),
+    [t, keypad]
   )
   const selectedWord = selectedPost ? correctWords[selectedPost.id] : ''
   const allDecoded = POSTS.every((p) => answers[p.id] === correctWords[p.id])
@@ -883,8 +887,8 @@ export default function InfluencerAvenue({ node }) {
   /* Emoji sticky-notes: generated from the localised word via encodeWord, so
      each language shows its own emojis. */
   const notes = useMemo(
-    () => POSTS.map((p) => ({ id: p.id, emojis: encodeWord(correctWords[p.id]) })),
-    [correctWords]
+    () => POSTS.map((p) => ({ id: p.id, emojis: encodeWord(correctWords[p.id], keypad) })),
+    [correctWords, keypad]
   )
 
   /* Both the post card and the answer button inside it select the post; they
@@ -896,16 +900,19 @@ export default function InfluencerAvenue({ node }) {
     setSelectedPostId(id)
   }
 
-  function enterLetter(letter) {
-    if (!canType || selectedAnswer.length >= selectedWord.length) return
-    const next = selectedAnswer + letter
+  /* `merge`: the physical keyboard typed the second half of a digraph (the J
+     of LJ/NJ, the Ž of DŽ), which replaces the letter before it. */
+  function enterLetter(letter, merge = false) {
+    if (!canType) return
+    if (!merge && selectedAnswer.length >= selectedWord.length) return
+    const next = (merge ? selectedAnswer.slice(0, -1) : selectedAnswer) + letter
     /* The decoder, not the generic "Influencers" activity: this is a letter
        typed on the emoji keypad. The response says which letter, what the
        answer now reads, and which post it is being typed for — otherwise the
        log is a row of identical selections with nothing to tell them apart. */
     track('entered', OBJ.decoder(), {
       node: node.id,
-      response: `${postNo(selectedPostId)};${letter};${next}`,
+      response: `${postNo(selectedPostId)};${keyLabel(letter)};${shownWord(next)}`,
     })
     playSound('key_press.mp3')
     if (next.length === selectedWord.length) {
@@ -918,13 +925,15 @@ export default function InfluencerAvenue({ node }) {
     if (!canType) return
     playSound('key_press.mp3') // the erase key is a key press too
     track('unselected', OBJ.influencers(), {
-      node: node.id, response: `${selectedAnswer.slice(-1)};${selectedAnswer.slice(0, -1)}`,
+      node: node.id, response: `${keyLabel(selectedAnswer.slice(-1))};${shownWord(selectedAnswer.slice(0, -1))}`,
     })
     setAnswers((prev) => ({ ...prev, [selectedPostId]: selectedAnswer.slice(0, -1) }))
   }
 
-  /* Physical keyboard: while the decoder is open, A–Z type a letter and
-     Backspace erases, exactly like clicking the keypad. The pressed key
+  /* Physical keyboard: while the decoder is open, the keypad's letters type
+     and Backspace erases, exactly like clicking the keypad. A letter the
+     keypad lacks is folded (é → E); Serbian digraphs are typed as two keys
+     (L then J → LJ). The pressed key
      flashes with its click look (is-pressed) so the player sees which emoji
      it was. A ref keeps the listener on the latest handlers. */
   const [pressedKey, setPressedKey] = useState(null)
@@ -935,19 +944,29 @@ export default function InfluencerAvenue({ node }) {
     const tag = event.target?.tagName
     if (tag === 'INPUT' || tag === 'TEXTAREA' || event.target?.isContentEditable) return
     let pressed = null
+    let merge = false
     if (event.key === 'Backspace') {
       if (!canType || !selectedAnswer) return
       pressed = 'erase'
     } else {
-      const letter = event.key.length === 1 ? toKeypadWord(event.key) : ''
-      if (letter.length !== 1 || !KEYPAD_LETTERS.has(letter)) return
-      if (!canType || selectedAnswer.length >= selectedWord.length) return
-      pressed = letter
+      const letter = event.key.length === 1 ? toKeypadWord(event.key, keypad) : ''
+      if (letter.length !== 1 || !keypadLetters.has(letter)) return
+      if (!canType) return
+      // L + J → LJ (and N + J, D + Ž) when this keypad has that digraph.
+      const last = selectedAnswer.slice(-1)
+      const joined = last ? toKeypadWord(keyLabel(last) + event.key, keypad) : ''
+      if (joined.length === 1) {
+        pressed = joined
+        merge = true
+      } else {
+        if (selectedAnswer.length >= selectedWord.length) return
+        pressed = letter
+      }
     }
     event.preventDefault()
     if (event.repeat) return
     if (pressed === 'erase') eraseLetter()
-    else enterLetter(pressed)
+    else enterLetter(pressed, merge)
     setPressedKey(pressed)
     window.clearTimeout(pressTimer.current)
     pressTimer.current = window.setTimeout(() => setPressedKey(null), 140)
@@ -1330,8 +1349,8 @@ export default function InfluencerAvenue({ node }) {
         {decoded ? (
           // Decoded: the emojis give way to the word, written big.
           <div className="ia-note-word"
-            style={{ fontSize: `${Math.min(24, Math.floor(NOTE_INNER_W / (word.length * 0.72)))}px` }}>
-            {word}
+            style={{ fontSize: `${Math.min(24, Math.floor(NOTE_INNER_W / (shownWord(word).length * 0.72)))}px` }}>
+            {shownWord(word)}
           </div>
         ) : (
           <div className="ia-note-emojis">
@@ -1344,7 +1363,7 @@ export default function InfluencerAvenue({ node }) {
             <span className="ia-answer-letters" aria-hidden="true">
               {Array.from({ length: word.length }, (_, index) => (
                 <span key={index} className={`ia-answer-letter ${index === label.length ? 'current' : ''}`}>
-                  {label[index] || '\u00a0'}
+                  {label[index] ? keyLabel(label[index]) : '\u00a0'}
                 </span>
               ))}
             </span>
@@ -1509,21 +1528,32 @@ export default function InfluencerAvenue({ node }) {
                     onClick={() => setDecoderOpen(false)}
                   />
                 </div>
-                <div className="ia-key-grid">
-                  {Object.entries(EMOJI_KEY).map(([emoji, letter]) => (
+                {/* Two rows of keys, the erase key in its own last column. The
+                    grid is in half-key columns (each key spans two), so when one
+                    row has a key less it shifts by half a key and sits centred. */}
+                <div className={`ia-key-grid ${keypad.length > 26 ? 'is-wide' : ''}`}
+                  style={{ '--key-cols': 2 * (Math.ceil(keypad.length / 2) + 1) }}>
+                  {keypad.map(([emoji, letter], index) => {
+                    const perRow = Math.ceil(keypad.length / 2)
+                    const row = index < perRow ? 1 : 2
+                    const col = row === 1 ? index : index - perRow
+                    const shift = row === 2 && keypad.length % 2 ? 1 : 0
+                    return (
                     <button
                       key={letter}
                       type="button"
+                      style={{ gridRow: row, gridColumn: `${1 + 2 * col + shift} / span 2` }}
                       className={`ia-key-cell ${pressedKey === letter ? 'is-pressed' : ''}`}
                       disabled={!canEdit || selectedAnswer.length >= selectedWord.length}
                       onMouseDown={(event) => event.preventDefault()}
                       onClick={() => enterLetter(letter)}
-                      aria-label={`${letter} ${emoji}`}
+                      aria-label={`${keyLabel(letter)} ${emoji}`}
                     >
                       <span className="ia-key-emoji" aria-hidden="true">{emoji}</span>
-                      <span className="ia-key-letter mono" aria-hidden="true">{letter}</span>
+                      <span className="ia-key-letter mono" aria-hidden="true">{keyLabel(letter)}</span>
                     </button>
-                  ))}
+                    )
+                  })}
                   <button
                     type="button"
                     className={`ia-decoder-erase ${pressedKey === 'erase' ? 'is-pressed' : ''}`}

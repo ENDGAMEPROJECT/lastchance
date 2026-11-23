@@ -6,7 +6,7 @@ import dictionaries from '../src/i18n/dictionaries.js'
 const { en } = dictionaries
 import { NODES, ITEMS } from '../src/game/gameData.js'
 import { ROULETTE_WHEELS, ROULETTE_SEGMENTS } from '../src/game/rouletteData.js'
-import { EMOJI_KEY, toKeypadWord } from '../src/game/gameData.js'
+import { keypadFor, toKeypadWord } from '../src/game/gameData.js'
 import { TEST_ITEMS } from '../src/game/testItems.js'
 
 const problems = []
@@ -156,33 +156,34 @@ for (const [i, round] of en.story.rounds.entries()) {
    rather than trusted.
 
    1. The Influencer Avenue keypad spells the post's label in the player's
-      language, on an A–Z emoji keypad. toKeypadWord folds accents away and
-      maps the stroke letters by hand, but it cannot invent a key: a Cyrillic
+      language, on that language's emoji keypad (KEYPADS). toKeypadWord folds
+      away accents the keypad has no key for and maps the stroke letters by
+      hand, but it cannot invent a key: a Cyrillic
       label folds to nothing, leaving a stage whose answer is the empty string
       and which therefore can never be completed.
    2. The Ads Corridor and the Persuasion Lab build their exit code from one
       highlighted letter per poster, set per language. If a poster's letter
       does not occur in that poster's own copy there is nothing to highlight,
       so the code can never be read off the wall. */
-const KEYPAD = new Set(Object.values(EMOJI_KEY))
-
 for (const [code, dict] of Object.entries(dictionaries)) {
   const labels = dict.rooms?.influencer?.labels || {}
+  const keypad = keypadFor(code)
+  const KEYPAD = new Set(keypad.map(([, letter]) => letter))
   for (const [id, label] of Object.entries(labels)) {
-    const word = toKeypadWord(label)
+    const word = toKeypadWord(label, keypad)
     ok(word.length > 0,
       `${code}: rooms.influencer.labels.${id} ("${label}") has no letter the emoji keypad can spell, `
       + 'so that post could never be decoded. The label must use the Latin alphabet.')
     // A letter the fold threw away, rather than folded — see STROKE_LETTERS.
     for (const ch of String(label)) {
-      if (/\p{L}/u.test(ch) && toKeypadWord(ch) === '') {
+      if (/\p{L}/u.test(ch) && toKeypadWord(ch, keypad) === '') {
         ok(false, `${code}: rooms.influencer.labels.${id} ("${label}") loses "${ch}" on the way to the `
           + 'keypad. Add it to STROKE_LETTERS in gameData.js, or pick a label without it.')
       }
     }
     for (const ch of word) {
       ok(KEYPAD.has(ch), `${code}: rooms.influencer.labels.${id} needs the letter "${ch}", `
-        + 'which no emoji in EMOJI_KEY stands for.')
+        + `which no emoji on the ${code} keypad (KEYPADS in gameData.js) stands for.`)
     }
   }
 
