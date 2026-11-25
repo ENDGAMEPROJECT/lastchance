@@ -1,0 +1,1276 @@
+diff --git a/.env.example b/.env.example
+index e8664d3..5e1f5a7 100644
+--- a/.env.example
++++ b/.env.example
+@@ -4,3 +4,8 @@
+ VITE_XAPI_ENDPOINT="https://your_lrs_host/data/xAPI"
+ # Base64-encoded key:secret - generate with: echo -n "key:secret" | base64
+ VITE_XAPI_AUTH="your_base64_encoded_key_secret"
++
++# Character voices: used ONLY by `npm run voices` on your machine to record
++# the dialogue into public/voices/. Never prefix it with VITE_ (that would
++# publish it inside the game). See scripts/generate-voices.mjs for options.
++GOOGLE_TTS_API_KEY="your_google_cloud_api_key"
+diff --git a/AGENTS.md b/AGENTS.md
+index c5986e3..5ce1414 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -75,6 +75,10 @@ after touching any `t('...')` key or locale file.
+ - **CSS perspective.** `rotateY`/perspective only apply through direct children of the element
+   holding `perspective`. If a tilt looks flat, the transform is probably on too deep a descendant
+   (this bit the Persuasion Lab frames — fixed by moving the transform up to the direct child).
++- **Voiced dialogue.** Lines in Enter/Return/InPersonTest/FinalDecision play through
++  `useVoiceLine()` (`game/voice.js`), keyed by language + speaker ID + final text. If a
++  scene starts showing another i18n key as a spoken line, add it to `LINES` in
++  `scripts/generate-voices.mjs`, then `npm run voices`.
+ - **Sounds mirror the image rule.** Play via `game/sound.js` (`playSound`), which resolves
+   `public/sounds/*` through `soundUrl()`/`BASE_URL` — never hardcode `/sounds/...`. The global
+   mute is applied automatically inside `playSound`. The inventory chime is fired **centrally** in
+diff --git a/README.md b/README.md
+index 742def5..d5ee00b 100644
+--- a/README.md
++++ b/README.md
+@@ -192,6 +192,24 @@ Sound effects live in `public/sounds/` and play through `src/game/sound.js`:
+ To add a sound: drop the file in `public/sounds/`, then `playSound('file.mp3')` (and optionally
+ `preloadSound('file.mp3')` on mount).
+ 
++## Character voices
++
++The dialogue scenes (pre-test, portal arrival, return, post-test) are voiced:
++Mia and Max each have their own voice in every language. The tracks are
++pre-recorded MP3s in `public/voices/<locale>/`, made with Google Cloud
++Text-to-Speech (Gemini-TTS, falling back to Chirp 3 HD), so the published game
++needs no API key and makes no calls to Google.
++
++1. Put `GOOGLE_TTS_API_KEY=...` in `.env` (gitignored; never a `VITE_` variable).
++2. `npm run voices -- --dry-run` lists every line → `docs/voices/<locale>.csv`.
++3. `npm run voices` records what is missing and updates `src/game/voiceManifest.js`.
++4. Commit `public/voices/` and the manifest.
++
++After `npm run i18n:import` changes the copy, run `npm run voices` again: only
++the changed lines are recorded (`--prune` removes tracks nothing uses). Voices,
++model and acting direction are at the top of `scripts/generate-voices.mjs`;
++`settings.voice` turns voices off, and they follow the HUD mute button.
++
+ ## Resuming a run
+ 
+ A refresh used to cost the whole run. The reducer state is plain JSON, so it is saved to
+diff --git a/docs/voices/en.csv b/docs/voices/en.csv
+new file mode 100644
+index 0000000..09e3cad
+--- /dev/null
++++ b/docs/voices/en.csv
+@@ -0,0 +1,175 @@
++file,speaker,i18n_key,text
++"voices/en/flrz3b35ir.mp3","max","story.pretest.opening","Look at this! An influencer I follow just posted a flash sale: the €600 NovaPad X for only €49! There are just 40 minutes left on the countdown. I'm entering my card info right now."
++"voices/en/1ihrf5yvp5r.mp3","max","story.pretest.responses.0","Whatever the reason for the setup, I don't want to miss out before the clock hits zero! Plus, she's a massive influencer: she wouldn't post something random. But the weird part is how this ad even knew I wanted a tablet. It popped up right at the top of my feed."
++"voices/en/2eqvw0113zu.mp3","max","story.pretest.responses.1","Look, there are a million theories about how algorithms and accounts handle ads, but I'm looking at the actual store page right now. It has the official brand logo, great reviews, and a secure checkout."
++"voices/en/rxfm3fq5dc.mp3","max","story.pretest.endingFriend","Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running: you've got until it hits zero, forty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy."
++"voices/en/44hq44q656.mp3","mia","story.pretest.endingYou","Deal. Let's use your phone to get into the Physical Internet and see what that offer is hiding."
++"voices/en/yt4atgru2z.mp3","mia","story.rounds.0.options.0.text","A countdown timer in an online shop can be fake"
++"voices/en/1pypwemptrp.mp3","mia","story.rounds.0.options.1.text","If the ad says you won a prize, then it's safe to click the link"
++"voices/en/2aaiqvuh1ke.mp3","mia","story.rounds.0.options.2.text","A shop with an ad on social media is a safe shop"
++"voices/en/11tfoy5vtje.mp3","mia","story.rounds.0.options.3.text","Real shops ask you to send your card number in a chat"
++"voices/en/1yp0ngznv3v.mp3","max","story.rounds.0.why","Exactly: the ticking clock is manufactured urgency, built to make you act before you think."
++"voices/en/10zedr04tr5.mp3","max","story.rounds.0.nudge","Think about what that ticking clock is really doing to you."
++"voices/en/1tvjxla74vc.mp3","max","story.rounds.0.positiveFeedback","So, even though they say there are 40 minutes left until an offer ends, it doesn’t actually end in 40 minutes..."
++"voices/en/e86sus2la.mp3","max","story.rounds.0.negativeFeedback","I don't know, that doesn't sound right."
++"voices/en/1innsxbp6e5.mp3","max","story.rounds.0.followUpQuestion","Alright, what else?"
++"voices/en/22zk08oambe.mp3","mia","story.rounds.1.options.0.text","You talk about tablets. Then you see a tablet ad. The usual reason: your phone recorded you."
++"voices/en/22oxchiuy2q.mp3","mia","story.rounds.1.options.1.text","Two people always see the same ads on the same website."
++"voices/en/ppaolvcaal.mp3","mia","story.rounds.1.options.2.text","If a famous person is in an ad, the product is safe."
++"voices/en/10ka6k7ki22.mp3","mia","story.rounds.1.options.3.text","Apps and websites use what you search and click to choose your ads"
++"voices/en/1itvcbccgdd.mp3","max","story.rounds.1.why","Right: it's not the mic or magic. Your search history was profiled and sold to ad networks."
++"voices/en/vimf2uz8x9.mp3","max","story.rounds.1.nudge","It's not the mic or a virus: think about what the platform already knows about you."
++"voices/en/1lvprfh6l6y.mp3","max","story.rounds.1.positiveFeedback","Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. "
++"voices/en/1azogzmgaat.mp3","max","story.rounds.1.negativeFeedback","That really doesn't make sense to me."
++"voices/en/28swb1lrr4c.mp3","max","story.rounds.1.followUpQuestion","Ok, and apart from that?"
++"voices/en/eoykmd096l.mp3","mia","story.rounds.2.options.0.text","“Lunawear.com-official.shop” is the same website as “lunawear.com”"
++"voices/en/12ex4ix5uso.mp3","mia","story.rounds.2.options.1.text","A shop with many 5-star reviews is always a real shop"
++"voices/en/78rr5xpv5a.mp3","mia","story.rounds.2.options.2.text","A €600 tablet for €49 is a warning sign."
++"voices/en/171pnwguy4g.mp3","mia","story.rounds.2.options.3.text","A website with a famous brand's logo is the brand's real shop"
++"voices/en/ngvpkui90l.mp3","max","story.rounds.2.why","Yes, read the URL letter by letter. 'bargalns' with an 'l' is a look-alike domain, not the real store."
++"voices/en/20dc1jeadhs.mp3","max","story.rounds.2.nudge","The real tell is in the address bar itself: read it character by character."
++"voices/en/h88lfgenu3.mp3","max","story.rounds.2.positiveFeedback","Yes, I guess it is a bit suspicious..."
++"voices/en/1mcke2hffal.mp3","max","story.rounds.2.negativeFeedback","Yeah, right, and I'm supposed to believe that?"
++"voices/en/u6yx6sj2c2.mp3","max","enter.friendLine","Alright: you've got 40 minutes to convince me this deal is a scam. If that clock hits zero, I'm buying ""NovaPad X"" tablet."
++"voices/en/luzdds1hj0.mp3","mia","enter.playerLine","Yes, we have a deal. Let's uncover why this offer is a scam, and how it was built."
++"voices/en/2eow4vtuhtl.mp3","mia","enter.mission","We’ll have to explore the districts, gather evidence of how the scam works, and make it back to school before the offer expires!"
++"voices/en/1hueq71tnw6.mp3","mia","enter.finalLine","Ready? The timer starts as soon as you open the map."
++"voices/en/4jcxcggr0.mp3","mia","return.playerLine","That went well! I think we've collected more than enough evidence."
++"voices/en/2gcs0tqtbbi.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 1 minutes."
++"voices/en/w6x8nlpj3c.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 2 minutes."
++"voices/en/20ldzqhce91.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 3 minutes."
++"voices/en/1r732e3a40f.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 4 minutes."
++"voices/en/1ce98qyo0g4.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 5 minutes."
++"voices/en/26q09wj6m02.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 6 minutes."
++"voices/en/1wbq3u0h80n.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 7 minutes."
++"voices/en/1yrh2tzqsga.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 8 minutes."
++"voices/en/skxqsvxw.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 9 minutes."
++"voices/en/21ej9exyixy.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 10 minutes."
++"voices/en/1lgu4rj1ifu.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 11 minutes."
++"voices/en/1aen69ry9ed.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 12 minutes."
++"voices/en/1ignrjrywv5.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 13 minutes."
++"voices/en/1zjty9lzwrn.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 14 minutes."
++"voices/en/n91szmg7zi.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 15 minutes."
++"voices/en/zi0gu69d2p.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 16 minutes."
++"voices/en/wogd7l5gv7.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 17 minutes."
++"voices/en/4aua4lpova.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 18 minutes."
++"voices/en/263eig9lbh9.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 19 minutes."
++"voices/en/1l5ak3x0ji8.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 20 minutes."
++"voices/en/2fxog1o6lme.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 21 minutes."
++"voices/en/aq8tmfnws8.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 22 minutes."
++"voices/en/1k1j51o59v.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 23 minutes."
++"voices/en/py3a4k6elo.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 24 minutes."
++"voices/en/1kgc4tf8os7.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 25 minutes."
++"voices/en/1a8tghxfyw.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 26 minutes."
++"voices/en/t2z9jgof5z.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 27 minutes."
++"voices/en/2gnffn57j9g.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 28 minutes."
++"voices/en/19lw104off8.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 29 minutes."
++"voices/en/1moc9j5k7my.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 30 minutes."
++"voices/en/1koj3bekcvg.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 31 minutes."
++"voices/en/1ty93mwpmvu.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 32 minutes."
++"voices/en/ysx1pnm7m3.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 33 minutes."
++"voices/en/1fst9zl0tuo.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 34 minutes."
++"voices/en/1nyskc2768g.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 35 minutes."
++"voices/en/26duvp1ey48.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 36 minutes."
++"voices/en/1vuy9lcmmx5.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 37 minutes."
++"voices/en/2blnrb64hr3.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 38 minutes."
++"voices/en/1p799zqa12c.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 39 minutes."
++"voices/en/1yvxh5ehgj8.mp3","max","return.friendLine","Let's go back already. Offer ends in less than 40 minutes."
++"voices/en/1vfhwrc9g5h.mp3","max","return.friendLineTimeUp","Let's go back already. The offer has already ended."
++"voices/en/5e0pd93q24.mp3","max","story.posttest.friend.responses.0","What just happened? Do you think any of what we saw was... real?"
++"voices/en/1m6cmbqeaf6.mp3","max","story.posttest.friend.responses.1","Yeah, about that... No offense Mia, but I really want this tablet. What if it's not a scam? I think I'm willing to take the risk!!"
++"voices/en/t5v3j8403q.mp3","max","story.posttest.friend.responses.2","Just tell me the strongest reasons why you think it's a scam."
++"voices/en/eq4ijheqek.mp3","mia","story.posttest.player.responses.0","Of course it was real, we saw all the reasons why the deal was a scam, remember? So that you wouldn't fall for it."
++"voices/en/1zjw414a5wo.mp3","mia","story.posttest.player.responses.1","Come one, we’re going to be late to class."
++"voices/en/33l1dgldsh.mp3","mia","story.posttest.player.responses.2","Max! Please tell me you’re kidding..."
++"voices/en/14x4b9jpdrv.mp3","max","story.posttest.convinced","You've convinced me. Now I understand the warning signs and how this offer tried to influence me. I'm not buying the tablet."
++"voices/en/100zcinm6hr.mp3","max","story.posttest.retryFriend","You haven't given me enough reasons not to buy it... There's still time before the offer expires: explain the points you haven't convinced me about yet"
++"voices/en/9c218p5p1z.mp3","max","end.lose.reasons.notEnoughEvidenceConvincing.body","I think you are right for the most part, but I just didn't see enough evidence in the Physical Internet. I'm buying it."
++"voices/en/9fx38y74hd.mp3","max","end.lose.reasons.notEnoughEvidenceUnconvincing.body","You didn't convince me: and I didn't see enough evidence in the Physical Internet either. I'm buying it."
++"voices/en/27m1xqk2imh.mp3","mia","story.pretest.opening","Look at this! An influencer I follow just posted a flash sale: the €600 NovaPad X for only €49! There are just 40 minutes left on the countdown. I'm entering my card info right now."
++"voices/en/1h3zm5a8oq3.mp3","mia","story.pretest.responses.0","Whatever the reason for the setup, I don't want to miss out before the clock hits zero! Plus, she's a massive influencer: she wouldn't post something random. But the weird part is how this ad even knew I wanted a tablet. It popped up right at the top of my feed."
++"voices/en/10led7qt7rl.mp3","mia","story.pretest.responses.1","Look, there are a million theories about how algorithms and accounts handle ads, but I'm looking at the actual store page right now. It has the official brand logo, great reviews, and a secure checkout."
++"voices/en/19bxksub748.mp3","mia","story.pretest.endingFriend","Look, you can dissect the page all you want, but everything seems fine to me! You're just being paranoid. The countdown's still running: you've got until it hits zero, forty minutes, to prove this is actually a scam. Otherwise, I'm hitting buy."
++"voices/en/c5a5h9e10l.mp3","max","story.pretest.endingYou","Deal. Let's use your phone to get into the Physical Internet and see what that offer is hiding."
++"voices/en/8k3ipt7unj.mp3","max","story.rounds.0.options.0.text","A countdown timer in an online shop can be fake"
++"voices/en/114zyr5rsxu.mp3","max","story.rounds.0.options.1.text","If the ad says you won a prize, then it's safe to click the link"
++"voices/en/1jrnbr0prqf.mp3","max","story.rounds.0.options.2.text","A shop with an ad on social media is a safe shop"
++"voices/en/ccvga2ysia.mp3","max","story.rounds.0.options.3.text","Real shops ask you to send your card number in a chat"
++"voices/en/250ri7jkrie.mp3","mia","story.rounds.0.why","Exactly: the ticking clock is manufactured urgency, built to make you act before you think."
++"voices/en/26ag0m7prxl.mp3","mia","story.rounds.0.nudge","Think about what that ticking clock is really doing to you."
++"voices/en/28f2qk8kxq3.mp3","mia","story.rounds.0.positiveFeedback","So, even though they say there are 40 minutes left until an offer ends, it doesn’t actually end in 40 minutes..."
++"voices/en/lcs2p547fz.mp3","mia","story.rounds.0.negativeFeedback","I don't know, that doesn't sound right."
++"voices/en/1wdb30217aj.mp3","mia","story.rounds.0.followUpQuestion","Alright, what else?"
++"voices/en/1117u7mdsn3.mp3","max","story.rounds.1.options.0.text","You talk about tablets. Then you see a tablet ad. The usual reason: your phone recorded you."
++"voices/en/1sbmutn4abq.mp3","max","story.rounds.1.options.1.text","Two people always see the same ads on the same website."
++"voices/en/2glp4e7294.mp3","max","story.rounds.1.options.2.text","If a famous person is in an ad, the product is safe."
++"voices/en/skjdcvph8c.mp3","max","story.rounds.1.options.3.text","Apps and websites use what you search and click to choose your ads"
++"voices/en/a3nlsjkmdz.mp3","mia","story.rounds.1.why","Right: it's not the mic or magic. Your search history was profiled and sold to ad networks."
++"voices/en/1pjk0r1gsmj.mp3","mia","story.rounds.1.nudge","It's not the mic or a virus: think about what the platform already knows about you."
++"voices/en/wl3yikhsde.mp3","mia","story.rounds.1.positiveFeedback","Ok, so it's not the mic or magic... My search history was analyzed and sold to ad networks. "
++"voices/en/22rdlap5ctj.mp3","mia","story.rounds.1.negativeFeedback","That really doesn't make sense to me."
++"voices/en/17eyr4w4a1g.mp3","mia","story.rounds.1.followUpQuestion","Ok, and apart from that?"
++"voices/en/1gvxwpadyod.mp3","max","story.rounds.2.options.0.text","“Lunawear.com-official.shop” is the same website as “lunawear.com”"
++"voices/en/5fwiive3od.mp3","max","story.rounds.2.options.1.text","A shop with many 5-star reviews is always a real shop"
++"voices/en/2dhxd79pkn2.mp3","max","story.rounds.2.options.2.text","A €600 tablet for €49 is a warning sign."
++"voices/en/7t1nkqwve1.mp3","max","story.rounds.2.options.3.text","A website with a famous brand's logo is the brand's real shop"
++"voices/en/1j9g4d8onb3.mp3","mia","story.rounds.2.why","Yes, read the URL letter by letter. 'bargalns' with an 'l' is a look-alike domain, not the real store."
++"voices/en/awd2cwr0jg.mp3","mia","story.rounds.2.nudge","The real tell is in the address bar itself: read it character by character."
++"voices/en/1devlz8p7nm.mp3","mia","story.rounds.2.positiveFeedback","Yes, I guess it is a bit suspicious..."
++"voices/en/1mvhs6aroro.mp3","mia","story.rounds.2.negativeFeedback","Yeah, right, and I'm supposed to believe that?"
++"voices/en/c93q8if1c7.mp3","mia","enter.friendLine","Alright: you've got 40 minutes to convince me this deal is a scam. If that clock hits zero, I'm buying ""NovaPad X"" tablet."
++"voices/en/34jo0awguq.mp3","max","enter.playerLine","Yes, we have a deal. Let's uncover why this offer is a scam, and how it was built."
++"voices/en/1lsty946008.mp3","max","enter.mission","We’ll have to explore the districts, gather evidence of how the scam works, and make it back to school before the offer expires!"
++"voices/en/ny0vnhclc3.mp3","max","enter.finalLine","Ready? The timer starts as soon as you open the map."
++"voices/en/riibphz3mv.mp3","max","return.playerLine","That went well! I think we've collected more than enough evidence."
++"voices/en/1ueoyyoloxh.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 1 minutes."
++"voices/en/272h9t9rm2p.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 2 minutes."
++"voices/en/cb7xkx9wta.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 3 minutes."
++"voices/en/847fm4tpjn.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 4 minutes."
++"voices/en/tbisg3ylxv.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 5 minutes."
++"voices/en/1j5qlw6wnqm.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 6 minutes."
++"voices/en/q564ywo372.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 7 minutes."
++"voices/en/22a9ffwjg97.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 8 minutes."
++"voices/en/1fv61iu9ie9.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 9 minutes."
++"voices/en/1k3df49vz16.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 10 minutes."
++"voices/en/1xq395qvbg2.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 11 minutes."
++"voices/en/7xotgm7u11.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 12 minutes."
++"voices/en/4v4uufr5j6.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 13 minutes."
++"voices/en/28jh7psq1ez.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 14 minutes."
++"voices/en/2gkiee42otg.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 15 minutes."
++"voices/en/qj353alf1b.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 16 minutes."
++"voices/en/u04is8iypz.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 17 minutes."
++"voices/en/ox6wm1jzkd.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 18 minutes."
++"voices/en/1gwoez8npzp.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 19 minutes."
++"voices/en/mmj2pxe0zk.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 20 minutes."
++"voices/en/1aam5971guk.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 21 minutes."
++"voices/en/kibwsgivme.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 22 minutes."
++"voices/en/1dx40hekz65.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 23 minutes."
++"voices/en/7sgaze01ym.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 24 minutes."
++"voices/en/1oq0yt4dn8u.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 25 minutes."
++"voices/en/1zum17qpgex.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 26 minutes."
++"voices/en/1z5ptxrnhnv.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 27 minutes."
++"voices/en/2e76khz5eq6.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 28 minutes."
++"voices/en/23yvuzwr6e8.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 29 minutes."
++"voices/en/8kdfhek3zh.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 30 minutes."
++"voices/en/1zsm23elohq.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 31 minutes."
++"voices/en/qxd2kg5y7x.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 32 minutes."
++"voices/en/13shofm47w5.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 33 minutes."
++"voices/en/8fgy46zurs.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 34 minutes."
++"voices/en/20x4z4o1g1g.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 35 minutes."
++"voices/en/uxqrito32t.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 36 minutes."
++"voices/en/2f1ljdnd10t.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 37 minutes."
++"voices/en/63yoir65st.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 38 minutes."
++"voices/en/20hothk7g2q.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 39 minutes."
++"voices/en/1iwi85c1lcv.mp3","mia","return.friendLine","Let's go back already. Offer ends in less than 40 minutes."
++"voices/en/hsir1vqvf0.mp3","mia","return.friendLineTimeUp","Let's go back already. The offer has already ended."
++"voices/en/124ahiovte4.mp3","mia","story.posttest.friend.responses.0","What just happened? Do you think any of what we saw was... real?"
++"voices/en/18urhsedd9h.mp3","mia","story.posttest.friend.responses.1","Yeah, about that... No offense Max, but I really want this tablet. What if it's not a scam? I think I'm willing to take the risk!!"
++"voices/en/4fs25z5zt6.mp3","mia","story.posttest.friend.responses.2","Just tell me the strongest reasons why you think it's a scam."
++"voices/en/1gqeh350f0x.mp3","max","story.posttest.player.responses.0","Of course it was real, we saw all the reasons why the deal was a scam, remember? So that you wouldn't fall for it."
++"voices/en/1prnjbnc28y.mp3","max","story.posttest.player.responses.1","Come one, we’re going to be late to class."
++"voices/en/26v2bl3z28e.mp3","max","story.posttest.player.responses.2","Mia! Please tell me you’re kidding..."
++"voices/en/1l9t11lrkwq.mp3","mia","story.posttest.convinced","You've convinced me. Now I understand the warning signs and how this offer tried to influence me. I'm not buying the tablet."
++"voices/en/1xby2cgpu9w.mp3","mia","story.posttest.retryFriend","You haven't given me enough reasons not to buy it... There's still time before the offer expires: explain the points you haven't convinced me about yet"
++"voices/en/1ddrtjj69aa.mp3","mia","end.lose.reasons.notEnoughEvidenceConvincing.body","I think you are right for the most part, but I just didn't see enough evidence in the Physical Internet. I'm buying it."
++"voices/en/1fyhaig3ope.mp3","mia","end.lose.reasons.notEnoughEvidenceUnconvincing.body","You didn't convince me: and I didn't see enough evidence in the Physical Internet either. I'm buying it."
+diff --git a/docs/voices/es.csv b/docs/voices/es.csv
+new file mode 100644
+index 0000000..06899c1
+--- /dev/null
++++ b/docs/voices/es.csv
+@@ -0,0 +1,175 @@
++file,speaker,i18n_key,text
++"voices/es/1yufmvtt6g5.mp3","max","story.pretest.opening","¡Mira esto! Una influencer que sigo acaba de publicar una oferta flash: ¡la NovaPad X de 600 € por solo 49 €! Quedan solo 40 minutos para poder comprarla a ese precio. Estoy metiendo los datos de mi tarjeta ahora mismo."
++"voices/es/2a2nbh60k1a.mp3","max","story.pretest.responses.0","¡No quiero perder la oferta antes de que la cuenta atrás llegue a cero! Además, es una influencer muy famosa, no publicaría algo falso. Pero lo raro es cómo sabían que quería una tablet. Apareció justo al principio de mi feed."
++"voices/es/bv5ggzeymo.mp3","max","story.pretest.responses.1","A ver, hay mil teorías sobre cómo los algoritmos y las cuentas manejan los anuncios, pero ahora mismo estoy viendo la página real de la tienda. Tiene el logo oficial de la marca, reseñas estupendas y un pago seguro."
++"voices/es/27wssxoyvpk.mp3","max","story.pretest.endingFriend","Mira, puedes analizar la página todo lo que quieras, ¡Pero a mí todo me parece correcto! Estás siendo paranoica. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, cuarenta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar."
++"voices/es/2c6qnewe2tg.mp3","mia","story.pretest.endingYou","Trato hecho. Usemos tu móvil para entrar al Internet físico y ver qué esconde esa oferta."
++"voices/es/2bmtu29djfm.mp3","mia","story.rounds.0.options.0.text","Una cuenta atrás en una tienda online puede ser falsa."
++"voices/es/j3kbm61ali.mp3","mia","story.rounds.0.options.1.text","Si el anuncio dice que has ganado un premio, entonces no hay duda de que es seguro."
++"voices/es/28vhhlfyib2.mp3","mia","story.rounds.0.options.2.text","Una tienda con anuncios en las redes sociales es una tienda segura."
++"voices/es/1kgh4krgp5q.mp3","mia","story.rounds.0.options.3.text","Las tiendas reales te piden que envíes el número de tu tarjeta por chat."
++"voices/es/hnqk8l7fgv.mp3","max","story.rounds.0.why","Exactamente: la cuenta atrás es una táctica para generar urgencia y actúes antes de pensar."
++"voices/es/17mx4ncm5dq.mp3","max","story.rounds.0.nudge","Piensa en lo que realmente te está haciendo esa cuenta atrás de reloj"
++"voices/es/1oeikpfkano.mp3","max","story.rounds.0.positiveFeedback","O sea que aunque digan que quedan 40 minutos para que acabe una oferta, realmente no acaba a los 40 minutos..."
++"voices/es/1rt9jv6nk1g.mp3","max","story.rounds.0.negativeFeedback","No lo sé, eso no suena bien."
++"voices/es/24fk9qe82r.mp3","max","story.rounds.0.followUpQuestion","Vale, ¿qué más?"
++"voices/es/1cml5h1joxa.mp3","mia","story.rounds.1.options.0.text","Hablas con un amigo sobre tablets. Luego ves un anuncio de una tablet. La razón: tu móvil te escucha."
++"voices/es/boxrq80hi0.mp3","mia","story.rounds.1.options.1.text","Dos personas siempre ven los mismos anuncios en la misma página web."
++"voices/es/20lgi5y5k1d.mp3","mia","story.rounds.1.options.2.text","Si una persona famosa aparece en un anuncio, el producto es seguro."
++"voices/es/qr2lnsvm9t.mp3","mia","story.rounds.1.options.3.text","Las aplicaciones y las páginas web utilizan tus búsquedas y clics para elegir los anuncios que ves."
++"voices/es/gfip4001mu.mp3","max","story.rounds.1.why","Exacto: no es el micrófono ni magia. Tu historial de búsqueda se utilizó para elaborar un perfil sobre ti y venderlo a redes publicitarias"
++"voices/es/2dur4213co3.mp3","max","story.rounds.1.nudge","No es el micrófono ni un virus: piensa en lo que la plataforma ya sabe de ti."
++"voices/es/3yry69dtel.mp3","max","story.rounds.1.positiveFeedback","Vale, no es el micrófono ni magia... Analizaron mi historial de búsqueda y lo vendieron a redes publicitarias."
++"voices/es/115p6a1goiw.mp3","max","story.rounds.1.negativeFeedback","La verdad es que eso no tiene ningún sentido."
++"voices/es/1wsjvggy1fn.mp3","max","story.rounds.1.followUpQuestion","Vale, ¿Y a parte de eso?"
++"voices/es/1ktp4jvgl45.mp3","mia","story.rounds.2.options.0.text","«Lunawear.com-official.shop» es la misma página web que «lunawear.com»."
++"voices/es/6u527lsjzc.mp3","mia","story.rounds.2.options.1.text","Una tienda con muchas reseñas de 5 estrellas siempre es una tienda auténtica."
++"voices/es/2g7p33j5xhk.mp3","mia","story.rounds.2.options.2.text","Una tablet de 600 € por 49 € es una señal de alarma."
++"voices/es/pqzgqfz1x.mp3","mia","story.rounds.2.options.3.text","Una página con el logo de una marca famosa es la tienda real de la marca."
++"voices/es/og9vzx49dt.mp3","max","story.rounds.2.why","Sí: lee la URL letra a letra. 'bargalns' con una 'l' es un dominio de web imitado, no la tienda real."
++"voices/es/yj1ivvde9h.mp3","max","story.rounds.2.nudge","La pista de verdad está en la propia barra de direcciones: léela carácter a carácter."
++"voices/es/1klj78v869y.mp3","max","story.rounds.2.positiveFeedback","Sí, supongo que es algo sospechoso..."
++"voices/es/1hnw4lp3lyi.mp3","max","story.rounds.2.negativeFeedback","Ya, claro, ¿y se supone que me lo tengo que creer?"
++"voices/es/1kqf833aiev.mp3","max","enter.friendLine","Muy bien: tienes 40 minutos para convencerme de que esta oferta es una estafa. Si ese reloj llega a cero, compro la ""NovaPad X"" tablet."
++"voices/es/ed80fdphr5.mp3","mia","enter.playerLine","Sí, trato hecho. Vamos a descubrir por qué esta oferta es una estafa y cómo está montada."
++"voices/es/5a3yxk9cxg.mp3","mia","enter.mission","¡Tendremos que explorar los distritos, reunir pruebas de cómo funciona la estafa y volver al instituto antes de que termine la oferta!"
++"voices/es/1nlsr4sm0du.mp3","mia","enter.finalLine","¿Lista? El temporizador arranca en cuanto abras el mapa."
++"voices/es/1wsc5vafmr6.mp3","mia","return.playerLine","¡Ha ido bien! Creo que hemos reunido pruebas más que de sobra."
++"voices/es/rhz1zsm747.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 1 minutos."
++"voices/es/8bdf97ywuk.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 2 minutos."
++"voices/es/1vl05g6wl27.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 3 minutos."
++"voices/es/qt6p98b8gz.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 4 minutos."
++"voices/es/28lc1wfzsn3.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 5 minutos."
++"voices/es/2c6aakeaxna.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 6 minutos."
++"voices/es/24q9glx9uir.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 7 minutos."
++"voices/es/igihfmyhgp.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 8 minutos."
++"voices/es/11aszv33690.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 9 minutos."
++"voices/es/14obc86zsf6.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 10 minutos."
++"voices/es/1cko6ojmv2d.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 11 minutos."
++"voices/es/1cd7cfvtf8k.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 12 minutos."
++"voices/es/26uixq20ltp.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 13 minutos."
++"voices/es/1z698agkp8f.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 14 minutos."
++"voices/es/29oyp2gxxkv.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 15 minutos."
++"voices/es/1q4frz1zg4g.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 16 minutos."
++"voices/es/1drasw6icuv.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 17 minutos."
++"voices/es/50jo1nizjd.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 18 minutos."
++"voices/es/wbfytq2el1.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 19 minutos."
++"voices/es/1hdnjkkxmdy.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 20 minutos."
++"voices/es/21q4e4zb2tf.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 21 minutos."
++"voices/es/hyu3me2x9u.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 22 minutos."
++"voices/es/20hspwiccxv.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 23 minutos."
++"voices/es/4mokkac7ll.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 24 minutos."
++"voices/es/1rwxa3lorx3.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 25 minutos."
++"voices/es/1zwlirvpuk4.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 26 minutos."
++"voices/es/bomvup7fkr.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 27 minutos."
++"voices/es/1ntw0jcufap.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 28 minutos."
++"voices/es/14c05gy984e.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 29 minutos."
++"voices/es/21jfu55arhk.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 30 minutos."
++"voices/es/1zvt1n3qnez.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 31 minutos."
++"voices/es/v02w84425g.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 32 minutos."
++"voices/es/144dmve9gyo.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 33 minutos."
++"voices/es/2g4i6ig3f0w.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 34 minutos."
++"voices/es/vt0a0kjov.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 35 minutos."
++"voices/es/eqjklngjjm.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 36 minutos."
++"voices/es/el7rhon1eg.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 37 minutos."
++"voices/es/nvpjfn5pep.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 38 minutos."
++"voices/es/20cgy9q8orc.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 39 minutos."
++"voices/es/bhrn4es5ki.mp3","max","return.friendLine","Volvamos ya. La oferta acaba en menos de 40 minutos."
++"voices/es/pfzqtvf8kc.mp3","max","return.friendLineTimeUp","Volvamos ya. La oferta ya ha terminado."
++"voices/es/niays5w7pz.mp3","max","story.posttest.friend.responses.0","¿Qué acaba de pasar? ¿Crees que algo de lo que hemos visto era... real?"
++"voices/es/1togadm2ned.mp3","max","story.posttest.friend.responses.1","Ya, sobre eso... Sin ofender, María, pero quiero esta tablet de verdad. ¿Y si no es una estafa? ¡¡Creo que estoy dispuesto a arriesgarme!!"
++"voices/es/130fu16rejo.mp3","max","story.posttest.friend.responses.2","Dime simplemente las principales razones por las que crees que es una estafa."
++"voices/es/x4mohubzz0.mp3","mia","story.posttest.player.responses.0","Claro que era real, vimos todas las razones por las que la oferta era una estafa, ¿recuerdas? Para que no picaras."
++"voices/es/28yqhja525r.mp3","mia","story.posttest.player.responses.1","Venga, que vamos a llegar tarde a clase."
++"voices/es/pnht9p5vb0.mp3","mia","story.posttest.player.responses.2","¡Marcos! Dime que es broma..."
++"voices/es/xdr8dphb3l.mp3","max","story.posttest.convinced","Me has convencido. Ahora entiendo las señales de alerta y cómo esta oferta intentaba influir en mí. No voy a comprar la tablet."
++"voices/es/9m2qany12g.mp3","max","story.posttest.retryFriend","No me has dado suficientes razones para no comprarla... Todavía puedes intentarlo de nuevo: explícame los puntos sobre los que aún no me has convencido."
++"voices/es/17w3b4b4ss6.mp3","max","end.lose.reasons.notEnoughEvidenceConvincing.body","Creo que tienes razón en general, pero no he visto suficientes pruebas en el «Internet físico». Voy a comprar la tablet."
++"voices/es/1iekm8ifz3n.mp3","max","end.lose.reasons.notEnoughEvidenceUnconvincing.body","No me convenciste, y tampoco vi pruebas suficientes en el Internet Físico. La compro."
++"voices/es/3gz0o3k91.mp3","mia","story.pretest.opening","¡Mira esto! Una influencer que sigo acaba de publicar una oferta flash: ¡la NovaPad X de 600 € por solo 49 €! Quedan solo 40 minutos para poder comprarla a ese precio. Estoy metiendo los datos de mi tarjeta ahora mismo."
++"voices/es/1rl4k5vh40.mp3","mia","story.pretest.responses.0","¡No quiero perder la oferta antes de que la cuenta atrás llegue a cero! Además, es una influencer muy famosa, no publicaría algo falso. Pero lo raro es cómo sabían que quería una tablet. Apareció justo al principio de mi feed."
++"voices/es/8pt1kzc6z5.mp3","mia","story.pretest.responses.1","A ver, hay mil teorías sobre cómo los algoritmos y las cuentas manejan los anuncios, pero ahora mismo estoy viendo la página real de la tienda. Tiene el logo oficial de la marca, reseñas estupendas y un pago seguro."
++"voices/es/14l1edtws6s.mp3","mia","story.pretest.endingFriend","Mira, puedes analizar la página todo lo que quieras, ¡Pero a mí todo me parece correcto! Estás siendo paranoico. La cuenta atrás sigue corriendo: tienes hasta que llegue a cero, cuarenta minutos, para demostrar que esto es realmente una estafa. Si no, le doy a comprar."
++"voices/es/1hok4j3ly0t.mp3","max","story.pretest.endingYou","Trato hecho. Usemos tu móvil para entrar al Internet físico y ver qué esconde esa oferta."
++"voices/es/ehnfid6sxc.mp3","max","story.rounds.0.options.0.text","Una cuenta atrás en una tienda online puede ser falsa."
++"voices/es/1i9ra6tkfz5.mp3","max","story.rounds.0.options.1.text","Si el anuncio dice que has ganado un premio, entonces no hay duda de que es seguro."
++"voices/es/288h5bjipdq.mp3","max","story.rounds.0.options.2.text","Una tienda con anuncios en las redes sociales es una tienda segura."
++"voices/es/vlvpa95tzh.mp3","max","story.rounds.0.options.3.text","Las tiendas reales te piden que envíes el número de tu tarjeta por chat."
++"voices/es/wcj9vxzs4k.mp3","mia","story.rounds.0.why","Exactamente: la cuenta atrás es una táctica para generar urgencia y actúes antes de pensar."
++"voices/es/1rzuz33a5lq.mp3","mia","story.rounds.0.nudge","Piensa en lo que realmente te está haciendo esa cuenta atrás de reloj"
++"voices/es/150tq3eaq4q.mp3","mia","story.rounds.0.positiveFeedback","O sea que aunque digan que quedan 40 minutos para que acabe una oferta, realmente no acaba a los 40 minutos..."
++"voices/es/17m4rixa86i.mp3","mia","story.rounds.0.negativeFeedback","No lo sé, eso no suena bien."
++"voices/es/wkjfe45izc.mp3","mia","story.rounds.0.followUpQuestion","Vale, ¿qué más?"
++"voices/es/t1pitaalit.mp3","max","story.rounds.1.options.0.text","Hablas con un amigo sobre tablets. Luego ves un anuncio de una tablet. La razón: tu móvil te escucha."
++"voices/es/103w4529u2l.mp3","max","story.rounds.1.options.1.text","Dos personas siempre ven los mismos anuncios en la misma página web."
++"voices/es/2dg9bm6me56.mp3","max","story.rounds.1.options.2.text","Si una persona famosa aparece en un anuncio, el producto es seguro."
++"voices/es/174f7423k4g.mp3","max","story.rounds.1.options.3.text","Las aplicaciones y las páginas web utilizan tus búsquedas y clics para elegir los anuncios que ves."
++"voices/es/24og6rmrlm0.mp3","mia","story.rounds.1.why","Exacto: no es el micrófono ni magia. Tu historial de búsqueda se utilizó para elaborar un perfil sobre ti y venderlo a redes publicitarias"
++"voices/es/20zdwwaaw75.mp3","mia","story.rounds.1.nudge","No es el micrófono ni un virus: piensa en lo que la plataforma ya sabe de ti."
++"voices/es/1eow64ob6yl.mp3","mia","story.rounds.1.positiveFeedback","Vale, no es el micrófono ni magia... Analizaron mi historial de búsqueda y lo vendieron a redes publicitarias."
++"voices/es/dq9ar1lp84.mp3","mia","story.rounds.1.negativeFeedback","La verdad es que eso no tiene ningún sentido."
++"voices/es/12f1whhilo5.mp3","mia","story.rounds.1.followUpQuestion","Vale, ¿Y a parte de eso?"
++"voices/es/2do00q75ay9.mp3","max","story.rounds.2.options.0.text","«Lunawear.com-official.shop» es la misma página web que «lunawear.com»."
++"voices/es/e2h4dd1xyd.mp3","max","story.rounds.2.options.1.text","Una tienda con muchas reseñas de 5 estrellas siempre es una tienda auténtica."
++"voices/es/19dnsy7k5rf.mp3","max","story.rounds.2.options.2.text","Una tablet de 600 € por 49 € es una señal de alarma."
++"voices/es/3nki9fb46w.mp3","max","story.rounds.2.options.3.text","Una página con el logo de una marca famosa es la tienda real de la marca."
++"voices/es/1ckk1agk0wq.mp3","mia","story.rounds.2.why","Sí: lee la URL letra a letra. 'bargalns' con una 'l' es un dominio de web imitado, no la tienda real."
++"voices/es/10wcyjemjbr.mp3","mia","story.rounds.2.nudge","La pista de verdad está en la propia barra de direcciones: léela carácter a carácter."
++"voices/es/zggeqtjrjq.mp3","mia","story.rounds.2.positiveFeedback","Sí, supongo que es algo sospechoso..."
++"voices/es/17ada6bqf91.mp3","mia","story.rounds.2.negativeFeedback","Ya, claro, ¿y se supone que me lo tengo que creer?"
++"voices/es/2570q5rl81r.mp3","mia","enter.friendLine","Muy bien: tienes 40 minutos para convencerme de que esta oferta es una estafa. Si ese reloj llega a cero, compro la ""NovaPad X"" tablet."
++"voices/es/1nvpx1pypj7.mp3","max","enter.playerLine","Sí, trato hecho. Vamos a descubrir por qué esta oferta es una estafa y cómo está montada."
++"voices/es/cu3m9826r8.mp3","max","enter.mission","¡Tendremos que explorar los distritos, reunir pruebas de cómo funciona la estafa y volver al instituto antes de que termine la oferta!"
++"voices/es/st76lcxlvo.mp3","max","enter.finalLine","¿Listo? El temporizador arranca en cuanto abras el mapa."
++"voices/es/1hibwoz2qrd.mp3","max","return.playerLine","¡Ha ido bien! Creo que hemos reunido pruebas más que de sobra."
++"voices/es/22t4yohtnx3.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 1 minutos."
++"voices/es/ocou93eotu.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 2 minutos."
++"voices/es/1s6h1qrx46o.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 3 minutos."
++"voices/es/1r8bieketuc.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 4 minutos."
++"voices/es/12oaivdhlgj.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 5 minutos."
++"voices/es/14ad8x9u4cl.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 6 minutos."
++"voices/es/wy8ei8nypb.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 7 minutos."
++"voices/es/125lhds6nsk.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 8 minutos."
++"voices/es/1aw2c8ymb29.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 9 minutos."
++"voices/es/1egcydqdebb.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 10 minutos."
++"voices/es/1ixcayceqzt.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 11 minutos."
++"voices/es/2g9341ml9ll.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 12 minutos."
++"voices/es/27a3u64s14v.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 13 minutos."
++"voices/es/s125ml866j.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 14 minutos."
++"voices/es/12a1q2k3oil.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 15 minutos."
++"voices/es/7bd7vysyjm.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 16 minutos."
++"voices/es/1684ttc3hab.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 17 minutos."
++"voices/es/28y59vs7bzy.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 18 minutos."
++"voices/es/5qqhcad6o3.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 19 minutos."
++"voices/es/5050606tx4.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 20 minutos."
++"voices/es/d15b1eu0c9.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 21 minutos."
++"voices/es/1g5mryzfa78.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 22 minutos."
++"voices/es/17xois5vz2q.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 23 minutos."
++"voices/es/lzrhxca2hg.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 24 minutos."
++"voices/es/1we02pfj52a.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 25 minutos."
++"voices/es/1zytcbphjp8.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 26 minutos."
++"voices/es/1s48qqpkf0s.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 27 minutos."
++"voices/es/1l4d9m93vbo.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 28 minutos."
++"voices/es/20r8kv9cs7k.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 29 minutos."
++"voices/es/ohg9ftkbuf.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 30 minutos."
++"voices/es/28pbrc3lu0f.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 31 minutos."
++"voices/es/v58nrvaq25.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 32 minutos."
++"voices/es/ggcdkrhp3l.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 33 minutos."
++"voices/es/p8t505y0f.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 34 minutos."
++"voices/es/1ntvjpa1jx2.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 35 minutos."
++"voices/es/cyj0zh89ca.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 36 minutos."
++"voices/es/169fvi645ov.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 37 minutos."
++"voices/es/15vd4hhmzxc.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 38 minutos."
++"voices/es/i3ktpyf1gc.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 39 minutos."
++"voices/es/1vg7z2z87cb.mp3","mia","return.friendLine","Volvamos ya. La oferta acaba en menos de 40 minutos."
++"voices/es/pn7yfoiims.mp3","mia","return.friendLineTimeUp","Volvamos ya. La oferta ya ha terminado."
++"voices/es/w7j6kme07a.mp3","mia","story.posttest.friend.responses.0","¿Qué acaba de pasar? ¿Crees que algo de lo que hemos visto era... real?"
++"voices/es/qdwbduuh2u.mp3","mia","story.posttest.friend.responses.1","Ya, sobre eso... Sin ofender, Marcos, pero quiero esta tablet de verdad. ¿Y si no es una estafa? ¡¡Creo que estoy dispuesta a arriesgarme!!"
++"voices/es/1orsc1esb8p.mp3","mia","story.posttest.friend.responses.2","Dime simplemente las principales razones por las que crees que es una estafa."
++"voices/es/dw2vjy1pnu.mp3","max","story.posttest.player.responses.0","Claro que era real, vimos todas las razones por las que la oferta era una estafa, ¿recuerdas? Para que no picaras."
++"voices/es/14kt5klpqp1.mp3","max","story.posttest.player.responses.1","Venga, que vamos a llegar tarde a clase."
++"voices/es/1dusg50hxfi.mp3","max","story.posttest.player.responses.2","¡María! Dime que es broma..."
++"voices/es/2bwopkvnavb.mp3","mia","story.posttest.convinced","Me has convencido. Ahora entiendo las señales de alerta y cómo esta oferta intentaba influir en mí. No voy a comprar la tablet."
++"voices/es/9vewwi4wb1.mp3","mia","story.posttest.retryFriend","No me has dado suficientes razones para no comprarla... Todavía puedes intentarlo de nuevo: explícame los puntos sobre los que aún no me has convencido."
++"voices/es/234dfr0vybw.mp3","mia","end.lose.reasons.notEnoughEvidenceConvincing.body","Creo que tienes razón en general, pero no he visto suficientes pruebas en el «Internet físico». Voy a comprar la tablet."
++"voices/es/v8u1atew91.mp3","mia","end.lose.reasons.notEnoughEvidenceUnconvincing.body","No me convenciste, y tampoco vi pruebas suficientes en el Internet Físico. La compro."
+diff --git a/docs/voices/fi.csv b/docs/voices/fi.csv
+new file mode 100644
+index 0000000..47587e5
+--- /dev/null
++++ b/docs/voices/fi.csv
+@@ -0,0 +1,175 @@
++file,speaker,i18n_key,text
++"voices/fi/cc97jjmj1s.mp3","max","story.pretest.opening","Katso tätä! Seuraamani vaikuttaja julkaisi juuri pikatarjouksen: €600 maksava NovaPad X nyt vain €49! Laskurissa on enää 40 minuuttia. Syötän korttitietojani juuri nyt."
++"voices/fi/1wyspmytb5x.mp3","max","story.pretest.responses.0","Oli syy mikä tahansa, en halua jäädä paitsi ennen kuin kello nollautuu! Ja hän on valtava vaikuttaja: ei hän mitä tahansa julkaisisi. Outoa on se, mistä tämä mainos tiesi, että halusin tabletin. Se ilmestyi suoraan syötteeni kärkeen."
++"voices/fi/22jkbko8g9d.mp3","max","story.pretest.responses.1","Kuule, algoritmeista ja tileistä on miljoona teoriaa, mutta katson juuri nyt itse kaupan sivua. Siinä on virallinen brändilogo, loistavat arvostelut ja turvallinen kassa."
++"voices/fi/289dtsalh0b.mp3","max","story.pretest.endingFriend","Kuule, voit pilkkoa sivua miten haluat, mutta minusta kaikki näyttää ihan hyvältä! Sinä vain vainoharhailet. Laskuri käy yhä: sinulla on siihen asti kun se nollautuu, neljäkymmentä minuuttia, aikaa todistaa, että tämä on oikeasti huijaus. Muuten painan ostaa."
++"voices/fi/jrqroz4fy2.mp3","mia","story.pretest.endingYou","Sovittu. Mennään puhelimesi kautta Fyysiseen internetiin katsomaan, mitä tuo tarjous piilottaa."
++"voices/fi/kgf6rb4l71.mp3","mia","story.rounds.0.options.0.text","Verkkokaupan ajastin, joka laskee aikaa alaspäin, voi olla huijausta."
++"voices/fi/r1afxduyn9.mp3","mia","story.rounds.0.options.1.text","Jos mainoksessa sanotaan, että olet voittanut palkinnon, linkkiä on turvallista klikata."
++"voices/fi/17gpm1xm507.mp3","mia","story.rounds.0.options.2.text","Kauppa, joka mainostaa sosiaalisessa mediassa, on turvallinen kauppa."
++"voices/fi/3mkb8i7yec.mp3","mia","story.rounds.0.options.3.text","Oikeat kaupat pyytävät sinua lähettämään korttisi numeron chatissa."
++"voices/fi/1jp71s7jfdz.mp3","max","story.rounds.0.why","Juuri niin: tikittävä kello on keinotekoista kiirettä, rakennettu saamaan sinut toimimaan ennen kuin ehdit ajatella."
++"voices/fi/t78z4tzzi7.mp3","max","story.rounds.0.nudge","Mieti, mitä tuo tikittävä kello oikeasti tekee sinulle."
++"voices/fi/1brtegf0vmy.mp3","max","story.rounds.0.positiveFeedback","Vaikka siis sanotaan, että tarjouksen päättymiseen on 40 minuuttia, se ei todellisuudessa pääty 40 minuutin kuluttua..."
++"voices/fi/28uz2z9dxqm.mp3","max","story.rounds.0.negativeFeedback","En tiedä, tuo ei kuulosta oikealta."
++"voices/fi/23bbbabf6yp.mp3","max","story.rounds.0.followUpQuestion","Selvä, mitä muuta?"
++"voices/fi/5lak4gtql4.mp3","mia","story.rounds.1.options.0.text","Puhut tableteista. Sitten näet tablettimainoksen. Yleisin syy: puhelimesi on nauhoittanut puhettasi."
++"voices/fi/1j47p9twx65.mp3","mia","story.rounds.1.options.1.text","Kaksi ihmistä näkee aina samat mainokset samalla verkkosivustolla."
++"voices/fi/1k7b4079dsp.mp3","mia","story.rounds.1.options.2.text","Jos mainoksessa esiintyy julkkis, tuote on turvallinen."
++"voices/fi/1subh0s7xx.mp3","mia","story.rounds.1.options.3.text","Sovellukset ja verkkosivustot käyttävät hakujasi ja klikkauksiasi valitakseen sinulle näytettävät mainokset."
++"voices/fi/2a883awzri0.mp3","max","story.rounds.1.why","Aivan: kyse ei ole mikrofonista eikä taikuudesta. Hakuhistoriastasi tehtiin profiili, joka myytiin mainosverkostoille."
++"voices/fi/1fk872mo5j6.mp3","max","story.rounds.1.nudge","Kyse ei ole mikrofonista eikä viruksesta: mieti, mitä alusta jo tietää sinusta."
++"voices/fi/29wqksvn6fr.mp3","max","story.rounds.1.positiveFeedback","Okei, kyse ei ole mikrofonista eikä taikuudesta... Hakuhistoriani analysoitiin ja myytiin mainosverkostoille."
++"voices/fi/1miy5oafemh.mp3","max","story.rounds.1.negativeFeedback","Tuossa ei kyllä ole minulle mitään järkeä."
++"voices/fi/1kl8et3vgcv.mp3","max","story.rounds.1.followUpQuestion","Ja sen lisäksi?"
++"voices/fi/2g1cpsvvvek.mp3","mia","story.rounds.2.options.0.text","”Lunawear.com-official.shop” on sama verkkosivusto kuin ”lunawear.com”."
++"voices/fi/1sshojfu6gk.mp3","mia","story.rounds.2.options.1.text","Kauppa, jolla on paljon viiden tähden arvosteluja, on aina oikea kauppa."
++"voices/fi/24qq10j0kxc.mp3","mia","story.rounds.2.options.2.text","600 euron tabletti 49 eurolla on varoitusmerkki."
++"voices/fi/5ryi5vdm01.mp3","mia","story.rounds.2.options.3.text","Sivusto, jolla on tunnetun brändin logo, on brändin oikea kauppa."
++"voices/fi/14adpoj1quj.mp3","max","story.rounds.2.why","Kyllä, lue URL kirjain kirjaimelta. 'bargalns' l-kirjaimella on jäljitelmäosoite, ei oikea kauppa."
++"voices/fi/1cell8gu7f6.mp3","max","story.rounds.2.nudge","Varsinainen vihje on itse osoiterivillä: lue se merkki merkiltä."
++"voices/fi/1iauspfjy7c.mp3","max","story.rounds.2.positiveFeedback","Joo, taidanpa vähän epäillä..."
++"voices/fi/181j1shs10y.mp3","max","story.rounds.2.negativeFeedback","Joo joo, ja tuohon minun pitäisi muka uskoa?"
++"voices/fi/22jsag7onhu.mp3","max","enter.friendLine","Selvä: sinulla on 40 minuuttia aikaa vakuuttaa minut, että tämä tarjous on huijaus. Jos kello nollautuu, ostan ""NovaPad X"" tablet."
++"voices/fi/xmlp299orl.mp3","mia","enter.playerLine","Kyllä, sovittu. Selvitetään, miksi tämä tarjous on huijaus ja miten se on rakennettu."
++"voices/fi/1ccxtdpgc7j.mp3","mia","enter.mission","Meidän on tutkittava kaupunginosat, kerättävä todisteet huijauksen toiminnasta ja ehdittävä takaisin kouluun ennen kuin tarjous päättyy!"
++"voices/fi/sdp3d66jl6.mp3","mia","enter.finalLine","Valmiina? Ajastin käynnistyy heti kun avaat kartan."
++"voices/fi/1k7wgedd6c.mp3","mia","return.playerLine","Se meni hyvin! Taisimme kerätä enemmän kuin tarpeeksi todisteita."
++"voices/fi/2g453se7wx1.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 1 minuutissa."
++"voices/fi/2fqky37en4e.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 2 minuutissa."
++"voices/fi/1uc3yq831yu.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 3 minuutissa."
++"voices/fi/14zcheqjnt.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 4 minuutissa."
++"voices/fi/yw3zvimpy8.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 5 minuutissa."
++"voices/fi/1ylfue0oph4.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 6 minuutissa."
++"voices/fi/1456tjiopxu.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 7 minuutissa."
++"voices/fi/l7ddvlnwpq.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 8 minuutissa."
++"voices/fi/s5l14kvcjk.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 9 minuutissa."
++"voices/fi/1bz65yy7zwv.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 10 minuutissa."
++"voices/fi/200p55a6iui.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 11 minuutissa."
++"voices/fi/1sq249yfylo.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 12 minuutissa."
++"voices/fi/1ac1mbpb1ij.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 13 minuutissa."
++"voices/fi/w9kvnwret1.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 14 minuutissa."
++"voices/fi/1k4cavypxy.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 15 minuutissa."
++"voices/fi/1yq3uj4catc.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 16 minuutissa."
++"voices/fi/1m5wfpd2i36.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 17 minuutissa."
++"voices/fi/rozfe11h7y.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 18 minuutissa."
++"voices/fi/ivfnad9rj3.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 19 minuutissa."
++"voices/fi/udcjbdn3wa.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 20 minuutissa."
++"voices/fi/7lt4z4dass.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 21 minuutissa."
++"voices/fi/1oe6lbs17l2.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 22 minuutissa."
++"voices/fi/1z4ltpvlqoz.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 23 minuutissa."
++"voices/fi/2cwuf28ux6x.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 24 minuutissa."
++"voices/fi/g24uoq5yzy.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 25 minuutissa."
++"voices/fi/1x60q8uwvb0.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 26 minuutissa."
++"voices/fi/25mu0aau9n2.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 27 minuutissa."
++"voices/fi/avflj9ewcl.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 28 minuutissa."
++"voices/fi/26kdc4jjd7u.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 29 minuutissa."
++"voices/fi/hhm1ksguek.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 30 minuutissa."
++"voices/fi/8sqgg1xl1j.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 31 minuutissa."
++"voices/fi/14ejhg1k1p2.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 32 minuutissa."
++"voices/fi/ayrdsba7bd.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 33 minuutissa."
++"voices/fi/231ntjtxk19.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 34 minuutissa."
++"voices/fi/1nbix427884.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 35 minuutissa."
++"voices/fi/8zdxly4cy4.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 36 minuutissa."
++"voices/fi/2fdf3it2ysi.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 37 minuutissa."
++"voices/fi/10zygopvyq9.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 38 minuutissa."
++"voices/fi/fte2ifhbgw.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 39 minuutissa."
++"voices/fi/mm82otpnrl.mp3","max","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 40 minuutissa."
++"voices/fi/1nodpvo7ef4.mp3","max","return.friendLineTimeUp","Mennään jo takaisin. Tarjous on jo päättynyt."
++"voices/fi/1wsvg77i7vi.mp3","max","story.posttest.friend.responses.0","Mitä juuri tapahtui? Luuletko, että mikään näkemästämme oli... totta?"
++"voices/fi/2atwzamp4eu.mp3","max","story.posttest.friend.responses.1","Niin, siitä... Ei pahalla, Mia, mutta haluan tämän tabletin oikeasti. Entä jos se ei olekaan huijaus? Taidan olla valmis ottamaan riskin!!"
++"voices/fi/5dsvk33bp3.mp3","max","story.posttest.friend.responses.2","Kerro vain vahvimmat syyt, miksi uskot sen olevan huijaus."
++"voices/fi/1a52t1rqvf0.mp3","mia","story.posttest.player.responses.0","Totta kai se oli totta, näimme kaikki syyt siihen miksi tarjous oli huijaus, muistatko? Jottet lankeaisi siihen."
++"voices/fi/1j38thixlds.mp3","mia","story.posttest.player.responses.1","Tule jo, myöhästymme tunnilta."
++"voices/fi/1eorg229xgs.mp3","mia","story.posttest.player.responses.2","Max! Sano että vitsailet..."
++"voices/fi/22orrcp4z7r.mp3","max","story.posttest.convinced","Sait minut vakuuttuneeksi. Nyt ymmärrän varoitusmerkit ja sen, miten tämä tarjous yritti vaikuttaa minuun. En osta tablettia."
++"voices/fi/26p38pddhbu.mp3","max","story.posttest.retryFriend","Et ole antanut minulle tarpeeksi syitä jättää sitä ostamatta... Aikaa on vielä ennen tarjouksen päättymistä: selitä ne kohdat, joista et ole vielä vakuuttanut minua"
++"voices/fi/1huurqetjg5.mp3","max","end.lose.reasons.notEnoughEvidenceConvincing.body","Olet varmaan oikeassa, mutta en ole nähnyt tarpeeksi todisteita ""fyysisessä internetissä"". Aion ostaa tabletin."
++"voices/fi/1dbwcoil79k.mp3","max","end.lose.reasons.notEnoughEvidenceUnconvincing.body","Et vakuuttanut minua, enkä nähnyt tarpeeksi todisteita Fyysisessä internetissäkään. Ostan sen."
++"voices/fi/6hbd442geo.mp3","mia","story.pretest.opening","Katso tätä! Seuraamani vaikuttaja julkaisi juuri pikatarjouksen: €600 maksava NovaPad X nyt vain €49! Laskurissa on enää 40 minuuttia. Syötän korttitietojani juuri nyt."
++"voices/fi/27qthbdcbh8.mp3","mia","story.pretest.responses.0","Oli syy mikä tahansa, en halua jäädä paitsi ennen kuin kello nollautuu! Ja hän on valtava vaikuttaja: ei hän mitä tahansa julkaisisi. Outoa on se, mistä tämä mainos tiesi, että halusin tabletin. Se ilmestyi suoraan syötteeni kärkeen."
++"voices/fi/1abg258h05l.mp3","mia","story.pretest.responses.1","Kuule, algoritmeista ja tileistä on miljoona teoriaa, mutta katson juuri nyt itse kaupan sivua. Siinä on virallinen brändilogo, loistavat arvostelut ja turvallinen kassa."
++"voices/fi/1qdp5ar03v5.mp3","mia","story.pretest.endingFriend","Kuule, voit pilkkoa sivua miten haluat, mutta minusta kaikki näyttää ihan hyvältä! Sinä vain vainoharhailet. Laskuri käy yhä: sinulla on siihen asti kun se nollautuu, neljäkymmentä minuuttia, aikaa todistaa, että tämä on oikeasti huijaus. Muuten painan ostaa."
++"voices/fi/4520474huk.mp3","max","story.pretest.endingYou","Sovittu. Mennään puhelimesi kautta Fyysiseen internetiin katsomaan, mitä tuo tarjous piilottaa."
++"voices/fi/frm7kz4b1g.mp3","max","story.rounds.0.options.0.text","Verkkokaupan ajastin, joka laskee aikaa alaspäin, voi olla huijausta."
++"voices/fi/jl0osvv9ga.mp3","max","story.rounds.0.options.1.text","Jos mainoksessa sanotaan, että olet voittanut palkinnon, linkkiä on turvallista klikata."
++"voices/fi/1h5i3xaev0g.mp3","max","story.rounds.0.options.2.text","Kauppa, joka mainostaa sosiaalisessa mediassa, on turvallinen kauppa."
++"voices/fi/6iadpl7eq4.mp3","max","story.rounds.0.options.3.text","Oikeat kaupat pyytävät sinua lähettämään korttisi numeron chatissa."
++"voices/fi/1qv5fq260l8.mp3","mia","story.rounds.0.why","Juuri niin: tikittävä kello on keinotekoista kiirettä, rakennettu saamaan sinut toimimaan ennen kuin ehdit ajatella."
++"voices/fi/ua7zz01cx6.mp3","mia","story.rounds.0.nudge","Mieti, mitä tuo tikittävä kello oikeasti tekee sinulle."
++"voices/fi/bc2e78yc74.mp3","mia","story.rounds.0.positiveFeedback","Vaikka siis sanotaan, että tarjouksen päättymiseen on 40 minuuttia, se ei todellisuudessa pääty 40 minuutin kuluttua..."
++"voices/fi/1hrhnxx3ipq.mp3","mia","story.rounds.0.negativeFeedback","En tiedä, tuo ei kuulosta oikealta."
++"voices/fi/tg3g77sv3g.mp3","mia","story.rounds.0.followUpQuestion","Selvä, mitä muuta?"
++"voices/fi/1nnpr4iu7qv.mp3","max","story.rounds.1.options.0.text","Puhut tableteista. Sitten näet tablettimainoksen. Yleisin syy: puhelimesi on nauhoittanut puhettasi."
++"voices/fi/24ltebrblp0.mp3","max","story.rounds.1.options.1.text","Kaksi ihmistä näkee aina samat mainokset samalla verkkosivustolla."
++"voices/fi/2ad0h8nr1c8.mp3","max","story.rounds.1.options.2.text","Jos mainoksessa esiintyy julkkis, tuote on turvallinen."
++"voices/fi/13c0nzf8xzy.mp3","max","story.rounds.1.options.3.text","Sovellukset ja verkkosivustot käyttävät hakujasi ja klikkauksiasi valitakseen sinulle näytettävät mainokset."
++"voices/fi/16v63lt6nmc.mp3","mia","story.rounds.1.why","Aivan: kyse ei ole mikrofonista eikä taikuudesta. Hakuhistoriastasi tehtiin profiili, joka myytiin mainosverkostoille."
++"voices/fi/kjvn1gs8uk.mp3","mia","story.rounds.1.nudge","Kyse ei ole mikrofonista eikä viruksesta: mieti, mitä alusta jo tietää sinusta."
++"voices/fi/2bxxh07e22e.mp3","mia","story.rounds.1.positiveFeedback","Okei, kyse ei ole mikrofonista eikä taikuudesta... Hakuhistoriani analysoitiin ja myytiin mainosverkostoille."
++"voices/fi/rnx0c7gd5x.mp3","mia","story.rounds.1.negativeFeedback","Tuossa ei kyllä ole minulle mitään järkeä."
++"voices/fi/21wvx9ghgc1.mp3","mia","story.rounds.1.followUpQuestion","Ja sen lisäksi?"
++"voices/fi/1qvd34szdru.mp3","max","story.rounds.2.options.0.text","”Lunawear.com-official.shop” on sama verkkosivusto kuin ”lunawear.com”."
++"voices/fi/7f42sottya.mp3","max","story.rounds.2.options.1.text","Kauppa, jolla on paljon viiden tähden arvosteluja, on aina oikea kauppa."
++"voices/fi/1do1gup22c3.mp3","max","story.rounds.2.options.2.text","600 euron tabletti 49 eurolla on varoitusmerkki."
++"voices/fi/1h7kgwjwdgd.mp3","max","story.rounds.2.options.3.text","Sivusto, jolla on tunnetun brändin logo, on brändin oikea kauppa."
++"voices/fi/1w14bz8odjo.mp3","mia","story.rounds.2.why","Kyllä, lue URL kirjain kirjaimelta. 'bargalns' l-kirjaimella on jäljitelmäosoite, ei oikea kauppa."
++"voices/fi/241tt63rnau.mp3","mia","story.rounds.2.nudge","Varsinainen vihje on itse osoiterivillä: lue se merkki merkiltä."
++"voices/fi/fg84e2c7bi.mp3","mia","story.rounds.2.positiveFeedback","Joo, taidanpa vähän epäillä..."
++"voices/fi/r3b25cnitp.mp3","mia","story.rounds.2.negativeFeedback","Joo joo, ja tuohon minun pitäisi muka uskoa?"
++"voices/fi/ghadyz270u.mp3","mia","enter.friendLine","Selvä: sinulla on 40 minuuttia aikaa vakuuttaa minut, että tämä tarjous on huijaus. Jos kello nollautuu, ostan ""NovaPad X"" tablet."
++"voices/fi/81p9wtz9ds.mp3","max","enter.playerLine","Kyllä, sovittu. Selvitetään, miksi tämä tarjous on huijaus ja miten se on rakennettu."
++"voices/fi/q3kn23rm41.mp3","max","enter.mission","Meidän on tutkittava kaupunginosat, kerättävä todisteet huijauksen toiminnasta ja ehdittävä takaisin kouluun ennen kuin tarjous päättyy!"
++"voices/fi/2bpqisnj0wa.mp3","max","enter.finalLine","Valmiina? Ajastin käynnistyy heti kun avaat kartan."
++"voices/fi/25igmdg42s.mp3","max","return.playerLine","Se meni hyvin! Taisimme kerätä enemmän kuin tarpeeksi todisteita."
++"voices/fi/1134phb34wm.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 1 minuutissa."
++"voices/fi/afri976ac8.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 2 minuutissa."
++"voices/fi/1qktntexf46.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 3 minuutissa."
++"voices/fi/23xo20316i2.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 4 minuutissa."
++"voices/fi/1yuqkmbcsux.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 5 minuutissa."
++"voices/fi/oh1ts37umg.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 6 minuutissa."
++"voices/fi/1podn49m0cx.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 7 minuutissa."
++"voices/fi/w8euq5tq0r.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 8 minuutissa."
++"voices/fi/ruozipmam8.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 9 minuutissa."
++"voices/fi/14w839d0gby.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 10 minuutissa."
++"voices/fi/283sh8m779l.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 11 minuutissa."
++"voices/fi/qi13r8ud6k.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 12 minuutissa."
++"voices/fi/28pzkp8dk9t.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 13 minuutissa."
++"voices/fi/1rfi46uzw93.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 14 minuutissa."
++"voices/fi/1ncerga7nmb.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 15 minuutissa."
++"voices/fi/vapzz47nbw.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 16 minuutissa."
++"voices/fi/tu7b4f03jh.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 17 minuutissa."
++"voices/fi/1pklqs7pr92.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 18 minuutissa."
++"voices/fi/24fpdj8805.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 19 minuutissa."
++"voices/fi/1ea2kmg9eps.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 20 minuutissa."
++"voices/fi/c5apyluovf.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 21 minuutissa."
++"voices/fi/ekl3qxcwxk.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 22 minuutissa."
++"voices/fi/zimupqhg2i.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 23 minuutissa."
++"voices/fi/51dutygij3.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 24 minuutissa."
++"voices/fi/1jzzf99pj7s.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 25 minuutissa."
++"voices/fi/27b9brqy8s9.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 26 minuutissa."
++"voices/fi/28aak83j4pa.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 27 minuutissa."
++"voices/fi/avskyeuans.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 28 minuutissa."
++"voices/fi/1ep4oag1sz9.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 29 minuutissa."
++"voices/fi/kl57f7t9c2.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 30 minuutissa."
++"voices/fi/myzefio1kx.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 31 minuutissa."
++"voices/fi/1vw1m8aft8n.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 32 minuutissa."
++"voices/fi/1l7bnl5tb80.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 33 minuutissa."
++"voices/fi/1ax1v9jszpq.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 34 minuutissa."
++"voices/fi/1swn51pl0sf.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 35 minuutissa."
++"voices/fi/5hyonqcioo.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 36 minuutissa."
++"voices/fi/19nuh1xl16.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 37 minuutissa."
++"voices/fi/bmhainobtn.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 38 minuutissa."
++"voices/fi/1crfgm6npw1.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 39 minuutissa."
++"voices/fi/1e3dhv32bxp.mp3","mia","return.friendLine","Mennään jo takaisin. Tarjous päättyy alle 40 minuutissa."
++"voices/fi/2b5bfnha7j3.mp3","mia","return.friendLineTimeUp","Mennään jo takaisin. Tarjous on jo päättynyt."
++"voices/fi/1kqwdrhnddo.mp3","mia","story.posttest.friend.responses.0","Mitä juuri tapahtui? Luuletko, että mikään näkemästämme oli... totta?"
++"voices/fi/m5dgzn0im3.mp3","mia","story.posttest.friend.responses.1","Niin, siitä... Ei pahalla, Max, mutta haluan tämän tabletin oikeasti. Entä jos se ei olekaan huijaus? Taidan olla valmis ottamaan riskin!!"
++"voices/fi/1srplp3qrvv.mp3","mia","story.posttest.friend.responses.2","Kerro vain vahvimmat syyt, miksi uskot sen olevan huijaus."
++"voices/fi/1gsyfe2dfed.mp3","max","story.posttest.player.responses.0","Totta kai se oli totta, näimme kaikki syyt siihen miksi tarjous oli huijaus, muistatko? Jottet lankeaisi siihen."
++"voices/fi/11delkj7zep.mp3","max","story.posttest.player.responses.1","Tule jo, myöhästymme tunnilta."
++"voices/fi/kv4ql4w6ye.mp3","max","story.posttest.player.responses.2","Mia! Sano että vitsailet..."
++"voices/fi/2an8fjejqn9.mp3","mia","story.posttest.convinced","Sait minut vakuuttuneeksi. Nyt ymmärrän varoitusmerkit ja sen, miten tämä tarjous yritti vaikuttaa minuun. En osta tablettia."
++"voices/fi/14nsaha5iiu.mp3","mia","story.posttest.retryFriend","Et ole antanut minulle tarpeeksi syitä jättää sitä ostamatta... Aikaa on vielä ennen tarjouksen päättymistä: selitä ne kohdat, joista et ole vielä vakuuttanut minua"
++"voices/fi/l1639fg886.mp3","mia","end.lose.reasons.notEnoughEvidenceConvincing.body","Olet varmaan oikeassa, mutta en ole nähnyt tarpeeksi todisteita ""fyysisessä internetissä"". Aion ostaa tabletin."
++"voices/fi/2dywgdeab92.mp3","mia","end.lose.reasons.notEnoughEvidenceUnconvincing.body","Et vakuuttanut minua, enkä nähnyt tarpeeksi todisteita Fyysisessä internetissäkään. Ostan sen."
+diff --git a/docs/voices/sr.csv b/docs/voices/sr.csv
+new file mode 100644
+index 0000000..d1792ab
+--- /dev/null
++++ b/docs/voices/sr.csv
+@@ -0,0 +1,175 @@
++file,speaker,i18n_key,text
++"voices/sr/jcaa3y7ev3.mp3","max","story.pretest.opening","Pogledaj ovo! Influenserka koju pratim upravo je objavila brzu rasprodaju: NovaPad X koji košta €600 sada je samo €49! Odbrojavanje pokazuje da je ostalo još samo 40 minuta. Upravo unosim podatke svoje kartice."
++"voices/sr/jwk6pkt9ef.mp3","max","story.pretest.responses.0","Kakav god da je razlog za sve ovo, ne želim da propustim ponudu pre nego što odbrojavanje dođe do nule! Osim toga, ona je poznata influenserka, ne bi objavila nešto nasumično. Ali čudno je kako je ovaj oglas uopšte znao da želim tablet. Pojavio se odmah na vrhu mog fid-a."
++"voices/sr/1xczagqtva4.mp3","max","story.pretest.responses.1","Slušaj, postoji milion teorija o tome kako algoritmi i nalozi prikazuju oglase, ali ja upravo gledam stranicu prodavnice. Ima zvanični logo brenda, odlične recenzije i bezbedno plaćanje."
++"voices/sr/1rvosbnesn2.mp3","max","story.pretest.endingFriend","Slušaj, možeš da analiziraš stranicu koliko god želiš, ali meni sve deluje u redu! Samo si paranoična. Odbrojavanje i dalje traje, imaš još četrdeset minuta, odnosno dok ne stigne do nule, da dokažeš da je ovo zaista prevara. U suprotnom, kliknuću na kupovinu."
++"voices/sr/13zfi9enhl3.mp3","mia","story.pretest.endingYou","Važi. Hajde da preko tvog telefona uđemo u fizički internet i vidimo šta ta ponuda krije."
++"voices/sr/148bhdkn6qv.mp3","mia","story.rounds.0.options.0.text","Tajmer koji odbrojava vreme u onlajn prodavnici može biti lažan."
++"voices/sr/x2umm3i3i9.mp3","mia","story.rounds.0.options.1.text","Ako u oglasu piše da ste osvojili nagradu, onda je bezbedno kliknuti na link."
++"voices/sr/165oitxb4th.mp3","mia","story.rounds.0.options.2.text","Prodavnica koja se reklamira na društvenim mrežama je bezbedna prodavnica."
++"voices/sr/cqce9im46p.mp3","mia","story.rounds.0.options.3.text","Prave prodavnice traže da pošalješ broj svoje kartice putem četa."
++"voices/sr/ql9h8rnb8c.mp3","max","story.rounds.0.why","Upravo tako, odbrojavanje je veštački stvoren osećaj hitnosti, osmišljen da te navede da reaguješ pre nego što razmisliš."
++"voices/sr/vhmuonedlk.mp3","max","story.rounds.0.nudge","Razmisli šta ti to odbrojavanje zapravo radi."
++"voices/sr/dczf7imcon.mp3","max","story.rounds.0.positiveFeedback","Dakle, iako kažu da je preostalo 40 minuta do isteka ponude, ona zapravo ne ističe za 40 minuta..."
++"voices/sr/1xgcdth9j9x.mp3","max","story.rounds.0.negativeFeedback","Ne znam, to mi ne zvuči tačno."
++"voices/sr/22evi07nnju.mp3","max","story.rounds.0.followUpQuestion","U redu, šta još?"
++"voices/sr/2gki0jzkgvl.mp3","mia","story.rounds.1.options.0.text","Pričaš o tabletima. Zatim vidiš reklamu za tablet. Uobičajeni razlog: telefon te je snimao."
++"voices/sr/imqyw0ega3.mp3","mia","story.rounds.1.options.1.text","Dve osobe uvek vide iste reklame na istom sajtu."
++"voices/sr/2ew3z9qun57.mp3","mia","story.rounds.1.options.2.text","Ako se poznata osoba pojavljuje u reklami, proizvod je bezbedan."
++"voices/sr/1ze5nrp4iey.mp3","mia","story.rounds.1.options.3.text","Aplikacije i veb-sajtovi koriste ono što pretražuješ i na šta klikćeš da bi odabrali reklame koje vidiš."
++"voices/sr/mfwyvjjwcm.mp3","max","story.rounds.1.why","Tako je, nije u pitanju mikrofon niti neka magija. Tvoja istorija pretrage je analizirana i prodata oglasnim mrežama."
++"voices/sr/1h09lfm211z.mp3","max","story.rounds.1.nudge","Nije mikrofon niti virus, razmisli o tome šta platforma već zna o tebi."
++"voices/sr/1gysx6wj25d.mp3","max","story.rounds.1.positiveFeedback","Ok, nije mikrofon ni magija... Moja istorija pretrage je analizirana i prodata reklamnim mrežama."
++"voices/sr/12v59os9g8f.mp3","max","story.rounds.1.negativeFeedback","To mi stvarno nema nikakvog smisla."
++"voices/sr/1svttjyyz8m.mp3","max","story.rounds.1.followUpQuestion","A osim toga?"
++"voices/sr/1j1l7eom4ke.mp3","mia","story.rounds.2.options.0.text","„Lunawear.com-official.shop” je isti sajt kao „lunawear.com”."
++"voices/sr/qo7wz98vgz.mp3","mia","story.rounds.2.options.1.text","Prodavnica sa mnogo ocena od 5 zvezdica je uvek prava prodavnica."
++"voices/sr/sgdjlyiyn3.mp3","mia","story.rounds.2.options.2.text","Tablet od 600 evra za 49 evra je znak za uzbunu."
++"voices/sr/140gpo7ibgh.mp3","mia","story.rounds.2.options.3.text","Sajt sa logom poznatog brenda je prava prodavnica tog brenda."
++"voices/sr/qg34kb43cr.mp3","max","story.rounds.2.why","Tako je, čitaj URL slovo po slovo. „bargalns“ sa slovom „l“ je domen koji oponaša pravi, a ne domen prave prodavnice."
++"voices/sr/mhmxexk7x0.mp3","max","story.rounds.2.nudge","Pravi trag nalazi se u samoj adresnoj traci: čitaj je znak po znak."
++"voices/sr/21h77qj38l1.mp3","max","story.rounds.2.positiveFeedback","Da, pretpostavljam da je malo sumnjivo..."
++"voices/sr/1tavrrjth3t.mp3","max","story.rounds.2.negativeFeedback","Da, baš, i ja treba to da poverujem?"
++"voices/sr/10gqebxp4r3.mp3","max","enter.friendLine","U redu, imaš 40 minuta da me ubediš da je ova ponuda prevara. Ako odbrojavanje stigne do nule, kupiću ""NovaPad X"" tablet."
++"voices/sr/1kgu7vx8gpw.mp3","mia","enter.playerLine","Da, dogovoreno. Hajde da otkrijemo zašto je ova ponuda prevara i kako je napravljena."
++"voices/sr/o3wz2q35wo.mp3","mia","enter.mission","Moraćemo da istražimo okruge, prikupimo dokaze o tome kako prevara funkcioniše i vratimo se u školu pre nego što ponuda istekne!"
++"voices/sr/110kn9b3zb5.mp3","mia","enter.finalLine","Spreman/na? Tajmer kreće čim otvoriš mapu."
++"voices/sr/1gqmnehwupk.mp3","mia","return.playerLine","Dobro je prošlo! Mislim da smo prikupili više nego dovoljno dokaza."
++"voices/sr/18l3zbbzzme.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 1 minuta."
++"voices/sr/1nra8gsn9fh.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 2 minuta."
++"voices/sr/136sx1q2m6e.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 3 minuta."
++"voices/sr/chhdqga19h.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 4 minuta."
++"voices/sr/35h069xicc.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 5 minuta."
++"voices/sr/fuf03uuxm3.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 6 minuta."
++"voices/sr/nm5qktmr51.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 7 minuta."
++"voices/sr/2cb7f2buhe5.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 8 minuta."
++"voices/sr/k1ma1s8mwb.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 9 minuta."
++"voices/sr/64j92sjmez.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 10 minuta."
++"voices/sr/1div9t2f4bk.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 11 minuta."
++"voices/sr/1zqrkiv8e6h.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 12 minuta."
++"voices/sr/1ubrggv3tn0.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 13 minuta."
++"voices/sr/1vu6szeycoz.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 14 minuta."
++"voices/sr/2btcg9p55st.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 15 minuta."
++"voices/sr/1y0fnyqlu8.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 16 minuta."
++"voices/sr/1k26a79vfnq.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 17 minuta."
++"voices/sr/1nq7bmupgoo.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 18 minuta."
++"voices/sr/1w1ajzha8rv.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 19 minuta."
++"voices/sr/274num21jr3.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 20 minuta."
++"voices/sr/1obipw5fchs.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 21 minuta."
++"voices/sr/21ofixsaxiq.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 22 minuta."
++"voices/sr/23s6otx9u02.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 23 minuta."
++"voices/sr/1pm765trlu6.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 24 minuta."
++"voices/sr/2aygkhzu0rh.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 25 minuta."
++"voices/sr/1ezl7hz2dth.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 26 minuta."
++"voices/sr/1kfdtgr719m.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 27 minuta."
++"voices/sr/1i3x48ifamn.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 28 minuta."
++"voices/sr/vhmubgzkp2.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 29 minuta."
++"voices/sr/15hifhl5ckp.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 30 minuta."
++"voices/sr/28tisp0uh6p.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 31 minuta."
++"voices/sr/uiud56z5ys.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 32 minuta."
++"voices/sr/lwdvel0aaw.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 33 minuta."
++"voices/sr/1cillz73q.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 34 minuta."
++"voices/sr/23rt2l92k7z.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 35 minuta."
++"voices/sr/lyeg7p58wg.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 36 minuta."
++"voices/sr/d6n515uvyz.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 37 minuta."
++"voices/sr/61mp0xcjix.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 38 minuta."
++"voices/sr/14jwhbkrd3x.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 39 minuta."
++"voices/sr/sic7hfbgq2.mp3","max","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 40 minuta."
++"voices/sr/1uov7m5o4eq.mp3","max","return.friendLineTimeUp","Hajde da se vratimo. Ponuda je već istekla."
++"voices/sr/q7q5fi15cy.mp3","max","story.posttest.friend.responses.0","Šta se upravo desilo? Misliš da je išta od onoga što smo videli bilo... stvarno?"
++"voices/sr/22x6nscvji7.mp3","max","story.posttest.friend.responses.1","Da, povodom toga... Bez uvrede, Mila, ali stvarno želim ovaj tablet. Šta ako nije prevara? Mislim da sam spreman da rizikujem!!"
++"voices/sr/2312nziljyy.mp3","max","story.posttest.friend.responses.2","Samo mi reci najjače razloge zašto misliš da je prevara."
++"voices/sr/1ylhfx70xvy.mp3","mia","story.posttest.player.responses.0","Naravno da je bilo stvarno, videli smo sve razloge zašto je ponuda prevara, sećaš se? Da ne bi naseo."
++"voices/sr/u2wush6igt.mp3","mia","story.posttest.player.responses.1","Hajde, zakasnićemo na čas."
++"voices/sr/19njrnynvi6.mp3","mia","story.posttest.player.responses.2","Marko! Reci mi da se šališ..."
++"voices/sr/4c4g7tw74j.mp3","max","story.posttest.convinced","Ubedila si me. Sada razumem znake upozorenja i kako je ova ponuda pokušala da utiče na mene. Neću kupiti tablet."
++"voices/sr/2oun3y9xe4.mp3","max","story.posttest.retryFriend","Nisi mi dala dovoljno razloga da ne kupim tablet, pa ću ga kupiti. Još ima vremena da pokušaš ponovo: objasni mi ono u šta me još nisi ubedila."
++"voices/sr/dk2g3i494e.mp3","max","end.lose.reasons.notEnoughEvidenceConvincing.body","Mislim da si u pravu, ali nisam video dovoljno dokaza na „fizičkom internetu“. Kupiću tablet."
++"voices/sr/xdqkbjwnwb.mp3","max","end.lose.reasons.notEnoughEvidenceUnconvincing.body","Nisi me ubedila: a nisam video ni dovoljno dokaza u fizičkom internetu. Kupujem ga."
++"voices/sr/1rxd50q2cs0.mp3","mia","story.pretest.opening","Pogledaj ovo! Influenserka koju pratim upravo je objavila brzu rasprodaju: NovaPad X koji košta €600 sada je samo €49! Odbrojavanje pokazuje da je ostalo još samo 40 minuta. Upravo unosim podatke svoje kartice."
++"voices/sr/1ug7lya783.mp3","mia","story.pretest.responses.0","Kakav god da je razlog za sve ovo, ne želim da propustim ponudu pre nego što odbrojavanje dođe do nule! Osim toga, ona je poznata influenserka, ne bi objavila nešto nasumično. Ali čudno je kako je ovaj oglas uopšte znao da želim tablet. Pojavio se odmah na vrhu mog fid-a."
++"voices/sr/1vvvyu2l6rt.mp3","mia","story.pretest.responses.1","Slušaj, postoji milion teorija o tome kako algoritmi i nalozi prikazuju oglase, ali ja upravo gledam stranicu prodavnice. Ima zvanični logo brenda, odlične recenzije i bezbedno plaćanje."
++"voices/sr/1t07nuecxdl.mp3","mia","story.pretest.endingFriend","Slušaj, možeš da analiziraš stranicu koliko god želiš, ali meni sve deluje u redu! Samo si paranoičan. Odbrojavanje i dalje traje, imaš još četrdeset minuta, odnosno dok ne stigne do nule, da dokažeš da je ovo zaista prevara. U suprotnom, kliknuću na kupovinu."
++"voices/sr/7rnusogr9i.mp3","max","story.pretest.endingYou","Važi. Hajde da preko tvog telefona uđemo u fizički internet i vidimo šta ta ponuda krije."
++"voices/sr/r3sbz0m1g0.mp3","max","story.rounds.0.options.0.text","Tajmer koji odbrojava vreme u onlajn prodavnici može biti lažan."
++"voices/sr/vlggoqilpl.mp3","max","story.rounds.0.options.1.text","Ako u oglasu piše da ste osvojili nagradu, onda je bezbedno kliknuti na link."
++"voices/sr/v6bg1eu186.mp3","max","story.rounds.0.options.2.text","Prodavnica koja se reklamira na društvenim mrežama je bezbedna prodavnica."
++"voices/sr/5uxf2johir.mp3","max","story.rounds.0.options.3.text","Prave prodavnice traže da pošalješ broj svoje kartice putem četa."
++"voices/sr/21cvxc9gggq.mp3","mia","story.rounds.0.why","Upravo tako, odbrojavanje je veštački stvoren osećaj hitnosti, osmišljen da te navede da reaguješ pre nego što razmisliš."
++"voices/sr/dvga7m6xpw.mp3","mia","story.rounds.0.nudge","Razmisli šta ti to odbrojavanje zapravo radi."
++"voices/sr/o4vde3mz3y.mp3","mia","story.rounds.0.positiveFeedback","Dakle, iako kažu da je preostalo 40 minuta do isteka ponude, ona zapravo ne ističe za 40 minuta..."
++"voices/sr/2d5bvtaxs4j.mp3","mia","story.rounds.0.negativeFeedback","Ne znam, to mi ne zvuči tačno."
++"voices/sr/1knku4alqg6.mp3","mia","story.rounds.0.followUpQuestion","U redu, šta još?"
++"voices/sr/1ypjh8n34ia.mp3","max","story.rounds.1.options.0.text","Pričaš o tabletima. Zatim vidiš reklamu za tablet. Uobičajeni razlog: telefon te je snimao."
++"voices/sr/10lzckpx1m6.mp3","max","story.rounds.1.options.1.text","Dve osobe uvek vide iste reklame na istom sajtu."
++"voices/sr/14jvhc57coi.mp3","max","story.rounds.1.options.2.text","Ako se poznata osoba pojavljuje u reklami, proizvod je bezbedan."
++"voices/sr/20djvdwz0l9.mp3","max","story.rounds.1.options.3.text","Aplikacije i veb-sajtovi koriste ono što pretražuješ i na šta klikćeš da bi odabrali reklame koje vidiš."
++"voices/sr/1aumfhpzem9.mp3","mia","story.rounds.1.why","Tako je, nije u pitanju mikrofon niti neka magija. Tvoja istorija pretrage je analizirana i prodata oglasnim mrežama."
++"voices/sr/24hqqhkhb0y.mp3","mia","story.rounds.1.nudge","Nije mikrofon niti virus, razmisli o tome šta platforma već zna o tebi."
++"voices/sr/nzodhkinw7.mp3","mia","story.rounds.1.positiveFeedback","Ok, nije mikrofon ni magija... Moja istorija pretrage je analizirana i prodata reklamnim mrežama."
++"voices/sr/1tuxaoz84fz.mp3","mia","story.rounds.1.negativeFeedback","To mi stvarno nema nikakvog smisla."
++"voices/sr/5oo9k8p1rf.mp3","mia","story.rounds.1.followUpQuestion","A osim toga?"
++"voices/sr/y3inqvfg1p.mp3","max","story.rounds.2.options.0.text","„Lunawear.com-official.shop” je isti sajt kao „lunawear.com”."
++"voices/sr/83rueq3ni7.mp3","max","story.rounds.2.options.1.text","Prodavnica sa mnogo ocena od 5 zvezdica je uvek prava prodavnica."
++"voices/sr/15gcokmewte.mp3","max","story.rounds.2.options.2.text","Tablet od 600 evra za 49 evra je znak za uzbunu."
++"voices/sr/2exx4wdcleo.mp3","max","story.rounds.2.options.3.text","Sajt sa logom poznatog brenda je prava prodavnica tog brenda."
++"voices/sr/1qxiakhwyv.mp3","mia","story.rounds.2.why","Tako je, čitaj URL slovo po slovo. „bargalns“ sa slovom „l“ je domen koji oponaša pravi, a ne domen prave prodavnice."
++"voices/sr/13ieura7pur.mp3","mia","story.rounds.2.nudge","Pravi trag nalazi se u samoj adresnoj traci: čitaj je znak po znak."
++"voices/sr/fysvi7dmcr.mp3","mia","story.rounds.2.positiveFeedback","Da, pretpostavljam da je malo sumnjivo..."
++"voices/sr/1ccphim7wta.mp3","mia","story.rounds.2.negativeFeedback","Da, baš, i ja treba to da poverujem?"
++"voices/sr/1x2ef1nsbum.mp3","mia","enter.friendLine","U redu, imaš 40 minuta da me ubediš da je ova ponuda prevara. Ako odbrojavanje stigne do nule, kupiću ""NovaPad X"" tablet."
++"voices/sr/1wseymisi7t.mp3","max","enter.playerLine","Da, dogovoreno. Hajde da otkrijemo zašto je ova ponuda prevara i kako je napravljena."
++"voices/sr/16h3qz0w04k.mp3","max","enter.mission","Moraćemo da istražimo okruge, prikupimo dokaze o tome kako prevara funkcioniše i vratimo se u školu pre nego što ponuda istekne!"
++"voices/sr/1fg7gq86pef.mp3","max","enter.finalLine","Spreman/na? Tajmer kreće čim otvoriš mapu."
++"voices/sr/1fiu6tzdtmn.mp3","max","return.playerLine","Dobro je prošlo! Mislim da smo prikupili više nego dovoljno dokaza."
++"voices/sr/16c73ms2vsa.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 1 minuta."
++"voices/sr/ocpugicxpf.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 2 minuta."
++"voices/sr/77gli3ebqq.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 3 minuta."
++"voices/sr/wd44zxh0v0.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 4 minuta."
++"voices/sr/22zv1tj5pl1.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 5 minuta."
++"voices/sr/2b4bagpunww.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 6 minuta."
++"voices/sr/1nncfr45955.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 7 minuta."
++"voices/sr/1f1sa5777vw.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 8 minuta."
++"voices/sr/2g744gbii14.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 9 minuta."
++"voices/sr/ejgulf8jix.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 10 minuta."
++"voices/sr/1uq3zle8w1t.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 11 minuta."
++"voices/sr/r5h71e9k6e.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 12 minuta."
++"voices/sr/164d34uihqv.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 13 minuta."
++"voices/sr/154tye08bm6.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 14 minuta."
++"voices/sr/1ol8s6mnsft.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 15 minuta."
++"voices/sr/xavfnj026f.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 16 minuta."
++"voices/sr/1st7shhgl16.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 17 minuta."
++"voices/sr/10j5bi1zeh7.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 18 minuta."
++"voices/sr/1jataqm38b1.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 19 minuta."
++"voices/sr/2b0mb8sos8y.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 20 minuta."
++"voices/sr/1gezvq0g8qy.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 21 minuta."
++"voices/sr/15zm1k4lxof.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 22 minuta."
++"voices/sr/5tp9i2y67a.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 23 minuta."
++"voices/sr/20dt39u6do1.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 24 minuta."
++"voices/sr/3pjeak0ldf.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 25 minuta."
++"voices/sr/23hasmbwfvq.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 26 minuta."
++"voices/sr/wt7rvfxpq5.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 27 minuta."
++"voices/sr/cj5axgtbm7.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 28 minuta."
++"voices/sr/28kduqsdfll.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 29 minuta."
++"voices/sr/eiwa1k475p.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 30 minuta."
++"voices/sr/2bv9pinoxxf.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 31 minuta."
++"voices/sr/nuxiszqbjf.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 32 minuta."
++"voices/sr/1q6vhm8vwqr.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 33 minuta."
++"voices/sr/2142qrzvqlk.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 34 minuta."
++"voices/sr/181fkeh67dp.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 35 minuta."
++"voices/sr/1pjcqgulupz.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 36 minuta."
++"voices/sr/4t0wkrfowb.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 37 minuta."
++"voices/sr/20f3yujy4uy.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 38 minuta."
++"voices/sr/wmj0yoylsi.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 39 minuta."
++"voices/sr/pptk2bit9a.mp3","mia","return.friendLine","Hajde da se vratimo. Ponuda ističe za manje od 40 minuta."
++"voices/sr/1l9k3y3jkq.mp3","mia","return.friendLineTimeUp","Hajde da se vratimo. Ponuda je već istekla."
++"voices/sr/26dxrhdment.mp3","mia","story.posttest.friend.responses.0","Šta se upravo desilo? Misliš da je išta od onoga što smo videli bilo... stvarno?"
++"voices/sr/2fpfbin3tm8.mp3","mia","story.posttest.friend.responses.1","Da, povodom toga... Bez uvrede, Marko, ali stvarno želim ovaj tablet. Šta ako nije prevara? Mislim da sam spremna da rizikujem!!"
++"voices/sr/1bpjicxh5my.mp3","mia","story.posttest.friend.responses.2","Samo mi reci najjače razloge zašto misliš da je prevara."
++"voices/sr/27tt6kk60s8.mp3","max","story.posttest.player.responses.0","Naravno da je bilo stvarno, videli smo sve razloge zašto je ponuda prevara, sećaš se? Da ne bi nasela."
++"voices/sr/13fqmf4qh5q.mp3","max","story.posttest.player.responses.1","Hajde, zakasnićemo na čas."
++"voices/sr/old1pg2swb.mp3","max","story.posttest.player.responses.2","Mila! Reci mi da se šališ..."
++"voices/sr/2ac5kyrnamy.mp3","mia","story.posttest.convinced","Ubedio si me. Sada razumem znake upozorenja i kako je ova ponuda pokušala da utiče na mene. Neću kupiti tablet."
++"voices/sr/lbmtejhqis.mp3","mia","story.posttest.retryFriend","Nisi mi dao dovoljno razloga da ne kupim tablet, pa ću ga kupiti. Još ima vremena da pokušaš ponovo: objasni mi ono u šta me još nisi ubedio."
++"voices/sr/84pgn9n1ws.mp3","mia","end.lose.reasons.notEnoughEvidenceConvincing.body","Mislim da si u pravu, ali nisam videla dovoljno dokaza na „fizičkom internetu“. Kupiću tablet."
++"voices/sr/2ajnprwxtsc.mp3","mia","end.lose.reasons.notEnoughEvidenceUnconvincing.body","Nisi me ubedio: a nisam videla ni dovoljno dokaza u fizičkom internetu. Kupujem ga."
+diff --git a/package.json b/package.json
+index 98e4fb8..f80c167 100644
+--- a/package.json
++++ b/package.json
+@@ -14,7 +14,8 @@
+     "check:assets": "node scripts/asset-check.mjs",
+     "check:all": "npm run check:i18n && npm run check:xapi && npm run check:assets && npm run build",
+     "i18n:import": "node scripts/i18n-import.mjs",
+-    "i18n:export": "node scripts/i18n-export.mjs"
++    "i18n:export": "node scripts/i18n-export.mjs",
++    "voices": "node scripts/generate-voices.mjs"
+   },
+   "dependencies": {
+     "react": "^18.3.1",
+diff --git a/scripts/generate-voices.mjs b/scripts/generate-voices.mjs
+new file mode 100644
+index 0000000..4ad9282
+--- /dev/null
++++ b/scripts/generate-voices.mjs
+@@ -0,0 +1,255 @@
++#!/usr/bin/env node
++/* Records the characters' dialogue with Google Cloud Text-to-Speech, one MP3
++   per line, per language, per voice:
++
++     public/voices/<locale>/<key>.mp3   the tracks the game plays
++     src/game/voiceManifest.js          which keys have a track (generated)
++     docs/voices/<locale>.csv           every line: file, speaker, i18n key, text
++
++   Usage
++     npm run voices                     record whatever is missing
++     npm run voices -- --dry-run        list the lines and count characters, no API calls
++     npm run voices -- --locale=fi      one language only
++     npm run voices -- --only=pretest   only lines whose i18n key contains this
++     npm run voices -- --force          re-record lines that already have a track
++     npm run voices -- --prune          delete tracks no line uses any more
++
++   Auth (in .env, which is gitignored — never in a VITE_ variable, or it ships
++   in the public bundle):
++     GOOGLE_TTS_API_KEY=...            an API key allowed to call the Text-to-Speech API
++   or, if your project does not accept API keys for Gemini-TTS:
++     GOOGLE_TTS_ACCESS_TOKEN=$(gcloud auth print-access-token)
++     GOOGLE_CLOUD_PROJECT=your-project-id
++
++   Optional tuning (.env or environment):
++     TTS_MODEL=gemini-2.5-pro-tts      Gemini-TTS model (falls back to Chirp 3 HD if refused)
++     TTS_VOICE_MIA=Leda                any Gemini/Chirp 3 HD voice name
++     TTS_VOICE_MAX=Puck
++     TTS_CONCURRENCY=3
++
++   Lines are keyed by what is heard (language + speaker + final text), so after
++   `npm run i18n:import` changes the copy, running this again records only the
++   lines that changed. Which lines are voiced, and by whom, mirrors
++   EnterScreen, ReturnScreen, InPersonTest and FinalDecision — keep LINES below
++   in step if a scene starts using another key. */
++import { existsSync, mkdirSync, readFileSync, readdirSync, unlinkSync, writeFileSync } from 'node:fs'
++import { dirname, join } from 'node:path'
++import { fileURLToPath } from 'node:url'
++import dictionaries from '../src/i18n/dictionaries.js'
++import { characterVars, interpolate } from '../src/i18n/characterText.js'
++import { getNarrative } from '../src/game/characters.js'
++import { GAME_MINUTES } from '../src/game/gameData.js'
++import { voiceKey, voiceFile } from '../src/game/voiceKey.js'
++
++const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
++
++/* ---------- options ---------- */
++const args = Object.fromEntries(process.argv.slice(2).map((a) => {
++  const [k, v] = a.replace(/^--/, '').split('=')
++  return [k, v ?? true]
++}))
++loadDotEnv(join(ROOT, '.env'))
++const env = process.env
++const DRY = Boolean(args['dry-run'])
++const FORCE = Boolean(args.force)
++const PRUNE = Boolean(args.prune)
++const ONLY = typeof args.only === 'string' ? args.only : null
++const LOCALES = typeof args.locale === 'string' ? args.locale.split(',') : Object.keys(dictionaries)
++const MODEL = env.TTS_MODEL || 'gemini-2.5-pro-tts'
++const CONCURRENCY = Number(env.TTS_CONCURRENCY) || 3
++
++/* ---------- casting ---------- */
++// Language codes sent to Google per game locale.
++const LANGUAGE = { en: 'en-US', es: 'es-ES', fi: 'fi-FI', sr: 'sr-RS' }
++const LANGUAGE_NAME = { en: 'English', es: 'Spanish from Spain', fi: 'Finnish', sr: 'Serbian' }
++const CAST = {
++  mia: { voice: env.TTS_VOICE_MIA || 'Leda', who: 'a 15-year-old girl' },
++  max: { voice: env.TTS_VOICE_MAX || 'Puck', who: 'a 15-year-old boy' },
++}
++// Gemini-TTS takes a natural-language direction alongside the text.
++const direction = (locale, speaker, name) =>
++  `You are ${name}, ${CAST[speaker].who}, talking out loud to your best friend from school. ` +
++  `Say the line in natural, native ${LANGUAGE_NAME[locale]} like a real teenager: casual, expressive, ` +
++  'quick and lively, never like a narrator or an advert. Say only the line itself.'
++
++/* ---------- which lines are spoken, and by whom ---------- */
++// role: 'player' = the character the player chose, 'friend' = the other one.
++const range = (n) => Array.from({ length: n }, (_, i) => i)
++const LINES = (lookup) => {
++  const rounds = lookup('story.rounds') || []
++  const count = (key) => (lookup(key) || []).length
++  return [
++    // School: the pre-test conversation (PretestScreen → InPersonTest).
++    { role: 'friend', key: 'story.pretest.opening' },
++    ...range(count('story.pretest.responses')).map((i) => ({ role: 'friend', key: `story.pretest.responses.${i}` })),
++    { role: 'friend', key: 'story.pretest.endingFriend' },
++    { role: 'player', key: 'story.pretest.endingYou' },
++    // The questions: the player says the option they pick; the friend reacts.
++    ...rounds.flatMap((round, r) => [
++      ...range(round.options?.length || 0).map((o) => ({ role: 'player', key: `story.rounds.${r}.options.${o}.text` })),
++      ...['why', 'nudge', 'positiveFeedback', 'negativeFeedback', 'followUpQuestion']
++        .map((field) => ({ role: 'friend', key: `story.rounds.${r}.${field}` })),
++    ]),
++    // Physical Internet arrival (EnterScreen); the HUD tour captions are not voiced.
++    { role: 'friend', key: 'enter.friendLine', vars: { minutes: GAME_MINUTES } },
++    { role: 'player', key: 'enter.playerLine', vars: { minutes: GAME_MINUTES } },
++    { role: 'player', key: 'enter.mission', vars: { minutes: GAME_MINUTES } },
++    { role: 'player', key: 'enter.finalLine', vars: { minutes: GAME_MINUTES } },
++    // Back from the last district (ReturnScreen): minutes = whole minutes left.
++    { role: 'player', key: 'return.playerLine' },
++    ...range(GAME_MINUTES).map((i) => ({ role: 'friend', key: 'return.friendLine', vars: { minutes: i + 1 } })),
++    { role: 'friend', key: 'return.friendLineTimeUp' },
++    // School again: the post-test (FinalDecision → InPersonTest).
++    ...range(count('story.posttest.friend.responses')).map((i) => ({ role: 'friend', key: `story.posttest.friend.responses.${i}` })),
++    ...range(count('story.posttest.player.responses')).map((i) => ({ role: 'player', key: `story.posttest.player.responses.${i}` })),
++    { role: 'friend', key: 'story.posttest.convinced' },
++    { role: 'friend', key: 'story.posttest.retryFriend' },
++    { role: 'player', key: 'story.posttest.endingYou' },
++    { role: 'friend', key: 'end.lose.reasons.notEnoughEvidenceConvincing.body' },
++    { role: 'friend', key: 'end.lose.reasons.notEnoughEvidenceUnconvincing.body' },
++  ]
++}
++
++/* ---------- resolve every line exactly as the game's t() does ---------- */
++const get = (dict, key) => key.split('.').reduce((acc, part) => (acc == null ? acc : acc[part]), dict)
++
++function collect(locale) {
++  const dict = dictionaries[locale]
++  const fallback = dictionaries.en
++  const lines = new Map()
++  for (const playerId of ['mia', 'max']) {
++    const narrative = getNarrative(playerId, dict.names)
++    const vars = characterVars(narrative, dict)
++    const lookup = (key) => get(dict, key) ?? get(fallback, key)
++    for (const line of LINES(lookup)) {
++      if (ONLY && !line.key.includes(ONLY)) continue
++      const template = lookup(line.key)
++      if (typeof template !== 'string' || !template.trim()) continue
++      const text = interpolate(template, { ...vars, ...line.vars })
++      if (/\{\w+\}/.test(text)) {
++        console.warn(`  ! ${locale} ${line.key}: unresolved placeholder, skipped → ${text}`)
++        continue
++      }
++      const speaker = line.role === 'player' ? narrative.character : narrative.friendId
++      const name = line.role === 'player' ? narrative.player : narrative.friend
++      const key = voiceKey(locale, speaker, text)
++      if (!lines.has(key)) lines.set(key, { key, locale, speaker, name, source: line.key, text })
++    }
++  }
++  return [...lines.values()]
++}
++
++/* ---------- Google Cloud Text-to-Speech ---------- */
++let useChirp = false // flips on if the Gemini model is refused
++async function synthesize(line) {
++  const languageCode = LANGUAGE[line.locale]
++  const voice = CAST[line.speaker].voice
++  const body = useChirp
++    ? { input: { text: line.text }, voice: { languageCode, name: `${languageCode}-Chirp3-HD-${voice}` }, audioConfig: { audioEncoding: 'MP3' } }
++    : {
++        input: { prompt: direction(line.locale, line.speaker, line.name), text: line.text },
++        voice: { languageCode, name: voice, modelName: MODEL },
++        audioConfig: { audioEncoding: 'MP3' },
++      }
++  const headers = { 'Content-Type': 'application/json' }
++  if (env.GOOGLE_TTS_ACCESS_TOKEN) {
++    headers.Authorization = `Bearer ${env.GOOGLE_TTS_ACCESS_TOKEN}`
++    if (env.GOOGLE_CLOUD_PROJECT) headers['x-goog-user-project'] = env.GOOGLE_CLOUD_PROJECT
++  } else headers['x-goog-api-key'] = env.GOOGLE_TTS_API_KEY
++
++  for (let attempt = 1; ; attempt++) {
++    const res = await fetch('https://texttospeech.googleapis.com/v1/text:synthesize', {
++      method: 'POST', headers, body: JSON.stringify(body),
++    })
++    if (res.ok) return Buffer.from((await res.json()).audioContent, 'base64')
++    const detail = await res.text()
++    if ((res.status === 429 || res.status >= 500) && attempt < 6) {
++      await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt))
++      continue
++    }
++    if (!useChirp && (res.status === 400 || res.status === 403 || res.status === 404) && /model|gemini|not supported|permission|api key/i.test(detail)) {
++      console.warn(`\n  ! ${MODEL} was refused (${res.status}): ${detail.slice(0, 300)}\n  → switching to Chirp 3 HD voices for the rest of this run.\n`)
++      useChirp = true
++      return synthesize(line)
++    }
++    throw new Error(`${res.status} ${detail.slice(0, 500)}`)
++  }
++}
++
++/* ---------- run ---------- */
++const all = LOCALES.flatMap((locale) => {
++  if (!dictionaries[locale]) throw new Error(`Unknown locale "${locale}"`)
++  return collect(locale)
++})
++
++// Review sheet per language (always written, also on --dry-run).
++mkdirSync(join(ROOT, 'docs/voices'), { recursive: true })
++const csv = (v) => `"${String(v).replace(/"/g, '""')}"`
++for (const locale of LOCALES) {
++  const rows = all.filter((l) => l.locale === locale)
++  writeFileSync(join(ROOT, `docs/voices/${locale}.csv`),
++    ['file,speaker,i18n_key,text', ...rows.map((l) => [voiceFile(locale, l.key), l.speaker, l.source, l.text].map(csv).join(','))].join('\n') + '\n')
++}
++
++const todo = all.filter((l) => FORCE || !existsSync(join(ROOT, 'public', voiceFile(l.locale, l.key))))
++const chars = todo.reduce((n, l) => n + l.text.length, 0)
++console.log(`${all.length} voiced lines in ${LOCALES.join(', ')}; ${todo.length} to record (${chars} characters).`)
++for (const locale of LOCALES) {
++  const n = all.filter((l) => l.locale === locale).length
++  console.log(`  ${locale}: ${n} lines → docs/voices/${locale}.csv`)
++}
++
++if (DRY) process.exit(0)
++if (todo.length && !env.GOOGLE_TTS_API_KEY && !env.GOOGLE_TTS_ACCESS_TOKEN) {
++  console.error('\nSet GOOGLE_TTS_API_KEY (or GOOGLE_TTS_ACCESS_TOKEN) in .env first. See the top of this file.')
++  process.exit(1)
++}
++
++let done = 0
++let failed = 0
++const queue = [...todo]
++await Promise.all(Array.from({ length: CONCURRENCY }, async () => {
++  for (let line; (line = queue.shift());) {
++    const file = join(ROOT, 'public', voiceFile(line.locale, line.key))
++    try {
++      const mp3 = await synthesize(line)
++      mkdirSync(dirname(file), { recursive: true })
++      writeFileSync(file, mp3)
++      done++
++      process.stdout.write(`\r  recorded ${done}/${todo.length}`)
++    } catch (error) {
++      failed++
++      console.error(`\n  ✗ ${line.locale} ${line.speaker} ${line.source}: ${error.message}`)
++    }
++  }
++}))
++if (todo.length) console.log('')
++
++// Prune, then write the manifest from what is actually on disk.
++const wanted = new Set(all.map((l) => `${l.locale}/${l.key}`))
++const manifest = {}
++for (const locale of Object.keys(dictionaries)) {
++  const dir = join(ROOT, 'public/voices', locale)
++  const keys = existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.mp3')).map((f) => f.slice(0, -4)) : []
++  const keep = []
++  for (const key of keys) {
++    if (PRUNE && LOCALES.includes(locale) && !ONLY && !wanted.has(`${locale}/${key}`)) unlinkSync(join(dir, `${key}.mp3`))
++    else keep.push(key)
++  }
++  if (keep.length) manifest[locale] = keep.sort()
++}
++writeFileSync(join(ROOT, 'src/game/voiceManifest.js'),
++  '/* AUTO-GENERATED by `npm run voices`. Do not edit by hand.\n' +
++  '   Every voiced line that has a track in public/voices/<locale>/, by key. */\n' +
++  `export default ${JSON.stringify(manifest, null, 2)}\n`)
++
++console.log(`Done: ${done} recorded${failed ? `, ${failed} failed (run again to retry)` : ''}${useChirp ? ' (Chirp 3 HD fallback)' : ''}.`)
++if (failed) process.exitCode = 1
++
++function loadDotEnv(path) {
++  if (!existsSync(path)) return
++  for (const raw of readFileSync(path, 'utf8').split(/\r?\n/)) {
++    const m = raw.match(/^\s*([A-Z0-9_]+)\s*=\s*(.*)\s*$/)
++    if (m && !(m[1] in process.env)) process.env[m[1]] = m[2].replace(/^(['"])(.*)\1$/, '$2')
++  }
++}
+diff --git a/src/components/screens/EnterScreen.jsx b/src/components/screens/EnterScreen.jsx
+index f51c28c..689d0a7 100644
+--- a/src/components/screens/EnterScreen.jsx
++++ b/src/components/screens/EnterScreen.jsx
+@@ -5,6 +5,7 @@ import { useT } from '../../i18n/index.jsx'
+ import { useStage } from '../Stage.jsx'
+ import { GAME_MINUTES } from '../../game/gameData.js'
+ import { playSound, stopSound, setAmbience } from '../../game/sound.js'
++import { useVoiceLine } from '../../game/voice.js'
+ import { DEBUG, settings } from '../../game/settings.js'
+ import { bgUrl } from '../../game/assets.js'
+ import DialogNav from './DialogNav.jsx'
+@@ -177,6 +178,8 @@ export default function EnterScreen() {
+      (getNarrative), so comparing it to 'Mia' would silently pick the wrong
+      bubble in any language that renames the characters. */
+   const speakerId = step.who === 'player' ? narrative.character : narrative.friendId
++  // The two characters' lines are voiced; the HUD tour captions are not.
++  useVoiceLine(speakerId, step.text, !intro && step.who !== 'tour')
+   const glitchBackground = backdrop === 'initial'
+     ? { backgroundImage: `url(${bgUrl('initial-ph-internet.png')})` }
+     : sceneBackground(narrative.internetScene, backdrop)
+diff --git a/src/components/screens/InPersonTest.jsx b/src/components/screens/InPersonTest.jsx
+index 00532dd..1bf283e 100644
+--- a/src/components/screens/InPersonTest.jsx
++++ b/src/components/screens/InPersonTest.jsx
+@@ -8,6 +8,7 @@ import DialogNav from './DialogNav.jsx'
+ import CloseButton from '../CloseButton.jsx'
+ import PhoneAd from '../PhoneAd.jsx'
+ import DialogScene, { FollowCharacter } from './DialogScene.jsx'
++import { useVoiceLine } from '../../game/voice.js'
+ import './pretest.css'
+ import { DEBUG, settings } from '../../game/settings.js'
+ 
+@@ -100,6 +101,9 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose,
+     : phase === 'followUp' ? followUp
+     : phase === 'endingFriend' ? (assessmentEnding ? assessmentEnding(passedPosttest(answers, rounds.length)) : p.endingFriend)
+     : phase === 'endingYou' ? p.endingYou : ''
++  // Voice whoever is talking. The prompt staying up under the options is the
++  // same speaker + text, so it is not said twice.
++  useVoiceLine(playerSpeaking ? narrative.character : narrative.friendId, line)
+   const speechKey = `${mastery}:${phase}:${round}:${introIndex}:${line}`
+   // Lines clear briskly while still leaving ~260 wpm to read.
+   const readingTime = line.length * LETTER_MS + HOLD_MS // type it out, then hold
+diff --git a/src/components/screens/ReturnScreen.jsx b/src/components/screens/ReturnScreen.jsx
+index 0f2bfe1..e1ff94f 100644
+--- a/src/components/screens/ReturnScreen.jsx
++++ b/src/components/screens/ReturnScreen.jsx
+@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
+ import { useGame, formatTime } from '../../game/GameContext.jsx'
+ import { useT } from '../../i18n/index.jsx'
+ import { playSound, stopSound, setAmbience } from '../../game/sound.js'
++import { useVoiceLine } from '../../game/voice.js'
+ import DialogNav from './DialogNav.jsx'
+ import PortalTunnel from '../PortalTunnel.jsx'
+ import DialogScene from './DialogScene.jsx'
+@@ -110,6 +111,7 @@ export default function ReturnScreen() {
+      (getNarrative), so comparing it to 'Mia' would silently pick the wrong
+      bubble in any language that renames the characters. */
+   const speakerId = step.who === 'player' ? narrative.character : narrative.friendId
++  useVoiceLine(speakerId, step.text, phase === 'talk')
+ 
+   return (
+     <div className="scene pretest-scene enter-scene return-scene">
+diff --git a/src/game/settings.js b/src/game/settings.js
+index c8a2130..6967c49 100644
+--- a/src/game/settings.js
++++ b/src/game/settings.js
+@@ -61,6 +61,11 @@ export const settings = {
+      messages are short and the speaker is "typing" at you. */
+   typewriter: { letterMs: 25, holdMs: 1500, chatMs: 12 },
+ 
++  /* Character voices in the dialogue scenes (pre-recorded by `npm run voices`,
++     see scripts/generate-voices.mjs). enabled: false turns them off without
++     deleting the tracks. They also follow the HUD's mute button. */
++  voice: { enabled: true, volume: 1 },
++
+   /* The portal trip (school ⇄ Physical Internet).
+      video: true = play the tunnel video (PortalTunnel); the trip then lasts
+      videoMs, the clip's length. If the video can't play (blocked autoplay,
+diff --git a/src/game/sound.js b/src/game/sound.js
+index d7f975b..c85925c 100644
+--- a/src/game/sound.js
++++ b/src/game/sound.js
+@@ -18,9 +18,14 @@ try { muted = localStorage.getItem(MUTE_KEY) === '1' } catch { /* ignore */ }
+ 
+ export function isMuted() { return muted }
+ 
++// Other audio (the character voices in voice.js) follows the same mute.
++const muteListeners = new Set()
++export function onMuteChange(fn) { muteListeners.add(fn); return () => muteListeners.delete(fn) }
++
+ export function setMuted(value) {
+   muted = !!value
+   try { localStorage.setItem(MUTE_KEY, muted ? '1' : '0') } catch { /* ignore */ }
++  muteListeners.forEach((fn) => { try { fn(muted) } catch { /* ignore */ } })
+   // Silence anything already playing when muting.
+   if (muted) {
+     for (const k in fadeTimers) window.clearInterval(fadeTimers[k])
+diff --git a/src/game/voice.js b/src/game/voice.js
+new file mode 100644
+index 0000000..4e71eed
+--- /dev/null
++++ b/src/game/voice.js
+@@ -0,0 +1,51 @@
++/* Character voices for the dialogue scenes. Tracks are pre-recorded by
++   `npm run voices` (scripts/generate-voices.mjs) into public/voices/<locale>/
++   and listed in voiceManifest.js; a line with no track simply stays silent,
++   so the game never waits on audio. Follows the global mute in sound.js. */
++import { useEffect } from 'react'
++import manifest from './voiceManifest.js'
++import { voiceKey, voiceFile } from './voiceKey.js'
++import { isMuted, onMuteChange } from './sound.js'
++import { settings } from './settings.js'
++import { useI18n } from '../i18n/index.jsx'
++
++const BASE = import.meta.env.BASE_URL
++const available = Object.fromEntries(Object.entries(manifest).map(([locale, keys]) => [locale, new Set(keys)]))
++
++// One element for every line: only one character talks at a time.
++let audio = null
++
++export function stopVoice() {
++  try { if (audio) { audio.pause(); audio.currentTime = 0 } } catch { /* ignore */ }
++}
++
++onMuteChange((muted) => { if (muted) stopVoice() })
++
++/* Say `text` as `speaker` ('mia' | 'max'). Returns false when there is no track. */
++export function playVoice(locale, speaker, text) {
++  stopVoice()
++  if (!settings.voice?.enabled || isMuted() || !text || !speaker) return false
++  const key = voiceKey(locale, speaker, text)
++  if (!available[locale]?.has(key)) return false
++  try {
++    if (!audio) audio = new Audio()
++    audio.src = `${BASE}${voiceFile(locale, key)}`
++    audio.volume = settings.voice.volume
++    audio.play().catch(() => {}) // autoplay rejections are harmless
++    return true
++  } catch {
++    return false
++  }
++}
++
++/* Voice the line currently on screen. Re-runs only when the speaker or text
++   changes, so a prompt that stays up while the options appear is not repeated;
++   the voice stops when the line changes or the scene unmounts. */
++export function useVoiceLine(speaker, text, enabled = true) {
++  const { locale } = useI18n()
++  useEffect(() => {
++    if (!enabled) return
++    playVoice(locale, speaker, text)
++    return stopVoice
++  }, [locale, speaker, text, enabled])
++}
+diff --git a/src/game/voiceKey.js b/src/game/voiceKey.js
+new file mode 100644
+index 0000000..354983c
+--- /dev/null
++++ b/src/game/voiceKey.js
+@@ -0,0 +1,29 @@
++/* Shared by the game (voice.js) and the generator (scripts/generate-voices.mjs),
++   so both name a voiced line's file the same way. A track is identified by
++   what is actually heard: the language, who says it, and the final text after
++   {friend}/{minutes}/gendered-word substitution. Change the copy in the Sheet
++   and the key changes too, so a stale recording is never played for new text.
++   No import.meta / DOM here: this file must also run in plain Node. */
++
++const normalise = (text) => String(text).replace(/\s+/g, ' ').trim()
++
++// cyrb53: a small, fast 53-bit string hash (plenty for a few thousand lines).
++function cyrb53(str, seed = 0) {
++  let h1 = 0xdeadbeef ^ seed
++  let h2 = 0x41c6ce57 ^ seed
++  for (let i = 0; i < str.length; i++) {
++    const ch = str.charCodeAt(i)
++    h1 = Math.imul(h1 ^ ch, 2654435761)
++    h2 = Math.imul(h2 ^ ch, 1597334677)
++  }
++  h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507) ^ Math.imul(h2 ^ (h2 >>> 13), 3266489909)
++  h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507) ^ Math.imul(h1 ^ (h1 >>> 13), 3266489909)
++  return 4294967296 * (2097151 & h2) + (h1 >>> 0)
++}
++
++/* `speaker` is the character ID ('mia' | 'max'), never the display name. */
++export function voiceKey(locale, speaker, text) {
++  return cyrb53(`${locale}|${speaker}|${normalise(text)}`).toString(36)
++}
++
++export const voiceFile = (locale, key) => `voices/${locale}/${key}.mp3`
+diff --git a/src/game/voiceManifest.js b/src/game/voiceManifest.js
+new file mode 100644
+index 0000000..ef8d59e
+--- /dev/null
++++ b/src/game/voiceManifest.js
+@@ -0,0 +1,3 @@
++/* AUTO-GENERATED by `npm run voices`. Do not edit by hand.
++   Every voiced line that has a track in public/voices/<locale>/, by key. */
++export default {}
+diff --git a/src/rooms/FinalDecision.jsx b/src/rooms/FinalDecision.jsx
+index a5cd096..26d5ea3 100644
+--- a/src/rooms/FinalDecision.jsx
++++ b/src/rooms/FinalDecision.jsx
+@@ -6,6 +6,7 @@ import { mergePosttestAnswers, passedPosttest, pendingPosttestQuestions, posttes
+ import { track, OBJ } from '../game/xapi.js'
+ import { testItem } from '../game/testItems.js'
+ import InPersonTest from '../components/screens/InPersonTest.jsx'
++import { useVoiceLine } from '../game/voice.js'
+ import '../components/screens/conversation-screen.css'
+ 
+ /* POST-TEST — a mastery pass through the shared InPersonTest scene, then the
+@@ -44,6 +45,8 @@ export default function FinalDecision() {
+   const [questionIndices, setQuestionIndices] = useState(() => pendingPosttestQuestions([], totalQuestions))
+ 
+   useEffect(() => { startPosttestDecision() }, [startPosttestDecision])
++  // The retry panel is the friend talking too.
++  useVoiceLine(narrative.friendId, t('story.posttest.retryFriend', vars), phase === 'retry')
+ 
+   const resolveAttempt = (attempt) => {
+     const nextAnswers = mergePosttestAnswers(answers, questionIndices, attempt)

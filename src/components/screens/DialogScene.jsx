@@ -44,9 +44,12 @@ export default function DialogScene({ scene, speaker, poses, visible = true, cla
 }
 
 /* Moves its children with a character's zoom (e.g. the phone in their hand):
-   a full-scene layer scaled around the same point as that cut-out. */
-export function FollowCharacter({ scene, role, speaker, children }) {
-  const [x, y] = zoomOrigin(scene.characters.find((c) => c.role === role).box)
+   a full-scene layer scaled around the same point as that cut-out. `pose`:
+   the emotion pose shown, if any — its cut-out has its own box, so its own
+   zoom point. */
+export function FollowCharacter({ scene, role, speaker, pose = null, children }) {
+  const character = scene.characters.find((c) => c.role === role)
+  const [x, y] = zoomOrigin((pose && character.poses[pose]?.box) || character.box)
   return (
     <div
       className={`dialog-follow ${speaker === role ? 'is-speaking' : ''}`}

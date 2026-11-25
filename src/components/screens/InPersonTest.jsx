@@ -10,6 +10,7 @@ import PhoneAd from '../PhoneAd.jsx'
 import DialogScene, { FollowCharacter } from './DialogScene.jsx'
 import './pretest.css'
 import { DEBUG, settings } from '../../game/settings.js'
+import { SCENE_SIZE } from '../../game/characters.js'
 
 /* Typewriter pacing lives in settings.typewriter so the narrated screens
    stay in step with each other; a line's reading time is its typing time
@@ -25,6 +26,22 @@ const ASK_GAP = 16
 // How long a speech bubble / the answer panel takes to fade out (matches pretest.css).
 const FADE_MS = 350
 
+/* A pose's phone outline ([[x, y], …] in scenery px) as the phone button
+   needs it: placed over its bounding box (in % of the scene, like the CSS
+   for the neutral art), with that box as the SVG viewBox. */
+function phoneOutline(points) {
+  const xs = points.map(([x]) => x)
+  const ys = points.map(([, y]) => y)
+  const [x0, y0] = [Math.min(...xs) - 2, Math.min(...ys) - 2]
+  const [w, h] = [Math.max(...xs) + 2 - x0, Math.max(...ys) + 2 - y0]
+  const [W, H] = SCENE_SIZE
+  return {
+    d: `M${points.map(([x, y]) => `${x} ${y}`).join(' L')} Z`,
+    viewBox: `${x0} ${y0} ${w} ${h}`,
+    style: { left: `${(x0 / W) * 100}%`, top: `${(y0 / H) * 100}%`, width: `${(w / W) * 100}%`, height: `${(h / H) * 100}%` },
+  }
+}
+
 /* Shared scene for the diagnostic conversations and the post-test review.
    `intro`: optional opening exchange [{ who: 'friend'|'player', text }] played
    before the first question instead of `script.opening` (post-test). Its last
@@ -35,12 +52,14 @@ const FADE_MS = 350
    the player's pose once they start answering. Each character keeps the pose
    of their latest line while listening; `endingPose(passed)` sets the
    player's pose (null = neutral) during the friend's ending line.
+   `posesAt({ phase, round, answered })` → { player?, friend? }: poses set by
+   the point in the conversation (pre-test), applied over the above.
    `phoneAction` ({ label, onClick }): instead of action buttons, the last line
    turns the phone into the way forward — a big glow, lit while that line is
    said (the player's endingYou names the phone, so the cue is in the text).
    `quietPhone`: the phone stays unlit and only highlights under the pointer
    (post-test, where it is optional rather than a step to take). */
-export default function InPersonTest({ script: p, intro, replyPose, endingPose, phoneAction, quietPhone = false, mastery = false, actions = [], requirePhoneView = true, assessment = false, questionIndices, skipOpening = false, assessmentEnding, onComplete }) {
+export default function InPersonTest({ script: p, intro, replyPose, endingPose, posesAt, phoneAction, quietPhone = false, mastery = false, actions = [], requirePhoneView = true, assessment = false, questionIndices, skipOpening = false, assessmentEnding, onComplete }) {
   const { reducedMotion, narrative } = useGame()
   const t = useT()
   const friend = narrative.friend
@@ -76,13 +95,20 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
   const playerSpeaking = ['reply', 'endingYou'].includes(phase) || (phase === 'intro' && intro[introIndex].who === 'player')
   // By ID, not by display name: a translation may rename the characters.
   const miaSpeaking = (playerSpeaking ? narrative.character : narrative.friendId) === 'mia'
-  const posed = Boolean(replyPose || endingPose) || (hasIntro && intro.some((l) => l.pose))
+  const posed = Boolean(replyPose || endingPose || posesAt) || (hasIntro && intro.some((l) => l.pose))
   const poses = { player: null, friend: null }
   if (hasIntro && !skipOpening) {
     intro.slice(0, phase === 'intro' ? introIndex + 1 : intro.length).forEach((l) => { poses[l.who] = l.pose || null })
   }
   if (replyPose && answers.length > 0) poses.player = replyPose
   if (endingPose && phase === 'endingFriend') poses.player = endingPose(passedPosttest(answers, rounds.length))
+  if (posesAt) Object.assign(poses, posesAt({ phase, round, answered: answers.length }))
+  /* The friend's phone: traced on the neutral art (CSS), or on the pose's own
+     outline when the pose holds it elsewhere; hidden for a pose without one. */
+  const friendPose = poses.friend
+    ? narrative.schoolScene.characters.find((c) => c.role === 'friend')?.poses[poses.friend]
+    : null
+  const posePhone = friendPose?.phone ? phoneOutline(friendPose.phone) : null
   // Post-test (assessment) reacts with positive/negativeFeedback; other mastery
   // passes keep the explanatory why/nudge.
   const masteryReply = () => assessment
@@ -276,11 +302,11 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
           {/* Darkens the scene while the player has to answer (below the phone). */}
           <div className={`pretest-shade ${asking || phonePortal ? 'is-on' : ''}`} aria-hidden="true" />
           {/* The friend holds the phone: it zooms with them while they talk. */}
-          <FollowCharacter scene={narrative.schoolScene} role="friend" speaker={playerSpeaking ? 'player' : 'friend'}>
+          <FollowCharacter scene={narrative.schoolScene} role="friend" speaker={playerSpeaking ? 'player' : 'friend'} pose={poses.friend}>
             <button
               ref={phoneRef}
               type="button"
-              className={`pretest-phone ${narrative.character === 'max' ? 'phone-mia' : ''} ${phoneClicked ? '' : 'is-unseen'} ${asking ? 'is-dimmed' : ''} ${poses.friend ? 'is-away' : ''} ${phonePortal ? 'is-portal' : ''} ${quietPhone ? 'is-quiet' : ''}`}
+              className={`pretest-phone ${narrative.character === 'max' ? 'phone-mia' : ''} ${phoneClicked ? '' : 'is-unseen'} ${asking ? 'is-dimmed' : ''} ${poses.friend && !posePhone ? 'is-away' : ''} ${phonePortal ? 'is-portal' : ''} ${quietPhone ? 'is-quiet' : ''}`}
               onMouseDown={(event) => event.preventDefault()}
               onClick={phonePortal ? () => {
                 if (!assessment && !completed.current) {
@@ -305,10 +331,11 @@ export default function InPersonTest({ script: p, intro, replyPose, endingPose, 
               aria-label={phonePortal ? phoneAction.label : t('story.product.offerLabel')}
               title={phonePortal ? phoneAction.label : t('story.product.offerLabel')}
               aria-haspopup={phonePortal ? undefined : 'dialog'}
+              style={posePhone?.style}
             >
-              <svg className="pretest-phone-light" viewBox={narrative.character === 'max' ? '1008 418 96 108' : '648 496 108 100'} aria-hidden="true">
+              <svg className="pretest-phone-light" viewBox={posePhone ? posePhone.viewBox : narrative.character === 'max' ? '1008 418 96 108' : '648 496 108 100'} aria-hidden="true">
                 {/* Trace only the exposed handset; the fingers stay unlit. */}
-                <path d={narrative.character === 'max'
+                <path d={posePhone ? posePhone.d : narrative.character === 'max'
                   ? 'M1017 434 Q1014 429 1022 428 L1058 425 Q1064 425 1067 432 L1085 479 C1074 478 1052 482 1037 486 L1036 482 L1053 473 Q1061 468 1058 464 Q1057 461 1053 463 C1045 464 1036 468 1029 471 Z M1041 498 C1057 493 1076 490 1086 488 L1089 493 C1072 493 1052 500 1041 504 Z M1048 518 C1062 510 1081 507 1093 502 L1095 507 Q1097 514 1090 515 L1080 515 L1075 513 C1065 513 1057 517 1048 518 Z'
                   : 'M676 548 L699 509 Q703 502 710 503 L742 505 Q750 506 747 514 L729 541 C721 538 710 533 704 535 Q698 536 699 542 Q699 547 706 550 L718 555 L718 560 C704 555 689 551 676 548 Z M666 560 C679 564 694 571 705 576 L702 578 C690 573 676 568 663 564 Z M657 575 C663 578 671 581 678 584 L660 582 Q654 581 655 577 Z'} />
               </svg>
